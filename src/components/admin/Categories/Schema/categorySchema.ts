@@ -4,9 +4,10 @@ const SUPPORTED_ICON_FORMATS = ["image/svg+xml", "image/png"];
 const ICON_MAX_SIZE = 2 * 1024 * 1024;
 
 export const categorySchema = Yup.object({
-  name: Yup.string().required("Name is required"),
-
-  description: Yup.string().default(""),
+  nameBn: Yup.string().required("Bangla name is required"),
+  nameEn: Yup.string().default(""),
+  descriptionEn: Yup.string().default(""),
+  descriptionBn: Yup.string().default(""),
   icon: Yup.mixed<File | string>()
     .nullable()
     .transform((value) => (value === null ? undefined : value))
@@ -22,7 +23,10 @@ export const categorySchema = Yup.object({
       if (!value || typeof value === "string") return true;
       return value instanceof File ? value.size <= ICON_MAX_SIZE : true;
     }),
-  isActive: Yup.boolean().default(true),
+  status: Yup.string()
+    .oneOf(["ACTIVE", "INACTIVE"])
+    .default("ACTIVE")
+    .required("Status is required"),
 });
 
 export type CategoryFormValues = Yup.InferType<typeof categorySchema>;

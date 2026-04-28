@@ -26,9 +26,6 @@ export function getMenuItems(): MenuItem[] {
       icon: Package,
       children: [
         { label: "All Products", href: "/admin/products" },
-        { label: "Draft Product", href: "/admin/products/draft" },
-        { label: "Stock Products", href: "/admin/products/stock" },
-        { label: "Product Review", href: "/admin/products/review" },
       ],
     },
     {
@@ -40,14 +37,10 @@ export function getMenuItems(): MenuItem[] {
           label: "Category List",
           href: "/admin/category",
           matchRoutes: [
-            "/admin/parent-category",
             "/admin/category",
-            "/admin/sub-category",
           ],
         },
-        { label: "Attribute List", href: "/admin/products/attributes", matchRoutes: ["/admin/products/attributes", "/admin/products/attribute-values"] },
-        { label: "Tag List", href: "/admin/products/tags" },
-        { label: "Brand List", href: "/admin/brands" },
+        
       ],
     },
     {
@@ -56,8 +49,6 @@ export function getMenuItems(): MenuItem[] {
       icon: ShoppingCart,
       children: [
         { label: "All Orders", href: "/admin/orders" },
-        { label: "Return & Refund", href: "/admin/orders/return-refund" },
-        { label: "Transactions", href: "/admin/orders/transactions" },
       ],
     },
 

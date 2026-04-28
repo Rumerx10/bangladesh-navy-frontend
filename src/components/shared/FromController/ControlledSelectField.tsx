@@ -3,11 +3,11 @@ import React from "react";
 import { cn } from "@/src/lib/utils";
 import { Controller, useFormContext } from "react-hook-form";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "../../ui/select";
 
 type Option = {
@@ -21,12 +21,14 @@ interface ControlledSelectFieldProps {
   placeholder?: string;
   description?: string;
   className?: string;
+  disabled?: boolean;
 }
 const ControlledSelectField: React.FC<ControlledSelectFieldProps> = ({
   name,
   options,
   placeholder,
   className,
+  disabled,
 }) => {
   const { control } = useFormContext();
   return (
@@ -38,6 +40,7 @@ const ControlledSelectField: React.FC<ControlledSelectFieldProps> = ({
           return (
             <>
               <Select
+                disabled={disabled}
                 onValueChange={(val) => {
                   if (val === "true") field.onChange(true);
                   else if (val === "false") field.onChange(false);
@@ -55,6 +58,7 @@ const ControlledSelectField: React.FC<ControlledSelectFieldProps> = ({
                 }
               >
                 <SelectTrigger
+                  disabled={disabled}
                   className={cn(
                     `flex h-10.5 w-full rounded-md border border-input bg-white px-3 py-1 text-base shadow-none transition-colors file:border-0 focus:outline-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 md:text-sm ${
                       error

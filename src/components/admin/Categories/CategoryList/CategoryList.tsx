@@ -1,14 +1,11 @@
 "use client";
 
-import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { DataTable } from "@/src/components/ui/data-table";
-import { useDelete } from "@/src/hooks/useDelete";
 import { useGet } from "@/src/hooks/useGet";
 import { usePagination } from "@/src/hooks/usePagination";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { useAppSelector } from "@/src/lib/redux/hooks";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import CreateUpdateCategory from "../Form/CreateUpdateCategory";
 import { GetCategoryColumns } from "../TableColumns/CategoryColumns";
 import { ICategory } from "../types";
@@ -16,8 +13,6 @@ import { ICategory } from "../types";
 export default function CategoryList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<ICategory | undefined>();
-  const [deleteId, setDeleteId] = useState<string | null>(null);
-
   const {
     setCurrentPage,
     itemsPerPage,
@@ -49,10 +44,6 @@ export default function CategoryList() {
     }
   );
 
-  const { mutate: deleteMutate } = useDelete(() => {
-    toast.success("Category deleted successfully!");
-  }, [["categories"]]);
-
   useEffect(() => {
     if (data) {
       setTotalItems(data.meta?.totalItems || 0);
@@ -63,17 +54,6 @@ export default function CategoryList() {
   const handleEdit = (item: ICategory) => {
     setSelectedItem(item);
     setIsModalOpen(true);
-  };
-
-  const handleDelete = (id: string) => {
-    setDeleteId(id);
-  };
-
-  const handleConfirmDelete = () => {
-    if (deleteId) {
-      deleteMutate({ url: `/category/${deleteId}` });
-      setDeleteId(null);
-    }
   };
 
   const handleModalClose = () => {
@@ -87,28 +67,23 @@ export default function CategoryList() {
     <div>
       <DataTable
         columns={columns}
-        data={Array.isArray(data) ? data : []}
+        data={Array.isArray(data?.data) ? data.data : []}
         isLoading={isLoading}
         totalItems={totalItems}
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         onPageChange={setCurrentPage}
         setItemsPerPage={setItemsPerPage}
-        title="Users"
+        title="Categories"
         searchValue={search}
         onSearchChange={handleSearchChange}
+        IsCreate
+        setIsModalOpen={setIsModalOpen}
       />
       <CreateUpdateCategory
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
-      />
-      <DeleteConfirmDialog
-        isOpen={!!deleteId}
-        onClose={() => setDeleteId(null)}
-        onConfirm={handleConfirmDelete}
-        title="Delete Category"
-        description="Are you sure you want to delete this category? This action cannot be undone."
       />
     </div>
   );

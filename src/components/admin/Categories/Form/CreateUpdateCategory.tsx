@@ -32,28 +32,33 @@ export default function CreateUpdateCategory({
   const methods = useForm<CategoryFormValues>({
     resolver: yupResolver(categorySchema) as Resolver<CategoryFormValues>,
     defaultValues: {
-      name: "",
-      description: "",
+      nameBn: "",
+      nameEn: "",
+      descriptionEn: "",
+      descriptionBn: "",
       icon: undefined,
-      isActive: true,
+      status: "ACTIVE",
     },
   });
 
   useEffect(() => {
     if (isOpen) {
       methods.reset({
-        name: initialValues?.name || "",
-
-        description: initialValues?.description || "",
+        nameBn: initialValues?.nameBn || "",
+        nameEn: initialValues?.nameEn || "",
+        descriptionEn: initialValues?.descriptionEn || "",
+        descriptionBn: initialValues?.descriptionBn || "",
         icon: initialValues?.icon || undefined,
-        isActive: initialValues?.status === "ACTIVE" || !initialValues,
+        status: initialValues?.status === "INACTIVE" ? "INACTIVE" : "ACTIVE",
       });
     } else {
       methods.reset({
-        name: "",
-        description: "",
+        nameBn: "",
+        nameEn: "",
+        descriptionEn: "",
+        descriptionBn: "",
         icon: undefined,
-        isActive: true,
+        status: "ACTIVE",
       });
     }
   }, [isOpen, initialValues, methods]);
@@ -99,14 +104,20 @@ export default function CreateUpdateCategory({
 
   const onSubmit = (values: CategoryFormValues) => {
     const formData = new FormData();
-    formData.append("name", values.name);
-    if (values.description) {
-      formData.append("description", values.description);
+    formData.append("nameBn", values.nameBn);
+    if (values.nameEn) {
+      formData.append("nameEn", values.nameEn);
+    }
+    if (values.descriptionEn) {
+      formData.append("descriptionEn", values.descriptionEn);
+    }
+    if (values.descriptionBn) {
+      formData.append("descriptionBn", values.descriptionBn);
     }
     if (values.icon instanceof File) {
       formData.append("icon", values.icon);
     }
-    formData.append("status", values.isActive ? "ACTIVE" : "INACTIVE");
+    formData.append("status", values.status);
 
     if (isUpdate && initialValues) {
       updateMutate({
@@ -125,7 +136,7 @@ export default function CreateUpdateCategory({
         if (!open) handleClose();
       }}
     >
-      <DialogContent className="bg-white sm:max-w-125">
+      <DialogContent className="bg-white min-w-[40vw] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-secondary text-xl font-semibold">
             {isUpdate ? "Update" : "Create"} Category

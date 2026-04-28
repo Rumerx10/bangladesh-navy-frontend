@@ -21,6 +21,7 @@ interface FileUploadControllerProps {
   initialUrl?: string;
   label?: string;
   accept?: string[];
+  disabled?: boolean;
 }
 
 export function FileUploadController({
@@ -29,6 +30,7 @@ export function FileUploadController({
   className,
   imgClassName,
   accept,
+  disabled,
 }: FileUploadControllerProps) {
   const { control, getValues } = useFormContext();
   const initialUrl = getValues(name);
@@ -65,6 +67,7 @@ export function FileUploadController({
                 : null;
 
         const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+          if (disabled) return;
           const file = e.target.files?.[0];
           if (!file) return;
 
@@ -79,6 +82,7 @@ export function FileUploadController({
         };
 
         const handleDelete = () => {
+          if (disabled) return;
           setTouched(true);
           field.onChange(null);
         };
@@ -118,6 +122,7 @@ export function FileUploadController({
               <div
                 className={cn(
                   "w-44.25 h-39.25 border border-dashed border-light-silver bg-[#F7F7F7] rounded-lg hover:border-dashboard-primary",
+                  disabled && "opacity-60 pointer-events-none",
                   className
                 )}
               >
@@ -164,6 +169,7 @@ export function FileUploadController({
                   <input
                     id={`${name}-file`}
                     type="file"
+                    disabled={disabled}
                     accept={(accept || SUPPORTED_FORMATS).join(",")}
                     className="hidden"
                     onChange={handleFileChange}
@@ -184,6 +190,7 @@ export function FileUploadController({
                     <button
                       onClick={handleDelete}
                       type="button"
+                      disabled={disabled}
                       className="absolute -top-2 -right-2 w-6 h-6 bg-primary rounded-full flex items-center justify-center z-10 cursor-pointer"
                     >
                       <X className="w-4 h-4 text-white" />

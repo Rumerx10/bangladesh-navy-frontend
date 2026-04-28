@@ -5,24 +5,26 @@ import { Button } from "../ui/button";
 
 interface ISubmitButtonProps {
   isLoading?: boolean;
+  disabled?: boolean;
   label: string;
   className?: string;
 }
 
 export default function SubmitButton({
   isLoading = false,
+  disabled = false,
   label = "Submit",
   className = "",
 }: ISubmitButtonProps) {
   return (
     <Button
       type="submit"
-      disabled={isLoading}
+      disabled={isLoading || disabled}
       className={cn(
         `
         flex items-center h-11 gap-2 text-white  cursor-pointer
         ${
-          isLoading
+          isLoading || disabled
             ? "bg-primary/70 cursor-not-allowed"
             : "bg-primary hover:bg-primary"
         }

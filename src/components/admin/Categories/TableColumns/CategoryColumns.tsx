@@ -7,7 +7,7 @@ import Image from "next/image";
 import { ICategory } from "../types";
 
 export const GetCategoryColumns = (
-  onEdit?: (item: ICategory) => void,
+  onEdit?: (item: ICategory) => void
 ): ColumnDef<ICategory>[] => {
   return [
     {
@@ -27,12 +27,32 @@ export const GetCategoryColumns = (
       },
     },
     {
-      header: "Name",
-      accessorKey: "name",
+      header: "Bengali Name",
+      accessorKey: "nameBn",
     },
     {
-      header: "Description",
-      accessorKey: "description",
+      header: "English Name",
+      accessorKey: "nameEn",
+      cell: (value) => {
+        const name = value as string | undefined;
+        return (
+          <span className="text-sm text-secondary-gary">{name || "—"}</span>
+        );
+      },
+    },
+    {
+      header: "Bengali Description",
+      accessorKey: "descriptionBn",
+      cell: (value) => {
+        const desc = value as string | undefined;
+        return (
+          <span className="text-sm text-secondary-gary">{desc || "—"}</span>
+        );
+      },
+    },
+    {
+      header: "English Description",
+      accessorKey: "descriptionEn",
       cell: (value) => {
         const desc = value as string | undefined;
         return (

@@ -1,17 +1,19 @@
+import { cn } from "@/src/lib/utils";
 import { Controller, useFormContext } from "react-hook-form";
 import { Textarea } from "../../ui/textarea";
-import { cn } from "@/src/lib/utils";
 
 interface ControlledTextareaFieldProps {
   name: string;
   placeholder?: string;
   className?: string;
+  disabled?: boolean;
 }
 
 const ControlledTextareaField: React.FC<ControlledTextareaFieldProps> = ({
   name,
   placeholder,
   className,
+  disabled,
 }) => {
   const { control } = useFormContext();
 
@@ -25,6 +27,7 @@ const ControlledTextareaField: React.FC<ControlledTextareaFieldProps> = ({
             <Textarea
               {...field}
               placeholder={placeholder}
+              disabled={disabled}
               className={cn(
                 `h-40 ${
                   error
