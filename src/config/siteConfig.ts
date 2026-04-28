@@ -4,7 +4,7 @@ export const siteConfig = {
     "Bangladesh Navy",
   description:
     process.env.NEXT_PUBLIC_SITE_DESCRIPTION ||
-    "Bangladesh Navy Hydrographic & Oceanographic Center",
+    "Hydrographic & Oceanographic Center",
   address:
     process.env.NEXT_PUBLIC_ADDRESS ||
     "House 12, Road 12, Sector 11, Uttara, Dhaka-1230, Bangladesh",

@@ -17,10 +17,13 @@ export default function SidebarLogo() {
         alt="logo"
         className="w-13"
       />
-      <div>
+      <div className="flex flex-col">
         <h3 className="text-base text-secondary-dark font-semibold">
           {siteConfig.name}
         </h3>
+        <p className="text-xs text-muted-foreground">
+          {siteConfig.description}
+        </p>
       </div>
     </div>
   );
