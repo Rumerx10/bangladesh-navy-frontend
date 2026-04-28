@@ -36,7 +36,7 @@ const Header = () => {
       <MobileNav open={menuOpen} setOpen={setMenuOpen} />
 
       {/* Spacer to push content below the fixed header */}
-      <div className="h-[100px] lg:h-[112px]" />
+      <div className="h-25 lg:h-28" />
     </header>
   );
 };
