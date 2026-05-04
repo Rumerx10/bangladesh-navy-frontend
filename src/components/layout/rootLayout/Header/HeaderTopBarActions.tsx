@@ -1,6 +1,5 @@
 "use client";
 
-import { siteConfig } from "@/src/config/siteConfig";
 import { openLoginModal } from "@/src/lib/redux/features/auth/authSlice";
 import { IUserInformation } from "@/src/lib/redux/features/auth/authTypes";
 import { useAppDispatch } from "@/src/lib/redux/hooks";
@@ -25,26 +24,6 @@ export default function HeaderTopBarActions({
 
   return (
     <div className="flex items-center gap-1 lg:gap-2 shrink-0">
-      <div className="hidden xl:flex items-center gap-1.5 px-3 py-2 text-xs text-gray-500">
-        <span className="font-medium text-gray-700">{siteConfig.currency}</span>
-      </div>
-
-      <Link
-        href="/wishlist"
-        className="relative flex flex-col items-center gap-0.5 px-3 py-1.5 text-gray-600 hover:text-primary transition-colors group"
-      >
-        <Heart
-          size={20}
-          className="group-hover:scale-110 transition-transform"
-        />
-        <span className="text-xs">Wishlist</span>
-        {wishlistCount > 0 && (
-          <span className="absolute -top-0.5 right-1 min-w-4.5 h-4.5 flex items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold px-1">
-            {wishlistCount}
-          </span>
-        )}
-      </Link>
-
       <Link
         href="/cart"
         className="relative flex flex-col items-center gap-0.5 px-3 py-1.5 text-gray-600 hover:text-primary transition-colors group"

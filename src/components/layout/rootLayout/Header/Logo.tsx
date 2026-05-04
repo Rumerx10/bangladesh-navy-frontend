@@ -9,18 +9,23 @@ export default function Logo() {
       <Link
         href="/"
         aria-label={siteConfig.name}
-        className="shrink-0 flex items-center cursor-pointer"
+        className="shrink-0 flex gap-2 items-center cursor-pointer"
       >
         <Image
           src={logo}
           alt={siteConfig.name}
-          width={216}
-          height={216}
-          className="w-24 h-24"
+          width={80}
+          height={80}
+          className="w-12 h-12 object-contain"
         />
-        <h2 className="text-sm 2xl:text-base text-secondary font-semibold">
-          {siteConfig.name}
-        </h2>
+        <div>
+          <span className="text-2xl font-bold text-gray-900 tracking-tight">
+            {siteConfig.name}
+          </span>
+          <p className="text-xs text-muted-foreground">
+            {siteConfig.description}
+          </p>
+        </div>
       </Link>
     </div>
   );

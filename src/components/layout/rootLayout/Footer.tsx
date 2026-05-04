@@ -27,24 +27,30 @@ const Footer = () => {
             <Link
               href="/"
               aria-label={siteConfig.name}
-              className="shrink-0 flex items-center"
+              className="shrink-0 flex gap-2 items-center"
             >
               <Image
                 src={logo}
                 alt={siteConfig.name}
                 width={216}
                 height={216}
-                className="w-24 h-24"
+                className="w-14 h-14"
               />
-              <h2 className="text-base text-secondary-dark font-semibold">
-                {siteConfig.name}
-              </h2>
+              <div className="flex flex-col">
+                <h2 className="text-base text-secondary-dark font-semibold font-poppins">
+                  {siteConfig.name}
+                </h2>
+                <p className="text-sm text-secondary-foreground">
+                  {siteConfig.description}
+                </p>
+              </div>
             </Link>
             <p
-              className="text-sm text-secondary-foreground mb-5 lg:mb-8 leading-relaxed"
+              className="text-sm text-secondary-foreground my-5 lg:mb-8 leading-relaxed"
               tabIndex={0}
             >
-              {siteConfig.address}
+              Providing accurate nautical charts and navigational information
+              for safe maritime navigation in Bangladesh waters.
             </p>
             <div>
               <h2 className="text-xl text-secondary-dark font-semibold">

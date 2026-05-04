@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import HeaderTopBarActions from "./HeaderTopBarActions";
 import HeaderTopBarSearch from "./HeaderTopBarSearch";
+import Logo from "./Logo";
 
 interface HeaderTopBarProps {
   menuOpen: boolean;
@@ -92,20 +93,9 @@ export default function HeaderTopBar({
       {/* ═══════ DESKTOP HEADER ═══════ */}
       <div className="hidden lg:flex container items-center justify-between gap-8 h-18">
         {/* Logo */}
-        <Link href="/" className="shrink-0 flex items-center gap-2">
-          <Image
-            src={logo}
-            alt={siteConfig.name}
-            width={40}
-            height={40}
-            className="w-10 h-10 object-contain"
-          />
-          <span className="text-2xl font-bold text-gray-900 tracking-tight">
-            {siteConfig.name}
-          </span>
-        </Link>
+        <Logo />
 
-        <HeaderTopBarSearch
+        {/* <HeaderTopBarSearch
           searchRef={searchRef}
           inputRef={inputRef}
           searchQuery={searchQuery}
@@ -118,7 +108,7 @@ export default function HeaderTopBar({
           clearSearch={clearSearch}
           handleProductClick={handleProductClick}
           onViewAllResults={handleViewAllResults}
-        />
+        /> */}
 
         <HeaderTopBarActions
           cartCount={cartCount}
