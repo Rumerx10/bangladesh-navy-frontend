@@ -1,6 +1,5 @@
 "use client";
 
-import { useAppDispatch } from "@/src/lib/redux/hooks";
 import { IProduct } from "@/src/types/ecommerce/product";
 import { Truck } from "lucide-react";
 import Image from "next/image";
@@ -11,8 +10,6 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const dispatch = useAppDispatch();
-
   const primaryImage =
     product.images.find((img) => img.isPrimary) ?? product.images[0];
   const hasDiscount =
@@ -40,7 +37,6 @@ export default function ProductCard({ product }: ProductCardProps) {
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
           />
         )}
-
 
         {/* Badges on image – New + Free Delivery only */}
         <div className="absolute bottom-2 left-2 flex items-center gap-1 z-2 flex-wrap">
