@@ -30,7 +30,6 @@ export default function HeaderTopBar({
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const cartItems = useAppSelector((state) => state.cart.items);
-  const wishlistIds = useAppSelector((state) => state.wishlist.productIds);
   const { userInformation, loading: authLoading } = useAppSelector(
     (state) => state.auth
   );
@@ -112,7 +111,6 @@ export default function HeaderTopBar({
 
         <HeaderTopBarActions
           cartCount={cartCount}
-          wishlistCount={wishlistIds.length}
           userInformation={userInformation}
           authLoading={authLoading}
         />

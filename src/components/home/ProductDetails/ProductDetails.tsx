@@ -3,28 +3,26 @@
 import { dummyProducts } from "@/src/data/dummyProducts";
 import { addToCart } from "@/src/lib/redux/features/cart/cartSlice";
 import {
-    selectCanAddToCart,
-    selectCanCheckout,
+  selectCanAddToCart,
+  selectCanCheckout,
 } from "@/src/lib/redux/features/permission/permissionSelectors";
-import { toggleWishlist } from "@/src/lib/redux/features/wishlist/wishlistSlice";
 import { useAppDispatch, useAppSelector } from "@/src/lib/redux/hooks";
 import { IProduct, IProductVariant } from "@/src/types/ecommerce/product";
 import {
-    ChevronLeft,
-    ChevronRight,
-    Heart,
-    HelpCircle,
-    MessageSquare,
-    Minus,
-    Plus,
-    Send,
-    Share2,
-    ShieldCheck,
-    ShoppingCart,
-    Star,
-    ThumbsUp,
-    Truck,
-    X,
+  ChevronLeft,
+  ChevronRight,
+  HelpCircle,
+  MessageSquare,
+  Minus,
+  Plus,
+  Send,
+  Share2,
+  ShieldCheck,
+  ShoppingCart,
+  Star,
+  ThumbsUp,
+  Truck,
+  X,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -37,12 +35,10 @@ interface ProductDetailsProps {
 }
 
 export default function ProductDetails({ product }: ProductDetailsProps) {
-  const dispatch = useAppDispatch();
   const router = useRouter();
-  const wishlistIds = useAppSelector((state) => state.wishlist.productIds);
   const canAddToCart = useAppSelector(selectCanAddToCart);
   const canCheckout = useAppSelector(selectCanCheckout);
-  const isWishlisted = wishlistIds.includes(product.id);
+  const dispatch = useAppDispatch();
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -477,20 +473,6 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
             >
               <ShoppingCart size={16} />
               Add to Cart
-            </button>
-            <button
-              className={`flex items-center justify-center w-10 h-10 rounded-lg border transition-colors cursor-pointer ${isWishlisted ? "border-red-300 text-red-500" : "border-border text-muted-foreground hover:text-red-500 hover:border-red-300"}`}
-              onClick={() => {
-                dispatch(toggleWishlist(product.id));
-                toast.success(
-                  isWishlisted ? "Removed from wishlist" : "Added to wishlist"
-                );
-              }}
-              aria-label={
-                isWishlisted ? "Remove from wishlist" : "Add to wishlist"
-              }
-            >
-              <Heart size={18} fill={isWishlisted ? "currentColor" : "none"} />
             </button>
             <button
               className="flex items-center justify-center w-10 h-10 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors cursor-pointer"

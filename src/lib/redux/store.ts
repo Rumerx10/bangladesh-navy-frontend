@@ -5,7 +5,6 @@ import filterReducer from "./features/filter/filterSlice";
 import organizerReducer from "./features/organizer/organizationSlice";
 import permissionReducer from "./features/permission/permissionSlice";
 import userReducer from "./features/user/userSlice";
-import wishlistReducer from "./features/wishlist/wishlistSlice";
 
 export const makeStore = () => {
   return configureStore({
@@ -16,7 +15,6 @@ export const makeStore = () => {
       permission: permissionReducer,
       filter: filterReducer,
       cart: cartReducer,
-      wishlist: wishlistReducer,
     },
   });
 };

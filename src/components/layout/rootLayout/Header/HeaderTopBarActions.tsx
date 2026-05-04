@@ -3,20 +3,18 @@
 import { openLoginModal } from "@/src/lib/redux/features/auth/authSlice";
 import { IUserInformation } from "@/src/lib/redux/features/auth/authTypes";
 import { useAppDispatch } from "@/src/lib/redux/hooks";
-import { Heart, ShoppingCart, User } from "lucide-react";
+import { ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
 import { ProfileDropdown } from "./ProfileDropdown";
 
 interface HeaderTopBarActionsProps {
   cartCount: number;
-  wishlistCount: number;
   userInformation: IUserInformation;
   authLoading: boolean;
 }
 
 export default function HeaderTopBarActions({
   cartCount,
-  wishlistCount,
   userInformation,
   authLoading,
 }: HeaderTopBarActionsProps) {
