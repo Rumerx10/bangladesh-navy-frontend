@@ -26,9 +26,7 @@ export default function HeaderTopBar({
 
   return (
     <div className="bg-white border-b border-gray-100">
-      {/* ═══════ DESKTOP HEADER ═══════ */}
       <div className="hidden lg:flex container items-center justify-between gap-8 h-18">
-        {/* Logo */}
         <Logo />
 
         <nav className="hidden lg:flex flex-1 justify-center">

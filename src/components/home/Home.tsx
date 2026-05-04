@@ -1,4 +1,9 @@
+import NavyHeroCarousel from "./HeroSection/NavyHeroCarousel";
 
 export default function Home() {
-  return <div></div>;
+  return (
+    <div>
+      <NavyHeroCarousel />
+    </div>
+  );
 }

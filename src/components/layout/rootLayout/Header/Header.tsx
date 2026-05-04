@@ -25,8 +25,6 @@ const Header = () => {
       >
         <HeaderTopBar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       </div>
-
-      <div className="h-25 lg:h-28" />
     </header>
   );
 };
