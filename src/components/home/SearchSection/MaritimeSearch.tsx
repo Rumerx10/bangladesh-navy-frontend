@@ -51,10 +51,10 @@ export default function MaritimeSearch() {
     <section className="relative py-16 lg:py-20 bg-white overflow-hidden">
       {/* Watermark */}
       <div className="absolute -right-20 -top-10 text-[#001836]">
-        <NavyWatermark variant="compass" size={350} opacity={0.03} />
+        <NavyWatermark variant="compass" size={350} opacity={0.03} animate="rotate" />
       </div>
       <div className="absolute -left-16 -bottom-16 text-[#001836]">
-        <NavyWatermark variant="anchor" size={250} opacity={0.025} />
+        <NavyWatermark variant="anchor" size={250} opacity={0.025} animate="drift" />
       </div>
       <div className="relative container px-4 sm:px-6 lg:px-8 text-center">
         <motion.h2

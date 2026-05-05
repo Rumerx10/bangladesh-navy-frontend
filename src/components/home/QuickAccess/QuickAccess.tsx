@@ -10,10 +10,10 @@ export default function QuickAccess() {
     <section className="relative py-16 lg:py-20 bg-gray-50 overflow-hidden">
       {/* Watermark */}
       <div className="absolute -right-10 top-1/2 -translate-y-1/2 text-[#001836]">
-        <NavyWatermark variant="helm" size={400} opacity={0.025} />
+        <NavyWatermark variant="helm" size={400} opacity={0.025} animate="rotate" />
       </div>
       <div className="absolute -left-20 -bottom-10 text-[#001836]">
-        <NavyWatermark variant="waves" size={300} opacity={0.03} />
+        <NavyWatermark variant="waves" size={300} opacity={0.03} animate="bob" />
       </div>
 
       <div className="relative container px-4 sm:px-6 lg:px-8">

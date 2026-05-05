@@ -10,10 +10,10 @@ export default function ChiefMessage() {
     <section className="relative py-16 lg:py-24 bg-gradient-to-b from-white to-[#f0f4f8] overflow-hidden">
       {/* Watermark */}
       <div className="absolute -right-16 -top-10 text-[#001836]">
-        <NavyWatermark variant="anchor" size={350} opacity={0.025} />
+        <NavyWatermark variant="anchor" size={350} opacity={0.025} animate="float" />
       </div>
       <div className="absolute -left-20 bottom-0 text-[#001836]">
-        <NavyWatermark variant="lighthouse" size={300} opacity={0.03} />
+        <NavyWatermark variant="lighthouse" size={300} opacity={0.03} animate="drift" />
       </div>
 
       <div className="relative container px-4 sm:px-6 lg:px-8">

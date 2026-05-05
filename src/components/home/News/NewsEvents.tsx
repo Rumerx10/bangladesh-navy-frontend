@@ -13,10 +13,10 @@ export default function NewsEvents() {
     <section id="latest-notices" className="relative py-16 lg:py-24 bg-gray-50 overflow-hidden">
       {/* Watermark */}
       <div className="absolute -right-16 top-20 text-[#001836]">
-        <NavyWatermark variant="ship" size={400} opacity={0.025} />
+        <NavyWatermark variant="ship" size={400} opacity={0.025} animate="float" />
       </div>
       <div className="absolute -left-12 bottom-10 text-[#001836]">
-        <NavyWatermark variant="compass" size={300} opacity={0.02} />
+        <NavyWatermark variant="compass" size={300} opacity={0.02} animate="rotate" />
       </div>
 
       <div className="relative container px-4 sm:px-6 lg:px-8">
