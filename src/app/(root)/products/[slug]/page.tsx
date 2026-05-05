@@ -1,18 +1,18 @@
-import { dummyProducts } from "@/src/data/dummyProducts";
-import ProductDetails from "@/src/components/home/ProductDetails/ProductDetails";
+import { findProductBySlug } from "@/src/data/navyProducts";
+import ProductDetailLayout from "@/src/components/products/detail/ProductDetailLayout";
 import { notFound } from "next/navigation";
 
-export default async function ProductDetailPage({
-  params,
-}: {
+interface ProductDetailPageProps {
   params: Promise<{ slug: string }>;
-}) {
+}
+
+export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
   const { slug } = await params;
-  const product = dummyProducts.find((p) => p.slug === slug);
+  const product = findProductBySlug(slug);
 
   if (!product) {
     notFound();
   }
 
-  return <ProductDetails product={product} />;
+  return <ProductDetailLayout product={product} />;
 }

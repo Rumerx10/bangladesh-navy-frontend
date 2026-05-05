@@ -2,6 +2,7 @@
 
 import { useAppSelector } from "@/src/lib/redux/hooks";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import AboutUsDropdown from "./AboutUsDropdown";
 import HeaderTopBarActions from "./HeaderTopBarActions";
 import Logo from "./Logo";
@@ -21,32 +22,44 @@ export default function HeaderTopBar({
   const { userInformation, loading: authLoading } = useAppSelector(
     (state) => state.auth
   );
+  const pathname = usePathname();
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div className="bg-white border-b border-gray-100">
-      <div className="hidden lg:flex container items-center justify-between gap-8 h-18">
+      {/* Desktop Navigation */}
+      <div className="hidden lg:flex container items-center justify-between gap-8 h-[72px] px-4">
         <Logo />
 
         <nav className="hidden lg:flex flex-1 justify-center">
-          <ul className="flex items-center gap-6 xl:gap-8">
+          <ul className="flex items-center gap-1 xl:gap-2">
+            <li>
+              <Link
+                href="/"
+                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                  pathname === "/"
+                    ? "text-[#003f71] bg-[#003f71]/5"
+                    : "text-gray-700 hover:text-[#003f71] hover:bg-gray-50"
+                }`}
+              >
+                Home
+              </Link>
+            </li>
             <ProductServiceDropdown />
             <AboutUsDropdown />
-
             <li>
               <Link
                 href="/#skill-development"
-                className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
+                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-[#003f71] hover:bg-gray-50 rounded-md transition-colors"
               >
                 Skill Development
               </Link>
             </li>
-
             <li>
               <Link
                 href="/#contact"
-                className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
+                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-[#003f71] hover:bg-gray-50 rounded-md transition-colors"
               >
                 Contact
               </Link>
@@ -61,6 +74,7 @@ export default function HeaderTopBar({
         />
       </div>
 
+      {/* Mobile Header */}
       <MobileHeader menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
     </div>
   );

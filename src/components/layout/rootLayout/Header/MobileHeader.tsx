@@ -1,9 +1,11 @@
+"use client";
+
 import logo from "@/public/logo.png";
 import { siteConfig } from "@/src/config/siteConfig";
-import { MapPin } from "lucide-react";
+import { useAppSelector } from "@/src/lib/redux/hooks";
+import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import HeaderTopBarSearch from "./HeaderTopBarSearch";
 
 interface MobileHeaderProps {
   menuOpen: boolean;
@@ -14,18 +16,22 @@ export default function MobileHeader({
   menuOpen,
   setMenuOpen,
 }: MobileHeaderProps) {
+  const cartItems = useAppSelector((state) => state.cart.items);
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
     <div className="lg:hidden">
-      <div className="flex items-center justify-between px-4 h-12">
+      <div className="flex items-center justify-between px-4 h-14">
         <div className="flex items-center gap-2">
+          {/* Hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="flex items-center justify-center w-8 h-8 text-gray-700 hover:text-primary transition-colors -ml-1"
+            className="flex items-center justify-center w-9 h-9 text-gray-700 hover:text-[#003f71] transition-colors -ml-1"
             aria-label="Open menu"
           >
             <svg
-              width="20"
-              height="20"
+              width="22"
+              height="22"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -38,28 +44,39 @@ export default function MobileHeader({
               <line x1="3" y1="18" x2="21" y2="18" />
             </svg>
           </button>
-          <Link href="/" className="flex items-center gap-1.5">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2">
             <Image
               src={logo}
               alt={siteConfig.name}
-              width={32}
-              height={32}
-              className="w-8 h-8 object-contain"
+              width={36}
+              height={36}
+              className="w-9 h-9 object-contain"
             />
-            <span className="text-xl font-bold text-gray-900 tracking-tight">
-              {siteConfig.name}
-            </span>
+            <div>
+              <span className="text-sm font-bold text-[#001836] leading-tight block">
+                {siteConfig.name}
+              </span>
+              <span className="text-[9px] text-gray-500 leading-tight block">
+                {siteConfig.description}
+              </span>
+            </div>
           </Link>
         </div>
-        <div className="flex items-center gap-1 text-xs text-gray-500">
-          <MapPin size={14} className="text-gray-400" />
-          <span>
-            Deliver to <strong className="text-gray-700">Bangladesh</strong>
-          </span>
-        </div>
-      </div>
 
-      <HeaderTopBarSearch />
+        {/* Cart */}
+        <Link
+          href="/cart"
+          className="relative flex items-center justify-center w-9 h-9 text-gray-600"
+        >
+          <ShoppingCart size={20} />
+          {cartCount > 0 && (
+            <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-[16px] flex items-center justify-center rounded-full bg-[#003f71] text-white text-[9px] font-bold px-0.5">
+              {cartCount > 99 ? "99+" : cartCount}
+            </span>
+          )}
+        </Link>
+      </div>
     </div>
   );
 }

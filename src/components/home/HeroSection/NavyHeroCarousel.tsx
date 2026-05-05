@@ -32,7 +32,7 @@ const heroSlides: HeroSlide[] = [
     description:
       "Charting the waters of Bangladesh for safe maritime navigation. Access official nautical charts, tide tables, and navigational publications.",
     buttons: [
-      { text: "Browse Products", href: "/products", variant: "primary" },
+      { text: "Browse Products", href: "/product-service", variant: "primary" },
       { text: "Latest Notices", href: "#latest-notices", variant: "secondary" },
     ],
   },
@@ -45,7 +45,7 @@ const heroSlides: HeroSlide[] = [
     description:
       "Professional maritime charts and navigational data for secure sea operations across Bangladesh waters.",
     buttons: [
-      { text: "View Charts", href: "/products", variant: "primary" },
+      { text: "View Charts", href: "/product-service", variant: "primary" },
       { text: "Get Updates", href: "#latest-notices", variant: "secondary" },
     ],
   },
@@ -58,7 +58,7 @@ const heroSlides: HeroSlide[] = [
     description:
       "Advanced oceanographic research and analysis for maritime navigation and environmental monitoring.",
     buttons: [
-      { text: "Explore Services", href: "/products", variant: "primary" },
+      { text: "Explore Services", href: "/product-service", variant: "primary" },
       { text: "Contact Us", href: "#latest-notices", variant: "secondary" },
     ],
   },
@@ -77,21 +77,20 @@ export default function NavyHeroCarousel() {
 
   // Auto-slide
   useEffect(() => {
-    const timer = setInterval(next, 5000);
+    const timer = setInterval(next, 3000);
     return () => clearInterval(timer);
   }, [next]);
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-gray-900 group">
-      {/* Carousel Container */}
+      {/* Carousel Container — Background Images */}
       <motion.div
-        className="relative w-full h-full"
-        animate={{ x: `${-current * 100}%` }}
+        className="relative w-full h-full flex"
+        animate={{ x: `-${current * 100}vw` }}
         transition={{ duration: 1, ease: "easeInOut" }}
       >
         {heroSlides.map((slide) => (
-          <div key={slide.id} className="relative w-full h-full shrink-0">
-            {/* Background Image */}
+          <div key={slide.id} className="relative min-w-full w-full h-full shrink-0">
             <Image
               src={slide.image}
               alt={slide.alt}
@@ -100,23 +99,22 @@ export default function NavyHeroCarousel() {
               className="object-cover"
               sizes="100vw"
             />
-            {/* Dark overlay for text readability */}
             <div className="absolute inset-0 bg-black/50" />
           </div>
         ))}
       </motion.div>
 
-      {/* Content Overlay - Carousel */}
+      {/* Content Overlay — Carousel */}
       <div className="absolute inset-0 z-20 flex items-center justify-center overflow-hidden">
         <motion.div
           className="relative w-full h-full flex items-center justify-center"
-          animate={{ x: `${-current * 100}%` }}
+          animate={{ x: `-${current * 100}vw` }}
           transition={{ duration: 1, ease: "easeInOut" }}
         >
           {heroSlides.map((slide) => (
             <div
               key={slide.id}
-              className="relative w-full h-full flex items-center justify-center shrink-0"
+              className="relative min-w-full w-full h-full flex items-center justify-center shrink-0"
             >
               <div className="container px-4 lg:px-6 lg:mt-10">
                 <div className="max-w-2xl mx-auto text-center text-white">
@@ -126,7 +124,7 @@ export default function NavyHeroCarousel() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    key={`subtitle-${slide.id}`}
+                    key={`subtitle-${slide.id}-${current}`}
                   >
                     {slide.subtitle}
                   </motion.p>
@@ -137,7 +135,7 @@ export default function NavyHeroCarousel() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.3 }}
-                    key={`title-${slide.id}`}
+                    key={`title-${slide.id}-${current}`}
                   >
                     {slide.title}
                   </motion.h1>
@@ -148,7 +146,7 @@ export default function NavyHeroCarousel() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
-                    key={`desc-${slide.id}`}
+                    key={`desc-${slide.id}-${current}`}
                   >
                     {slide.description}
                   </motion.p>
@@ -159,13 +157,13 @@ export default function NavyHeroCarousel() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.5 }}
-                    key={`buttons-${slide.id}`}
+                    key={`buttons-${slide.id}-${current}`}
                   >
                     {slide.buttons.map((button, index) => (
                       <Link
                         key={index}
                         href={button.href}
-                        className={`px-6 md:px-8 py-3 md:py-4 font-semibold rounded-lg transition-colors duration-200 w-full sm:w-auto text-center ${
+                        className={`inline-flex items-center justify-center px-6 md:px-8 h-[44px] py-[16px] font-medium text-base rounded-lg transition-colors duration-200 w-full sm:w-auto text-center ${
                           button.variant === "secondary"
                             ? "bg-white/20 hover:bg-white/30 border border-white/40"
                             : "bg-primary hover:bg-primary/80"
@@ -204,13 +202,12 @@ export default function NavyHeroCarousel() {
           <button
             key={index}
             onClick={() => setCurrent(index)}
-            className={`transition-all duration-300 rounded-full ${
+            className={`transition-all duration-300 rounded-full cursor-pointer ${
               index === current
-                ? "bg-white w-3 h-3 md:w-3 md:h-3"
-                : "bg-white/50 hover:bg-white/80 w-2 h-2 md:w-2.5 md:h-2.5"
+                ? "bg-white w-3 h-3"
+                : "bg-white/50 hover:bg-white/80 w-2.5 h-2.5"
             }`}
             aria-label={`Go to slide ${index + 1}`}
-            aria-current={index === current}
           />
         ))}
       </div>

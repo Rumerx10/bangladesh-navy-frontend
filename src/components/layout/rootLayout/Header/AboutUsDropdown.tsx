@@ -1,31 +1,45 @@
+"use client";
+
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const aboutLinks = [
-  { label: "History", href: "/#history" },
-  { label: "Vision & Mission", href: "/#vision-mission" },
-  { label: "Organization", href: "/#organization" },
-  { label: "Survey Ships", href: "/#survey-ships" },
-  { label: "Gallery", href: "/#gallery" },
+  { label: "History", href: "/about/history" },
+  { label: "Vision & Mission", href: "/about/vision-mission" },
+  { label: "Organization", href: "/about/organization" },
+  { label: "Survey Ships", href: "/about/survey-ships" },
+  { label: "Gallery", href: "/about/gallery" },
 ];
 
 export default function AboutUsDropdown() {
+  const pathname = usePathname();
+  const isActive = pathname?.startsWith("/about");
+
   return (
     <li className="relative group">
       <button
         type="button"
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-700 hover:text-primary transition-colors cursor-pointer py-6"
+        className={`inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-md transition-colors cursor-pointer ${
+          isActive
+            ? "text-[#003f71] bg-[#003f71]/5"
+            : "text-gray-700 hover:text-[#003f71] hover:bg-gray-50"
+        }`}
       >
         About Us
-        <ChevronDown size={15} className="mt-px" />
+        <ChevronDown size={14} className="mt-px transition-transform group-hover:rotate-180 duration-200" />
       </button>
-      <div className="absolute left-1/2 top-full z-50 hidden min-w-55 -translate-x-1/2 rounded-xl border border-gray-200 bg-white p-2 shadow-xl group-hover:block">
+      <div className="absolute left-1/2 top-full z-50 hidden min-w-[200px] -translate-x-1/2 rounded-xl border border-gray-200 bg-white p-2 shadow-xl group-hover:block">
         <div className="flex flex-col gap-0.5">
           {aboutLinks.map((item) => (
             <Link
               key={item.label}
               href={item.href}
-              className="rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors"
+              className={`rounded-md px-3 py-2.5 text-sm transition-colors ${
+                pathname === item.href
+                  ? "text-[#003f71] bg-[#003f71]/5 font-medium"
+                  : "text-gray-700 hover:bg-gray-50 hover:text-[#003f71]"
+              }`}
             >
               {item.label}
             </Link>

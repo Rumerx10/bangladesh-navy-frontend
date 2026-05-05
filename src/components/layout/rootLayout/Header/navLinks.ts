@@ -1,9 +1,13 @@
-export const navLinks = [
-  { label: "All Categories", href: "/categories" },
-  { label: "SuperDeals", href: "/products?filter=deals", isHighlighted: true },
-  { label: "New Arrivals", href: "/products?filter=new" },
-  { label: "Trending", href: "/products?filter=trending" },
-  { label: "Best Sellers", href: "/products?filter=best-sellers" },
-  { label: "Flash Sale", href: "/products?filter=flash-sale" },
-  { label: "Brands", href: "/brands" },
+export interface NavLink {
+  label: string;
+  href: string;
+  isDropdown?: boolean;
+}
+
+export const navLinks: NavLink[] = [
+  { label: "Home", href: "/" },
+  { label: "Products & Services", href: "/product-service", isDropdown: true },
+  { label: "About Us", href: "/about", isDropdown: true },
+  { label: "Skill Development", href: "/#skill-development" },
+  { label: "Contact", href: "/#contact" },
 ];

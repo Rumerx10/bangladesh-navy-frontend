@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import HeaderTopBar from "./HeaderTopBar";
+import MobileNav from "./MobileNav";
+import TopInfoBar from "./TopInfoBar";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -23,8 +25,12 @@ const Header = () => {
           scrolled ? "shadow-md" : ""
         }`}
       >
+        <TopInfoBar />
         <HeaderTopBar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       </div>
+
+      {/* Mobile Navigation Drawer + Bottom Nav */}
+      <MobileNav open={menuOpen} setOpen={setMenuOpen} />
     </header>
   );
 };
