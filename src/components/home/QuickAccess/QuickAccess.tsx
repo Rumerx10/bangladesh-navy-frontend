@@ -7,7 +7,7 @@ import QuickAccessCard from "./QuickAccessCard";
 
 export default function QuickAccess() {
   return (
-    <section className="relative py-16 lg:py-20 bg-gray-50 overflow-hidden">
+    <section className="relative py-16 lg:py-25 bg-gray-50 overflow-hidden">
       {/* Watermark */}
       <div className="absolute -right-10 top-1/2 -translate-y-1/2 text-[#001836]">
         <NavyWatermark variant="helm" size={400} opacity={0.025} animate="rotate" />

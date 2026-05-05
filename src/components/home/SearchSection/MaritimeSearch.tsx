@@ -48,7 +48,7 @@ export default function MaritimeSearch() {
   };
 
   return (
-    <section className="relative py-16 lg:py-20 bg-white overflow-hidden">
+    <section className="relative py-16 lg:py-25 bg-white overflow-hidden">
       {/* Watermark */}
       <div className="absolute -right-20 -top-10 text-[#001836]">
         <NavyWatermark variant="compass" size={350} opacity={0.03} animate="rotate" />
@@ -90,7 +90,7 @@ export default function MaritimeSearch() {
         </motion.div>
 
         <motion.div
-          className="mt-5 max-w-2xl mx-auto relative"
+          className="mt-5 max-w-2xl mx-auto relative z-50"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -132,7 +132,7 @@ export default function MaritimeSearch() {
 
           {/* Search dropdown */}
           {showDropdown && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl border border-gray-200 shadow-2xl z-50 overflow-hidden text-left">
+            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl border border-gray-200 shadow-2xl z-50 overflow-hidden text-left z-[99999]">
               {results.length > 0 ? (
                 <>
                   {results.map((product) => {

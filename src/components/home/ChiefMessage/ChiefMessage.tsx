@@ -7,7 +7,7 @@ import { Quote } from "lucide-react";
 
 export default function ChiefMessage() {
   return (
-    <section className="relative py-16 lg:py-24 bg-gradient-to-b from-white to-[#f0f4f8] overflow-hidden">
+    <section className="relative py-16 lg:py-25 bg-gradient-to-b from-white to-[#f0f4f8] overflow-hidden">
       {/* Watermark */}
       <div className="absolute -right-16 -top-10 text-[#001836]">
         <NavyWatermark variant="anchor" size={350} opacity={0.025} animate="float" />

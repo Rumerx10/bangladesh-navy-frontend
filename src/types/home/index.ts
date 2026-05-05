@@ -46,10 +46,13 @@ export interface IChiefMessage {
 
 export interface INewsItem {
   id: string;
+  slug: string;
   title: string;
   description: string;
+  content: string[];
   date: string;
-  image?: string;
+  image: string;
+  category: string;
   href: string;
 }
 

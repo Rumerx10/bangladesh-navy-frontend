@@ -4,9 +4,10 @@ import { statsItems } from "@/src/data/homeData";
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
 import StatItem from "./StatItem";
 
+
 export default function StatsBar() {
   return (
-    <section className="relative bg-[#001836] py-10 lg:py-52 overflow-hidden">
+    <section className="relative bg-[#001836] py-10 lg:py-56 overflow-hidden">
       {/* Watermark */}
       <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 text-white">
         <NavyWatermark variant="ship" size={500} opacity={0.04} animate="pulse" />
