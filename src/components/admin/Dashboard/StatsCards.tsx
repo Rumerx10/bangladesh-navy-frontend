@@ -2,7 +2,7 @@
 
 import { statsCardConfigs } from "@/src/data/dashboard/statsCardConfigs";
 import { useGet } from "@/src/hooks/useGet";
-import type { DashboardStatResponse } from "@/src/types/dashboard/dashboard";
+import type { DashboardStatResponse } from "@/src/components/admin/Dashboard/types";
 import { motion } from "framer-motion";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import StatsCardsSkeleton from "./Skeleton/StatsCardsSkeleton";

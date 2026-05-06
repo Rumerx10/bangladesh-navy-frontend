@@ -1,7 +1,7 @@
 "use client";
 
 import { DataTable } from "@/src/components/ui/data-table";
-import { ITableProps } from "@/src/types/common/common";
+import { ITableProps } from "@/src/components/shared/types/common";
 import { Users } from "lucide-react";
 
 const UsersTable = <T,>({

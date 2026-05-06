@@ -1,4 +1,4 @@
-import { SortOption } from "@/src/types/ecommerce/shop";
+import { SortOption } from "@/src/components/cart/types/shop";
 
 export const SORT_OPTIONS: { label: string; value: SortOption }[] = [
   { label: "Popularity", value: "popularity" },

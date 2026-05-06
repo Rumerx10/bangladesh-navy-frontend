@@ -1,4 +1,4 @@
-import { ITimelineItem } from "@/src/types/about";
+import { ITimelineItem } from "@/src/components/about/types";
 import TimelineCard from "./TimelineCard";
 
 interface HistoryTimelineProps {

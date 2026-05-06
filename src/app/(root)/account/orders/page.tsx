@@ -2,7 +2,7 @@
 
 import { siteConfig } from "@/src/config/siteConfig";
 import { dummyOrders } from "@/src/data/dummyOrders";
-import { IOrder, OrderStatus } from "@/src/types/ecommerce/order";
+import { IOrder, OrderStatus } from "@/src/components/cart/types/order";
 import {
   Calendar,
   ChevronRight,

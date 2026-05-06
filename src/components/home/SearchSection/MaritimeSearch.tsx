@@ -90,7 +90,7 @@ export default function MaritimeSearch() {
         </motion.div>
 
         <motion.div
-          className="mt-5 max-w-2xl mx-auto relative z-50"
+          className="mt-5 max-w-2xl mx-auto relative"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

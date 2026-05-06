@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { axiosInstance } from "../helpers/axios/axiosInstance";
-import { IGenericErrorResponse } from "../types/common/common";
+import { IGenericErrorResponse } from "@/src/components/shared/types/common";
 
 interface IGenericResponse<T> {
   data: T;

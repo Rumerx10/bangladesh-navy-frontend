@@ -3,7 +3,7 @@
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
 import NewsCard from "@/src/components/home/News/NewsCard";
 import { newsItems } from "@/src/data/homeData";
-import { INewsItem } from "@/src/types/home";
+import { INewsItem } from "@/src/components/home/types";
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, ChevronRight, Home, Share2, Tag } from "lucide-react";
 import Image from "next/image";

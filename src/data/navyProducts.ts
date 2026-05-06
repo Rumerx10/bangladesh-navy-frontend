@@ -2,7 +2,7 @@ import {
   DiscountType,
   INavyProduct,
   ProductStatus,
-} from "@/src/types/product";
+} from "@/src/components/products/types";
 import { navyCategories } from "./navyCategories";
 
 const cat = (slug: string) =>

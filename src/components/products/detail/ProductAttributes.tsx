@@ -1,4 +1,4 @@
-import { INavyProductAttribute } from "@/src/types/product";
+import { INavyProductAttribute } from "@/src/components/products/types";
 
 interface ProductAttributesProps {
   attributes: INavyProductAttribute[];

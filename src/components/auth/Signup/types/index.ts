@@ -1,4 +1,4 @@
-import { ErrorType } from "@/src/types/common/common";
+import { ErrorType } from "@/src/components/shared/types/common";
 import { SignupFormType } from "../Schema";
 
 export interface SignupFormProps {

@@ -1,7 +1,7 @@
 import StatusBadge from "@/src/components/shared/Status/Status";
 import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
-import { StatusType } from "@/src/types/common/common";
+import { StatusType } from "@/src/components/shared/types/common";
 import { Pencil, Trash2 } from "lucide-react";
 import { IAttribute } from "../types";
 

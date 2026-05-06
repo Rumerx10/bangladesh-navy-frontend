@@ -1,6 +1,6 @@
 "use client";
 
-import { INavyProduct, IProductFilter } from "@/src/types/product";
+import { INavyProduct, IProductFilter } from "@/src/components/products/types";
 import { LayoutGrid } from "lucide-react";
 import ProductCard from "./ProductCard";
 import SortDropdown from "./SortDropdown";

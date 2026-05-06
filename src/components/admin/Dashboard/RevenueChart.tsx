@@ -1,7 +1,7 @@
 "use client";
 
 import { useGet } from "@/src/hooks/useGet";
-import type { RevenueResponse } from "@/src/types/dashboard/dashboard";
+import type { RevenueResponse } from "@/src/components/admin/Dashboard/types";
 import { TrendingUp } from "lucide-react";
 import {
   Area,

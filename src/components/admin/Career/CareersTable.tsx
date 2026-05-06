@@ -1,7 +1,7 @@
 "use client";
 
 import { DataTable } from "@/src/components/ui/data-table";
-import { ITableProps } from "@/src/types/common/common";
+import { ITableProps } from "@/src/components/shared/types/common";
 import { FileCog } from "lucide-react";
 
 const CareersTable = <T,>({

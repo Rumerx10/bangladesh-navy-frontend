@@ -1,6 +1,6 @@
 "use client";
 
-import { ICartItem } from "@/src/types/ecommerce/cart";
+import { ICartItem } from "@/src/components/cart/types/cart";
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { getCartData, saveCartData } from "@/src/lib/indexedDB";
 

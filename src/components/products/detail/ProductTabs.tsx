@@ -1,6 +1,6 @@
 "use client";
 
-import { INavyProduct } from "@/src/types/product";
+import { INavyProduct } from "@/src/components/products/types";
 import { useState } from "react";
 
 interface ProductTabsProps {

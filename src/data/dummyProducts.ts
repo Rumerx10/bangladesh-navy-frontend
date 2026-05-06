@@ -1,4 +1,4 @@
-import { IProduct } from "@/src/types/ecommerce/product";
+import { IProduct } from "@/src/components/cart/types/product";
 
 export const dummyProducts: IProduct[] = [
   {

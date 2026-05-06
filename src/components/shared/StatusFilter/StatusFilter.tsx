@@ -2,7 +2,7 @@ import { Funnel } from "lucide-react";
 
 import { setSortBy } from "@/src/lib/redux/features/filter/filterSlice";
 import { useAppDispatch } from "@/src/lib/redux/hooks";
-import { StatusType } from "@/src/types/common/common";
+import { StatusType } from "@/src/components/shared/types/common";
 import {
   Select,
   SelectContent,

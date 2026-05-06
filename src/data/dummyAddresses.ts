@@ -1,4 +1,4 @@
-import { IShippingAddress } from "@/src/types/ecommerce/order";
+import { IShippingAddress } from "@/src/components/cart/types/order";
 
 export interface IAddress extends IShippingAddress {
   id: string;

@@ -2,7 +2,7 @@
 
 import { addToCart } from "@/src/lib/redux/features/cart/cartSlice";
 import { useAppDispatch } from "@/src/lib/redux/hooks";
-import { DiscountType, INavyProduct } from "@/src/types/product";
+import { DiscountType, INavyProduct } from "@/src/components/products/types";
 import { Check, Minus, Plus, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";

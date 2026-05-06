@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/src/components/ui/dialog";
-import { StatusType } from "@/src/types/common/common";
+import { StatusType } from "@/src/components/shared/types/common";
 import { SquarePen, User } from "lucide-react";
 import Image from "next/image";
 import { ICareer } from "../types";

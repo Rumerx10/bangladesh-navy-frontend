@@ -1,5 +1,5 @@
 import { cn } from "@/src/lib/utils";
-import { StatusType } from "@/src/types/common/common";
+import { StatusType } from "@/src/components/shared/types/common";
 import { StatusBadgeProps } from "./types";
 
 export default function StatusBadge({ status, className }: StatusBadgeProps) {

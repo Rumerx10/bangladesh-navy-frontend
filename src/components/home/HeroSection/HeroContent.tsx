@@ -1,6 +1,6 @@
 "use client";
 
-import { IHeroButton } from "@/src/types/home";
+import { IHeroButton } from "@/src/components/home/types";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import HeroBadge from "./HeroBadge";

@@ -8,7 +8,7 @@ import StatusBadge from "@/src/components/shared/Status/Status";
 import SubmitButton from "@/src/components/shared/SubmitButton";
 import TextEditor from "@/src/components/shared/text-editor/TextEditor";
 import { Button } from "@/src/components/ui/button";
-import { ErrorType, StatusType } from "@/src/types/common/common";
+import { ErrorType, StatusType } from "@/src/components/shared/types/common";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useFormContext } from "react-hook-form";

@@ -1,4 +1,4 @@
-import type { IGalleryItem, ISurveyShip, ITimelineItem, IVisionMissionItem } from "@/src/types/about";
+import type { IGalleryItem, ISurveyShip, ITimelineItem, IVisionMissionItem } from "@/src/components/about/types";
 
 export const historyTimeline: ITimelineItem[] = [
   { id: "h-1", year: "1971", title: "Independence of Bangladesh", description: "Following the liberation war, Bangladesh emerged as an independent nation with significant maritime territory to survey and chart.", icon: "flag", position: "right" },

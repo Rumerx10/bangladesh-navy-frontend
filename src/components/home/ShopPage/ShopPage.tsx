@@ -1,8 +1,8 @@
 "use client";
 
 import { dummyProducts } from "@/src/data/dummyProducts";
-import { IProduct } from "@/src/types/ecommerce/product";
-import { IShopFilters, SortOption } from "@/src/types/ecommerce/shop";
+import { IProduct } from "@/src/components/cart/types/product";
+import { IShopFilters, SortOption } from "@/src/components/cart/types/shop";
 import { SORT_OPTIONS } from "@/src/constants/ecommerce/shop";
 import {
   Check,

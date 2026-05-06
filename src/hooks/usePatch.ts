@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosRequestConfig } from "axios";
 import { toast } from "react-toastify";
-import { IGenericErrorResponse } from "../types/common/common";
+import { IGenericErrorResponse } from "@/src/components/shared/types/common";
 import { postService } from "../services/auth";
 
 type PatchArg =

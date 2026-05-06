@@ -1,4 +1,4 @@
-import { INewsItem } from "@/src/types/home";
+import { INewsItem } from "@/src/components/home/types";
 import { ArrowRight, Calendar, Newspaper, Tag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

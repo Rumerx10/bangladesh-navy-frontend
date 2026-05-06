@@ -1,6 +1,6 @@
 "use client";
 
-import { IProduct } from "@/src/types/ecommerce/product";
+import { IProduct } from "@/src/components/cart/types/product";
 import { Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

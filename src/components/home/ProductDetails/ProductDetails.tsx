@@ -7,7 +7,7 @@ import {
   selectCanCheckout,
 } from "@/src/lib/redux/features/permission/permissionSelectors";
 import { useAppDispatch, useAppSelector } from "@/src/lib/redux/hooks";
-import { IProduct, IProductVariant } from "@/src/types/ecommerce/product";
+import { IProduct, IProductVariant } from "@/src/components/cart/types/product";
 import {
   ChevronLeft,
   ChevronRight,

@@ -4,7 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
 import { IUserInformation } from "../lib/redux/features/auth/authTypes";
 import { authService } from "../services/auth";
-import { IGenericErrorResponse } from "../types/common/common";
+import { IGenericErrorResponse } from "@/src/components/shared/types/common";
 
 interface JwtPayload {
   role?: string;

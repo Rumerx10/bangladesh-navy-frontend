@@ -1,4 +1,4 @@
-import { ProfilePictureSectionProps } from "@/src/types/account/account.types";
+import { ProfilePictureSectionProps } from "@/src/components/account/types";
 import { Camera, User } from "lucide-react";
 import Image from "next/image";
 import { Controller, useFormContext } from "react-hook-form";

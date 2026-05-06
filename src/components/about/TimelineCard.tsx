@@ -1,4 +1,4 @@
-import { ITimelineItem } from "@/src/types/about";
+import { ITimelineItem } from "@/src/components/about/types";
 import { Building, Cpu, Flag, Globe, Monitor } from "lucide-react";
 
 const iconMap: Record<string, React.ReactNode> = {

@@ -2,7 +2,7 @@
 
 import { clearCart } from "@/src/lib/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/src/lib/redux/hooks";
-import { PaymentMethod } from "@/src/types/ecommerce/order";
+import { PaymentMethod } from "@/src/components/cart/types/order";
 import {
   Banknote,
   CreditCard,

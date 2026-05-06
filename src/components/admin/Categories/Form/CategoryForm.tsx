@@ -7,7 +7,7 @@ import InputLabel from "@/src/components/shared/InputLabel";
 import SubmitButton from "@/src/components/shared/SubmitButton";
 import { Button } from "@/src/components/ui/button";
 import { axiosInstance } from "@/src/helpers/axios/axiosInstance";
-import { ErrorType } from "@/src/types/common/common";
+import { ErrorType } from "@/src/components/shared/types/common";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useFormContext } from "react-hook-form";

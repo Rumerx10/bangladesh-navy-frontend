@@ -1,7 +1,7 @@
 "use client";
 
 import { dummyOrders } from "@/src/data/dummyOrders";
-import { OrderStatus } from "@/src/types/ecommerce/order";
+import { OrderStatus } from "@/src/components/cart/types/order";
 import { ArrowRight, ChevronRight, Package } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

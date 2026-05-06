@@ -1,4 +1,4 @@
-import type { StatCardConfig } from "@/src/types/dashboard/dashboard";
+import type { StatCardConfig } from "@/src/components/admin/Dashboard/types";
 import { ClipboardList, Clock, ShoppingCart, Users } from "lucide-react";
 
 export const statsCardConfigs: StatCardConfig[] = [

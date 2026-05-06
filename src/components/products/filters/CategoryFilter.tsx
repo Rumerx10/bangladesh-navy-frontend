@@ -1,6 +1,6 @@
 "use client";
 
-import { INavyCategory } from "@/src/types/product";
+import { INavyCategory } from "@/src/components/products/types";
 
 interface CategoryFilterProps {
   categories: INavyCategory[];

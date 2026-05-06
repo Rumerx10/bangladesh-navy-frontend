@@ -3,7 +3,7 @@
 import { formatPrice, getDiscountedPrice, getProductSlug } from "@/src/data/navyProducts";
 import { addToCart } from "@/src/lib/redux/features/cart/cartSlice";
 import { useAppDispatch } from "@/src/lib/redux/hooks";
-import { DiscountType, INavyProduct } from "@/src/types/product";
+import { DiscountType, INavyProduct } from "@/src/components/products/types";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { toast } from "react-toastify";

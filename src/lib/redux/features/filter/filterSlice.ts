@@ -1,4 +1,4 @@
-import { BookingType } from "@/src/types/common/common";
+import { BookingType } from "@/src/components/shared/types/common";
 import { createSlice } from "@reduxjs/toolkit";
 import { IInitialState } from "./filterTypes";
 

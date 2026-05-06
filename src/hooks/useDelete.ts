@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { deleteService } from "../services/auth";
-import { IGenericErrorResponse } from "../types/common/common";
+import { IGenericErrorResponse } from "@/src/components/shared/types/common";
 
 export const useDelete = <T>(
   onSuccess?: (data: T) => void,

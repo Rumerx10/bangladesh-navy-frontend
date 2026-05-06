@@ -3,7 +3,7 @@ import {
   OrderStatus,
   PaymentStatus,
   PaymentMethod,
-} from "@/src/types/ecommerce/order";
+} from "@/src/components/cart/types/order";
 
 export const dummyOrders: IOrder[] = [
   {

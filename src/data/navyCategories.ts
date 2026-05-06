@@ -1,4 +1,4 @@
-import { INavyCategory } from "@/src/types/product";
+import { INavyCategory } from "@/src/components/products/types";
 
 export const navyCategories: INavyCategory[] = [
   {

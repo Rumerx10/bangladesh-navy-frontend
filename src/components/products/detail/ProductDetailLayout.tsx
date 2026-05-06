@@ -1,7 +1,7 @@
 "use client";
 
 import { formatPrice, getDiscountedPrice } from "@/src/data/navyProducts";
-import { INavyProduct } from "@/src/types/product";
+import { INavyProduct } from "@/src/components/products/types";
 import ProductAttributes from "./ProductAttributes";
 import ProductInfo from "./ProductInfo";
 import ProductTabs from "./ProductTabs";

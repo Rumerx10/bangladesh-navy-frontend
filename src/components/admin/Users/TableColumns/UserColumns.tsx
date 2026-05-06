@@ -6,7 +6,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
-import { StatusType } from "@/src/types/common/common";
+import { StatusType } from "@/src/components/shared/types/common";
 import { EllipsisVertical, Eye, Pencil } from "lucide-react";
 import Image from "next/image";
 import { IUser } from "../types";

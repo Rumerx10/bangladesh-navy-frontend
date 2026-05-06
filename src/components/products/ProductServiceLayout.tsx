@@ -2,7 +2,7 @@
 
 import { navyCategories } from "@/src/data/navyCategories";
 import { navyProducts } from "@/src/data/navyProducts";
-import { IProductFilter } from "@/src/types/product";
+import { IProductFilter } from "@/src/components/products/types";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import ProductGrid from "./ProductGrid";

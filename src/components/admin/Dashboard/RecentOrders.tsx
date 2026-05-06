@@ -17,7 +17,7 @@ import {
 import { Package } from "lucide-react";
 import { useGet } from "@/src/hooks/useGet";
 import RecentOrdersSkeleton from "./Skeleton/RecentOrdersSkeleton";
-import type { OrderStatus, RecentOrder } from "@/src/types/dashboard/dashboard";
+import type { OrderStatus, RecentOrder } from "@/src/components/admin/Dashboard/types";
 
 const statusStyles: Record<OrderStatus, string> = {
   Completed: "bg-emerald-50 text-emerald-600 border-emerald-200",

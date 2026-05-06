@@ -1,4 +1,4 @@
-import { IQuickAccessItem } from "@/src/types/home";
+import { IQuickAccessItem } from "@/src/components/home/types";
 import {
   AlertTriangle,
   ArrowRight,

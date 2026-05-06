@@ -6,7 +6,7 @@ import InputLabel from "@/src/components/shared/InputLabel";
 import Paragraph from "@/src/components/shared/Paragraph";
 import SubmitButton from "@/src/components/shared/SubmitButton";
 import { Button } from "@/src/components/ui/button";
-import { ErrorType } from "@/src/types/common/common";
+import { ErrorType } from "@/src/components/shared/types/common";
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
 import { HeroManagementSchemaForm } from "../Schema/heroManagementSchema";

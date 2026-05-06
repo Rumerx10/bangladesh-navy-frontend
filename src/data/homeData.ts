@@ -6,7 +6,7 @@ import type {
   IQuickAccessItem,
   ISearchTab,
   IStatItem,
-} from "@/src/types/home";
+} from "@/src/components/home/types";
 
 export const heroSlides: IHeroSlide[] = [
   {
