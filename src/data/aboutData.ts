@@ -64,12 +64,19 @@ export const surveyShips: ISurveyShip[] = [
 ];
 
 export const galleryItems: IGalleryItem[] = [
-  { id: "g-1", title: "Hydrographic Survey Operations", category: "Survey", image: "/products/chart-coxbazar.jpg" },
-  { id: "g-2", title: "Chart Production Facility", category: "Production", image: "/products/chart-chittagong.jpg" },
-  { id: "g-3", title: "BNS Anusandhan at Sea", category: "Ships", image: "/products/chart-saintmartin.jpg" },
-  { id: "g-4", title: "ENC Production Lab", category: "Production", image: "/products/enc-complete.jpg" },
-  { id: "g-5", title: "Tide Gauge Station", category: "Survey", image: "/products/tide-table-2026.jpg" },
-  { id: "g-6", title: "Training Exercise", category: "Training", image: "/products/chart-mongla.jpg" },
-  { id: "g-7", title: "Oceanographic Data Collection", category: "Survey", image: "/products/chart-payra.jpg" },
-  { id: "g-8", title: "International Cooperation", category: "Events", image: "/products/sailing-directions.jpg" },
+  { id: "g-1", title: "Hydrographic Survey Operations", category: "Survey", image: "/heroImages/home/img1.jpeg" },
+  { id: "g-2", title: "Chart Production Facility", category: "Production", image: "/heroImages/home/img2.jpeg" },
+  { id: "g-3", title: "BNS Anusandhan at Sea", category: "Ships", image: "/heroImages/home/img3.jpeg" },
+  { id: "g-4", title: "ENC Production Lab", category: "Production", image: "/newsImages/news1.jpg" },
+  { id: "g-5", title: "Tide Gauge Station", category: "Survey", image: "/newsImages/news2.jpg" },
+  { id: "g-6", title: "Training Exercise", category: "Training", image: "/newsImages/news3.jpg" },
+  { id: "g-7", title: "Oceanographic Data Collection", category: "Survey", image: "/newsImages/news4.jpg" },
+  { id: "g-8", title: "International Cooperation", category: "Events", image: "/newsImages/news5.jpg" },
+  { id: "g-9", title: "Marine Research Expedition", category: "Survey", image: "/heroImages/home/heroImage1.png" },
+  { id: "g-10", title: "Coastal Mapping Project", category: "Survey", image: "/heroImages/home/heroImage2.jpg" },
+  { id: "g-11", title: "Navigational Warning Center", category: "Operations", image: "/newsImages/news6.jpg" },
+  { id: "g-12", title: "Deep Sea Sounding", category: "Survey", image: "/heroImages/home/heroImage3.jpg" },
+  { id: "g-13", title: "National Maritime Day", category: "Events", image: "/heroImages/home/img1.jpeg" },
+  { id: "g-14", title: "Hydrographic School", category: "Training", image: "/heroImages/home/img2.jpeg" },
+  { id: "g-15", title: "Satellite Analysis", category: "Production", image: "/heroImages/home/img3.jpeg" },
 ];

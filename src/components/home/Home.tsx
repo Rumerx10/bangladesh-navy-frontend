@@ -10,8 +10,8 @@ export default function Home() {
   return (
     <div>
       <NavyHeroCarousel />
-      <MaritimeSearch />
       <QuickAccess />
+      <MaritimeSearch />
       <StatsBar />
       <ChiefMessage />
       <GallerySection />
