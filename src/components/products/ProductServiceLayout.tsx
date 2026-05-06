@@ -85,7 +85,7 @@ export default function ProductServiceLayout() {
 
       <div className="flex gap-6 lg:gap-8">
         {/* Sidebar — 28% */}
-        <aside className="hidden lg:block w-[28%] shrink-0">
+        <aside className="hidden lg:block w-[22%] shrink-0">
           <ProductSidebar filters={filters} setFilters={setFilters} />
         </aside>
 

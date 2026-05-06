@@ -8,9 +8,9 @@ export const siteConfig = {
   address:
     process.env.NEXT_PUBLIC_ADDRESS ||
     "BNHOC, Chittagong, Bangladesh",
-  phone1: process.env.NEXT_PUBLIC_PHONE_1 || "+880-xxx-xxxx",
-  phone2: process.env.NEXT_PUBLIC_PHONE_2 || "+880-xxx-xxxx",
-  email: process.env.NEXT_PUBLIC_EMAIL || "info@bnhoc.mil.bd",
+  phone1: process.env.NEXT_PUBLIC_PHONE_1 || "+8801769722428",
+  phone2: process.env.NEXT_PUBLIC_PHONE_2 || "0233334250030",
+  email: process.env.NEXT_PUBLIC_EMAIL || "bnhoc@navy.mil.bd",
   currency: process.env.NEXT_PUBLIC_CURRENCY || "BDT",
   currencySymbol: process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || "৳",
 };

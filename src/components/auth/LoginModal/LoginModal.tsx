@@ -111,7 +111,8 @@ export default function LoginModal() {
         </div>
 
         {/* Google Sign In */}
-        <GoogleSignInButton
+        <div>
+          <GoogleSignInButton
           label="Continue with Google"
           onSuccess={(role) => {
             handleCloseModal();
@@ -122,6 +123,7 @@ export default function LoginModal() {
             resetAuthError();
           }}
         />
+        </div>
 
         {/* Divider */}
         <div className="flex items-center gap-3">

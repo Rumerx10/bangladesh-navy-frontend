@@ -1,6 +1,7 @@
 "use client";
 
 import { INavyProduct, IProductFilter } from "@/src/components/products/types";
+import { AnimatePresence, motion } from "framer-motion";
 import { LayoutGrid } from "lucide-react";
 import ProductCard from "./ProductCard";
 import SortDropdown from "./SortDropdown";
@@ -19,11 +20,10 @@ export default function ProductGrid({
   setFilters,
 }: ProductGridProps) {
   return (
-    <div>
+    <div className="min-h-[600px]">
       {/* Toolbar */}
       <div className="flex items-center justify-between mb-5 pb-4 border-b border-gray-100">
         <div className="flex items-center gap-2 text-sm text-gray-500">
-          <LayoutGrid size={16} />
           <span>
             Showing <strong className="text-[#001836]">{products.length}</strong>{" "}
             of {totalCount} products
@@ -37,13 +37,31 @@ export default function ProductGrid({
 
       {/* Grid */}
       {products.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-5">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        <motion.div 
+          layout
+          className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-5"
+        >
+          <AnimatePresence mode="popLayout">
+            {products.map((product) => (
+              <motion.div
+                layout
+                key={product.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ProductCard product={product} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-16 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex flex-col items-center justify-center py-16 text-center"
+        >
           <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-4">
             <LayoutGrid size={24} className="text-gray-400" />
           </div>
@@ -53,7 +71,7 @@ export default function ProductGrid({
           <p className="text-sm text-gray-500 mt-1">
             Try adjusting your filters
           </p>
-        </div>
+        </motion.div>
       )}
     </div>
   );

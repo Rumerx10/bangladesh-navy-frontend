@@ -12,7 +12,7 @@ export default function FloatingCartButton() {
   return (
     <button
       onClick={toggleDrawer}
-      className="fixed right-5 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full bg-[#003f71] text-white shadow-xl hover:bg-[#004d8a] transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-110 hidden lg:flex"
+      className="fixed right-5 bottom-10 z-40 w-12 h-12 rounded-md bg-[#003f71] text-white shadow-xl hover:bg-[#004d8a] transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-110 hidden lg:flex"
       aria-label="Open cart"
     >
       <ShoppingCart size={20} />

@@ -196,9 +196,13 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
 
           {/* Other Links */}
           <Link
-            href="/#skill-development"
+            href="/skill-development"
             onClick={() => setOpen(false)}
-            className="py-2.5 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+            className={`py-2.5 px-3 rounded-md text-sm font-medium ${
+              pathname.startsWith("/skill-development")
+                ? "text-[#003f71] bg-[#003f71]/5"
+                : "text-gray-700 hover:bg-gray-50"
+            }`}
           >
             Skill Development
           </Link>

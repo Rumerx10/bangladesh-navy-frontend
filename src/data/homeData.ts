@@ -72,15 +72,17 @@ export const statsItems: IStatItem[] = [
 ];
 
 export const chiefMessage: IChiefMessage = {
-  title: "Message from Chief Hydrographer",
+  title: "MESSAGE FROM BN CHIEF HYDROGRAPHER",
   content: [
-    "Welcome to the Bangladesh Navy Hydrographic and Oceanographic Center. Our mission is to provide mariners with accurate and up-to-date nautical information for safe navigation in Bangladesh waters.",
-    "As the national hydrographic authority, we are committed to continuously enhancing our products. Our dedicated team works tirelessly to ensure that all maritime stakeholders have access to reliable navigational products and services.",
-    "I invite you to explore our website and discover the range of products and services we offer. Your feedback is invaluable to us as we continue to improve and serve the maritime community better.",
+    "Cdre Sheikh Firoz Ahmed, (H), NGP, psc, BN was born on 15 Dec 1974. He joined Bangladesh Navy as Officer Cadet on 01 July 1992. He completed his basic training successfully at Bangladesh Naval Academy. He achieved Osmani Gold Medal and Best All Round Midshipman Trophy for his outstanding performance during the training. On completion of his successful basic training, he was commissioned in the Executive Branch of Bangladesh Navy on 01 Jan 1995.",
+    "Cdre Sheikh Firoz Ahmed completed his Basic Hydrography course in 1997 from BN Hydrography School, BNS ISSA KHAN, Chattogram. He then completed Category-B Hydrography Course from Ecole des Hydrograph, EPSHOM, Brest, France in 2001. He completed Long Hydrography Course (Category-A) from National Hydrography School, India and received the efficiency trophy for securing 1st position in the course. He has also completed MBA and MSc in Defence Studies from Bangladesh University of Professionals and MSc in Hydrography (with Distinction) from Goa University, India. He is a distinguished graduate of Defence Services Command & Staff College, Mirpur, Dhaka. Besides, he successfully completed “GIS and Remote Sensing Course” from Military Institute of Science and Technology (MIST) in 2011.",
+    "Cdre Sheikh Firoz Ahmed has excellent mix of command, staff and instructional appointments throughout his career. Prior taking over the duties of BN Chief Hydrographer on 11 January 2024, he successfully performed the duties of Registrar, Bangabandhu Sheikh Mujibur Rahman Maritime University, the only maritime specialized university of the country. He also served as Staff Officer (Hydrography), Deputy Director & Director Hydrography at Naval Headquarters. He commanded various BN ships namely BNS DARSHAK, BNS TALLASHI, BNS AGRADOOT, BNS SHAIBAL, BNS ANUSHANDHAN. He also commanded Bangladesh Navy Hydrographic & Oceanographic Center.",
+    "Cdre Sheikh Firoz Ahmed is a recipient of Bangladesh Navy Shuddachar Award and Nou Gourov Padak (NGP). Cdre Sheikh Firoz Ahmed's experience in international arena is remarkable. He performed the duties of IHO observer in Advisory Board on Law of the Sea (ABLOS). He represented Bangladesh in various international forums like North Indian Ocean Hydrographic Commission (NIOHC), IHO Conference, International Board on Standards of Competence for Hydrographic Surveyors and Nautical Cartographers (IBSC) etc. He had the privilege of visiting numerous countries including France, Italy, Germany, The Netherlands, UK, India, Malaysia, Thailand, Indonesia, KSA, Oman and Maldives. His global exposure reflects his broad perspective and adaptability, highlighting his ability to engage with people from various backgrounds. He possesses command over French and Arabic language.",
+    "He served in UN peace keeping mission in South Sudan as Commanding Officer, Malakal of Bangladesh Navy Forces Marine Unit (BANFMU), UNMISS in 2016-17 and received the Force Commander’s Commendation for his outstanding performance in the mission area. He also served in DR Congo (MONUC) as Interpreter (French language), BANBAT 1.",
   ],
-  name: "Rear Admiral",
-  designation: "Chief Hydrographer",
-  initials: "CH",
+  name: "Cdre Sheikh Firoz Ahmed, (H), NGP, psc, BN",
+  designation: "BN Chief Hydrographer",
+  initials: "FA",
 };
 
 export const newsItems: INewsItem[] = [

@@ -50,15 +50,19 @@ export default function HeaderTopBar({
             <AboutUsDropdown />
             <li>
               <Link
-                href="/#skill-development"
-                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-[#003f71] hover:bg-gray-50 rounded-md transition-colors"
+                href="/skill-development"
+                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                  pathname.startsWith("/skill-development")
+                    ? "text-[#003f71] bg-[#003f71]/5"
+                    : "text-gray-700 hover:text-[#003f71] hover:bg-gray-50"
+                }`}
               >
                 Skill Development
               </Link>
             </li>
             <li>
               <Link
-                href="/#contact"
+                href="/contact-us"
                 className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-[#003f71] hover:bg-gray-50 rounded-md transition-colors"
               >
                 Contact

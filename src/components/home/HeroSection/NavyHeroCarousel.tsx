@@ -25,7 +25,7 @@ interface HeroSlide {
 const heroSlides: HeroSlide[] = [
   {
     id: 1,
-    image: "/heroImages/home/heroImage1.png",
+    image: "/heroImages/home/img1.jpeg",
     alt: "Bangladesh Navy Maritime Heritage",
     subtitle: "Hydrographic & Oceanographic Center",
     title: "Bangladesh Navy",
@@ -38,7 +38,7 @@ const heroSlides: HeroSlide[] = [
   },
   {
     id: 2,
-    image: "/heroImages/home/heroImage2.jpg",
+    image: "/heroImages/home/img2.jpeg",
     alt: "Hydrographic Charting Services",
     subtitle: "Maritime Safety Solutions",
     title: "Hydrographic Services",
@@ -51,7 +51,7 @@ const heroSlides: HeroSlide[] = [
   },
   {
     id: 3,
-    image: "/heroImages/home/heroImage3.jpg",
+    image: "/heroImages/home/img3.jpeg",
     alt: "Oceanographic Research and Navigation",
     subtitle: "Ocean Research & Development",
     title: "Oceanographic Research",
@@ -86,7 +86,7 @@ export default function NavyHeroCarousel() {
       {/* Carousel Container — Background Images */}
       <motion.div
         className="relative w-full h-full flex"
-        animate={{ x: `-${current * 100}vw` }}
+        animate={{ x: `-${current * 100}%` }}
         transition={{ duration: 1, ease: "easeInOut" }}
       >
         {heroSlides.map((slide) => (
@@ -99,7 +99,10 @@ export default function NavyHeroCarousel() {
               className="object-cover"
               sizes="100vw"
             />
-            <div className="absolute inset-0 bg-black/50" />
+            {/* Dark Gradient Overlay */}
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/60" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60" />
           </div>
         ))}
       </motion.div>
@@ -107,8 +110,8 @@ export default function NavyHeroCarousel() {
       {/* Content Overlay — Carousel */}
       <div className="absolute inset-0 z-20 flex items-center justify-center overflow-hidden">
         <motion.div
-          className="relative w-full h-full flex items-center justify-center"
-          animate={{ x: `-${current * 100}vw` }}
+          className="relative w-full h-full flex"
+          animate={{ x: `-${current * 100}%` }}
           transition={{ duration: 1, ease: "easeInOut" }}
         >
           {heroSlides.map((slide) => (
@@ -163,7 +166,7 @@ export default function NavyHeroCarousel() {
                       <Link
                         key={index}
                         href={button.href}
-                        className={`inline-flex items-center justify-center px-6 md:px-8 h-[44px] py-[16px] font-medium text-base rounded-lg transition-colors duration-200 w-full sm:w-auto text-center ${
+                        className={`inline-flex items-center justify-center px-6 md:px-8 h-[54px] py-[16px] font-medium text-base rounded-lg transition-colors duration-200 w-full sm:w-auto text-center ${
                           button.variant === "secondary"
                             ? "bg-white/20 hover:bg-white/30 border border-white/40"
                             : "bg-primary hover:bg-primary/80"

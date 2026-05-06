@@ -4,31 +4,19 @@ import Link from "next/link";
 
 const typeConfig = {
   warning: {
-    icon: <AlertTriangle size={16} />,
-    bg: "bg-amber-50",
-    iconBg: "bg-amber-100",
-    iconColor: "text-amber-600",
-    border: "border-amber-200",
-    label: "Warning",
+    accent: "border-l-amber-500",
     labelColor: "text-amber-600",
+    label: "Warning",
   },
   info: {
-    icon: <Info size={16} />,
-    bg: "bg-blue-50",
-    iconBg: "bg-blue-100",
-    iconColor: "text-blue-600",
-    border: "border-blue-200",
+    accent: "border-l-[#003f71]",
+    labelColor: "text-[#003f71]",
     label: "Information",
-    labelColor: "text-blue-600",
   },
   update: {
-    icon: <RefreshCw size={16} />,
-    bg: "bg-emerald-50",
-    iconBg: "bg-emerald-100",
-    iconColor: "text-emerald-600",
-    border: "border-emerald-200",
-    label: "Update",
+    accent: "border-l-emerald-500",
     labelColor: "text-emerald-600",
+    label: "Update",
   },
 };
 
@@ -42,24 +30,30 @@ export default function NoticeCard({ item }: NoticeCardProps) {
   return (
     <Link
       href={item.href}
-      className={`group flex flex-col rounded-xl ${config.bg} border ${config.border} p-4 lg:p-5 hover:shadow-md transition-all duration-300`}
+      className={`group relative flex flex-col bg-white ${config.accent} border-l-4 p-6 rounded-r-xl hover:shadow-xl hover:shadow-blue-900/5 transition-all duration-300`}
     >
-      <div className="flex items-start gap-3">
-        <div
-          className={`w-9 h-9 rounded-lg ${config.iconBg} ${config.iconColor} flex items-center justify-center shrink-0`}
-        >
-          {config.icon}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center justify-between gap-2 mb-3">
+          <span className={`text-[10px] font-bold uppercase tracking-widest ${config.labelColor}`}>
+            {config.label}
+          </span>
+          <span className="text-[10px] text-gray-400 font-medium">
+            {item.date}
+          </span>
         </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <span className={`text-[10px] font-bold uppercase tracking-wider ${config.labelColor}`}>
-              {config.label}
-            </span>
-            <span className="text-[10px] text-gray-400">• {item.date}</span>
-          </div>
-          <h4 className="text-sm font-semibold text-gray-800 group-hover:text-[#003f71] transition-colors line-clamp-2 leading-snug">
-            {item.title}
-          </h4>
+        <h4 className="text-base lg:text-lg font-bold text-[#001836] group-hover:text-[#003f71] transition-colors line-clamp-2 leading-snug">
+          {item.title}
+        </h4>
+      </div>
+      
+      <div className="mt-5 pt-4 border-t border-gray-50 flex items-center justify-between">
+        <span className="text-[11px] text-gray-500 group-hover:text-[#003f71] font-bold transition-colors uppercase tracking-tight">
+          View Full Notice
+        </span>
+        <div className="text-gray-300 group-hover:text-[#003f71] transition-all transform group-hover:translate-x-1">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 12h14m-7-7 7 7-7 7"/>
+          </svg>
         </div>
       </div>
     </Link>

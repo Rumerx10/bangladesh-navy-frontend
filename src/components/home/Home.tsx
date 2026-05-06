@@ -1,4 +1,5 @@
 import ChiefMessage from "./ChiefMessage/ChiefMessage";
+import GallerySection from "./Gallery/GallerySection";
 import NavyHeroCarousel from "./HeroSection/NavyHeroCarousel";
 import NewsEvents from "./News/NewsEvents";
 import QuickAccess from "./QuickAccess/QuickAccess";
@@ -13,6 +14,7 @@ export default function Home() {
       <QuickAccess />
       <StatsBar />
       <ChiefMessage />
+      <GallerySection />
       <NewsEvents />
     </div>
   );

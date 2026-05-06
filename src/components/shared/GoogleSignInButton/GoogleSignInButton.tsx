@@ -47,7 +47,7 @@ export default function GoogleSignInButton({
         useOneTap
         theme="outline"
         size="large"
-        width="384" // Max width to match max-w-md if needed, or similar
+        width="344" // Max width to match max-w-md if needed, or similar
       />
     </div>
   );
