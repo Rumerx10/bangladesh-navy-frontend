@@ -11,9 +11,9 @@ export default function Home() {
     <div>
       <NavyHeroCarousel />
       <QuickAccess />
+      <ChiefMessage />
       <MaritimeSearch />
       <StatsBar />
-      <ChiefMessage />
       <GallerySection />
       <NewsEvents />
     </div>

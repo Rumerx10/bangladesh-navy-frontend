@@ -100,15 +100,15 @@ export default function NavyHeroCarousel() {
               sizes="100vw"
             />
             {/* Dark Gradient Overlay */}
-            <div className="absolute inset-0 bg-black/40" />
+            {/* <div className="absolute inset-0 bg-black/40" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/60" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60" /> */}
           </div>
         ))}
       </motion.div>
 
       {/* Content Overlay — Carousel */}
-      <div className="absolute inset-0 z-20 flex items-center justify-center overflow-hidden">
+      {/* <div className="absolute inset-0 z-20 flex items-center justify-center overflow-hidden">
         <motion.div
           className="relative w-full h-full flex"
           animate={{ x: `-${current * 100}%` }}
@@ -121,7 +121,6 @@ export default function NavyHeroCarousel() {
             >
               <div className="container px-4 lg:px-6 lg:mt-10">
                 <div className="max-w-2xl mx-auto text-center text-white">
-                  {/* Subtitle */}
                   <motion.p
                     className="text-sm md:text-base font-semibold text-blue-300 mb-2 md:mb-3 uppercase tracking-widest"
                     initial={{ opacity: 0, y: 20 }}
@@ -132,7 +131,6 @@ export default function NavyHeroCarousel() {
                     {slide.subtitle}
                   </motion.p>
 
-                  {/* Main Title */}
                   <motion.h1
                     className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-5 leading-tight"
                     initial={{ opacity: 0, y: 20 }}
@@ -143,7 +141,6 @@ export default function NavyHeroCarousel() {
                     {slide.title}
                   </motion.h1>
 
-                  {/* Description */}
                   <motion.p
                     className="text-base md:text-lg lg:text-xl mb-6 md:mb-8 text-gray-100 leading-relaxed"
                     initial={{ opacity: 0, y: 20 }}
@@ -154,7 +151,6 @@ export default function NavyHeroCarousel() {
                     {slide.description}
                   </motion.p>
 
-                  {/* Buttons */}
                   <motion.div
                     className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6"
                     initial={{ opacity: 0, y: 20 }}
@@ -181,7 +177,7 @@ export default function NavyHeroCarousel() {
             </div>
           ))}
         </motion.div>
-      </div>
+      </div> */}
 
       {/* Arrow Navigation */}
       <button

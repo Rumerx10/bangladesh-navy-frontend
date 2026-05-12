@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { ArrowRight, Bell, Newspaper } from "lucide-react";
 import Link from "next/link";
 import NewsCard from "./NewsCard";
-import NoticeCard from "./NoticeCard";
 
 export default function NewsEvents() {
   // Show only the 3 latest news on the homepage
@@ -77,50 +76,6 @@ export default function NewsEvents() {
         </div>
       </section>
 
-      {/* ─── Notices to Mariners Section ─── */}
-      <section id="latest-notices" className="relative py-16 lg:py-24 bg-gray-50 overflow-hidden">
-        {/* Watermark */}
-        <div className="absolute -left-12 bottom-10 text-[#001836]">
-          <NavyWatermark variant="compass" size={300} opacity={0.02} animate="rotate" />
-        </div>
-
-        <div className="relative container px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-10 lg:mb-14"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <Bell size={20} className="text-[#003f71]" />
-              <span className="text-sm font-semibold text-[#003f71] uppercase tracking-wider">
-                Maritime Safety
-              </span>
-            </div>
-            <h2 className="text-2xl lg:text-3xl font-bold text-[#001836]">
-              Recent Notices to Mariners
-            </h2>
-            <p className="mt-2 text-sm lg:text-base text-gray-500 max-w-lg mx-auto">
-              Important navigational warnings and chart corrections
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {noticeItems.map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.08 }}
-              >
-                <NoticeCard item={item} />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
     </>
   );
 }
