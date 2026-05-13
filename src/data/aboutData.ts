@@ -1,12 +1,135 @@
-import type { IGalleryItem, ISurveyShip, ITimelineItem, IVisionMissionItem } from "@/src/components/about/types";
+import type { IGalleryItem, ISurveyShip, IVisionMissionItem } from "@/src/components/about/types";
 
-export const historyTimeline: ITimelineItem[] = [
-  { id: "h-1", year: "1971", title: "Independence of Bangladesh", description: "Following the liberation war, Bangladesh emerged as an independent nation with significant maritime territory to survey and chart.", icon: "flag", position: "right" },
-  { id: "h-2", year: "1978", title: "Establishment of Hydrographic Department", description: "The Bangladesh Navy established its Hydrographic Department to systematically survey and chart national waters.", icon: "building", position: "left" },
-  { id: "h-3", year: "1990", title: "First Digital Chart Published", description: "Transition to digital cartography began with the publication of the first digitally produced nautical chart.", icon: "monitor", position: "right" },
-  { id: "h-4", year: "2010", title: "ENC Production Commenced", description: "Started production of Electronic Navigational Charts (ENC) in accordance with IHO standards for ECDIS systems.", icon: "cpu", position: "left" },
-  { id: "h-5", year: "2020", title: "GIS Integration Implemented", description: "Full integration of Geographic Information Systems for advanced spatial data management and visualization.", icon: "globe", position: "right" },
+// ─── History Data ───
+
+export interface IHistoryEra {
+  id: string;
+  era: string;
+  yearRange: string;
+  title: string;
+  summary: string;
+  details: string[];
+  highlight?: string;
+  icon: string;
+}
+
+export interface IHistoryMilestone {
+  year: string;
+  event: string;
+  highlight?: boolean;
+}
+
+export const historyEras: IHistoryEra[] = [
+  {
+    id: "era-1",
+    era: "Origins",
+    yearRange: "1971 – 1982",
+    title: "Birth of a Maritime Nation",
+    summary:
+      "The Bangladesh Navy was born during the 1971 Liberation War when Bengali sailors defected from the Pakistan Navy. Operation Jackpot—a series of daring commando raids on enemy ports—became a defining moment of the war at sea.",
+    details: [
+      "Bengali sailors and officers defected from the Pakistan Navy and formed the nucleus of the Bangladesh Naval Force in July 1971.",
+      "Naval Commandos executed Operation Jackpot, mining and sabotaging enemy warships and merchant vessels across major ports, severely disrupting Pakistani supply lines.",
+      "The first naval fleet of six patrol vessels was inaugurated on 9 November 1971.",
+      "After independence the three services were separated in 1972. BNS Issa Khan, BNS Haji Mohsin, and BNS Titumir were commissioned as the first naval bases in 1974.",
+      "The fleet grew with the acquisition of ex-Royal Navy frigates: BNS Umar Farooq (1976), BNS Ali Haider (1978), and BNS Abu Bakr (1982).",
+    ],
+    highlight: "Operation Jackpot is regarded as one of the most successful unconventional naval operations in modern history.",
+    icon: "anchor",
+  },
+  {
+    id: "era-2",
+    era: "Foundation",
+    yearRange: "1983 – 1995",
+    title: "Laying the Hydrographic Foundation",
+    summary:
+      "Recognizing the need to chart its vast maritime territory, the Bangladesh Navy established the Hydrographic School and Chart Depot in 1983 at BNS Issa Khan, Chattogram—the first dedicated hydrographic institutions in the country.",
+    details: [
+      "The Hydrographic School was established at BNS Issa Khan, Chattogram in 1983 to train naval personnel in survey techniques and chart production.",
+      "The BN Chart Depot was created in the same year to manage, store, and distribute navigational charts and maritime publications.",
+      "Conventional analogue survey methods were employed, using traditional equipment for coastal and riverine hydrographic data collection.",
+      "These foundational institutions set the stage for Bangladesh to develop sovereign capability in charting its own waters.",
+    ],
+    icon: "compass",
+  },
+  {
+    id: "era-3",
+    era: "Modernization",
+    yearRange: "1996 – 2000",
+    title: "Digital Transformation: Hydro Bangla Project-1",
+    summary:
+      "A landmark collaboration with the French government in 1996 under the \"Hydro Bangla Project-1\" enabled the Navy to transition from conventional analogue survey methods to modern digital surveying systems.",
+    details: [
+      "The French government provided technical assistance and modern equipment under the Hydro Bangla Project-1 initiative.",
+      "Survey operations transitioned from analogue to digital, dramatically improving accuracy, speed, and data management.",
+      "Digital cartographic tools were introduced, enabling the production of higher-quality nautical charts compliant with emerging international standards.",
+      "Personnel received specialized training in digital hydrographic surveying and data processing techniques.",
+    ],
+    highlight: "This project marked a paradigm shift—transforming Bangladesh Navy hydrography from a manual discipline into a technology-driven capability.",
+    icon: "cpu",
+  },
+  {
+    id: "era-4",
+    era: "Establishment",
+    yearRange: "2001 – 2010",
+    title: "BNHOC is Born",
+    summary:
+      "The completion of Hydro Bangla Project-2 in 2001 led to the formal establishment of the Bangladesh Navy Hydrographic and Oceanographic Centre (BNHOC) at New Mooring, Chattogram. Bangladesh also became a member state of the International Hydrographic Organization (IHO).",
+    details: [
+      "BNHOC was formally established in 2001 as the central hub for all hydrographic and oceanographic activities of the Bangladesh Navy.",
+      "The existing BN Chart Depot was merged into BNHOC, consolidating chart production, data management, and distribution under one centre.",
+      "Bangladesh became a member state of the International Hydrographic Organization (IHO) in 2001, gaining access to international standards and collaboration frameworks.",
+      "BNHOC began producing nautical charts and publications to national and international standards, including INT series charts.",
+      "Electronic Navigational Chart (ENC) production commenced in accordance with IHO S-57/S-63 standards for ECDIS systems.",
+    ],
+    highlight: "2001 was a watershed year—BNHOC was born and Bangladesh joined the global hydrographic community through IHO membership.",
+    icon: "building",
+  },
+  {
+    id: "era-5",
+    era: "Present & Future",
+    yearRange: "2011 – Present",
+    title: "Regional Leadership & Innovation",
+    summary:
+      "Today, BNHOC serves as the national authority for hydrographic data, producing INT charts, ENCs, and maritime safety information. The centre leverages GIS, satellite imagery, and modern multi-beam sonar to support safe navigation and sustainable maritime development.",
+    details: [
+      "The Naval Aviation Wing was established in 2011, enhancing aerial survey and maritime reconnaissance capabilities.",
+      "Full integration of Geographic Information Systems (GIS) for advanced spatial data management and coastal zone analysis.",
+      "Production of S-100 series products and next-generation Electronic Navigational Charts is underway.",
+      "BNHOC provides meteorological and tidal data, Notices to Mariners, and navigational warnings for Bangladesh waters.",
+      "Active participation in UN peacekeeping missions and international hydrographic cooperation programmes since 1993.",
+      "The centre maintains and calibrates all survey and meteorological equipment for the Navy's hydrographic fleet.",
+    ],
+    highlight: "BNHOC has evolved from a chart depot into a world-recognized centre driving Bangladesh's Blue Economy agenda.",
+    icon: "globe",
+  },
 ];
+
+export const historyMilestones: IHistoryMilestone[] = [
+  { year: "1971", event: "Bangladesh Navy formed during Liberation War" },
+  { year: "1971", event: "Operation Jackpot executed against enemy ports" },
+  { year: "1974", event: "First naval bases commissioned by Bangabandhu" },
+  { year: "1983", event: "Hydrographic School & Chart Depot established", highlight: true },
+  { year: "1993", event: "Bangladesh Navy joins UN peacekeeping missions" },
+  { year: "1996", event: "Hydro Bangla Project-1 with French assistance", highlight: true },
+  { year: "2001", event: "BNHOC formally established", highlight: true },
+  { year: "2001", event: "Bangladesh joins IHO as member state", highlight: true },
+  { year: "2010", event: "ENC production commenced (IHO S-57 standard)" },
+  { year: "2011", event: "Naval Aviation Wing established" },
+  { year: "2020", event: "Full GIS integration implemented" },
+  { year: "2024", event: "S-100 series chart production initiated" },
+];
+
+export const historyKeyFacts = {
+  foundedYear: "2001",
+  location: "New Mooring, Chattogram",
+  parentOrg: "Bangladesh Navy",
+  ihoMemberSince: "2001",
+  totalPersonnel: "300+",
+  chartsProduced: "100+",
+};
+
+// ─── Vision & Mission ───
 
 export const visionMissionItems: IVisionMissionItem[] = [
   {
@@ -36,6 +159,8 @@ export const visionMissionItems: IVisionMissionItem[] = [
   },
 ];
 
+// ─── Survey Ships ───
+
 export const surveyShips: ISurveyShip[] = [
   {
     id: "ss-1",
@@ -62,6 +187,8 @@ export const surveyShips: ISurveyShip[] = [
     status: "active",
   },
 ];
+
+// ─── Gallery ───
 
 export const galleryItems: IGalleryItem[] = [
   { id: "g-1", title: "Hydrographic Survey Operations", category: "Survey", image: "/heroImages/home/img1.jpeg" },
