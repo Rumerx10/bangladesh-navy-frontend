@@ -12,12 +12,16 @@ import {
   GraduationCap
 } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
+import CourseEnrollForm from "./CourseEnrollForm";
 
 interface CourseDetailsProps {
   course: ICourse;
 }
 
 export default function CourseDetails({ course }: CourseDetailsProps) {
+  const [enrollOpen, setEnrollOpen] = useState(false);
+
   return (
     <div className="bg-white">
       {/* Dynamic Header/Banner for Course */}
@@ -154,7 +158,10 @@ export default function CourseDetails({ course }: CourseDetailsProps) {
                     </div>
                   </div>
                   
-                  <button className="w-full py-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-blue-500/25 cursor-pointer">
+                  <button
+                    onClick={() => setEnrollOpen(true)}
+                    className="w-full py-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-blue-500/25 cursor-pointer"
+                  >
                     Apply Now
                   </button>
                   <p className="text-[10px] text-white/40 text-center mt-4 uppercase tracking-widest font-medium">
@@ -184,6 +191,13 @@ export default function CourseDetails({ course }: CourseDetailsProps) {
           </div>
         </div>
       </section>
+
+      {/* Enrollment Modal */}
+      <CourseEnrollForm
+        open={enrollOpen}
+        onClose={() => setEnrollOpen(false)}
+        defaultCourse={course.title}
+      />
     </div>
   );
 }

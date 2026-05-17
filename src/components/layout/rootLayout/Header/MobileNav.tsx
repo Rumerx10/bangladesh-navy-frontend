@@ -26,6 +26,22 @@ const aboutLinks = [
   { label: "Gallery", href: "/about/gallery" },
 ];
 
+const skillDevLinks = [
+  { label: "BN Hydrographic School", href: "/skill-development" },
+  { label: "Long Hydrographic Course (Cat. A)", href: "/skill-development/long-hydrographic-course-cat-a" },
+  { label: "Basic Hydrographic Course (Cat. B)", href: "/skill-development/basic-hydrography-cat-b" },
+  { label: "Survey Recorder Part I", href: "/skill-development/survey-recorder-part-1" },
+  { label: "Survey Recorder Part II", href: "/skill-development/survey-recorder-part-2" },
+  { label: "Survey Recorder Part III", href: "/skill-development/survey-recorder-part-3" },
+  { label: "Customized Courses", href: "/skill-development/customized-courses" },
+];
+
+const contactLinks = [
+  { label: "Query & Suggestion", href: "/contact-us" },
+  { label: "Contact Information", href: "/contact-us/information" },
+  { label: "Hydrographic Note", href: "/contact-us/hydrographic-note" },
+];
+
 interface MobileNavProps {
   open: boolean;
   setOpen: (value: boolean) => void;
@@ -42,6 +58,8 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
 
   const [productsOpen, setProductsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [skillDevOpen, setSkillDevOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
 
   return (
     <>
@@ -194,25 +212,55 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
             )}
           </div>
 
-          {/* Other Links */}
-          <Link
-            href="/skill-development"
-            onClick={() => setOpen(false)}
-            className={`py-2.5 px-3 rounded-md text-sm font-medium ${
-              pathname.startsWith("/skill-development")
-                ? "text-[#003f71] bg-[#003f71]/5"
-                : "text-gray-700 hover:bg-gray-50"
-            }`}
-          >
-            Skill Development
-          </Link>
-          <Link
-            href="/#contact"
-            onClick={() => setOpen(false)}
-            className="py-2.5 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
-          >
-            Contact
-          </Link>
+          {/* Skill Development */}
+          <div>
+            <button
+              onClick={() => setSkillDevOpen(!skillDevOpen)}
+              className="flex items-center justify-between w-full py-2.5 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
+              Skill Development
+              {skillDevOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+            </button>
+            {skillDevOpen && (
+              <div className="ml-3 pl-3 border-l border-gray-100 flex flex-col gap-0.5">
+                {skillDevLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="py-2 px-3 text-sm text-gray-600 hover:text-[#003f71] rounded-md hover:bg-gray-50"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Contact */}
+          <div>
+            <button
+              onClick={() => setContactOpen(!contactOpen)}
+              className="flex items-center justify-between w-full py-2.5 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
+              Contact
+              {contactOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+            </button>
+            {contactOpen && (
+              <div className="ml-3 pl-3 border-l border-gray-100 flex flex-col gap-0.5">
+                {contactLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="py-2 px-3 text-sm text-gray-600 hover:text-[#003f71] rounded-md hover:bg-gray-50"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         </nav>
 
         {/* User Section */}

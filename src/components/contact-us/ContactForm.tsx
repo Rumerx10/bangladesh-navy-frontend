@@ -5,16 +5,25 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import ControlledInputField from "../shared/FromController/ControlledInputField";
+import ControlledSelectField from "../shared/FromController/ControlledSelectField";
 import ControlledTextareaField from "../shared/FromController/ControlledTextareaField";
 import InputLabel from "../shared/InputLabel";
-import Text from "../shared/Text";
 import { Button } from "../ui/button";
 import {
   ContactFormType,
   contactValidationSchema,
 } from "./schema/ContactSchema";
 
-export default function ContactForm() {
+const contactTypeOptions = [
+  { label: "Query & Suggestion", value: "query-suggestion" },
+  { label: "Hydrographic Note", value: "hydrographic-note" },
+];
+
+interface ContactFormProps {
+  defaultType?: string;
+}
+
+export default function ContactForm({ defaultType }: ContactFormProps) {
   const { mutateAsync, error, isPending } = usePost(
     "/contact-support",
     () => {
@@ -27,6 +36,7 @@ export default function ContactForm() {
     resolver: yupResolver(contactValidationSchema),
     mode: "onChange",
     defaultValues: {
+      type: defaultType || "",
       name: "",
       email: "",
       phone: "",
@@ -59,6 +69,16 @@ export default function ContactForm() {
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)} className="w-full">
           <div className="flex flex-col gap-5">
+            <div>
+              <InputLabel label="Type" required />
+              <ControlledSelectField
+                name="type"
+                options={contactTypeOptions}
+                placeholder="Select type"
+                className="bg-white"
+              />
+            </div>
+
             <div>
               <InputLabel label="Name" required />
               <ControlledInputField

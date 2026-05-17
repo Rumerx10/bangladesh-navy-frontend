@@ -4,10 +4,12 @@ import { useAppSelector } from "@/src/lib/redux/hooks";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import AboutUsDropdown from "./AboutUsDropdown";
+import ContactDropdown from "./ContactDropdown";
 import HeaderTopBarActions from "./HeaderTopBarActions";
 import Logo from "./Logo";
 import MobileHeader from "./MobileHeader";
 import ProductServiceDropdown from "./ProductServiceDropdown";
+import SkillDevDropdown from "./SkillDevDropdown";
 
 interface HeaderTopBarProps {
   menuOpen: boolean;
@@ -48,26 +50,8 @@ export default function HeaderTopBar({
             </li>
             <ProductServiceDropdown />
             <AboutUsDropdown />
-            <li>
-              <Link
-                href="/skill-development"
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                  pathname.startsWith("/skill-development")
-                    ? "text-[#003f71] bg-[#003f71]/5"
-                    : "text-gray-700 hover:text-[#003f71] hover:bg-gray-50"
-                }`}
-              >
-                Skill Development
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/contact-us"
-                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-[#003f71] hover:bg-gray-50 rounded-md transition-colors"
-              >
-                Contact
-              </Link>
-            </li>
+            <SkillDevDropdown />
+            <ContactDropdown />
           </ul>
         </nav>
 

@@ -1,6 +1,7 @@
 import * as yup from "yup";
 
 export const contactValidationSchema = yup.object({
+  type: yup.string().required("Please select a type"),
   name: yup.string().required("Name is required"),
   email: yup
     .string()

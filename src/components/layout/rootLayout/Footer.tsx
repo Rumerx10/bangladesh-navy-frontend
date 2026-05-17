@@ -21,17 +21,23 @@ const aboutLinks = [
 ];
 
 const serviceLinks = [
-  { label: "Skill Development", href: "/#skill-development" },
-  { label: "Hydrographic Forms", href: "#" },
-  { label: "Marine Weather", href: "/product-service?category=marine-weather" },
-  { label: "GIS Explorer", href: "#" },
+  { label: "BN Hydrographic School", href: "/skill-development" },
+  { label: "Long Hydrographic Course (Cat. A)", href: "/skill-development/long-hydrographic-course-cat-a" },
+  { label: "Basic Hydrographic Course (Cat. B)", href: "/skill-development/basic-hydrography-cat-b" },
+  { label: "Customized Courses", href: "/skill-development/customized-courses" },
+];
+
+const contactPageLinks = [
+  { label: "Query & Suggestion", href: "/contact-us" },
+  { label: "Contact Information", href: "/contact-us/information" },
+  { label: "Hydrographic Note", href: "/contact-us/hydrographic-note" },
 ];
 
 const Footer = () => {
   return (
     <footer className="bg-[#001836] text-gray-300 pt-12 lg:pt-16">
       <div className="container px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
           {/* Logo & Info */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Link
@@ -115,13 +121,32 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Services */}
+          {/* Skill Development */}
           <div>
             <h4 className="text-sm font-semibold text-white mb-4 lg:mb-5">
-              Services
+              Skill Development
             </h4>
             <ul className="space-y-2.5">
               {serviceLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Us */}
+          <div>
+            <h4 className="text-sm font-semibold text-white mb-4 lg:mb-5">
+              Contact Us
+            </h4>
+            <ul className="space-y-2.5">
+              {contactPageLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}

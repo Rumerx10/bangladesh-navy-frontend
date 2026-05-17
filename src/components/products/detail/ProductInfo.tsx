@@ -1,12 +1,12 @@
 "use client";
 
+import { DiscountType, INavyProduct } from "@/src/components/products/types";
+import { getProductSlug } from "@/src/data/navyProducts";
 import { addToCart } from "@/src/lib/redux/features/cart/cartSlice";
 import { useAppDispatch } from "@/src/lib/redux/hooks";
-import { DiscountType, INavyProduct } from "@/src/components/products/types";
 import { Check, Minus, Plus, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { getProductSlug } from "@/src/data/navyProducts";
 
 interface ProductInfoProps {
   product: INavyProduct;
@@ -69,16 +69,10 @@ export default function ProductInfo({
 
       {/* Stock */}
       <div className="mt-4 flex items-center gap-2">
-        {product.stock > 0 ? (
-          <>
-            <Check size={16} className="text-green-500" />
+        <Check size={16} className="text-green-500" />
             <span className="text-sm text-green-600 font-medium">
-              In Stock ({product.stock} available)
+              In Stock
             </span>
-          </>
-        ) : (
-          <span className="text-sm text-red-500 font-medium">Out of Stock</span>
-        )}
       </div>
 
       {/* Description */}
