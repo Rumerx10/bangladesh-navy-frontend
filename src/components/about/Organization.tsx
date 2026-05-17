@@ -1,64 +1,126 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Building, Users } from "lucide-react";
+import Image from "next/image";
+import {
+  Anchor,
+  Map,
+  Waves,
+  Database,
+  GraduationCap,
+  Briefcase,
+} from "lucide-react";
 
 const departments = [
-  { name: "Hydrographic Survey Wing", description: "Conducts systematic hydrographic surveys of Bangladesh waters" },
-  { name: "Nautical Chart Production Wing", description: "Produces and maintains paper and electronic nautical charts" },
-  { name: "Oceanographic Division", description: "Conducts oceanographic research and tidal observations" },
-  { name: "Data Management Division", description: "Manages geospatial data and GIS systems" },
-  { name: "Training & Development", description: "Provides hydrographic training and skill development" },
-  { name: "Administration & Finance", description: "Manages administrative and financial operations" },
+  {
+    name: "Hydrographic Survey Wing",
+    description: "Conducts systematic hydrographic surveys of Bangladesh waters",
+    icon: <Anchor size={20} />,
+  },
+  {
+    name: "Nautical Chart Production Wing",
+    description: "Produces and maintains paper and electronic nautical charts",
+    icon: <Map size={20} />,
+  },
+  {
+    name: "Oceanographic Division",
+    description: "Conducts oceanographic research and tidal observations",
+    icon: <Waves size={20} />,
+  },
+  {
+    name: "Data Management Division",
+    description: "Manages geospatial data and GIS systems",
+    icon: <Database size={20} />,
+  },
+  {
+    name: "Training & Development",
+    description: "Provides hydrographic training and skill development",
+    icon: <GraduationCap size={20} />,
+  },
+  {
+    name: "Administration & Finance",
+    description: "Manages administrative and financial operations",
+    icon: <Briefcase size={20} />,
+  },
 ];
 
 export default function Organization() {
   return (
-    <section className="py-8 lg:py-12">
+    <section className="py-12 lg:py-20">
       <div className="container px-4 sm:px-6 lg:px-8">
-        {/* Leadership */}
+        {/* ── Chief Hydrographer (Root Node) ── */}
         <motion.div
-          className="text-center mb-10"
+          className="flex flex-col items-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6 }}
         >
-          <div className="w-20 h-20 rounded-full bg-[#001836] flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
-            CH
+          {/* Photo card with glow */}
+          <div className="relative group">
+            <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-[#003f71] to-cyan-500 opacity-30 blur group-hover:opacity-50 transition-opacity duration-500" />
+            <div className="relative w-32 h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl">
+              <Image
+                src="/CHIEF.png"
+                alt="Cdre Sheikh Firoz Ahmed"
+                fill
+                className="object-cover object-top"
+                priority
+              />
+            </div>
           </div>
-          <h2 className="text-xl font-bold text-[#001836]">
-            Chief Hydrographer
+
+          {/* Name & designation */}
+          <h2 className="mt-5 text-xl lg:text-2xl font-bold text-[#001836] text-center">
+            Cdre Sheikh Firoz Ahmed, (H), NGP, psc, BN
           </h2>
-          <p className="text-sm text-gray-500 mt-1">
-            Bangladesh Navy Hydrographic and Oceanographic Center
+          <p className="text-sm lg:text-base text-[#003f71] font-semibold mt-1">
+            BN Chief Hydrographer
+          </p>
+          <p className="text-xs text-gray-500 mt-0.5">
+            Bangladesh Navy Hydrographic &amp; Oceanographic Center
           </p>
         </motion.div>
 
-        {/* Departments */}
-        <h3 className="text-lg font-bold text-[#001836] mb-5 flex items-center gap-2">
-          <Building size={20} />
-          Departments & Divisions
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* ── Tree Connector: Vertical stem from chief ── */}
+        <div className="flex justify-center">
+          <div className="w-px h-12 lg:h-16 bg-gradient-to-b from-[#003f71] to-[#003f71]/30" />
+        </div>
+
+        {/* ── Tree Connector: Horizontal bar ── */}
+        <div className="hidden lg:block max-w-5xl mx-auto">
+          <div className="h-px bg-[#003f71]/25" />
+        </div>
+
+        {/* ── Department Tree Branches ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-0 max-w-5xl mx-auto">
           {departments.map((dept, i) => (
             <motion.div
               key={i}
-              className="rounded-xl border border-gray-100 bg-white p-5 hover:shadow-md hover:border-[#003f71]/15 transition-all"
-              initial={{ opacity: 0, y: 20 }}
+              className="flex flex-col items-center"
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
+              transition={{ duration: 0.45, delay: i * 0.08 }}
             >
-              <div className="w-10 h-10 rounded-lg bg-[#003f71]/10 text-[#003f71] flex items-center justify-center mb-3">
-                <Users size={18} />
+              {/* Vertical branch connector */}
+              <div className="w-px h-8 lg:h-10 bg-gradient-to-b from-[#003f71]/25 to-[#003f71]/40" />
+
+              {/* Connector dot */}
+              <div className="w-3 h-3 rounded-full bg-[#003f71] border-2 border-white shadow-sm" />
+
+              {/* Department card */}
+              <div className="mt-3 mb-8 w-full max-w-[280px] rounded-2xl border border-gray-100 bg-white p-5 shadow-sm hover:shadow-lg hover:border-[#003f71]/20 hover:-translate-y-1 transition-all duration-300 group cursor-default">
+                <div className="w-11 h-11 rounded-xl bg-[#003f71]/10 text-[#003f71] flex items-center justify-center mb-3 group-hover:bg-[#003f71] group-hover:text-white transition-colors duration-300">
+                  {dept.icon}
+                </div>
+                <h4 className="text-sm font-bold text-[#001836] leading-snug">
+                  {dept.name}
+                </h4>
+                <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">
+                  {dept.description}
+                </p>
               </div>
-              <h4 className="text-sm font-semibold text-[#001836]">
-                {dept.name}
-              </h4>
-              <p className="text-xs text-gray-500 mt-1 leading-relaxed">
-                {dept.description}
-              </p>
             </motion.div>
           ))}
         </div>

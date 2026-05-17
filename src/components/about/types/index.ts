@@ -36,12 +36,14 @@ export interface IOrganizationUnit {
 
 export interface ISurveyShip {
   id: string;
+  slug: string;
   name: string;
   designation: string;
   description: string;
   image?: string;
   specifications: Record<string, string>;
   status: "active" | "retired" | "under-maintenance";
+  details: string[];
 }
 
 export interface IGalleryItem {

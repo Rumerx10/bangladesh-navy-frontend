@@ -2,7 +2,9 @@
 
 import { surveyShips } from "@/src/data/aboutData";
 import { motion } from "framer-motion";
-import { Anchor, Ship } from "lucide-react";
+import { Anchor, ArrowRight, Ship } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function SurveyShips() {
   return (
@@ -19,8 +21,19 @@ export default function SurveyShips() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
             >
               <div className="flex flex-col lg:flex-row">
-                <div className="lg:w-1/3 aspect-video lg:aspect-auto bg-gradient-to-br from-[#001836] to-[#003f71] flex items-center justify-center p-8">
-                  <Ship size={80} className="text-white/20" />
+                <div className="lg:w-1/3 aspect-video lg:aspect-auto relative bg-gradient-to-br from-[#001836] to-[#003f71] overflow-hidden">
+                  {ship.image ? (
+                    <Image
+                      src={ship.image}
+                      alt={ship.name}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center h-full p-8">
+                      <Ship size={80} className="text-white/20" />
+                    </div>
+                  )}
                 </div>
                 <div className="flex-1 p-6 lg:p-8">
                   <div className="flex items-start gap-3 mb-4">
@@ -54,7 +67,7 @@ export default function SurveyShips() {
                   <p className="text-sm text-gray-600 leading-relaxed mb-4">
                     {ship.description}
                   </p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
                     {Object.entries(ship.specifications).map(([key, value]) => (
                       <div key={key} className="bg-gray-50 rounded-lg px-3 py-2">
                         <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">
@@ -66,6 +79,16 @@ export default function SurveyShips() {
                       </div>
                     ))}
                   </div>
+                  <Link
+                    href={`/about/survey-ships/${ship.slug}`}
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#003f71] hover:text-[#001836] transition-colors group"
+                  >
+                    Read Details
+                    <ArrowRight
+                      size={16}
+                      className="group-hover:translate-x-1 transition-transform"
+                    />
+                  </Link>
                 </div>
               </div>
             </motion.div>
