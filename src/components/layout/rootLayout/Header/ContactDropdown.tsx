@@ -5,8 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const contactLinks = [
-  { label: "Query & Suggestion", href: "/contact-us" },
-  { label: "Contact Information", href: "/contact-us/information" },
+  { label: "Contact Information", href: "/contact-us" },
+  { label: "Query & Suggestion", href: "/contact-us/query" },
   { label: "Hydrographic Note", href: "/contact-us/hydrographic-note" },
 ];
 
