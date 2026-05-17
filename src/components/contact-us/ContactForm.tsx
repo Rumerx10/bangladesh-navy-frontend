@@ -70,16 +70,6 @@ export default function ContactForm({ defaultType }: ContactFormProps) {
         <form onSubmit={methods.handleSubmit(onSubmit)} className="w-full">
           <div className="flex flex-col gap-5">
             <div>
-              <InputLabel label="Type" required />
-              <ControlledSelectField
-                name="type"
-                options={contactTypeOptions}
-                placeholder="Select type"
-                className="bg-white"
-              />
-            </div>
-
-            <div>
               <InputLabel label="Name" required />
               <ControlledInputField
                 name="name"
