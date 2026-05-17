@@ -1,17 +1,12 @@
-import AboutPageHeader from "@/src/components/about/AboutPageHeader";
+import AboutHero from "@/src/components/about/AboutHero";
 import Organization from "@/src/components/about/Organization";
 
 export default function OrganizationPage() {
   return (
     <>
-      <AboutPageHeader
+      <AboutHero
         title="Organization"
-        subtitle="Structure and departments of BNHOC"
-        breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "About Us", href: "/about" },
-          { label: "Organization" },
-        ]}
+        description="Structure and departments of BNHOC"
       />
       <Organization />
     </>

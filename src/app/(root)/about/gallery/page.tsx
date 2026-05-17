@@ -1,17 +1,12 @@
-import AboutPageHeader from "@/src/components/about/AboutPageHeader";
+import AboutHero from "@/src/components/about/AboutHero";
 import GalleryGrid from "@/src/components/about/GalleryGrid";
 
 export default function GalleryPage() {
   return (
     <>
-      <AboutPageHeader
+      <AboutHero
         title="Gallery"
-        subtitle="Visual documentation of our operations, events, and facilities"
-        breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "About Us", href: "/about" },
-          { label: "Gallery" },
-        ]}
+        description="Visual documentation of our operations, events, and facilities"
       />
       <GalleryGrid />
     </>

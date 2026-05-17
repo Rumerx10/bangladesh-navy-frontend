@@ -1,17 +1,12 @@
-import AboutPageHeader from "@/src/components/about/AboutPageHeader";
+import AboutHero from "@/src/components/about/AboutHero";
 import SurveyShips from "@/src/components/about/SurveyShips";
 
 export default function SurveyShipsPage() {
   return (
     <>
-      <AboutPageHeader
+      <AboutHero
         title="Survey Ships"
-        subtitle="Our fleet of hydrographic survey and oceanographic research vessels"
-        breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "About Us", href: "/about" },
-          { label: "Survey Ships" },
-        ]}
+        description="Our fleet of hydrographic survey and oceanographic research vessels"
       />
       <SurveyShips />
     </>
