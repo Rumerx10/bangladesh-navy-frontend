@@ -1,18 +1,20 @@
 "use client";
 
+import { ICartItem } from "@/src/components/cart/types/cart";
 import { PaymentMethod } from "@/src/components/cart/types/order";
-import { useAppSelector } from "@/src/lib/redux/hooks";
 import {
-    CreditCard,
-    ImageIcon,
-    ShieldCheck,
-    Smartphone,
-    Wallet,
+  Building2,
+  CreditCard,
+  ImageIcon,
+  Landmark,
+  ShieldCheck,
+  Smartphone,
+  Wallet,
 } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { useFormContext } from "react-hook-form";
+
+import { CheckoutSchemaForm } from "../Schema/checkoutSchema";
 
 const paymentMethods = [
   {
@@ -34,6 +36,12 @@ const paymentMethods = [
     color: "#f97316",
   },
   {
+    id: PaymentMethod.BANK_TRANSFER,
+    label: "Bank Transfer",
+    icon: <Landmark size={22} />,
+    color: "#0f766e",
+  },
+  {
     id: PaymentMethod.STRIPE,
     label: "Stripe",
     icon: <Wallet size={22} />,
@@ -41,34 +49,8 @@ const paymentMethods = [
   },
 ];
 
-interface ShippingForm {
-  fullName: string;
-  phone: string;
-  email: string;
-  addressLine1: string;
-  addressLine2: string;
-  city: string;
-  district: string;
-  division: string;
-  postalCode: string;
-}
-
-const initialForm: ShippingForm = {
-  fullName: "",
-  phone: "",
-  email: "",
-  addressLine1: "",
-  addressLine2: "",
-  city: "",
-  district: "",
-  division: "",
-  postalCode: "",
-};
-
 function CheckoutItemImage({ src, alt }: { src: string; alt: string }) {
-  const [imgError, setImgError] = useState(false);
-
-  if (imgError || !src) {
+  if (!src) {
     return (
       <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground">
         <ImageIcon size={20} />
@@ -83,85 +65,64 @@ function CheckoutItemImage({ src, alt }: { src: string; alt: string }) {
       fill
       className="object-cover"
       sizes="56px"
-      onError={() => setImgError(true)}
     />
   );
 }
 
-export default function Checkout() {
-  const router = useRouter();
-  const { items } = useAppSelector((state) => state.cart);
+export default function CheckoutForm({
+  items,
+  onSubmit,
+  isPending = false,
+}: {
+  items: ICartItem[];
+  onSubmit: (data: CheckoutSchemaForm) => void | Promise<void>;
+  isPending?: boolean;
+}) {
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useFormContext<CheckoutSchemaForm>();
 
-  const [form, setForm] = useState<ShippingForm>(initialForm);
-  const [selectedPayment, setSelectedPayment] = useState<PaymentMethod>(
-    PaymentMethod.SSLCOMMERZ
-  );
-  const [isPlacing, setIsPlacing] = useState(false);
+  const selectedPayment = watch("paymentMethod");
+  const isBankTransfer = selectedPayment === PaymentMethod.BANK_TRANSFER;
 
-  // Redirect to cart if empty
-  useEffect(() => {
-    if (items.length === 0) {
-      router.replace("/cart");
-    }
-  }, [items.length, router]);
-
-  // Totals
   const subtotal = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
   const total = subtotal;
 
-  const handleChange = (field: keyof ShippingForm, value: string) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const isFormValid =
-    form.fullName.trim() &&
-    form.phone.trim() &&
-    form.addressLine1.trim() &&
-    form.city.trim() &&
-    form.district.trim() &&
-    form.division.trim();
-
-  const handlePlaceOrder = async () => {
-    if (!isFormValid) {
-      toast.error("Please fill in all required fields");
-      return;
-    }
-
-    setIsPlacing(true);
-
-    // Simulate order processing
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    toast.info(
-      `${paymentMethods.find((m) => m.id === selectedPayment)?.label} payment gateway coming soon!`
-    );
-    setIsPlacing(false);
-  };
-
-  if (items.length === 0) return null;
-
   const inputClass =
     "w-full px-3 py-2.5 sm:py-2 border border-border rounded-lg text-sm bg-background text-foreground focus:outline-none focus:border-primary placeholder:text-muted-foreground transition-colors";
 
+  const fieldErrorClass = "mt-1 text-xs text-red-500";
+
+  const bankAccountDetails = [
+    { label: "Bank Name", value: "BD Bank" },
+    { label: "Account Name", value: "Bangladesh Navy Frontend" },
+    { label: "Account Number", value: "0123 456 7890" },
+    { label: "Branch", value: "Dhaka Main Branch" },
+    { label: "Routing Number", value: "123456789" },
+  ];
+
   return (
-    <div className="container px-4 sm:px-0">
+    <form onSubmit={handleSubmit(onSubmit)} className="container px-4 sm:px-0">
       <div className="py-4 lg:py-32">
         <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-4 sm:mb-6">
           Checkout
         </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 lg:gap-8">
-          {/* === LEFT: Forms === */}
           <div className="flex flex-col gap-6">
-            {/* Shipping Address */}
             <div className="border border-border rounded-xl p-4 sm:p-6 bg-card">
               <h2 className="text-sm sm:text-base font-bold text-foreground mb-4 sm:mb-5 flex items-center gap-2">
                 <span className="w-1 h-4.5 rounded-sm bg-primary" />
                 Shipping Address
               </h2>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-foreground mb-1">
@@ -170,9 +131,11 @@ export default function Checkout() {
                   <input
                     className={inputClass}
                     placeholder="Enter your full name"
-                    value={form.fullName}
-                    onChange={(e) => handleChange("fullName", e.target.value)}
+                    {...register("fullName")}
                   />
+                  {errors.fullName && (
+                    <p className={fieldErrorClass}>{errors.fullName.message}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-foreground mb-1">
@@ -181,9 +144,11 @@ export default function Checkout() {
                   <input
                     className={inputClass}
                     placeholder="+880 1XX XXXX XXX"
-                    value={form.phone}
-                    onChange={(e) => handleChange("phone", e.target.value)}
+                    {...register("phone")}
                   />
+                  {errors.phone && (
+                    <p className={fieldErrorClass}>{errors.phone.message}</p>
+                  )}
                 </div>
                 <div className="sm:col-span-2">
                   <label className="block text-xs font-semibold text-foreground mb-1">
@@ -193,9 +158,11 @@ export default function Checkout() {
                     className={inputClass}
                     type="email"
                     placeholder="your@email.com (optional)"
-                    value={form.email}
-                    onChange={(e) => handleChange("email", e.target.value)}
+                    {...register("email")}
                   />
+                  {errors.email && (
+                    <p className={fieldErrorClass}>{errors.email.message}</p>
+                  )}
                 </div>
                 <div className="sm:col-span-2">
                   <label className="block text-xs font-semibold text-foreground mb-1">
@@ -204,11 +171,13 @@ export default function Checkout() {
                   <input
                     className={inputClass}
                     placeholder="House no, street, area"
-                    value={form.addressLine1}
-                    onChange={(e) =>
-                      handleChange("addressLine1", e.target.value)
-                    }
+                    {...register("addressLine1")}
                   />
+                  {errors.addressLine1 && (
+                    <p className={fieldErrorClass}>
+                      {errors.addressLine1.message}
+                    </p>
+                  )}
                 </div>
                 <div className="sm:col-span-2">
                   <label className="block text-xs font-semibold text-foreground mb-1">
@@ -217,10 +186,7 @@ export default function Checkout() {
                   <input
                     className={inputClass}
                     placeholder="Apartment, suite, unit, etc. (optional)"
-                    value={form.addressLine2}
-                    onChange={(e) =>
-                      handleChange("addressLine2", e.target.value)
-                    }
+                    {...register("addressLine2")}
                   />
                 </div>
                 <div>
@@ -230,9 +196,11 @@ export default function Checkout() {
                   <input
                     className={inputClass}
                     placeholder="e.g. Dhaka"
-                    value={form.city}
-                    onChange={(e) => handleChange("city", e.target.value)}
+                    {...register("city")}
                   />
+                  {errors.city && (
+                    <p className={fieldErrorClass}>{errors.city.message}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-foreground mb-1">
@@ -241,9 +209,11 @@ export default function Checkout() {
                   <input
                     className={inputClass}
                     placeholder="e.g. Dhaka"
-                    value={form.district}
-                    onChange={(e) => handleChange("district", e.target.value)}
+                    {...register("district")}
                   />
+                  {errors.district && (
+                    <p className={fieldErrorClass}>{errors.district.message}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-foreground mb-1">
@@ -252,9 +222,11 @@ export default function Checkout() {
                   <input
                     className={inputClass}
                     placeholder="e.g. Dhaka"
-                    value={form.division}
-                    onChange={(e) => handleChange("division", e.target.value)}
+                    {...register("division")}
                   />
+                  {errors.division && (
+                    <p className={fieldErrorClass}>{errors.division.message}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-foreground mb-1">
@@ -263,20 +235,19 @@ export default function Checkout() {
                   <input
                     className={inputClass}
                     placeholder="e.g. 1205"
-                    value={form.postalCode}
-                    onChange={(e) => handleChange("postalCode", e.target.value)}
+                    {...register("postalCode")}
                   />
                 </div>
               </div>
             </div>
 
-            {/* Payment Method */}
             <div className="border border-border rounded-xl p-4 sm:p-6 bg-card">
               <h2 className="text-sm sm:text-base font-bold text-foreground mb-4 sm:mb-5 flex items-center gap-2">
                 <span className="w-1 h-4.5 rounded-sm bg-primary" />
                 Payment Method
               </h2>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:gap-3">
                 {paymentMethods.map((method) => (
                   <button
                     key={method.id}
@@ -286,7 +257,18 @@ export default function Checkout() {
                         ? "border-primary bg-primary/5"
                         : "border-border hover:border-primary"
                     }`}
-                    onClick={() => setSelectedPayment(method.id)}
+                    onClick={() => {
+                      setValue("paymentMethod", method.id, {
+                        shouldValidate: true,
+                        shouldDirty: true,
+                      });
+
+                      if (method.id !== PaymentMethod.BANK_TRANSFER) {
+                        setValue("bankTransactionId", "", {
+                          shouldValidate: true,
+                        });
+                      }
+                    }}
                   >
                     <div
                       className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg"
@@ -300,10 +282,54 @@ export default function Checkout() {
                   </button>
                 ))}
               </div>
+
+              {errors.paymentMethod && (
+                <p className={fieldErrorClass}>{errors.paymentMethod.message}</p>
+              )}
+
+              {isBankTransfer && (
+                <div className="mt-6 grid gap-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-amber-950">
+                  <div className="flex items-center gap-2 text-sm font-bold">
+                    <Building2 size={18} />
+                    Bangladesh Bank transfer details
+                  </div>
+
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    {bankAccountDetails.map((detail) => (
+                      <div
+                        key={detail.label}
+                        className="rounded-lg border border-amber-200 bg-white/80 p-3"
+                      >
+                        <p className="text-[11px] font-semibold uppercase tracking-wide text-amber-700">
+                          {detail.label}
+                        </p>
+                        <p className="text-sm font-medium text-foreground">
+                          {detail.value}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-foreground mb-1">
+                      Bank Transaction ID <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      className={inputClass}
+                      placeholder="Enter your bank transaction/reference ID"
+                      {...register("bankTransactionId")}
+                    />
+                    {errors.bankTransactionId && (
+                      <p className={fieldErrorClass}>
+                        {errors.bankTransactionId.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* === RIGHT: Order Summary === */}
           <div className="flex flex-col gap-6">
             <div className="border border-border rounded-xl p-4 sm:p-6 bg-card">
               <h2 className="text-sm sm:text-base font-bold text-foreground mb-4 sm:mb-5 flex items-center gap-2">
@@ -311,7 +337,6 @@ export default function Checkout() {
                 Order Summary
               </h2>
 
-              {/* Items */}
               <div className="flex flex-col gap-3">
                 {items.map((item) => (
                   <div
@@ -338,7 +363,6 @@ export default function Checkout() {
 
               <hr className="border-t border-border my-4" />
 
-              {/* Totals */}
               <div className="flex flex-col gap-2.5">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Subtotal</span>
@@ -355,18 +379,16 @@ export default function Checkout() {
 
                 <div className="flex justify-between text-base sm:text-lg font-bold">
                   <span>Total</span>
-                  <span className="text-primary">
-                    ৳{total.toLocaleString()}
-                  </span>
+                  <span className="text-primary">৳{total.toLocaleString()}</span>
                 </div>
               </div>
 
               <button
                 className="flex items-center justify-center gap-2 w-full py-3 mt-4 rounded-lg text-sm font-bold bg-primary text-primary-foreground hover:opacity-90 active:scale-[0.98] transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                onClick={handlePlaceOrder}
-                disabled={isPlacing}
+                type="submit"
+                disabled={isPending}
               >
-                {isPlacing ? "Processing..." : "Place Order"}
+                {isPending ? "Processing..." : "Place Order"}
               </button>
 
               <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground text-center justify-center mt-3">
@@ -377,6 +399,6 @@ export default function Checkout() {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 }

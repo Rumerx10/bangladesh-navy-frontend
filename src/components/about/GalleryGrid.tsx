@@ -1,14 +1,14 @@
 "use client";
 
 import { galleryItems } from "@/src/data/aboutData";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion, Variants } from "framer-motion";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 
 const allCategories = ["All", ...Array.from(new Set(galleryItems.map((g) => g.category)))];
 
-const gridVariants = {
+const gridVariants: Variants = {
   hidden: {},
   show: {
     transition: {
@@ -18,7 +18,7 @@ const gridVariants = {
   },
 };
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: {
     opacity: 0,
     y: 30,

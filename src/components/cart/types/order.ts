@@ -21,6 +21,7 @@ export enum PaymentMethod {
   SSLCOMMERZ = "SSLCOMMERZ",
   BKASH = "BKASH",
   NAGAD = "NAGAD",
+  BANK_TRANSFER = "BANK_TRANSFER",
   STRIPE = "STRIPE",
 }
 

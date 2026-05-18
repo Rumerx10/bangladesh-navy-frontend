@@ -5,19 +5,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import ControlledInputField from "../shared/FromController/ControlledInputField";
-import ControlledSelectField from "../shared/FromController/ControlledSelectField";
 import ControlledTextareaField from "../shared/FromController/ControlledTextareaField";
 import InputLabel from "../shared/InputLabel";
 import { Button } from "../ui/button";
 import {
-  ContactFormType,
-  contactValidationSchema,
+    ContactFormType,
+    contactValidationSchema,
 } from "./schema/ContactSchema";
-
-const contactTypeOptions = [
-  { label: "Query & Suggestion", value: "query-suggestion" },
-  { label: "Hydrographic Note", value: "hydrographic-note" },
-];
 
 interface ContactFormProps {
   defaultType?: string;
@@ -63,7 +57,8 @@ export default function ContactForm({ defaultType }: ContactFormProps) {
           Send us a Message
         </h2>
         <p className="text-gray-500 text-sm lg:text-base leading-relaxed">
-          Have a question about our products or services? Fill out the form below and our team will get back to you shortly.
+          Have a question about our products or services? Fill out the form
+          below and our team will get back to you shortly.
         </p>
       </div>
       <FormProvider {...methods}>
