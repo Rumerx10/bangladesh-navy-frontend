@@ -1,46 +1,57 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import {
-  Anchor,
-  Map,
-  Waves,
-  Database,
-  GraduationCap,
-  Briefcase,
+    Anchor,
+    Briefcase,
+    Database,
+    GraduationCap,
+    Map,
+    Waves,
 } from "lucide-react";
+import Image from "next/image";
 
 const departments = [
   {
-    name: "Hydrographic Survey Wing",
-    description: "Conducts systematic hydrographic surveys of Bangladesh waters",
+    name: "BNHOC",
+    description:
+      "Bangladesh Navy Hydrographic & Oceanographic Centre - Core command center for hydrographic operations",
     icon: <Anchor size={20} />,
   },
   {
-    name: "Nautical Chart Production Wing",
-    description: "Produces and maintains paper and electronic nautical charts",
+    name: "BNS Anusandhan",
+    description:
+      "Research and survey vessel dedicated to hydrographic data collection",
     icon: <Map size={20} />,
   },
   {
-    name: "Oceanographic Division",
-    description: "Conducts oceanographic research and tidal observations",
+    name: "BNS Shaibal",
+    description:
+      "Survey and support vessel for oceanographic and coastal operations",
     icon: <Waves size={20} />,
   },
   {
-    name: "Data Management Division",
-    description: "Manages geospatial data and GIS systems",
+    name: "BN Hydro Institute",
+    description:
+      "Training and education center for hydrographic personnel development",
     icon: <Database size={20} />,
   },
   {
-    name: "Training & Development",
-    description: "Provides hydrographic training and skill development",
+    name: "BNS Darshak",
+    description:
+      "Support vessel for training and operational hydrographic surveys",
     icon: <GraduationCap size={20} />,
   },
   {
-    name: "Administration & Finance",
-    description: "Manages administrative and financial operations",
+    name: "BNS Surovi",
+    description:
+      "Advanced survey and research vessel for operational hydrographic missions",
     icon: <Briefcase size={20} />,
+  },
+  {
+    name: "BNS Tallashi",
+    description: "Operational support vessel for coastal and maritime surveys",
+    icon: <Anchor size={20} />,
   },
 ];
 
