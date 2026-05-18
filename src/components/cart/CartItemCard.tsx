@@ -3,9 +3,10 @@
 import { removeFromCart } from "@/src/lib/redux/features/cart/cartSlice";
 import { useAppDispatch } from "@/src/lib/redux/hooks";
 import { ICartItem } from "@/src/components/cart/types/cart";
-import { Tag, Trash2, Truck } from "lucide-react";
+import { ImageIcon, Tag, Trash2, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import QuantitySelector from "./QuantitySelector";
 
 interface CartItemCardProps {
@@ -15,6 +16,7 @@ interface CartItemCardProps {
 
 export default function CartItemCard({ item, index }: CartItemCardProps) {
   const dispatch = useAppDispatch();
+  const [imgError, setImgError] = useState(false);
 
   return (
     <div className="relative border border-border rounded-xl bg-card overflow-hidden hover:shadow-md hover:border-primary/20 transition-all">
@@ -26,13 +28,20 @@ export default function CartItemCard({ item, index }: CartItemCardProps) {
       <div className="flex gap-3 sm:gap-4 p-3 sm:p-5 pl-5 sm:pl-6">
         {/* Image */}
         <div className="relative w-20 sm:w-24 lg:w-[100px] min-w-[80px] sm:min-w-[96px] lg:min-w-[100px] h-24 sm:h-28 lg:h-[120px] rounded-lg overflow-hidden bg-gray-100">
-          <Image
-            src={item.image}
-            alt={item.name}
-            fill
-            className="object-cover"
-            sizes="110px"
-          />
+          {imgError || !item.image ? (
+            <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground">
+              <ImageIcon size={32} />
+            </div>
+          ) : (
+            <Image
+              src={item.image}
+              alt={item.name}
+              fill
+              className="object-cover"
+              sizes="110px"
+              onError={() => setImgError(true)}
+            />
+          )}
         </div>
 
         {/* Details */}

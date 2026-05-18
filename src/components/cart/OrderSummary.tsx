@@ -3,25 +3,17 @@
 import { ICartItem } from "@/src/components/cart/types/cart";
 import { ArrowRight, ShoppingCart } from "lucide-react";
 import Link from "next/link";
-import CouponInput from "./CouponInput";
 
 interface OrderSummaryProps {
   items: ICartItem[];
-  couponCode: string | null;
-  couponDiscount: number;
 }
 
-export default function OrderSummary({
-  items,
-  couponCode,
-  couponDiscount,
-}: OrderSummaryProps) {
+export default function OrderSummary({ items }: OrderSummaryProps) {
   const subtotal = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
-  const discount = couponDiscount;
-  const total = Math.max(0, subtotal - discount);
+  const total = subtotal;
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const freeShippingCount = items.filter((item) => item.freeShipping).length;
 
@@ -33,9 +25,6 @@ export default function OrderSummary({
           <span>Order Summary</span>
         </div>
 
-        {/* Coupon */}
-        <CouponInput couponCode={couponCode} subtotal={subtotal} />
-
         {/* Summary rows */}
         <div className="flex flex-col gap-3">
           <div className="flex justify-between text-sm">
@@ -44,20 +33,12 @@ export default function OrderSummary({
               ৳{subtotal.toLocaleString()}
             </span>
           </div>
-          {discount > 0 && (
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Discount</span>
-              <span className="font-medium text-green-600">
-                -৳{discount.toLocaleString()}
-              </span>
-            </div>
-          )}
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Shipping</span>
             {freeShippingCount === items.length ? (
               <span className="font-medium text-green-600">Free</span>
             ) : (
-              <span className="font-medium text-orange-600">Calculated at checkout</span>
+              <span className="font-medium text-green-600">Free</span>
             )}
           </div>
 

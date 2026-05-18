@@ -4,7 +4,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 export default function TopInfoBar() {
   return (
     <div className="bg-[#001836] text-white text-xs">
-      <div className="container flex items-center justify-between h-8 px-4">
+      <div className="container flex items-center justify-between h-8 px-4 sm:px-0">
         <span className="font-medium tracking-wide">Welcome to BNHOC</span>
         <div className="hidden sm:flex items-center gap-4">
           <a

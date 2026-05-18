@@ -6,15 +6,11 @@ import { getCartData, saveCartData } from "@/src/lib/indexedDB";
 
 interface CartState {
   items: ICartItem[];
-  couponCode: string | null;
-  couponDiscount: number;
   initialized: boolean;
 }
 
 const initialState: CartState = {
   items: [],
-  couponCode: null,
-  couponDiscount: 0,
   initialized: false,
 };
 
@@ -28,8 +24,6 @@ const persistCart = (state: CartState) => {
   if (typeof window !== "undefined") {
     saveCartData("cartState", {
       items: state.items,
-      couponCode: state.couponCode,
-      couponDiscount: state.couponDiscount,
     });
   }
 };
@@ -87,25 +81,8 @@ const cartSlice = createSlice({
       persistCart(state);
     },
 
-    applyCoupon(
-      state,
-      action: PayloadAction<{ code: string; discount: number }>
-    ) {
-      state.couponCode = action.payload.code;
-      state.couponDiscount = action.payload.discount;
-      persistCart(state);
-    },
-
-    removeCoupon(state) {
-      state.couponCode = null;
-      state.couponDiscount = 0;
-      persistCart(state);
-    },
-
     clearCart(state) {
       state.items = [];
-      state.couponCode = null;
-      state.couponDiscount = 0;
       persistCart(state);
     },
   },
@@ -113,8 +90,6 @@ const cartSlice = createSlice({
     builder.addCase(initCart.fulfilled, (state, action) => {
       if (action.payload) {
         state.items = action.payload.items ?? [];
-        state.couponCode = action.payload.couponCode ?? null;
-        state.couponDiscount = action.payload.couponDiscount ?? 0;
       }
       state.initialized = true;
     });
@@ -128,8 +103,6 @@ export const {
   addToCart,
   removeFromCart,
   updateQuantity,
-  applyCoupon,
-  removeCoupon,
   clearCart,
 } = cartSlice.actions;
 
