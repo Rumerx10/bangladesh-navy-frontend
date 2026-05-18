@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 const aboutLinks = [
   { label: "History", href: "/about/history" },
   { label: "Vision & Mission", href: "/about/vision-mission" },
-  { label: "Organization", href: "/about/organization" },
+  { label: "Organogram", href: "/about/organogram" },
   { label: "Survey Ships", href: "/about/survey-ships" },
   { label: "Gallery", href: "/about/gallery" },
 ];
@@ -27,7 +27,10 @@ export default function AboutUsDropdown() {
         }`}
       >
         About Us
-        <ChevronDown size={14} className="mt-px transition-transform group-hover:rotate-180 duration-200" />
+        <ChevronDown
+          size={14}
+          className="mt-px transition-transform group-hover:rotate-180 duration-200"
+        />
       </button>
       <div className="absolute left-1/2 top-full z-50 hidden min-w-[200px] -translate-x-1/2 rounded-xl border border-gray-200 bg-white p-2 shadow-xl group-hover:block">
         <div className="flex flex-col gap-0.5">

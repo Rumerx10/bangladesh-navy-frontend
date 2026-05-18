@@ -1,30 +1,45 @@
 import logo from "@/public/logo.png";
 import { siteConfig } from "@/src/config/siteConfig";
-import { Facebook, MapPin, Mail, Phone, Youtube } from "lucide-react";
+import { Facebook, Mail, MapPin, Phone, Youtube } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 const productLinks = [
   { label: "Paper Charts", href: "/product-service?category=paper-charts" },
-  { label: "Electronic Charts", href: "/product-service?category=electronic-charts" },
+  {
+    label: "Electronic Charts",
+    href: "/product-service?category=electronic-charts",
+  },
   { label: "Tide Tables", href: "/product-service?category=tide-tables" },
-  { label: "Notices to Mariners", href: "/product-service?category=notices-to-mariners" },
+  {
+    label: "Notices to Mariners",
+    href: "/product-service?category=notices-to-mariners",
+  },
   { label: "Publications", href: "/product-service?category=publications" },
 ];
 
 const aboutLinks = [
   { label: "History", href: "/about/history" },
   { label: "Vision & Mission", href: "/about/vision-mission" },
-  { label: "Organization", href: "/about/organization" },
+  { label: "Organogram", href: "/about/organogram" },
   { label: "Survey Ships", href: "/about/survey-ships" },
   { label: "Gallery", href: "/about/gallery" },
 ];
 
 const serviceLinks = [
   { label: "BN Hydrographic School", href: "/skill-development" },
-  { label: "Long Hydrographic Course (Cat. A)", href: "/skill-development/long-hydrographic-course-cat-a" },
-  { label: "Basic Hydrographic Course (Cat. B)", href: "/skill-development/basic-hydrography-cat-b" },
-  { label: "Customized Courses", href: "/skill-development/customized-courses" },
+  {
+    label: "Long Hydrographic Course (Cat. A)",
+    href: "/skill-development/long-hydrographic-course-cat-a",
+  },
+  {
+    label: "Basic Hydrographic Course (Cat. B)",
+    href: "/skill-development/basic-hydrography-cat-b",
+  },
+  {
+    label: "Customized Courses",
+    href: "/skill-development/customized-courses",
+  },
 ];
 
 const contactPageLinks = [
@@ -76,7 +91,10 @@ const Footer = () => {
               </div>
               <div className="flex items-center gap-2.5 text-gray-400">
                 <Mail size={16} className="shrink-0 text-gray-500" />
-                <Link href={`mailto:${siteConfig.email}`} className="hover:text-white transition-colors">
+                <Link
+                  href={`mailto:${siteConfig.email}`}
+                  className="hover:text-white transition-colors"
+                >
                   {siteConfig.email}
                 </Link>
               </div>
@@ -175,7 +193,13 @@ const Footer = () => {
                 className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#003f71] flex items-center justify-center transition-colors"
                 aria-label="Twitter"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-white">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="text-white"
+                >
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
               </a>

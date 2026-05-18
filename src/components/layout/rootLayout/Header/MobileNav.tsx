@@ -4,14 +4,14 @@ import { navyCategories } from "@/src/data/navyCategories";
 import { logoutUser } from "@/src/lib/redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/src/lib/redux/hooks";
 import {
-  ChevronDown,
-  ChevronRight,
-  Home,
-  LayoutGrid,
-  LogOut,
-  ShoppingCart,
-  User,
-  X,
+    ChevronDown,
+    ChevronRight,
+    Home,
+    LayoutGrid,
+    LogOut,
+    ShoppingCart,
+    User,
+    X,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,19 +21,37 @@ import { useState } from "react";
 const aboutLinks = [
   { label: "History", href: "/about/history" },
   { label: "Vision & Mission", href: "/about/vision-mission" },
-  { label: "Organization", href: "/about/organization" },
+  { label: "Organogram", href: "/about/organogram" },
   { label: "Survey Ships", href: "/about/survey-ships" },
   { label: "Gallery", href: "/about/gallery" },
 ];
 
 const skillDevLinks = [
   { label: "BN Hydrographic School", href: "/skill-development" },
-  { label: "Long Hydrographic Course (Cat. A)", href: "/skill-development/long-hydrographic-course-cat-a" },
-  { label: "Basic Hydrographic Course (Cat. B)", href: "/skill-development/basic-hydrography-cat-b" },
-  { label: "Survey Recorder Part I", href: "/skill-development/survey-recorder-part-1" },
-  { label: "Survey Recorder Part II", href: "/skill-development/survey-recorder-part-2" },
-  { label: "Survey Recorder Part III", href: "/skill-development/survey-recorder-part-3" },
-  { label: "Customized Courses", href: "/skill-development/customized-courses" },
+  {
+    label: "Long Hydrographic Course (Cat. A)",
+    href: "/skill-development/long-hydrographic-course-cat-a",
+  },
+  {
+    label: "Basic Hydrographic Course (Cat. B)",
+    href: "/skill-development/basic-hydrography-cat-b",
+  },
+  {
+    label: "Survey Recorder Part I",
+    href: "/skill-development/survey-recorder-part-1",
+  },
+  {
+    label: "Survey Recorder Part II",
+    href: "/skill-development/survey-recorder-part-2",
+  },
+  {
+    label: "Survey Recorder Part III",
+    href: "/skill-development/survey-recorder-part-3",
+  },
+  {
+    label: "Customized Courses",
+    href: "/skill-development/customized-courses",
+  },
 ];
 
 const contactLinks = [
@@ -92,7 +110,10 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
               pathname === "/cart" ? "text-[#003f71]" : "text-gray-500"
             }`}
           >
-            <ShoppingCart size={22} strokeWidth={pathname === "/cart" ? 2.5 : 1.5} />
+            <ShoppingCart
+              size={22}
+              strokeWidth={pathname === "/cart" ? 2.5 : 1.5}
+            />
             <span className="text-[10px] font-medium">Cart</span>
             {cartCount > 0 && (
               <span className="absolute top-0 right-2 min-w-4 h-4 flex items-center justify-center rounded-full bg-[#003f71] text-white text-[9px] font-bold px-0.5">
@@ -104,7 +125,9 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
           <Link
             href="/account"
             className={`flex flex-col items-center justify-center gap-0.5 min-w-[60px] py-1 ${
-              pathname?.startsWith("/account") ? "text-[#003f71]" : "text-gray-500"
+              pathname?.startsWith("/account")
+                ? "text-[#003f71]"
+                : "text-gray-500"
             }`}
           >
             {isLoggedIn && userInformation.profilePicture ? (
@@ -114,11 +137,16 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
                 width={24}
                 height={24}
                 className={`w-6 h-6 rounded-full object-cover ${
-                  pathname?.startsWith("/account") ? "ring-2 ring-[#003f71]" : "ring-1 ring-gray-200"
+                  pathname?.startsWith("/account")
+                    ? "ring-2 ring-[#003f71]"
+                    : "ring-1 ring-gray-200"
                 }`}
               />
             ) : (
-              <User size={22} strokeWidth={pathname?.startsWith("/account") ? 2.5 : 1.5} />
+              <User
+                size={22}
+                strokeWidth={pathname?.startsWith("/account") ? 2.5 : 1.5}
+              />
             )}
             <span className="text-[10px] font-medium">
               {isLoggedIn ? userInformation.firstName : "Account"}
@@ -129,7 +157,10 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
 
       {/* Overlay */}
       {open && (
-        <div className="fixed inset-0 bg-black/50 z-60" onClick={() => setOpen(false)} />
+        <div
+          className="fixed inset-0 bg-black/50 z-60"
+          onClick={() => setOpen(false)}
+        />
       )}
 
       {/* Close Button */}
@@ -156,7 +187,9 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
             href="/"
             onClick={() => setOpen(false)}
             className={`py-2.5 px-3 rounded-md text-sm font-medium ${
-              pathname === "/" ? "text-[#003f71] bg-[#003f71]/5" : "text-gray-700 hover:bg-gray-50"
+              pathname === "/"
+                ? "text-[#003f71] bg-[#003f71]/5"
+                : "text-gray-700 hover:bg-gray-50"
             }`}
           >
             Home
@@ -169,7 +202,11 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
               className="flex items-center justify-between w-full py-2.5 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
               Products & Services
-              {productsOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+              {productsOpen ? (
+                <ChevronDown size={16} />
+              ) : (
+                <ChevronRight size={16} />
+              )}
             </button>
             {productsOpen && (
               <div className="ml-3 pl-3 border-l border-gray-100 flex flex-col gap-0.5">
@@ -194,7 +231,11 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
               className="flex items-center justify-between w-full py-2.5 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
               About Us
-              {aboutOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+              {aboutOpen ? (
+                <ChevronDown size={16} />
+              ) : (
+                <ChevronRight size={16} />
+              )}
             </button>
             {aboutOpen && (
               <div className="ml-3 pl-3 border-l border-gray-100 flex flex-col gap-0.5">
@@ -219,7 +260,11 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
               className="flex items-center justify-between w-full py-2.5 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
               Skill Development
-              {skillDevOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+              {skillDevOpen ? (
+                <ChevronDown size={16} />
+              ) : (
+                <ChevronRight size={16} />
+              )}
             </button>
             {skillDevOpen && (
               <div className="ml-3 pl-3 border-l border-gray-100 flex flex-col gap-0.5">
@@ -244,7 +289,11 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
               className="flex items-center justify-between w-full py-2.5 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
               Contact
-              {contactOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+              {contactOpen ? (
+                <ChevronDown size={16} />
+              ) : (
+                <ChevronRight size={16} />
+              )}
             </button>
             {contactOpen && (
               <div className="ml-3 pl-3 border-l border-gray-100 flex flex-col gap-0.5">
@@ -284,7 +333,9 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
                 <p className="text-sm font-semibold text-gray-800 truncate">
                   {userInformation.firstName} {userInformation.lastName}
                 </p>
-                <p className="text-xs text-gray-500 truncate">{userInformation.email}</p>
+                <p className="text-xs text-gray-500 truncate">
+                  {userInformation.email}
+                </p>
               </div>
               <button
                 onClick={() => {
