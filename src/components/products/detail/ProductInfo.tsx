@@ -1,6 +1,6 @@
 "use client";
 
-import { DiscountType, INavyProduct } from "@/src/components/products/types";
+import { INavyProduct } from "@/src/components/products/types";
 import { getProductSlug } from "@/src/data/navyProducts";
 import { addToCart } from "@/src/lib/redux/features/cart/cartSlice";
 import { useAppDispatch } from "@/src/lib/redux/hooks";
@@ -53,7 +53,7 @@ export default function ProductInfo({
         <span className="text-3xl font-bold text-[#001836]">
           {formatPrice(discountedPrice)}
         </span>
-        {hasDiscount && (
+        {/* {hasDiscount && (
           <>
             <span className="text-lg text-gray-400 line-through">
               {formatPrice(product.price)}
@@ -64,15 +64,13 @@ export default function ProductInfo({
                 : `৳${product.discountValue} OFF`}
             </span>
           </>
-        )}
+        )} */}
       </div>
 
       {/* Stock */}
       <div className="mt-4 flex items-center gap-2">
         <Check size={16} className="text-green-500" />
-            <span className="text-sm text-green-600 font-medium">
-              In Stock
-            </span>
+        <span className="text-sm text-green-600 font-medium">In Stock</span>
       </div>
 
       {/* Description */}
@@ -96,9 +94,7 @@ export default function ProductInfo({
             {quantity}
           </span>
           <button
-            onClick={() =>
-              setQuantity((q) => Math.min(product.stock, q + 1))
-            }
+            onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
             className="w-10 h-10 flex items-center justify-center hover:bg-gray-50 transition-colors cursor-pointer"
             disabled={quantity >= product.stock}
           >

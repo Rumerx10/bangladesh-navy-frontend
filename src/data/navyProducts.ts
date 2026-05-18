@@ -13,7 +13,7 @@ export const navyProducts: INavyProduct[] = [
     id: "prod-001",
     nameBn: "কক্সবাজার রুট নটিক্যাল চার্ট",
     nameEn: "Cox's Bazar Route Nautical Chart",
-    images: ["/products/chart-coxbazar.jpg"],
+    images: ["/img2.tif"],
     descriptionBn:
       "কক্সবাজার সমুদ্র রুটের বিস্তারিত নটিক্যাল চার্ট। সকল নৌ-চলাচলের জন্য অপরিহার্য।",
     descriptionEn:
@@ -38,7 +38,7 @@ export const navyProducts: INavyProduct[] = [
     id: "prod-002",
     nameBn: "সেন্টমার্টিন রুট নটিক্যাল চার্ট",
     nameEn: "Saint Martin Route Nautical Chart",
-    images: ["/products/chart-saintmartin.jpg"],
+    images: ["/img2.tif"],
     descriptionBn:
       "সেন্টমার্টিন দ্বীপ এবং আশেপাশের সমুদ্র রুটের নটিক্যাল চার্ট।",
     descriptionEn:
@@ -60,7 +60,7 @@ export const navyProducts: INavyProduct[] = [
     id: "prod-003",
     nameBn: "চট্টগ্রাম রুট নটিক্যাল চার্ট",
     nameEn: "Chittagong Route Nautical Chart",
-    images: ["/products/chart-chittagong.jpg"],
+    images: ["/img1.jpeg"],
     descriptionBn:
       "চট্টগ্রাম বন্দর এবং সমুদ্র রুটের বিস্তারিত নটিক্যাল চার্ট।",
     descriptionEn:
@@ -84,7 +84,7 @@ export const navyProducts: INavyProduct[] = [
     id: "prod-004",
     nameBn: "মংলা বন্দর রুট নটিক্যাল চার্ট",
     nameEn: "Mongla Port Route Nautical Chart",
-    images: ["/products/chart-mongla.jpg"],
+    images: ["/img1.jpeg"],
     descriptionBn: "মংলা বন্দর রুটের নটিক্যাল চার্ট, পশুর নদী চ্যানেল সহ।",
     descriptionEn:
       "Nautical chart for Mongla Port route including Pashur River channel navigation. Essential for cargo vessels approaching Mongla.",
@@ -104,7 +104,7 @@ export const navyProducts: INavyProduct[] = [
     id: "prod-005",
     nameBn: "পায়রা বন্দর রুট নটিক্যাল চার্ট",
     nameEn: "Payra Port Route Nautical Chart",
-    images: ["/products/chart-payra.jpg"],
+    images: ["/img1.jpeg"],
     descriptionBn: "পায়রা গভীর সমুদ্র বন্দর এবং রুটের নটিক্যাল চার্ট।",
     descriptionEn:
       "Nautical chart for Payra Deep Sea Port approach and route. Includes channel depths and navigation aids.",
@@ -126,7 +126,7 @@ export const navyProducts: INavyProduct[] = [
     id: "prod-006",
     nameBn: "সন্দ্বীপ চ্যানেল নটিক্যাল চার্ট",
     nameEn: "Sandwip Channel Nautical Chart",
-    images: ["/products/chart-sandwip.jpg"],
+    images: ["/img1.jpeg"],
     descriptionBn: "সন্দ্বীপ চ্যানেল এবং আশেপাশের জলপথের চার্ট।",
     descriptionEn:
       "Detailed chart of Sandwip Channel and surrounding waterways. Critical for inland and coastal vessel traffic.",
@@ -147,7 +147,7 @@ export const navyProducts: INavyProduct[] = [
     id: "prod-007",
     nameBn: "বাংলাদেশ ENC সম্পূর্ণ প্যাকেজ",
     nameEn: "Bangladesh ENC Complete Package",
-    images: ["/products/enc-complete.jpg"],
+    images: ["/img1.jpeg"],
     descriptionBn:
       "বাংলাদেশের সম্পূর্ণ ইলেকট্রনিক নেভিগেশনাল চার্ট প্যাকেজ।",
     descriptionEn:
@@ -172,7 +172,7 @@ export const navyProducts: INavyProduct[] = [
     id: "prod-008",
     nameBn: "চট্টগ্রাম পোর্ট ENC",
     nameEn: "Chittagong Port Approach ENC",
-    images: ["/products/enc-chittagong.jpg"],
+    images: ["/img2.tif"],
     descriptionBn: "চট্টগ্রাম বন্দরের ইলেকট্রনিক নেভিগেশনাল চার্ট।",
     descriptionEn:
       "Electronic Navigational Chart for Chittagong Port approach. High-resolution harbour-level chart with real-time update capability.",
@@ -193,11 +193,11 @@ export const navyProducts: INavyProduct[] = [
     id: "prod-009",
     nameBn: "বাংলাদেশ জোয়ার-ভাটা সারণি ২০২৬",
     nameEn: "Bangladesh Tide Table 2026",
-    images: ["/products/tide-table-2026.jpg"],
+    images: ["/img1.jpeg"],
     descriptionBn: "২০২৬ সালের বাংলাদেশের সম্পূর্ণ জোয়ার-ভাটা সারণি।",
     descriptionEn:
       "Complete tide prediction tables for Bangladesh ports and coastal stations for the year 2026. Includes secondary port corrections.",
-    price: 180000,
+    price: 1000,
     stock: 200,
     categoryId: "cat-3",
     status: ProductStatus.ACTIVE,
@@ -215,11 +215,11 @@ export const navyProducts: INavyProduct[] = [
     id: "prod-010",
     nameBn: "নাবিকদের জন্য বিজ্ঞপ্তি - সংকলন ২০২৬",
     nameEn: "Notices to Mariners — Compilation 2026",
-    images: ["/products/ntm-2026.jpg"],
+    images: ["/img1.jpeg"],
     descriptionBn: "২০২৬ সালের নাবিকদের জন্য সকল বিজ্ঞপ্তির সংকলন।",
     descriptionEn:
       "Annual compilation of all Notices to Mariners issued for Bangladesh waters in 2026. Includes chart corrections and navigational warnings.",
-    price: 150000,
+    price: 1000,
     stock: 150,
     categoryId: "cat-4",
     status: ProductStatus.ACTIVE,
@@ -236,12 +236,12 @@ export const navyProducts: INavyProduct[] = [
     id: "prod-011",
     nameBn: "বাংলাদেশ নৌচলাচল নির্দেশিকা",
     nameEn: "Bangladesh Sailing Directions",
-    images: ["/products/sailing-directions.jpg"],
+    images: ["/img2.tif"],
     descriptionBn:
       "বাংলাদেশের জলসীমায় নৌচলাচলের জন্য ব্যাপক নির্দেশিকা।",
     descriptionEn:
       "Comprehensive sailing directions for navigating Bangladesh waters. Includes port information, pilotage details, and coastal descriptions.",
-    price: 500000,
+    price: 1000,
     stock: 60,
     categoryId: "cat-5",
     status: ProductStatus.ACTIVE,
@@ -257,11 +257,11 @@ export const navyProducts: INavyProduct[] = [
     id: "prod-012",
     nameBn: "কর্ণফুলী নদী ফেয়ারওয়ে চার্ট",
     nameEn: "Karnaphuli River Fairway Chart",
-    images: ["/products/chart-karnaphuli.jpg"],
+    images: ["/img2.tif"],
     descriptionBn: "কর্ণফুলী নদী ফেয়ারওয়ের বিস্তারিত চার্ট।",
     descriptionEn:
       "Detailed fairway chart of Karnaphuli River from estuary to upstream berthing areas. Critical for port-bound vessel navigation.",
-    price: 200000,
+    price: 1000,
     stock: 45,
     categoryId: "cat-1",
     status: ProductStatus.ACTIVE,

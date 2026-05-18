@@ -1,12 +1,18 @@
 "use client";
 
-import { formatPrice, getDiscountedPrice, getProductSlug } from "@/src/data/navyProducts";
+import { DiscountType, INavyProduct } from "@/src/components/products/types";
+import {
+    formatPrice,
+    getDiscountedPrice,
+    getProductSlug,
+} from "@/src/data/navyProducts";
 import { addToCart } from "@/src/lib/redux/features/cart/cartSlice";
 import { useAppDispatch } from "@/src/lib/redux/hooks";
-import { DiscountType, INavyProduct } from "@/src/components/products/types";
 import { ShoppingCart } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { toast } from "react-toastify";
+import TiffPreview from "./TiffPreview";
 
 interface ProductCardProps {
   product: INavyProduct;
@@ -26,7 +32,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         productId: product.id,
         name: product.nameEn,
         slug,
-        image: product.images[0] ?? "/products/chart-coxbazar.jpg",
+        image: product.images[0] ?? "img1.jpeg",
         price: discountedPrice / 100,
         compareAtPrice: hasDiscount ? product.price / 100 : undefined,
         quantity: 1,
@@ -35,6 +41,9 @@ export default function ProductCard({ product }: ProductCardProps) {
     );
     toast.success(`${product.nameEn} added to cart`);
   };
+  const imageUrl = product.images?.[0] ?? "/img1.jpeg";
+
+  const isTiff = /\.(tif|tiff)$/i.test(imageUrl);
 
   return (
     <Link
@@ -44,16 +53,27 @@ export default function ProductCard({ product }: ProductCardProps) {
       {/* Image */}
       <div className="relative aspect-[4/3] bg-gradient-to-br from-[#001836] to-[#003f71] flex items-center justify-center overflow-hidden">
         {/* Decorative grid pattern */}
-        <div
+        {isTiff ? (
+          <TiffPreview src={imageUrl} className="w-full h-full object-cover" />
+        ) : (
+          <Image
+            src={imageUrl}
+            alt={product.nameEn}
+            width={400}
+            height={300}
+            className="object-cover w-full h-full"
+          />
+        )}
+        {/* <div
           className="absolute inset-0 opacity-10"
           style={{
             backgroundImage:
               "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
             backgroundSize: "20px 20px",
           }}
-        />
+        /> */}
         {/* Chart icon placeholder */}
-        <svg
+        {/* <svg
           width="64"
           height="64"
           viewBox="0 0 24 24"
@@ -66,7 +86,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <polyline points="14 2 14 8 20 8" />
           <line x1="8" y1="13" x2="16" y2="13" />
           <line x1="8" y1="17" x2="16" y2="17" />
-        </svg>
+        </svg> */}
 
         {/* Discount badge */}
         {hasDiscount && product.discountType && (

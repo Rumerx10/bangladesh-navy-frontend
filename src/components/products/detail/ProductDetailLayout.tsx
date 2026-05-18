@@ -5,6 +5,8 @@ import { INavyProduct } from "@/src/components/products/types";
 import ProductAttributes from "./ProductAttributes";
 import ProductInfo from "./ProductInfo";
 import ProductTabs from "./ProductTabs";
+import TiffPreview from "../TiffPreview";
+import Image from "next/image";
 
 interface ProductDetailLayoutProps {
   product: INavyProduct;
@@ -12,7 +14,9 @@ interface ProductDetailLayoutProps {
 
 export default function ProductDetailLayout({ product }: ProductDetailLayoutProps) {
   const discountedPrice = getDiscountedPrice(product);
+const imageUrl = product.images?.[0] ?? "/img1.jpeg";
 
+  const isTiff = /\.(tif|tiff)$/i.test(imageUrl);
   return (
     <div className="container px-4 sm:px-6 lg:px-8 py-6 lg:py-8 mt-28 lg:mt-[104px]">
       {/* Breadcrumb */}
@@ -27,7 +31,18 @@ export default function ProductDetailLayout({ product }: ProductDetailLayoutProp
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         {/* Image Section */}
         <div className="relative aspect-[4/3] lg:aspect-square rounded-2xl bg-gradient-to-br from-[#001836] to-[#003f71] flex items-center justify-center overflow-hidden">
-          <div
+        {isTiff ? (
+          <TiffPreview src={imageUrl} className="w-full h-full object-cover" />
+        ) : (
+          <Image
+            src={imageUrl}
+            alt={product.nameEn}
+            width={400}
+            height={300}
+            className="object-cover w-full h-full"
+          />
+        )}
+          {/* <div
             className="absolute inset-0 opacity-10"
             style={{
               backgroundImage:
@@ -48,7 +63,7 @@ export default function ProductDetailLayout({ product }: ProductDetailLayoutProp
             <polyline points="14 2 14 8 20 8" />
             <line x1="8" y1="13" x2="16" y2="13" />
             <line x1="8" y1="17" x2="16" y2="17" />
-          </svg>
+          </svg> */}
           <div className="absolute bottom-4 left-4 px-3 py-1.5 rounded-lg bg-black/40 backdrop-blur-sm text-white text-sm font-medium">
             {product.category.nameEn}
           </div>
