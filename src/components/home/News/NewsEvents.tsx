@@ -1,9 +1,9 @@
 "use client";
 
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
-import { newsItems, noticeItems } from "@/src/data/homeData";
+import { newsItems } from "@/src/data/homeData";
 import { motion } from "framer-motion";
-import { ArrowRight, Bell, Newspaper } from "lucide-react";
+import { ArrowRight, Newspaper } from "lucide-react";
 import Link from "next/link";
 import NewsCard from "./NewsCard";
 
@@ -17,7 +17,12 @@ export default function NewsEvents() {
       <section className="relative py-16 lg:py-24 bg-white overflow-hidden">
         {/* Watermark */}
         <div className="absolute -right-16 top-20 text-[#001836]">
-          <NavyWatermark variant="ship" size={400} opacity={0.025} animate="float" />
+          <NavyWatermark
+            variant="ship"
+            size={400}
+            opacity={0.025}
+            animate="float"
+          />
         </div>
 
         <div className="relative container px-4 sm:px-6 lg:px-8">
@@ -39,7 +44,8 @@ export default function NewsEvents() {
               Latest News & Events
             </h2>
             <p className="mt-2 text-sm lg:text-base text-gray-500 max-w-lg mx-auto">
-              Stay informed about the latest hydrographic updates and maritime events
+              Stay informed about the latest hydrographic updates and maritime
+              events
             </p>
           </motion.div>
 
@@ -75,7 +81,6 @@ export default function NewsEvents() {
           </motion.div>
         </div>
       </section>
-
     </>
   );
 }

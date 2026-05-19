@@ -7,7 +7,7 @@ export const courses: ICourse[] = [
     title: "Basic Hydrographic Course (Cat. B)",
     category: CourseCategory.HYDROGRAPHY,
     duration: "24 Weeks",
-    image: "/newsImages/news1.jpg",
+    image: "/img8.jpeg",
     shortDescription: "A comprehensive course covering the fundamentals of hydrographic surveying according to IHO S-5 standards.",
     longDescription: "This course is designed to provide students with a solid foundation in hydrographic surveying. It covers theoretical knowledge and practical skills required to conduct hydrographic surveys in various environments. The curriculum follows the International Hydrographic Organization (IHO) Category-B standards.",
     learningOutcomes: [
@@ -82,7 +82,7 @@ export const courses: ICourse[] = [
     title: "Marine GIS & Remote Sensing",
     category: CourseCategory.GIS,
     duration: "8 Weeks",
-    image: "/newsImages/news4.jpg",
+    image: "/img7.jpeg",
     shortDescription: "Utilizing satellite imagery and spatial analysis for coastal and marine management.",
     longDescription: "A modern approach to maritime domain awareness using GIS tools and remote sensing data. Ideal for professionals in coastal management, environmental protection, and maritime security.",
     learningOutcomes: [

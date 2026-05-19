@@ -98,7 +98,7 @@ export default function ChiefMessage() {
 
                 <div className="relative aspect-4/5 rounded-xl overflow-hidden shadow-2xl border-8 border-white">
                   <Image
-                    src="/CHIEF.png"
+                    src="/CHIEF.jpeg"
                     alt={chiefMessage.name}
                     fill
                     className="object-cover object-top transition-transform duration-700 group-hover:scale-105"

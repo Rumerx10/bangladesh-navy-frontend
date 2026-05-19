@@ -72,7 +72,7 @@ export default function Organization() {
             <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-[#003f71] to-cyan-500 opacity-30 blur group-hover:opacity-50 transition-opacity duration-500" />
             <div className="relative w-32 h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl">
               <Image
-                src="/CHIEF.png"
+                src="/CHIEF.jpeg"
                 alt="Cdre Sheikh Firoz Ahmed"
                 fill
                 className="object-cover object-top"

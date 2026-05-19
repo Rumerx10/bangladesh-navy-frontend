@@ -117,11 +117,11 @@ export default function ProductCard({ product }: ProductCardProps) {
             <span className="text-lg font-bold text-[#001836]">
               {formatPrice(discountedPrice)}
             </span>
-            {hasDiscount && (
+            {/* {hasDiscount && (
               <span className="text-xs text-gray-400 line-through">
                 {formatPrice(product.price)}
               </span>
-            )}
+            )} */}
           </div>
 
           <button
