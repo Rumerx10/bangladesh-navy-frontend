@@ -185,7 +185,7 @@ export const surveyShips: ISurveyShip[] = [
     name: "BNS TALLASHI",
     designation: "Survey Launch",
     description: "Coastal survey launch for shallow water hydrographic surveys and port approach channel surveys.",
-    image: "/shipImages/bns-tallashi.png",
+    image: "/img9.jpeg",
     specifications: { "Length": "32m", "Beam": "7m", "Draft": "2.1m", "Crew": "35", "Survey Equipment": "Single-beam Echo Sounder, DGPS" },
     status: "active",
     details: [
