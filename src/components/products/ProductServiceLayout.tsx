@@ -13,13 +13,45 @@ export default function ProductServiceLayout() {
   const categoryParam = searchParams.get("category");
   const searchParam = searchParams.get("search");
 
-  const [filters, setFilters] = useState<IProductFilter>({
-    categoryIds: categoryParam
-      ? [navyCategories.find((c) => c.slug === categoryParam)?.id ?? ""]
-      : [],
-    search: searchParam ?? undefined,
-    sortBy: "relevance",
+  const [filters, setFilters] = useState<IProductFilter>(() => {
+    const initialCat = categoryParam
+      ? navyCategories.find((c) => c.slug === categoryParam)
+      : null;
+    return {
+      categoryIds: initialCat ? [initialCat.id] : [],
+      search: searchParam ?? undefined,
+      sortBy: "relevance",
+    };
   });
+
+  const [lastUrlParams, setLastUrlParams] = useState({
+    category: categoryParam,
+    search: searchParam,
+  });
+
+  // Sync state during render if URL params change (handles Next.js hydration and navigation)
+  // This is the recommended React pattern to avoid useEffect race conditions.
+  if (
+    categoryParam !== lastUrlParams.category ||
+    searchParam !== lastUrlParams.search
+  ) {
+    setFilters((prev) => {
+      const nextFilters = { ...prev };
+      if (categoryParam !== lastUrlParams.category) {
+        if (categoryParam) {
+          const cat = navyCategories.find((c) => c.slug === categoryParam);
+          nextFilters.categoryIds = cat ? [cat.id] : [];
+        } else {
+          nextFilters.categoryIds = [];
+        }
+      }
+      if (searchParam !== lastUrlParams.search) {
+        nextFilters.search = searchParam ?? undefined;
+      }
+      return nextFilters;
+    });
+    setLastUrlParams({ category: categoryParam, search: searchParam });
+  }
 
   const filteredProducts = useMemo(() => {
     let result = [...navyProducts];
@@ -39,13 +71,22 @@ export default function ProductServiceLayout() {
 
     // Search filter
     if (filters.search) {
-      const q = filters.search.toLowerCase();
-      result = result.filter(
-        (p) =>
-          p.nameEn.toLowerCase().includes(q) ||
-          p.nameBn.includes(q) ||
-          p.descriptionEn?.toLowerCase().includes(q)
-      );
+      const queryWords = filters.search.toLowerCase().split(/\s+/).filter(Boolean);
+      result = result.filter((p) => {
+        const searchableText = [
+          p.nameEn,
+          p.nameBn,
+          p.descriptionEn,
+          p.descriptionBn,
+          p.category?.nameEn,
+          p.category?.nameBn,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+
+        return queryWords.every((word) => searchableText.includes(word));
+      });
     }
 
     // Sort
