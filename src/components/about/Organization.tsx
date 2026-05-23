@@ -19,7 +19,7 @@ const departments = [
     icon: <Anchor size={20} />,
   },
   {
-    name: "BNS Anusandhan",
+    name: "BNS ANUSANDHAN",
     description:
       "Research and survey vessel dedicated to hydrographic data collection",
     icon: <Map size={20} />,
@@ -49,7 +49,7 @@ const departments = [
     icon: <Briefcase size={20} />,
   },
   {
-    name: "BNS Tallashi",
+    name: "BNS TALLASHI",
     description: "Operational support vessel for coastal and maritime surveys",
     icon: <Anchor size={20} />,
   },
@@ -88,9 +88,7 @@ export default function Organization() {
           <p className="text-sm lg:text-base text-[#003f71] font-semibold mt-1">
             BN Chief Hydrographer
           </p>
-          <p className="text-xs text-gray-500 mt-0.5">
-            Bangladesh Navy Hydrographic &amp; Oceanographic Center
-          </p>
+
         </motion.div>
 
         {/* ── Tree Connector: Vertical stem from chief ── */}
@@ -121,11 +119,11 @@ export default function Organization() {
               <div className="w-3 h-3 rounded-full bg-[#003f71] border-2 border-white shadow-sm" />
 
               {/* Department card */}
-              <div className="mt-3 mb-8 w-full max-w-[280px] rounded-2xl border border-gray-100 bg-white p-5 shadow-sm hover:shadow-lg hover:border-[#003f71]/20 hover:-translate-y-1 transition-all duration-300 group cursor-default">
-                <div className="w-11 h-11 rounded-xl bg-[#003f71]/10 text-[#003f71] flex items-center justify-center mb-3 group-hover:bg-[#003f71] group-hover:text-white transition-colors duration-300">
+              <div className="mt-3 mb-8 w-full max-w-[280px] min-h-[200px] flex flex-col rounded-2xl border border-gray-100 bg-white p-5 shadow-sm hover:shadow-lg hover:border-[#003f71]/20 hover:-translate-y-1 transition-all duration-300 group cursor-default ">
+                <div className="w-11 h-11 rounded-xl bg-[#003f71]/10 text-[#003f71] flex items-center justify-center mb-3 group-hover:bg-[#003f71] group-hover:text-white transition-colors duration-300 shrink-0">
                   {dept.icon}
                 </div>
-                <h4 className="text-sm font-bold text-[#001836] leading-snug">
+                <h4 className="text-sm font-bold text-[#001836] leading-snug uppercase">
                   {dept.name}
                 </h4>
                 <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">

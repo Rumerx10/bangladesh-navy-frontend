@@ -25,4 +25,5 @@ export interface ICourse {
   coursePlan: ICoursePlanStep[];
   price?: number; // Optional, maybe some are free
   instructor?: string;
+  about?: string; // Optional about paragraph for the school/course
 }

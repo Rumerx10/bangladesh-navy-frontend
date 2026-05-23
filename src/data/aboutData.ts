@@ -165,7 +165,7 @@ export const surveyShips: ISurveyShip[] = [
   {
     id: "ss-1",
     slug: "bns-anusandhan",
-    name: "BNS Anusandhan",
+    name: "BNS ANUSANDHAN",
     designation: "Survey Vessel",
     description: "Primary hydrographic survey vessel equipped with modern multi-beam echo sounder systems and oceanographic equipment.",
     image: "/shipImages/bns-anusandhan.png",
@@ -182,7 +182,7 @@ export const surveyShips: ISurveyShip[] = [
   {
     id: "ss-2",
     slug: "bns-tallashi",
-    name: "BNS Tallashi",
+    name: "BNS TALLASHI",
     designation: "Survey Launch",
     description: "Coastal survey launch for shallow water hydrographic surveys and port approach channel surveys.",
     image: "/shipImages/bns-tallashi.png",

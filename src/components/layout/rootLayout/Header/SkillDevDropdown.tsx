@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 
 const skillDevLinks = [
   { label: "BN Hydrographic School", href: "/skill-development" },
-  { label: "Long Hydrographic Course (Cat. A)", href: "/skill-development/long-hydrographic-course-cat-a" },
-  { label: "Basic Hydrographic Course (Cat. B)", href: "/skill-development/basic-hydrography-cat-b" },
+  { label: "Long Hydrographic Course (CATEGORY A)", href: "/skill-development/long-hydrographic-course-cat-a" },
+  { label: "Basic Hydrographic Course (CATEGORY B)", href: "/skill-development/basic-hydrography-cat-b" },
   { label: "Survey Recorder Part I", href: "/skill-development/survey-recorder-part-1" },
   { label: "Survey Recorder Part II", href: "/skill-development/survey-recorder-part-2" },
   { label: "Survey Recorder Part III", href: "/skill-development/survey-recorder-part-3" },

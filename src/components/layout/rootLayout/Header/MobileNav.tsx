@@ -29,11 +29,11 @@ const aboutLinks = [
 const skillDevLinks = [
   { label: "BN Hydrographic School", href: "/skill-development" },
   {
-    label: "Long Hydrographic Course (Cat. A)",
+    label: "Long Hydrographic Course (CATEGORY A)",
     href: "/skill-development/long-hydrographic-course-cat-a",
   },
   {
-    label: "Basic Hydrographic Course (Cat. B)",
+    label: "Basic Hydrographic Course (CATEGORY B)",
     href: "/skill-development/basic-hydrography-cat-b",
   },
   {

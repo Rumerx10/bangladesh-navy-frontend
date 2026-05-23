@@ -18,9 +18,7 @@ export const navyProducts: INavyProduct[] = [
       "কক্সবাজার সমুদ্র রুটের বিস্তারিত নটিক্যাল চার্ট। সকল নৌ-চলাচলের জন্য অপরিহার্য।",
     descriptionEn:
       "Detailed nautical chart covering the Cox's Bazar sea route. Essential for all maritime navigation in the southeastern coastal waters of Bangladesh.",
-    price: 250000, // 2500 BDT in poysha
-    discountType: DiscountType.PERCENTAGE,
-    discountValue: 10,
+    price: 350000, // 3500 BDT
     stock: 50,
     categoryId: "cat-1",
     status: ProductStatus.ACTIVE,
@@ -71,7 +69,7 @@ export const navyProducts: INavyProduct[] = [
       "সেন্টমার্টিন দ্বীপ এবং আশেপাশের সমুদ্র রুটের নটিক্যাল চার্ট।",
     descriptionEn:
       "Nautical chart for Saint Martin Island and surrounding sea routes. Covers reef areas and safe navigation channels.",
-    price: 300000,
+    price: 350000, // 3500 BDT
     stock: 35,
     categoryId: "cat-1",
     status: ProductStatus.ACTIVE,
@@ -113,9 +111,7 @@ export const navyProducts: INavyProduct[] = [
     descriptionBn: "চট্টগ্রাম বন্দর এবং সমুদ্র রুটের বিস্তারিত নটিক্যাল চার্ট।",
     descriptionEn:
       "Comprehensive nautical chart covering Chittagong Port approach and coastal navigation routes. Includes port layout and anchorage details.",
-    price: 350000,
-    discountType: DiscountType.FLAT,
-    discountValue: 500,
+    price: 350000, // 3500 BDT
     stock: 40,
     categoryId: "cat-1",
     status: ProductStatus.ACTIVE,
@@ -157,7 +153,7 @@ export const navyProducts: INavyProduct[] = [
     descriptionBn: "মংলা বন্দর রুটের নটিক্যাল চার্ট, পশুর নদী চ্যানেল সহ।",
     descriptionEn:
       "Nautical chart for Mongla Port route including Pashur River channel navigation. Essential for cargo vessels approaching Mongla.",
-    price: 280000,
+    price: 350000, // 3500 BDT
     stock: 25,
     categoryId: "cat-1",
     status: ProductStatus.ACTIVE,
@@ -191,9 +187,7 @@ export const navyProducts: INavyProduct[] = [
     descriptionBn: "পায়রা গভীর সমুদ্র বন্দর এবং রুটের নটিক্যাল চার্ট।",
     descriptionEn:
       "Nautical chart for Payra Deep Sea Port approach and route. Includes channel depths and navigation aids.",
-    price: 320000,
-    discountType: DiscountType.PERCENTAGE,
-    discountValue: 15,
+    price: 350000, // 3500 BDT
     stock: 30,
     categoryId: "cat-1",
     status: ProductStatus.ACTIVE,
@@ -227,7 +221,7 @@ export const navyProducts: INavyProduct[] = [
     descriptionBn: "সন্দ্বীপ চ্যানেল এবং আশেপাশের জলপথের চার্ট।",
     descriptionEn:
       "Detailed chart of Sandwip Channel and surrounding waterways. Critical for inland and coastal vessel traffic.",
-    price: 220000,
+    price: 350000, // 3500 BDT
     stock: 20,
     categoryId: "cat-1",
     status: ProductStatus.ACTIVE,
@@ -262,9 +256,7 @@ export const navyProducts: INavyProduct[] = [
     descriptionBn: "বাংলাদেশের সম্পূর্ণ ইলেকট্রনিক নেভিগেশনাল চার্ট প্যাকেজ।",
     descriptionEn:
       "Complete Electronic Navigational Chart package covering all Bangladesh waters. S-57 compliant, ECDIS compatible.",
-    price: 1500000,
-    discountType: DiscountType.PERCENTAGE,
-    discountValue: 20,
+    price: 350000, // 3500 BDT
     stock: 100,
     categoryId: "cat-2",
     status: ProductStatus.ACTIVE,
@@ -314,7 +306,7 @@ export const navyProducts: INavyProduct[] = [
     descriptionBn: "চট্টগ্রাম বন্দরের ইলেকট্রনিক নেভিগেশনাল চার্ট।",
     descriptionEn:
       "Electronic Navigational Chart for Chittagong Port approach. High-resolution harbour-level chart with real-time update capability.",
-    price: 450000,
+    price: 350000, // 3500 BDT
     stock: 80,
     categoryId: "cat-2",
     status: ProductStatus.ACTIVE,
@@ -345,11 +337,11 @@ export const navyProducts: INavyProduct[] = [
     id: "prod-009",
     nameBn: "বাংলাদেশ জোয়ার-ভাটা সারণি ২০২৬",
     nameEn: "Bangladesh Tide Table 2026",
-    images: ["/img1.jpeg"],
+    images: ["/tid.jpeg"],
     descriptionBn: "২০২৬ সালের বাংলাদেশের সম্পূর্ণ জোয়ার-ভাটা সারণি।",
     descriptionEn:
       "Complete tide prediction tables for Bangladesh ports and coastal stations for the year 2026. Includes secondary port corrections.",
-    price: 100000,
+    price: 350000, // 3500 BDT
     stock: 200,
     categoryId: "cat-3",
     status: ProductStatus.ACTIVE,
@@ -392,7 +384,7 @@ export const navyProducts: INavyProduct[] = [
     descriptionBn: "২০২৬ সালের নাবিকদের জন্য সকল বিজ্ঞপ্তির সংকলন।",
     descriptionEn:
       "Annual compilation of all Notices to Mariners issued for Bangladesh waters in 2026. Includes chart corrections and navigational warnings.",
-    price: 1000,
+    price: 350000, // 3500 BDT
     stock: 150,
     categoryId: "cat-4",
     status: ProductStatus.ACTIVE,
@@ -461,7 +453,7 @@ export const navyProducts: INavyProduct[] = [
     descriptionBn: "কর্ণফুলী নদী ফেয়ারওয়ের বিস্তারিত চার্ট।",
     descriptionEn:
       "Detailed fairway chart of Karnaphuli River from estuary to upstream berthing areas. Critical for port-bound vessel navigation.",
-    price: 1000,
+    price: 350000, // 3500 BDT
     stock: 45,
     categoryId: "cat-1",
     status: ProductStatus.ACTIVE,

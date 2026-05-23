@@ -53,50 +53,65 @@ export default function HeaderTopBarActions({
     router.replace(newUrl, { scroll: false });
   }, [searchQuery, isProductPage, pathname, router, searchParams]);
 
+  const handleSearchSubmit = () => {
+    if (searchQuery.trim()) {
+      setIsSearchOpen(false);
+      if (isProductPage) {
+        // Stay on product page and use URL params
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("search", searchQuery);
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+      } else {
+        // Navigate to product-service page with search query
+        router.push(`/product-service?search=${encodeURIComponent(searchQuery.trim())}`);
+      }
+      setSearchQuery("");
+    }
+  };
+
   return (
     <div className="flex items-center gap-1 shrink-0">
-      {/* Search Interaction */}
+      {/* Search Interaction — visible globally */}
       <AnimatePresence mode="wait">
-        {isProductPage && (
-          <div className="flex items-center">
-            {isSearchOpen ? (
-              <motion.div
-                initial={{ width: 0, opacity: 0 }}
-                animate={{ width: "240px", opacity: 1 }}
-                exit={{ width: 0, opacity: 0 }}
-                className="relative flex items-center h-10 ml-2"
+        <div className="flex items-center">
+          {isSearchOpen ? (
+            <motion.div
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: "240px", opacity: 1 }}
+              exit={{ width: 0, opacity: 0 }}
+              className="relative flex items-center h-10 ml-2"
+            >
+              <input
+                autoFocus
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter") handleSearchSubmit(); }}
+                placeholder="Search products..."
+                className="w-full h-full pl-4 pr-10 rounded-full border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:border-[#003f71] focus:bg-white transition-all shadow-inner"
+              />
+              <button
+                onClick={() => {
+                  setIsSearchOpen(false);
+                  setSearchQuery("");
+                }}
+                className="absolute right-3 text-gray-400 hover:text-red-500 transition-colors"
               >
-                <input
-                  autoFocus
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search products..."
-                  className="w-full h-full pl-4 pr-10 rounded-full border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:border-[#003f71] focus:bg-white transition-all shadow-inner"
-                />
-                <button
-                  onClick={() => {
-                    setIsSearchOpen(false);
-                    setSearchQuery("");
-                  }}
-                  className="absolute right-3 text-gray-400 hover:text-red-500 transition-colors"
-                >
-                  <X size={16} />
-                </button>
-              </motion.div>
-            ) : (
-              <motion.button
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                onClick={() => setIsSearchOpen(true)}
-                className="flex items-center justify-center w-10 h-10 text-gray-600 hover:text-[#003f71] hover:bg-gray-50 rounded-full transition-colors"
-                aria-label="Open search"
-              >
-                <Search size={20} />
-              </motion.button>
-            )}
-          </div>
-        )}
+                <X size={16} />
+              </button>
+            </motion.div>
+          ) : (
+            <motion.button
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              onClick={() => setIsSearchOpen(true)}
+              className="flex items-center justify-center w-10 h-10 text-gray-600 hover:text-[#003f71] hover:bg-gray-50 rounded-full transition-colors"
+              aria-label="Open search"
+            >
+              <Search size={20} />
+            </motion.button>
+          )}
+        </div>
       </AnimatePresence>
 
       {/* Standard Actions */}
