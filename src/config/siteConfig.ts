@@ -8,7 +8,7 @@ export const siteConfig = {
   address:
     process.env.NEXT_PUBLIC_ADDRESS ||
     "BNHOC, Chittagong, Bangladesh",
-  phone1: process.env.NEXT_PUBLIC_PHONE_1 || "+8801769722428",
+  phone1: process.env.NEXT_PUBLIC_PHONE_1 || "+8801769722446",
   phone2: process.env.NEXT_PUBLIC_PHONE_2 || "0233334250030",
   email: process.env.NEXT_PUBLIC_EMAIL || "bnhoc@navy.mil.bd",
   currency: process.env.NEXT_PUBLIC_CURRENCY || "BDT",

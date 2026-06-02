@@ -13,7 +13,7 @@ export default function SkillDevelopmentPage() {
     <main>
       <SkillBanner />
 
-      {/* About BN Hydrographic School */}
+      {/* About BN Hydrographic Institute */}
       <section className="py-16 lg:py-20 bg-white">
         <div className="container px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
@@ -22,19 +22,19 @@ export default function SkillDevelopmentPage() {
                 <BookOpen size={24} />
               </div>
               <h2 className="text-2xl lg:text-3xl font-bold text-[#001836]">
-                About BN Hydrographic School
+                About BN Hydrographic Institute
               </h2>
             </div>
             <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed space-y-4">
               <p>
-                The Bangladesh Navy Hydrographic School, established in 1983 at BNS Issa Khan, Chattogram,
+                The Bangladesh Navy Hydrographic Institute, established in 1983 at BNS Issa Khan, Chattogram,
                 is the premier institution for hydrographic education and training in Bangladesh. Operating
                 under the aegis of the Bangladesh Navy Hydrographic &amp; Oceanographic Center (BNHOC), the
-                school has been instrumental in developing a cadre of professionally qualified hydrographic
+                Institute has been instrumental in developing a cadre of professionally qualified hydrographic
                 surveyors and cartographers for the nation.
               </p>
               <p>
-                The school offers a comprehensive range of courses — from foundational Survey Recorder
+                The Institute offers a comprehensive range of courses — from foundational Survey Recorder
                 programmes to advanced CATEGORY A and CATEGORY B hydrographic courses recognized by the
                 International Hydrographic Organization (IHO) under its Standards of Competence (S-5).
                 Training combines rigorous classroom instruction with extensive practical sea training
@@ -42,7 +42,7 @@ export default function SkillDevelopmentPage() {
                 and hands-on operational competence.
               </p>
               <p>
-                Over the decades, the BN Hydrographic School has trained hundreds of naval and civilian
+                Over the decades, the BN Hydrographic Institute has trained hundreds of naval and civilian
                 professionals from Bangladesh and friendly foreign navies, contributing to regional
                 capacity building in hydrographic surveying, nautical cartography, GIS, and oceanographic
                 data collection.

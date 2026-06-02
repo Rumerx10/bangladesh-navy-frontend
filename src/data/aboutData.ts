@@ -43,9 +43,9 @@ export const historyEras: IHistoryEra[] = [
     yearRange: "1983 – 1995",
     title: "Laying the Hydrographic Foundation",
     summary:
-      "Recognizing the need to chart its vast maritime territory, the Bangladesh Navy established the Hydrographic School and Chart Depot in 1983 at BNS Issa Khan, Chattogram—the first dedicated hydrographic institutions in the country.",
+      "Recognizing the need to chart its vast maritime territory, the Bangladesh Navy established the Hydrographic Institute and Chart Depot in 1983 at BNS Issa Khan, Chattogram—the first dedicated hydrographic institutions in the country.",
     details: [
-      "The Hydrographic School was established at BNS Issa Khan, Chattogram in 1983 to train naval personnel in survey techniques and chart production.",
+      "The Hydrographic Institute was established at BNS Issa Khan, Chattogram in 1983 to train naval personnel in survey techniques and chart production.",
       "The BN Chart Depot was created in the same year to manage, store, and distribute navigational charts and maritime publications.",
       "Conventional analogue survey methods were employed, using traditional equipment for coastal and riverine hydrographic data collection.",
       "These foundational institutions set the stage for Bangladesh to develop sovereign capability in charting its own waters.",
@@ -109,7 +109,7 @@ export const historyMilestones: IHistoryMilestone[] = [
   { year: "1971", event: "Bangladesh Navy formed during Liberation War" },
   { year: "1971", event: "Operation Jackpot executed against enemy ports" },
   { year: "1974", event: "First naval bases commissioned by Bangabandhu" },
-  { year: "1983", event: "Hydrographic School & Chart Depot established", highlight: true },
+  { year: "1983", event: "Hydrographic Institute & Chart Depot established", highlight: true },
   { year: "1993", event: "Bangladesh Navy joins UN peacekeeping missions" },
   { year: "1996", event: "Hydro Bangla Project-1 with French assistance", highlight: true },
   { year: "2001", event: "BNHOC formally established", highlight: true },
@@ -231,6 +231,6 @@ export const galleryItems: IGalleryItem[] = [
   { id: "g-11", title: "Navigational Warning Center", category: "Operations", image: "/newsImages/news6.jpg" },
   { id: "g-12", title: "Deep Sea Sounding", category: "Survey", image: "/img6.jpeg" },
   { id: "g-13", title: "National Maritime Day", category: "Events", image: "/img5.jpeg" },
-  { id: "g-14", title: "Hydrographic School", category: "Training", image: "/heroImages/home/img2.jpeg" },
+  { id: "g-14", title: "Hydrographic Institute", category: "Training", image: "/heroImages/home/img2.jpeg" },
   { id: "g-15", title: "Satellite Analysis", category: "Production", image: "/img6.jpeg" },
 ];

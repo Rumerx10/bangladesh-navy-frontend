@@ -5,16 +5,18 @@ import Link from "next/link";
 
 interface NewsCardProps {
   item: INewsItem;
+  hideImage?: boolean;
 }
 
-export default function NewsCard({ item }: NewsCardProps) {
+export default function NewsCard({ item, hideImage = false }: NewsCardProps) {
   return (
     <Link
       href={item.href}
       className="group flex flex-col h-full rounded-2xl bg-white border border-gray-100 overflow-hidden hover:shadow-xl hover:border-[#003f71]/15 transition-all duration-300"
     >
       {/* Image */}
-      <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-[#001836] to-[#003f71]">
+      {!hideImage && (
+        <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-[#001836] to-[#003f71]">
         <Image
           src={item.image}
           alt={item.title}
@@ -28,7 +30,8 @@ export default function NewsCard({ item }: NewsCardProps) {
           <Tag size={10} />
           {item.category}
         </span>
-      </div>
+        </div>
+      )}
 
       <div className="flex-1 p-5 lg:p-6 flex flex-col">
         <div className="flex items-center gap-2 mb-3">

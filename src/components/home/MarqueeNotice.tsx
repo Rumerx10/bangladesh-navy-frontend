@@ -1,0 +1,21 @@
+"use client";
+
+export default function MarqueeNotice() {
+  return (
+    <div className="bg-[#003f71] text-white py-2 overflow-hidden flex items-center">
+      <div className="container px-4 flex items-center">
+        <span className="font-bold text-sm shrink-0 mr-4 bg-[#002a4d] px-3 py-1 rounded">NOTICE</span>
+        <div className="flex-1 overflow-hidden relative flex">
+          <div className="animate-marquee whitespace-nowrap text-sm tracking-wider font-medium pt-1">
+            <span className="pr-16">
+              Welcome to Bangladesh Navy Hydrographic and Oceanographic Centre. Latest navigational warnings and notices are available in the Notices to Mariners section.
+            </span>
+            <span className="pr-16">
+              Welcome to Bangladesh Navy Hydrographic and Oceanographic Centre. Latest navigational warnings and notices are available in the Notices to Mariners section.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

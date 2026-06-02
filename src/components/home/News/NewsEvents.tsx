@@ -59,7 +59,7 @@ export default function NewsEvents() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
               >
-                <NewsCard item={item} />
+                <NewsCard item={item} hideImage={true} />
               </motion.div>
             ))}
           </div>

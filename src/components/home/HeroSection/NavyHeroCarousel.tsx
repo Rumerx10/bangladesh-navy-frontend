@@ -77,7 +77,7 @@ export default function NavyHeroCarousel() {
 
   // Auto-slide
   useEffect(() => {
-    const timer = setInterval(next, 3000);
+    const timer = setInterval(next, 5000);
     return () => clearInterval(timer);
   }, [next]);
 

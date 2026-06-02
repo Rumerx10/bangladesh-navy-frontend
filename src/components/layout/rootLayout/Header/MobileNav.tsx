@@ -27,7 +27,7 @@ const aboutLinks = [
 ];
 
 const skillDevLinks = [
-  { label: "BN Hydrographic School", href: "/skill-development" },
+  { label: "BN Hydrographic Institute", href: "/skill-development" },
   {
     label: "Long Hydrographic Course (CATEGORY A)",
     href: "/skill-development/long-hydrographic-course-cat-a",
@@ -60,6 +60,12 @@ const contactLinks = [
   { label: "Hydrographic Note", href: "/contact-us/hydrographic-note" },
 ];
 
+const noticesLinks = [
+  { label: "Publications", href: "/product-service?category=publications" },
+  { label: "Notices", href: "/product-service?category=notices-to-mariners" },
+  { label: "Hydrographic Note", href: "/contact-us/hydrographic-note" },
+];
+
 interface MobileNavProps {
   open: boolean;
   setOpen: (value: boolean) => void;
@@ -77,6 +83,7 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
   const [productsOpen, setProductsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [skillDevOpen, setSkillDevOpen] = useState(false);
+  const [noticesOpen, setNoticesOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
 
   return (
@@ -195,35 +202,6 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
             Home
           </Link>
 
-          {/* Products & Services */}
-          <div>
-            <button
-              onClick={() => setProductsOpen(!productsOpen)}
-              className="flex items-center justify-between w-full py-2.5 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
-              Products & Services
-              {productsOpen ? (
-                <ChevronDown size={16} />
-              ) : (
-                <ChevronRight size={16} />
-              )}
-            </button>
-            {productsOpen && (
-              <div className="ml-3 pl-3 border-l border-gray-100 flex flex-col gap-0.5">
-                {navyCategories.map((cat) => (
-                  <Link
-                    key={cat.id}
-                    href={`/product-service?category=${cat.slug}`}
-                    onClick={() => setOpen(false)}
-                    className="py-2 px-3 text-sm text-gray-600 hover:text-[#003f71] rounded-md hover:bg-gray-50"
-                  >
-                    {cat.nameEn}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-
           {/* About Us */}
           <div>
             <button
@@ -253,6 +231,35 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
             )}
           </div>
 
+          {/* Products & Services */}
+          <div>
+            <button
+              onClick={() => setProductsOpen(!productsOpen)}
+              className="flex items-center justify-between w-full py-2.5 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
+              Products & Services
+              {productsOpen ? (
+                <ChevronDown size={16} />
+              ) : (
+                <ChevronRight size={16} />
+              )}
+            </button>
+            {productsOpen && (
+              <div className="ml-3 pl-3 border-l border-gray-100 flex flex-col gap-0.5">
+                {navyCategories.map((cat) => (
+                  <Link
+                    key={cat.id}
+                    href={`/product-service?category=${cat.slug}`}
+                    onClick={() => setOpen(false)}
+                    className="py-2 px-3 text-sm text-gray-600 hover:text-[#003f71] rounded-md hover:bg-gray-50"
+                  >
+                    {cat.nameEn}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Skill Development */}
           <div>
             <button
@@ -269,6 +276,35 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
             {skillDevOpen && (
               <div className="ml-3 pl-3 border-l border-gray-100 flex flex-col gap-0.5">
                 {skillDevLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="py-2 px-3 text-sm text-gray-600 hover:text-[#003f71] rounded-md hover:bg-gray-50"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Notices to Mariners */}
+          <div>
+            <button
+              onClick={() => setNoticesOpen(!noticesOpen)}
+              className="flex items-center justify-between w-full py-2.5 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
+              Notices to Mariners
+              {noticesOpen ? (
+                <ChevronDown size={16} />
+              ) : (
+                <ChevronRight size={16} />
+              )}
+            </button>
+            {noticesOpen && (
+              <div className="ml-3 pl-3 border-l border-gray-100 flex flex-col gap-0.5">
+                {noticesLinks.map((link) => (
                   <Link
                     key={link.label}
                     href={link.href}

@@ -27,7 +27,7 @@ const aboutLinks = [
 ];
 
 const serviceLinks = [
-  { label: "BN Hydrographic School", href: "/skill-development" },
+  { label: "BN Hydrographic Institute", href: "/skill-development" },
   {
     label: "Long Hydrographic Course (Cat. A)",
     href: "/skill-development/long-hydrographic-course-cat-a",
