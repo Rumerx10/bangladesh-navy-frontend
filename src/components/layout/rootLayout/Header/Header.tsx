@@ -1,5 +1,6 @@
 "use client";
 
+import MarqueeNotice from "@/src/components/home/MarqueeNotice";
 import { useEffect, useState } from "react";
 import HeaderTopBar from "./HeaderTopBar";
 import MobileNav from "./MobileNav";
@@ -27,6 +28,7 @@ const Header = () => {
       >
         <TopInfoBar />
         <HeaderTopBar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+        <MarqueeNotice />
       </div>
 
       {/* Mobile Navigation Drawer + Bottom Nav */}

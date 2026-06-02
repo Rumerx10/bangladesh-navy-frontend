@@ -8,7 +8,7 @@ import ContactDropdown from "./ContactDropdown";
 import HeaderTopBarActions from "./HeaderTopBarActions";
 import Logo from "./Logo";
 import MobileHeader from "./MobileHeader";
-import NoticesMarinersDropdown from "./NoticesMarinersDropdown";
+
 import ProductServiceDropdown from "./ProductServiceDropdown";
 import SkillDevDropdown from "./SkillDevDropdown";
 
@@ -52,7 +52,7 @@ export default function HeaderTopBar({
             <AboutUsDropdown />
             <ProductServiceDropdown />
             <SkillDevDropdown />
-            <NoticesMarinersDropdown />
+
             <ContactDropdown />
           </ul>
         </nav>

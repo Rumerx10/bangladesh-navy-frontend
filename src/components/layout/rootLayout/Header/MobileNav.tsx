@@ -66,6 +66,7 @@ const noticesLinks = [
   { label: "Hydrographic Note", href: "/contact-us/hydrographic-note" },
 ];
 
+
 interface MobileNavProps {
   open: boolean;
   setOpen: (value: boolean) => void;
@@ -83,7 +84,7 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
   const [productsOpen, setProductsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [skillDevOpen, setSkillDevOpen] = useState(false);
-  const [noticesOpen, setNoticesOpen] = useState(false);
+  const [noticesSubOpen, setNoticesSubOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
 
   return (
@@ -256,6 +257,33 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
                     {cat.nameEn}
                   </Link>
                 ))}
+
+                {/* Notices to Mariners sub-section */}
+                <button
+                  onClick={() => setNoticesSubOpen(!noticesSubOpen)}
+                  className="flex items-center justify-between w-full py-2 px-3 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md mt-1"
+                >
+                  Notices to Mariners
+                  {noticesSubOpen ? (
+                    <ChevronDown size={14} />
+                  ) : (
+                    <ChevronRight size={14} />
+                  )}
+                </button>
+                {noticesSubOpen && (
+                  <div className="ml-3 pl-3 border-l border-gray-100 flex flex-col gap-0.5">
+                    {noticesLinks.map((link) => (
+                      <Link
+                        key={link.label}
+                        href={link.href}
+                        onClick={() => setOpen(false)}
+                        className="py-2 px-3 text-sm text-gray-600 hover:text-[#003f71] rounded-md hover:bg-gray-50"
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -289,34 +317,7 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
             )}
           </div>
 
-          {/* Notices to Mariners */}
-          <div>
-            <button
-              onClick={() => setNoticesOpen(!noticesOpen)}
-              className="flex items-center justify-between w-full py-2.5 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
-              Notices to Mariners
-              {noticesOpen ? (
-                <ChevronDown size={16} />
-              ) : (
-                <ChevronRight size={16} />
-              )}
-            </button>
-            {noticesOpen && (
-              <div className="ml-3 pl-3 border-l border-gray-100 flex flex-col gap-0.5">
-                {noticesLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="py-2 px-3 text-sm text-gray-600 hover:text-[#003f71] rounded-md hover:bg-gray-50"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
+
 
           {/* Contact */}
           <div>

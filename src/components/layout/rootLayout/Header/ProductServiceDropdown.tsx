@@ -1,13 +1,21 @@
 "use client";
 
 import { navyCategories } from "@/src/data/navyCategories";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+const noticesLinks = [
+  { label: "Publications", href: "/product-service?category=publications" },
+  { label: "Notices", href: "/product-service?category=notices-to-mariners" },
+  { label: "Hydrographic Note", href: "/contact-us/hydrographic-note" },
+];
+
 export default function ProductServiceDropdown() {
   const pathname = usePathname();
-  const isActive = pathname?.startsWith("/product-service");
+  const isActive =
+    pathname?.startsWith("/product-service") ||
+    pathname?.startsWith("/notices-mariners");
 
   return (
     <li className="relative group">
@@ -20,7 +28,10 @@ export default function ProductServiceDropdown() {
         }`}
       >
         Products &amp; Services
-        <ChevronDown size={14} className="mt-px transition-transform group-hover:rotate-180 duration-200" />
+        <ChevronDown
+          size={14}
+          className="mt-px transition-transform group-hover:rotate-180 duration-200"
+        />
       </Link>
       <div className="absolute left-1/2 top-full z-50 hidden -translate-x-1/2 rounded-xl border border-gray-200 bg-white shadow-xl group-hover:block">
         <div className="flex flex-col gap-0.5 p-2 min-w-[220px]">
@@ -33,6 +44,33 @@ export default function ProductServiceDropdown() {
               {cat.nameEn}
             </Link>
           ))}
+
+          {/* Divider */}
+          <div className="h-px bg-gray-200 my-1" />
+
+          {/* Notices to Mariners — hover to expand */}
+          <div className="relative group/notices">
+            <button
+              type="button"
+              className="flex items-center justify-between w-full rounded-md px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-[#003f71] transition-colors cursor-pointer"
+            >
+              Notices to Mariners
+              <ChevronRight size={14} className="ml-2 text-gray-400" />
+            </button>
+            <div className="absolute left-full top-0 z-50 hidden ml-1 min-w-[200px] rounded-xl border border-gray-200 bg-white p-2 shadow-xl group-hover/notices:block">
+              <div className="flex flex-col gap-0.5">
+                {noticesLinks.map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="rounded-md px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#003f71] transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </li>
