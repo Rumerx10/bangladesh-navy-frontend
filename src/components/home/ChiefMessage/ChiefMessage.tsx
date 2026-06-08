@@ -106,14 +106,14 @@ export default function ChiefMessage() {
                   />
 
                   {/* Bottom Overlay Info */}
-                  <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-[#001836] via-[#001836]/80 to-transparent p-6 text-white">
+                  {/* <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-[#001836] via-[#001836]/80 to-transparent p-6 text-white">
                     <h3 className="text-xl font-bold leading-tight">
                       {chiefMessage.name}
                     </h3>
                     <p className="text-sm text-blue-200 mt-1">
                       {chiefMessage.designation}
                     </p>
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* Floating BN Badge or Emblem decoration */}
@@ -123,9 +123,8 @@ export default function ChiefMessage() {
               </div>
 
               {/* Quick Highlights beneath photo */}
-              <div className="grid grid-cols-2 gap-4 mt-10">
+              {/* <div className="grid grid-cols-2 gap-4 mt-10">
                 <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 flex flex-col items-center text-center">
-                  <Award className="text-[#003f71] mb-2" size={24} />
                   <span className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">
                     Award
                   </span>
@@ -134,7 +133,6 @@ export default function ChiefMessage() {
                   </span>
                 </div>
                 <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 flex flex-col items-center text-center">
-                  <GraduationCap className="text-[#003f71] mb-2" size={24} />
                   <span className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">
                     Education
                   </span>
@@ -142,7 +140,7 @@ export default function ChiefMessage() {
                     MBA, MSc (Hydrography)
                   </span>
                 </div>
-              </div>
+              </div> */}
             </motion.div>
 
             {/* Right Column: Message Content */}

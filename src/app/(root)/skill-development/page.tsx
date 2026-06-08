@@ -12,11 +12,9 @@ export default function SkillDevelopmentPage() {
   return (
     <main>
       <SkillBanner />
-
-      {/* About BN Hydrographic Institute */}
-      <section className="py-16 lg:py-20 bg-white">
-        <div className="container px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
+      <section className="py-16 lg:py-20 bg-white container">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <div>
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-12 rounded-xl bg-[#003f71]/10 text-[#003f71] flex items-center justify-center">
                 <BookOpen size={24} />
@@ -25,7 +23,7 @@ export default function SkillDevelopmentPage() {
                 About BN Hydrographic Institute
               </h2>
             </div>
-            <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed space-y-4">
+            <div className="  text-gray-600 leading-relaxed space-y-4">
               <p>
                 The Bangladesh Navy Hydrographic Institute, established in 1983 at BNS Issa Khan, Chattogram,
                 is the premier institution for hydrographic education and training in Bangladesh. Operating

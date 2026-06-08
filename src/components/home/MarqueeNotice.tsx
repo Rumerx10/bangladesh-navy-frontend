@@ -11,7 +11,7 @@ export default function MarqueeNotice() {
               Welcome to Bangladesh Navy Hydrographic and Oceanographic Centre. Latest navigational warnings and notices are available in the Notices to Mariners section.
             </span>
             <span className="pr-16">
-              Welcome to Bangladesh Navy Hydrographic and Oceanographic Centre. Latest navigational warnings and notices are available in the Notices to Mariners section.
+              Mariners are advised to regularly check updated charts, tide tables, sailing directions, and hydrographic publications for safe navigation.
             </span>
           </div>
         </div>

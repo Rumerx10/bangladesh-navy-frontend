@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
@@ -22,46 +23,89 @@ const banners = [
   },
 ];
 
+const fadeVariants = {
+  enter: { opacity: 0 },
+  center: { opacity: 1, transition: { duration: 0.7 } },
+  exit: { opacity: 0, transition: { duration: 0.7 } },
+};
+
+const flipVariants = {
+  enter: {
+    rotateY: 90,
+    opacity: 0,
+    transition: { duration: 0 },
+  },
+  center: {
+    rotateY: 0,
+    opacity: 1,
+    transition: { duration: 0.75, ease: [0.25, 0.1, 0.25, 1] },
+  },
+  exit: {
+    rotateY: -90,
+    opacity: 0,
+    transition: { duration: 0.35, ease: "easeIn" },
+  },
+};
+
 export default function HeroBanner() {
   const [current, setCurrent] = useState(0);
+  const [isFlip, setIsFlip] = useState(false);
 
   const next = useCallback(() => {
-    setCurrent((prev) => (prev + 1) % banners.length);
+    setCurrent((prev) => {
+      const wrap = prev === banners.length - 1;
+      setIsFlip(wrap);
+      return (prev + 1) % banners.length;
+    });
   }, []);
 
   const prev = useCallback(() => {
+    setIsFlip(false);
     setCurrent((prev) => (prev - 1 + banners.length) % banners.length);
   }, []);
 
-  // Auto-slide
   useEffect(() => {
     const timer = setInterval(next, 4000);
     return () => clearInterval(timer);
   }, [next]);
 
   return (
-    <div className="relative w-full rounded-lg overflow-hidden bg-gray-100 group">
+    <div
+      className="relative w-full rounded-lg bg-gray-100 group overflow-hidden"
+      style={{ perspective: "1200px" }}
+    >
       {/* Slides */}
       <div className="relative w-full aspect-[16/7] sm:aspect-[16/6]">
-        {banners.map((banner, index) => (
-          <div
-            key={banner.id}
-            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-              index === current ? "opacity-100 z-10" : "opacity-0 z-0"
-            }`}
+        <AnimatePresence mode="sync" initial={false}>
+          <motion.div
+            key={current}
+            variants={isFlip ? flipVariants : fadeVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="absolute inset-0"
+            style={{ transformStyle: "preserve-3d" }}
           >
-            <Image
-              src={banner.image}
-              alt={banner.alt}
-              fill
-              priority={index === 0}
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 70vw"
-            />
-            {/* Gradient overlay for text readability */}
+            {/* Ken Burns zoom */}
+            <motion.div
+              initial={{ scale: 1.1 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 5, ease: "easeOut" }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={banners[current].image}
+                alt={banners[current].alt}
+                fill
+                priority={current === 0}
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 70vw"
+              />
+            </motion.div>
+            {/* Gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
-          </div>
-        ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* Arrow navigation */}
@@ -85,7 +129,10 @@ export default function HeroBanner() {
         {banners.map((_, index) => (
           <button
             key={index}
-            onClick={() => setCurrent(index)}
+            onClick={() => {
+              setIsFlip(false);
+              setCurrent(index);
+            }}
             className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
               index === current
                 ? "bg-white w-6"

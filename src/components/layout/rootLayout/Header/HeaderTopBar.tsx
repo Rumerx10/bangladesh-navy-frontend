@@ -32,7 +32,7 @@ export default function HeaderTopBar({
   return (
     <div className="bg-white border-b border-gray-100">
       {/* Desktop Navigation */}
-      <div className="hidden lg:flex container items-center justify-between gap-8 h-18 px-4 sm:px-0">
+      <div className="hidden lg:flex container items-center justify-between gap-8 h-24 px-4 sm:px-0">
         <Logo />
 
         <nav className="hidden lg:flex flex-1 justify-center">
@@ -40,7 +40,7 @@ export default function HeaderTopBar({
             <li>
               <Link
                 href="/"
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                className={`px-3 py-2 text-base font-medium rounded-md transition-colors ${
                   pathname === "/"
                     ? "text-[#003f71] bg-[#003f71]/5"
                     : "text-gray-700 hover:text-[#003f71] hover:bg-gray-50"

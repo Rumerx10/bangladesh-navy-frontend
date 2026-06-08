@@ -15,13 +15,14 @@ export default function ProductServiceDropdown() {
   const pathname = usePathname();
   const isActive =
     pathname?.startsWith("/product-service") ||
-    pathname?.startsWith("/notices-mariners");
+    pathname?.startsWith("/notices-mariners") ||
+    pathname?.startsWith("/how-to-pay");
 
   return (
     <li className="relative group">
       <Link
         href="/product-service"
-        className={`inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-md transition-colors cursor-pointer ${
+        className={`inline-flex items-center gap-1.5 px-3 py-2 text-base font-medium rounded-md transition-colors cursor-pointer ${
           isActive
             ? "text-[#003f71] bg-[#003f71]/5"
             : "text-gray-700 hover:text-[#003f71] hover:bg-gray-50"
@@ -34,7 +35,7 @@ export default function ProductServiceDropdown() {
         />
       </Link>
       <div className="absolute left-1/2 top-full z-50 hidden -translate-x-1/2 rounded-xl border border-gray-200 bg-white shadow-xl group-hover:block">
-        <div className="flex flex-col gap-0.5 p-2 min-w-[220px]">
+        <div className="flex flex-col gap-0.5 p-2 min-w-55">
           {navyCategories.map((cat) => (
             <Link
               key={cat.id}
@@ -45,8 +46,12 @@ export default function ProductServiceDropdown() {
             </Link>
           ))}
 
-          {/* Divider */}
-          <div className="h-px bg-gray-200 my-1" />
+          <Link
+            href="/how-to-pay"
+            className="rounded-md px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#003f71] transition-colors"
+          >
+            How to Pay
+          </Link>
 
           {/* Notices to Mariners — hover to expand */}
           <div className="relative group/notices">
@@ -57,7 +62,7 @@ export default function ProductServiceDropdown() {
               Notices to Mariners
               <ChevronRight size={14} className="ml-2 text-gray-400" />
             </button>
-            <div className="absolute left-full top-0 z-50 hidden ml-1 min-w-[200px] rounded-xl border border-gray-200 bg-white p-2 shadow-xl group-hover/notices:block">
+            <div className="absolute left-full top-0 z-50 hidden ml-1 min-w-50 rounded-xl border border-gray-200 bg-white p-2 shadow-xl group-hover/notices:block">
               <div className="flex flex-col gap-0.5">
                 {noticesLinks.map((item) => (
                   <Link

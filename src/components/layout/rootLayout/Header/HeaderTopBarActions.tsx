@@ -147,7 +147,7 @@ export default function HeaderTopBarActions({
       ) : (
         <button
           onClick={() => dispatch(openLoginModal())}
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#003f71] text-white text-sm font-medium hover:bg-[#003f71]/90 transition-colors cursor-pointer"
+          className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#003f71] text-white text-base  font-medium hover:bg-[#003f71]/90 transition-colors cursor-pointer"
         >
           <User size={16} />
           <span className="whitespace-nowrap">Sign In</span>

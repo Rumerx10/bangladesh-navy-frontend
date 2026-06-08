@@ -1,6 +1,6 @@
 import { IQuickAccessItem } from "@/src/components/home/types";
 import {
-  AlertTriangle,
+  Info,
   ArrowRight,
   BookOpen,
   CloudSun,
@@ -14,7 +14,7 @@ const iconMap: Record<string, React.ReactNode> = {
   map: <Map size={22} />,
   monitor: <Monitor size={22} />,
   waves: <Waves size={22} />,
-  "alert-triangle": <AlertTriangle size={22} />,
+  "alert-triangle": <Info size={22} />,
   "book-open": <BookOpen size={22} />,
   "cloud-sun": <CloudSun size={22} />,
 };

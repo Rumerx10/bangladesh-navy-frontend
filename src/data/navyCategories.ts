@@ -25,22 +25,15 @@ export const navyCategories: INavyCategory[] = [
     description: "Annual tide prediction tables",
     productCount: 12,
   },
-  {
-    id: "cat-4",
-    nameBn: "নাবিকদের জন্য বিজ্ঞপ্তি",
-    nameEn: "Notices to Mariners",
-    slug: "notices-to-mariners",
-    description: "Navigation warnings & corrections",
-    productCount: 28,
-  },
-  {
-    id: "cat-5",
-    nameBn: "প্রকাশনা",
-    nameEn: "Publications",
-    slug: "publications",
-    description: "Sailing directions & maritime guides",
-    productCount: 18,
-  },
+  // {
+  //   id: "cat-4",
+  //   nameBn: "নাবিকদের জন্য বিজ্ঞপ্তি",
+  //   nameEn: "Notices to Mariners",
+  //   slug: "notices-to-mariners",
+  //   description: "Navigation warnings & corrections",
+  //   productCount: 28,
+  // },
+
   {
     id: "cat-6",
     nameBn: "সামুদ্রিক আবহাওয়া",

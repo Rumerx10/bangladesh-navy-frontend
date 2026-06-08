@@ -1,11 +1,11 @@
 import type {
-  IChiefMessage,
-  IHeroSlide,
-  INewsItem,
-  INoticeItem,
-  IQuickAccessItem,
-  ISearchTab,
-  IStatItem,
+    IChiefMessage,
+    IHeroSlide,
+    INewsItem,
+    INoticeItem,
+    IQuickAccessItem,
+    ISearchTab,
+    IStatItem,
 } from "@/src/components/home/types";
 
 export const heroSlides: IHeroSlide[] = [
@@ -17,8 +17,18 @@ export const heroSlides: IHeroSlide[] = [
     description:
       "Charting the waters of Bangladesh for safe maritime navigation. Access official nautical charts, tide tables, and navigational publications.",
     buttons: [
-      { text: "Browse Charts", href: "/product-service", variant: "primary", icon: "compass" },
-      { text: "Latest Notices", href: "#latest-notices", variant: "secondary", icon: "bell" },
+      {
+        text: "Browse Charts",
+        href: "/product-service",
+        variant: "primary",
+        icon: "compass",
+      },
+      {
+        text: "Latest Notices",
+        href: "#latest-notices",
+        variant: "secondary",
+        icon: "bell",
+      },
     ],
   },
   {
@@ -29,7 +39,12 @@ export const heroSlides: IHeroSlide[] = [
     description:
       "Access the most up-to-date nautical charts covering Bangladesh's vast maritime territory — from Chittagong to the Sundarbans.",
     buttons: [
-      { text: "View Products", href: "/product-service", variant: "primary", icon: "map" },
+      {
+        text: "View Products",
+        href: "/product-service",
+        variant: "primary",
+        icon: "map",
+      },
       { text: "About Us", href: "/about", variant: "secondary", icon: "info" },
     ],
   },
@@ -41,8 +56,18 @@ export const heroSlides: IHeroSlide[] = [
     description:
       "S-57 compliant Electronic Navigational Charts (ENCs) for ECDIS systems. Monthly updates ensure accuracy and compliance with IHO standards.",
     buttons: [
-      { text: "Explore ENCs", href: "/product-service?category=electronic-charts", variant: "primary", icon: "monitor" },
-      { text: "Learn More", href: "/about/history", variant: "secondary", icon: "book" },
+      {
+        text: "Explore ENCs",
+        href: "/product-service?category=electronic-charts",
+        variant: "primary",
+        icon: "monitor",
+      },
+      {
+        text: "Learn More",
+        href: "/about/history",
+        variant: "secondary",
+        icon: "book",
+      },
     ],
   },
 ];
@@ -52,16 +77,45 @@ export const searchTabs: ISearchTab[] = [
   { id: "charts", label: "Charts" },
   { id: "tides", label: "Tides" },
   { id: "notices", label: "Notices" },
-  { id: "pubs", label: "Pubs" },
+  { id: "publication", label: "Publication" },
 ];
 
 export const quickAccessItems: IQuickAccessItem[] = [
-  { id: "qa-1", title: "Paper Charts", description: "Official nautical charts for Bangladesh waters", icon: "map", href: "/product-service?category=paper-charts" },
-  { id: "qa-2", title: "Electronic Charts", description: "ENC & ECDIS compatible digital charts", icon: "monitor", href: "/product-service?category=electronic-charts" },
-  { id: "qa-3", title: "Tide Tables", description: "Annual tide prediction tables", icon: "waves", href: "/product-service?category=tide-tables" },
-  { id: "qa-4", title: "Notices to Mariners", description: "Navigation warnings & corrections", icon: "alert-triangle", href: "/product-service?category=notices-to-mariners" },
-  { id: "qa-5", title: "Publications", description: "Sailing directions & maritime guides", icon: "book-open", href: "/product-service?category=publications" },
-  { id: "qa-6", title: "Marine Weather", description: "Weather data & forecasting", icon: "cloud-sun", href: "/product-service?category=marine-weather" },
+  {
+    id: "qa-1",
+    title: "Paper Charts",
+    description: "Official nautical charts for Bangladesh waters",
+    icon: "map",
+    href: "/product-service?category=paper-charts",
+  },
+  {
+    id: "qa-2",
+    title: "Electronic Charts",
+    description: "ENC & ECDIS compatible digital charts",
+    icon: "monitor",
+    href: "/product-service?category=electronic-charts",
+  },
+  {
+    id: "qa-3",
+    title: "Tide Tables",
+    description: "Annual tide prediction tables",
+    icon: "waves",
+    href: "/product-service?category=tide-tables",
+  },
+  {
+    id: "qa-4",
+    title: "Notices to Mariners",
+    description: "Navigation warnings & corrections",
+    icon: "alert-triangle",
+    href: "/product-service?category=notices-to-mariners",
+  },
+  {
+    id: "qa-6",
+    title: "Marine Weather",
+    description: "Weather data & forecasting",
+    icon: "cloud-sun",
+    href: "/product-service?category=marine-weather",
+  },
 ];
 
 export const statsItems: IStatItem[] = [
@@ -90,7 +144,8 @@ export const newsItems: INewsItem[] = [
     id: "news-1",
     slug: "bnhoc-completes-hydrographic-survey-payra",
     title: "BNHOC Completes Hydrographic Survey of Payra Deep Sea Port Channel",
-    description: "Bangladesh Navy Hydrographic and Oceanographic Center has successfully completed an extensive hydrographic survey of the Payra Deep Sea Port Channel.",
+    description:
+      "Bangladesh Navy Hydrographic and Oceanographic Center has successfully completed an extensive hydrographic survey of the Payra Deep Sea Port Channel.",
     content: [
       "Bangladesh Navy Hydrographic and Oceanographic Center (BNHOC) has successfully completed an extensive hydrographic survey of the Payra Deep Sea Port approach channel, marking a significant milestone in ensuring safe maritime navigation for one of Bangladesh's most critical port infrastructure projects.",
       "The survey, conducted over a period of three months using state-of-the-art multibeam echo sounding equipment, has produced detailed bathymetric charts covering the entire approach channel extending 75 kilometers from the port to the Bay of Bengal.",
@@ -106,7 +161,8 @@ export const newsItems: INewsItem[] = [
     id: "news-2",
     slug: "international-hydrographic-day-2026",
     title: "International Hydrographic Day 2026: BNHOC Celebrates",
-    description: "BNHOC celebrated World Hydrography Day on 21 June with the theme 'Hydrography — Underpinning the Digital Twin of the Ocean.'",
+    description:
+      "BNHOC celebrated World Hydrography Day on 21 June with the theme 'Hydrography — Underpinning the Digital Twin of the Ocean.'",
     content: [
       "BNHOC celebrated World Hydrography Day on 21 June 2026 with the theme 'Hydrography — Underpinning the Digital Twin of the Ocean.' The event brought together maritime professionals, academics, and government officials to highlight the critical role of hydrography in modern ocean management.",
       "The celebration featured a seminar on the latest advances in digital hydrography, including the transition to S-100 based products and the development of digital twin technologies for maritime applications.",
@@ -121,8 +177,10 @@ export const newsItems: INewsItem[] = [
   {
     id: "news-3",
     slug: "new-encs-released-bay-of-bengal",
-    title: "New Electronic Navigational Charts (ENCs) Released for Bay of Bengal",
-    description: "BNHOC has released 12 new Electronic Navigational Charts covering major shipping lanes in the Bay of Bengal.",
+    title:
+      "New Electronic Navigational Charts (ENCs) Released for Bay of Bengal",
+    description:
+      "BNHOC has released 12 new Electronic Navigational Charts covering major shipping lanes in the Bay of Bengal.",
     content: [
       "BNHOC has released 12 new Electronic Navigational Charts (ENCs) covering major shipping lanes and port approach areas in the Bay of Bengal. These S-57 compliant charts are now available for download through authorized ENC distributors worldwide.",
       "The new ENCs cover critical navigation areas including the approaches to Chittagong Port, Mongla Port, and the newly developed Payra Deep Sea Port, providing comprehensive coverage for vessels operating in Bangladesh waters.",
@@ -138,7 +196,8 @@ export const newsItems: INewsItem[] = [
     id: "news-4",
     slug: "bnhoc-receives-new-survey-launch",
     title: "BNHOC Receives New Hydrographic Survey Launch",
-    description: "A new state-of-the-art survey launch has been commissioned to enhance BNHOC's coastal and riverine survey capabilities.",
+    description:
+      "A new state-of-the-art survey launch has been commissioned to enhance BNHOC's coastal and riverine survey capabilities.",
     content: [
       "A new state-of-the-art hydrographic survey launch has been commissioned and delivered to BNHOC, significantly enhancing the organization's coastal and riverine survey capabilities.",
       "The vessel, equipped with advanced multibeam echo sounding systems, GNSS positioning, and real-time data processing capabilities, will primarily operate in the shallow waters and river systems of Bangladesh.",
@@ -153,7 +212,8 @@ export const newsItems: INewsItem[] = [
     id: "news-5",
     slug: "annual-tide-tables-2027-published",
     title: "Annual Tide Tables for 2027 Now Available",
-    description: "BNHOC has published the official tide tables for 2027 covering all major ports and tidal stations in Bangladesh.",
+    description:
+      "BNHOC has published the official tide tables for 2027 covering all major ports and tidal stations in Bangladesh.",
     content: [
       "BNHOC has published the official tide tables for 2027, providing tide predictions for all 12 major ports and 35 secondary tidal stations across Bangladesh's coastline and major river systems.",
       "The tide tables incorporate data from BNHOC's network of permanent tidal observation stations and reflect the latest tidal harmonic constants derived from continuous observations spanning over two decades.",
@@ -168,7 +228,8 @@ export const newsItems: INewsItem[] = [
     id: "news-6",
     slug: "bnhoc-iho-capacity-building-workshop",
     title: "BNHOC Hosts IHO Capacity Building Workshop",
-    description: "A week-long capacity building workshop organized jointly by BNHOC and IHO trained 25 hydrographers from the region.",
+    description:
+      "A week-long capacity building workshop organized jointly by BNHOC and IHO trained 25 hydrographers from the region.",
     content: [
       "A week-long capacity building workshop organized jointly by BNHOC and the International Hydrographic Organization (IHO) brought together 25 hydrographers from 8 countries in the Indian Ocean region.",
       "The workshop focused on modern hydrographic survey techniques, S-100 based product specifications, and marine spatial data infrastructure development.",
@@ -182,9 +243,39 @@ export const newsItems: INewsItem[] = [
 ];
 
 export const noticeItems: INoticeItem[] = [
-  { id: "notice-1", title: "Temporary Obstruction — Chittagong Port Outer Anchorage", date: "Mar 2026", href: "#", type: "warning" },
-  { id: "notice-2", title: "Light Characteristics Change — Kutubdia Lighthouse", date: "Feb 2026", href: "#", type: "update" },
-  { id: "notice-3", title: "Updated Depths Information — Mongla Port Approach", date: "Feb 2026", href: "#", type: "info" },
-  { id: "notice-4", title: "New Buoyage System — Sandwip Channel", date: "Dec 2025", href: "#", type: "update" },
-  { id: "notice-5", title: "Wreck Removal Completed — Karnaphuli River Fairway", date: "Nov 2025", href: "#", type: "info" },
+  {
+    id: "notice-1",
+    title: "Temporary Obstruction — Chittagong Port Outer Anchorage",
+    date: "Mar 2026",
+    href: "#",
+    type: "warning",
+  },
+  {
+    id: "notice-2",
+    title: "Light Characteristics Change — Kutubdia Lighthouse",
+    date: "Feb 2026",
+    href: "#",
+    type: "update",
+  },
+  {
+    id: "notice-3",
+    title: "Updated Depths Information — Mongla Port Approach",
+    date: "Feb 2026",
+    href: "#",
+    type: "info",
+  },
+  {
+    id: "notice-4",
+    title: "New Buoyage System — Sandwip Channel",
+    date: "Dec 2025",
+    href: "#",
+    type: "update",
+  },
+  {
+    id: "notice-5",
+    title: "Wreck Removal Completed — Karnaphuli River Fairway",
+    date: "Nov 2025",
+    href: "#",
+    type: "info",
+  },
 ];

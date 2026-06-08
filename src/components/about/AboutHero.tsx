@@ -12,8 +12,8 @@ export default function AboutHero({ title, description }: AboutHeroProps) {
     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-[#001836] overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500 rounded-full blur-[120px] -mr-64 -mt-64" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-cyan-500 rounded-full blur-[100px] -ml-48 -mb-48" />
+        <div className="absolute top-0 right-0 w-125 h-125 bg-blue-500 rounded-full blur-[120px] -mr-64 -mt-64" />
+        <div className="absolute bottom-0 left-0 w-100 h-100 bg-cyan-500 rounded-full blur-[100px] -ml-48 -mb-48" />
       </div>
 
       <div className="relative container px-4 sm:px-6 lg:px-8 text-center">
