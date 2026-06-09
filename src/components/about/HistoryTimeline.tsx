@@ -1,17 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Anchor, ChevronRight, Sparkles } from "lucide-react";
 import type { IHistoryEra, IHistoryMilestone } from "@/src/data/aboutData";
-import { eraIcons, keyFacts } from "@/src/data/historyHelpers";
+import { eraIcons } from "@/src/data/historyHelpers";
+import { AnimatePresence, motion } from "framer-motion";
+import { Anchor, ChevronRight, Sparkles } from "lucide-react";
+import { useState } from "react";
 
 interface HistoryTimelineProps {
   eras: IHistoryEra[];
   milestones: IHistoryMilestone[];
 }
 
-export default function HistoryTimeline({ eras, milestones }: HistoryTimelineProps) {
+export default function HistoryTimeline({
+  eras,
+  milestones,
+}: HistoryTimelineProps) {
   const [activeEra, setActiveEra] = useState(0);
 
   return (
@@ -29,7 +32,9 @@ export default function HistoryTimeline({ eras, milestones }: HistoryTimelinePro
         </div>
         <h2 className="text-[clamp(1.6rem,3.2vw,2.25rem)] font-extrabold text-[#001836] leading-tight mb-3">
           From Liberation to{" "}
-          <span className="text-[var(--primary,#003f71)]">Global Leadership</span>
+          <span className="text-[var(--primary,#003f71)]">
+            Global Leadership
+          </span>
         </h2>
         <p className="text-[0.95rem] text-[#5a6a7a] leading-relaxed max-w-[620px] mx-auto">
           The Bangladesh Navy Hydrographic &amp; Oceanographic Centre traces its
@@ -38,8 +43,6 @@ export default function HistoryTimeline({ eras, milestones }: HistoryTimelinePro
           Bangladesh&apos;s maritime future.
         </p>
       </motion.div>
-
-      
 
       {/* ── Era Navigation (centered) ── */}
       <motion.div

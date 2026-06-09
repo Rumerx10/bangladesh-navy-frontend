@@ -20,23 +20,7 @@ export interface IHistoryMilestone {
 }
 
 export const historyEras: IHistoryEra[] = [
-  {
-    id: "era-1",
-    era: "Origins",
-    yearRange: "1971 – 1982",
-    title: "Birth of a Maritime Nation",
-    summary:
-      "The Bangladesh Navy was born during the 1971 Liberation War when Bengali sailors defected from the Pakistan Navy. Operation Jackpot—a series of daring commando raids on enemy ports—became a defining moment of the war at sea.",
-    details: [
-      "Bengali sailors and officers defected from the Pakistan Navy and formed the nucleus of the Bangladesh Naval Force in July 1971.",
-      "Naval Commandos executed Operation Jackpot, mining and sabotaging enemy warships and merchant vessels across major ports, severely disrupting Pakistani supply lines.",
-      "The first naval fleet of six patrol vessels was inaugurated on 9 November 1971.",
-      "After independence the three services were separated in 1972. BNS Issa Khan, BNS Haji Mohsin, and BNS Titumir were commissioned as the first naval bases in 1974.",
-      "The fleet grew with the acquisition of ex-Royal Navy frigates: BNS Umar Farooq (1976), BNS Ali Haider (1978), and BNS Abu Bakr (1982).",
-    ],
-    highlight: "Operation Jackpot is regarded as one of the most successful unconventional naval operations in modern history.",
-    icon: "anchor",
-  },
+  
   {
     id: "era-2",
     era: "Foundation",
@@ -106,16 +90,11 @@ export const historyEras: IHistoryEra[] = [
 ];
 
 export const historyMilestones: IHistoryMilestone[] = [
-  { year: "1971", event: "Bangladesh Navy formed during Liberation War" },
-  { year: "1971", event: "Operation Jackpot executed against enemy ports" },
-  { year: "1974", event: "First naval bases commissioned by Bangabandhu" },
   { year: "1983", event: "Hydrographic Institute & Chart Depot established", highlight: true },
-  { year: "1993", event: "Bangladesh Navy joins UN peacekeeping missions" },
   { year: "1996", event: "Hydro Bangla Project-1 with French assistance", highlight: true },
   { year: "2001", event: "BNHOC formally established", highlight: true },
   { year: "2001", event: "Bangladesh joins IHO as member state", highlight: true },
   { year: "2010", event: "ENC production commenced (IHO S-57 standard)" },
-  { year: "2011", event: "Naval Aviation Wing established" },
   { year: "2020", event: "Full GIS integration implemented" },
   { year: "2024", event: "S-100 series chart production initiated" },
 ];
@@ -136,25 +115,25 @@ export const visionMissionItems: IVisionMissionItem[] = [
     id: "vm-1",
     type: "vision",
     title: "Our Vision",
-    description: "To be a world-class hydrographic organization providing comprehensive maritime geospatial data and services for safe navigation and sustainable development of Bangladesh's maritime domain.",
-    points: [
-      "International standard nautical charts and publications",
-      "Modern hydrographic survey capabilities",
-      "Centre of excellence for maritime data",
-    ],
+    description: "To ensure safe & efficient marine transportation for sustainable Bangladesh.",
+    // points: [
+    //   "International standard nautical charts and publications",
+    //   "Modern hydrographic survey capabilities",
+    //   "Centre of excellence for maritime data",
+    // ],
     icon: "eye",
   },
   {
     id: "vm-2",
     type: "mission",
     title: "Our Mission",
-    description: "To provide accurate and timely hydrographic, oceanographic, and navigational information to ensure safety of navigation in Bangladesh waters and support national maritime development.",
-    points: [
-      "Conduct systematic hydrographic surveys",
-      "Produce and maintain nautical charts",
-      "Disseminate maritime safety information",
-      "Support maritime research and development",
-    ],
+    description: "Provide accurate and up-to-date Hydrographic, Oceanographic & Meteorological data through production of Charts & Publications for safe navigation and sustainable Marine environment.",
+    // points: [
+    //   "Conduct systematic hydrographic surveys",
+    //   "Produce and maintain nautical charts",
+    //   "Disseminate maritime safety information",
+    //   "Support maritime research and development",
+    // ],
     icon: "target",
   },
 ];
@@ -168,7 +147,7 @@ export const surveyShips: ISurveyShip[] = [
     name: "BNS ANUSANDHAN",
     designation: "Survey Vessel",
     description: "Primary hydrographic survey vessel equipped with modern multi-beam echo sounder systems and oceanographic equipment.",
-    image: "/shipImages/bns-anusandhan.png",
+    image: "/ANI-02.jpeg",
     specifications: { "Length": "65m", "Beam": "12m", "Draft": "3.8m", "Crew": "85", "Survey Equipment": "Multi-beam Echo Sounder, Side Scan Sonar" },
     status: "active",
     details: [
@@ -202,7 +181,7 @@ export const surveyShips: ISurveyShip[] = [
     name: "BNS Darshak",
     designation: "Oceanographic Vessel",
     description: "Dedicated oceanographic research vessel for deep water surveys and scientific data collection.",
-    image: "/shipImages/bns-darshak.png",
+    image: "/img8.jpeg",
     specifications: { "Length": "55m", "Beam": "10m", "Draft": "3.5m", "Crew": "65", "Survey Equipment": "CTD Profiler, ADCP, Grab Sampler" },
     status: "active",
     details: [

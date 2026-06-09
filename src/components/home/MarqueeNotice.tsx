@@ -8,11 +8,11 @@ export default function MarqueeNotice() {
         <div className="flex-1 overflow-hidden relative flex">
           <div className="animate-marquee whitespace-nowrap text-sm tracking-wider font-medium pt-1">
             <span className="pr-16">
-              Welcome to Bangladesh Navy Hydrographic and Oceanographic Centre. Latest navigational warnings and notices are available in the Notices to Mariners section.
+              The Annual Summary of Notices to Mariners 2026 is now available
             </span>
-            <span className="pr-16">
+            {/* <span className="pr-16">
               Mariners are advised to regularly check updated charts, tide tables, sailing directions, and hydrographic publications for safe navigation.
-            </span>
+            </span> */}
           </div>
         </div>
       </div>

@@ -4,12 +4,10 @@ import NavyWatermark from "@/src/components/shared/NavyWatermark";
 import { chiefMessage } from "@/src/data/homeData";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-    Award,
     ChevronRight,
-    GraduationCap,
     Quote,
     Ship,
-    X,
+    X
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
