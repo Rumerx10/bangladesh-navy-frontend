@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 const links = [
   { label: "BN Hydrographic Institute", href: "/skill-development" },
-  { label: "Courses", href: "/skill-development#courses" },
+  { label: "Courses", href: "/skill-development/courses" },
 ];
 
 export default function SkillDevDropdown() {

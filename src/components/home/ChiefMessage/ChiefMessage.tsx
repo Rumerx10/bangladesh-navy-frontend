@@ -57,7 +57,7 @@ export default function ChiefMessage() {
 
   const truncatedContent = chiefMessage.content.slice(0, VISIBLE_PARAGRAPHS);
   const hasMore = chiefMessage.content.length > VISIBLE_PARAGRAPHS;
-
+console.log(truncatedContent)
   return (
     <>
       <section className="relative py-20 lg:py-32 bg-white overflow-hidden">

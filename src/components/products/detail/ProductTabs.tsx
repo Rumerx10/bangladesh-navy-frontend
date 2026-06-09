@@ -1,6 +1,7 @@
 "use client";
 
 import { INavyProduct } from "@/src/components/products/types";
+import parse from "html-react-parser";
 import { useState } from "react";
 
 interface ProductTabsProps {
@@ -29,17 +30,9 @@ export default function ProductTabs({ product }: ProductTabsProps) {
           </button>
         ))}
       </div>
-      <div className="p-5">
-        {activeTab === 0 && (
-          <p className="text-sm text-gray-600 leading-relaxed">
-            {product.descriptionEn ?? "No description available."}
-          </p>
-        )}
-        {activeTab === 1 && (
-          <p className="text-sm text-gray-600 leading-relaxed">
-            {product.descriptionBn ?? "বর্ণনা পাওয়া যায়নি।"}
-          </p>
-        )}
+      <div className="p-5 text-sm text-gray-600 leading-relaxed [&_h3]:font-bold [&_h3]:text-[#001836] [&_h3]:text-base [&_h3]:mb-3 [&_h3]:mt-2 [&_p]:mb-3 [&_table]:w-full [&_table]:border-collapse [&_table]:mt-2 [&_th]:border [&_th]:border-gray-200 [&_th]:bg-[#003f71] [&_th]:text-white [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:text-xs [&_th]:font-semibold [&_td]:border [&_td]:border-gray-200 [&_td]:px-3 [&_td]:py-2 [&_td]:text-xs [&_tr:nth-child(even)_td]:bg-gray-50">
+        {activeTab === 0 && parse(product.descriptionEn ?? "No description available.")}
+        {activeTab === 1 && parse(product.descriptionBn ?? "বর্ণনা পাওয়া যায়নি।")}
       </div>
     </div>
   );
