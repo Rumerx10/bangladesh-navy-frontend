@@ -34,6 +34,7 @@ export interface INavyProduct {
   nameBn: string;
   nameEn: string;
   images: string[];
+  content?: string;
   descriptionBn?: string;
   descriptionEn?: string;
   price: number; // in smallest unit (poysha)

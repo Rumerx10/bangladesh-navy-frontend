@@ -1,5 +1,5 @@
 "use client";
-
+import parse from "html-react-parser";
 import { INavyProduct } from "@/src/components/products/types";
 import { getProductSlug } from "@/src/data/navyProducts";
 import { addToCart } from "@/src/lib/redux/features/cart/cartSlice";
@@ -76,7 +76,7 @@ export default function ProductInfo({
       {/* Description */}
       {product.descriptionEn && (
         <p className="mt-5 text-sm text-gray-600 leading-relaxed">
-          {product.descriptionEn}
+          {parse(product.descriptionEn)}
         </p>
       )}
 
