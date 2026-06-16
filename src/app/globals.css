@@ -346,3 +346,21 @@ input[type="time"]::-moz-inner-spin-button {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
 }
+/* NavyHeroCarousel — Swiper pagination dots */
+.hero-bullet {
+  display: inline-block;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 9999px;
+  background-color: rgb(255 255 255 / 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.hero-bullet:hover {
+  background-color: rgb(255 255 255 / 0.8);
+}
+.hero-bullet-active {
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: rgb(255 255 255);
+}

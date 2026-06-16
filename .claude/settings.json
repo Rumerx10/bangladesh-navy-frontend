@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn add *)",
+      "Bash(npx tsc *)",
+      "Bash(mv \"1. Ship.jpeg\" img1.jpeg)",
+      "Bash(mv \"20171220_152525_1.jpg\" img2.jpg)",
+      "Bash(mv \"20230522_142548.jpg\" img3.jpg)",
+      "Bash(mv \"3bc63155-f390-4dec-b45b-a1803ac155e6.jpg\" img4.jpg)",
+      "Bash(mv \"90ba4d9b-8d11-4cdc-8f69-b8ec308b6fdc.jpg\" img5.jpg)"
+    ]
+  }
+}
