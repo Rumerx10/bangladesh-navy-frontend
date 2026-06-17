@@ -36,12 +36,9 @@ export default function NewsEvents() {
           >
             <div className="flex items-center justify-center gap-2 mb-3">
               <Newspaper size={20} className="text-[#003f71]" />
-              <span className="text-sm font-semibold text-[#003f71] uppercase tracking-wider">
-                Stay Updated
-              </span>
             </div>
             <h2 className="text-2xl lg:text-3xl font-bold text-[#001836]">
-              Latest News & Events
+              News and Events
             </h2>
             <p className="mt-2 text-sm lg:text-base text-gray-500 max-w-lg mx-auto">
               Stay informed about the latest hydrographic updates and maritime

@@ -3,11 +3,12 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useRef } from "react";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay, EffectFade, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper/types";
 
 import "swiper/css";
+import "swiper/css/effect-fade";
 
 interface HeroSlide {
   id: number;
@@ -39,11 +40,13 @@ export default function NavyHeroCarousel() {
   return (
     <div className="relative w-full h-screen overflow-hidden bg-gray-900 group">
       <Swiper
-        modules={[Autoplay, Pagination]}
+        modules={[Autoplay, EffectFade, Pagination]}
         onSwiper={(swiper) => (swiperRef.current = swiper)}
+        effect="fade"
+        fadeEffect={{ crossFade: true }}
         loop
-        speed={1000}
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        speed={1500}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
         pagination={{
           el: ".hero-pagination",
           clickable: true,

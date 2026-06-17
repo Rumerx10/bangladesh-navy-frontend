@@ -26,10 +26,10 @@ export default function VisionMission() {
               <div className="w-14 h-14 rounded-xl bg-[#003f71]/10 text-[#003f71] flex items-center justify-center mb-5">
                 {iconMap[item.icon] ?? <Eye size={24} />}
               </div>
-              <h2 className="text-xl font-bold text-[#001836] mb-3">
+              <h2 className="text-2xl lg:text-3xl font-bold text-[#001836] mb-4">
                 {item.title}
               </h2>
-              <p className="text-sm text-gray-600 leading-relaxed mb-4">
+              <p className="text-lg lg:text-xl text-gray-700 leading-relaxed mb-4">
                 {item.description}
               </p>
               {item.points && (

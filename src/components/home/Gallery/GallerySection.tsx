@@ -2,7 +2,10 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { Maximize2 } from "lucide-react";
+
+const MotionLink = motion.create(Link);
 
 const galleryImages = [
   { id: 1, src: "/img4.jpeg", alt: "Survey Operation", size: "large" },
@@ -90,13 +93,14 @@ export default function GallerySection() {
 
         {/* View All Button */}
         <div className="mt-12 text-center">
-          <motion.button
-            className="px-8 py-3 bg-[#001836] text-white rounded-full font-semibold hover:bg-[#003f71] transition-colors shadow-lg hover:shadow-xl cursor-pointer"
+          <MotionLink
+            href="/about/gallery"
+            className="inline-block px-8 py-3 bg-[#001836] text-white rounded-full font-semibold hover:bg-[#003f71] transition-colors shadow-lg hover:shadow-xl cursor-pointer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Explore Full Gallery
-          </motion.button>
+          </MotionLink>
         </div>
       </div>
     </section>

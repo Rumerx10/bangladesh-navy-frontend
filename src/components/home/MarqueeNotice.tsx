@@ -8,7 +8,7 @@ export default function MarqueeNotice() {
         <div className="flex-1 overflow-hidden relative flex">
           <div className="animate-marquee whitespace-nowrap text-sm tracking-wider font-medium pt-1">
             <span className="pr-16">
-              The Annual Summary of Notices to Mariners 2026 is now available
+              The Annual Summary of Notices to Mariners 2026 is available now
             </span>
             {/* <span className="pr-16">
               Mariners are advised to regularly check updated charts, tide tables, sailing directions, and hydrographic publications for safe navigation.

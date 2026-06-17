@@ -115,7 +115,7 @@ export const visionMissionItems: IVisionMissionItem[] = [
     id: "vm-1",
     type: "vision",
     title: "Our Vision",
-    description: "To ensure safe & efficient marine transportation for sustainable Bangladesh.",
+    description: "To ensure safe & efficient marine activity for sustainable Bangladesh.",
     // points: [
     //   "International standard nautical charts and publications",
     //   "Modern hydrographic survey capabilities",

@@ -208,9 +208,6 @@ console.log(truncatedContent)
                   <p className="text-xl font-bold text-[#001836]">
                     {chiefMessage.name}
                   </p>
-                  <p className="text-sm text-[#003f71] font-medium tracking-wide uppercase mt-1">
-                    {chiefMessage.designation}
-                  </p>
                 </div>
 
                 {/* Decorative BN Mark */}
