@@ -46,7 +46,6 @@ export default function ProductInfo({
       <h1 className="text-2xl lg:text-3xl font-bold text-[#001836] leading-tight">
         {product.nameEn}
       </h1>
-      <p className="text-base text-gray-500 mt-1">{product.nameBn}</p>
 
       {/* Price */}
       <div className="mt-5 flex items-baseline gap-3">

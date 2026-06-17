@@ -3,12 +3,7 @@
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
 import { chiefMessage } from "@/src/data/homeData";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-    ChevronRight,
-    Quote,
-    Ship,
-    X
-} from "lucide-react";
+import { ChevronRight, Quote, Ship, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
@@ -57,7 +52,7 @@ export default function ChiefMessage() {
 
   const truncatedContent = chiefMessage.content.slice(0, VISIBLE_PARAGRAPHS);
   const hasMore = chiefMessage.content.length > VISIBLE_PARAGRAPHS;
-console.log(truncatedContent)
+  console.log(truncatedContent);
   return (
     <>
       <section className="relative py-20 lg:py-32 bg-white overflow-hidden">
@@ -157,10 +152,18 @@ console.log(truncatedContent)
                     Official Biography
                   </span>
                 </div>
-                <h2 className="text-3xl lg:text-5xl font-bold text-[#001836] leading-tight mb-6">
+                <h2 className="text-3xl lg:text-5xl font-bold text-[#001836] leading-tight mb-2">
                   {chiefMessage.title}
                 </h2>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                  <div>
+                    <p className="text-xl font-bold text-[#001836]">
+                      {chiefMessage.name}
+                    </p>
+                  </div>
+                </div>
                 <Quote size={48} className="text-[#001836]/5 -mb-6 -ml-2.5" />
+                
               </div>
 
               {/* Truncated Biography Paragraphs */}
@@ -203,22 +206,6 @@ console.log(truncatedContent)
               )}
 
               {/* Signature Area */}
-              <div className="mt-12 pt-10 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-                <div>
-                  <p className="text-xl font-bold text-[#001836]">
-                    {chiefMessage.name}
-                  </p>
-                </div>
-
-                {/* Decorative BN Mark */}
-                <div className="hidden sm:block">
-                  <div className="w-16 h-16 rounded-full border-2 border-dashed border-[#001836]/20 flex items-center justify-center p-2">
-                    <div className="w-full h-full rounded-full bg-[#001836]/5 flex items-center justify-center text-[#001836] font-bold text-lg">
-                      BN
-                    </div>
-                  </div>
-                </div>
-              </div>
             </motion.div>
           </div>
         </div>

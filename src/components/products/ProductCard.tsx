@@ -108,9 +108,6 @@ export default function ProductCard({ product }: ProductCardProps) {
         <h3 className="text-sm font-semibold text-[#001836] line-clamp-2 group-hover:text-[#003f71] transition-colors leading-snug">
           {product.nameEn}
         </h3>
-        <p className="text-xs text-gray-400 mt-1 line-clamp-1">
-          {product.nameBn}
-        </p>
 
         <div className="mt-auto pt-3 flex items-center justify-between">
           <div className="flex items-baseline gap-2">
