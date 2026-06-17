@@ -23,16 +23,9 @@ export default function SkillBanner() {
             Professional Excellence
           </div>
           <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            Skill Development & <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
-              Maritime Certification
-            </span>
+            BN HYDROGRAPHIC INSTITUTE
           </h1>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Elevate your maritime career with specialized courses from the Bangladesh Navy. 
-            From hydrographic surveying to digital cartography, gain the skills recognized globally.
-          </p>
-
+          
           <div className="flex flex-wrap items-center justify-center gap-6">
             <div className="flex items-center gap-3 text-white/80">
               <Shield className="text-blue-400" size={24} />
@@ -40,7 +33,9 @@ export default function SkillBanner() {
             </div>
             <div className="flex items-center gap-3 text-white/80">
               <BookOpen className="text-blue-400" size={24} />
-              <span className="text-sm font-medium">Industry Expert Instructors</span>
+              <span className="text-sm font-medium">
+                Industry Expert Instructors
+              </span>
             </div>
           </div>
         </motion.div>

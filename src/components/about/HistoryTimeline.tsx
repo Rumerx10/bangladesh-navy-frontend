@@ -3,8 +3,17 @@
 import type { IHistoryEra, IHistoryMilestone } from "@/src/data/aboutData";
 import { eraIcons } from "@/src/data/historyHelpers";
 import { AnimatePresence, motion } from "framer-motion";
-import { Anchor, ChevronRight, Sparkles } from "lucide-react";
+import { Anchor, ChevronRight } from "lucide-react";
 import { useState } from "react";
+
+const historyNarrative: string[] = [
+  "To ensure the safe and efficient utilization of maritime routes and resources, the Government of Bangladesh established the Bangladesh Navy Hydrographic Department (BNHD) on May 12, 1983. BNHD was tasked with surveying the nation's coastal and marine areas, producing nautical charts, and providing other navigational aids for safe navigation, benefiting both domestic and foreign vessels.",
+  "The department began its operations under the name \"BN Chart Depot\" on November 4, 1983, by collecting charts and navigational items from Bhatiary Ship Breaking Yards. BNHD started nautical charting journey with a historic chart titled 'St. Martin Island to Teknaf'. It was an ammonia-printed chart, published with manually collected survey data.",
+  "With the assistance of the French government through the Hydro Bangla Projects (1 & 2), the department stepped into digital survey era. Recognizing the need for better coordination in surveying activities, data management, and chart production, BN Hydrographic and Oceanographic Center (BNHOC) was officially established on March 15, 2001, at the BN Chart Depot.",
+  "BNHOC rapidly advanced the production of navigational charts and tide tables, processing hydrographic data from survey ships. In 2001, Bangladesh joined the International Hydrographic Organization as its 70th member, reflecting its adherence to international survey standards. BNHOC has played a significant role in maritime delimitation with India and Myanmar. Its contributions to maritime stake holders are noteworthy. Publications such as the BN Tide Table, BN Chart Catalog, and Notice to Mariners have been instrumental in ensuring safe navigation within Bangladesh sea waters.",
+  "BNHOC has published 55 paper charts and 17 electronic navigational charts covering Bangladesh sea areas at Bay of Bengal. These include 09 international series paper charts and 11 international series electronic navigational charts. Those charts not only enhance the country's global reputation but also generate foreign exchange through international sales. Additionally, BNHOC supports Bangladesh Navy by publishing daily marine weather forecasts and reviewing Hydrographic, Oceanographic, and Meteorological data collected by BN ships. These efforts have significantly contributed to the growth of the blue economy.",
+  "Over the past two decades, BNHOC has made remarkable progress in maritime boundary demarcation, safe navigation, and sustainable marine resource use. The organization remains committed to its mission of \"Ensuring Safe & Efficient Navigation for Sustainable Bangladesh,\" aligning with the nation's goals for a secure and sustainable maritime environment.",
+];
 
 interface HistoryTimelineProps {
   eras: IHistoryEra[];
@@ -19,29 +28,18 @@ export default function HistoryTimeline({
 
   return (
     <div className="flex flex-col gap-10">
-      {/* ── Intro Section ── */}
+      {/* ── History Narrative ── */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center max-w-[740px] mx-auto"
+        className="max-w-[860px] mx-auto"
       >
-        <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[var(--primary,#003f71)] text-white text-xs font-semibold uppercase tracking-wider mb-4">
-          <Sparkles size={14} />
-          <span>Our Legacy</span>
+        <div className="flex flex-col gap-5 text-[1.05rem] md:text-[1.15rem] text-[#3a4858] leading-[1.9] text-justify">
+          {historyNarrative.map((para, i) => (
+            <p key={i}>{para}</p>
+          ))}
         </div>
-        <h2 className="text-[clamp(1.6rem,3.2vw,2.25rem)] font-extrabold text-[#001836] leading-tight mb-3">
-          From Liberation to{" "}
-          <span className="text-[var(--primary,#003f71)]">
-            Global Leadership
-          </span>
-        </h2>
-        <p className="text-[0.95rem] text-[#5a6a7a] leading-relaxed max-w-[620px] mx-auto">
-          The Bangladesh Navy Hydrographic &amp; Oceanographic Centre traces its
-          roots to the 1971 Liberation War. Over five decades, it has grown from
-          a small chart depot into a nationally recognized centre charting
-          Bangladesh&apos;s maritime future.
-        </p>
       </motion.div>
 
       {/* ── Era Navigation (centered) ── */}
