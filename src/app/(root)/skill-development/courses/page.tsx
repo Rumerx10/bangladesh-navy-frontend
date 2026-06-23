@@ -1,5 +1,4 @@
 import CourseOverview from "@/src/components/skill-development/CourseOverview";
-import SkillCourseList from "@/src/components/skill-development/SkillCourseList";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
