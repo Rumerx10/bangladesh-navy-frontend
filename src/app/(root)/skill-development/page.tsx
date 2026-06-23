@@ -21,7 +21,7 @@ export default function SkillDevelopmentPage() {
               <BookOpen size={24} />
             </div>
             <h2 className="text-2xl lg:text-3xl font-bold text-[#001836]">
-              BN Hydrographic Institute
+              About Us
             </h2>
           </div>
 

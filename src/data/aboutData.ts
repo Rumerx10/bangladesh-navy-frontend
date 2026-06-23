@@ -115,7 +115,7 @@ export const visionMissionItems: IVisionMissionItem[] = [
     id: "vm-1",
     type: "vision",
     title: "Our Vision",
-    description: "To ensure safe & efficient marine activity for sustainable Bangladesh.",
+    description: "To ensure safe & efficient marine activities for sustainable Bangladesh.",
     // points: [
     //   "International standard nautical charts and publications",
     //   "Modern hydrographic survey capabilities",
@@ -127,7 +127,7 @@ export const visionMissionItems: IVisionMissionItem[] = [
     id: "vm-2",
     type: "mission",
     title: "Our Mission",
-    description: "Provide accurate and up-to-date Hydrographic, Oceanographic & Meteorological data through production of Charts & Publications for safe navigation and sustainable Marine environment.",
+    description: "Provide accurate and up-to-date Hydrographic, Oceanographic & Meteorological data through production of Charts & Publications for safe navigation and sustainable Marine activities.",
     // points: [
     //   "Conduct systematic hydrographic surveys",
     //   "Produce and maintain nautical charts",

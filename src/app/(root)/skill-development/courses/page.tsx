@@ -12,7 +12,7 @@ export default function CoursesPage() {
   return (
     <main className="pt-32 lg:pt-36">
       <CourseOverview />
-      <SkillCourseList />
+      {/* <SkillCourseList /> */}
     </main>
   );
 }

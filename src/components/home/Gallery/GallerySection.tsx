@@ -27,13 +27,13 @@ export default function GallerySection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#001836] mb-4">
-              Maritime Gallery
+            <h2 className="text-3xl lg:text-6xl font-bold text-[#001836] mb-4">
+               Gallery
             </h2>
             <div className="w-20 h-1.5 bg-[#003f71] mx-auto rounded-full mb-6" />
-            <p className="text-gray-500 max-w-2xl mx-auto">
+            {/* <p className="text-gray-500 max-w-2xl mx-auto">
               Visualizing our commitment to maritime excellence, hydrographic accuracy, and oceanographic exploration across the Bay of Bengal.
-            </p>
+            </p> */}
           </motion.div>
         </div>
 
