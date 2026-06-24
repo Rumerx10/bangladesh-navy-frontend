@@ -21,7 +21,7 @@ export default function Logo() {
         <span className="text-base lg:text-lg font-bold text-[#001836] tracking-tight leading-tight block">
           {siteConfig.name}
         </span>
-        <p className="text-[10px] lg:text-xs text-gray-500 leading-tight">
+        <p className="text-base lg:text-lg font-bold text-[#001836] tracking-tight leading-tight block">
           {siteConfig.description}
         </p>
       </div>
