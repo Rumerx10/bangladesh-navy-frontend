@@ -50,7 +50,7 @@ export default function DirectApproach() {
                       </a>
                     ))
                   ) : (
-                    <p className="text-gray-500">Not Available</p>
+                    <p className="text-gray-500">+8801769722446</p>
                   )}
                 </div>
               )}
@@ -79,7 +79,7 @@ export default function DirectApproach() {
                       </a>
                     ))
                   ) : (
-                    <p className="text-gray-500">Not Available</p>
+                    <p className="text-gray-500">bnhoc@navy.mil.bd</p>
                   )}
                 </div>
               )}
