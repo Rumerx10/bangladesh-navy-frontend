@@ -304,7 +304,7 @@ export default function AccountOrdersPage() {
             <Package size={28} />
           </div>
           <p className="text-sm font-medium text-gray-600">No orders found</p>
-          <p className="text-xs text-gray-400 max-w-[200px]">
+          <p className="text-xs text-gray-400 max-w-50">
             {searchQuery
               ? `No results for "${searchQuery}". Try a different search.`
               : "Your orders will appear here once you place an order."}

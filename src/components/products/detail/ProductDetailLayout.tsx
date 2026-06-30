@@ -12,36 +12,43 @@ interface ProductDetailLayoutProps {
   product: INavyProduct;
 }
 
-export default function ProductDetailLayout({ product }: ProductDetailLayoutProps) {
+export default function ProductDetailLayout({
+  product,
+}: ProductDetailLayoutProps) {
   const discountedPrice = getDiscountedPrice(product);
-const imageUrl = product.images?.[0] ?? "/img1.jpeg";
+  const imageUrl = product.images?.[0] ?? "/img1.jpeg";
 
   const isTiff = /\.(tif|tiff)$/i.test(imageUrl);
   return (
-    <div className="container px-4 sm:px-6 lg:px-8 py-6 lg:py-8 mt-28 lg:mt-[104px]">
+    <div className="container px-4 sm:px-6 lg:px-8 py-6 lg:py-8 mt-28 lg:mt-26">
       {/* Breadcrumb */}
       <nav className="text-sm text-gray-500 mb-6">
         <span className="hover:text-[#003f71] cursor-pointer">Home</span>
         <span className="mx-2">›</span>
-        <span className="hover:text-[#003f71] cursor-pointer">Products & Services</span>
+        <span className="hover:text-[#003f71] cursor-pointer">
+          Products & Services
+        </span>
         <span className="mx-2">›</span>
         <span className="text-[#001836] font-medium">{product.nameEn}</span>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         {/* Image Section */}
-        <div className="relative aspect-[4/3] lg:aspect-square rounded-2xl bg-gradient-to-br from-[#001836] to-[#003f71] flex items-center justify-center overflow-hidden">
-        {isTiff ? (
-          <TiffPreview src={imageUrl} className="w-full h-full object-cover" />
-        ) : (
-          <Image
-            src={imageUrl}
-            alt={product.nameEn}
-            width={400}
-            height={300}
-            className="object-cover w-full h-full"
-          />
-        )}
+        <div className="relative aspect-4/3 lg:aspect-square rounded-2xl bg-linear-to-br from-[#001836] to-[#003f71] flex items-center justify-center overflow-hidden">
+          {isTiff ? (
+            <TiffPreview
+              src={imageUrl}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <Image
+              src={imageUrl}
+              alt={product.nameEn}
+              width={400}
+              height={300}
+              className="object-cover w-full h-full"
+            />
+          )}
           {/* <div
             className="absolute inset-0 opacity-10"
             style={{

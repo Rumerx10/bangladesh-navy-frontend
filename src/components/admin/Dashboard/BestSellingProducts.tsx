@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Award } from "lucide-react";
@@ -19,7 +19,7 @@ export default function BestSellingProducts() {
     <Card className="border-gray-100 shadow-sm rounded-2xl py-4 sm:py-5 h-full">
       <CardHeader className="pb-2 px-4 sm:px-6">
         <div className="flex items-center gap-2 sm:gap-3">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-[#d97706] to-[#fbbf24] flex items-center justify-center shrink-0">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-linear-to-br from-[#d97706] to-[#fbbf24] flex items-center justify-center shrink-0">
             <Award className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </div>
           <div>

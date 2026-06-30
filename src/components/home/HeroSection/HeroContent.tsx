@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { IHeroButton } from "@/src/components/home/types";
 import { motion } from "framer-motion";
@@ -39,7 +39,7 @@ export default function HeroContent({
         {highlightTitle && (
           <>
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-300">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-300 to-cyan-300">
               {highlightTitle}
             </span>
           </>
@@ -65,7 +65,7 @@ export default function HeroContent({
           <Link
             key={i}
             href={button.href}
-            className={`inline-flex items-center justify-center gap-2 px-6 h-[44px] py-[16px] rounded-lg font-medium text-base transition-all duration-200 ${
+            className={`inline-flex items-center justify-center gap-2 px-6 h-11 py-4 rounded-lg font-medium text-base transition-all duration-200 ${
               button.variant === "primary"
                 ? "bg-[#003f71] hover:bg-[#004d8a] text-white shadow-lg shadow-blue-900/30"
                 : "bg-white/10 hover:bg-white/20 text-white border border-white/20"

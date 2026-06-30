@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import {
@@ -69,7 +69,7 @@ export default function Organization() {
         >
           {/* Photo card with glow */}
           <div className="relative group">
-            <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-[#003f71] to-cyan-500 opacity-30 blur group-hover:opacity-50 transition-opacity duration-500" />
+            <div className="absolute -inset-1 rounded-full bg-linear-to-br from-[#003f71] to-cyan-500 opacity-30 blur group-hover:opacity-50 transition-opacity duration-500" />
             <div className="relative w-32 h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl">
               <Image
                 src="/CHIEF.jpeg"
@@ -93,7 +93,7 @@ export default function Organization() {
 
         {/* ── Tree Connector: Vertical stem from chief ── */}
         <div className="flex justify-center">
-          <div className="w-px h-12 lg:h-16 bg-gradient-to-b from-[#003f71] to-[#003f71]/30" />
+          <div className="w-px h-12 lg:h-16 bg-linear-to-b from-[#003f71] to-[#003f71]/30" />
         </div>
 
         {/* ── Tree Connector: Horizontal bar ── */}
@@ -113,13 +113,13 @@ export default function Organization() {
               transition={{ duration: 0.45, delay: i * 0.08 }}
             >
               {/* Vertical branch connector */}
-              <div className="w-px h-8 lg:h-10 bg-gradient-to-b from-[#003f71]/25 to-[#003f71]/40" />
+              <div className="w-px h-8 lg:h-10 bg-linear-to-b from-[#003f71]/25 to-[#003f71]/40" />
 
               {/* Connector dot */}
               <div className="w-3 h-3 rounded-full bg-[#003f71] border-2 border-white shadow-sm" />
 
               {/* Department card */}
-              <div className="mt-3 mb-8 w-full max-w-[280px] min-h-[200px] flex flex-col rounded-2xl border border-gray-100 bg-white p-5 shadow-sm hover:shadow-lg hover:border-[#003f71]/20 hover:-translate-y-1 transition-all duration-300 group cursor-default ">
+              <div className="mt-3 mb-8 w-full max-w-70 min-h-50 flex flex-col rounded-2xl border border-gray-100 bg-white p-5 shadow-sm hover:shadow-lg hover:border-[#003f71]/20 hover:-translate-y-1 transition-all duration-300 group cursor-default ">
                 <div className="w-11 h-11 rounded-xl bg-[#003f71]/10 text-[#003f71] flex items-center justify-center mb-3 group-hover:bg-[#003f71] group-hover:text-white transition-colors duration-300 shrink-0">
                   {dept.icon}
                 </div>

@@ -126,7 +126,7 @@ export default function HeaderTopBarActions({
             <motion.span 
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="absolute top-0.5 right-0.5 min-w-[18px] h-[18px] flex items-center justify-center rounded-full bg-[#003f71] text-white text-[10px] font-bold px-1"
+              className="absolute top-0.5 right-0.5 min-w-4.5 h-4.5 flex items-center justify-center rounded-full bg-[#003f71] text-white text-[10px] font-bold px-1"
             >
               {cartCount > 99 ? "99+" : cartCount}
             </motion.span>

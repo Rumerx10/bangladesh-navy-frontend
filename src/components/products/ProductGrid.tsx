@@ -20,9 +20,9 @@ export default function ProductGrid({
   setFilters,
 }: ProductGridProps) {
   return (
-    <div className="min-h-[600px]">
+    <div className="min-h-150">
       {/* Toolbar */}
-      <div className="flex items-center justify-between mb-5 pb-4 border-b border-gray-100">
+      {/* <div className="flex items-center justify-between mb-5 pb-4 border-b border-gray-100">
         <div className="flex items-center gap-2 text-sm text-gray-500">
           <span>
             Showing <strong className="text-[#001836]">{products.length}</strong>{" "}
@@ -33,7 +33,7 @@ export default function ProductGrid({
           value={filters.sortBy}
           onChange={(sortBy) => setFilters((prev) => ({ ...prev, sortBy }))}
         />
-      </div>
+      </div> */}
 
       {/* Grid */}
       {products.length > 0 ? (

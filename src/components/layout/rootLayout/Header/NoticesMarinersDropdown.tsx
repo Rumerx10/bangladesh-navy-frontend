@@ -32,7 +32,7 @@ export default function NoticesMarinersDropdown() {
           className="mt-px transition-transform group-hover:rotate-180 duration-200"
         />
       </button>
-      <div className="absolute left-1/2 top-full z-50 hidden min-w-[220px] -translate-x-1/2 rounded-xl border border-gray-200 bg-white p-2 shadow-xl group-hover:block">
+      <div className="absolute left-1/2 top-full z-50 hidden min-w-55 -translate-x-1/2 rounded-xl border border-gray-200 bg-white p-2 shadow-xl group-hover:block">
         <div className="flex flex-col gap-0.5">
           {noticesLinks.map((item) => (
             <Link

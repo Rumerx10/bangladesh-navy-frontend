@@ -200,7 +200,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           {product.category.name}
         </Link>
         <ChevronRight size={12} />
-        <span className="text-foreground font-medium truncate max-w-[200px]">
+        <span className="text-foreground font-medium truncate max-w-50">
           {product.name}
         </span>
       </nav>
@@ -882,7 +882,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           onClick={() => setShowReviewModal(false)}
         >
           <div
-            className="bg-card rounded-2xl w-[90%] max-w-[480px] max-h-[90vh] overflow-y-auto shadow-2xl"
+            className="bg-card rounded-2xl w-[90%] max-w-120 max-h-[90vh] overflow-y-auto shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between px-6 py-5 border-b border-border">
@@ -976,7 +976,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           onClick={() => setShowQuestionModal(false)}
         >
           <div
-            className="bg-card rounded-2xl w-[90%] max-w-[480px] max-h-[90vh] overflow-y-auto shadow-2xl"
+            className="bg-card rounded-2xl w-[90%] max-w-120 max-h-[90vh] overflow-y-auto shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between px-6 py-5 border-b border-border">

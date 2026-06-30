@@ -175,7 +175,7 @@ export default function ShopPage() {
       {/* Categories */}
       <div className="px-4 py-3.5 border-b border-border last:border-b-0">
         <h4 className="text-xs font-bold text-foreground mb-3 uppercase tracking-wider">Category</h4>
-        <div className="flex flex-col gap-2 max-h-[200px] overflow-y-auto">
+        <div className="flex flex-col gap-2 max-h-50 overflow-y-auto">
           {allCategories.map((cat) => (
             <label key={cat.name} className="flex items-center gap-2 cursor-pointer text-sm text-foreground">
               <input type="checkbox" className="w-4 h-4 accent-primary cursor-pointer shrink-0" checked={filters.categories.includes(cat.name)} onChange={() => toggleCategory(cat.name)} />
@@ -189,7 +189,7 @@ export default function ShopPage() {
       {/* Brands */}
       <div className="px-4 py-3.5 border-b border-border last:border-b-0">
         <h4 className="text-xs font-bold text-foreground mb-3 uppercase tracking-wider">Brand</h4>
-        <div className="flex flex-col gap-2 max-h-[200px] overflow-y-auto">
+        <div className="flex flex-col gap-2 max-h-50 overflow-y-auto">
           {allBrands.map((brand) => (
             <label key={brand.name} className="flex items-center gap-2 cursor-pointer text-sm text-foreground">
               <input type="checkbox" className="w-4 h-4 accent-primary cursor-pointer shrink-0" checked={filters.brands.includes(brand.name)} onChange={() => toggleBrand(brand.name)} />
@@ -256,7 +256,7 @@ export default function ShopPage() {
               className={`relative w-10 h-5.5 rounded-full border-none cursor-pointer p-0 transition-colors ${filters.freeShipping ? "bg-primary" : "bg-border"}`}
               onClick={() => setFilters((f) => ({ ...f, freeShipping: !f.freeShipping }))}
             >
-              <span className={`absolute top-[3px] left-[3px] w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${filters.freeShipping ? "translate-x-[1.1rem]" : ""}`} />
+              <span className={`absolute top-0.75 left-0.75 w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${filters.freeShipping ? "translate-x-[1.1rem]" : ""}`} />
             </button>
           </div>
           <div className="flex items-center justify-between py-1">
@@ -265,7 +265,7 @@ export default function ShopPage() {
               className={`relative w-10 h-5.5 rounded-full border-none cursor-pointer p-0 transition-colors ${filters.inStock ? "bg-primary" : "bg-border"}`}
               onClick={() => setFilters((f) => ({ ...f, inStock: !f.inStock }))}
             >
-              <span className={`absolute top-[3px] left-[3px] w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${filters.inStock ? "translate-x-[1.1rem]" : ""}`} />
+              <span className={`absolute top-0.75 left-0.75 w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${filters.inStock ? "translate-x-[1.1rem]" : ""}`} />
             </button>
           </div>
         </div>

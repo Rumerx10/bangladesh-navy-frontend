@@ -4,13 +4,24 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Maximize2 } from "lucide-react";
+import SectionTitle from "../../SectionTitle";
 
 const MotionLink = motion.create(Link);
 
 const galleryImages = [
   { id: 1, src: "/img4.jpeg", alt: "Survey Operation", size: "large" },
-  { id: 2, src: "/newsImages/news2.jpg", alt: "IHO Celebration", size: "small" },
-  { id: 3, src: "/newsImages/news3.jpg", alt: "Nautical Charts", size: "small" },
+  {
+    id: 2,
+    src: "/newsImages/news2.jpg",
+    alt: "IHO Celebration",
+    size: "small",
+  },
+  {
+    id: 3,
+    src: "/newsImages/news3.jpg",
+    alt: "Nautical Charts",
+    size: "small",
+  },
   { id: 4, src: "/img5.jpeg", alt: "Survey Launch", size: "small" },
   { id: 5, src: "/img8.jpeg", alt: "Tide Prediction", size: "small" },
 ];
@@ -21,26 +32,13 @@ export default function GallerySection() {
       <div className="container px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12 lg:mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-3xl lg:text-6xl font-bold text-[#001836] mb-4">
-               Gallery
-            </h2>
-            <div className="w-20 h-1.5 bg-[#003f71] mx-auto rounded-full mb-6" />
-            {/* <p className="text-gray-500 max-w-2xl mx-auto">
-              Visualizing our commitment to maritime excellence, hydrographic accuracy, and oceanographic exploration across the Bay of Bengal.
-            </p> */}
-          </motion.div>
+          <SectionTitle title="Gallery" />
         </div>
 
         {/* Gallery Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 h-[800px] md:h-[600px] lg:h-[700px]">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 h-200 md:h-150 lg:h-175">
           {/* Main Large Image */}
-          <motion.div 
+          <motion.div
             className="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-2xl shadow-lg"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -58,14 +56,14 @@ export default function GallerySection() {
                 <Maximize2 size={24} />
               </div>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white">
+            <div className="absolute bottom-0 left-0 right-0 p-6 bg-linear-to-t from-black/80 to-transparent text-white">
               <p className="font-bold text-lg">{galleryImages[0].alt}</p>
             </div>
           </motion.div>
 
           {/* Smaller Images */}
           {galleryImages.slice(1).map((image, index) => (
-            <motion.div 
+            <motion.div
               key={image.id}
               className="relative group overflow-hidden rounded-2xl shadow-md"
               initial={{ opacity: 0, scale: 0.95 }}
@@ -84,7 +82,7 @@ export default function GallerySection() {
                   <Maximize2 size={20} />
                 </div>
               </div>
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent text-white">
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-black/70 to-transparent text-white">
                 <p className="font-semibold text-sm">{image.alt}</p>
               </div>
             </motion.div>

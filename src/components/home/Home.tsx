@@ -1,4 +1,5 @@
-import ChiefMessage from "./ChiefMessage/ChiefMessage";
+// import ChiefMessage from "./ChiefMessage/ChiefMessage";
+import Partners from "../Partners";
 import GallerySection from "./Gallery/GallerySection";
 import NavyHeroCarousel from "./HeroSection/NavyHeroCarousel";
 
@@ -9,13 +10,13 @@ import MaritimeSearch from "./SearchSection/MaritimeSearch";
 export default function Home() {
   return (
     <div>
-
       <NavyHeroCarousel />
       <QuickAccess />
-      <ChiefMessage />
+      {/* <ChiefMessage /> */}
       <MaritimeSearch />
       <NewsEvents />
       <GallerySection />
+      <Partners />
     </div>
   );
 }

@@ -7,7 +7,7 @@ interface CustomTooltipProps {
 export default function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border border-gray-100 px-4 py-3 min-w-[160px]">
+      <div className="bg-white rounded-xl shadow-lg border border-gray-100 px-4 py-3 min-w-40">
         <p className="text-xs font-medium text-gray-400 mb-1.5">{label}</p>
         {payload.map((entry) => (
           <div

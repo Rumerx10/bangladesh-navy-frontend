@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import type { ISurveyShip } from "@/src/components/about/types";
 import { motion } from "framer-motion";
@@ -11,10 +11,10 @@ interface SurveyShipDetailProps {
 
 export default function SurveyShipDetail({ ship }: SurveyShipDetailProps) {
   return (
-    <section className="mt-32">
+    <section className="mt-40">
       <div className="container pb-10">
         <motion.div
-          className="relative w-full min-h-[400px] rounded-2xl overflow-hidden mb-8 shadow-lg"
+          className="relative w-full min-h-100 rounded-2xl overflow-hidden mb-8 shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -28,12 +28,12 @@ export default function SurveyShipDetail({ ship }: SurveyShipDetailProps) {
               priority
             />
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-[#001836] to-[#003f71] flex items-center justify-center">
+            <div className="w-full h-full bg-linear-to-br from-[#001836] to-[#003f71] flex items-center justify-center">
               <Anchor size={80} className="text-white/10" />
             </div>
           )}
           {/* Overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#001836]/80 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-[#001836]/80 via-transparent to-transparent" />
           {/* Ship name overlay */}
           <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
             <div className="flex items-end justify-between gap-4">

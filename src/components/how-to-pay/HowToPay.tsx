@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { CreditCard, Landmark, ShieldCheck } from "lucide-react";
@@ -68,7 +68,7 @@ export default function HowToPay() {
             </div>
             <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight">
               How to{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-cyan-300">
                 Pay
               </span>
             </h1>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Zap } from "lucide-react";
 import Image from "next/image";
@@ -43,7 +43,7 @@ export default function FlashSaleCards() {
 
           {/* Gradient overlay */}
           <div
-            className={`absolute inset-0 bg-gradient-to-r ${sale.gradient} opacity-80`}
+            className={`absolute inset-0 bg-linear-to-r ${sale.gradient} opacity-80`}
           />
 
           {/* Content */}

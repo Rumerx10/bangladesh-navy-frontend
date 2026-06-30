@@ -12,7 +12,7 @@ yarn format       # Prettier write
 yarn spotless     # lint --fix + format (combined)
 ```
 
-No tests are configured (`test` script is a no-op).
+No tests are configured (`test` script is a no-op). Husky + lint-staged runs ESLint --fix + Prettier automatically on every commit.
 
 ## Environment variables
 
@@ -33,26 +33,54 @@ No tests are configured (`test` script is a no-op).
 - **shadcn/ui** components (Radix + CVA + tailwind-merge) live in [src/components/ui/](src/components/ui/)
 - **React Hook Form + Yup** for all forms
 - **Axios** with custom interceptors in [src/helpers/axios/axiosInstance.ts](src/helpers/axios/axiosInstance.ts)
+- **TipTap** rich text editor via [src/components/shared/text-editor/TextEditor.tsx](src/components/shared/text-editor/TextEditor.tsx)
+- **Recharts** for admin dashboard charts; **`@tanstack/react-table`** for admin data tables
+- **Swiper** for carousels; **Framer Motion** for animations
+- **jsPDF + jspdf-autotable** for PDF export in admin reports
+- **DOMPurify** (via [src/utils/sanitize.ts](src/utils/sanitize.ts)) to sanitize TipTap HTML before rendering
+- **react-toastify** for all toast notifications (not shadcn toast)
+- **`@imgly/background-removal`** for client-side image background removal in the admin image uploader
+
+### Path alias
+
+`@/src/` resolves to `src/` (configured in `tsconfig.json`). All internal imports use this prefix — e.g. `@/src/components/...`, `@/src/hooks/...`.
 
 ### Route groups
 
 | Group | Layout | Purpose |
 |---|---|---|
-| `(root)` | Header + Footer + CartDrawer | Public-facing pages (home, products, about, skill-dev, etc.) |
-| `admin` | Sidebar + DashboardHeader | Admin dashboard (products, users, content management, career) |
+| `(root)` | Header + Footer + CartDrawer (via `CartDrawerProvider`) | Public-facing pages (home, products, about, skill-dev, etc.) |
+| `admin` | Sidebar + DashboardHeader | Admin dashboard |
 | `auth` | Minimal | Login / signup |
+
+The `admin` route itself is flat but its pages are organized in sub-groups: `(products)`, `(categories)`, `(users)`, `(content-management)` (banner-poster, media-gallery), `(career)` (career listings + applicant list), and `hero-management`. Components for each live under [src/components/admin/](src/components/admin/) in matching subdirectories.
+
+### Route guards (proxy.ts pattern)
+
+There is no global `middleware.ts`. Instead, each protected directory has a `proxy.ts` file that exports HTTP method handlers (`GET`, `POST`, `PATCH`, etc.) which decode the JWT from cookies and redirect unauthorized requests:
+
+- [src/app/admin/proxy.ts](src/app/admin/proxy.ts) — redirects unauthenticated users to `/auth/login?redirect=<path>`, and non-admins to `/`
+- [src/app/auth/proxy.ts](src/app/auth/proxy.ts) — redirects already-authenticated users away from login/signup (admins → `/admin`, users → `/`)
+
+### Auth token storage
+
+- `accessToken` — JS-readable cookie (set by client via `js-cookie`)
+- `refreshToken` — JS-readable cookie
+- `role` and `userId` — **httpOnly** cookies set via server actions in [src/actions/cookiesAction.ts](src/actions/cookiesAction.ts)
+
+The `UserFetcher` component listens to a custom `auth-token-updated` window event to re-sync the token after login. Dispatch this event when programmatically updating `accessToken`.
 
 ### Data fetching hooks
 
 All API calls go through three generic hooks in [src/hooks/](src/hooks/):
 
-- `useGet<T>(endpoint, queryKey, params?, options?)` — wraps `useQuery`
-- `usePost<T>(defaultEndpoint?, onSuccess?, invalidateKeys?)` — wraps `useMutation`
+- `useGet<T>(endpoint, queryKey, params?, options?)` — wraps `useQuery`. Query key is extended with filtered param values for automatic cache invalidation.
+- `usePost<T>(defaultEndpoint?, onSuccess?, invalidateKeys?)` — wraps `useMutation`. Accepts either `PostArg { endpoint, data, config }` or raw data.
 - `usePatch`, `useDelete` — similar patterns
 
-The axios instance normalises every response to `{ data, meta }`, handles JWT refresh automatically on 401, and routes `/api/*` calls to the Next.js BFF routes instead of the external API.
+The axios instance normalises every response to `{ data, meta }`, handles JWT refresh automatically on 401 `jwt expired`, and rewrites `/api/*` URLs to `window.location.origin/api/*` so they hit Next.js BFF routes.
 
-### Redux slices
+### Redux
 
 Located in [src/lib/redux/features/](src/lib/redux/features/):
 
@@ -64,15 +92,23 @@ Located in [src/lib/redux/features/](src/lib/redux/features/):
 | `filter` | Product filter/search state synced to URL |
 | `user`, `wishlist`, `organizer` | Supporting slices |
 
+Always use the typed hooks from [src/lib/redux/hooks.ts](src/lib/redux/hooks.ts): `useAppDispatch()` and `useAppSelector`.
+
 **Auth bootstrap**: [src/app/UserFetcher.tsx](src/app/UserFetcher.tsx) is a client component rendered in the root layout. It decodes the `accessToken` cookie, fetches `/user/:id`, and dispatches `setUserInformation` + `setPermissionsFromRole` to Redux on every page load.
 
 ### Roles & permissions
 
 Four roles: `GUEST` → `USER` → `ADMIN` → `SUPER_ADMIN`. Role is decoded from the JWT and normalised in [src/lib/redux/features/permission/permissionSlice.ts](src/lib/redux/features/permission/permissionSlice.ts). Admins cannot add to cart; users cannot access admin routes.
 
-### Path alias
+### Form pattern
 
-`@/src/` resolves to `src/` (configured in `tsconfig.json`). All internal imports use this prefix.
+All form pages use React Hook Form with `FormProvider`. Reusable controlled fields live in [src/components/shared/FromController/](src/components/shared/FromController/) (note: directory is named `FromController`, not `FormController`). These components call `useFormContext()` internally and must be rendered inside a `FormProvider`. Use `ControlledInputField`, `ControlledSelectField`, `ControlledTextEditorField`, etc.
+
+### Shared utility components
+
+- **`SectionTitle`** ([src/components/SectionTitle.tsx](src/components/SectionTitle.tsx)) — reusable section heading with title + description; use this instead of inline headings.
+- **`InternetStatus`** ([src/components/InternetStatus.tsx](src/components/InternetStatus.tsx)) — renders an offline banner; included in the `(root)` layout.
+- **`Partners`** ([src/components/Partners.tsx](src/components/Partners.tsx)) — marquee partner logos pulled from `public/partners/`.
 
 ### Static data
 

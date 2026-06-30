@@ -17,7 +17,7 @@ export default function RevenueChartSkeleton() {
         </div>
       </CardHeader>
       <CardContent className="pt-2 px-2 sm:px-6">
-        <Skeleton className="w-full h-[220px] sm:h-[280px] lg:h-[320px] rounded-xl" />
+        <Skeleton className="w-full h-55 sm:h-70 lg:h-80 rounded-xl" />
         {/* Legend */}
         <div className="flex items-center justify-center gap-6 mt-4">
           <div className="flex items-center gap-2">

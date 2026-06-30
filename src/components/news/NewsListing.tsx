@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
 import NewsCard from "@/src/components/home/News/NewsCard";
@@ -9,9 +9,9 @@ import Link from "next/link";
 
 export default function NewsListingPage() {
   return (
-    <div className="mt-28 lg:mt-[104px]">
+    <div className="mt-28 lg:mt-26">
       {/* Page Header */}
-      <section className="relative bg-gradient-to-b from-[#001836] to-[#003052] py-14 lg:py-20 overflow-hidden">
+      <section className="relative bg-linear-to-b from-[#001836] to-[#003052] py-14 lg:py-20 overflow-hidden">
         <div className="absolute -right-20 -top-10 text-white">
           <NavyWatermark variant="anchor" size={300} opacity={0.05} animate="float" />
         </div>

@@ -1,94 +1,88 @@
 "use client";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import { useRef } from "react";
-import { Autoplay, EffectFade, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import type { Swiper as SwiperType } from "swiper/types";
-
-import "swiper/css";
-import "swiper/css/effect-fade";
-
-interface HeroSlide {
-  id: number;
-  image: string;
-  alt: string;
-}
-
-const heroSlides: HeroSlide[] = [
-  {
-    id: 1,
-    image: "/heroImages/home/img1.jpeg",
-    alt: "Bangladesh Navy Maritime Heritage",
-  },
-  {
-    id: 2,
-    image: "/heroImages/heroImg1.jpeg",
-    alt: "Hydrographic Charting Services",
-  },
-  {
-    id: 3,
-    image: "/heroImages/heroImg2.jpg",
-    alt: "Oceanographic Research and Navigation",
-  },
-];
+import Link from "next/link";
 
 export default function NavyHeroCarousel() {
-  const swiperRef = useRef<SwiperType | null>(null);
-
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-gray-900 group">
-      <Swiper
-        modules={[Autoplay, EffectFade, Pagination]}
-        onSwiper={(swiper) => (swiperRef.current = swiper)}
-        effect="fade"
-        fadeEffect={{ crossFade: true }}
-        loop
-        speed={1500}
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
-        pagination={{
-          el: ".hero-pagination",
-          clickable: true,
-          bulletClass: "hero-bullet",
-          bulletActiveClass: "hero-bullet-active",
-        }}
-        className="w-full h-full"
-      >
-        {heroSlides.map((slide) => (
-          <SwiperSlide key={slide.id}>
-            <div className="relative w-full h-full">
-              <Image
-                src={slide.image}
-                alt={slide.alt}
-                fill
-                priority={slide.id === 1}
-                className="object-cover"
-                sizes="100vw"
-              />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+    <div className="relative w-full h-screen overflow-hidden bg-gray-900">
+      {/* Background image */}
+      <Image
+        src="/heroImages/heroImg1.jpg"
+        alt="Bangladesh Navy Maritime Heritage"
+        fill
+        priority
+        className="object-cover object-center"
+      />
 
-      {/* Arrow Navigation */}
-      <button
-        onClick={() => swiperRef.current?.slidePrev()}
-        className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/20 hover:bg-white/40 shadow-lg flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft size={24} />
-      </button>
-      <button
-        onClick={() => swiperRef.current?.slideNext()}
-        className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/20 hover:bg-white/40 shadow-lg flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer"
-        aria-label="Next slide"
-      >
-        <ChevronRight size={24} />
-      </button>
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/50 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-black/20" />
 
-      {/* Dots Indicator */}
-      <div className="hero-pagination absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3" />
+      {/* Content */}
+      <div className="absolute inset-0 flex items-center">
+        <div className="container mx-auto px-6 md:px-12 lg:px-20 max-w-6xl">
+          {/* Badge */}
+          <div className="flex items-center gap-3 mb-6">
+            <span className="h-px w-10 bg-amber-400" />
+            <span className="text-amber-400 text-xs font-semibold tracking-[0.25em] uppercase">
+              Excellence in Maritime Service
+            </span>
+          </div>
+
+          {/* Title */}
+          <h1 className="text-white font-bold leading-tight tracking-tight mb-4">
+            <span className="block text-4xl md:text-6xl lg:text-7xl">
+              Guardians of the
+            </span>
+            <span className="block text-4xl md:text-6xl lg:text-7xl text-amber-400 mt-1">
+              Bay of Bengal
+            </span>
+          </h1>
+
+          {/* Divider */}
+          <div className="flex items-center gap-3 my-6">
+            <span className="h-0.5 w-12 bg-amber-400" />
+            <span className="h-0.5 w-4 bg-amber-400/40" />
+          </div>
+
+          {/* Description */}
+          <p className="text-white/80 text-base md:text-lg leading-relaxed max-w-xl font-light">
+            Bangladesh Navy stands as the premier maritime defense force,
+            protecting our sovereign waters and advancing naval excellence
+            across the Indo-Pacific region.
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4 mt-10">
+            <Link
+              href="/about"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-amber-400 hover:bg-amber-300 text-gray-900 text-sm font-semibold tracking-wider uppercase transition-colors duration-200"
+            >
+              Explore Our Fleet
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </Link>
+            <Link
+              href="/skill-development"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/40 hover:border-white text-white text-sm font-semibold tracking-wider uppercase transition-colors duration-200"
+            >
+              Join the Navy
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

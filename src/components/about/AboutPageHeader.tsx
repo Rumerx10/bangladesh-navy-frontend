@@ -13,7 +13,7 @@ export default function AboutPageHeader({
   breadcrumbs,
 }: AboutPageHeaderProps) {
   return (
-    <div className="bg-white border-b border-gray-100 py-6 lg:py-8 mt-28 lg:mt-[104px]">
+    <div className="bg-white border-b border-gray-100 py-6 lg:py-8 mt-28 lg:mt-26">
       <div className="container px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-sm text-gray-500 mb-3">

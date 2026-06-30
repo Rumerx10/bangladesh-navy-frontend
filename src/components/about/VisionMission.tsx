@@ -13,7 +13,7 @@ export default function VisionMission() {
   return (
     <section className="py-8 lg:py-12">
       <div className="container px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
+        <div className="container grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
           {visionMissionItems.map((item, i) => (
             <motion.div
               key={item.id}

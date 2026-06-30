@@ -24,7 +24,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group relative flex flex-col h-[380px] rounded-lg overflow-hidden bg-card hover:shadow-[0_4px_20px_rgba(0,0,0,0.08)] transition-shadow"
+      className="group relative flex flex-col h-95 rounded-lg overflow-hidden bg-card hover:shadow-[0_4px_20px_rgba(0,0,0,0.08)] transition-shadow"
     >
       {/* Image — takes remaining space */}
       <div className="relative w-full flex-1 min-h-0 overflow-hidden bg-gray-100 rounded-t-lg">
@@ -46,7 +46,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             </span>
           )}
           {product.freeShipping && (
-            <span className="flex items-center gap-1 text-[10px] font-extrabold px-2 py-[3px] rounded-sm bg-emerald-600 text-white uppercase tracking-wider">
+            <span className="flex items-center gap-1 text-[10px] font-extrabold px-2 py-0.75 rounded-sm bg-emerald-600 text-white uppercase tracking-wider">
               <Truck size={12} strokeWidth={2.5} />
               Free Delivery
             </span>
@@ -55,7 +55,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       </div>
 
       {/* Content — fixed height */}
-      <div className="flex flex-col justify-between shrink-0 h-[100px] pt-2 pb-2 px-2">
+      <div className="flex flex-col justify-between shrink-0 h-25 pt-2 pb-2 px-2">
         <div className="flex flex-col gap-0.5">
           {product.brand && (
             <span className="text-xs font-bold text-foreground truncate">

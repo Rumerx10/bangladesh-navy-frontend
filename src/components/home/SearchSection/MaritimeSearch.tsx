@@ -1,7 +1,12 @@
-"use client";
+﻿"use client";
 
 import { searchTabs } from "@/src/data/homeData";
-import { formatPrice, getDiscountedPrice, getProductSlug, navyProducts } from "@/src/data/navyProducts";
+import {
+  formatPrice,
+  getDiscountedPrice,
+  getProductSlug,
+  navyProducts,
+} from "@/src/data/navyProducts";
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
 import { motion } from "framer-motion";
 import { Search, X } from "lucide-react";
@@ -9,7 +14,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 import SearchTabs from "./SearchTabs";
-
+import SectionTitle from "../../SectionTitle";
 
 export default function MaritimeSearch() {
   const router = useRouter();
@@ -35,7 +40,9 @@ export default function MaritimeSearch() {
 
   const handleSearch = () => {
     if (query.trim()) {
-      router.push(`/product-service?search=${encodeURIComponent(query.trim())}`);
+      router.push(
+        `/product-service?search=${encodeURIComponent(query.trim())}`
+      );
       setQuery("");
       setIsFocused(false);
     }
@@ -51,31 +58,26 @@ export default function MaritimeSearch() {
     <section className="relative py-16 lg:py-25 bg-white overflow-hidden">
       {/* Watermark */}
       <div className="absolute -right-20 -top-10 text-[#001836]">
-        <NavyWatermark variant="compass" size={350} opacity={0.03} animate="rotate" />
+        <NavyWatermark
+          variant="compass"
+          size={350}
+          opacity={0.03}
+          animate="rotate"
+        />
       </div>
       <div className="absolute -left-16 -bottom-16 text-[#001836]">
-        <NavyWatermark variant="anchor" size={250} opacity={0.025} animate="drift" />
+        <NavyWatermark
+          variant="anchor"
+          size={250}
+          opacity={0.025}
+          animate="drift"
+        />
       </div>
       <div className="relative container px-4 sm:px-6 lg:px-8 text-center">
-        <motion.h2
-          className="text-2xl lg:text-3xl font-bold text-[#001836]"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          Find Maritime Resources
-        </motion.h2>
-        <motion.p
-          className="mt-2 text-sm lg:text-base text-gray-500 max-w-md mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          Search our comprehensive database of charts, notices, and data
-        </motion.p>
-
+        <SectionTitle
+          title="Find Maritime Resources"
+          desc="Search our comprehensive database of charts, notices, and data"
+        />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -107,7 +109,7 @@ export default function MaritimeSearch() {
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setTimeout(() => setIsFocused(false), 200)}
                 onKeyDown={handleKeyDown}
-                className="w-full px-4 h-[44px] rounded-lg border border-gray-200 text-sm bg-gray-50 focus:outline-none focus:border-[#003f71] focus:ring-2 focus:ring-[#003f71]/10 transition-all"
+                className="w-full px-4 h-11 rounded-lg border border-gray-200 text-sm bg-gray-50 focus:outline-none focus:border-[#003f71] focus:ring-2 focus:ring-[#003f71]/10 transition-all"
               />
               {query && (
                 <button
@@ -123,7 +125,7 @@ export default function MaritimeSearch() {
             </div>
             <button
               onClick={handleSearch}
-              className="inline-flex items-center justify-center gap-2 px-6 h-[44px] py-[16px] rounded-lg bg-[#003f71] text-white font-medium text-base hover:bg-[#004d8a] transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-6 h-11 py-4 rounded-lg bg-[#003f71] text-white font-medium text-base hover:bg-[#004d8a] transition-colors cursor-pointer"
             >
               <Search size={18} />
               <span className="hidden sm:inline">Search</span>
@@ -149,7 +151,7 @@ export default function MaritimeSearch() {
                         }}
                       >
                         {/* Thumbnail */}
-                        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#001836] to-[#003f71] flex items-center justify-center shrink-0">
+                        <div className="w-12 h-12 rounded-lg bg-linear-to-br from-[#001836] to-[#003f71] flex items-center justify-center shrink-0">
                           <svg
                             width="20"
                             height="20"
@@ -168,7 +170,8 @@ export default function MaritimeSearch() {
                             {product.nameEn}
                           </p>
                           <p className="text-xs text-gray-400 truncate">
-                            {product.category.nameEn} • {formatPrice(discountedPrice)}
+                            {product.category.nameEn} •{" "}
+                            {formatPrice(discountedPrice)}
                           </p>
                         </div>
                       </Link>

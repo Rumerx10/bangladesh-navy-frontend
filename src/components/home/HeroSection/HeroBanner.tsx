@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -103,7 +103,7 @@ export default function HeroBanner() {
               />
             </motion.div>
             {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-r from-black/30 via-transparent to-transparent" />
           </motion.div>
         </AnimatePresence>
       </div>

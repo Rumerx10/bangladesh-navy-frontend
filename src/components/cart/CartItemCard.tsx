@@ -27,7 +27,7 @@ export default function CartItemCard({ item, index }: CartItemCardProps) {
 
       <div className="flex gap-3 sm:gap-4 p-3 sm:p-5 pl-5 sm:pl-6">
         {/* Image */}
-        <div className="relative w-20 sm:w-24 lg:w-[100px] min-w-[80px] sm:min-w-[96px] lg:min-w-[100px] h-24 sm:h-28 lg:h-[120px] rounded-lg overflow-hidden bg-gray-100">
+        <div className="relative w-20 sm:w-24 lg:w-25 min-w-20 sm:min-w-24 lg:min-w-25 h-24 sm:h-28 lg:h-30 rounded-lg overflow-hidden bg-gray-100">
           {imgError || !item.image ? (
             <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground">
               <ImageIcon size={32} />

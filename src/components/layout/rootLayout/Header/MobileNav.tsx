@@ -94,7 +94,7 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
         <div className="flex items-center justify-around h-14">
           <Link
             href="/"
-            className={`flex flex-col items-center justify-center gap-0.5 min-w-[60px] py-1 ${
+            className={`flex flex-col items-center justify-center gap-0.5 min-w-15 py-1 ${
               pathname === "/" ? "text-[#003f71]" : "text-gray-500"
             }`}
           >
@@ -104,7 +104,7 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
 
           <button
             onClick={() => setOpen(true)}
-            className={`flex flex-col items-center justify-center gap-0.5 min-w-[60px] py-1 ${
+            className={`flex flex-col items-center justify-center gap-0.5 min-w-15 py-1 ${
               open ? "text-[#003f71]" : "text-gray-500"
             }`}
           >
@@ -114,7 +114,7 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
 
           <Link
             href="/cart"
-            className={`relative flex flex-col items-center justify-center gap-0.5 min-w-[60px] py-1 ${
+            className={`relative flex flex-col items-center justify-center gap-0.5 min-w-15 py-1 ${
               pathname === "/cart" ? "text-[#003f71]" : "text-gray-500"
             }`}
           >
@@ -132,7 +132,7 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
 
           <Link
             href="/account"
-            className={`flex flex-col items-center justify-center gap-0.5 min-w-[60px] py-1 ${
+            className={`flex flex-col items-center justify-center gap-0.5 min-w-15 py-1 ${
               pathname?.startsWith("/account")
                 ? "text-[#003f71]"
                 : "text-gray-500"

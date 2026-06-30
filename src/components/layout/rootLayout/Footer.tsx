@@ -52,7 +52,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#001836] text-gray-300 pt-12 lg:pt-16">
       <div className="container px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-10">
           {/* Logo & Info */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Link
@@ -143,6 +143,24 @@ const Footer = () => {
           <div>
             <h4 className="text-sm font-semibold text-white mb-4 lg:mb-5">
               Skill Development
+            </h4>
+            <ul className="space-y-2.5">
+              {serviceLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-semibold text-white mb-4 lg:mb-5">
+              Important Links
             </h4>
             <ul className="space-y-2.5">
               {serviceLinks.map((link) => (

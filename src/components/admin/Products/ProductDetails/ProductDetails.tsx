@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -87,7 +87,7 @@ export default function ProductDetails() {
                 alt={product.name}
                 width={400}
                 height={400}
-                className="object-contain max-h-[320px]"
+                className="object-contain max-h-80"
               />
             </div>
             {/* Thumbnails */}
@@ -144,7 +144,7 @@ export default function ProductDetails() {
             </div>
 
             {/* Price */}
-            <div className="bg-gradient-to-r from-primary/5 to-transparent rounded-xl p-4 mb-4">
+            <div className="bg-linear-to-r from-primary/5 to-transparent rounded-xl p-4 mb-4">
               <p className="text-xs text-gray-400 mb-1 uppercase tracking-wider font-medium">
                 Price
               </p>

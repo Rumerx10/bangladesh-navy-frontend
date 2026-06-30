@@ -71,7 +71,7 @@ export default function MobileHeader({
         >
           <ShoppingCart size={20} />
           {cartCount > 0 && (
-            <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-[16px] flex items-center justify-center rounded-full bg-[#003f71] text-white text-[9px] font-bold px-0.5">
+            <span className="absolute -top-0.5 -right-0.5 min-w-4 h-4 flex items-center justify-center rounded-full bg-[#003f71] text-white text-[9px] font-bold px-0.5">
               {cartCount > 99 ? "99+" : cartCount}
             </span>
           )}

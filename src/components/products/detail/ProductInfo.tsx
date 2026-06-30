@@ -43,16 +43,16 @@ export default function ProductInfo({
   return (
     <div className="flex flex-col">
       {/* Title */}
-      <h1 className="text-2xl lg:text-3xl font-bold text-[#001836] leading-tight">
+      <h1 className="text-2xl lg:text-5xl font-bold text-[#001836] leading-tight">
         {product.nameEn}
       </h1>
 
       {/* Price */}
-      <div className="mt-5 flex items-baseline gap-3">
+      {/* <div className="mt-5 flex items-baseline gap-3">
         <span className="text-3xl font-bold text-[#001836]">
           {formatPrice(discountedPrice)}
         </span>
-        {/* {hasDiscount && (
+        {hasDiscount && (
           <>
             <span className="text-lg text-gray-400 line-through">
               {formatPrice(product.price)}
@@ -63,14 +63,14 @@ export default function ProductInfo({
                 : `৳${product.discountValue} OFF`}
             </span>
           </>
-        )} */}
-      </div>
+        )}
+      </div> */}
 
       {/* Stock */}
-      <div className="mt-4 flex items-center gap-2">
+      {/* <div className="mt-4 flex items-center gap-2">
         <Check size={16} className="text-green-500" />
         <span className="text-sm text-green-600 font-medium">In Stock</span>
-      </div>
+      </div> */}
 
       {/* Description */}
       {product.descriptionEn && (
@@ -80,7 +80,7 @@ export default function ProductInfo({
       )}
 
       {/* Quantity + Add to Cart */}
-      <div className="mt-6 flex items-center gap-4">
+      {/* <div className="mt-6 flex items-center gap-4">
         <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
           <button
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -109,7 +109,7 @@ export default function ProductInfo({
           <ShoppingCart size={18} />
           Add to Cart
         </button>
-      </div>
+      </div> */}
 
       {/* Category */}
       <div className="mt-6 pt-5 border-t border-gray-100">

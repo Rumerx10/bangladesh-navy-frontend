@@ -35,7 +35,7 @@ export default function ProductSidebar({ filters, setFilters }: ProductSidebarPr
     filters.priceMax !== undefined;
 
   return (
-    <div className="sticky top-[120px] space-y-5">
+    <div className="sticky top-30 space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-[#001836] font-semibold">

@@ -4,7 +4,9 @@ import type { IHistoryEra, IHistoryMilestone } from "@/src/data/aboutData";
 import { eraIcons } from "@/src/data/historyHelpers";
 import { AnimatePresence, motion } from "framer-motion";
 import { Anchor, ChevronRight } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
+import SectionTitle from "../SectionTitle";
 
 const historyNarrative: string[] = [
   "To ensure the safe and efficient utilization of maritime routes and resources, the Government of Bangladesh established the Bangladesh Navy Hydrographic Department (BNHD) on May 12, 1983. BNHD was tasked with surveying the nation's coastal and marine areas, producing nautical charts, and providing other navigational aids for safe navigation, benefiting both domestic and foreign vessels.",
@@ -33,12 +35,22 @@ export default function HistoryTimeline({
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="max-w-[860px] mx-auto"
+        className="container px-4 mx-auto"
       >
-        <div className="flex flex-col gap-5 text-[1.05rem] md:text-[1.15rem] text-[#3a4858] leading-[1.9] text-justify">
+        <div className="text-[1.05rem] md:text-[1.15rem] text-[#3a4858] leading-[1.9] text-justify">
+          <div className="float-left mr-7 mb-4 w-60 md:w-90 shrink-0">
+            <Image
+              src="/shipImages/bns-darshak.png"
+              alt="BNS Darshak – Bangladesh Navy Hydrographic Survey Ship"
+              width={360}
+              height={240}
+              className="rounded-xl object-cover w-full shadow-md"
+            />
+          </div>
           {historyNarrative.map((para, i) => (
-            <p key={i}>{para}</p>
+            <p key={i} className="mb-5 last:mb-0">{para}</p>
           ))}
+          <div className="clear-both" />
         </div>
       </motion.div>
 
@@ -56,14 +68,14 @@ export default function HistoryTimeline({
             <button
               key={era.id}
               onClick={() => setActiveEra(idx)}
-              className={`flex-none flex flex-col items-center gap-1 py-3.5 px-5 rounded-[14px] border-[1.5px] cursor-pointer transition-all duration-300 min-w-[120px] sm:min-w-40 ${
+              className={`flex-none flex flex-col items-center gap-1 py-3.5 px-5 rounded-[14px] border-[1.5px] cursor-pointer transition-all duration-300 min-w-30 sm:min-w-40 ${
                 isActive
                   ? "bg-[var(--primary,#003f71)] border-transparent text-white shadow-[0_6px_24px_rgba(0,63,113,0.25)] -translate-y-0.5"
                   : "bg-white border-[#e0e6ed] hover:border-[var(--primary,#003f71)] hover:bg-[#f0f4f8]"
               }`}
             >
               <span
-                className={`flex items-center justify-center w-[38px] h-[38px] rounded-[10px] transition-all duration-300  ${
+                className={`flex items-center justify-center w-9.5 h-9.5 rounded-[10px] transition-all duration-300  ${
                   isActive
                     ? "bg-white/20 text-white"
                     : "bg-[rgba(0,63,113,0.08)] text-[var(--primary,#003f71)]"
@@ -91,14 +103,14 @@ export default function HistoryTimeline({
       </motion.div>
 
       {/* ── Active Era Detail ── */}
-      <AnimatePresence mode="wait">
+
         <motion.div
           key={activeEra}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -12 }}
           transition={{ duration: 0.4 }}
-          className="rounded-[20px] bg-white border border-[#e8edf3] overflow-hidden shadow-[0_4px_32px_rgba(0,24,54,0.06)]"
+          className="rounded-lg bg-white border border-[#e8edf3] overflow-hidden shadow-[0_4px_32px_rgba(0,24,54,0.06)]"
         >
           {/* header strip */}
           <div className="flex items-center gap-4 px-5 py-5 md:px-8 md:py-6 bg-[var(--primary,#003f71)] text-white">
@@ -121,7 +133,7 @@ export default function HistoryTimeline({
           </p>
 
           {/* detail points */}
-          <ul className="list-none px-5 md:px-8 pt-5 m-0 flex flex-col gap-3">
+          <ul className="pb-6 list-none px-5 md:px-8 pt-5 m-0 flex flex-col gap-3">
             {eras[activeEra].details.map((d, i) => (
               <motion.li
                 key={i}
@@ -132,7 +144,7 @@ export default function HistoryTimeline({
               >
                 <ChevronRight
                   size={16}
-                  className="shrink-0 mt-[3px] text-[var(--primary,#003f71)]"
+                  className="shrink-0 mt-0.75 text-(--primary,#003f71)"
                 />
                 <span>{d}</span>
               </motion.li>
@@ -151,7 +163,7 @@ export default function HistoryTimeline({
             </motion.blockquote>
           )}
         </motion.div>
-      </AnimatePresence>
+ 
 
       {/* ── Milestones Ribbon ── */}
       <motion.div
@@ -161,9 +173,7 @@ export default function HistoryTimeline({
         transition={{ duration: 0.5 }}
         className="pt-2"
       >
-        <h3 className="text-lg font-extrabold text-[#001836] mb-6 text-center">
-          Key Milestones
-        </h3>
+        <SectionTitle title="Key Milestones" />
         <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-x-4 gap-y-5 pt-5">
           {milestones.map((m, idx) => (
             <div
@@ -176,7 +186,7 @@ export default function HistoryTimeline({
             >
               {/* dot */}
               <div
-                className={`w-2.5 h-2.5 rounded-full absolute -top-[5px] left-5 border-2 border-white ${
+                className={`w-2.5 h-2.5 rounded-full absolute -top-1.25 left-5 border-2 border-white ${
                   m.highlight
                     ? "bg-[var(--primary,#003f71)] shadow-[0_0_0_3px_rgba(0,63,113,0.2)]"
                     : "bg-[#c4d0dc] shadow-[0_0_0_2px_#e8edf3]"

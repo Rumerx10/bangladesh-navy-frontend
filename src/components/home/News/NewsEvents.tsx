@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Newspaper } from "lucide-react";
 import Link from "next/link";
 import NewsCard from "./NewsCard";
+import SectionTitle from "../../SectionTitle";
 
 export default function NewsEvents() {
   // Show only the 3 latest news on the homepage
@@ -27,24 +28,16 @@ export default function NewsEvents() {
 
         <div className="relative container px-4 sm:px-6 lg:px-8">
           {/* Section header */}
-          <motion.div
-            className="text-center mb-10 lg:mb-14"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
+          <div>
             <div className="flex items-center justify-center gap-2 mb-3">
               <Newspaper size={20} className="text-[#003f71]" />
             </div>
-            <h2 className="text-2xl lg:text-3xl font-bold text-[#001836]">
-              News and Events
-            </h2>
-            <p className="mt-2 text-sm lg:text-base text-gray-500 max-w-lg mx-auto">
-              Stay informed about the latest hydrographic updates and maritime
-              events
-            </p>
-          </motion.div>
+            <SectionTitle
+              title=" News and Events"
+              desc=" Stay informed about the latest hydrographic updates and maritime
+              events"
+            />
+          </div>
 
           {/* News Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -71,7 +64,7 @@ export default function NewsEvents() {
           >
             <Link
               href="/news"
-              className="inline-flex items-center justify-center gap-2 px-8 h-[44px] py-[16px] rounded-lg bg-[#003f71] text-white font-medium text-base hover:bg-[#004d8a] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-8 h-11 py-4 rounded-lg bg-[#003f71] text-white font-medium text-base hover:bg-[#004d8a] transition-colors"
             >
               View All News <ArrowRight size={18} />
             </Link>

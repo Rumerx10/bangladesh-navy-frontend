@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { dummyPaymentMethods, IPaymentCard } from "@/src/data/dummyPaymentMethods";
 import {
@@ -71,7 +71,7 @@ export default function PaymentMethodsPage() {
               }`}
             >
               {/* Card Visual */}
-              <div className={`w-full h-36 rounded-xl bg-gradient-to-br ${brand.gradient} p-5 flex flex-col justify-between shadow-inner mb-4`}>
+              <div className={`w-full h-36 rounded-xl bg-linear-to-br ${brand.gradient} p-5 flex flex-col justify-between shadow-inner mb-4`}>
                 <div className="flex items-center justify-between">
                   <div className="w-10 h-7 rounded bg-white/20 flex items-center justify-center">
                     <CreditCard size={18} className="text-white/80" />

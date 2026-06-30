@@ -68,7 +68,7 @@ function CategoryChildren({
             {/* Recursive fly-out */}
             {hasChildren && hoveredId === cat.id && (
               <div
-                className="absolute left-full top-0 bg-white rounded-md shadow-xl border border-gray-100 min-w-[200px] z-10"
+                className="absolute left-full top-0 bg-white rounded-md shadow-xl border border-gray-100 min-w-50 z-10"
                 style={{ marginLeft: 2 }}
               >
                 <CategoryChildren
@@ -89,7 +89,7 @@ export default function CategorySidebar() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
-    <div className="hidden lg:flex flex-col w-[260px] shrink-0 bg-white rounded-lg border border-gray-200 relative">
+    <div className="hidden lg:flex flex-col w-65 shrink-0 bg-white rounded-lg border border-gray-200 relative">
       {/* Header */}
       <div className="flex items-center gap-2 px-4 h-11 bg-gray-50 border-b border-gray-200 rounded-t-lg">
         <Menu size={16} className="text-gray-600" />
@@ -128,7 +128,7 @@ export default function CategorySidebar() {
 
               {/* First-level fly-out */}
               {hasChildren && hoveredId === cat.id && (
-                <div className="absolute left-full top-0 bg-white rounded-md shadow-xl border border-gray-100 min-w-[220px] z-50">
+                <div className="absolute left-full top-0 bg-white rounded-md shadow-xl border border-gray-100 min-w-55 z-50">
                   <div className="px-4 py-2 border-b border-gray-100">
                     <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
                       {cat.name}

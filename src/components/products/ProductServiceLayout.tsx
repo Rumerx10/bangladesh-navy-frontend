@@ -109,7 +109,7 @@ export default function ProductServiceLayout() {
   }, [filters]);
 
   return (
-    <div className="container px-4 sm:px-6 lg:px-8 py-6 lg:py-8 mt-28 lg:mt-[104px]">
+    <div className="container px-4 sm:px-6 lg:px-8 py-6 lg:py-8 mt-28 lg:mt-26">
       {/* Breadcrumb */}
       <nav className="text-sm text-gray-500 mb-4">
         <span className="hover:text-[#003f71] cursor-pointer">Home</span>
@@ -126,9 +126,9 @@ export default function ProductServiceLayout() {
 
       <div className="flex gap-6 lg:gap-8">
         {/* Sidebar — 28% */}
-        <aside className="hidden lg:block w-[22%] shrink-0">
+        {/* <aside className="hidden lg:block w-[22%] shrink-0">
           <ProductSidebar filters={filters} setFilters={setFilters} />
-        </aside>
+        </aside> */}
 
         {/* Product Grid — remaining */}
         <main className="flex-1 min-w-0">

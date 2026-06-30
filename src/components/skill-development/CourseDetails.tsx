@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { ICourse } from "@/src/components/skill-development/types";
 import { motion } from "framer-motion";
@@ -25,7 +25,7 @@ export default function CourseDetails({ course }: CourseDetailsProps) {
   return (
     <div className="bg-white">
       {/* Dynamic Header/Banner for Course */}
-      <section className="relative h-[400px] lg:h-[500px] flex items-end">
+      <section className="relative h-100 lg:h-125 flex items-end">
         <Image
           src={course.image}
           alt={course.title}
@@ -33,7 +33,7 @@ export default function CourseDetails({ course }: CourseDetailsProps) {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#001836] via-[#001836]/60 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-[#001836] via-[#001836]/60 to-transparent" />
         <div className="relative container px-4 sm:px-6 lg:px-8 pb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

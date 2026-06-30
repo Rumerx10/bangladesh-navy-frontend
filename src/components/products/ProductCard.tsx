@@ -2,56 +2,57 @@
 
 import { DiscountType, INavyProduct } from "@/src/components/products/types";
 import {
-    formatPrice,
+    // formatPrice,
     getDiscountedPrice,
     getProductSlug,
 } from "@/src/data/navyProducts";
-import { addToCart } from "@/src/lib/redux/features/cart/cartSlice";
-import { useAppDispatch } from "@/src/lib/redux/hooks";
-import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { toast } from "react-toastify";
 import TiffPreview from "./TiffPreview";
+
+// import { addToCart } from "@/src/lib/redux/features/cart/cartSlice";
+// import { useAppDispatch } from "@/src/lib/redux/hooks";
+// import { ShoppingCart } from "lucide-react";
+// import { toast } from "react-toastify";
+
 
 interface ProductCardProps {
   product: INavyProduct;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const slug = getProductSlug(product);
   const discountedPrice = getDiscountedPrice(product);
   const hasDiscount = discountedPrice < product.price;
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dispatch(
-      addToCart({
-        productId: product.id,
-        name: product.nameEn,
-        slug,
-        image: product.images[0] ?? "img1.jpeg",
-        price: discountedPrice / 100,
-        compareAtPrice: hasDiscount ? product.price / 100 : undefined,
-        quantity: 1,
-        stock: product.stock,
-      })
-    );
-    toast.success(`${product.nameEn} added to cart`);
-  };
   const imageUrl = product.images?.[0] ?? "/img1.jpeg";
-
   const isTiff = /\.(tif|tiff)$/i.test(imageUrl);
+
+  // const handleAddToCart = (e: React.MouseEvent) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   dispatch(
+  //     addToCart({
+  //       productId: product.id,
+  //       name: product.nameEn,
+  //       slug,
+  //       image: product.images[0] ?? "img1.jpeg",
+  //       price: discountedPrice / 100,
+  //       compareAtPrice: hasDiscount ? product.price / 100 : undefined,
+  //       quantity: 1,
+  //       stock: product.stock,
+  //     })
+  //   );
+  //   toast.success(`${product.nameEn} added to cart`);
+  // };
 
   return (
     <Link
       href={`/products/${slug}`}
-      className="group flex flex-col rounded-xl border border-gray-100 bg-white overflow-hidden hover:shadow-lg hover:border-[#003f71]/15 transition-all duration-300"
+      className="group flex flex-col rounded-xl border border-gray-100 shadow bg-white overflow-hidden hover:shadow-lg hover:border-[#003f71]/15 transition-all duration-300"
     >
       {/* Image */}
-      <div className="relative aspect-[4/3] bg-gradient-to-br from-[#001836] to-[#003f71] flex items-center justify-center overflow-hidden">
+      <div className="relative aspect-4/3 bg-linear-to-br from-[#001836] to-[#003f71] flex items-center justify-center overflow-hidden">
         {/* Decorative grid pattern */}
         {isTiff ? (
           <TiffPreview src={imageUrl} className="w-full h-full object-cover" />
@@ -61,7 +62,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             alt={product.nameEn}
             width={400}
             height={300}
-            className="object-cover w-full h-full"
+            className="object-contain w-full h-full"
           />
         )}
         {/* <div
@@ -109,16 +110,16 @@ export default function ProductCard({ product }: ProductCardProps) {
           {product.nameEn}
         </h3>
 
-        <div className="mt-auto pt-3 flex items-center justify-between">
+        {/* <div className="mt-auto pt-3 flex items-center justify-between">
           <div className="flex items-baseline gap-2">
             <span className="text-lg font-bold text-[#001836]">
               {formatPrice(discountedPrice)}
             </span>
-            {/* {hasDiscount && (
+            {hasDiscount && (
               <span className="text-xs text-gray-400 line-through">
                 {formatPrice(product.price)}
               </span>
-            )} */}
+            )}
           </div>
 
           <button
@@ -128,7 +129,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           >
             <ShoppingCart size={16} />
           </button>
-        </div>
+        </div> */}
       </div>
     </Link>
   );

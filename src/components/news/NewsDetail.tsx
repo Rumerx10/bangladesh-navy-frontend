@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
 import NewsCard from "@/src/components/home/News/NewsCard";
@@ -29,9 +29,9 @@ export default function NewsDetail({ news }: NewsDetailProps) {
         ];
 
   return (
-    <div className="mt-28 lg:mt-[104px]">
+    <div className="mt-28 lg:mt-26">
       {/* Hero Image */}
-      <section className="relative h-[340px] lg:h-[420px] overflow-hidden bg-[#001836]">
+      <section className="relative h-85 lg:h-105 overflow-hidden bg-[#001836]">
         <Image
           src={news.image}
           alt={news.title}
@@ -40,7 +40,7 @@ export default function NewsDetail({ news }: NewsDetailProps) {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#001836] via-[#001836]/60 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-[#001836] via-[#001836]/60 to-transparent" />
 
         {/* Breadcrumb on hero */}
         <div className="absolute bottom-0 left-0 right-0">
@@ -54,7 +54,7 @@ export default function NewsDetail({ news }: NewsDetailProps) {
                 News
               </Link>
               <ChevronRight size={14} />
-              <span className="text-white font-medium truncate max-w-[200px]">{news.title}</span>
+              <span className="text-white font-medium truncate max-w-50">{news.title}</span>
             </nav>
           </div>
         </div>
@@ -133,7 +133,7 @@ export default function NewsDetail({ news }: NewsDetailProps) {
                     navigator.clipboard.writeText(window.location.href);
                   }
                 }}
-                className="inline-flex items-center gap-2 px-4 h-[44px] py-[16px] rounded-lg border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 h-11 py-4 rounded-lg border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors cursor-pointer"
               >
                 <Share2 size={16} />
                 Share

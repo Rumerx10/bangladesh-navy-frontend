@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { Mail, MessageSquare, Phone } from "lucide-react";
@@ -8,8 +8,8 @@ export default function ContactHero() {
     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-[#001836] overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500 rounded-full blur-[120px] -mr-64 -mt-64" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-cyan-500 rounded-full blur-[100px] -ml-48 -mb-48" />
+        <div className="absolute top-0 right-0 w-125 h-125 bg-blue-500 rounded-full blur-[120px] -mr-64 -mt-64" />
+        <div className="absolute bottom-0 left-0 w-100 h-100 bg-cyan-500 rounded-full blur-[100px] -ml-48 -mb-48" />
       </div>
 
       <div className="relative container px-4 sm:px-6 lg:px-8 text-center">
@@ -24,7 +24,7 @@ export default function ContactHero() {
           </div>
           <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight">
             Get in Touch with <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-cyan-300">
               Our Experts
             </span>
           </h1>

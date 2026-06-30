@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function CompassRose() {
   return (
-    <div className="relative w-[280px] h-[280px] lg:w-[360px] lg:h-[360px]">
+    <div className="relative w-70 h-70 lg:w-90 lg:h-90">
       {/* Outer glowing ring */}
       <motion.div
         className="absolute inset-0 rounded-full border-2 border-amber-400/30"

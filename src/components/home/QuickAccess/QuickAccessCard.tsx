@@ -27,7 +27,7 @@ export default function QuickAccessCard({ item }: QuickAccessCardProps) {
   return (
     <Link
       href={item.href}
-      className="group flex items-center gap-4 p-5 rounded-xl bg-white border border-gray-100 hover:border-[#003f71]/20 hover:shadow-lg transition-all duration-300"
+      className="shadow group flex items-center gap-4 p-5 rounded-xl bg-white border border-gray-100 hover:border-[#003f71]/20 hover:shadow-lg transition-all duration-300"
     >
       <div className="w-12 h-12 rounded-xl bg-[#003f71]/8 text-[#003f71] flex items-center justify-center shrink-0 group-hover:bg-[#003f71] group-hover:text-white transition-colors duration-300">
         {iconMap[item.icon] ?? <Map size={22} />}

@@ -178,6 +178,10 @@
   }
 }
 
+.button {
+  cursor: pointer;
+}
+
 .animate-marquee {
   display: flex;
   width: max-content;
@@ -203,7 +207,6 @@
   animation: slide-left 30s linear infinite;
 }
 
-
 .tiptap {
   :first-child {
     margin-top: 0;
@@ -220,7 +223,6 @@
   }
 }
 
-
 .ProseMirror ul {
   list-style-type: disc;
   margin-left: 1.25rem;
@@ -236,7 +238,6 @@
 .ProseMirror li {
   margin-bottom: 0.25rem;
 }
-
 
 input[type="time"]::-webkit-calendar-picker-indicator {
   display: none;
@@ -320,31 +321,63 @@ input[type="time"]::-moz-inner-spin-button {
    Navy Watermark Animations
 ================================= */
 @keyframes watermarkFloat {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-12px) rotate(1deg); }
-  50% { transform: translateY(-6px) rotate(-0.5deg); }
-  75% { transform: translateY(-18px) rotate(0.5deg); }
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-12px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(-0.5deg);
+  }
+  75% {
+    transform: translateY(-18px) rotate(0.5deg);
+  }
 }
 
 @keyframes watermarkRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes watermarkPulse {
-  0%, 100% { transform: scale(1); opacity: 0.04; }
-  50% { transform: scale(1.05); opacity: 0.06; }
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.04;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.06;
+  }
 }
 
 @keyframes watermarkDrift {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  33% { transform: translate(10px, -8px) rotate(2deg); }
-  66% { transform: translate(-6px, -14px) rotate(-1deg); }
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(10px, -8px) rotate(2deg);
+  }
+  66% {
+    transform: translate(-6px, -14px) rotate(-1deg);
+  }
 }
 
 @keyframes watermarkBob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 /* NavyHeroCarousel — Swiper pagination dots */
 .hero-bullet {

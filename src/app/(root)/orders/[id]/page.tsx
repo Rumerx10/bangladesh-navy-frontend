@@ -240,13 +240,13 @@ export default function OrderDetailPage({
                       <div key={idx} className="flex items-start gap-3 relative pb-5 last:pb-0">
                         {idx < entries.length - 1 && (
                           <div
-                            className={`absolute left-[9px] top-5 w-0.5 h-[calc(100%-12px)] ${
+                            className={`absolute left-2.25 top-5 w-0.5 h-[calc(100%-12px)] ${
                               isCancelled || isReturned ? "bg-red-300" : "bg-primary"
                             }`}
                           />
                         )}
                         <div
-                          className={`w-[18px] h-[18px] rounded-full border-2 shrink-0 mt-0.5 ${
+                          className={`w-4.5 h-4.5 rounded-full border-2 shrink-0 mt-0.5 ${
                             isCancelled
                               ? "bg-red-500 border-red-500"
                               : isReturned
@@ -286,10 +286,10 @@ export default function OrderDetailPage({
                     return (
                       <div key={status} className="flex items-start gap-3 relative pb-5 last:pb-0">
                         {idx < STATUS_FLOW.length - 1 && (
-                          <div className={`absolute left-[9px] top-5 w-0.5 h-[calc(100%-12px)] ${isDone ? "bg-primary" : "bg-border"}`} />
+                          <div className={`absolute left-2.25 top-5 w-0.5 h-[calc(100%-12px)] ${isDone ? "bg-primary" : "bg-border"}`} />
                         )}
                         <div
-                          className={`w-[18px] h-[18px] rounded-full border-2 shrink-0 mt-0.5 ${
+                          className={`w-4.5 h-4.5 rounded-full border-2 shrink-0 mt-0.5 ${
                             isDone
                               ? "bg-primary border-primary"
                               : isActive

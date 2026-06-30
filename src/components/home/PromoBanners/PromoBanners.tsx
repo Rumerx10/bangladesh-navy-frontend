@@ -11,7 +11,7 @@ const promoBanners = [
     btnText: "Shop Now",
     href: "/products?category=coats",
     image: "/banners/promo-coats.png",
-    gridClass: "col-start-1 row-span-2 min-h-[280px] lg:min-h-0",
+    gridClass: "col-start-1 row-span-2 min-h-70 lg:min-h-0",
   },
   {
     id: "menswear",
@@ -21,7 +21,7 @@ const promoBanners = [
     btnText: "Discover Now",
     href: "/products?category=menswear",
     image: "/banners/promo-menswear.png",
-    gridClass: "col-start-1 sm:col-start-2 row-span-1 sm:row-span-2 min-h-[220px] sm:min-h-[280px] lg:min-h-0",
+    gridClass: "col-start-1 sm:col-start-2 row-span-1 sm:row-span-2 min-h-55 sm:min-h-70 lg:min-h-0",
   },
   {
     id: "accessories",
@@ -31,7 +31,7 @@ const promoBanners = [
     btnText: "Discover Now",
     href: "/products?category=accessories",
     image: "/banners/promo-accessories.png",
-    gridClass: "col-start-1 sm:col-start-1 lg:col-start-3 min-h-[220px] sm:min-h-[240px] lg:min-h-0",
+    gridClass: "col-start-1 sm:col-start-1 lg:col-start-3 min-h-55 sm:min-h-60 lg:min-h-0",
   },
   {
     id: "shoes",
@@ -41,7 +41,7 @@ const promoBanners = [
     btnText: "Shop Now",
     href: "/products?category=shoes",
     image: "/banners/promo-shoes.png",
-    gridClass: "col-start-1 sm:col-start-2 lg:col-start-3 min-h-[220px] sm:min-h-[240px] lg:min-h-0",
+    gridClass: "col-start-1 sm:col-start-2 lg:col-start-3 min-h-55 sm:min-h-60 lg:min-h-0",
   },
 ];
 
@@ -49,7 +49,7 @@ export default function PromoBanners() {
   return (
     <section className="py-8">
       <div className="container">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-3 sm:gap-4 lg:h-[480px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-3 sm:gap-4 lg:h-120">
           {promoBanners.map((banner) => (
             <Link
               key={banner.id}

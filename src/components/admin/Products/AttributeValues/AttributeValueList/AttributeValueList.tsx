@@ -102,7 +102,7 @@ export default function AttributeValueList() {
 
       {/* View Attribute Value Modal */}
       <Dialog open={!!viewItem} onOpenChange={() => setViewItem(undefined)}>
-        <DialogContent className="bg-white sm:max-w-[450px]">
+        <DialogContent className="bg-white sm:max-w-112.5">
           <DialogHeader>
             <DialogTitle className="text-secondary text-xl font-semibold">
               Attribute Value Details
