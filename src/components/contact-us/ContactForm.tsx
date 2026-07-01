@@ -9,9 +9,10 @@ import ControlledTextareaField from "../shared/FromController/ControlledTextarea
 import InputLabel from "../shared/InputLabel";
 import { Button } from "../ui/button";
 import {
-    ContactFormType,
-    contactValidationSchema,
+  ContactFormType,
+  contactValidationSchema,
 } from "./schema/ContactSchema";
+import SectionTitle from "../SectionTitle";
 
 interface ContactFormProps {
   defaultType?: string;
@@ -53,13 +54,12 @@ export default function ContactForm({ defaultType }: ContactFormProps) {
   return (
     <div className="bg-white">
       <div className="mb-10">
-        <h2 className="text-2xl lg:text-3xl font-bold text-[#001836] mb-4">
-          Send us a Message
-        </h2>
-        <p className="text-gray-500 text-sm lg:text-base leading-relaxed">
-          Have a question about our products or services? Fill out the form
-          below and our team will get back to you shortly.
-        </p>
+        <SectionTitle
+          title="Send us a Message"
+          desc="Have a question about our products or services? Fill out the form
+          below and our team will get back to you shortly."
+          position="start"
+        />
       </div>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)} className="w-full">

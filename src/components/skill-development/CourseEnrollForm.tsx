@@ -103,7 +103,7 @@ export default function CourseEnrollForm({
         {/* Header */}
         <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-white border-b border-gray-100">
           <div>
-            <h2 className="text-lg font-bold text-[#001836]">
+            <h2 className="text-lg font-bold text-pBlue">
               Course Application
             </h2>
             <p className="text-xs text-gray-500 mt-0.5">
@@ -223,7 +223,7 @@ export default function CourseEnrollForm({
                 <Button
                   disabled={isPending}
                   type="submit"
-                  className="capitalize bg-[#003f71] text-white rounded-lg px-8 py-2.5 h-10 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed hover:bg-[#001836] transition-colors"
+                  className="capitalize bg-liteBlue text-white rounded-lg px-8 py-2.5 h-10 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed hover:bg-pBlue transition-colors"
                 >
                   {isPending ? "Submitting..." : "Submit Application"}
                 </Button>

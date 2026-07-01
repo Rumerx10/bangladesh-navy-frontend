@@ -17,7 +17,7 @@ function renderParagraph(para: string) {
         <Link
           href="https://mist.ac.bd/"
           target="_blank"
-          className="text-[#003f71] font-semibold underline underline-offset-4 hover:text-blue-600 transition-colors"
+          className="text-liteBlue font-semibold underline underline-offset-4 hover:text-blue-600 transition-colors"
         >
           Military Institute of Science and Technology (MIST)
         </Link>
@@ -49,9 +49,9 @@ export default function QuickAccess() {
 
   return (
     <>
-      <section className="relative py-16 lg:py-25 bg-gray-50 overflow-hidden">
+      <section className="relative py-8 lg:py-20 bg-gray-50 overflow-hidden">
         {/* Watermarks */}
-        <div className="absolute -right-10 top-1/2 -translate-y-1/2 text-[#001836]">
+        <div className="absolute -right-10 top-1/2 -translate-y-1/2 text-pBlue">
           <NavyWatermark
             variant="helm"
             size={400}
@@ -59,7 +59,7 @@ export default function QuickAccess() {
             animate="rotate"
           />
         </div>
-        <div className="absolute -left-20 -bottom-10 text-[#001836]">
+        <div className="absolute -left-20 -bottom-10 text-pBlue">
           <NavyWatermark
             variant="waves"
             size={300}
@@ -79,7 +79,7 @@ export default function QuickAccess() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
-                <h2 className="text-3xl lg:text-5xl font-bold text-[#001836]">
+                <h2 className="text-3xl lg:text-5xl font-bold text-pBlue">
                   Quick Access
                 </h2>
                 <p className="mt-2 text-sm lg:text-base text-gray-500">
@@ -178,7 +178,7 @@ export default function QuickAccess() {
           >
             {/* Backdrop */}
             <motion.div
-              className="absolute inset-0 bg-[#001836]/60 backdrop-blur-md"
+              className="absolute inset-0 bg-pBlue/60 backdrop-blur-md"
               onClick={closeModal}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -194,7 +194,7 @@ export default function QuickAccess() {
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             >
               {/* Modal Header */}
-              <div className="relative bg-linear-to-r from-[#001836] to-[#003f71] px-6 sm:px-10 py-6 sm:py-8 shrink-0">
+              <div className="relative bg-linear-to-r from-pBlue to-liteBlue px-6 sm:px-10 py-6 sm:py-8 shrink-0">
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-10">
                   <Ship size={80} className="text-white" />
                 </div>
@@ -233,7 +233,7 @@ export default function QuickAccess() {
 
               {/* Modal Body */}
               <div className="flex-1 overflow-y-auto px-6 sm:px-10 py-8 sm:py-10">
-                <Quote size={40} className="text-[#001836]/5 -mb-4 -ml-1.5" />
+                <Quote size={40} className="text-pBlue/5 -mb-4 -ml-1.5" />
                 <div className="space-y-6">
                   {chiefMessage.content.map((para, i) => (
                     <motion.p
@@ -249,15 +249,15 @@ export default function QuickAccess() {
                 </div>
                 <div className="mt-10 pt-8 border-t border-gray-100 flex items-center justify-between">
                   <div>
-                    <p className="text-lg font-bold text-[#001836]">
+                    <p className="text-lg font-bold text-pBlue">
                       {chiefMessage.name}
                     </p>
-                    <p className="text-sm text-[#003f71] font-medium tracking-wide uppercase mt-1">
+                    <p className="text-sm text-liteBlue font-medium tracking-wide uppercase mt-1">
                       {chiefMessage.designation}
                     </p>
                   </div>
-                  <div className="w-14 h-14 rounded-full border-2 border-dashed border-[#001836]/20 flex items-center justify-center">
-                    <div className="w-10 h-10 rounded-full bg-[#001836]/5 flex items-center justify-center text-[#001836] font-bold text-sm">
+                  <div className="w-14 h-14 rounded-full border-2 border-dashed border-pBlue/20 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full bg-pBlue/5 flex items-center justify-center text-pBlue font-bold text-sm">
                       BN
                     </div>
                   </div>

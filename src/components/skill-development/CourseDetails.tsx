@@ -33,7 +33,7 @@ export default function CourseDetails({ course }: CourseDetailsProps) {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-linear-to-t from-[#001836] via-[#001836]/60 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-pBlue via-pBlue/60 to-transparent" />
         <div className="relative container px-4 sm:px-6 lg:px-8 pb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -64,13 +64,13 @@ export default function CourseDetails({ course }: CourseDetailsProps) {
       </section>
 
       {/* Main Content */}
-      <section className="py-16 lg:py-24">
+      <section className="py-8 lg:py-20">
         <div className="container px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
             {/* Left Content */}
             <div className="flex-1">
               <div className="mb-12">
-                <h2 className="text-2xl font-bold text-[#001836] mb-6 flex items-center gap-3">
+                <h2 className="text-2xl font-bold text-pBlue mb-6 flex items-center gap-3">
                   <BookOpen className="text-blue-600" />
                   Course Overview
                 </h2>
@@ -83,7 +83,7 @@ export default function CourseDetails({ course }: CourseDetailsProps) {
               </div>
 
               <div className="mb-12">
-                <h2 className="text-2xl font-bold text-[#001836] mb-6">What You Will Learn</h2>
+                <h2 className="text-2xl font-bold text-pBlue mb-6">What You Will Learn</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {course.learningOutcomes.map((outcome, index) => (
                     <motion.div 
@@ -102,7 +102,7 @@ export default function CourseDetails({ course }: CourseDetailsProps) {
               </div>
 
               <div>
-                <h2 className="text-2xl font-bold text-[#001836] mb-8">Course Plan & Curriculum</h2>
+                <h2 className="text-2xl font-bold text-pBlue mb-8">Course Plan & Curriculum</h2>
                 <div className="space-y-4">
                   {course.coursePlan.map((step, index) => (
                     <motion.div 
@@ -113,7 +113,7 @@ export default function CourseDetails({ course }: CourseDetailsProps) {
                       viewport={{ once: true }}
                     >
                       <div className="flex flex-col items-center">
-                        <div className="w-10 h-10 rounded-full bg-[#001836] text-white flex items-center justify-center font-bold text-sm z-10">
+                        <div className="w-10 h-10 rounded-full bg-pBlue text-white flex items-center justify-center font-bold text-sm z-10">
                           {step.week}
                         </div>
                         {index !== course.coursePlan.length - 1 && (
@@ -122,7 +122,7 @@ export default function CourseDetails({ course }: CourseDetailsProps) {
                       </div>
                       <div className="flex-1 pb-10">
                         <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100 group-hover:border-blue-200 group-hover:shadow-md transition-all">
-                          <h4 className="font-bold text-[#001836] mb-2 flex items-center justify-between">
+                          <h4 className="font-bold text-pBlue mb-2 flex items-center justify-between">
                             Week {step.week}: {step.title}
                             <span className="text-[10px] uppercase text-blue-500 font-bold bg-blue-50 px-2 py-1 rounded">Module {index + 1}</span>
                           </h4>
@@ -138,7 +138,7 @@ export default function CourseDetails({ course }: CourseDetailsProps) {
             {/* Right Sidebar - Enrollment/Quick Info */}
             <div className="lg:w-96">
               <div className="sticky top-32 space-y-6">
-                <div className="bg-[#001836] rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden">
+                <div className="bg-pBlue rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden">
                   {/* Decorative circles */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16" />
                   
@@ -170,7 +170,7 @@ export default function CourseDetails({ course }: CourseDetailsProps) {
                 </div>
 
                 <div className="bg-gray-50 rounded-3xl p-8 border border-gray-100">
-                  <h4 className="font-bold text-[#001836] mb-4">Requirements</h4>
+                  <h4 className="font-bold text-pBlue mb-4">Requirements</h4>
                   <ul className="space-y-3">
                     <li className="flex items-start gap-2 text-xs text-gray-500">
                       <ChevronRight size={14} className="text-blue-500 mt-0.5" />

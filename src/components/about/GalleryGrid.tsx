@@ -47,7 +47,7 @@ export default function GalleryGrid() {
 
   return (
     <motion.section
-      className="py-12 lg:py-20 bg-white"
+      className="py-8 lg:py-20 bg-white"
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.15 }}
@@ -62,7 +62,7 @@ export default function GalleryGrid() {
               onClick={() => setActiveCategory(cat)}
               className={`px-6 h-11 rounded-full font-bold text-sm transition-all cursor-pointer inline-flex items-center justify-center tracking-wider uppercase ${
                 activeCategory === cat
-                  ? "bg-[#003f71] text-white shadow-lg shadow-blue-900/20"
+                  ? "bg-liteBlue text-white shadow-lg shadow-blue-900/20"
                   : "bg-gray-50 text-gray-500 hover:bg-gray-100"
               }`}
             >
@@ -117,7 +117,7 @@ export default function GalleryGrid() {
                 />
 
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-linear-to-t from-[#001836]/90 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-linear-to-t from-pBlue/90 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
 
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <motion.div

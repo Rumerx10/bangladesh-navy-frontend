@@ -49,10 +49,10 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       href={`/products/${slug}`}
-      className="group flex flex-col rounded-xl border border-gray-100 shadow bg-white overflow-hidden hover:shadow-lg hover:border-[#003f71]/15 transition-all duration-300"
+      className="group flex flex-col rounded-xl border border-gray-100 shadow bg-white overflow-hidden hover:shadow-lg hover:border-liteBlue/15 transition-all duration-300"
     >
       {/* Image */}
-      <div className="relative aspect-4/3 bg-linear-to-br from-[#001836] to-[#003f71] flex items-center justify-center overflow-hidden">
+      <div className="relative aspect-4/3 bg-linear-to-br from-pBlue to-liteBlue flex items-center justify-center overflow-hidden">
         {/* Decorative grid pattern */}
         {isTiff ? (
           <TiffPreview src={imageUrl} className="w-full h-full object-cover" />
@@ -66,7 +66,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           />
         )}
         {/* <div
-          className="absolute inset-0 opacity-10"
+          className="absolute inset-0"
           style={{
             backgroundImage:
               "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
@@ -106,13 +106,13 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       {/* Info */}
       <div className="flex-1 p-4 flex flex-col">
-        <h3 className="text-sm font-semibold text-[#001836] line-clamp-2 group-hover:text-[#003f71] transition-colors leading-snug">
+        <h3 className="text-sm font-semibold text-pBlue line-clamp-2 group-hover:text-liteBlue transition-colors leading-snug">
           {product.nameEn}
         </h3>
 
         {/* <div className="mt-auto pt-3 flex items-center justify-between">
           <div className="flex items-baseline gap-2">
-            <span className="text-lg font-bold text-[#001836]">
+            <span className="text-lg font-bold text-pBlue">
               {formatPrice(discountedPrice)}
             </span>
             {hasDiscount && (
@@ -124,7 +124,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
           <button
             onClick={handleAddToCart}
-            className="flex items-center justify-center w-9 h-9 rounded-lg bg-[#003f71] text-white hover:bg-[#004d8a] transition-colors cursor-pointer"
+            className="flex items-center justify-center w-9 h-9 rounded-lg bg-liteBlue text-white hover:bg-[#004d8a] transition-colors cursor-pointer"
             aria-label="Add to cart"
           >
             <ShoppingCart size={16} />

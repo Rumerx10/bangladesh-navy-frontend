@@ -15,7 +15,7 @@ export default function ContactInfoPage() {
         title="Contact Information"
         description="Reach out to the Bangladesh Navy Hydrographic & Oceanographic Center"
       />
-      <section className="py-16 lg:py-24">
+      <section className="py-8 lg:py-20">
         <div className="container px-4 sm:px-6 lg:px-8 max-w-3xl">
           <DirectApproach />
         </div>

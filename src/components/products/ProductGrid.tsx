@@ -25,7 +25,7 @@ export default function ProductGrid({
       {/* <div className="flex items-center justify-between mb-5 pb-4 border-b border-gray-100">
         <div className="flex items-center gap-2 text-sm text-gray-500">
           <span>
-            Showing <strong className="text-[#001836]">{products.length}</strong>{" "}
+            Showing <strong className="text-pBlue">{products.length}</strong>{" "}
             of {totalCount} products
           </span>
         </div>

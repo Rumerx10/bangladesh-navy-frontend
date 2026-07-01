@@ -38,14 +38,14 @@ export default function ProductSidebar({ filters, setFilters }: ProductSidebarPr
     <div className="sticky top-30 space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 text-[#001836] font-semibold">
+        <div className="flex items-center gap-2 text-pBlue font-semibold">
           <Filter size={18} />
           <span>Filters</span>
         </div>
         {hasActiveFilters && (
           <button
             onClick={handleClearAll}
-            className="text-xs text-[#003f71] font-medium hover:underline cursor-pointer"
+            className="text-xs text-liteBlue font-medium hover:underline cursor-pointer"
           >
             Clear All
           </button>

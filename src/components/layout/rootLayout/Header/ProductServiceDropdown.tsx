@@ -24,8 +24,8 @@ export default function ProductServiceDropdown() {
         href="/product-service"
         className={`inline-flex items-center gap-1.5 px-3 py-2 text-base font-medium rounded-md transition-colors cursor-pointer ${
           isActive
-            ? "text-[#003f71] bg-[#003f71]/5"
-            : "text-gray-700 hover:text-[#003f71] hover:bg-gray-50"
+            ? "text-liteBlue bg-liteBlue/5"
+            : "text-gray-700 hover:text-liteBlue hover:bg-gray-50"
         }`}
       >
         Products &amp; Services
@@ -40,7 +40,7 @@ export default function ProductServiceDropdown() {
             <Link
               key={cat.id}
               href={`/product-service?category=${cat.slug}`}
-              className="rounded-md px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#003f71] transition-colors"
+              className="rounded-md px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-liteBlue transition-colors"
             >
               {cat.nameEn}
             </Link>
@@ -48,7 +48,7 @@ export default function ProductServiceDropdown() {
 
           <Link
             href="/how-to-pay"
-            className="rounded-md px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#003f71] transition-colors"
+            className="rounded-md px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-liteBlue transition-colors"
           >
             How to Pay
           </Link>
@@ -57,7 +57,7 @@ export default function ProductServiceDropdown() {
           <div className="relative group/notices">
             <button
               type="button"
-              className="flex items-center justify-between w-full rounded-md px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-[#003f71] transition-colors cursor-pointer"
+              className="flex items-center justify-between w-full rounded-md px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-liteBlue transition-colors cursor-pointer"
             >
               Notices to Mariners
               <ChevronRight size={14} className="ml-2 text-gray-400" />
@@ -68,7 +68,7 @@ export default function ProductServiceDropdown() {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="rounded-md px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#003f71] transition-colors"
+                    className="rounded-md px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-liteBlue transition-colors"
                   >
                     {item.label}
                   </Link>

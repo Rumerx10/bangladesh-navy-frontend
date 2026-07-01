@@ -93,7 +93,7 @@ export default function GallerySection() {
         <div className="mt-12 text-center">
           <MotionLink
             href="/about/gallery"
-            className="inline-block px-8 py-3 bg-[#001836] text-white rounded-full font-semibold hover:bg-[#003f71] transition-colors shadow-lg hover:shadow-xl cursor-pointer"
+            className="inline-block px-8 py-3 bg-pBlue text-white rounded-full font-semibold hover:bg-liteBlue transition-colors shadow-lg hover:shadow-xl cursor-pointer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

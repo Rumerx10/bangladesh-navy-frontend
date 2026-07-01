@@ -22,7 +22,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
             onClick={() => setActiveTab(i)}
             className={`px-5 py-3 text-sm font-medium transition-colors cursor-pointer ${
               activeTab === i
-                ? "text-[#003f71] border-b-2 border-[#003f71] bg-white"
+                ? "text-liteBlue border-b-2 border-liteBlue bg-white"
                 : "text-gray-500 hover:text-gray-700 bg-gray-50"
             }`}
           >
@@ -30,11 +30,11 @@ export default function ProductTabs({ product }: ProductTabsProps) {
           </button>
         ))}
       </div>
-      <div className="p-5 text-sm text-gray-600 leading-relaxed [&_h3]:font-bold [&_h3]:text-[#001836] [&_h3]:text-base [&_h3]:mb-3 [&_h3]:mt-2 [&_p]:mb-3 [&_table]:w-full [&_table]:border-collapse [&_table]:mt-2 [&_th]:border [&_th]:border-gray-200 [&_th]:bg-[#003f71] [&_th]:text-white [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:text-xs [&_th]:font-semibold [&_td]:border [&_td]:border-gray-200 [&_td]:px-3 [&_td]:py-2 [&_td]:text-xs [&_tr:nth-child(even)_td]:bg-gray-50">
+      <div className="p-5 text-sm text-gray-600 leading-relaxed [&_h3]:font-bold [&_h3]:text-pBlue [&_h3]:text-base [&_h3]:mb-3 [&_h3]:mt-2 [&_p]:mb-3 [&_table]:w-full [&_table]:border-collapse [&_table]:mt-2 [&_th]:border [&_th]:border-gray-200 [&_th]:bg-liteBlue [&_th]:text-white [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:text-xs [&_th]:font-semibold [&_td]:border [&_td]:border-gray-200 [&_td]:px-3 [&_td]:py-2 [&_td]:text-xs [&_tr:nth-child(even)_td]:bg-gray-50">
         {activeTab === 0 && parse(product.descriptionEn ?? "No description available.")}
       </div>
       {product?.content && (
-        <div className="p-5 text-sm text-gray-600 leading-relaxed [&_h3]:font-bold [&_h3]:text-[#001836] [&_h3]:text-base [&_h3]:mb-3 [&_h3]:mt-2 [&_p]:mb-3 [&_table]:w-full [&_table]:border-collapse [&_table]:mt-2 [&_th]:border [&_th]:border-gray-200 [&_th]:bg-[#003f71] [&_th]:text-white [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:text-xs [&_th]:font-semibold [&_td]:border [&_td]:border-gray-200 [&_td]:px-3 [&_td]:py-2 [&_td]:text-xs [&_tr:nth-child(even)_td]:bg-gray-50">
+        <div className="p-5 text-sm text-gray-600 leading-relaxed [&_h3]:font-bold [&_h3]:text-pBlue [&_h3]:text-base [&_h3]:mb-3 [&_h3]:mt-2 [&_p]:mb-3 [&_table]:w-full [&_table]:border-collapse [&_table]:mt-2 [&_th]:border [&_th]:border-gray-200 [&_th]:bg-liteBlue [&_th]:text-white [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:text-xs [&_th]:font-semibold [&_td]:border [&_td]:border-gray-200 [&_td]:px-3 [&_td]:py-2 [&_td]:text-xs [&_tr:nth-child(even)_td]:bg-gray-50">
           {parse(product.content)}
         </div>
       )}

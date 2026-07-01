@@ -19,7 +19,7 @@ export default function SortDropdown({ value, onChange }: SortDropdownProps) {
         onChange(val as "relevance" | "price-asc" | "price-desc" | "newest")
       }
     >
-      <SelectTrigger className="w-50 bg-white border-gray-200 text-gray-700 font-medium h-10 rounded-lg focus:ring-[#003f71]/20">
+      <SelectTrigger className="w-50 bg-white border-gray-200 text-gray-700 font-medium h-10 rounded-lg focus:ring-liteBlue/20">
         <SelectValue placeholder="Sort by" />
       </SelectTrigger>
       <SelectContent className="bg-white border-gray-100 shadow-xl rounded-xl">

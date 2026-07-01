@@ -23,12 +23,12 @@ export default function AboutPageHeader({
               {crumb.href ? (
                 <Link
                   href={crumb.href}
-                  className="hover:text-[#003f71] transition-colors"
+                  className="hover:text-liteBlue transition-colors"
                 >
                   {crumb.label}
                 </Link>
               ) : (
-                <span className="text-[#001836] font-medium">
+                <span className="text-pBlue font-medium">
                   {crumb.label}
                 </span>
               )}
@@ -36,7 +36,7 @@ export default function AboutPageHeader({
           ))}
         </nav>
 
-        <h1 className="text-2xl lg:text-3xl font-bold text-[#001836]">
+        <h1 className="text-2xl lg:text-3xl font-bold text-pBlue">
           {title}
         </h1>
         <p className="text-sm lg:text-base text-gray-500 mt-1">{subtitle}</p>

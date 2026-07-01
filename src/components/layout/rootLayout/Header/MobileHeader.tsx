@@ -26,7 +26,7 @@ export default function MobileHeader({
           {/* Hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="flex items-center justify-center w-9 h-9 text-gray-700 hover:text-[#003f71] transition-colors -ml-1"
+            className="flex items-center justify-center w-9 h-9 text-gray-700 hover:text-liteBlue transition-colors -ml-1"
             aria-label="Open menu"
           >
             <svg
@@ -54,7 +54,7 @@ export default function MobileHeader({
               className="w-9 h-9 object-contain"
             />
             <div>
-              <span className="text-sm font-bold text-[#001836] leading-tight block">
+              <span className="text-sm font-bold text-pBlue leading-tight block">
                 {siteConfig.name}
               </span>
               <span className="text-[9px] text-gray-500 leading-tight block">
@@ -71,7 +71,7 @@ export default function MobileHeader({
         >
           <ShoppingCart size={20} />
           {cartCount > 0 && (
-            <span className="absolute -top-0.5 -right-0.5 min-w-4 h-4 flex items-center justify-center rounded-full bg-[#003f71] text-white text-[9px] font-bold px-0.5">
+            <span className="absolute -top-0.5 -right-0.5 min-w-4 h-4 flex items-center justify-center rounded-full bg-liteBlue text-white text-[9px] font-bold px-0.5">
               {cartCount > 99 ? "99+" : cartCount}
             </span>
           )}

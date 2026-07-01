@@ -28,12 +28,12 @@ export default function SurveyShipDetail({ ship }: SurveyShipDetailProps) {
               priority
             />
           ) : (
-            <div className="w-full h-full bg-linear-to-br from-[#001836] to-[#003f71] flex items-center justify-center">
+            <div className="w-full h-full bg-linear-to-br from-pBlue to-liteBlue flex items-center justify-center">
               <Anchor size={80} className="text-white/10" />
             </div>
           )}
           {/* Overlay gradient */}
-          <div className="absolute inset-0 bg-linear-to-t from-[#001836]/80 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-pBlue/80 via-transparent to-transparent" />
           {/* Ship name overlay */}
           <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
             <div className="flex items-end justify-between gap-4">
@@ -71,7 +71,7 @@ export default function SurveyShipDetail({ ship }: SurveyShipDetailProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
         >
-          <Info size={18} className="text-[#003f71] mt-0.5 shrink-0" />
+          <Info size={18} className="text-liteBlue mt-0.5 shrink-0" />
           <p className="text-sm text-gray-600 leading-relaxed">
             {ship.description}
           </p>
@@ -84,19 +84,19 @@ export default function SurveyShipDetail({ ship }: SurveyShipDetailProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.15 }}
         >
-          <h2 className="text-base font-bold text-[#001836] mb-4 uppercase tracking-wide">
+          <h2 className="text-base font-bold text-pBlue mb-4 uppercase tracking-wide">
             Specifications
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {Object.entries(ship.specifications).map(([key, value]) => (
               <div
                 key={key}
-                className="rounded-xl border border-gray-100 bg-white p-4 text-center hover:shadow-md hover:border-[#003f71]/15 transition-all duration-300 flex flex-col items-center justify-center"
+                className="rounded-xl border border-gray-100 bg-white p-4 text-center hover:shadow-md hover:border-liteBlue/15 transition-all duration-300 flex flex-col items-center justify-center"
               >
                 <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-1.5">
                   {key}
                 </p>
-                <p className="text-sm lg:text-base text-[#001836] font-bold">
+                <p className="text-sm lg:text-base text-pBlue font-bold">
                   {value}
                 </p>
               </div>
@@ -110,7 +110,7 @@ export default function SurveyShipDetail({ ship }: SurveyShipDetailProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.2 }}
         >
-          <h2 className="text-base font-bold text-[#001836] mb-4 uppercase tracking-wide">
+          <h2 className="text-base font-bold text-pBlue mb-4 uppercase tracking-wide">
             About {ship.name}
           </h2>
           <div className="space-y-4">

@@ -14,28 +14,26 @@ interface HeaderTopBarProps {
   setMenuOpen: (value: boolean) => void;
 }
 
-interface NestedSubLink {
+export interface NestedSubLink {
   label: string;
   link: string;
 }
 
-interface SubLink {
+export interface SubLink {
   label: string;
   link: string;
   subLinks?: NestedSubLink[];
 }
 
-interface NavItem {
+export interface NavItem {
   label: string;
   link: string;
-  /** Render the trigger as a <Link> so clicking it navigates */
   asLink?: boolean;
-  /** Extra path prefixes that count as active */
   activeMatches?: string[];
   subLinks?: SubLink[];
 }
 
-const NavigationData: NavItem[] = [
+export const NavigationItems: NavItem[] = [
   { label: "Home", link: "/" },
   {
     label: "About Us",
@@ -82,7 +80,6 @@ const NavigationData: NavItem[] = [
     link: "#",
     subLinks: [
       { label: "Hydrographic Notes", link: "/contact-us/query-suggestion" },
-
       {
         label: "Notices to Mariners",
         link: "#",
@@ -105,14 +102,26 @@ const NavigationData: NavItem[] = [
   },
 ];
 
-const triggerBase =
-  "inline-flex items-center gap-1.5 px-3 py-2 text-base font-medium rounded-md transition-colors cursor-pointer";
-const triggerActive = "text-[#003f71] bg-[#003f71]/5";
-const triggerIdle = "text-gray-700 hover:text-[#003f71] hover:bg-gray-50";
+// Primary items always shown in the main nav row
+const PRIMARY_LABELS = ["Home", "About Us", "Products & Services"];
+// Items collapsed into "Others" below 1800 px
+const OTHERS_LABELS = ["Training and Courses", "Contact", "Important Notice"];
 
-const subLinkBase = "rounded-md px-3 py-2.5 text-sm transition-colors";
-const subLinkActive = "text-[#003f71] bg-[#003f71]/5 font-medium";
-const subLinkIdle = "text-gray-700 hover:bg-gray-50 hover:text-[#003f71]";
+const primaryItems = NavigationItems.filter((item) =>
+  PRIMARY_LABELS.includes(item.label)
+);
+const othersItems = NavigationItems.filter((item) =>
+  OTHERS_LABELS.includes(item.label)
+);
+
+const triggerBase =
+  "inline-flex items-center gap-1 px-2.5 py-2 text-sm font-medium rounded-md transition-colors cursor-pointer whitespace-nowrap";
+const triggerActive = "text-liteBlue bg-liteBlue/5";
+const triggerIdle = "text-gray-700 hover:text-liteBlue hover:bg-gray-50";
+
+const subLinkBase = "block rounded-md px-3 py-2.5 text-sm transition-colors";
+const subLinkActive = "text-liteBlue bg-liteBlue/5 font-medium";
+const subLinkIdle = "text-gray-700 hover:bg-gray-50 hover:text-liteBlue";
 
 export default function HeaderTopBar({
   menuOpen,
@@ -128,101 +137,204 @@ export default function HeaderTopBar({
 
   function isItemActive(item: NavItem) {
     if (item.link === "/") return pathname === "/";
+    if (item.link === "#") return false;
     const paths = [item.link, ...(item.activeMatches ?? [])];
     return paths.some((p) => pathname?.startsWith(p));
+  }
+
+  function renderSubLinks(subLinks: SubLink[]) {
+    return subLinks.map((sub) => {
+      if (sub.subLinks) {
+        return (
+          <div key={sub.label} className="relative group/sub">
+            <button
+              type="button"
+              className={`${subLinkBase} flex items-center justify-between w-full ${subLinkIdle} cursor-pointer`}
+            >
+              {sub.label}
+              <ChevronRight size={14} className="ml-2 text-gray-400 shrink-0" />
+            </button>
+            <div className="absolute left-full top-0 z-50 hidden ml-1 min-w-48 rounded-xl border border-gray-200 bg-white p-2 shadow-xl group-hover/sub:block">
+              <div className="flex flex-col gap-0.5">
+                {sub.subLinks.map((nested) => (
+                  <Link
+                    key={nested.label}
+                    href={nested.link}
+                    className={`${subLinkBase} ${subLinkIdle}`}
+                  >
+                    {nested.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      }
+      return (
+        <Link
+          key={sub.label}
+          href={sub.link}
+          className={`${subLinkBase} ${pathname === sub.link ? subLinkActive : subLinkIdle}`}
+        >
+          {sub.label}
+        </Link>
+      );
+    });
+  }
+
+  function renderNavItem(item: NavItem, extraLiClass?: string) {
+    const active = isItemActive(item);
+    const triggerClass = `${triggerBase} ${active ? triggerActive : triggerIdle}`;
+
+    if (!item.subLinks) {
+      return (
+        <li key={item.label} className={extraLiClass ?? ""}>
+          <Link href={item.link} className={triggerClass}>
+            {item.label}
+          </Link>
+        </li>
+      );
+    }
+
+    const chevron = (
+      <ChevronDown
+        size={14}
+        className="mt-px transition-transform group-hover:rotate-180 duration-200 shrink-0"
+      />
+    );
+
+    return (
+      <li
+        key={item.label}
+        className={`relative group ${extraLiClass ?? ""}`.trim()}
+      >
+        {item.asLink ? (
+          <Link href={item.link} className={triggerClass}>
+            {item.label}
+            {chevron}
+          </Link>
+        ) : (
+          <button type="button" className={triggerClass}>
+            {item.label}
+            {chevron}
+          </button>
+        )}
+
+        <div className="absolute left-1/2 top-full z-50 hidden -translate-x-1/2 rounded-xl border border-gray-200 bg-white shadow-xl group-hover:block">
+          <div className="flex flex-col gap-0.5 p-2 min-w-52">
+            {renderSubLinks(item.subLinks)}
+          </div>
+        </div>
+      </li>
+    );
   }
 
   return (
     <div className="bg-white border-b border-gray-100">
       {/* Desktop Navigation */}
-      <div className="hidden lg:flex container items-center justify-between gap-8 h-24 px-4 sm:px-0">
+      <div className="hidden lg:flex container items-center justify-between gap-4 h-24 px-4 sm:px-0">
         <Logo />
 
         <nav className="hidden lg:flex flex-1 justify-center">
-          <ul className="flex items-center gap-1 xl:gap-2">
-            {NavigationData.map((item) => {
-              const active = isItemActive(item);
-              const triggerClass = `${triggerBase} ${active ? triggerActive : triggerIdle}`;
+          <ul className="flex items-center gap-0.5">
+            {/* Primary items — always visible */}
+            {primaryItems.map((item) => renderNavItem(item))}
 
-              if (!item.subLinks) {
-                return (
-                  <li key={item.label}>
-                    <Link href={item.link} className={triggerClass}>
-                      {item.label}
-                    </Link>
-                  </li>
-                );
-              }
-
-              const chevron = (
+            {/* "Others" mega-dropdown — visible below 1800 px */}
+            <li className="relative group min-[1800px]:hidden">
+              <button
+                type="button"
+                className={`${triggerBase} ${triggerIdle}`}
+              >
+                Others
                 <ChevronDown
                   size={14}
-                  className="mt-px transition-transform group-hover:rotate-180 duration-200"
+                  className="mt-px transition-transform group-hover:rotate-180 duration-200 shrink-0"
                 />
-              );
+              </button>
 
-              return (
-                <li key={item.label} className="relative group">
-                  {item.asLink ? (
-                    <Link href={item.link} className={triggerClass}>
-                      {item.label}
-                      {chevron}
-                    </Link>
-                  ) : (
-                    <button type="button" className={triggerClass}>
-                      {item.label}
-                      {chevron}
-                    </button>
-                  )}
-
-                  <div className="absolute left-1/2 top-full z-50 hidden -translate-x-1/2 rounded-xl border border-gray-200 bg-white shadow-xl group-hover:block">
-                    <div className="flex flex-col gap-0.5 p-2 min-w-55">
-                      {item.subLinks.map((sub) => {
-                        if (sub.subLinks) {
-                          return (
-                            <div key={sub.label} className="relative group/sub">
-                              <button
-                                type="button"
-                                className={`${subLinkBase} flex items-center justify-between w-full font-medium ${subLinkIdle} cursor-pointer`}
+              <div className="absolute left-1/2 top-full z-50 hidden -translate-x-1/2 rounded-xl border border-gray-200 bg-white shadow-xl group-hover:block">
+                <div className="flex p-3 gap-1">
+                  {othersItems.map((section, i) => (
+                    <div
+                      key={section.label}
+                      className={`min-w-44 px-2 ${
+                        i < othersItems.length - 1
+                          ? "border-r border-gray-100 pr-4"
+                          : ""
+                      }`}
+                    >
+                      {section.link !== "#" ? (
+                        <Link
+                          href={section.link}
+                          className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-1 hover:text-liteBlue transition-colors"
+                        >
+                          {section.label}
+                        </Link>
+                      ) : (
+                        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-1">
+                          {section.label}
+                        </p>
+                      )}
+                      <div className="flex flex-col gap-0.5">
+                        {section.subLinks?.map((sub) => {
+                          if (sub.subLinks) {
+                            return (
+                              <div
+                                key={sub.label}
+                                className="relative group/othersub"
                               >
-                                {sub.label}
-                                <ChevronRight
-                                  size={14}
-                                  className="ml-2 text-gray-400"
-                                />
-                              </button>
-                              <div className="absolute left-full top-0 z-50 hidden ml-1 min-w-50 rounded-xl border border-gray-200 bg-white p-2 shadow-xl group-hover/sub:block">
-                                <div className="flex flex-col gap-0.5">
-                                  {sub.subLinks.map((nested) => (
-                                    <Link
-                                      key={nested.label}
-                                      href={nested.link}
-                                      className={`${subLinkBase} ${subLinkIdle}`}
-                                    >
-                                      {nested.label}
-                                    </Link>
-                                  ))}
+                                <button
+                                  type="button"
+                                  className={`${subLinkBase} flex items-center justify-between w-full ${subLinkIdle} cursor-pointer`}
+                                >
+                                  {sub.label}
+                                  <ChevronRight
+                                    size={13}
+                                    className="ml-1 text-gray-400 shrink-0"
+                                  />
+                                </button>
+                                <div className="absolute left-full top-0 z-50 hidden ml-1 min-w-44 rounded-xl border border-gray-200 bg-white p-2 shadow-xl group-hover/othersub:block">
+                                  <div className="flex flex-col gap-0.5">
+                                    {sub.subLinks.map((nested) => (
+                                      <Link
+                                        key={nested.label}
+                                        href={nested.link}
+                                        className={`${subLinkBase} ${subLinkIdle}`}
+                                      >
+                                        {nested.label}
+                                      </Link>
+                                    ))}
+                                  </div>
                                 </div>
                               </div>
-                            </div>
+                            );
+                          }
+                          return (
+                            <Link
+                              key={sub.label}
+                              href={sub.link}
+                              className={`${subLinkBase} ${
+                                pathname === sub.link
+                                  ? subLinkActive
+                                  : subLinkIdle
+                              }`}
+                            >
+                              {sub.label}
+                            </Link>
                           );
-                        }
-
-                        return (
-                          <Link
-                            key={sub.label}
-                            href={sub.link}
-                            className={`${subLinkBase} ${pathname === sub.link ? subLinkActive : subLinkIdle}`}
-                          >
-                            {sub.label}
-                          </Link>
-                        );
-                      })}
+                        })}
+                      </div>
                     </div>
-                  </div>
-                </li>
-              );
-            })}
+                  ))}
+                </div>
+              </div>
+            </li>
+
+            {/* Individual "others" items — only shown at 1800 px+ */}
+            {othersItems.map((item) =>
+              renderNavItem(item, "hidden min-[1800px]:block")
+            )}
           </ul>
         </nav>
 

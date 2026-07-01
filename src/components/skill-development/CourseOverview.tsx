@@ -1,18 +1,18 @@
 export default function CourseOverview() {
   return (
-    <section className="bg-white py-16 lg:py-20">
+    <section className="bg-white py-8 lg:py-20">
       <div className="container px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-12">
 
         {/* Intro */}
         <div>
-          <h2 className="text-2xl lg:text-3xl font-bold text-[#001836] mb-4">Courses</h2>
+          <h2 className="text-2xl lg:text-3xl font-bold text-pBlue mb-4">Courses</h2>
           <p className="text-gray-600 leading-relaxed text-[15px] mb-6">
             BN Hydrographic Institute offers professional courses in hydrography, oceanography
             and related marine sciences, designed to meet national requirements while maintaining
             international standards.
           </p>
-          <div className="rounded-xl border border-[#003f71]/20 bg-[#003f71]/5 p-5">
-            <p className="text-sm font-semibold text-[#003f71] mb-3">Course Sequence</p>
+          <div className="rounded-xl border border-liteBlue/20 bg-liteBlue/5 p-5">
+            <p className="text-sm font-semibold text-liteBlue mb-3">Course Sequence</p>
             <ol className="list-decimal list-inside space-y-1 text-sm text-gray-700">
               <li>Long Hydrographic Cat-A Course</li>
               <li>Basic Hydrographic Cat-B Course</li>
@@ -24,8 +24,8 @@ export default function CourseOverview() {
         {/* Course descriptions */}
         <div className="space-y-8">
           {/* Cat A */}
-          <div className="border-l-4 border-[#003f71] pl-5">
-            <h3 className="text-lg font-bold text-[#001836] mb-2">
+          <div className="border-l-4 border-liteBlue pl-5">
+            <h3 className="text-lg font-bold text-pBlue mb-2">
               1. Long Hydrographic (Cat A) Course
             </h3>
             <p className="text-sm text-gray-600 leading-relaxed">
@@ -37,8 +37,8 @@ export default function CourseOverview() {
           </div>
 
           {/* Cat B */}
-          <div className="border-l-4 border-[#003f71] pl-5">
-            <h3 className="text-lg font-bold text-[#001836] mb-2">
+          <div className="border-l-4 border-liteBlue pl-5">
+            <h3 className="text-lg font-bold text-pBlue mb-2">
               2. Basic Hydrographic (Cat B) Course
             </h3>
             <p className="text-sm text-gray-600 leading-relaxed">
@@ -51,8 +51,8 @@ export default function CourseOverview() {
           </div>
 
           {/* Other */}
-          <div className="border-l-4 border-[#003f71] pl-5">
-            <h3 className="text-lg font-bold text-[#001836] mb-2">3. Other Courses</h3>
+          <div className="border-l-4 border-liteBlue pl-5">
+            <h3 className="text-lg font-bold text-pBlue mb-2">3. Other Courses</h3>
             <p className="text-sm text-gray-600 leading-relaxed">
               The institute also conducts professional training for Survey Recorders, short courses,
               workshops and refresher programmes on modern hydrographic technologies and software.
@@ -64,20 +64,20 @@ export default function CourseOverview() {
 
         {/* Summary Table */}
         <div>
-          <h3 className="text-lg font-bold text-[#001836] mb-4">Course Statistics</h3>
+          <h3 className="text-lg font-bold text-pBlue mb-4">Course Statistics</h3>
           <div className="overflow-x-auto rounded-xl border border-gray-200">
             <table className="w-full text-sm border-collapse">
               <thead>
-                <tr className="bg-[#003f71] text-white">
-                  <th className="border border-[#003f71]/40 px-3 py-3 text-center font-semibold">Ser</th>
-                  <th className="border border-[#003f71]/40 px-3 py-3 text-left font-semibold">Course</th>
-                  <th className="border border-[#003f71]/40 px-3 py-3 text-center font-semibold">Courses Conducted</th>
-                  <th className="border border-[#003f71]/40 px-3 py-3 text-center font-semibold">Courses Duration</th>
-                  <th className="border border-[#003f71]/40 px-3 py-3 text-center font-semibold">BN</th>
-                  <th className="border border-[#003f71]/40 px-3 py-3 text-center font-semibold">Other Maritime Org</th>
-                  <th className="border border-[#003f71]/40 px-3 py-3 text-center font-semibold">Overseas</th>
-                  <th className="border border-[#003f71]/40 px-3 py-3 text-center font-semibold">Total Trainees</th>
-                  <th className="border border-[#003f71]/40 px-3 py-3 text-center font-semibold">Remarks</th>
+                <tr className="bg-liteBlue text-white">
+                  <th className="border border-liteBlue/40 px-3 py-3 text-center font-semibold">Ser</th>
+                  <th className="border border-liteBlue/40 px-3 py-3 text-left font-semibold">Course</th>
+                  <th className="border border-liteBlue/40 px-3 py-3 text-center font-semibold">Courses Conducted</th>
+                  <th className="border border-liteBlue/40 px-3 py-3 text-center font-semibold">Courses Duration</th>
+                  <th className="border border-liteBlue/40 px-3 py-3 text-center font-semibold">BN</th>
+                  <th className="border border-liteBlue/40 px-3 py-3 text-center font-semibold">Other Maritime Org</th>
+                  <th className="border border-liteBlue/40 px-3 py-3 text-center font-semibold">Overseas</th>
+                  <th className="border border-liteBlue/40 px-3 py-3 text-center font-semibold">Total Trainees</th>
+                  <th className="border border-liteBlue/40 px-3 py-3 text-center font-semibold">Remarks</th>
                 </tr>
               </thead>
               <tbody className="text-gray-700">
@@ -151,7 +151,7 @@ export default function CourseOverview() {
                   <td className="border border-gray-200 px-3 py-3 text-center">Officers and Sailors</td>
                 </tr>
                 {/* Total */}
-                <tr className="bg-[#003f71]/10 font-bold">
+                <tr className="bg-liteBlue/10 font-bold">
                   <td className="border border-gray-300 px-3 py-3 text-center" colSpan={2}>Total</td>
                   <td className="border border-gray-300 px-3 py-3 text-center">118</td>
                   <td className="border border-gray-300 px-3 py-3 text-center">—</td>

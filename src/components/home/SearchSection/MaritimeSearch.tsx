@@ -57,7 +57,7 @@ export default function MaritimeSearch() {
   return (
     <section className="relative py-16 lg:py-25 bg-white overflow-hidden">
       {/* Watermark */}
-      <div className="absolute -right-20 -top-10 text-[#001836]">
+      <div className="absolute -right-20 -top-10 text-pBlue">
         <NavyWatermark
           variant="compass"
           size={350}
@@ -65,7 +65,7 @@ export default function MaritimeSearch() {
           animate="rotate"
         />
       </div>
-      <div className="absolute -left-16 -bottom-16 text-[#001836]">
+      <div className="absolute -left-16 -bottom-16 text-pBlue">
         <NavyWatermark
           variant="anchor"
           size={250}
@@ -109,7 +109,7 @@ export default function MaritimeSearch() {
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setTimeout(() => setIsFocused(false), 200)}
                 onKeyDown={handleKeyDown}
-                className="w-full px-4 h-11 rounded-lg border border-gray-200 text-sm bg-gray-50 focus:outline-none focus:border-[#003f71] focus:ring-2 focus:ring-[#003f71]/10 transition-all"
+                className="w-full px-4 h-11 rounded-lg border border-gray-200 text-sm bg-gray-50 focus:outline-none focus:border-liteBlue focus:ring-2 focus:ring-liteBlue/10 transition-all"
               />
               {query && (
                 <button
@@ -125,7 +125,7 @@ export default function MaritimeSearch() {
             </div>
             <button
               onClick={handleSearch}
-              className="inline-flex items-center justify-center gap-2 px-6 h-11 py-4 rounded-lg bg-[#003f71] text-white font-medium text-base hover:bg-[#004d8a] transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-6 h-11 py-4 rounded-lg bg-liteBlue text-white font-medium text-base hover:bg-[#004d8a] transition-colors cursor-pointer"
             >
               <Search size={18} />
               <span className="hidden sm:inline">Search</span>
@@ -151,7 +151,7 @@ export default function MaritimeSearch() {
                         }}
                       >
                         {/* Thumbnail */}
-                        <div className="w-12 h-12 rounded-lg bg-linear-to-br from-[#001836] to-[#003f71] flex items-center justify-center shrink-0">
+                        <div className="w-12 h-12 rounded-lg bg-linear-to-br from-pBlue to-liteBlue flex items-center justify-center shrink-0">
                           <svg
                             width="20"
                             height="20"
@@ -179,7 +179,7 @@ export default function MaritimeSearch() {
                   })}
                   <button
                     onClick={handleSearch}
-                    className="w-full px-4 py-3 text-sm font-medium text-[#003f71] bg-gray-50 hover:bg-gray-100 transition-colors text-center cursor-pointer"
+                    className="w-full px-4 py-3 text-sm font-medium text-liteBlue bg-gray-50 hover:bg-gray-100 transition-colors text-center cursor-pointer"
                   >
                     View all results for &quot;{query}&quot;
                   </button>
@@ -191,7 +191,7 @@ export default function MaritimeSearch() {
                   </p>
                   <button
                     onClick={handleSearch}
-                    className="mt-2 text-sm text-[#003f71] font-medium hover:underline cursor-pointer"
+                    className="mt-2 text-sm text-liteBlue font-medium hover:underline cursor-pointer"
                   >
                     Search in product catalog →
                   </button>

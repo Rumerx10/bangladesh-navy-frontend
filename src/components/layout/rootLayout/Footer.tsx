@@ -42,6 +42,12 @@ const serviceLinks = [
   },
 ];
 
+const importantLinks = [
+  { label: "Bangladesh Navy", href: "/#" },
+  { label: "IHO", href: "/#" },
+  { label: "UKHO", href: "/#" },
+];
+
 const contactPageLinks = [
   { label: "Query & Suggestion", href: "/contact-us" },
   { label: "Contact Information", href: "/contact-us/information" },
@@ -50,7 +56,7 @@ const contactPageLinks = [
 
 const Footer = () => {
   return (
-    <footer className="bg-[#001836] text-gray-300 pt-12 lg:pt-16">
+    <footer className="bg-pBlue text-gray-300 pt-12 lg:pt-16">
       <div className="container px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-10">
           {/* Logo & Info */}
@@ -163,7 +169,7 @@ const Footer = () => {
               Important Links
             </h4>
             <ul className="space-y-2.5">
-              {serviceLinks.map((link) => (
+              {importantLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
@@ -201,14 +207,14 @@ const Footer = () => {
             <div className="flex gap-2.5">
               <a
                 href="#"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#003f71] flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-liteBlue flex items-center justify-center transition-colors"
                 aria-label="Facebook"
               >
                 <Facebook size={16} className="text-white" />
               </a>
               <a
                 href="#"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#003f71] flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-liteBlue flex items-center justify-center transition-colors"
                 aria-label="Twitter"
               >
                 <svg
@@ -223,7 +229,7 @@ const Footer = () => {
               </a>
               <a
                 href="#"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#003f71] flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-liteBlue flex items-center justify-center transition-colors"
                 aria-label="YouTube"
               >
                 <Youtube size={16} className="text-white" />

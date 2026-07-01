@@ -40,8 +40,8 @@ export default function CartDrawer() {
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
           <div className="flex items-center gap-2">
-            <ShoppingCart size={18} className="text-[#003f71]" />
-            <h2 className="text-base font-bold text-[#001836]">
+            <ShoppingCart size={18} className="text-liteBlue" />
+            <h2 className="text-base font-bold text-pBlue">
               Cart ({totalItems})
             </h2>
           </div>
@@ -94,11 +94,11 @@ export default function CartDrawer() {
                     <Link
                       href={`/products/${item.slug}`}
                       onClick={closeDrawer}
-                      className="text-sm font-medium text-gray-800 line-clamp-1 hover:text-[#003f71]"
+                      className="text-sm font-medium text-gray-800 line-clamp-1 hover:text-liteBlue"
                     >
                       {item.name}
                     </Link>
-                    <p className="text-sm font-bold text-[#001836] mt-1">
+                    <p className="text-sm font-bold text-pBlue mt-1">
                       ৳{item.price.toLocaleString()}
                     </p>
                     <div className="flex items-center gap-2 mt-2">
@@ -163,14 +163,14 @@ export default function CartDrawer() {
           <div className="border-t border-gray-100 px-5 py-4 space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-sm text-gray-500">Subtotal</span>
-              <span className="text-lg font-bold text-[#001836]">
+              <span className="text-lg font-bold text-pBlue">
                 ৳{subtotal.toLocaleString()}
               </span>
             </div>
             <Link
               href="/cart"
               onClick={closeDrawer}
-              className="flex items-center justify-center gap-2 w-full py-3 rounded-lg bg-[#003f71] text-white font-semibold text-sm hover:bg-[#004d8a] transition-colors"
+              className="flex items-center justify-center gap-2 w-full py-3 rounded-lg bg-liteBlue text-white font-semibold text-sm hover:bg-[#004d8a] transition-colors"
             >
               View Cart
               <ArrowRight size={16} />

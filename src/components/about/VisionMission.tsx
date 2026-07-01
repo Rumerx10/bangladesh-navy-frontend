@@ -11,7 +11,7 @@ const iconMap: Record<string, React.ReactNode> = {
 
 export default function VisionMission() {
   return (
-    <section className="py-8 lg:py-12">
+    <section className="py-8 lg:py-20">
       <div className="container px-4 sm:px-6 lg:px-8">
         <div className="container grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
           {visionMissionItems.map((item, i) => (
@@ -23,10 +23,10 @@ export default function VisionMission() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.15 }}
             >
-              <div className="w-14 h-14 rounded-xl bg-[#003f71]/10 text-[#003f71] flex items-center justify-center mb-5">
+              <div className="w-14 h-14 rounded-xl bg-liteBlue/10 text-liteBlue flex items-center justify-center mb-5">
                 {iconMap[item.icon] ?? <Eye size={24} />}
               </div>
-              <h2 className="text-2xl lg:text-3xl font-bold text-[#001836] mb-4">
+              <h2 className="text-2xl lg:text-3xl font-bold text-pBlue mb-4">
                 {item.title}
               </h2>
               <p className="text-lg lg:text-xl text-gray-700 leading-relaxed mb-4">

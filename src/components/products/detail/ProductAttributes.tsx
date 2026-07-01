@@ -7,7 +7,7 @@ interface ProductAttributesProps {
 export default function ProductAttributes({ attributes }: ProductAttributesProps) {
   return (
     <div className="rounded-xl border border-gray-100 overflow-hidden">
-      <h3 className="px-5 py-3 bg-gray-50 text-sm font-semibold text-[#001836] border-b border-gray-100">
+      <h3 className="px-5 py-3 bg-gray-50 text-sm font-semibold text-pBlue border-b border-gray-100">
         Specifications
       </h3>
       <div className="divide-y divide-gray-50">

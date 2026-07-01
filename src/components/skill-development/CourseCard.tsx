@@ -26,7 +26,7 @@ export default function CourseCard({ course }: CourseCardProps) {
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 bg-white/90 backdrop-blur-md text-[#001836] text-[10px] font-bold uppercase tracking-wider rounded-full shadow-sm">
+          <span className="px-3 py-1 bg-white/90 backdrop-blur-md text-pBlue text-[10px] font-bold uppercase tracking-wider rounded-full shadow-sm">
             {course.category}
           </span>
         </div>
@@ -44,7 +44,7 @@ export default function CourseCard({ course }: CourseCardProps) {
           </div>
         </div>
 
-        <h3 className="text-xl font-bold text-[#001836] mb-3 group-hover:text-[#003f71] transition-colors line-clamp-2">
+        <h3 className="text-xl font-bold text-pBlue mb-3 group-hover:text-liteBlue transition-colors line-clamp-2">
           {course.title}
         </h3>
         
@@ -54,7 +54,7 @@ export default function CourseCard({ course }: CourseCardProps) {
 
         <Link
           href={`/skill-development/${course.slug}`}
-          className="inline-flex items-center gap-2 text-[#001836] font-bold text-sm group/link"
+          className="inline-flex items-center gap-2 text-pBlue font-bold text-sm group/link"
         >
           View Details
           <ArrowRight size={18} className="transition-transform group-hover/link:translate-x-1" />

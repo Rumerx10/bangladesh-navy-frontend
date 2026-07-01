@@ -12,11 +12,11 @@ export default function NewsCard({ item, hideImage = false }: NewsCardProps) {
   return (
     <Link
       href={item.href}
-      className="group flex flex-col h-full rounded-2xl bg-white border border-gray-100 overflow-hidden hover:shadow-xl hover:border-[#003f71]/15 transition-all duration-300"
+      className="group flex flex-col h-full rounded-2xl bg-white border border-gray-100 overflow-hidden hover:shadow-xl hover:border-liteBlue/15 transition-all duration-300"
     >
       {/* Image */}
       {!hideImage && (
-        <div className="relative aspect-[16/9] overflow-hidden bg-linear-to-br from-[#001836] to-[#003f71]">
+        <div className="relative aspect-[16/9] overflow-hidden bg-linear-to-br from-pBlue to-liteBlue">
         <Image
           src={item.image}
           alt={item.title}
@@ -26,7 +26,7 @@ export default function NewsCard({ item, hideImage = false }: NewsCardProps) {
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
         {/* Category badge */}
-        <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-[#003f71]/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
+        <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-liteBlue/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
           <Tag size={10} />
           {item.category}
         </span>
@@ -35,13 +35,13 @@ export default function NewsCard({ item, hideImage = false }: NewsCardProps) {
 
       <div className="flex-1 p-5 lg:p-6 flex flex-col">
         <div className="flex items-center gap-2 mb-3">
-          <Calendar size={14} className="text-[#003f71]" />
-          <span className="text-xs font-semibold text-[#003f71]">
+          <Calendar size={14} className="text-liteBlue" />
+          <span className="text-xs font-semibold text-liteBlue">
             {item.date}
           </span>
         </div>
 
-        <h3 className="text-base font-bold text-[#001836] group-hover:text-[#003f71] transition-colors line-clamp-2 leading-snug mb-2">
+        <h3 className="text-base font-bold text-pBlue group-hover:text-liteBlue transition-colors line-clamp-2 leading-snug mb-2">
           {item.title}
         </h3>
 
@@ -49,7 +49,7 @@ export default function NewsCard({ item, hideImage = false }: NewsCardProps) {
           {item.description}
         </p>
 
-        <span className="inline-flex items-center gap-1.5 text-sm text-[#003f71] font-medium group-hover:gap-2.5 transition-all">
+        <span className="inline-flex items-center gap-1.5 text-sm text-liteBlue font-medium group-hover:gap-2.5 transition-all">
           Read More <ArrowRight size={14} />
         </span>
       </div>

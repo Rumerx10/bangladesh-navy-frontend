@@ -15,9 +15,9 @@ export default function NewsEvents() {
   return (
     <>
       {/* ─── News & Events Section ─── */}
-      <section className="relative py-16 lg:py-24 bg-white overflow-hidden">
+      <section className="relative py-8 lg:py-20 bg-white overflow-hidden">
         {/* Watermark */}
-        <div className="absolute -right-16 top-20 text-[#001836]">
+        <div className="absolute -right-16 top-20 text-pBlue">
           <NavyWatermark
             variant="ship"
             size={400}
@@ -30,7 +30,7 @@ export default function NewsEvents() {
           {/* Section header */}
           <div>
             <div className="flex items-center justify-center gap-2 mb-3">
-              <Newspaper size={20} className="text-[#003f71]" />
+              <Newspaper size={20} className="text-liteBlue" />
             </div>
             <SectionTitle
               title=" News and Events"
@@ -64,7 +64,7 @@ export default function NewsEvents() {
           >
             <Link
               href="/news"
-              className="inline-flex items-center justify-center gap-2 px-8 h-11 py-4 rounded-lg bg-[#003f71] text-white font-medium text-base hover:bg-[#004d8a] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-8 h-11 py-4 rounded-lg bg-liteBlue text-white font-medium text-base hover:bg-[#004d8a] transition-colors"
             >
               View All News <ArrowRight size={18} />
             </Link>

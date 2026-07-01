@@ -43,13 +43,13 @@ export default function ProductInfo({
   return (
     <div className="flex flex-col">
       {/* Title */}
-      <h1 className="text-2xl lg:text-5xl font-bold text-[#001836] leading-tight">
+      <h1 className="text-2xl lg:text-5xl font-bold text-pBlue leading-tight">
         {product.nameEn}
       </h1>
 
       {/* Price */}
       {/* <div className="mt-5 flex items-baseline gap-3">
-        <span className="text-3xl font-bold text-[#001836]">
+        <span className="text-3xl font-bold text-pBlue">
           {formatPrice(discountedPrice)}
         </span>
         {hasDiscount && (
@@ -104,7 +104,7 @@ export default function ProductInfo({
         <button
           onClick={handleAddToCart}
           disabled={product.stock <= 0}
-          className="flex-1 flex items-center justify-center gap-2 h-10 rounded-lg bg-[#003f71] text-white font-semibold text-sm hover:bg-[#004d8a] disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
+          className="flex-1 flex items-center justify-center gap-2 h-10 rounded-lg bg-liteBlue text-white font-semibold text-sm hover:bg-[#004d8a] disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
         >
           <ShoppingCart size={18} />
           Add to Cart
@@ -115,7 +115,7 @@ export default function ProductInfo({
       <div className="mt-6 pt-5 border-t border-gray-100">
         <p className="text-sm text-gray-500">
           Category:{" "}
-          <span className="text-[#003f71] font-medium">
+          <span className="text-liteBlue font-medium">
             {product.category.nameEn}
           </span>
         </p>

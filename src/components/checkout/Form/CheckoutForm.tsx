@@ -109,7 +109,7 @@ export default function CheckoutForm({
   ];
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="container px-4 sm:px-0">
+    <form onSubmit={handleSubmit(onSubmit)} className="container py-8 lg:py-20 px-4 sm:px-0">
       <div className="py-4 lg:py-32">
         <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-4 sm:mb-6">
           Checkout

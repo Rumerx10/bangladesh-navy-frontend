@@ -26,7 +26,7 @@ export default function SkillCourseList() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <div>
-            <h2 className="text-3xl font-bold text-[#001836] mb-3">
+            <h2 className="text-3xl font-bold text-pBlue mb-3">
               Available Courses
             </h2>
             <p className="text-gray-500 max-w-xl">
@@ -36,7 +36,7 @@ export default function SkillCourseList() {
           </div>
           <span className="text-sm text-gray-400">
             Showing{" "}
-            <span className="font-bold text-[#001836]">{filtered.length}</span>{" "}
+            <span className="font-bold text-pBlue">{filtered.length}</span>{" "}
             of {courses.length} courses
           </span>
         </div>
@@ -49,8 +49,8 @@ export default function SkillCourseList() {
               onClick={() => setActiveCategory(cat)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                 activeCategory === cat
-                  ? "bg-[#003f71] text-white shadow-sm"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-[#003f71]"
+                  ? "bg-liteBlue text-white shadow-sm"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-liteBlue"
               }`}
             >
               {cat}

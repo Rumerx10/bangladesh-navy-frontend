@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function SurveyShips() {
   return (
-    <section className="py-8 lg:py-12">
+    <section className="py-8 lg:py-20">
       <div className="container px-4 sm:px-6 lg:px-8">
         <div className="space-y-6">
           {surveyShips.map((ship, i) => {
@@ -29,7 +29,7 @@ export default function SurveyShips() {
               >
                 <div className="flex flex-col lg:flex-row">
                   {/* ── Image ── */}
-                  <div className="lg:w-1/3 aspect-video lg:aspect-auto relative bg-linear-to-br from-[#001836] to-[#003f71] overflow-hidden">
+                  <div className="lg:w-1/3 aspect-video lg:aspect-auto relative bg-linear-to-br from-pBlue to-liteBlue overflow-hidden">
                     {ship.image ? (
                       <Image
                         src={ship.image}
@@ -64,14 +64,14 @@ export default function SurveyShips() {
                   <div className="flex-1 p-6 lg:p-8 flex flex-col gap-4">
                     {/* Header */}
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-[#003f71]/10 text-[#003f71] flex items-center justify-center shrink-0">
+                      <div className="w-10 h-10 rounded-lg bg-liteBlue/10 text-liteBlue flex items-center justify-center shrink-0">
                         <Anchor size={18} />
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold text-[#001836] leading-tight">
+                        <h3 className="text-lg font-bold text-pBlue leading-tight">
                           {ship.name}
                         </h3>
-                        <p className="text-sm text-[#003f71] font-medium">
+                        <p className="text-sm text-liteBlue font-medium">
                           {ship.designation}
                         </p>
                       </div>
@@ -85,8 +85,8 @@ export default function SurveyShips() {
                     {/* ── Two Cards ── */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {/* Card 1 — Vessel Specifications */}
-                      <div className="rounded-xl overflow-hidden border border-[#003f71]/12">
-                        <div className="flex items-center gap-2 px-4 py-2.5 bg-[#003f71]">
+                      <div className="rounded-xl overflow-hidden border border-liteBlue/12">
+                        <div className="flex items-center gap-2 px-4 py-2.5 bg-liteBlue">
                           <Ship size={13} className="text-white/70 shrink-0" />
                           <span className="text-base font-medium text-white uppercase tracking-widest">
                             Basic Information
@@ -98,7 +98,7 @@ export default function SurveyShips() {
                               <p className="text-xs font-medium uppercase tracking-wider text-gray-400 mb-0.5">
                                 {key}
                               </p>
-                              <p className="text-base font-bold text-[#001836]">
+                              <p className="text-base font-bold text-pBlue">
                                 {value}
                               </p>
                             </div>
@@ -108,7 +108,7 @@ export default function SurveyShips() {
 
                       {/* Card 2 — Survey Equipment */}
                       <div className="rounded-xl overflow-hidden border border-cyan-200/50 bg-[#f0f8ff]/60">
-                        <div className="flex items-center gap-2 px-4 py-2.5 bg-[#001836]">
+                        <div className="flex items-center gap-2 px-4 py-2.5 bg-pBlue">
                           <Radar
                             size={13}
                             className="text-cyan-400/80 shrink-0"
@@ -120,8 +120,8 @@ export default function SurveyShips() {
                         <div className="p-4 flex flex-col gap-2.5">
                           {surveyEquipment.map((eq) => (
                             <div key={eq} className="flex items-start gap-2.5">
-                              <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#003f71] shrink-0" />
-                              <span className="text-base text-[#001836] font-medium leading-snug">
+                              <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-liteBlue shrink-0" />
+                              <span className="text-base text-pBlue font-medium leading-snug">
                                 {eq}
                               </span>
                             </div>
@@ -133,7 +133,7 @@ export default function SurveyShips() {
                     {/* Link */}
                     <Link
                       href={`/about/survey-ships/${ship.slug}`}
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-[#003f71] hover:text-[#001836] transition-colors group w-fit"
+                      className="inline-flex items-center gap-2 text-sm font-semibold text-liteBlue hover:text-pBlue transition-colors group w-fit"
                     >
                       Read Details
                       <ArrowRight

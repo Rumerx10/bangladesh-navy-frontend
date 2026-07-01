@@ -5,8 +5,8 @@ import { Mail, MessageSquare, Phone } from "lucide-react";
 
 export default function QueryHero() {
   return (
-    <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-[#001836] overflow-hidden">
-      <div className="absolute inset-0 opacity-10">
+    <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-pBlue overflow-hidden">
+      <div className="absolute inset-0">
         <div className="absolute top-0 right-0 w-125 h-125 bg-blue-500 rounded-full blur-[120px] -mr-64 -mt-64" />
         <div className="absolute bottom-0 left-0 w-100 h-100 bg-cyan-500 rounded-full blur-[100px] -ml-48 -mb-48" />
       </div>
@@ -44,17 +44,7 @@ export default function QueryHero() {
             </div>
           </div>
         </motion.div>
-      </div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-16 bg-white overflow-hidden">
-        <svg
-          viewBox="0 0 1440 120"
-          className="absolute bottom-0 w-full h-full text-white fill-current"
-          preserveAspectRatio="none"
-        >
-          <path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
-        </svg>
-      </div>
+      </div>      
     </section>
   );
 }

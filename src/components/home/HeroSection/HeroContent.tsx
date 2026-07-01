@@ -67,7 +67,7 @@ export default function HeroContent({
             href={button.href}
             className={`inline-flex items-center justify-center gap-2 px-6 h-11 py-4 rounded-lg font-medium text-base transition-all duration-200 ${
               button.variant === "primary"
-                ? "bg-[#003f71] hover:bg-[#004d8a] text-white shadow-lg shadow-blue-900/30"
+                ? "bg-liteBlue hover:bg-[#004d8a] text-white shadow-lg shadow-blue-900/30"
                 : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
             }`}
           >

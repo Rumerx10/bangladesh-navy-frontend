@@ -23,18 +23,18 @@ export default function ProductDetailLayout({
     <div className="container px-4 sm:px-6 lg:px-8 py-6 lg:py-8 mt-28 lg:mt-26">
       {/* Breadcrumb */}
       <nav className="text-sm text-gray-500 mb-6">
-        <span className="hover:text-[#003f71] cursor-pointer">Home</span>
+        <span className="hover:text-liteBlue cursor-pointer">Home</span>
         <span className="mx-2">›</span>
-        <span className="hover:text-[#003f71] cursor-pointer">
+        <span className="hover:text-liteBlue cursor-pointer">
           Products & Services
         </span>
         <span className="mx-2">›</span>
-        <span className="text-[#001836] font-medium">{product.nameEn}</span>
+        <span className="text-pBlue font-medium">{product.nameEn}</span>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         {/* Image Section */}
-        <div className="relative aspect-4/3 lg:aspect-square rounded-2xl bg-linear-to-br from-[#001836] to-[#003f71] flex items-center justify-center overflow-hidden">
+        <div className="relative aspect-4/3 lg:aspect-square rounded-2xl bg-linear-to-br from-pBlue to-liteBlue flex items-center justify-center overflow-hidden">
           {isTiff ? (
             <TiffPreview
               src={imageUrl}
@@ -50,7 +50,7 @@ export default function ProductDetailLayout({
             />
           )}
           {/* <div
-            className="absolute inset-0 opacity-10"
+            className="absolute inset-0"
             style={{
               backgroundImage:
                 "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",

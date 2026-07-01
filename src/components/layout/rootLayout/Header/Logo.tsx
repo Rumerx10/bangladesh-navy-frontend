@@ -18,10 +18,10 @@ export default function Logo() {
         className="w-10 h-10 lg:w-12 lg:h-12 object-contain"
       />
       <div className="hidden sm:block">
-        <span className="text-base lg:text-lg font-bold text-[#001836] tracking-tight leading-tight block">
+        <span className="text-base lg:text-lg font-bold text-pBlue tracking-tight leading-tight block">
           {siteConfig.name}
         </span>
-        <p className="text-base lg:text-lg font-bold text-[#001836] tracking-tight leading-tight block">
+        <p className="text-base lg:text-lg font-bold text-pBlue tracking-tight leading-tight block">
           {siteConfig.description}
         </p>
       </div>

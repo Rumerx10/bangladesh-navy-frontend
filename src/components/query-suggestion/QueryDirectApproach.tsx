@@ -22,7 +22,7 @@ export default function QueryDirectApproach() {
 
   return (
     <div className="bg-[#f8fafc] p-6 lg:p-10 rounded-3xl border border-gray-100 shadow-sm h-full">
-      <Text className="text-2xl lg:text-3xl font-bold text-[#001836] mb-8">
+      <Text className="text-2xl lg:text-3xl font-bold text-pBlue mb-8">
         Direct Contact Info
       </Text>
 
@@ -30,7 +30,7 @@ export default function QueryDirectApproach() {
         <div className="space-y-6">
           <div className="flex items-start gap-4">
             <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-              <Phone className="w-5 h-5 text-[#003f71]" />
+              <Phone className="w-5 h-5 text-liteBlue" />
             </div>
             <div>
               <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">
@@ -45,7 +45,7 @@ export default function QueryDirectApproach() {
                       <a
                         key={index}
                         href={`tel:${phone.replace(/\s/g, "")}`}
-                        className="text-[#001836] font-semibold hover:text-[#003f71] transition-colors"
+                        className="text-pBlue font-semibold hover:text-liteBlue transition-colors"
                       >
                         {phone}
                       </a>
@@ -60,7 +60,7 @@ export default function QueryDirectApproach() {
 
           <div className="flex items-start gap-4">
             <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-              <Mail className="w-5 h-5 text-[#003f71]" />
+              <Mail className="w-5 h-5 text-liteBlue" />
             </div>
             <div>
               <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">
@@ -75,7 +75,7 @@ export default function QueryDirectApproach() {
                       <a
                         key={index}
                         href={`mailto:${email}`}
-                        className="text-[#001836] font-semibold hover:text-[#003f71] transition-colors break-all"
+                        className="text-pBlue font-semibold hover:text-liteBlue transition-colors break-all"
                       >
                         {email}
                       </a>
@@ -90,7 +90,7 @@ export default function QueryDirectApproach() {
 
           <div className="flex items-start gap-4">
             <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-              <Clock className="w-5 h-5 text-[#003f71]" />
+              <Clock className="w-5 h-5 text-liteBlue" />
             </div>
             <div>
               <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">
@@ -99,7 +99,7 @@ export default function QueryDirectApproach() {
               {isLoading ? (
                 <div className="h-5 w-60 bg-gray-200 rounded animate-pulse" />
               ) : (
-                <p className="text-[#001836] font-semibold">
+                <p className="text-pBlue font-semibold">
                   {officeHour || "Sun - Thu, 08:30 AM - 04:30 PM"}
                 </p>
               )}

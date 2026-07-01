@@ -31,7 +31,7 @@ export default function NewsDetail({ news }: NewsDetailProps) {
   return (
     <div className="mt-28 lg:mt-26">
       {/* Hero Image */}
-      <section className="relative h-85 lg:h-105 overflow-hidden bg-[#001836]">
+      <section className="relative h-85 lg:h-105 overflow-hidden bg-pBlue">
         <Image
           src={news.image}
           alt={news.title}
@@ -40,7 +40,7 @@ export default function NewsDetail({ news }: NewsDetailProps) {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-[#001836] via-[#001836]/60 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-pBlue via-pBlue/60 to-transparent" />
 
         {/* Breadcrumb on hero */}
         <div className="absolute bottom-0 left-0 right-0">
@@ -62,7 +62,7 @@ export default function NewsDetail({ news }: NewsDetailProps) {
 
       {/* Content */}
       <section className="relative py-10 lg:py-14 bg-white overflow-hidden">
-        <div className="absolute -right-20 top-20 text-[#001836]">
+        <div className="absolute -right-20 top-20 text-pBlue">
           <NavyWatermark variant="lighthouse" size={300} opacity={0.02} animate="drift" />
         </div>
 
@@ -75,7 +75,7 @@ export default function NewsDetail({ news }: NewsDetailProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#003f71]/10 text-[#003f71] text-xs font-bold uppercase tracking-wider">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-liteBlue/10 text-liteBlue text-xs font-bold uppercase tracking-wider">
                 <Tag size={12} />
                 {news.category}
               </span>
@@ -87,7 +87,7 @@ export default function NewsDetail({ news }: NewsDetailProps) {
 
             {/* Title */}
             <motion.h1
-              className="text-2xl lg:text-4xl font-bold text-[#001836] leading-tight mb-8"
+              className="text-2xl lg:text-4xl font-bold text-pBlue leading-tight mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 }}
@@ -120,7 +120,7 @@ export default function NewsDetail({ news }: NewsDetailProps) {
             <div className="flex items-center justify-between mt-10 pt-8 border-t border-gray-100">
               <Link
                 href="/news"
-                className="inline-flex items-center gap-2 text-sm font-medium text-[#003f71] hover:text-[#004d8a] transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-medium text-liteBlue hover:text-[#004d8a] transition-colors"
               >
                 <ArrowLeft size={16} />
                 Back to All News
@@ -147,7 +147,7 @@ export default function NewsDetail({ news }: NewsDetailProps) {
       {displayRelated.length > 0 && (
         <section className="py-12 lg:py-16 bg-gray-50">
           <div className="container px-4 sm:px-6 lg:px-8">
-            <h2 className="text-xl lg:text-2xl font-bold text-[#001836] mb-8">
+            <h2 className="text-xl lg:text-2xl font-bold text-pBlue mb-8">
               Related News
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

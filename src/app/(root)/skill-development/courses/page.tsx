@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function CoursesPage() {
   return (
-    <main className="pt-32 lg:pt-36">
+    <main className="pt-33">
       <CourseOverview />
       {/* <SkillCourseList /> */}
     </main>

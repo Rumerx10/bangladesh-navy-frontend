@@ -58,7 +58,7 @@ export default function NewArrivals() {
   if (products.length === 0) return null;
 
   return (
-    <section className="py-8 lg:py-12 bg-primary/10">
+    <section className="py-8 lg:py-20 bg-primary/10">
       <div className="container" ref={headerRef}>
         <div className="flex items-center justify-between mb-6">
           <div>

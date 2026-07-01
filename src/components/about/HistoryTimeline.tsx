@@ -85,7 +85,7 @@ export default function HistoryTimeline({
               </span>
               <span
                 className={`text-[0.82rem] font-bold transition-colors duration-300 ${
-                  isActive ? "text-white" : "text-[#001836]"
+                  isActive ? "text-white" : "text-pBlue"
                 }`}
               >
                 {era.era}

@@ -18,7 +18,7 @@ function renderParagraph(para: string) {
         <Link
           href="https://mist.ac.bd/"
           target="_blank"
-          className="text-[#003f71] font-semibold underline underline-offset-4 hover:text-blue-600 transition-colors"
+          className="text-liteBlue font-semibold underline underline-offset-4 hover:text-blue-600 transition-colors"
         >
           Military Institute of Science and Technology (MIST)
         </Link>
@@ -57,7 +57,7 @@ export default function ChiefMessage() {
     <>
       <section className="relative py-20 lg:py-32 bg-white overflow-hidden">
         {/* Dynamic Watermarks for visual depth */}
-        <div className="absolute -right-24 top-20 text-[#001836] opacity-10">
+        <div className="absolute -right-24 top-20 text-pBlue opacity-10">
           <NavyWatermark
             variant="anchor"
             size={450}
@@ -65,7 +65,7 @@ export default function ChiefMessage() {
             animate="float"
           />
         </div>
-        <div className="absolute -left-32 bottom-20 text-[#001836] opacity-10">
+        <div className="absolute -left-32 bottom-20 text-pBlue opacity-10">
           <NavyWatermark
             variant="lighthouse"
             size={400}
@@ -86,8 +86,8 @@ export default function ChiefMessage() {
             >
               <div className="relative group">
                 {/* Main Decorative Frame */}
-                <div className="absolute -inset-4 border-2 border-[#001836]/10 rounded-2xl transform rotate-2 group-hover:rotate-0 transition-transform duration-500" />
-                <div className="absolute -inset-4 border-2 border-[#003f71]/10 rounded-2xl transform -rotate-2 group-hover:rotate-0 transition-transform duration-500" />
+                <div className="absolute -inset-4 border-2 border-pBlue/10 rounded-2xl transform rotate-2 group-hover:rotate-0 transition-transform duration-500" />
+                <div className="absolute -inset-4 border-2 border-liteBlue/10 rounded-2xl transform -rotate-2 group-hover:rotate-0 transition-transform duration-500" />
 
                 <div className="relative aspect-4/5 rounded-xl overflow-hidden shadow-2xl border-8 border-white">
                   <Image
@@ -99,7 +99,7 @@ export default function ChiefMessage() {
                   />
 
                   {/* Bottom Overlay Info */}
-                  {/* <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-[#001836] via-[#001836]/80 to-transparent p-6 text-white">
+                  {/* <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-pBlue via-pBlue/80 to-transparent p-6 text-white">
                     <h3 className="text-xl font-bold leading-tight">
                       {chiefMessage.name}
                     </h3>
@@ -110,7 +110,7 @@ export default function ChiefMessage() {
                 </div>
 
                 {/* Floating BN Badge or Emblem decoration */}
-                <div className="absolute -top-6 -right-6 w-20 h-20 bg-[#001836] rounded-full flex items-center justify-center border-4 border-white shadow-xl z-10">
+                <div className="absolute -top-6 -right-6 w-20 h-20 bg-pBlue rounded-full flex items-center justify-center border-4 border-white shadow-xl z-10">
                   <Ship className="text-white w-10 h-10" />
                 </div>
               </div>
@@ -121,7 +121,7 @@ export default function ChiefMessage() {
                   <span className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">
                     Award
                   </span>
-                  <span className="text-xs font-bold text-[#001836]">
+                  <span className="text-xs font-bold text-pBlue">
                     NGP, Shuddachar Award
                   </span>
                 </div>
@@ -129,7 +129,7 @@ export default function ChiefMessage() {
                   <span className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">
                     Education
                   </span>
-                  <span className="text-xs font-bold text-[#001836]">
+                  <span className="text-xs font-bold text-pBlue">
                     MBA, MSc (Hydrography)
                   </span>
                 </div>
@@ -147,22 +147,22 @@ export default function ChiefMessage() {
               {/* Section Header */}
               <div className="mb-10">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-1 bg-[#003f71]" />
-                  <span className="text-sm font-bold text-[#003f71] uppercase tracking-widest">
+                  <div className="w-12 h-1 bg-liteBlue" />
+                  <span className="text-sm font-bold text-liteBlue uppercase tracking-widest">
                     Official Biography
                   </span>
                 </div>
-                <h2 className="text-3xl lg:text-5xl font-bold text-[#001836] leading-tight mb-2">
+                <h2 className="text-3xl lg:text-5xl font-bold text-pBlue leading-tight mb-2">
                   {chiefMessage.title}
                 </h2>
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                   <div>
-                    <p className="text-xl font-bold text-[#001836]">
+                    <p className="text-xl font-bold text-pBlue">
                       {chiefMessage.name}
                     </p>
                   </div>
                 </div>
-                <Quote size={48} className="text-[#001836]/5 -mb-6 -ml-2.5" />
+                <Quote size={48} className="text-pBlue/5 -mb-6 -ml-2.5" />
                 
               </div>
 
@@ -194,7 +194,7 @@ export default function ChiefMessage() {
                   <button
                     id="chief-message-read-more"
                     onClick={openModal}
-                    className="group inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-[#001836] to-[#003f71] text-white text-sm font-semibold uppercase tracking-wider rounded-lg shadow-lg hover:shadow-xl hover:shadow-[#001836]/20 transition-all duration-300 hover:-translate-y-0.5"
+                    className="group inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-pBlue to-liteBlue text-white text-sm font-semibold uppercase tracking-wider rounded-lg shadow-lg hover:shadow-xl hover:shadow-pBlue/20 transition-all duration-300 hover:-translate-y-0.5"
                   >
                     Read Full Biography
                     <ChevronRight
@@ -223,7 +223,7 @@ export default function ChiefMessage() {
           >
             {/* Backdrop */}
             <motion.div
-              className="absolute inset-0 bg-[#001836]/60 backdrop-blur-md"
+              className="absolute inset-0 bg-pBlue/60 backdrop-blur-md"
               onClick={closeModal}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -239,7 +239,7 @@ export default function ChiefMessage() {
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             >
               {/* Modal Header */}
-              <div className="relative bg-linear-to-r from-[#001836] to-[#003f71] px-6 sm:px-10 py-6 sm:py-8 shrink-0">
+              <div className="relative bg-linear-to-r from-pBlue to-liteBlue px-6 sm:px-10 py-6 sm:py-8 shrink-0">
                 {/* Decorative watermark in header */}
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-10">
                   <Ship size={80} className="text-white" />
@@ -284,7 +284,7 @@ export default function ChiefMessage() {
 
               {/* Modal Body — Scrollable */}
               <div className="flex-1 overflow-y-auto px-6 sm:px-10 py-8 sm:py-10">
-                <Quote size={40} className="text-[#001836]/5 -mb-4 -ml-1.5" />
+                <Quote size={40} className="text-pBlue/5 -mb-4 -ml-1.5" />
                 <div className="space-y-6">
                   {chiefMessage.content.map((para, i) => (
                     <motion.p
@@ -302,15 +302,15 @@ export default function ChiefMessage() {
                 {/* Modal Signature */}
                 <div className="mt-10 pt-8 border-t border-gray-100 flex items-center justify-between">
                   <div>
-                    <p className="text-lg font-bold text-[#001836]">
+                    <p className="text-lg font-bold text-pBlue">
                       {chiefMessage.name}
                     </p>
-                    <p className="text-sm text-[#003f71] font-medium tracking-wide uppercase mt-1">
+                    <p className="text-sm text-liteBlue font-medium tracking-wide uppercase mt-1">
                       {chiefMessage.designation}
                     </p>
                   </div>
-                  <div className="w-14 h-14 rounded-full border-2 border-dashed border-[#001836]/20 flex items-center justify-center p-1.5">
-                    <div className="w-full h-full rounded-full bg-[#001836]/5 flex items-center justify-center text-[#001836] font-bold text-sm">
+                  <div className="w-14 h-14 rounded-full border-2 border-dashed border-pBlue/20 flex items-center justify-center p-1.5">
+                    <div className="w-full h-full rounded-full bg-pBlue/5 flex items-center justify-center text-pBlue font-bold text-sm">
                       BN
                     </div>
                   </div>

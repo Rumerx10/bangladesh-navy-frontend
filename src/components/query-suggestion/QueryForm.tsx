@@ -53,7 +53,7 @@ export default function QueryForm({ defaultType }: QueryFormProps) {
   return (
     <div className="bg-white">
       <div className="mb-10">
-        <h2 className="text-2xl lg:text-3xl font-bold text-[#001836] mb-4">
+        <h2 className="text-2xl lg:text-3xl font-bold text-pBlue mb-4">
           Submit a Query or Suggestion
         </h2>
         <p className="text-gray-500 text-sm lg:text-base leading-relaxed">

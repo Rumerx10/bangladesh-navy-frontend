@@ -112,12 +112,12 @@ export default function ProductServiceLayout() {
     <div className="container px-4 sm:px-6 lg:px-8 py-6 lg:py-8 mt-28 lg:mt-26">
       {/* Breadcrumb */}
       <nav className="text-sm text-gray-500 mb-4">
-        <span className="hover:text-[#003f71] cursor-pointer">Home</span>
+        <span className="hover:text-liteBlue cursor-pointer">Home</span>
         <span className="mx-2">›</span>
-        <span className="text-[#001836] font-medium">Products & Services</span>
+        <span className="text-pBlue font-medium">Products & Services</span>
       </nav>
 
-      <h1 className="text-2xl lg:text-3xl font-bold text-[#001836] mb-1">
+      <h1 className="mt-8 lg:mt-20 text-2xl lg:text-3xl font-bold text-pBlue mb-1">
         Products & Services
       </h1>
       <p className="text-sm text-gray-500 mb-6">
