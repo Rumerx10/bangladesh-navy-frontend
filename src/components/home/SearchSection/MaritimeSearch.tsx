@@ -134,7 +134,7 @@ export default function MaritimeSearch() {
 
           {/* Search dropdown */}
           {showDropdown && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl border border-gray-200 shadow-2xl z-50 overflow-hidden text-left z-[99999]">
+            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl border border-gray-200 shadow-2xl z-50 overflow-hidden text-left">
               {results.length > 0 ? (
                 <>
                   {results.map((product) => {
