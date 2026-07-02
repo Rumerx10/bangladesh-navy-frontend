@@ -226,7 +226,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                 {product.images.map((img, idx) => (
                   <button
                     key={img.id}
-                    className={`relative w-[4.5rem] h-[4.5rem] rounded-lg overflow-hidden cursor-pointer border-2 shrink-0 bg-gray-100 transition-all hover:opacity-80 ${idx === selectedImage ? "border-primary" : "border-transparent"}`}
+                    className={`relative w-18 h-18 rounded-lg overflow-hidden cursor-pointer border-2 shrink-0 bg-gray-100 transition-all hover:opacity-80 ${idx === selectedImage ? "border-primary" : "border-transparent"}`}
                     onClick={() => setSelectedImage(idx)}
                     aria-label={`View image ${idx + 1}`}
                   >
@@ -257,7 +257,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                   {product.images.map((img, idx) => (
                     <button
                       key={img.id}
-                      className={`relative w-[4.5rem] h-[4.5rem] rounded-lg overflow-hidden cursor-pointer border-2 shrink-0 bg-gray-100 transition-all hover:opacity-80 ${idx === selectedImage ? "border-primary" : "border-transparent"}`}
+                      className={`relative w-18 h-18 rounded-lg overflow-hidden cursor-pointer border-2 shrink-0 bg-gray-100 transition-all hover:opacity-80 ${idx === selectedImage ? "border-primary" : "border-transparent"}`}
                       onClick={() => setSelectedImage(idx)}
                       aria-label={`View image ${idx + 1}`}
                     >
