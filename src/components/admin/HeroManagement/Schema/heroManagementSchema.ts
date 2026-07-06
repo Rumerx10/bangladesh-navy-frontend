@@ -8,15 +8,25 @@ const SUPPORTED_IMAGE_FORMATS = [
 ];
 
 const IMAGE_SIZE = 5 * 1024 * 1024;
+
 export const heroManagementSchema = Yup.object({
   title: Yup.string()
     .required("Title is required")
     .max(100, "Title must be at most 100 characters"),
-
+  slogan: Yup.string()
+    .required("Slogan is required")
+    .max(500, "Slogan must be at most 100 characters"),
   description: Yup.string()
     .required("Description is required")
     .max(500, "Description must be at most 500 characters"),
-
+  notices: Yup.array()
+    .of(
+      Yup.object({
+        message: Yup.string().required("Notice message is required"),
+        isActive: Yup.boolean().default(true),
+      })
+    )
+    .default([]),
   images: Yup.array()
     .of(
       Yup.mixed<File | string>()
@@ -25,17 +35,15 @@ export const heroManagementSchema = Yup.object({
           "fileType",
           "Unsupported image format. Allowed: JPG, PNG, WEBP.",
           (value) => {
-            if (typeof value === "string") return true; // URL is fine
+            if (typeof value === "string") return true;
             if (value instanceof File) {
               return SUPPORTED_IMAGE_FORMATS.includes(value.type);
             }
             return false;
           }
         )
-        .test(
-          "fileSize",
-          "Image size must be less than 5MB.",
-          (value) => (typeof value === "string" ? true : value.size <= IMAGE_SIZE)
+        .test("fileSize", "Image size must be less than 5MB.", (value) =>
+          typeof value === "string" ? true : value.size <= IMAGE_SIZE
         )
         .test(
           "validUrlOrFile",
@@ -47,4 +55,7 @@ export const heroManagementSchema = Yup.object({
     .max(5, "You can upload a maximum of 5 images")
     .required("Images are required"),
 });
-export type HeroManagementSchemaForm = Yup.InferType<typeof heroManagementSchema>;
+
+export type HeroManagementSchemaForm = Yup.InferType<
+  typeof heroManagementSchema
+>;

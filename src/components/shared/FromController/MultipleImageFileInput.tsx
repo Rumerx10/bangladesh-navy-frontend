@@ -2,7 +2,7 @@ import { cn } from "@/src/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Controller, FieldError, useFormContext } from "react-hook-form";
 
 export const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
@@ -25,8 +25,15 @@ export function MultipleImageUploadController({
   imgClassName,
   initialUrls = [],
 }: MultipleImageUploadControllerProps) {
-  const { control } = useFormContext();
+  const { control, setValue } = useFormContext();
   const [isLoading, setIsLoading] = useState(false);
+
+  // ✅ Set initial values when component mounts or initialUrls changes
+  useEffect(() => {
+    if (initialUrls && initialUrls.length > 0) {
+      setValue(name, initialUrls);
+    }
+  }, [initialUrls, name, setValue]);
 
   const parseFieldErrors = (
     fieldError: FieldError | Record<string, FieldError> | undefined
@@ -167,7 +174,10 @@ export function MultipleImageUploadController({
                       src={src}
                       alt={`Preview ${index}`}
                       fill
-                      className={cn("object-contain rounded-lg", imgClassName)}
+                      className={cn("object-cover rounded-lg", imgClassName)}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "/placeholder.svg";
+                      }}
                     />
                   </div>
                 ))}

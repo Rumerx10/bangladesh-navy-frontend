@@ -1,10 +1,15 @@
 import {
+  Home,
   Layers,
   LayoutDashboard,
   Package,
   Settings,
   ShoppingCart,
   Users,
+  Info,
+  GraduationCap,
+  Phone,
+  AlertTriangle,
   type LucideIcon,
 } from "lucide-react";
 
@@ -16,17 +21,106 @@ export interface MenuItem {
   matchRoutes?: string[];
   children?: { label: string; href: string; matchRoutes?: string[] }[];
 }
-
 export function getMenuItems(): MenuItem[] {
   const menuItems: (MenuItem | false)[] = [
     { label: "Dashboard", icon: LayoutDashboard, href: "/admin" },
     {
+      segment: "Content Management",
+      label: "Home",
+      icon: Home,
+      href: "/admin/hero-management",
+      children: [
+        { label: "Hero", href: "/admin/home/hero-management" },
+        { label: "Chief's Biography", href: "/admin/home/biography" },
+        { label: "Partner Management", href: "/admin/home/partner" },
+      ],
+    },
+    {
+      segment: "Content Management",
+      label: "About Us",
+      icon: Info,
+      href: "/admin/about",
+      children: [
+        { label: "History", href: "/admin/about/history" },
+        { label: "Vision & Mission", href: "/admin/about/vision-mission" },
+        { label: "Organogram", href: "/admin/about/organogram" },
+        { label: "Survey Ships", href: "/admin/about/survey-ships" },
+        { label: "Gallery", href: "/admin/about/gallery" },
+      ],
+    },
+    {
+      segment: "Content Management",
+      label: "Products & Services",
+      icon: Package,
+      href: "/admin/product-service",
+      children: [
+        { label: "All Products", href: "/admin/products" },
+        { label: "How to Pay", href: "/admin/how-to-pay" },
+      ],
+    },
+    {
+      segment: "Content Management",
+      label: "Training & Courses",
+      icon: GraduationCap,
+      href: "/admin/skill-development",
+      children: [
+        {
+          label: "BN Hydrographic Institute",
+          href: "/admin/skill-development",
+        },
+        { label: "Courses", href: "/admin/skill-development/courses" },
+      ],
+    },
+    {
+      segment: "Content Management",
+      label: "Contact",
+      icon: Phone,
+      href: "/admin/contact-us",
+      children: [
+        { label: "Contact Information", href: "/admin/contact-us" },
+        {
+          label: "Query & Suggestion",
+          href: "/admin/contact-us/query-suggestion",
+        },
+        {
+          label: "Hydrographic Note",
+          href: "/admin/contact-us/hydrographic-note",
+        },
+      ],
+    },
+    {
+      segment: "Content Management",
+      label: "Important Notice",
+      icon: AlertTriangle,
+      href: "/admin/notices",
+      children: [
+        {
+          label: "Hydrographic Notes",
+          href: "/admin/contact-us/query-suggestion",
+        },
+        {
+          label: "Notices to Mariners",
+          href: "/admin/notices/mariners",
+        },
+        {
+          label: "Publications",
+          href: "/admin/product-service?category=publications",
+        },
+        {
+          label: "Notices",
+          href: "/admin/product-service?category=notices-to-mariners",
+        },
+        {
+          label: "Hydrographic Note",
+          href: "/admin/contact-us/hydrographic-note",
+        },
+      ],
+    },
+    {
       segment: "Product Management",
       label: "Manage Product",
       icon: Package,
-      children: [
-        { label: "All Products", href: "/admin/products" },
-      ],
+      children: [{ label: "All Products", href: "/admin/products" }],
     },
     {
       label: "Categories & Attributes",
@@ -36,22 +130,16 @@ export function getMenuItems(): MenuItem[] {
         {
           label: "Category List",
           href: "/admin/category",
-          matchRoutes: [
-            "/admin/category",
-          ],
+          matchRoutes: ["/admin/category"],
         },
-        
       ],
     },
     {
       segment: "Order Management",
       label: "Orders",
       icon: ShoppingCart,
-      children: [
-        { label: "All Orders", href: "/admin/orders" },
-      ],
+      children: [{ label: "All Orders", href: "/admin/orders" }],
     },
-
     {
       segment: "User Management",
       label: "Users",

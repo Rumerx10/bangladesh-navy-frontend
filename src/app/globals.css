@@ -4,7 +4,7 @@
 /* Dark mode variant */
 @custom-variant dark (&:is(.dark *));
 
-@theme{
+@theme {
   --color-pBlue: #001836;
   --color-liteBlue: #003f71;
 }
@@ -140,6 +140,21 @@
 
   body {
     @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer components {
+  .scrollbar-modern {
+    scrollbar-width: 2px;
+  }
+  .scrollbar-modern::-webkit-scrollbar {
+    @apply w-1;
+  }
+  .scrollbar-modern::-webkit-scrollbar-track {
+    @apply bg-white rounded-full;
+  }
+  .scrollbar-modern::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-gray-300 transition-colors duration-200;
   }
 }
 

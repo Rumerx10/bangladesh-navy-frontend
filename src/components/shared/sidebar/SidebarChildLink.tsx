@@ -19,7 +19,7 @@ export default function SidebarChildLink({
       href={href}
       onClick={onNavigate}
       className={cn(
-        "flex items-center h-10 px-3 rounded-sm text-sm transition-colors",
+        "flex items-center mt-1 h-10 px-3 rounded-sm text-sm transition-colors",
         isActive
           ? "text-primary font-medium bg-[#EAF6FB]"
           : "text-[#6B7280] hover:text-primary hover:bg-[#EAF6FB]"
