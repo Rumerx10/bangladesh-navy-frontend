@@ -1,7 +1,7 @@
 import {
-    DiscountType,
-    INavyProduct,
-    ProductStatus,
+  DiscountType,
+  INavyProduct,
+  ProductStatus,
 } from "@/src/components/products/types";
 import { navyCategories } from "./navyCategories";
 

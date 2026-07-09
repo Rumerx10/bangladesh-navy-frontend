@@ -3,12 +3,12 @@
 import { selectCanViewOwnOrders } from "@/src/lib/redux/features/permission/permissionSelectors";
 import { useAppSelector } from "@/src/lib/redux/hooks";
 import {
-    CreditCard,
-    MapPin,
-    Package,
-    RotateCcw,
-    User,
-    XCircle,
+  CreditCard,
+  MapPin,
+  Package,
+  RotateCcw,
+  User,
+  XCircle,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

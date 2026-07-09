@@ -40,26 +40,48 @@ export default function NavyWatermark({
           {/* Hull */}
           <path d="M15 105 L185 105 L170 140 L160 155 L40 155 L30 140 Z" />
           {/* Water line */}
-          <path d="M10 162 Q30 155 50 165 Q70 175 90 165 Q110 155 130 165 Q150 175 170 165 Q190 155 200 162" fill="none" stroke="currentColor" strokeWidth="3">
-            <animate attributeName="d" dur="4s" repeatCount="indefinite"
+          <path
+            d="M10 162 Q30 155 50 165 Q70 175 90 165 Q110 155 130 165 Q150 175 170 165 Q190 155 200 162"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+          >
+            <animate
+              attributeName="d"
+              dur="4s"
+              repeatCount="indefinite"
               values="M10 162 Q30 155 50 165 Q70 175 90 165 Q110 155 130 165 Q150 175 170 165 Q190 155 200 162;
                       M10 165 Q30 175 50 162 Q70 155 90 168 Q110 175 130 162 Q150 155 170 168 Q190 175 200 165;
-                      M10 162 Q30 155 50 165 Q70 175 90 165 Q110 155 130 165 Q150 175 170 165 Q190 155 200 162" />
+                      M10 162 Q30 155 50 165 Q70 175 90 165 Q110 155 130 165 Q150 175 170 165 Q190 155 200 162"
+            />
           </path>
-          <path d="M5 175 Q25 168 45 178 Q65 188 85 178 Q105 168 125 178 Q145 188 165 178 Q185 168 200 175" fill="none" stroke="currentColor" strokeWidth="2">
-            <animate attributeName="d" dur="5s" repeatCount="indefinite"
+          <path
+            d="M5 175 Q25 168 45 178 Q65 188 85 178 Q105 168 125 178 Q145 188 165 178 Q185 168 200 175"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <animate
+              attributeName="d"
+              dur="5s"
+              repeatCount="indefinite"
               values="M5 175 Q25 168 45 178 Q65 188 85 178 Q105 168 125 178 Q145 188 165 178 Q185 168 200 175;
                       M5 178 Q25 188 45 175 Q65 168 85 180 Q105 188 125 175 Q145 168 165 180 Q185 188 200 178;
-                      M5 175 Q25 168 45 178 Q65 188 85 178 Q105 168 125 178 Q145 188 165 178 Q185 168 200 175" />
+                      M5 175 Q25 168 45 178 Q65 188 85 178 Q105 168 125 178 Q145 188 165 178 Q185 168 200 175"
+            />
           </path>
           {/* Mast */}
           <rect x="97" y="10" width="6" height="45" />
           {/* Flag */}
           <path d="M103 12 L130 20 L103 28 Z">
-            <animate attributeName="d" dur="3s" repeatCount="indefinite"
+            <animate
+              attributeName="d"
+              dur="3s"
+              repeatCount="indefinite"
               values="M103 12 L130 20 L103 28 Z;
                       M103 12 L128 18 L103 28 Z;
-                      M103 12 L130 20 L103 28 Z" />
+                      M103 12 L130 20 L103 28 Z"
+            />
           </path>
         </svg>
       );
@@ -68,7 +90,14 @@ export default function NavyWatermark({
       return (
         <svg {...svgProps}>
           {/* Ring */}
-          <circle cx="100" cy="35" r="15" fill="none" stroke="currentColor" strokeWidth="6" />
+          <circle
+            cx="100"
+            cy="35"
+            r="15"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="6"
+          />
           {/* Shank */}
           <rect x="96" y="48" width="8" height="90" />
           {/* Cross bar */}
@@ -79,8 +108,20 @@ export default function NavyWatermark({
           <path d="M55 170 L40 185 Q38 190 45 190 L65 175 Z" />
           <path d="M145 170 L160 185 Q162 190 155 190 L135 175 Z" />
           {/* Chain links */}
-          <circle cx="100" cy="15" r="6" fill="none" stroke="currentColor" strokeWidth="3">
-            <animate attributeName="r" dur="4s" repeatCount="indefinite" values="6;7;6" />
+          <circle
+            cx="100"
+            cy="15"
+            r="6"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+          >
+            <animate
+              attributeName="r"
+              dur="4s"
+              repeatCount="indefinite"
+              values="6;7;6"
+            />
           </circle>
         </svg>
       );
@@ -89,18 +130,76 @@ export default function NavyWatermark({
       return (
         <svg {...svgProps}>
           {/* Outer circle */}
-          <circle cx="100" cy="100" r="85" fill="none" stroke="currentColor" strokeWidth="3" />
-          <circle cx="100" cy="100" r="78" fill="none" stroke="currentColor" strokeWidth="1">
-            <animate attributeName="r" dur="8s" repeatCount="indefinite" values="78;80;78" />
+          <circle
+            cx="100"
+            cy="100"
+            r="85"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+          />
+          <circle
+            cx="100"
+            cy="100"
+            r="78"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+          >
+            <animate
+              attributeName="r"
+              dur="8s"
+              repeatCount="indefinite"
+              values="78;80;78"
+            />
           </circle>
           {/* Cardinal points */}
-          <text x="100" y="28" textAnchor="middle" fontSize="14" fontWeight="bold">N</text>
-          <text x="100" y="188" textAnchor="middle" fontSize="14" fontWeight="bold">S</text>
-          <text x="12" y="105" textAnchor="middle" fontSize="14" fontWeight="bold">W</text>
-          <text x="188" y="105" textAnchor="middle" fontSize="14" fontWeight="bold">E</text>
+          <text
+            x="100"
+            y="28"
+            textAnchor="middle"
+            fontSize="14"
+            fontWeight="bold"
+          >
+            N
+          </text>
+          <text
+            x="100"
+            y="188"
+            textAnchor="middle"
+            fontSize="14"
+            fontWeight="bold"
+          >
+            S
+          </text>
+          <text
+            x="12"
+            y="105"
+            textAnchor="middle"
+            fontSize="14"
+            fontWeight="bold"
+          >
+            W
+          </text>
+          <text
+            x="188"
+            y="105"
+            textAnchor="middle"
+            fontSize="14"
+            fontWeight="bold"
+          >
+            E
+          </text>
           {/* Compass needle - animated rotation */}
           <g>
-            <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="60s" repeatCount="indefinite" />
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0 100 100"
+              to="360 100 100"
+              dur="60s"
+              repeatCount="indefinite"
+            />
             <polygon points="100,30 108,90 100,75 92,90" />
             <polygon points="100,170 108,110 100,125 92,110" opacity="0.5" />
           </g>
@@ -109,7 +208,12 @@ export default function NavyWatermark({
           <polygon points="170,100 110,92 125,100 110,108" opacity="0.5" />
           {/* Center */}
           <circle cx="100" cy="100" r="6">
-            <animate attributeName="r" dur="4s" repeatCount="indefinite" values="6;7;6" />
+            <animate
+              attributeName="r"
+              dur="4s"
+              repeatCount="indefinite"
+              values="6;7;6"
+            />
           </circle>
           {/* Tick marks */}
           {[0, 30, 60, 120, 150, 210, 240, 300, 330].map((deg) => {
@@ -119,7 +223,15 @@ export default function NavyWatermark({
             const x2 = 100 + 82 * Math.sin(rad);
             const y2 = 100 - 82 * Math.cos(rad);
             return (
-              <line key={deg} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="2" />
+              <line
+                key={deg}
+                x1={x1}
+                y1={y1}
+                x2={x2}
+                y2={y2}
+                stroke="currentColor"
+                strokeWidth="2"
+              />
             );
           })}
         </svg>
@@ -154,12 +266,40 @@ export default function NavyWatermark({
         <svg {...svgProps}>
           {/* Animated rotation for the whole helm */}
           <g>
-            <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="50s" repeatCount="indefinite" />
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0 100 100"
+              to="360 100 100"
+              dur="50s"
+              repeatCount="indefinite"
+            />
             {/* Outer ring */}
-            <circle cx="100" cy="100" r="75" fill="none" stroke="currentColor" strokeWidth="5" />
-            <circle cx="100" cy="100" r="65" fill="none" stroke="currentColor" strokeWidth="2" />
+            <circle
+              cx="100"
+              cy="100"
+              r="75"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="5"
+            />
+            <circle
+              cx="100"
+              cy="100"
+              r="65"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            />
             {/* Inner hub */}
-            <circle cx="100" cy="100" r="18" fill="none" stroke="currentColor" strokeWidth="4" />
+            <circle
+              cx="100"
+              cy="100"
+              r="18"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
             <circle cx="100" cy="100" r="8" />
             {/* Spokes */}
             {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => {
@@ -169,7 +309,16 @@ export default function NavyWatermark({
               const x2 = 100 + 63 * Math.sin(rad);
               const y2 = 100 - 63 * Math.cos(rad);
               return (
-                <line key={deg} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+                <line
+                  key={deg}
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                />
               );
             })}
             {/* Handle knobs */}
@@ -204,20 +353,46 @@ export default function NavyWatermark({
 
           {/* Yellow glow behind lamp */}
           <circle cx="100" cy="55" r="30" fill="url(#lighthouseGlow)">
-            <animate attributeName="r" dur="3s" repeatCount="indefinite" values="28;35;28" />
-            <animate attributeName="opacity" dur="3s" repeatCount="indefinite" values="0.8;0.4;0.8" />
+            <animate
+              attributeName="r"
+              dur="3s"
+              repeatCount="indefinite"
+              values="28;35;28"
+            />
+            <animate
+              attributeName="opacity"
+              dur="3s"
+              repeatCount="indefinite"
+              values="0.8;0.4;0.8"
+            />
           </circle>
 
           {/* Animated yellow light beams */}
           <g>
-            <animateTransform attributeName="transform" type="rotate" values="-12 100 50;12 100 50;-12 100 50" dur="4s" repeatCount="indefinite" />
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              values="-12 100 50;12 100 50;-12 100 50"
+              dur="4s"
+              repeatCount="indefinite"
+            />
             {/* Left beam */}
             <path d="M96 48 L15 5 L55 48 Z" fill="url(#beamGradLeft)">
-              <animate attributeName="opacity" dur="3s" repeatCount="indefinite" values="0.6;0.2;0.6" />
+              <animate
+                attributeName="opacity"
+                dur="3s"
+                repeatCount="indefinite"
+                values="0.6;0.2;0.6"
+              />
             </path>
             {/* Right beam */}
             <path d="M104 48 L185 5 L145 48 Z" fill="url(#beamGradRight)">
-              <animate attributeName="opacity" dur="3s" repeatCount="indefinite" values="0.6;0.2;0.6" />
+              <animate
+                attributeName="opacity"
+                dur="3s"
+                repeatCount="indefinite"
+                values="0.6;0.2;0.6"
+              />
             </path>
           </g>
 
@@ -225,7 +400,12 @@ export default function NavyWatermark({
           <path d="M85 50 Q100 35 115 50 Z" />
           {/* Lamp room — yellow glow */}
           <rect x="82" y="50" width="36" height="18" rx="2" fill="#FACC15">
-            <animate attributeName="opacity" dur="3s" repeatCount="indefinite" values="1;0.5;1" />
+            <animate
+              attributeName="opacity"
+              dur="3s"
+              repeatCount="indefinite"
+              values="1;0.5;1"
+            />
           </rect>
           {/* Gallery */}
           <rect x="78" y="66" width="44" height="6" rx="1" />

@@ -163,7 +163,6 @@ export default function ChiefMessage() {
                   </div>
                 </div>
                 <Quote size={48} className="text-pBlue/5 -mb-6 -ml-2.5" />
-                
               </div>
 
               {/* Truncated Biography Paragraphs */}

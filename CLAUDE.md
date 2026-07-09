@@ -16,12 +16,12 @@ No tests are configured (`test` script is a no-op). Husky + lint-staged runs ESL
 
 ## Environment variables
 
-| Variable | Default | Purpose |
-|---|---|---|
-| `NEXT_PUBLIC_API_BASE_URL` | `http://localhost:8001/api/v1` | Backend REST API |
-| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | _(empty)_ | Google OAuth |
-| `NEXT_PUBLIC_SITE_NAME` | `Bangladesh Navy` | Site metadata |
-| `NEXT_PUBLIC_CURRENCY` / `NEXT_PUBLIC_CURRENCY_SYMBOL` | `BDT` / `৳` | Currency display |
+| Variable                                               | Default                        | Purpose          |
+| ------------------------------------------------------ | ------------------------------ | ---------------- |
+| `NEXT_PUBLIC_API_BASE_URL`                             | `http://localhost:8001/api/v1` | Backend REST API |
+| `NEXT_PUBLIC_GOOGLE_CLIENT_ID`                         | _(empty)_                      | Google OAuth     |
+| `NEXT_PUBLIC_SITE_NAME`                                | `Bangladesh Navy`              | Site metadata    |
+| `NEXT_PUBLIC_CURRENCY` / `NEXT_PUBLIC_CURRENCY_SYMBOL` | `BDT` / `৳`                    | Currency display |
 
 ## Architecture
 
@@ -47,11 +47,11 @@ No tests are configured (`test` script is a no-op). Husky + lint-staged runs ESL
 
 ### Route groups
 
-| Group | Layout | Purpose |
-|---|---|---|
+| Group    | Layout                                                  | Purpose                                                      |
+| -------- | ------------------------------------------------------- | ------------------------------------------------------------ |
 | `(root)` | Header + Footer + CartDrawer (via `CartDrawerProvider`) | Public-facing pages (home, products, about, skill-dev, etc.) |
-| `admin` | Sidebar + DashboardHeader | Admin dashboard |
-| `auth` | Minimal | Login / signup |
+| `admin`  | Sidebar + DashboardHeader                               | Admin dashboard                                              |
+| `auth`   | Minimal                                                 | Login / signup                                               |
 
 The `admin` route itself is flat but its pages are organized in sub-groups: `(products)`, `(categories)`, `(users)`, `(content-management)` (banner-poster, media-gallery), `(career)` (career listings + applicant list), and `hero-management`. Components for each live under [src/components/admin/](src/components/admin/) in matching subdirectories.
 
@@ -84,13 +84,13 @@ The axios instance normalises every response to `{ data, meta }`, handles JWT re
 
 Located in [src/lib/redux/features/](src/lib/redux/features/):
 
-| Slice | Responsibility |
-|---|---|
-| `auth` | `userInformation`, `loading`, `isLoginModalOpen` |
-| `permission` | Role-derived permission map (`canAccessAdmin`, `canAddToCart`, etc.) |
-| `cart` | Cart items (client-side) |
-| `filter` | Product filter/search state synced to URL |
-| `user`, `wishlist`, `organizer` | Supporting slices |
+| Slice                           | Responsibility                                                       |
+| ------------------------------- | -------------------------------------------------------------------- |
+| `auth`                          | `userInformation`, `loading`, `isLoginModalOpen`                     |
+| `permission`                    | Role-derived permission map (`canAccessAdmin`, `canAddToCart`, etc.) |
+| `cart`                          | Cart items (client-side)                                             |
+| `filter`                        | Product filter/search state synced to URL                            |
+| `user`, `wishlist`, `organizer` | Supporting slices                                                    |
 
 Always use the typed hooks from [src/lib/redux/hooks.ts](src/lib/redux/hooks.ts): `useAppDispatch()` and `useAppSelector`.
 

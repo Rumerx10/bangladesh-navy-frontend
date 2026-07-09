@@ -81,7 +81,12 @@ export default function ViewJobDetailsModal({
           </div>
         </div>
 
-        {data && <div className="my-6" dangerouslySetInnerHTML={{ __html: data?.description }} />}
+        {data && (
+          <div
+            className="my-6"
+            dangerouslySetInnerHTML={{ __html: data?.description }}
+          />
+        )}
         <Button className="w-40 lg:w-49.75 h-11 text-sm  md:text-base font-medium">
           <SquarePen />
           Update Details

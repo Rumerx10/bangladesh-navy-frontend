@@ -1,11 +1,12 @@
 "use client";
-
-import { CheckCircle, Package, ShoppingBag } from "lucide-react";
+import { useState } from "react";
 import Link from "next/link";
+import { CheckCircle, Package, ShoppingBag } from "lucide-react";
 
-export default function CheckoutSuccessPage() {
-  // Generate a random order number
-  const orderNumber = `ORD-${Date.now().toString(36).toUpperCase()}`;
+const CheckoutSuccessPage = () => {
+  const [orderNumber] = useState(
+    () => `ORD-${Date.now().toString(36).toUpperCase()}`
+  );
 
   return (
     <div className="container">
@@ -83,7 +84,9 @@ export default function CheckoutSuccessPage() {
               size={20}
               style={{ margin: "0 auto 0.5rem", color: "var(--primary)" }}
             />
-            <p style={{ fontSize: "0.75rem", color: "var(--muted-foreground)" }}>
+            <p
+              style={{ fontSize: "0.75rem", color: "var(--muted-foreground)" }}
+            >
               Estimated Delivery
             </p>
             <p
@@ -110,7 +113,9 @@ export default function CheckoutSuccessPage() {
               size={20}
               style={{ margin: "0 auto 0.5rem", color: "var(--primary)" }}
             />
-            <p style={{ fontSize: "0.75rem", color: "var(--muted-foreground)" }}>
+            <p
+              style={{ fontSize: "0.75rem", color: "var(--muted-foreground)" }}
+            >
               Payment
             </p>
             <p
@@ -191,4 +196,6 @@ export default function CheckoutSuccessPage() {
       `}</style>
     </div>
   );
-}
+};
+
+export default CheckoutSuccessPage;

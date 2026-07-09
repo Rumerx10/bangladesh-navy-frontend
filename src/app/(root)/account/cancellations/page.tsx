@@ -16,15 +16,23 @@ export default function CancellationsPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-xl lg:text-2xl font-bold text-gray-900">My Cancellations</h1>
-          <p className="text-sm text-gray-500 mt-1">View your cancelled orders</p>
+          <h1 className="text-xl lg:text-2xl font-bold text-gray-900">
+            My Cancellations
+          </h1>
+          <p className="text-sm text-gray-500 mt-1">
+            View your cancelled orders
+          </p>
         </div>
         <div className="flex flex-col items-center justify-center py-16 text-center gap-3">
           <div className="w-16 h-16 flex items-center justify-center rounded-full bg-red-50 text-red-400">
             <XCircle size={28} />
           </div>
-          <p className="text-sm font-medium text-gray-600">No cancelled orders</p>
-          <p className="text-xs text-gray-400">Your cancelled orders will appear here</p>
+          <p className="text-sm font-medium text-gray-600">
+            No cancelled orders
+          </p>
+          <p className="text-xs text-gray-400">
+            Your cancelled orders will appear here
+          </p>
         </div>
       </div>
     );
@@ -33,7 +41,9 @@ export default function CancellationsPage() {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-xl lg:text-2xl font-bold text-gray-900">My Cancellations</h1>
+        <h1 className="text-xl lg:text-2xl font-bold text-gray-900">
+          My Cancellations
+        </h1>
         <p className="text-sm text-gray-500 mt-1">View your cancelled orders</p>
       </div>
 
@@ -46,7 +56,9 @@ export default function CancellationsPage() {
             {/* Header */}
             <div className="flex items-center justify-between px-4 sm:px-5 py-3 bg-gray-50/60 border-b border-gray-100">
               <div className="flex items-center gap-1.5 text-sm">
-                <span className="font-semibold text-gray-900">{order.orderNumber}</span>
+                <span className="font-semibold text-gray-900">
+                  {order.orderNumber}
+                </span>
                 <span className="text-gray-400">·</span>
                 <span className="text-gray-500">
                   {new Date(order.createdAt).toLocaleDateString("en-US", {
@@ -92,7 +104,8 @@ export default function CancellationsPage() {
             {/* Footer */}
             <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-t border-gray-100">
               <span className="text-sm font-bold text-gray-900">
-                Total: {siteConfig.currencySymbol}{order.total.toLocaleString()}
+                Total: {siteConfig.currencySymbol}
+                {order.total.toLocaleString()}
               </span>
               <Link
                 href={`/orders/${order.id}`}

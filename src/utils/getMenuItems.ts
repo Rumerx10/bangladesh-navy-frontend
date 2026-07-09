@@ -41,11 +41,11 @@ export function getMenuItems(): MenuItem[] {
       icon: Info,
       href: "/admin/about",
       children: [
-        { label: "History", href: "/admin/about/history" },
-        { label: "Vision & Mission", href: "/admin/about/vision-mission" },
-        { label: "Organogram", href: "/admin/about/organogram" },
-        { label: "Survey Ships", href: "/admin/about/survey-ships" },
-        { label: "Gallery", href: "/admin/about/gallery" },
+        { label: "History", href: "/admin/about-us/history" },
+        { label: "Vision & Mission", href: "/admin/about-us/mission-vision" },
+        { label: "Organogram", href: "/admin/about-us/organogram" },
+        { label: "Survey Ships", href: "/admin/about-us/survey-ships" },
+        { label: "Gallery", href: "/admin/about-us/gallery" },
       ],
     },
     {
@@ -93,28 +93,6 @@ export function getMenuItems(): MenuItem[] {
       label: "Important Notice",
       icon: AlertTriangle,
       href: "/admin/notices",
-      children: [
-        {
-          label: "Hydrographic Notes",
-          href: "/admin/contact-us/query-suggestion",
-        },
-        {
-          label: "Notices to Mariners",
-          href: "/admin/notices/mariners",
-        },
-        {
-          label: "Publications",
-          href: "/admin/product-service?category=publications",
-        },
-        {
-          label: "Notices",
-          href: "/admin/product-service?category=notices-to-mariners",
-        },
-        {
-          label: "Hydrographic Note",
-          href: "/admin/contact-us/hydrographic-note",
-        },
-      ],
     },
     {
       segment: "Product Management",

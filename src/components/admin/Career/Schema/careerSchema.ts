@@ -61,5 +61,4 @@ export const careerSchema = Yup.object({
   experience: Yup.string().required("Experience is required"),
 });
 
-
 export type CareerSchemaForm = Yup.InferType<typeof careerSchema>;

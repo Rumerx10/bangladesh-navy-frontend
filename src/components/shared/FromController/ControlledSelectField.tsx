@@ -3,11 +3,11 @@ import React from "react";
 import { cn } from "@/src/lib/utils";
 import { Controller, useFormContext } from "react-hook-form";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "../../ui/select";
 
 type Option = {

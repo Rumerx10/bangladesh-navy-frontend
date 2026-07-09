@@ -16,8 +16,8 @@ export default function NavyHeroCarousel() {
       />
 
       {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/50 to-transparent" />
-      <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-black/20" />
+      <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/20 to-transparent" />
+      {/* <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-black/20" /> */}
 
       {/* Content */}
       <div className="absolute inset-0 flex items-center">
@@ -76,7 +76,7 @@ export default function NavyHeroCarousel() {
             </Link>
             <Link
               href="/skill-development"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/40 hover:border-white text-white text-sm font-semibold tracking-wider uppercase transition-colors duration-200"
+              className="inline-flex backdrop-blur-sm items-center justify-center gap-2 px-8 py-4 border border-white/40 hover:border-white text-white text-sm font-semibold tracking-wider uppercase transition-colors duration-200"
             >
               Join the Navy
             </Link>

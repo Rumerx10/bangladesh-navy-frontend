@@ -40,7 +40,9 @@ declare module "@tiptap/core" {
       /**
        * Change resizable image alignment
        */
-      setResizableImageAlign: (align: "left" | "center" | "right") => ReturnType;
+      setResizableImageAlign: (
+        align: "left" | "center" | "right"
+      ) => ReturnType;
     };
   }
 }

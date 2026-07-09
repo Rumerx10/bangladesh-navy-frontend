@@ -57,8 +57,8 @@ export default function ProductVariantsSection() {
           <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
             <Layers className="w-10 h-10 text-gray-300 mx-auto mb-3" />
             <p className="text-sm text-gray-400">
-              No variants added yet. Click &quot;Add Variant&quot; to create your first
-              variant.
+              No variants added yet. Click &quot;Add Variant&quot; to create
+              your first variant.
             </p>
           </div>
         )}

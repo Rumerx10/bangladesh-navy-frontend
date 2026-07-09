@@ -14,7 +14,7 @@ export default function NoticesMarinersDropdown() {
   const pathname = usePathname();
   // Using a custom check to determine if any of the links are active
   // Since some are query params, pathname alone won't highlight them perfectly, but it's a good start.
-  const isActive = pathname?.startsWith("/notices-mariners"); 
+  const isActive = pathname?.startsWith("/notices-mariners");
 
   return (
     <li className="relative group">

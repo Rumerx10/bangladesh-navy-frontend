@@ -1,12 +1,12 @@
 "use client";
 
 import {
-    BadgeCheck,
-    CreditCard,
-    Lock,
-    RotateCcw,
-    Tag,
-    Truck,
+  BadgeCheck,
+  CreditCard,
+  Lock,
+  RotateCcw,
+  Tag,
+  Truck,
 } from "lucide-react";
 
 const badges = [

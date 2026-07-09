@@ -134,10 +134,7 @@ export const MOCK_PRODUCT_DETAILS: Record<string, IProductDetail> = {
     name: "Nike Air Max 270",
     description:
       "The Nike Air Max 270 delivers visible cushioning under every step with lifestyle versatility. Featuring a large Air unit for a soft, bouncy ride.",
-    images: [
-      "/icons/HealthPackages.svg",
-      "/icons/Corporate.svg",
-    ],
+    images: ["/icons/HealthPackages.svg", "/icons/Corporate.svg"],
     basePrice: 12500,
     hasVariants: true,
     stock: 45,

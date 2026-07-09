@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface PriceRangeFilterProps {
   min?: number;
@@ -18,17 +18,20 @@ export default function PriceRangeFilter({
   const MAX_LIMIT = 20000;
 
   // Local state in BDT (parent uses poysha)
+  const [prevMin, setPrevMin] = useState(min);
+  const [prevMax, setPrevMax] = useState(max);
   const [minVal, setMinVal] = useState(min ? min / 100 : MIN_LIMIT);
   const [maxVal, setMaxVal] = useState(max ? max / 100 : MAX_LIMIT);
 
-  // Sync with props if they change externally (e.g. Clear All)
-  useEffect(() => {
+  // Sync with props if they change externally (e.g. Clear All) — update during render, not in an effect
+  if (prevMin !== min) {
+    setPrevMin(min);
     setMinVal(min ? min / 100 : MIN_LIMIT);
-  }, [min]);
-
-  useEffect(() => {
+  }
+  if (prevMax !== max) {
+    setPrevMax(max);
     setMaxVal(max ? max / 100 : MAX_LIMIT);
-  }, [max]);
+  }
 
   const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Math.min(Number(e.target.value), maxVal - 500);
@@ -45,9 +48,7 @@ export default function PriceRangeFilter({
   return (
     <div className="border border-gray-100 rounded-xl p-4 bg-white shadow-sm">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold text-pBlue">
-          Price Range (BDT)
-        </h3>
+        <h3 className="text-sm font-semibold text-pBlue">Price Range (BDT)</h3>
         <span className="text-[10px] font-medium text-gray-400 bg-gray-50 px-2 py-0.5 rounded">
           Max: 20k
         </span>
@@ -56,13 +57,21 @@ export default function PriceRangeFilter({
       {/* Visual Values */}
       <div className="flex items-center justify-between mb-6">
         <div className="text-center">
-          <span className="block text-[10px] text-gray-400 uppercase font-medium mb-1">Min</span>
-          <span className="text-sm font-bold text-liteBlue">৳{minVal.toLocaleString()}</span>
+          <span className="block text-[10px] text-gray-400 uppercase font-medium mb-1">
+            Min
+          </span>
+          <span className="text-sm font-bold text-liteBlue">
+            ৳{minVal.toLocaleString()}
+          </span>
         </div>
         <div className="h-px w-8 bg-gray-100" />
         <div className="text-center">
-          <span className="block text-[10px] text-gray-400 uppercase font-medium mb-1">Max</span>
-          <span className="text-sm font-bold text-liteBlue">৳{maxVal.toLocaleString()}</span>
+          <span className="block text-[10px] text-gray-400 uppercase font-medium mb-1">
+            Max
+          </span>
+          <span className="text-sm font-bold text-liteBlue">
+            ৳{maxVal.toLocaleString()}
+          </span>
         </div>
       </div>
 
@@ -70,13 +79,13 @@ export default function PriceRangeFilter({
       <div className="relative h-6 flex items-center">
         {/* Track Background */}
         <div className="absolute w-full h-1.5 bg-gray-100 rounded-full" />
-        
+
         {/* Active Track Highlight */}
-        <div 
+        <div
           className="absolute h-1.5 bg-liteBlue rounded-full"
           style={{
             left: `${(minVal / MAX_LIMIT) * 100}%`,
-            right: `${100 - (maxVal / MAX_LIMIT) * 100}%`
+            right: `${100 - (maxVal / MAX_LIMIT) * 100}%`,
           }}
         />
 

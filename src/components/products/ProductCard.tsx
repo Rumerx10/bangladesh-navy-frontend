@@ -2,9 +2,9 @@
 
 import { DiscountType, INavyProduct } from "@/src/components/products/types";
 import {
-    // formatPrice,
-    getDiscountedPrice,
-    getProductSlug,
+  // formatPrice,
+  getDiscountedPrice,
+  getProductSlug,
 } from "@/src/data/navyProducts";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,7 +14,6 @@ import TiffPreview from "./TiffPreview";
 // import { useAppDispatch } from "@/src/lib/redux/hooks";
 // import { ShoppingCart } from "lucide-react";
 // import { toast } from "react-toastify";
-
 
 interface ProductCardProps {
   product: INavyProduct;

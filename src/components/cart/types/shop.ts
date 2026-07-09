@@ -1,4 +1,9 @@
-export type SortOption = "popularity" | "newest" | "price-asc" | "price-desc" | "rating";
+export type SortOption =
+  | "popularity"
+  | "newest"
+  | "price-asc"
+  | "price-desc"
+  | "rating";
 
 export interface IShopFilters {
   categories: string[];

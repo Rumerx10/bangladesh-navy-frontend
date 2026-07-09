@@ -1,10 +1,11 @@
+import BiographyManagement from "@/src/components/admin/ContentManagement/home/biography-management/BiographyManagement";
 
 const page = () => {
   return (
     <div>
-      biography
+      <BiographyManagement />
     </div>
   );
-}
+};
 
 export default page;

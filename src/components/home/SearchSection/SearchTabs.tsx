@@ -6,7 +6,11 @@ interface SearchTabsProps {
   onTabChange: (id: string) => void;
 }
 
-export default function SearchTabs({ tabs, activeTab, onTabChange }: SearchTabsProps) {
+export default function SearchTabs({
+  tabs,
+  activeTab,
+  onTabChange,
+}: SearchTabsProps) {
   return (
     <div className="mt-6 flex items-center justify-center gap-1 flex-wrap">
       {tabs.map((tab) => (

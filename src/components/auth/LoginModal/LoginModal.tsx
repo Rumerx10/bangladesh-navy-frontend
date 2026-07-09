@@ -113,16 +113,16 @@ export default function LoginModal() {
         {/* Google Sign In */}
         <div>
           <GoogleSignInButton
-          label="Continue with Google"
-          onSuccess={(role) => {
-            handleCloseModal();
-            if (isAdminRole(role)) {
-              router.push("/admin");
-              return;
-            }
-            resetAuthError();
-          }}
-        />
+            label="Continue with Google"
+            onSuccess={(role) => {
+              handleCloseModal();
+              if (isAdminRole(role)) {
+                router.push("/admin");
+                return;
+              }
+              resetAuthError();
+            }}
+          />
         </div>
 
         {/* Divider */}

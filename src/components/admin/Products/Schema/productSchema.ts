@@ -6,9 +6,7 @@ const variantAttributeSchema = Yup.object({
 });
 
 const variantSchema = Yup.object({
-  images: Yup.array()
-    .of(Yup.mixed<File | string>().required())
-    .default([]),
+  images: Yup.array().of(Yup.mixed<File | string>().required()).default([]),
   sellingPrice: Yup.number()
     .typeError("Price is required")
     .positive("Price must be positive")
@@ -18,9 +16,7 @@ const variantSchema = Yup.object({
     .min(0, "Cannot be negative")
     .nullable()
     .default(null),
-  discountType: Yup.string()
-    .oneOf(["percentage", "fixed"])
-    .default("fixed"),
+  discountType: Yup.string().oneOf(["percentage", "fixed"]).default("fixed"),
   stockQty: Yup.number()
     .typeError("Stock is required")
     .integer("Must be a whole number")
@@ -35,9 +31,7 @@ const variantSchema = Yup.object({
 export const productSchema = Yup.object({
   name: Yup.string().required("Product name is required"),
   description: Yup.string().default(""),
-  images: Yup.array()
-    .of(Yup.mixed<File | string>().required())
-    .default([]),
+  images: Yup.array().of(Yup.mixed<File | string>().required()).default([]),
   categoryId: Yup.string().required("Category is required"),
   subCategoryId: Yup.string().default(""),
   brandId: Yup.string().default(""),
@@ -62,9 +56,7 @@ export const productSchema = Yup.object({
     .typeError("Must be a number")
     .min(0, "Cannot be negative")
     .default(null),
-  discountType: Yup.string()
-    .oneOf(["percentage", "fixed"])
-    .default("fixed"),
+  discountType: Yup.string().oneOf(["percentage", "fixed"]).default("fixed"),
   stock: Yup.number()
     .nullable()
     .when("hasVariants", {

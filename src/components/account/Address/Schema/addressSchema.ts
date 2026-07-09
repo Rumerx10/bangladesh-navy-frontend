@@ -5,7 +5,12 @@ export const addressSchema = Yup.object({
   fullName: Yup.string().required("Full name is required"),
   phone: Yup.string().required("Phone is required"),
   addressType: Yup.string()
-    .oneOf([AddressType.HOME, AddressType.OFFICE, AddressType.SHIPPING, AddressType.BILLING])
+    .oneOf([
+      AddressType.HOME,
+      AddressType.OFFICE,
+      AddressType.SHIPPING,
+      AddressType.BILLING,
+    ])
     .required("Address type is required"),
   country: Yup.string().required("Country is required"),
   city: Yup.string().required("City is required"),

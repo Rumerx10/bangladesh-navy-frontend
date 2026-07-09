@@ -50,15 +50,15 @@ export default function SurveyShipDetail({ ship }: SurveyShipDetailProps) {
                   ship.status === "active"
                     ? "bg-green-500/20 text-green-300 border border-green-400/30"
                     : ship.status === "under-maintenance"
-                    ? "bg-amber-500/20 text-amber-300 border border-amber-400/30"
-                    : "bg-gray-500/20 text-gray-300 border border-gray-400/30"
+                      ? "bg-amber-500/20 text-amber-300 border border-amber-400/30"
+                      : "bg-gray-500/20 text-gray-300 border border-gray-400/30"
                 }`}
               >
                 {ship.status === "active"
                   ? "● Active"
                   : ship.status === "under-maintenance"
-                  ? "● Maintenance"
-                  : "● Retired"}
+                    ? "● Maintenance"
+                    : "● Retired"}
               </span>
             </div>
           </div>
@@ -115,10 +115,7 @@ export default function SurveyShipDetail({ ship }: SurveyShipDetailProps) {
           </h2>
           <div className="space-y-4">
             {ship.details.map((paragraph, i) => (
-              <p
-                key={i}
-                className="text-sm text-gray-600 leading-[1.8]"
-              >
+              <p key={i} className="text-sm text-gray-600 leading-[1.8]">
                 {paragraph}
               </p>
             ))}

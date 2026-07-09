@@ -17,19 +17,19 @@ export default function NewsCard({ item, hideImage = false }: NewsCardProps) {
       {/* Image */}
       {!hideImage && (
         <div className="relative aspect-[16/9] overflow-hidden bg-linear-to-br from-pBlue to-liteBlue">
-        <Image
-          src={item.image}
-          alt={item.title}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-500"
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        />
-        <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
-        {/* Category badge */}
-        <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-liteBlue/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
-          <Tag size={10} />
-          {item.category}
-        </span>
+          <Image
+            src={item.image}
+            alt={item.title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+          <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
+          {/* Category badge */}
+          <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-liteBlue/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
+            <Tag size={10} />
+            {item.category}
+          </span>
         </div>
       )}
 

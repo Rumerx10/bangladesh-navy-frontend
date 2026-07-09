@@ -94,7 +94,12 @@ export default function DesignerCanvas({
       y: 50,
       fontSize: 24,
       fontWeight: 600,
-      color: template.backgroundColor === "#2A2A2A" || template.backgroundColor === "#1A1A2E" || template.backgroundColor === "#0D0D0D" ? "#FFFFFF" : "#1A1A1A",
+      color:
+        template.backgroundColor === "#2A2A2A" ||
+        template.backgroundColor === "#1A1A2E" ||
+        template.backgroundColor === "#0D0D0D"
+          ? "#FFFFFF"
+          : "#1A1A1A",
       rotation: 0,
       textTransform: "none",
     };
@@ -103,13 +108,21 @@ export default function DesignerCanvas({
     setSelectedZoneId(null);
   }, [template.backgroundColor]);
 
-  const [processingZones, setProcessingZones] = useState<Record<string, boolean>>({});
+  const [processingZones, setProcessingZones] = useState<
+    Record<string, boolean>
+  >({});
   const [originalFiles, setOriginalFiles] = useState<Record<string, File>>({});
   const [originalUrls, setOriginalUrls] = useState<Record<string, string>>({});
-  const [bgRemovedZones, setBgRemovedZones] = useState<Record<string, boolean>>({});
-  const [imagePositions, setImagePositions] = useState<Record<string, { x: number; y: number }>>({});
+  const [bgRemovedZones, setBgRemovedZones] = useState<Record<string, boolean>>(
+    {}
+  );
+  const [imagePositions, setImagePositions] = useState<
+    Record<string, { x: number; y: number }>
+  >({});
   const [imageScales, setImageScales] = useState<Record<string, number>>({});
-  const [imageFitModes, setImageFitModes] = useState<Record<string, "cover" | "contain" | "fill">>({});
+  const [imageFitModes, setImageFitModes] = useState<
+    Record<string, "cover" | "contain" | "fill">
+  >({});
 
   // Brand overlay state
   const [brandText, setBrandText] = useState("YOUR BRAND");
@@ -149,7 +162,12 @@ export default function DesignerCanvas({
   const handleToggleFitMode = useCallback((zoneId: string) => {
     setImageFitModes((prev) => {
       const current = prev[zoneId] || "cover";
-      const next = current === "cover" ? "contain" : current === "contain" ? "fill" : "cover";
+      const next =
+        current === "cover"
+          ? "contain"
+          : current === "contain"
+            ? "fill"
+            : "cover";
       return { ...prev, [zoneId]: next };
     });
   }, []);
@@ -159,7 +177,10 @@ export default function DesignerCanvas({
       if (bgRemovedZones[zoneId]) {
         // Restore original
         if (originalUrls[zoneId]) {
-          setImageUploads((prev) => ({ ...prev, [zoneId]: originalUrls[zoneId] }));
+          setImageUploads((prev) => ({
+            ...prev,
+            [zoneId]: originalUrls[zoneId],
+          }));
           setBgRemovedZones((prev) => ({ ...prev, [zoneId]: false }));
           setImageFitModes((prev) => ({ ...prev, [zoneId]: "cover" }));
           setImagePositions((prev) => ({ ...prev, [zoneId]: { x: 0, y: 0 } }));
@@ -325,9 +346,7 @@ export default function DesignerCanvas({
             Templates
           </Button>
           <div className="h-6 w-px bg-gray-200" />
-          <h2 className="text-sm font-bold text-gray-800">
-            {template.name}
-          </h2>
+          <h2 className="text-sm font-bold text-gray-800">{template.name}</h2>
           <span className="text-xs text-gray-400">
             {template.canvasWidth}×{template.canvasHeight}
           </span>
@@ -381,7 +400,10 @@ export default function DesignerCanvas({
           ref={containerRef}
           className="flex-1 flex items-center justify-center bg-gray-100 rounded-xl overflow-auto p-6"
           onMouseDown={(e) => {
-            if (e.target === e.currentTarget || e.target === canvasRef.current) {
+            if (
+              e.target === e.currentTarget ||
+              e.target === canvasRef.current
+            ) {
               setSelectedTextId(null);
               setSelectedZoneId(null);
             }
@@ -425,7 +447,9 @@ export default function DesignerCanvas({
                 {imageUploads[zone.id] ? (
                   <div
                     className={`relative w-full h-full cursor-pointer ${
-                      selectedZoneId === zone.id ? "ring-2 ring-blue-500 ring-inset" : ""
+                      selectedZoneId === zone.id
+                        ? "ring-2 ring-blue-500 ring-inset"
+                        : ""
                     }`}
                     onMouseDown={(e) => {
                       e.stopPropagation();
@@ -448,7 +472,9 @@ export default function DesignerCanvas({
                     {processingZones[zone.id] && (
                       <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center z-20 backdrop-blur-sm">
                         <span className="animate-spin h-6 w-6 border-3 border-white/30 border-t-white rounded-full" />
-                        <span className="text-white text-[10px] mt-2 font-medium">Removing BG...</span>
+                        <span className="text-white text-[10px] mt-2 font-medium">
+                          Removing BG...
+                        </span>
                       </div>
                     )}
                   </div>
@@ -485,11 +511,17 @@ export default function DesignerCanvas({
                 element={el}
                 isSelected={selectedTextId === el.id}
                 canvasScale={canvasScale}
-                onSelect={() => { setSelectedTextId(el.id); setSelectedZoneId(null); }}
+                onSelect={() => {
+                  setSelectedTextId(el.id);
+                  setSelectedZoneId(null);
+                }}
                 onPositionChange={(x, y) =>
                   handleTextPositionChange(el.id, x, y)
                 }
-                onDoubleClick={() => { setSelectedTextId(el.id); setSelectedZoneId(null); }}
+                onDoubleClick={() => {
+                  setSelectedTextId(el.id);
+                  setSelectedZoneId(null);
+                }}
               />
             ))}
 
@@ -581,13 +613,16 @@ export default function DesignerCanvas({
                   <div className="p-3 space-y-4">
                     <div className="flex items-center gap-2">
                       <ImagePlus className="h-4 w-4 text-primary" />
-                      <h4 className="text-sm font-bold text-gray-800">Image Controls</h4>
+                      <h4 className="text-sm font-bold text-gray-800">
+                        Image Controls
+                      </h4>
                     </div>
 
                     {/* Zoom */}
                     <div>
                       <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                        Zoom: {Math.round((imageScales[selectedZoneId] || 1) * 100)}%
+                        Zoom:{" "}
+                        {Math.round((imageScales[selectedZoneId] || 1) * 100)}%
                       </label>
                       <div className="flex items-center gap-2 mt-1.5">
                         <button
@@ -600,8 +635,15 @@ export default function DesignerCanvas({
                           type="range"
                           min={30}
                           max={300}
-                          value={Math.round((imageScales[selectedZoneId] || 1) * 100)}
-                          onChange={(e) => setImageScales((prev) => ({ ...prev, [selectedZoneId]: parseInt(e.target.value) / 100 }))}
+                          value={Math.round(
+                            (imageScales[selectedZoneId] || 1) * 100
+                          )}
+                          onChange={(e) =>
+                            setImageScales((prev) => ({
+                              ...prev,
+                              [selectedZoneId]: parseInt(e.target.value) / 100,
+                            }))
+                          }
                           className="flex-1 h-1.5 appearance-none bg-gray-200 rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
                         />
                         <button
@@ -622,9 +664,15 @@ export default function DesignerCanvas({
                         {(["cover", "contain", "fill"] as const).map((mode) => (
                           <button
                             key={mode}
-                            onClick={() => setImageFitModes((prev) => ({ ...prev, [selectedZoneId]: mode }))}
+                            onClick={() =>
+                              setImageFitModes((prev) => ({
+                                ...prev,
+                                [selectedZoneId]: mode,
+                              }))
+                            }
                             className={`flex-1 py-2 text-xs rounded-lg capitalize cursor-pointer transition-colors ${
-                              (imageFitModes[selectedZoneId] || "cover") === mode
+                              (imageFitModes[selectedZoneId] || "cover") ===
+                              mode
                                 ? "bg-secondary text-white"
                                 : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                             }`}
@@ -656,8 +704,8 @@ export default function DesignerCanvas({
                           processingZones[selectedZoneId]
                             ? "bg-gray-100 text-gray-400 cursor-wait"
                             : bgRemovedZones[selectedZoneId]
-                            ? "bg-green-50 text-green-600 hover:bg-green-100"
-                            : "bg-purple-50 text-purple-600 hover:bg-purple-100"
+                              ? "bg-green-50 text-green-600 hover:bg-green-100"
+                              : "bg-purple-50 text-purple-600 hover:bg-purple-100"
                         }`}
                       >
                         {processingZones[selectedZoneId] ? (
@@ -704,7 +752,10 @@ export default function DesignerCanvas({
                       {textElements.map((el) => (
                         <button
                           key={el.id}
-                          onClick={() => { setSelectedTextId(el.id); setSelectedZoneId(null); }}
+                          onClick={() => {
+                            setSelectedTextId(el.id);
+                            setSelectedZoneId(null);
+                          }}
                           className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-left hover:bg-gray-50 transition-colors cursor-pointer border border-transparent hover:border-gray-200"
                         >
                           <div
@@ -728,24 +779,40 @@ export default function DesignerCanvas({
                       <>
                         <div className="h-px bg-gray-100 my-1" />
                         <div className="space-y-1">
-                          {template.imageZones.filter((z) => imageUploads[z.id]).map((zone) => (
-                            <button
-                              key={zone.id}
-                              onClick={() => { setSelectedZoneId(zone.id); setSelectedTextId(null); }}
-                              className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-left hover:bg-gray-50 transition-colors cursor-pointer border border-transparent hover:border-gray-200"
-                            >
-                              <div className="w-6 h-6 rounded overflow-hidden shrink-0 border border-gray-200">
-                                <img src={imageUploads[zone.id]} alt="" className="w-full h-full object-cover" />
-                              </div>
-                              <div className="min-w-0 flex-1">
-                                <p className="text-xs font-medium text-gray-700">{zone.placeholder}</p>
-                                <p className="text-[10px] text-gray-400">
-                                  {Math.round((imageScales[zone.id] || 1) * 100)}% • {imageFitModes[zone.id] || "cover"}
-                                  {bgRemovedZones[zone.id] ? " • BG removed" : ""}
-                                </p>
-                              </div>
-                            </button>
-                          ))}
+                          {template.imageZones
+                            .filter((z) => imageUploads[z.id])
+                            .map((zone) => (
+                              <button
+                                key={zone.id}
+                                onClick={() => {
+                                  setSelectedZoneId(zone.id);
+                                  setSelectedTextId(null);
+                                }}
+                                className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-left hover:bg-gray-50 transition-colors cursor-pointer border border-transparent hover:border-gray-200"
+                              >
+                                <div className="w-6 h-6 rounded overflow-hidden shrink-0 border border-gray-200">
+                                  <img
+                                    src={imageUploads[zone.id]}
+                                    alt=""
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+                                <div className="min-w-0 flex-1">
+                                  <p className="text-xs font-medium text-gray-700">
+                                    {zone.placeholder}
+                                  </p>
+                                  <p className="text-[10px] text-gray-400">
+                                    {Math.round(
+                                      (imageScales[zone.id] || 1) * 100
+                                    )}
+                                    % • {imageFitModes[zone.id] || "cover"}
+                                    {bgRemovedZones[zone.id]
+                                      ? " • BG removed"
+                                      : ""}
+                                  </p>
+                                </div>
+                              </button>
+                            ))}
                         </div>
                       </>
                     )}
@@ -766,7 +833,9 @@ export default function DesignerCanvas({
                         >
                           <span
                             className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform shadow-sm ${
-                              brandActive ? "translate-x-4.5" : "translate-x-0.5"
+                              brandActive
+                                ? "translate-x-4.5"
+                                : "translate-x-0.5"
                             }`}
                           />
                         </button>
@@ -798,7 +867,9 @@ export default function DesignerCanvas({
                               min={16}
                               max={120}
                               value={brandFontSize}
-                              onChange={(e) => setBrandFontSize(parseInt(e.target.value))}
+                              onChange={(e) =>
+                                setBrandFontSize(parseInt(e.target.value))
+                              }
                               className="w-full mt-1 h-1.5 appearance-none bg-gray-200 rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
                             />
                           </div>
@@ -834,7 +905,9 @@ export default function DesignerCanvas({
                               min={5}
                               max={100}
                               value={Math.round(brandOpacity * 100)}
-                              onChange={(e) => setBrandOpacity(parseInt(e.target.value) / 100)}
+                              onChange={(e) =>
+                                setBrandOpacity(parseInt(e.target.value) / 100)
+                              }
                               className="w-full mt-1 h-1.5 appearance-none bg-gray-200 rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
                             />
                           </div>
@@ -1061,4 +1134,3 @@ function SocialIcon({
     </svg>
   );
 }
-

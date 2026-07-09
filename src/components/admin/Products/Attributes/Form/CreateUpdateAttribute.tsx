@@ -8,10 +8,10 @@ import InputLabel from "@/src/components/shared/InputLabel";
 import SubmitButton from "@/src/components/shared/SubmitButton";
 import { Button } from "@/src/components/ui/button";
 import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
 } from "@/src/components/ui/dialog";
 import { usePatch } from "@/src/hooks/usePatch";
 import { usePost } from "@/src/hooks/usePost";

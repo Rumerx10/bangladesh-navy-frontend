@@ -232,13 +232,13 @@ export default function QuickAccess() {
               </div>
 
               {/* Modal Body */}
-              <div className="flex-1 overflow-y-auto px-6 sm:px-10 py-8 sm:py-10">
-                <Quote size={40} className="text-pBlue/5 -mb-4 -ml-1.5" />
+              <div className="scrollbar-modern flex-1 overflow-y-auto px-4 lg:px-6 py-4 lg:py-6">
+                <Quote size={40} className="text-pBlue/20 mb-4" />
                 <div className="space-y-6">
                   {chiefMessage.content.map((para, i) => (
                     <motion.p
                       key={i}
-                      className="text-base lg:text-lg text-gray-600 leading-relaxed font-light"
+                      className="text-base lg:text-lg text-gray-600 text-justify leading-relaxed font-light"
                       initial={{ opacity: 0, y: 15 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}

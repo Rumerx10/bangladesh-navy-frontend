@@ -6,7 +6,9 @@ interface ProductDetailPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
+export default async function ProductDetailPage({
+  params,
+}: ProductDetailPageProps) {
   const { slug } = await params;
   const product = findProductBySlug(slug);
 

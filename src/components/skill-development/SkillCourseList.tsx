@@ -13,7 +13,9 @@ const availableCategories = [
 ] as (typeof ALL | CourseCategory)[];
 
 export default function SkillCourseList() {
-  const [activeCategory, setActiveCategory] = useState<typeof ALL | CourseCategory>(ALL);
+  const [activeCategory, setActiveCategory] = useState<
+    typeof ALL | CourseCategory
+  >(ALL);
 
   const filtered =
     activeCategory === ALL
@@ -36,8 +38,8 @@ export default function SkillCourseList() {
           </div>
           <span className="text-sm text-gray-400">
             Showing{" "}
-            <span className="font-bold text-pBlue">{filtered.length}</span>{" "}
-            of {courses.length} courses
+            <span className="font-bold text-pBlue">{filtered.length}</span> of{" "}
+            {courses.length} courses
           </span>
         </div>
 

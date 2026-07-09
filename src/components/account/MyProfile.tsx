@@ -2,8 +2,8 @@
 
 import ProfileForm from "@/src/components/account/Form/ProfileForm";
 import {
-    ProfileFormValues,
-    profileSchema,
+  ProfileFormValues,
+  profileSchema,
 } from "@/src/components/account/Schema/profileSchema";
 import { usePatch } from "@/src/hooks/usePatch";
 import { useAppSelector } from "@/src/lib/redux/hooks";

@@ -43,9 +43,34 @@ const serviceLinks = [
 ];
 
 const importantLinks = [
-  { label: "Bangladesh Navy", href: "/#" },
-  { label: "IHO", href: "/#" },
-  { label: "UKHO", href: "/#" },
+  {
+    label: "Bangladesh Navy",
+    href: "https://www.navy.mil.bd",
+  },
+  {
+    label: "United Kingdom Hydrographic Office (UKHO)",
+    href: "https://www.admiralty.co.uk",
+  },
+  {
+    label: "IC-ENC",
+    href: "https://www.ic-enc.org",
+  },
+  {
+    label: "Chattogram Port Authority (CPA)",
+    href: "https://cpa.gov.bd",
+  },
+  {
+    label: "Bangladesh Inland Water Transport Authority (BIWTA)",
+    href: "https://biwta.gov.bd",
+  },
+  {
+    label: "Bangladesh Inland Water Transport Authority (BIMRAD)",
+    href: "https://bimrad.gov.bd",
+  },
+  {
+    label: "Bangladesh Oceanographic Research Institute (BORI)",
+    href: "https://bori.gov.bd",
+  },
 ];
 
 const contactPageLinks = [

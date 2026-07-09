@@ -50,13 +50,19 @@ export default function OrdersPage() {
 
         <div className="flex flex-col gap-4">
           {dummyOrders.map((order) => (
-            <div key={order.id} className="border border-border rounded-xl bg-card overflow-hidden hover:shadow-sm transition-shadow">
+            <div
+              key={order.id}
+              className="border border-border rounded-xl bg-card overflow-hidden hover:shadow-sm transition-shadow"
+            >
               {/* Header */}
               <div className="flex items-center justify-between px-4 sm:px-5 py-3 bg-muted/30 border-b border-border">
                 <div className="flex items-center gap-1 text-sm">
-                  <span className="font-semibold text-foreground">{order.orderNumber}</span>
+                  <span className="font-semibold text-foreground">
+                    {order.orderNumber}
+                  </span>
                   <span className="text-muted-foreground">
-                    {" "}·{" "}
+                    {" "}
+                    ·{" "}
                     {new Date(order.createdAt).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "short",
@@ -90,8 +96,7 @@ export default function OrdersPage() {
                           {item.name}
                         </p>
                         <p className="text-[11px] sm:text-xs text-muted-foreground">
-                          Qty: {item.quantity} · ৳
-                          {item.price.toLocaleString()}
+                          Qty: {item.quantity} · ৳{item.price.toLocaleString()}
                         </p>
                       </div>
                     </div>

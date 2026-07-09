@@ -40,8 +40,10 @@ export default function DraggableText({
         if (!parent) return;
 
         const parentRect = parent.getBoundingClientRect();
-        const dx = ((moveE.clientX - startPos.current.x) / parentRect.width) * 100;
-        const dy = ((moveE.clientY - startPos.current.y) / parentRect.height) * 100;
+        const dx =
+          ((moveE.clientX - startPos.current.x) / parentRect.width) * 100;
+        const dy =
+          ((moveE.clientY - startPos.current.y) / parentRect.height) * 100;
 
         const newX = Math.max(0, Math.min(95, startElement.current.x + dx));
         const newY = Math.max(0, Math.min(95, startElement.current.y + dy));

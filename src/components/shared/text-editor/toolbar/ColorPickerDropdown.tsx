@@ -37,7 +37,6 @@ export default function ColorPickerDropdown({ editor }: { editor: Editor }) {
     setOpen(false);
   };
 
-
   return (
     <div className="relative py-2.5" ref={dropdownRef}>
       <button onClick={() => setOpen(!open)} title="Text Color">

@@ -35,9 +35,7 @@ export const GetProductColumns = (
       header: "Product Name",
       accessorKey: "name",
       cell: (value) => (
-        <span className="font-medium text-secondary">
-          {value as string}
-        </span>
+        <span className="font-medium text-secondary">{value as string}</span>
       ),
     },
     {

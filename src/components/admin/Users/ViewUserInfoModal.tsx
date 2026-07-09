@@ -2,10 +2,10 @@
 
 import StatusBadge from "@/src/components/shared/Status/Status";
 import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
 } from "@/src/components/ui/dialog";
 import { StatusType } from "@/src/components/shared/types/common";
 import { BadgeCheck, Mail, Phone, Shield, UserRound } from "lucide-react";
@@ -127,7 +127,8 @@ export default function ViewUserInfoModal({
               <p className={labelClass}>Security & Access</p>
               <p className={valueClass + " flex items-center gap-2 capitalize"}>
                 <Shield className="h-4 w-4 text-secondary-dark " />
-                Role: {user?.role?.toLocaleLowerCase() || "-"} | Status: {user?.status || "-"}
+                Role: {user?.role?.toLocaleLowerCase() || "-"} | Status:{" "}
+                {user?.status || "-"}
               </p>
             </div>
           </div>

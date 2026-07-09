@@ -26,7 +26,7 @@ export default function ProductInfoSection() {
   const selectedCategoryId = watch("categoryId");
 
   const subCategoryOptions = selectedCategoryId
-    ? mockSubCategories[selectedCategoryId] ?? []
+    ? (mockSubCategories[selectedCategoryId] ?? [])
     : [];
 
   return (

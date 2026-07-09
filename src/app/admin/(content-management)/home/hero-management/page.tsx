@@ -1,9 +1,11 @@
-import HeroManagement from "@/src/components/admin/HeroManagement/HeroManagement";
+import HeroManagement from "@/src/components/admin/ContentManagement/home/hero-management/HeroManagement";
 
-export default function page() {
+const page = () => {
   return (
     <div>
       <HeroManagement />
     </div>
   );
-}
+};
+
+export default page;

@@ -1,10 +1,10 @@
 import StatusBadge from "@/src/components/shared/Status/Status";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
 import { StatusType } from "@/src/components/shared/types/common";
 import { EllipsisVertical, Eye, Pencil } from "lucide-react";

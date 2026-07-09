@@ -21,9 +21,7 @@ export default function NoticeItem({ item, isLast }: NoticeItemProps) {
         !isLast ? "border-b border-gray-100" : ""
       }`}
     >
-      <div className="mt-0.5 shrink-0">
-        {typeIcon[item.type ?? "info"]}
-      </div>
+      <div className="mt-0.5 shrink-0">{typeIcon[item.type ?? "info"]}</div>
       <div className="flex-1 min-w-0">
         <h4 className="text-sm font-medium text-gray-800 group-hover:text-liteBlue transition-colors line-clamp-1">
           {item.title}

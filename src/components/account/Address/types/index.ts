@@ -1,7 +1,6 @@
 import { ErrorType } from "@/src/components/shared/types/common";
 import { AddressFormValues } from "../Schema/addressSchema";
 
-
 export enum AddressType {
   HOME = "HOME",
   OFFICE = "OFFICE",
@@ -9,7 +8,7 @@ export enum AddressType {
   BILLING = "BILLING",
 }
 
-export type IAddressType = typeof AddressType[keyof typeof AddressType];
+export type IAddressType = (typeof AddressType)[keyof typeof AddressType];
 
 export interface IAddress {
   id?: string;

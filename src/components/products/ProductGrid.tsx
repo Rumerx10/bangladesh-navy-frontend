@@ -37,7 +37,7 @@ export default function ProductGrid({
 
       {/* Grid */}
       {products.length > 0 ? (
-        <motion.div 
+        <motion.div
           layout
           className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-5"
         >
@@ -57,7 +57,7 @@ export default function ProductGrid({
           </AnimatePresence>
         </motion.div>
       ) : (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col items-center justify-center py-16 text-center"

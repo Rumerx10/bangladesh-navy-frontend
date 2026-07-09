@@ -25,10 +25,12 @@ export interface ImageUploadResponse {
   height?: number;
 }
 
-export type ResizableImageAttributes = Omit<ImageAttributes, 'width' | 'height'> & {
+export type ResizableImageAttributes = Omit<
+  ImageAttributes,
+  "width" | "height"
+> & {
   width?: string;
   height?: string;
   wrap?: "inline" | "wrap" | "break";
-  align?: string
+  align?: string;
 };
-

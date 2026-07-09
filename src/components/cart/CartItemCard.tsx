@@ -54,19 +54,25 @@ export default function CartItemCard({ item, index }: CartItemCardProps) {
           </Link>
 
           {/* Attribute tags */}
-          {item.selectedAttributes && Object.keys(item.selectedAttributes).length > 0 && (
-            <div className="flex gap-1.5 flex-wrap">
-              {Object.entries(item.selectedAttributes).map(([key, value]) => (
-                <span key={key} className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-medium px-2 py-0.5 rounded-full bg-primary/8 text-primary border border-primary/15">
-                  <Tag size={10} />
-                  {key}: {value}
-                </span>
-              ))}
-            </div>
-          )}
+          {item.selectedAttributes &&
+            Object.keys(item.selectedAttributes).length > 0 && (
+              <div className="flex gap-1.5 flex-wrap">
+                {Object.entries(item.selectedAttributes).map(([key, value]) => (
+                  <span
+                    key={key}
+                    className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-medium px-2 py-0.5 rounded-full bg-primary/8 text-primary border border-primary/15"
+                  >
+                    <Tag size={10} />
+                    {key}: {value}
+                  </span>
+                ))}
+              </div>
+            )}
 
           {item.variantName && !item.selectedAttributes && (
-            <span className="text-xs text-muted-foreground">{item.variantName}</span>
+            <span className="text-xs text-muted-foreground">
+              {item.variantName}
+            </span>
           )}
 
           {/* Price */}
@@ -74,12 +80,11 @@ export default function CartItemCard({ item, index }: CartItemCardProps) {
             <span className="text-sm sm:text-base font-bold text-foreground">
               ৳{item.price.toLocaleString()}
             </span>
-            {item.compareAtPrice &&
-              item.compareAtPrice > item.price && (
-                <span className="text-xs sm:text-sm text-muted-foreground line-through">
-                  ৳{item.compareAtPrice.toLocaleString()}
-                </span>
-              )}
+            {item.compareAtPrice && item.compareAtPrice > item.price && (
+              <span className="text-xs sm:text-sm text-muted-foreground line-through">
+                ৳{item.compareAtPrice.toLocaleString()}
+              </span>
+            )}
           </div>
 
           {/* Free shipping badge */}

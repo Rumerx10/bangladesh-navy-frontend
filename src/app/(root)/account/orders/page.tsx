@@ -75,22 +75,26 @@ const tabs = [
   {
     label: "Pending",
     value: OrderStatus.PENDING,
-    count: dummyOrders.filter((o) => o.orderStatus === OrderStatus.PENDING).length,
+    count: dummyOrders.filter((o) => o.orderStatus === OrderStatus.PENDING)
+      .length,
   },
   {
     label: "Processing",
     value: OrderStatus.PROCESSING,
-    count: dummyOrders.filter((o) => o.orderStatus === OrderStatus.PROCESSING).length,
+    count: dummyOrders.filter((o) => o.orderStatus === OrderStatus.PROCESSING)
+      .length,
   },
   {
     label: "Shipped",
     value: OrderStatus.SHIPPED,
-    count: dummyOrders.filter((o) => o.orderStatus === OrderStatus.SHIPPED).length,
+    count: dummyOrders.filter((o) => o.orderStatus === OrderStatus.SHIPPED)
+      .length,
   },
   {
     label: "Delivered",
     value: OrderStatus.DELIVERED,
-    count: dummyOrders.filter((o) => o.orderStatus === OrderStatus.DELIVERED).length,
+    count: dummyOrders.filter((o) => o.orderStatus === OrderStatus.DELIVERED)
+      .length,
   },
 ];
 
@@ -103,7 +107,10 @@ function OrderCard({ order }: { order: IOrder }) {
       {/* ── Header ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-4 sm:px-5 py-3 bg-gray-50/60 border-b border-gray-100">
         <div className="flex items-center gap-2 text-sm min-w-0">
-          <Package size={15} className="text-gray-400 shrink-0 hidden sm:block" />
+          <Package
+            size={15}
+            className="text-gray-400 shrink-0 hidden sm:block"
+          />
           <span className="font-semibold text-gray-900 truncate">
             {order.orderNumber}
           </span>
@@ -183,11 +190,17 @@ function OrderCard({ order }: { order: IOrder }) {
           )}
         </div>
         <div className="flex items-center gap-3">
-          {order.estimatedDelivery && order.orderStatus !== OrderStatus.DELIVERED && order.orderStatus !== OrderStatus.CANCELLED && (
-            <span className="text-[11px] text-gray-400 hidden sm:block">
-              Est. {new Date(order.estimatedDelivery).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-            </span>
-          )}
+          {order.estimatedDelivery &&
+            order.orderStatus !== OrderStatus.DELIVERED &&
+            order.orderStatus !== OrderStatus.CANCELLED && (
+              <span className="text-[11px] text-gray-400 hidden sm:block">
+                Est.{" "}
+                {new Date(order.estimatedDelivery).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
+            )}
           <Link
             href={`/orders/${order.id}`}
             className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline no-underline transition-colors"
@@ -209,7 +222,12 @@ export default function AccountOrdersPage() {
   const filteredOrders = useMemo(() => {
     return dummyOrders.filter((order) => {
       // Exclude cancelled and returned from the "all" view in this page
-      if (activeTab === "all" && (order.orderStatus === OrderStatus.CANCELLED || order.orderStatus === OrderStatus.RETURNED || order.orderStatus === OrderStatus.REFUNDED)) {
+      if (
+        activeTab === "all" &&
+        (order.orderStatus === OrderStatus.CANCELLED ||
+          order.orderStatus === OrderStatus.RETURNED ||
+          order.orderStatus === OrderStatus.REFUNDED)
+      ) {
         return false;
       }
       const matchesTab = activeTab === "all" || order.orderStatus === activeTab;
