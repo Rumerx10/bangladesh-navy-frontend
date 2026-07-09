@@ -31,6 +31,7 @@ export function getMenuItems(): MenuItem[] {
       href: "/admin/hero-management",
       children: [
         { label: "Hero", href: "/admin/home/hero-management" },
+        { label: "Notices", href: "/admin/home/notice-management" },
         { label: "Chief's Biography", href: "/admin/home/biography" },
         { label: "Partner Management", href: "/admin/home/partner" },
       ],

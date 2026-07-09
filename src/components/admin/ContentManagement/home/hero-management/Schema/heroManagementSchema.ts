@@ -19,14 +19,6 @@ export const heroManagementSchema = Yup.object({
   description: Yup.string()
     .required("Description is required")
     .max(500, "Description must be at most 500 characters"),
-  notices: Yup.array()
-    .of(
-      Yup.object({
-        message: Yup.string().required("Notice message is required"),
-        isActive: Yup.boolean().default(true),
-      })
-    )
-    .default([]),
   images: Yup.array()
     .of(
       Yup.mixed<File | string>()

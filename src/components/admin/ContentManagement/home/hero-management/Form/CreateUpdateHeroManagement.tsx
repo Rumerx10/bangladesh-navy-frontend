@@ -32,7 +32,6 @@ const CreateUpdateHeroManagement = ({
       title: initialValues?.title || "",
       slogan: initialValues?.slogan || "",
       description: initialValues?.description || "",
-      notices: initialValues?.notices || [],
       images: initialValues?.images || [],
     },
   });
