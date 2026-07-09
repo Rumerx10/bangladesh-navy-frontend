@@ -2,7 +2,7 @@
 import ToolbarButton from "../Toolbar";
 import { type Editor } from "@tiptap/core";
 
-export default function BasicStyleButtons({ editor }: {editor: Editor}) {
+export default function BasicStyleButtons({ editor }: { editor: Editor }) {
   return (
     <div className="toolbar-group">
       <ToolbarButton

@@ -66,12 +66,17 @@ export default function ProductServiceLayout() {
       result = result.filter((p) => p.price >= (filters.priceMin ?? 0) * 100);
     }
     if (filters.priceMax !== undefined) {
-      result = result.filter((p) => p.price <= (filters.priceMax ?? Infinity) * 100);
+      result = result.filter(
+        (p) => p.price <= (filters.priceMax ?? Infinity) * 100
+      );
     }
 
     // Search filter
     if (filters.search) {
-      const queryWords = filters.search.toLowerCase().split(/\s+/).filter(Boolean);
+      const queryWords = filters.search
+        .toLowerCase()
+        .split(/\s+/)
+        .filter(Boolean);
       result = result.filter((p) => {
         const searchableText = [
           p.nameEn,
@@ -121,7 +126,8 @@ export default function ProductServiceLayout() {
         Products & Services
       </h1>
       <p className="text-sm text-gray-500 mb-6">
-        Browse our collection of nautical charts, publications, and maritime services
+        Browse our collection of nautical charts, publications, and maritime
+        services
       </p>
 
       <div className="flex gap-6 lg:gap-8">

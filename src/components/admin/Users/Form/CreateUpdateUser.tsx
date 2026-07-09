@@ -1,10 +1,10 @@
 "use client";
 
 import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
 } from "@/src/components/ui/dialog";
 import { usePatch } from "@/src/hooks/usePatch";
 import { yupResolver } from "@hookform/resolvers/yup";

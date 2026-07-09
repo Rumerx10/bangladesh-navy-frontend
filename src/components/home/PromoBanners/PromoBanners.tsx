@@ -21,7 +21,8 @@ const promoBanners = [
     btnText: "Discover Now",
     href: "/products?category=menswear",
     image: "/banners/promo-menswear.png",
-    gridClass: "col-start-1 sm:col-start-2 row-span-1 sm:row-span-2 min-h-55 sm:min-h-70 lg:min-h-0",
+    gridClass:
+      "col-start-1 sm:col-start-2 row-span-1 sm:row-span-2 min-h-55 sm:min-h-70 lg:min-h-0",
   },
   {
     id: "accessories",
@@ -31,7 +32,8 @@ const promoBanners = [
     btnText: "Discover Now",
     href: "/products?category=accessories",
     image: "/banners/promo-accessories.png",
-    gridClass: "col-start-1 sm:col-start-1 lg:col-start-3 min-h-55 sm:min-h-60 lg:min-h-0",
+    gridClass:
+      "col-start-1 sm:col-start-1 lg:col-start-3 min-h-55 sm:min-h-60 lg:min-h-0",
   },
   {
     id: "shoes",
@@ -41,7 +43,8 @@ const promoBanners = [
     btnText: "Shop Now",
     href: "/products?category=shoes",
     image: "/banners/promo-shoes.png",
-    gridClass: "col-start-1 sm:col-start-2 lg:col-start-3 min-h-55 sm:min-h-60 lg:min-h-0",
+    gridClass:
+      "col-start-1 sm:col-start-2 lg:col-start-3 min-h-55 sm:min-h-60 lg:min-h-0",
   },
 ];
 

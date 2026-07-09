@@ -36,7 +36,10 @@ export default function CartItemList({ items }: CartItemListProps) {
         {freeShippingCount === items.length ? (
           <span>All items in your cart have free shipping!</span>
         ) : freeShippingCount > 0 ? (
-          <span>{freeShippingCount} of {items.length} item{items.length > 1 ? 's' : ''} eligible for free shipping</span>
+          <span>
+            {freeShippingCount} of {items.length} item
+            {items.length > 1 ? "s" : ""} eligible for free shipping
+          </span>
         ) : (
           <span>Shipping charge is free always!</span>
         )}

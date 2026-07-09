@@ -27,20 +27,24 @@ export default function SkillDevelopmentPage() {
 
           <div className="text-gray-600 leading-relaxed space-y-4 text-[15px]">
             <p>
-              BN Hydrographic Institute, formerly known as BN Hydrographic School, was established
-              on 04 May 1983 at BNS ISSA KHAN with the objective of developing skilled hydrographic
-              professionals. Initially offering Survey Recorder courses, the institute has progressively
-              evolved into a specialized centre for hydrography, oceanography and nautical charting.
-              As a dedicated training and research institution, the institute promotes professional
-              excellence through high-quality instruction, practical training and continuous technical
-              capacity development.
+              BN Hydrographic Institute, formerly known as BN Hydrographic
+              School, was established on 04 May 1983 at BNS ISSA KHAN with the
+              objective of developing skilled hydrographic professionals.
+              Initially offering Survey Recorder courses, the institute has
+              progressively evolved into a specialized centre for hydrography,
+              oceanography and nautical charting. As a dedicated training and
+              research institution, the institute promotes professional
+              excellence through high-quality instruction, practical training
+              and continuous technical capacity development.
             </p>
             <p>
-              The institute provides professional training to personnel from Bangladesh, maritime
-              organizations and international participants. Training is conducted using advanced survey
-              technologies, including multibeam and single beam echo sounders, side scan sonar,
-              GPS/DGPS, Sub Bottom Profiler and other modern hydrographic systems, ensuring
-              precise data collection, processing and analysis.
+              The institute provides professional training to personnel from
+              Bangladesh, maritime organizations and international participants.
+              Training is conducted using advanced survey technologies,
+              including multibeam and single beam echo sounders, side scan
+              sonar, GPS/DGPS, Sub Bottom Profiler and other modern hydrographic
+              systems, ensuring precise data collection, processing and
+              analysis.
             </p>
           </div>
 
@@ -55,9 +59,10 @@ export default function SkillDevelopmentPage() {
                 <h3 className="text-lg font-bold text-pBlue">Vision</h3>
               </div>
               <p className="text-sm text-gray-600 leading-relaxed">
-                To become a centre of excellence in hydrographic education, training and research,
-                upholding internationally recognized standards and contributing to safe navigation
-                and sustainable maritime development.
+                To become a centre of excellence in hydrographic education,
+                training and research, upholding internationally recognized
+                standards and contributing to safe navigation and sustainable
+                maritime development.
               </p>
             </div>
 
@@ -87,17 +92,22 @@ export default function SkillDevelopmentPage() {
 
           {/* Training Overview */}
           <div className="mt-10 rounded-2xl border border-gray-200 bg-gray-50 p-6">
-            <h3 className="text-lg font-bold text-pBlue mb-3">Training Overview</h3>
+            <h3 className="text-lg font-bold text-pBlue mb-3">
+              Training Overview
+            </h3>
             <div className="text-sm text-gray-600 leading-relaxed space-y-3">
               <p>
-                All training is aligned with international standards, particularly those set by the IBSC,
-                ensuring high-quality outcomes and preparing trainees to support safe navigation, accurate
-                charting and sustainable maritime development.
+                All training is aligned with international standards,
+                particularly those set by the IBSC, ensuring high-quality
+                outcomes and preparing trainees to support safe navigation,
+                accurate charting and sustainable maritime development.
               </p>
               <p>
-                To avail training facilities at the institute for national participants, applications are
-                coordinated through the Directorate of Naval Training at Naval Headquarters. Overseas
-                participants are required to apply through the Armed Forces Division, Dhaka Cantonment.
+                To avail training facilities at the institute for national
+                participants, applications are coordinated through the
+                Directorate of Naval Training at Naval Headquarters. Overseas
+                participants are required to apply through the Armed Forces
+                Division, Dhaka Cantonment.
               </p>
             </div>
           </div>

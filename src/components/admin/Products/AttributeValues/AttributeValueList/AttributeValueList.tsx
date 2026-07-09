@@ -25,9 +25,24 @@ const INITIAL_VALUES: IAttributeValue[] = [
   { id: "val-7", name: "M", attributeId: "attr-2", attributeName: "Size" },
   { id: "val-8", name: "L", attributeId: "attr-2", attributeName: "Size" },
   { id: "val-9", name: "XL", attributeId: "attr-2", attributeName: "Size" },
-  { id: "val-11", name: "64 GB", attributeId: "attr-3", attributeName: "Storage" },
-  { id: "val-12", name: "128 GB", attributeId: "attr-3", attributeName: "Storage" },
-  { id: "val-13", name: "256 GB", attributeId: "attr-3", attributeName: "Storage" },
+  {
+    id: "val-11",
+    name: "64 GB",
+    attributeId: "attr-3",
+    attributeName: "Storage",
+  },
+  {
+    id: "val-12",
+    name: "128 GB",
+    attributeId: "attr-3",
+    attributeName: "Storage",
+  },
+  {
+    id: "val-13",
+    name: "256 GB",
+    attributeId: "attr-3",
+    attributeName: "Storage",
+  },
 ];
 
 export default function AttributeValueList() {
@@ -65,7 +80,11 @@ export default function AttributeValueList() {
     setSelectedItem(undefined);
   };
 
-  const columns = GetAttributeValueColumns(handleView, handleEdit, handleDelete);
+  const columns = GetAttributeValueColumns(
+    handleView,
+    handleEdit,
+    handleDelete
+  );
 
   return (
     <div>

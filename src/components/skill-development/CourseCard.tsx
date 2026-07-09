@@ -47,7 +47,7 @@ export default function CourseCard({ course }: CourseCardProps) {
         <h3 className="text-xl font-bold text-pBlue mb-3 group-hover:text-liteBlue transition-colors line-clamp-2">
           {course.title}
         </h3>
-        
+
         <p className="text-sm text-gray-600 mb-6 line-clamp-3 leading-relaxed">
           {course.shortDescription}
         </p>
@@ -57,7 +57,10 @@ export default function CourseCard({ course }: CourseCardProps) {
           className="inline-flex items-center gap-2 text-pBlue font-bold text-sm group/link"
         >
           View Details
-          <ArrowRight size={18} className="transition-transform group-hover/link:translate-x-1" />
+          <ArrowRight
+            size={18}
+            className="transition-transform group-hover/link:translate-x-1"
+          />
         </Link>
       </div>
     </motion.div>

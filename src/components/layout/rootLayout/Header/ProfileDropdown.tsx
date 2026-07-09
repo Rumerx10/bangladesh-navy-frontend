@@ -19,7 +19,10 @@ import {
   DropdownMenuTrigger,
 } from "../../../ui/dropdown-menu";
 import ProfileDropdownSkeleton from "./Skeleton/ProfileDropdownSkeleton";
-import { adminMenuItems, userMenuItems } from "../../../../utils/profileMenuItems";
+import {
+  adminMenuItems,
+  userMenuItems,
+} from "../../../../utils/profileMenuItems";
 
 export function ProfileDropdown() {
   const dispatch = useAppDispatch();

@@ -90,23 +90,33 @@ export default function CtaBanner() {
                   {/* Offer Badge */}
                   {banner.badge && (
                     <div className="w-14 h-14 sm:w-[4.5rem] sm:h-[4.5rem] rounded-full bg-red-500 flex flex-col items-center justify-center text-white shadow-lg mb-4 sm:mb-5">
-                      <span className="text-base sm:text-xl font-extrabold leading-none">{banner.badge}</span>
-                      <span className="text-[9px] sm:text-[11px] font-medium -mt-0.5">{banner.badgeText}</span>
+                      <span className="text-base sm:text-xl font-extrabold leading-none">
+                        {banner.badge}
+                      </span>
+                      <span className="text-[9px] sm:text-[11px] font-medium -mt-0.5">
+                        {banner.badgeText}
+                      </span>
                     </div>
                   )}
 
                   {/* Title */}
-                  <h2 className={`text-xl sm:text-2xl lg:text-[1.75rem] font-bold leading-snug mb-4 sm:mb-5 drop-shadow-md ${banner.dark ? "text-white" : "text-gray-900"}`}>
+                  <h2
+                    className={`text-xl sm:text-2xl lg:text-[1.75rem] font-bold leading-snug mb-4 sm:mb-5 drop-shadow-md ${banner.dark ? "text-white" : "text-gray-900"}`}
+                  >
                     {banner.title}
                   </h2>
 
                   {/* Price */}
                   <div className="flex items-baseline gap-2 sm:gap-3 mb-5 sm:mb-7">
-                    <span className={`text-lg sm:text-xl lg:text-2xl font-bold ${banner.dark ? "text-white" : "text-gray-900"}`}>
+                    <span
+                      className={`text-lg sm:text-xl lg:text-2xl font-bold ${banner.dark ? "text-white" : "text-gray-900"}`}
+                    >
                       {banner.price}
                     </span>
                     {banner.comparePrice && (
-                      <span className={`text-sm sm:text-base line-through ${banner.dark ? "text-white/50" : "text-gray-400"}`}>
+                      <span
+                        className={`text-sm sm:text-base line-through ${banner.dark ? "text-white/50" : "text-gray-400"}`}
+                      >
                         {banner.comparePrice}
                       </span>
                     )}

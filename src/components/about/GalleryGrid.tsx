@@ -1,12 +1,20 @@
 "use client";
 
 import { galleryItems } from "@/src/data/aboutData";
-import { motion, AnimatePresence, useReducedMotion, Variants } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+  Variants,
+} from "framer-motion";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 
-const allCategories = ["All", ...Array.from(new Set(galleryItems.map((g) => g.category)))];
+const allCategories = [
+  "All",
+  ...Array.from(new Set(galleryItems.map((g) => g.category))),
+];
 
 const gridVariants: Variants = {
   hidden: {},
@@ -123,7 +131,11 @@ export default function GalleryGrid() {
                   <motion.div
                     className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30"
                     initial={false}
-                    animate={shouldReduceMotion ? undefined : { scale: [0.85, 1.05, 1], rotate: [0, 8, 0] }}
+                    animate={
+                      shouldReduceMotion
+                        ? undefined
+                        : { scale: [0.85, 1.05, 1], rotate: [0, 8, 0] }
+                    }
                     transition={{ duration: 0.45, ease: "easeOut" }}
                     whileHover={shouldReduceMotion ? undefined : { scale: 1.1 }}
                   >

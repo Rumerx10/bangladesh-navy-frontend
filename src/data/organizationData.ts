@@ -55,12 +55,18 @@ export const organogramData: IOrganogramData = {
       {
         id: "plan-policy",
         title: "DEPUTY CHIEFHYDROGRAPHER (PLAN & POLICY)",
-        sub: { id: "national-affair", title: "DEPUTY CHIEFHYDROGRAPHER (NATIONAL AFFAIR)" },
+        sub: {
+          id: "national-affair",
+          title: "DEPUTY CHIEFHYDROGRAPHER (NATIONAL AFFAIR)",
+        },
       },
       {
         id: "ops-trg",
         title: "DEPUTY CHIEFHYDROGRAPHER (OPS & TRG)",
-        sub: { id: "international-affair", title: "DEPUTY CHIEFHYDROGRAPHER (INTERNATIONAL AFFAIR)" },
+        sub: {
+          id: "international-affair",
+          title: "DEPUTY CHIEFHYDROGRAPHER (INTERNATIONAL AFFAIR)",
+        },
       },
     ],
   },

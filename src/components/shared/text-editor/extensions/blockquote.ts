@@ -9,5 +9,4 @@ const CustomBlockquote = StarterKit.configure({
   },
 });
 
-
-export default CustomBlockquote
+export default CustomBlockquote;

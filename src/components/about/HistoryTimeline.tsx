@@ -14,7 +14,7 @@ const historyNarrative: string[] = [
   "With the assistance of the French government through the Hydro Bangla Projects (1 & 2), the department stepped into digital survey era. Recognizing the need for better coordination in surveying activities, data management, and chart production, BN Hydrographic and Oceanographic Center (BNHOC) was officially established on March 15, 2001, at the BN Chart Depot.",
   "BNHOC rapidly advanced the production of navigational charts and tide tables, processing hydrographic data from survey ships. In 2001, Bangladesh joined the International Hydrographic Organization as its 70th member, reflecting its adherence to international survey standards. BNHOC has played a significant role in maritime delimitation with India and Myanmar. Its contributions to maritime stake holders are noteworthy. Publications such as the BN Tide Table, BN Chart Catalog, and Notice to Mariners have been instrumental in ensuring safe navigation within Bangladesh sea waters.",
   "BNHOC has published 55 paper charts and 17 electronic navigational charts covering Bangladesh sea areas at Bay of Bengal. These include 09 international series paper charts and 11 international series electronic navigational charts. Those charts not only enhance the country's global reputation but also generate foreign exchange through international sales. Additionally, BNHOC supports Bangladesh Navy by publishing daily marine weather forecasts and reviewing Hydrographic, Oceanographic, and Meteorological data collected by BN ships. These efforts have significantly contributed to the growth of the blue economy.",
-  "Over the past two decades, BNHOC has made remarkable progress in maritime boundary demarcation, safe navigation, and sustainable marine resource use. The organization remains committed to its mission of \"Ensuring Safe & Efficient Navigation for Sustainable Bangladesh,\" aligning with the nation's goals for a secure and sustainable maritime environment.",
+  'Over the past two decades, BNHOC has made remarkable progress in maritime boundary demarcation, safe navigation, and sustainable marine resource use. The organization remains committed to its mission of "Ensuring Safe & Efficient Navigation for Sustainable Bangladesh," aligning with the nation\'s goals for a secure and sustainable maritime environment.',
 ];
 
 interface HistoryTimelineProps {
@@ -48,7 +48,9 @@ export default function HistoryTimeline({
             />
           </div>
           {historyNarrative.map((para, i) => (
-            <p key={i} className="mb-5 last:mb-0">{para}</p>
+            <p key={i} className="mb-5 last:mb-0">
+              {para}
+            </p>
           ))}
           <div className="clear-both" />
         </div>
@@ -104,66 +106,65 @@ export default function HistoryTimeline({
 
       {/* ── Active Era Detail ── */}
 
-        <motion.div
-          key={activeEra}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -12 }}
-          transition={{ duration: 0.4 }}
-          className="rounded-lg bg-white border border-[#e8edf3] overflow-hidden shadow-[0_4px_32px_rgba(0,24,54,0.06)]"
-        >
-          {/* header strip */}
-          <div className="flex items-center gap-4 px-5 py-5 md:px-8 md:py-6 bg-[var(--primary,#003f71)] text-white">
-            <div className="w-12 h-12 rounded-xl bg-white/18 flex items-center justify-center shrink-0">
-              {eraIcons[eras[activeEra].icon] ?? <Anchor size={22} />}
-            </div>
-            <div>
-              <p className="text-[0.72rem] font-semibold uppercase tracking-wider opacity-80 mb-0.5">
-                {eras[activeEra].yearRange}
-              </p>
-              <h3 className="text-lg md:text-xl font-extrabold leading-tight">
-                {eras[activeEra].title}
-              </h3>
-            </div>
+      <motion.div
+        key={activeEra}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -12 }}
+        transition={{ duration: 0.4 }}
+        className="rounded-lg bg-white border border-[#e8edf3] overflow-hidden shadow-[0_4px_32px_rgba(0,24,54,0.06)]"
+      >
+        {/* header strip */}
+        <div className="flex items-center gap-4 px-5 py-5 md:px-8 md:py-6 bg-[var(--primary,#003f71)] text-white">
+          <div className="w-12 h-12 rounded-xl bg-white/18 flex items-center justify-center shrink-0">
+            {eraIcons[eras[activeEra].icon] ?? <Anchor size={22} />}
           </div>
+          <div>
+            <p className="text-[0.72rem] font-semibold uppercase tracking-wider opacity-80 mb-0.5">
+              {eras[activeEra].yearRange}
+            </p>
+            <h3 className="text-lg md:text-xl font-extrabold leading-tight">
+              {eras[activeEra].title}
+            </h3>
+          </div>
+        </div>
 
-          {/* summary */}
-          <p className="px-5 md:px-8 pt-6 text-[0.92rem] text-[#4a5568] leading-relaxed">
-            {eras[activeEra].summary}
-          </p>
+        {/* summary */}
+        <p className="px-5 md:px-8 pt-6 text-[0.92rem] text-[#4a5568] leading-relaxed">
+          {eras[activeEra].summary}
+        </p>
 
-          {/* detail points */}
-          <ul className="pb-6 list-none px-5 md:px-8 pt-5 m-0 flex flex-col gap-3">
-            {eras[activeEra].details.map((d, i) => (
-              <motion.li
-                key={i}
-                initial={{ opacity: 0, x: -12 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.08 * i }}
-                className="flex items-start gap-2 text-sm text-[#374151] leading-relaxed"
-              >
-                <ChevronRight
-                  size={16}
-                  className="shrink-0 mt-0.75 text-(--primary,#003f71)"
-                />
-                <span>{d}</span>
-              </motion.li>
-            ))}
-          </ul>
-
-          {/* highlight quote */}
-          {eras[activeEra].highlight && (
-            <motion.blockquote
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.35 }}
-              className="mx-5 md:mx-8 mt-5 mb-7 px-5 py-4 rounded-xl bg-[rgba(0,63,113,0.05)] border-l-4 border-[var(--primary,#003f71)] text-[0.85rem] italic text-[#1a3a5c] leading-relaxed"
+        {/* detail points */}
+        <ul className="pb-6 list-none px-5 md:px-8 pt-5 m-0 flex flex-col gap-3">
+          {eras[activeEra].details.map((d, i) => (
+            <motion.li
+              key={i}
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.08 * i }}
+              className="flex items-start gap-2 text-sm text-[#374151] leading-relaxed"
             >
-              {eras[activeEra].highlight}
-            </motion.blockquote>
-          )}
-        </motion.div>
- 
+              <ChevronRight
+                size={16}
+                className="shrink-0 mt-0.75 text-(--primary,#003f71)"
+              />
+              <span>{d}</span>
+            </motion.li>
+          ))}
+        </ul>
+
+        {/* highlight quote */}
+        {eras[activeEra].highlight && (
+          <motion.blockquote
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.35 }}
+            className="mx-5 md:mx-8 mt-5 mb-7 px-5 py-4 rounded-xl bg-[rgba(0,63,113,0.05)] border-l-4 border-[var(--primary,#003f71)] text-[0.85rem] italic text-[#1a3a5c] leading-relaxed"
+          >
+            {eras[activeEra].highlight}
+          </motion.blockquote>
+        )}
+      </motion.div>
 
       {/* ── Milestones Ribbon ── */}
       <motion.div

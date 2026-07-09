@@ -13,12 +13,7 @@ export default function Paragraph({
   as: Tag = "p",
 }: ParagraphProps) {
   return (
-    <Tag
-      className={cn(
-        "text-sm xl:text-base text-secondary-foreground leading-relaxed",
-        className
-      )}
-    >
+    <Tag className={cn("text-base text-secondary-foreground", className)}>
       {children}
     </Tag>
   );

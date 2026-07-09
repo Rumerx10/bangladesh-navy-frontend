@@ -120,7 +120,13 @@ function HArrow() {
   return (
     <div className="flex items-center shrink-0" style={{ width: 20 }}>
       <div className="flex-1 h-px" style={{ background: LINE }} />
-      <svg width="6" height="8" viewBox="0 0 6 8" fill="none" className="shrink-0">
+      <svg
+        width="6"
+        height="8"
+        viewBox="0 0 6 8"
+        fill="none"
+        className="shrink-0"
+      >
         <path d="M0 0 L6 4 L0 8 Z" fill={NAVY} fillOpacity="0.5" />
       </svg>
     </div>
@@ -158,14 +164,23 @@ function ForkDown({ n }: { n: number }) {
       {n > 1 && (
         <div
           className="absolute h-px"
-          style={{ top: "50%", left: `${lo}%`, right: `${100 - hi}%`, background: LINE }}
+          style={{
+            top: "50%",
+            left: `${lo}%`,
+            right: `${100 - hi}%`,
+            background: LINE,
+          }}
         />
       )}
       {pcts.map((p, i) => (
         <div
           key={i}
           className="absolute top-1/2 bottom-0 w-px"
-          style={{ left: `${p}%`, transform: "translateX(-50%)", background: LINE }}
+          style={{
+            left: `${p}%`,
+            transform: "translateX(-50%)",
+            background: LINE,
+          }}
         />
       ))}
     </div>
@@ -176,7 +191,13 @@ function ForkDown({ n }: { n: number }) {
  * Root → two asymmetric branches.
  * leftPct / rightPct = horizontal % positions of the stems (relative to full container width).
  */
-function RootFork({ leftPct, rightPct }: { leftPct: number; rightPct: number }) {
+function RootFork({
+  leftPct,
+  rightPct,
+}: {
+  leftPct: number;
+  rightPct: number;
+}) {
   return (
     <div className="relative w-full" style={{ height: 36 }}>
       <div
@@ -185,13 +206,22 @@ function RootFork({ leftPct, rightPct }: { leftPct: number; rightPct: number }) 
       />
       <div
         className="absolute h-px"
-        style={{ top: "50%", left: `${leftPct}%`, right: `${100 - rightPct}%`, background: LINE }}
+        style={{
+          top: "50%",
+          left: `${leftPct}%`,
+          right: `${100 - rightPct}%`,
+          background: LINE,
+        }}
       />
       {[leftPct, rightPct].map((p, i) => (
         <div
           key={i}
           className="absolute top-1/2 bottom-0 w-px"
-          style={{ left: `${p}%`, transform: "translateX(-50%)", background: LINE }}
+          style={{
+            left: `${p}%`,
+            transform: "translateX(-50%)",
+            background: LINE,
+          }}
         />
       ))}
     </div>
@@ -245,10 +275,7 @@ function LeftRows({ rows }: { rows: string[][] }) {
             {row.map((dept, di) => (
               <Fragment key={di}>
                 <div className="flex-1 min-w-0">
-                  <DeptCard
-                    title={dept}
-                    delay={0.15 + ri * 0.08 + di * 0.04}
-                  />
+                  <DeptCard title={dept} delay={0.15 + ri * 0.08 + di * 0.04} />
                 </div>
                 {di < row.length - 1 && <HArrow />}
               </Fragment>
@@ -282,7 +309,6 @@ export default function Organization() {
         {/* Horizontal scroll on mobile */}
         <div className="overflow-x-auto -mx-4 px-4 pb-6">
           <div style={{ minWidth: 860 }} className="flex flex-col items-center">
-
             {/* ROOT */}
             <RootCard title={root} />
 
@@ -291,7 +317,6 @@ export default function Organization() {
 
             {/* BRANCH ROW */}
             <div className="w-full flex items-start gap-4">
-
               {/* ── LEFT BRANCH (wider) ── */}
               <div style={{ flex: "0 0 60%" }} className="min-w-0">
                 <BranchCard title={leftBranch.title} delay={0.1} />
@@ -305,7 +330,10 @@ export default function Organization() {
               <div className="self-stretch w-px shrink-0 bg-pBlue/10 mt-1" />
 
               {/* ── RIGHT BRANCH (narrower) ── */}
-              <div style={{ flex: "0 0 35%" }} className="min-w-0 flex flex-col items-center">
+              <div
+                style={{ flex: "0 0 35%" }}
+                className="min-w-0 flex flex-col items-center"
+              >
                 <BranchCard title={rightBranch.title} delay={0.15} />
                 {/* Branch → 2 column stems */}
                 <ForkDown n={rightBranch.columns.length} />
@@ -335,7 +363,11 @@ export default function Organization() {
               {[
                 { color: "#001836", label: "Chief Hydrographer" },
                 { color: "#003f71", label: "Addl Chief Hydrographer" },
-                { color: "#eef4fa", label: "Deputy Chief Hydrographer", border: "#003f71" },
+                {
+                  color: "#eef4fa",
+                  label: "Deputy Chief Hydrographer",
+                  border: "#003f71",
+                },
                 { color: "#ffffff", label: "Department", border: "#003f71" },
               ].map((item) => (
                 <span key={item.label} className="flex items-center gap-1.5">
@@ -356,9 +388,6 @@ export default function Organization() {
     </section>
   );
 }
-
-
-
 
 // "use client";
 

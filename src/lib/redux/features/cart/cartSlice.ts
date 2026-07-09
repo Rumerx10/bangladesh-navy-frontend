@@ -29,7 +29,10 @@ const persistCart = (state: CartState) => {
 };
 
 // Helper to build a unique key for matching cart items by attributes
-const itemKey = (item: { productId: string; selectedAttributes?: Record<string, string> }) => {
+const itemKey = (item: {
+  productId: string;
+  selectedAttributes?: Record<string, string>;
+}) => {
   const attrs = item.selectedAttributes
     ? Object.entries(item.selectedAttributes)
         .sort(([a], [b]) => a.localeCompare(b))
@@ -58,7 +61,10 @@ const cartSlice = createSlice({
 
     removeFromCart(
       state,
-      action: PayloadAction<{ productId: string; selectedAttributes?: Record<string, string> }>
+      action: PayloadAction<{
+        productId: string;
+        selectedAttributes?: Record<string, string>;
+      }>
     ) {
       const removeKey = itemKey(action.payload);
       state.items = state.items.filter((item) => itemKey(item) !== removeKey);
@@ -76,7 +82,10 @@ const cartSlice = createSlice({
       const targetKey = itemKey(action.payload);
       const item = state.items.find((item) => itemKey(item) === targetKey);
       if (item) {
-        item.quantity = Math.max(1, Math.min(action.payload.quantity, item.stock));
+        item.quantity = Math.max(
+          1,
+          Math.min(action.payload.quantity, item.stock)
+        );
       }
       persistCart(state);
     },
@@ -99,11 +108,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const {
-  addToCart,
-  removeFromCart,
-  updateQuantity,
-  clearCart,
-} = cartSlice.actions;
+export const { addToCart, removeFromCart, updateQuantity, clearCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

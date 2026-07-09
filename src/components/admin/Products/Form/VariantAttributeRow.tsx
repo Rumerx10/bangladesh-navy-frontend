@@ -29,7 +29,7 @@ export default function VariantAttributeRow({
   );
 
   const valueOptions = selectedAttrId
-    ? mockAttributeValues[selectedAttrId] ?? []
+    ? (mockAttributeValues[selectedAttrId] ?? [])
     : [];
 
   return (

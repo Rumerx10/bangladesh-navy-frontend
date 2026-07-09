@@ -13,7 +13,12 @@ export default function NewsListingPage() {
       {/* Page Header */}
       <section className="relative bg-linear-to-b from-pBlue to-[#003052] py-14 lg:py-20 overflow-hidden">
         <div className="absolute -right-20 -top-10 text-white">
-          <NavyWatermark variant="anchor" size={300} opacity={0.05} animate="float" />
+          <NavyWatermark
+            variant="anchor"
+            size={300}
+            opacity={0.05}
+            animate="float"
+          />
         </div>
         <div className="relative container px-4 sm:px-6 lg:px-8 text-center text-white">
           <motion.div
@@ -31,13 +36,17 @@ export default function NewsListingPage() {
               News & Events
             </h1>
             <p className="text-base text-gray-300 max-w-lg mx-auto">
-              Stay updated with the latest hydrographic surveys, maritime events, and BNHOC publications
+              Stay updated with the latest hydrographic surveys, maritime
+              events, and BNHOC publications
             </p>
           </motion.div>
 
           {/* Breadcrumb */}
           <nav className="flex items-center justify-center gap-1.5 mt-6 text-sm text-gray-400">
-            <Link href="/" className="flex items-center gap-1 hover:text-white transition-colors">
+            <Link
+              href="/"
+              className="flex items-center gap-1 hover:text-white transition-colors"
+            >
               <Home size={14} /> Home
             </Link>
             <ChevronRight size={14} />

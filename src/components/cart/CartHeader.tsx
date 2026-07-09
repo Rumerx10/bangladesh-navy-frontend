@@ -15,7 +15,9 @@ export default function CartHeader({ totalItems }: CartHeaderProps) {
   return (
     <div className="flex items-center justify-between mb-4 sm:mb-6">
       <div>
-        <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">Shopping Cart</h1>
+        <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">
+          Shopping Cart
+        </h1>
         <span className="text-xs sm:text-sm text-muted-foreground mt-0.5 block">
           {totalItems} {totalItems === 1 ? "item" : "items"} in your cart
         </span>

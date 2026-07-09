@@ -786,7 +786,8 @@ const minimalPromoPoster: PosterTemplate = {
   canvasWidth: 600,
   canvasHeight: 850,
   backgroundColor: "#1A1A2E",
-  backgroundGradient: "linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%)",
+  backgroundGradient:
+    "linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%)",
   shapes: [
     {
       type: "circle",

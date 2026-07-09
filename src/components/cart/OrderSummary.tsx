@@ -28,7 +28,9 @@ export default function OrderSummary({ items }: OrderSummaryProps) {
         {/* Summary rows */}
         <div className="flex flex-col gap-3">
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Subtotal ({totalItems} items)</span>
+            <span className="text-muted-foreground">
+              Subtotal ({totalItems} items)
+            </span>
             <span className="font-medium text-foreground">
               ৳{subtotal.toLocaleString()}
             </span>
@@ -46,9 +48,7 @@ export default function OrderSummary({ items }: OrderSummaryProps) {
 
           <div className="flex justify-between text-lg font-bold">
             <span>Total</span>
-            <span className="text-primary">
-              ৳{total.toLocaleString()}
-            </span>
+            <span className="text-primary">৳{total.toLocaleString()}</span>
           </div>
         </div>
 
@@ -60,7 +60,10 @@ export default function OrderSummary({ items }: OrderSummaryProps) {
           <ArrowRight size={16} />
         </Link>
 
-        <Link href="/" className="text-center text-sm text-primary underline block">
+        <Link
+          href="/"
+          className="text-center text-sm text-primary underline block"
+        >
           Continue Shopping
         </Link>
       </div>

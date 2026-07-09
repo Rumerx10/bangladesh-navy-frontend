@@ -48,10 +48,10 @@ export default function ProductDetails() {
   }
 
   const totalStock = product.hasVariants
-    ? product.variants?.reduce(
+    ? (product.variants?.reduce(
         (sum: number, v: IProductVariantDetail) => sum + v.stockQty,
         0
-      ) ?? 0
+      ) ?? 0)
     : product.stock;
 
   return (
@@ -309,22 +309,20 @@ export default function ProductDetails() {
                       {/* Variant Images */}
                       {variant.images.length > 0 && (
                         <div className="flex gap-2 mb-3">
-                          {variant.images.map(
-                            (img: string, imgIdx: number) => (
-                              <div
-                                key={imgIdx}
-                                className="w-12 h-12 border border-gray-200 rounded-lg overflow-hidden bg-light flex items-center justify-center"
-                              >
-                                <Image
-                                  src={img}
-                                  alt={`Variant ${idx + 1} image ${imgIdx + 1}`}
-                                  width={44}
-                                  height={44}
-                                  className="object-contain"
-                                />
-                              </div>
-                            )
-                          )}
+                          {variant.images.map((img: string, imgIdx: number) => (
+                            <div
+                              key={imgIdx}
+                              className="w-12 h-12 border border-gray-200 rounded-lg overflow-hidden bg-light flex items-center justify-center"
+                            >
+                              <Image
+                                src={img}
+                                alt={`Variant ${idx + 1} image ${imgIdx + 1}`}
+                                width={44}
+                                height={44}
+                                className="object-contain"
+                              />
+                            </div>
+                          ))}
                         </div>
                       )}
 

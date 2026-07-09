@@ -1,11 +1,11 @@
 import type {
-    IChiefMessage,
-    IHeroSlide,
-    INewsItem,
-    INoticeItem,
-    IQuickAccessItem,
-    ISearchTab,
-    IStatItem,
+  IChiefMessage,
+  IHeroSlide,
+  INewsItem,
+  INoticeItem,
+  IQuickAccessItem,
+  ISearchTab,
+  IStatItem,
 } from "@/src/components/home/types";
 
 export const heroSlides: IHeroSlide[] = [

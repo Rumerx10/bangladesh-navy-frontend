@@ -192,7 +192,11 @@ export const dummyCategories: Category[] = [
         slug: "maternity",
         children: [
           { id: "5-2-1", name: "Maternity Wear", slug: "maternity-wear" },
-          { id: "5-2-2", name: "Nursing Essentials", slug: "nursing-essentials" },
+          {
+            id: "5-2-2",
+            name: "Nursing Essentials",
+            slug: "nursing-essentials",
+          },
         ],
       },
     ],
@@ -220,7 +224,11 @@ export const dummyCategories: Category[] = [
         children: [
           { id: "6-2-1", name: "Cookware", slug: "cookware" },
           { id: "6-2-2", name: "Dinnerware", slug: "dinnerware" },
-          { id: "6-2-3", name: "Kitchen Appliances", slug: "kitchen-appliances" },
+          {
+            id: "6-2-3",
+            name: "Kitchen Appliances",
+            slug: "kitchen-appliances",
+          },
         ],
       },
     ],
@@ -236,7 +244,11 @@ export const dummyCategories: Category[] = [
         name: "Fresh Food",
         slug: "fresh-food",
         children: [
-          { id: "7-1-1", name: "Fruits & Vegetables", slug: "fruits-vegetables" },
+          {
+            id: "7-1-1",
+            name: "Fruits & Vegetables",
+            slug: "fruits-vegetables",
+          },
           { id: "7-1-2", name: "Meat & Seafood", slug: "meat-seafood" },
           { id: "7-1-3", name: "Dairy & Eggs", slug: "dairy-eggs" },
         ],
@@ -322,7 +334,11 @@ export const dummyCategories: Category[] = [
         children: [
           { id: "10-1-1", name: "Yoga & Pilates", slug: "yoga-pilates" },
           { id: "10-1-2", name: "Gym Equipment", slug: "gym-equipment" },
-          { id: "10-1-3", name: "Fitness Accessories", slug: "fitness-accessories" },
+          {
+            id: "10-1-3",
+            name: "Fitness Accessories",
+            slug: "fitness-accessories",
+          },
         ],
       },
       {
@@ -350,7 +366,11 @@ export const dummyCategories: Category[] = [
         children: [
           { id: "11-1-1", name: "Car Electronics", slug: "car-electronics" },
           { id: "11-1-2", name: "Car Care", slug: "car-care" },
-          { id: "11-1-3", name: "Interior Accessories", slug: "interior-accessories" },
+          {
+            id: "11-1-3",
+            name: "Interior Accessories",
+            slug: "interior-accessories",
+          },
         ],
       },
       {

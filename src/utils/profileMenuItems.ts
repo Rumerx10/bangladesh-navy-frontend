@@ -1,12 +1,12 @@
 import {
-    CreditCard,
-    Home,
-    LayoutDashboard,
-    MapPin,
-    Package,
-    RotateCcw,
-    User,
-    XCircle,
+  CreditCard,
+  Home,
+  LayoutDashboard,
+  MapPin,
+  Package,
+  RotateCcw,
+  User,
+  XCircle,
 } from "lucide-react";
 
 export const userMenuItems = [

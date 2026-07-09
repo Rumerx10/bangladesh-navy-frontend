@@ -2,7 +2,6 @@ import { type CommandProps, type NodeViewProps } from "@tiptap/core";
 import Image from "@tiptap/extension-image";
 import { ResizableImageAttributes } from "../types/editor";
 
-
 const ResizableImage = Image.extend({
   name: "resizableImage",
 
@@ -260,7 +259,13 @@ const ResizableImage = Image.extend({
         const pos = getPos();
         if (pos !== undefined) {
           editor.commands.command(({ tr }: Record<string, unknown>) => {
-            const transaction = tr as { setNodeMarkup: (pos: number, type: unknown, attrs: Record<string, unknown>) => void };
+            const transaction = tr as {
+              setNodeMarkup: (
+                pos: number,
+                type: unknown,
+                attrs: Record<string, unknown>
+              ) => void;
+            };
             transaction.setNodeMarkup(pos, undefined, {
               ...node.attrs,
               width: parseInt(img.style.width),

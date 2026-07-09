@@ -1,6 +1,6 @@
 .text-editor-container {
   /* max-width: 800px; */
-  
+
   margin: 20px auto;
   border: 1px solid #e1e5e9;
   border-radius: 8px;
@@ -170,7 +170,6 @@
   display: block;
   cursor: pointer;
 }
-
 
 /* 1. Inline - Image behaves like text */
 .image-resize-container[data-wrap="inline"] {
@@ -434,7 +433,7 @@
 }
 .ProseMirror blockquote.custom-blockquote p {
   margin: 0;
-} 
+}
 /* Preview blockquote styling */
 .preview-content blockquote {
   border-left: 3px solid #3b82f6;
@@ -503,7 +502,6 @@
   background: #fffb0080;
   color: #000;
 }
-
 
 .color-dropdown {
   transition: all 0.15s ease;

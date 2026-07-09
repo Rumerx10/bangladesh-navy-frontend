@@ -64,9 +64,7 @@ export default function TextControlPanel({
             min={8}
             max={120}
             value={element.fontSize}
-            onChange={(e) =>
-              onUpdate({ fontSize: parseInt(e.target.value) })
-            }
+            onChange={(e) => onUpdate({ fontSize: parseInt(e.target.value) })}
             className="flex-1 h-1.5 appearance-none bg-gray-200 rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
           />
           <div className="flex flex-col">
@@ -114,10 +112,22 @@ export default function TextControlPanel({
         {/* Quick colors */}
         <div className="flex flex-wrap gap-1.5 mt-2">
           {[
-            "#FFFFFF", "#000000", "#E94560", "#FFD700",
-            "#2ECC71", "#3498DB", "#9B59B6", "#E67E22",
-            "#1ABC9C", "#F39C12", "#C0392B", "#8E44AD",
-            "#2C3E50", "#7F8C8D", "#D35400", "#27AE60",
+            "#FFFFFF",
+            "#000000",
+            "#E94560",
+            "#FFD700",
+            "#2ECC71",
+            "#3498DB",
+            "#9B59B6",
+            "#E67E22",
+            "#1ABC9C",
+            "#F39C12",
+            "#C0392B",
+            "#8E44AD",
+            "#2C3E50",
+            "#7F8C8D",
+            "#D35400",
+            "#27AE60",
           ].map((c) => (
             <button
               key={c}
@@ -166,9 +176,7 @@ export default function TextControlPanel({
           min={-180}
           max={180}
           value={element.rotation}
-          onChange={(e) =>
-            onUpdate({ rotation: parseInt(e.target.value) })
-          }
+          onChange={(e) => onUpdate({ rotation: parseInt(e.target.value) })}
           className="w-full mt-1 h-1.5 appearance-none bg-gray-200 rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
         />
       </div>

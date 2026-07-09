@@ -9,7 +9,11 @@ interface TemplateCardProps {
   onSelect: (template: PosterTemplate) => void;
 }
 
-function renderMiniShapes(template: PosterTemplate, width: number, height: number) {
+function renderMiniShapes(
+  template: PosterTemplate,
+  width: number,
+  height: number
+) {
   return template.shapes.map((shape, i) => {
     const sx = (shape.x / 100) * width;
     const sy = (shape.y / 100) * height;
@@ -46,7 +50,9 @@ function renderMiniShapes(template: PosterTemplate, width: number, height: numbe
             backgroundColor: shape.color,
             opacity: shape.opacity ?? 1,
             borderRadius: shape.borderRadius || 0,
-            transform: shape.rotation ? `rotate(${shape.rotation}deg)` : undefined,
+            transform: shape.rotation
+              ? `rotate(${shape.rotation}deg)`
+              : undefined,
             border: shape.border || undefined,
           }}
         />
@@ -100,7 +106,9 @@ function renderMiniTexts(template: PosterTemplate, scale: number) {
             color: el.color,
             textTransform: el.textTransform || "none",
             lineHeight: el.lineHeight || 1.2,
-            letterSpacing: el.letterSpacing ? `${el.letterSpacing * scale * 0.5}px` : undefined,
+            letterSpacing: el.letterSpacing
+              ? `${el.letterSpacing * scale * 0.5}px`
+              : undefined,
             whiteSpace: "nowrap",
             opacity: el.opacity ?? 1,
           }}
@@ -138,7 +146,8 @@ export default function TemplateCard({
             style={{
               width: previewW,
               height: previewH,
-              background: template.backgroundGradient || template.backgroundColor,
+              background:
+                template.backgroundGradient || template.backgroundColor,
             }}
           >
             {renderMiniShapes(template, previewW, previewH)}
@@ -155,7 +164,12 @@ export default function TemplateCard({
                 }}
               >
                 <div className="w-4 h-4 text-gray-400/50">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  >
                     <rect x="3" y="3" width="18" height="18" rx="2" />
                     <circle cx="8.5" cy="8.5" r="1.5" />
                     <path d="m21 15-5-5L5 21" />
@@ -182,7 +196,8 @@ export default function TemplateCard({
                 {template.name}
               </h4>
               <p className="text-[11px] text-gray-400 mt-0.5 capitalize">
-                {template.category} • {template.canvasWidth}×{template.canvasHeight}
+                {template.category} • {template.canvasWidth}×
+                {template.canvasHeight}
               </p>
             </div>
             <span

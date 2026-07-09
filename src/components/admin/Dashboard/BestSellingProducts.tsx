@@ -35,7 +35,10 @@ export default function BestSellingProducts() {
       <CardContent className="pt-2 px-3 sm:px-6">
         <div className="space-y-3 sm:space-y-4">
           {products.map((product) => (
-            <div key={product.rank} className="flex items-center gap-2 sm:gap-3 group">
+            <div
+              key={product.rank}
+              className="flex items-center gap-2 sm:gap-3 group"
+            >
               {/* Rank */}
               <span
                 className="w-6 h-6 sm:w-7 sm:h-7 rounded-md sm:rounded-lg flex items-center justify-center text-[10px] sm:text-xs font-bold text-white shrink-0"

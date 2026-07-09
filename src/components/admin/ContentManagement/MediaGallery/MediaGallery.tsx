@@ -2,17 +2,9 @@
 
 import { Button } from "@/src/components/ui/button";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  Eye,
-  FolderOpen,
-  Search,
-  Trash2,
-  Upload,
-  X
-} from "lucide-react";
+import { Eye, FolderOpen, Search, Trash2, Upload, X } from "lucide-react";
 import { useState } from "react";
 import ImageUploadModal from "./ImageUploadModal";
-
 
 export interface MediaItem {
   id: string;
@@ -324,9 +316,24 @@ export default function MediaGallery() {
                   {previewItem.name}
                 </h3>
                 <div className="flex gap-4 mt-2 text-sm text-gray-500">
-                  <span>Type: <span className="font-medium text-gray-700 capitalize">{previewItem.type}</span></span>
-                  <span>Size: <span className="font-medium text-gray-700">{previewItem.size}</span></span>
-                  <span>Dimensions: <span className="font-medium text-gray-700">{previewItem.dimensions}</span></span>
+                  <span>
+                    Type:{" "}
+                    <span className="font-medium text-gray-700 capitalize">
+                      {previewItem.type}
+                    </span>
+                  </span>
+                  <span>
+                    Size:{" "}
+                    <span className="font-medium text-gray-700">
+                      {previewItem.size}
+                    </span>
+                  </span>
+                  <span>
+                    Dimensions:{" "}
+                    <span className="font-medium text-gray-700">
+                      {previewItem.dimensions}
+                    </span>
+                  </span>
                 </div>
               </div>
             </motion.div>

@@ -2,11 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  LayoutGrid,
-  Sparkles,
-  Search,
-} from "lucide-react";
+import { LayoutGrid, Sparkles, Search } from "lucide-react";
 import { templates, PosterTemplate } from "./templates";
 import TemplateCard from "./TemplateCard";
 import DesignerCanvas from "./DesignerCanvas";
@@ -18,16 +14,13 @@ export default function BannerPoster() {
   const [viewMode, setViewMode] = useState<ViewMode>("gallery");
   const [selectedTemplate, setSelectedTemplate] =
     useState<PosterTemplate | null>(null);
-  const [categoryFilter, setCategoryFilter] =
-    useState<CategoryFilter>("all");
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
   const [search, setSearch] = useState("");
 
   const filteredTemplates = templates.filter((t) => {
     const matchesCategory =
       categoryFilter === "all" || t.category === categoryFilter;
-    const matchesSearch = t.name
-      .toLowerCase()
-      .includes(search.toLowerCase());
+    const matchesSearch = t.name.toLowerCase().includes(search.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 

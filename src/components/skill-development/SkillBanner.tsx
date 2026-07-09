@@ -25,7 +25,7 @@ export default function SkillBanner() {
           <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight">
             BN HYDROGRAPHIC INSTITUTE
           </h1>
-          
+
           <div className="flex flex-wrap items-center justify-center gap-6">
             <div className="flex items-center gap-3 text-white/80">
               <Shield className="text-blue-400" size={24} />
@@ -39,7 +39,7 @@ export default function SkillBanner() {
             </div>
           </div>
         </motion.div>
-      </div>      
+      </div>
     </section>
   );
 }

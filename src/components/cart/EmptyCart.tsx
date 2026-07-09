@@ -10,7 +10,9 @@ export default function EmptyCart() {
         <div className="w-20 h-20 flex items-center justify-center rounded-full bg-muted text-muted-foreground">
           <ShoppingCart size={32} />
         </div>
-        <h1 className="text-xl font-bold text-foreground">Your cart is empty</h1>
+        <h1 className="text-xl font-bold text-foreground">
+          Your cart is empty
+        </h1>
         <p className="text-sm text-muted-foreground max-w-xs">
           Looks like you haven&apos;t added any products to your cart yet.
         </p>

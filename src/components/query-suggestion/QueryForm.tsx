@@ -5,8 +5,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import {
-    ContactFormType,
-    contactValidationSchema,
+  ContactFormType,
+  contactValidationSchema,
 } from "../contact-us/schema/ContactSchema";
 import ControlledInputField from "../shared/FromController/ControlledInputField";
 import ControlledTextareaField from "../shared/FromController/ControlledTextareaField";

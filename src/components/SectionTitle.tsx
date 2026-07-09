@@ -19,7 +19,9 @@ const SectionTitle = ({
       className={`mb-8 lg:mb-10 flex flex-col items-${position} justify-${position} `}
     >
       <h2 className="text-3xl lg:text-5xl font-bold text-pBlue">{title}</h2>
-      <p className={`max-w-3xl text-${position} mt-2 text-sm lg:text-base text-gray-500`} >
+      <p
+        className={`max-w-3xl text-${position} mt-2 text-sm lg:text-base text-gray-500`}
+      >
         {desc}
       </p>
     </motion.div>

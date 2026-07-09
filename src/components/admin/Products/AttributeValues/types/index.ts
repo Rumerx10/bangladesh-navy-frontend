@@ -3,5 +3,5 @@ export interface IAttributeValue {
   name: string;
   attributeId: string;
   attributeName: string;
-  actions?: string
+  actions?: string;
 }

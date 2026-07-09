@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import {
   Table,
   TableBody,
@@ -17,7 +12,10 @@ import {
 import { Package } from "lucide-react";
 import { useGet } from "@/src/hooks/useGet";
 import RecentOrdersSkeleton from "./Skeleton/RecentOrdersSkeleton";
-import type { OrderStatus, RecentOrder } from "@/src/components/admin/Dashboard/types";
+import type {
+  OrderStatus,
+  RecentOrder,
+} from "@/src/components/admin/Dashboard/types";
 
 const statusStyles: Record<OrderStatus, string> = {
   Completed: "bg-emerald-50 text-emerald-600 border-emerald-200",
@@ -82,9 +80,7 @@ export default function RecentOrders() {
                 <p className="text-xs text-gray-500 truncate">
                   {order.customer}
                 </p>
-                <p className="text-[10px] text-gray-400 mt-0.5">
-                  {order.date}
-                </p>
+                <p className="text-[10px] text-gray-400 mt-0.5">{order.date}</p>
               </div>
               <span className="text-sm font-bold text-gray-900 shrink-0 ml-3">
                 {order.amount}

@@ -2,11 +2,11 @@
 
 import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/src/components/ui/select";
 import { useDelete } from "@/src/hooks/useDelete";
 import { useGet } from "@/src/hooks/useGet";
@@ -67,7 +67,7 @@ export default function AttributeValueList() {
   }, [selectedAttributeId]);
 
   const { data, isLoading } = useGet<IAttributeValue[]>(
-    '/product-attribute/values/list',
+    "/product-attribute/values/list",
     [
       "product-attribute-values",
       selectedAttributeId,

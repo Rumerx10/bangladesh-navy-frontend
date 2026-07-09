@@ -5,7 +5,14 @@ import NewsCard from "@/src/components/home/News/NewsCard";
 import { newsItems } from "@/src/data/homeData";
 import { INewsItem } from "@/src/components/home/types";
 import { motion } from "framer-motion";
-import { ArrowLeft, Calendar, ChevronRight, Home, Share2, Tag } from "lucide-react";
+import {
+  ArrowLeft,
+  Calendar,
+  ChevronRight,
+  Home,
+  Share2,
+  Tag,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -25,7 +32,11 @@ export default function NewsDetail({ news }: NewsDetailProps) {
       ? relatedNews
       : [
           ...relatedNews,
-          ...newsItems.filter((n) => n.id !== news.id && !relatedNews.find((r) => r.id === n.id)).slice(0, 3 - relatedNews.length),
+          ...newsItems
+            .filter(
+              (n) => n.id !== news.id && !relatedNews.find((r) => r.id === n.id)
+            )
+            .slice(0, 3 - relatedNews.length),
         ];
 
   return (
@@ -46,7 +57,10 @@ export default function NewsDetail({ news }: NewsDetailProps) {
         <div className="absolute bottom-0 left-0 right-0">
           <div className="container px-4 sm:px-6 lg:px-8 pb-8">
             <nav className="flex items-center gap-1.5 text-sm text-gray-300 mb-4">
-              <Link href="/" className="flex items-center gap-1 hover:text-white transition-colors">
+              <Link
+                href="/"
+                className="flex items-center gap-1 hover:text-white transition-colors"
+              >
                 <Home size={14} /> Home
               </Link>
               <ChevronRight size={14} />
@@ -54,7 +68,9 @@ export default function NewsDetail({ news }: NewsDetailProps) {
                 News
               </Link>
               <ChevronRight size={14} />
-              <span className="text-white font-medium truncate max-w-50">{news.title}</span>
+              <span className="text-white font-medium truncate max-w-50">
+                {news.title}
+              </span>
             </nav>
           </div>
         </div>
@@ -63,7 +79,12 @@ export default function NewsDetail({ news }: NewsDetailProps) {
       {/* Content */}
       <section className="relative py-10 lg:py-14 bg-white overflow-hidden">
         <div className="absolute -right-20 top-20 text-pBlue">
-          <NavyWatermark variant="lighthouse" size={300} opacity={0.02} animate="drift" />
+          <NavyWatermark
+            variant="lighthouse"
+            size={300}
+            opacity={0.02}
+            animate="drift"
+          />
         </div>
 
         <div className="relative container px-4 sm:px-6 lg:px-8">
@@ -128,7 +149,10 @@ export default function NewsDetail({ news }: NewsDetailProps) {
               <button
                 onClick={() => {
                   if (navigator.share) {
-                    navigator.share({ title: news.title, url: window.location.href });
+                    navigator.share({
+                      title: news.title,
+                      url: window.location.href,
+                    });
                   } else {
                     navigator.clipboard.writeText(window.location.href);
                   }

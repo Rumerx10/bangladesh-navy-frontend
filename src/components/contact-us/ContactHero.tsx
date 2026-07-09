@@ -29,8 +29,9 @@ export default function ContactHero() {
             </span>
           </h1>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-            We are dedicated to providing precise hydrographic information and maritime support. 
-            Our team is ready to assist with your inquiries, feedback, and service requests.
+            We are dedicated to providing precise hydrographic information and
+            maritime support. Our team is ready to assist with your inquiries,
+            feedback, and service requests.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-8">

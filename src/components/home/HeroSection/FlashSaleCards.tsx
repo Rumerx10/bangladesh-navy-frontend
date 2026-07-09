@@ -25,7 +25,10 @@ const flashSales = [
 
 export default function FlashSaleCards() {
   return (
-    <div className="flex gap-3 overflow-x-auto lg:grid lg:grid-cols-2 lg:gap-4 mt-3 lg:mt-4 snap-x snap-mandatory" style={{ scrollbarWidth: "none" }}>
+    <div
+      className="flex gap-3 overflow-x-auto lg:grid lg:grid-cols-2 lg:gap-4 mt-3 lg:mt-4 snap-x snap-mandatory"
+      style={{ scrollbarWidth: "none" }}
+    >
       {flashSales.map((sale) => (
         <Link
           key={sale.id}

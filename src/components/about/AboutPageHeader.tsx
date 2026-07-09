@@ -28,17 +28,13 @@ export default function AboutPageHeader({
                   {crumb.label}
                 </Link>
               ) : (
-                <span className="text-pBlue font-medium">
-                  {crumb.label}
-                </span>
+                <span className="text-pBlue font-medium">{crumb.label}</span>
               )}
             </span>
           ))}
         </nav>
 
-        <h1 className="text-2xl lg:text-3xl font-bold text-pBlue">
-          {title}
-        </h1>
+        <h1 className="text-2xl lg:text-3xl font-bold text-pBlue">{title}</h1>
         <p className="text-sm lg:text-base text-gray-500 mt-1">{subtitle}</p>
       </div>
     </div>

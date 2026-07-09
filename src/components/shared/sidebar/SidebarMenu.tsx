@@ -39,7 +39,7 @@ export default function SidebarMenu({ onNavigate }: SidebarMenuProps) {
   };
 
   return (
-    <nav className="flex-1 overflow-y-auto custom-scrollbar mt-4">
+    <nav className="flex-1 overflow-y-auto custom-scrollbar mt-4 scrollbar-modern pr-1">
       <div className="flex flex-col gap-1 py-1">
         {menuItems.map((item, index) => {
           const showSegment =

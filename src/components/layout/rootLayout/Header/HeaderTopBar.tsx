@@ -242,10 +242,7 @@ export default function HeaderTopBar({
 
             {/* "Others" mega-dropdown — visible below 1800 px */}
             <li className="relative group min-[1800px]:hidden">
-              <button
-                type="button"
-                className={`${triggerBase} ${triggerIdle}`}
-              >
+              <button type="button" className={`${triggerBase} ${triggerIdle}`}>
                 Others
                 <ChevronDown
                   size={14}

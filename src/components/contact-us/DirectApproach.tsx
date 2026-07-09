@@ -33,7 +33,9 @@ export default function DirectApproach() {
               <Phone className="w-5 h-5 text-liteBlue" />
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">Phone Numbers</p>
+              <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">
+                Phone Numbers
+              </p>
               {isLoading ? (
                 <div className="h-5 w-48 bg-gray-200 rounded animate-pulse" />
               ) : (
@@ -62,7 +64,9 @@ export default function DirectApproach() {
               <Mail className="w-5 h-5 text-liteBlue" />
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">Email Addresses</p>
+              <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">
+                Email Addresses
+              </p>
               {isLoading ? (
                 <div className="h-5 w-56 bg-gray-200 rounded animate-pulse" />
               ) : (
@@ -91,7 +95,9 @@ export default function DirectApproach() {
               <Clock className="w-5 h-5 text-liteBlue" />
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">Office Hours</p>
+              <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">
+                Office Hours
+              </p>
               {isLoading ? (
                 <div className="h-5 w-60 bg-gray-200 rounded animate-pulse" />
               ) : (

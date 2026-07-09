@@ -59,13 +59,7 @@ function CheckoutItemImage({ src, alt }: { src: string; alt: string }) {
   }
 
   return (
-    <Image
-      src={src}
-      alt={alt}
-      fill
-      className="object-cover"
-      sizes="56px"
-    />
+    <Image src={src} alt={alt} fill className="object-cover" sizes="56px" />
   );
 }
 
@@ -109,7 +103,10 @@ export default function CheckoutForm({
   ];
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="container py-8 lg:py-20 px-4 sm:px-0">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="container py-8 lg:py-20 px-4 sm:px-0"
+    >
       <div className="py-4 lg:py-32">
         <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-4 sm:mb-6">
           Checkout
@@ -284,7 +281,9 @@ export default function CheckoutForm({
               </div>
 
               {errors.paymentMethod && (
-                <p className={fieldErrorClass}>{errors.paymentMethod.message}</p>
+                <p className={fieldErrorClass}>
+                  {errors.paymentMethod.message}
+                </p>
               )}
 
               {isBankTransfer && (
@@ -312,7 +311,8 @@ export default function CheckoutForm({
 
                   <div>
                     <label className="block text-xs font-semibold text-foreground mb-1">
-                      Bank Transaction ID <span className="text-red-500">*</span>
+                      Bank Transaction ID{" "}
+                      <span className="text-red-500">*</span>
                     </label>
                     <input
                       className={inputClass}
@@ -379,7 +379,9 @@ export default function CheckoutForm({
 
                 <div className="flex justify-between text-base sm:text-lg font-bold">
                   <span>Total</span>
-                  <span className="text-primary">৳{total.toLocaleString()}</span>
+                  <span className="text-primary">
+                    ৳{total.toLocaleString()}
+                  </span>
                 </div>
               </div>
 

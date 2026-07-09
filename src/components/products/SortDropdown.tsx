@@ -8,7 +8,9 @@ import {
 
 interface SortDropdownProps {
   value: string;
-  onChange: (value: "relevance" | "price-asc" | "price-desc" | "newest") => void;
+  onChange: (
+    value: "relevance" | "price-asc" | "price-desc" | "newest"
+  ) => void;
 }
 
 export default function SortDropdown({ value, onChange }: SortDropdownProps) {

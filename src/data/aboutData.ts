@@ -1,4 +1,8 @@
-import type { IGalleryItem, ISurveyShip, IVisionMissionItem } from "@/src/components/about/types";
+import type {
+  IGalleryItem,
+  ISurveyShip,
+  IVisionMissionItem,
+} from "@/src/components/about/types";
 
 // ─── History Data ───
 
@@ -20,7 +24,6 @@ export interface IHistoryMilestone {
 }
 
 export const historyEras: IHistoryEra[] = [
-  
   {
     id: "era-2",
     era: "Foundation",
@@ -42,14 +45,15 @@ export const historyEras: IHistoryEra[] = [
     yearRange: "1996 – 2000",
     title: "Digital Transformation: Hydro Bangla Project-1",
     summary:
-      "A landmark collaboration with the French government in 1996 under the \"Hydro Bangla Project-1\" enabled the Navy to transition from conventional analogue survey methods to modern digital surveying systems.",
+      'A landmark collaboration with the French government in 1996 under the "Hydro Bangla Project-1" enabled the Navy to transition from conventional analogue survey methods to modern digital surveying systems.',
     details: [
       "The French government provided technical assistance and modern equipment under the Hydro Bangla Project-1 initiative.",
       "Survey operations transitioned from analogue to digital, dramatically improving accuracy, speed, and data management.",
       "Digital cartographic tools were introduced, enabling the production of higher-quality nautical charts compliant with emerging international standards.",
       "Personnel received specialized training in digital hydrographic surveying and data processing techniques.",
     ],
-    highlight: "This project marked a paradigm shift—transforming Bangladesh Navy hydrography from a manual discipline into a technology-driven capability.",
+    highlight:
+      "This project marked a paradigm shift—transforming Bangladesh Navy hydrography from a manual discipline into a technology-driven capability.",
     icon: "cpu",
   },
   {
@@ -66,7 +70,8 @@ export const historyEras: IHistoryEra[] = [
       "BNHOC began producing nautical charts and publications to national and international standards, including INT series charts.",
       "Electronic Navigational Chart (ENC) production commenced in accordance with IHO S-57/S-63 standards for ECDIS systems.",
     ],
-    highlight: "2001 was a watershed year—BNHOC was born and Bangladesh joined the global hydrographic community through IHO membership.",
+    highlight:
+      "2001 was a watershed year—BNHOC was born and Bangladesh joined the global hydrographic community through IHO membership.",
     icon: "building",
   },
   {
@@ -84,16 +89,29 @@ export const historyEras: IHistoryEra[] = [
       "Active participation in UN peacekeeping missions and international hydrographic cooperation programmes since 1993.",
       "The centre maintains and calibrates all survey and meteorological equipment for the Navy's hydrographic fleet.",
     ],
-    highlight: "BNHOC has evolved from a chart depot into a world-recognized centre driving Bangladesh's Blue Economy agenda.",
+    highlight:
+      "BNHOC has evolved from a chart depot into a world-recognized centre driving Bangladesh's Blue Economy agenda.",
     icon: "globe",
   },
 ];
 
 export const historyMilestones: IHistoryMilestone[] = [
-  { year: "1983", event: "Hydrographic Institute & Chart Depot established", highlight: true },
-  { year: "1996", event: "Hydro Bangla Project-1 with French assistance", highlight: true },
+  {
+    year: "1983",
+    event: "Hydrographic Institute & Chart Depot established",
+    highlight: true,
+  },
+  {
+    year: "1996",
+    event: "Hydro Bangla Project-1 with French assistance",
+    highlight: true,
+  },
   { year: "2001", event: "BNHOC formally established", highlight: true },
-  { year: "2001", event: "Bangladesh joins IHO as member state", highlight: true },
+  {
+    year: "2001",
+    event: "Bangladesh joins IHO as member state",
+    highlight: true,
+  },
   { year: "2010", event: "ENC production commenced (IHO S-57 standard)" },
   { year: "2020", event: "Full GIS integration implemented" },
   { year: "2024", event: "S-100 series chart production initiated" },
@@ -115,7 +133,8 @@ export const visionMissionItems: IVisionMissionItem[] = [
     id: "vm-1",
     type: "vision",
     title: "Our Vision",
-    description: "To ensure safe & efficient marine activities for sustainable Bangladesh.",
+    description:
+      "To ensure safe & efficient marine activities for sustainable Bangladesh.",
     // points: [
     //   "International standard nautical charts and publications",
     //   "Modern hydrographic survey capabilities",
@@ -127,7 +146,8 @@ export const visionMissionItems: IVisionMissionItem[] = [
     id: "vm-2",
     type: "mission",
     title: "Our Mission",
-    description: "Provide accurate and up-to-date Hydrographic, Oceanographic & Meteorological data through production of Charts & Publications for safe navigation and sustainable Marine activities.",
+    description:
+      "Provide accurate and up-to-date Hydrographic, Oceanographic & Meteorological data through production of Charts & Publications for safe navigation and sustainable Marine activities.",
     // points: [
     //   "Conduct systematic hydrographic surveys",
     //   "Produce and maintain nautical charts",
@@ -146,9 +166,16 @@ export const surveyShips: ISurveyShip[] = [
     slug: "bns-anusandhan",
     name: "BNS ANUSANDHAN",
     designation: "Survey Vessel",
-    description: "Primary hydrographic survey vessel equipped with modern multi-beam echo sounder systems and oceanographic equipment.",
+    description:
+      "Primary hydrographic survey vessel equipped with modern multi-beam echo sounder systems and oceanographic equipment.",
     image: "/ANI-02.jpeg",
-    specifications: { "Length": "65m", "Beam": "12m", "Draft": "3.8m", "Crew": "85", "Survey Equipment": "Multi-beam Echo Sounder, Side Scan Sonar" },
+    specifications: {
+      Length: "65m",
+      Beam: "12m",
+      Draft: "3.8m",
+      Crew: "85",
+      "Survey Equipment": "Multi-beam Echo Sounder, Side Scan Sonar",
+    },
     status: "active",
     details: [
       "BNS Anusandhan is the flagship hydrographic survey vessel of the Bangladesh Navy Hydrographic & Oceanographic Center (BNHOC). Commissioned to serve as the primary platform for systematic ocean-floor mapping and charting operations across Bangladesh's extensive maritime territory.",
@@ -163,9 +190,16 @@ export const surveyShips: ISurveyShip[] = [
     slug: "bns-tallashi",
     name: "BNS TALLASHI",
     designation: "Survey Launch",
-    description: "Coastal survey launch for shallow water hydrographic surveys and port approach channel surveys.",
+    description:
+      "Coastal survey launch for shallow water hydrographic surveys and port approach channel surveys.",
     image: "/img9.jpeg",
-    specifications: { "Length": "32m", "Beam": "7m", "Draft": "2.1m", "Crew": "35", "Survey Equipment": "Single-beam Echo Sounder, DGPS" },
+    specifications: {
+      Length: "32m",
+      Beam: "7m",
+      Draft: "2.1m",
+      Crew: "35",
+      "Survey Equipment": "Single-beam Echo Sounder, DGPS",
+    },
     status: "active",
     details: [
       "BNS Tallashi is a purpose-built coastal survey launch designed for hydrographic operations in the shallow waters, river systems, and port approaches of Bangladesh. Her shallow draft makes her ideally suited for surveying areas inaccessible to larger vessels.",
@@ -180,9 +214,16 @@ export const surveyShips: ISurveyShip[] = [
     slug: "bns-darshak",
     name: "BNS Darshak",
     designation: "Oceanographic Vessel",
-    description: "Dedicated oceanographic research vessel for deep water surveys and scientific data collection.",
+    description:
+      "Dedicated oceanographic research vessel for deep water surveys and scientific data collection.",
     image: "/img8.jpeg",
-    specifications: { "Length": "55m", "Beam": "10m", "Draft": "3.5m", "Crew": "65", "Survey Equipment": "CTD Profiler, ADCP, Grab Sampler" },
+    specifications: {
+      Length: "55m",
+      Beam: "10m",
+      Draft: "3.5m",
+      Crew: "65",
+      "Survey Equipment": "CTD Profiler, ADCP, Grab Sampler",
+    },
     status: "active",
     details: [
       "BNS Darshak serves as the dedicated oceanographic research vessel of BNHOC, designed to conduct deep-water scientific surveys and environmental data collection across the Bay of Bengal and adjacent waters.",
@@ -197,22 +238,112 @@ export const surveyShips: ISurveyShip[] = [
 // ─── Gallery ───
 
 export const galleryItems: IGalleryItem[] = [
-  { id: "g-1", title: "Bangladesh Navy Ship", category: "Ships", image: "/gallery/img1.jpeg" },
-  { id: "g-2", title: "Survey Operations", category: "Survey", image: "/gallery/img2.jpg" },
-  { id: "g-3", title: "Maritime Survey", category: "Survey", image: "/gallery/img3.jpg" },
-  { id: "g-4", title: "Hydrographic Operations", category: "Operations", image: "/gallery/img4.jpg" },
-  { id: "g-5", title: "Oceanographic Research", category: "Survey", image: "/gallery/img5.jpg" },
-  { id: "g-6", title: "ADCP Deployment", category: "Survey", image: "/gallery/img6.jpg" },
-  { id: "g-7", title: "BNS Shaibal", category: "Ships", image: "/gallery/img7.jpg" },
-  { id: "g-8", title: "BNS Shaibal at Sea", category: "Ships", image: "/gallery/img8.jpeg" },
-  { id: "g-9", title: "BNS Shaibal Operations", category: "Ships", image: "/gallery/img9.jpg" },
-  { id: "g-10", title: "BNS Shaibal Survey", category: "Ships", image: "/gallery/img10.jpg" },
-  { id: "g-11", title: "Buoy Position Marking", category: "Operations", image: "/gallery/img11.jpeg" },
-  { id: "g-12", title: "Char Hare Survey", category: "Survey", image: "/gallery/img12.jpg" },
-  { id: "g-13", title: "Navy Operations", category: "Operations", image: "/gallery/img13.JPG" },
-  { id: "g-14", title: "Field Survey", category: "Survey", image: "/gallery/img14.JPG" },
-  { id: "g-15", title: "Maritime Mission", category: "Operations", image: "/gallery/img15.JPG" },
-  { id: "g-16", title: "Coastal Survey", category: "Survey", image: "/gallery/img16.JPG" },
-  { id: "g-17", title: "Naval Exercise", category: "Training", image: "/gallery/img17.JPG" },
-  { id: "g-18", title: "Hydrographic Mission", category: "Operations", image: "/gallery/img18.JPG" },
+  {
+    id: "g-1",
+    title: "Bangladesh Navy Ship",
+    category: "Ships",
+    image: "/gallery/img1.jpeg",
+  },
+  {
+    id: "g-2",
+    title: "Survey Operations",
+    category: "Survey",
+    image: "/gallery/img2.jpg",
+  },
+  {
+    id: "g-3",
+    title: "Maritime Survey",
+    category: "Survey",
+    image: "/gallery/img3.jpg",
+  },
+  {
+    id: "g-4",
+    title: "Hydrographic Operations",
+    category: "Operations",
+    image: "/gallery/img4.jpg",
+  },
+  {
+    id: "g-5",
+    title: "Oceanographic Research",
+    category: "Survey",
+    image: "/gallery/img5.jpg",
+  },
+  {
+    id: "g-6",
+    title: "ADCP Deployment",
+    category: "Survey",
+    image: "/gallery/img6.jpg",
+  },
+  {
+    id: "g-7",
+    title: "BNS Shaibal",
+    category: "Ships",
+    image: "/gallery/img7.jpg",
+  },
+  {
+    id: "g-8",
+    title: "BNS Shaibal at Sea",
+    category: "Ships",
+    image: "/gallery/img8.jpeg",
+  },
+  {
+    id: "g-9",
+    title: "BNS Shaibal Operations",
+    category: "Ships",
+    image: "/gallery/img9.jpg",
+  },
+  {
+    id: "g-10",
+    title: "BNS Shaibal Survey",
+    category: "Ships",
+    image: "/gallery/img10.jpg",
+  },
+  {
+    id: "g-11",
+    title: "Buoy Position Marking",
+    category: "Operations",
+    image: "/gallery/img11.jpeg",
+  },
+  {
+    id: "g-12",
+    title: "Char Hare Survey",
+    category: "Survey",
+    image: "/gallery/img12.jpg",
+  },
+  {
+    id: "g-13",
+    title: "Navy Operations",
+    category: "Operations",
+    image: "/gallery/img13.JPG",
+  },
+  {
+    id: "g-14",
+    title: "Field Survey",
+    category: "Survey",
+    image: "/gallery/img14.JPG",
+  },
+  {
+    id: "g-15",
+    title: "Maritime Mission",
+    category: "Operations",
+    image: "/gallery/img15.JPG",
+  },
+  {
+    id: "g-16",
+    title: "Coastal Survey",
+    category: "Survey",
+    image: "/gallery/img16.JPG",
+  },
+  {
+    id: "g-17",
+    title: "Naval Exercise",
+    category: "Training",
+    image: "/gallery/img17.JPG",
+  },
+  {
+    id: "g-18",
+    title: "Hydrographic Mission",
+    category: "Operations",
+    image: "/gallery/img18.JPG",
+  },
 ];

@@ -103,9 +103,7 @@ export default function CourseEnrollForm({
         {/* Header */}
         <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-white border-b border-gray-100">
           <div>
-            <h2 className="text-lg font-bold text-pBlue">
-              Course Application
-            </h2>
+            <h2 className="text-lg font-bold text-pBlue">Course Application</h2>
             <p className="text-xs text-gray-500 mt-0.5">
               Fill in your details to apply for enrollment
             </p>

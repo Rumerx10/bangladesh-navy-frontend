@@ -2,12 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import { Button } from "@/src/components/ui/button";
-import {
-  Upload,
-  X,
-  ImagePlus,
-  CheckCircle2,
-} from "lucide-react";
+import { Upload, X, ImagePlus, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { MediaItem } from "./MediaGallery";
 
@@ -68,13 +63,8 @@ export default function ImageUploadModal({
     }
   };
 
-  const handleTypeChange = (
-    index: number,
-    type: "product" | "category"
-  ) => {
-    setFiles((prev) =>
-      prev.map((f, i) => (i === index ? { ...f, type } : f))
-    );
+  const handleTypeChange = (index: number, type: "product" | "category") => {
+    setFiles((prev) => prev.map((f, i) => (i === index ? { ...f, type } : f)));
   };
 
   const removeFile = (index: number) => {
@@ -132,9 +122,7 @@ export default function ImageUploadModal({
           {/* Header */}
           <div className="flex items-center justify-between p-5 border-b border-gray-100">
             <div>
-              <h2 className="text-lg font-bold text-gray-900">
-                Upload Images
-              </h2>
+              <h2 className="text-lg font-bold text-gray-900">Upload Images</h2>
               <p className="text-sm text-gray-500 mt-0.5">
                 Drag & drop or browse files
               </p>
@@ -247,11 +235,7 @@ export default function ImageUploadModal({
           {/* Footer */}
           {files.length > 0 && (
             <div className="flex items-center justify-end gap-3 p-5 border-t border-gray-100 bg-gray-50/50">
-              <Button
-                variant="outline"
-                onClick={handleClose}
-                className="px-6"
-              >
+              <Button variant="outline" onClick={handleClose} className="px-6">
                 Cancel
               </Button>
               <Button
