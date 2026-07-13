@@ -11,7 +11,6 @@ import { LoginFormType, loginSchema } from "./Schema";
 export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-
   const methods = useForm<LoginFormType>({
     resolver: yupResolver(loginSchema),
     defaultValues: {

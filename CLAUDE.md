@@ -34,7 +34,7 @@ No tests are configured (`test` script is a no-op). Husky + lint-staged runs ESL
 - **React Hook Form + Yup** for all forms
 - **Axios** with custom interceptors in [src/helpers/axios/axiosInstance.ts](src/helpers/axios/axiosInstance.ts)
 - **TipTap** rich text editor via [src/components/shared/text-editor/TextEditor.tsx](src/components/shared/text-editor/TextEditor.tsx)
-- **Recharts** for admin dashboard charts; **`@tanstack/react-table`** for admin data tables
+- **Recharts** for admin dashboard charts; custom `DataTable` (not `@tanstack/react-table` directly) for admin data tables
 - **Swiper** for carousels; **Framer Motion** for animations
 - **jsPDF + jspdf-autotable** for PDF export in admin reports
 - **DOMPurify** (via [src/utils/sanitize.ts](src/utils/sanitize.ts)) to sanitize TipTap HTML before rendering
@@ -53,11 +53,15 @@ No tests are configured (`test` script is a no-op). Husky + lint-staged runs ESL
 | `admin`  | Sidebar + DashboardHeader                               | Admin dashboard                                              |
 | `auth`   | Minimal                                                 | Login / signup                                               |
 
-The `admin` route itself is flat but its pages are organized in sub-groups: `(products)`, `(categories)`, `(users)`, `(content-management)` (banner-poster, media-gallery), `(career)` (career listings + applicant list), and `hero-management`. Components for each live under [src/components/admin/](src/components/admin/) in matching subdirectories.
+The `admin` route is organized into sub-groups: `(products)`, `(categories)`, `(users)`, `(content-management)`, and `(career)`. The `(content-management)` group covers six feature areas: `about-us`, `banner-poster`, `home`, `media-gallery`, `notices`, and `products`. Components for each live under [src/components/admin/](src/components/admin/) in matching subdirectories.
+
+**Content management component structure:**
+- `about-us` — gallery-management, history-management, mission-vision-management, survey-ships-management
+- `home` — biography-management, hero-management, notice-management, partner-management
 
 ### Route guards (proxy.ts pattern)
 
-There is no global `middleware.ts`. Instead, each protected directory has a `proxy.ts` file that exports HTTP method handlers (`GET`, `POST`, `PATCH`, etc.) which decode the JWT from cookies and redirect unauthorized requests:
+There is no global `middleware.ts`. Instead, each protected directory has a `proxy.ts` file that exports all HTTP method handlers (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`) — each delegates to a single auth check function that decodes the JWT from the `accessToken` cookie and redirects unauthorized requests:
 
 - [src/app/admin/proxy.ts](src/app/admin/proxy.ts) — redirects unauthenticated users to `/auth/login?redirect=<path>`, and non-admins to `/`
 - [src/app/auth/proxy.ts](src/app/auth/proxy.ts) — redirects already-authenticated users away from login/signup (admins → `/admin`, users → `/`)
@@ -72,11 +76,12 @@ The `UserFetcher` component listens to a custom `auth-token-updated` window even
 
 ### Data fetching hooks
 
-All API calls go through three generic hooks in [src/hooks/](src/hooks/):
+All API calls go through generic hooks in [src/hooks/](src/hooks/):
 
 - `useGet<T>(endpoint, queryKey, params?, options?)` — wraps `useQuery`. Query key is extended with filtered param values for automatic cache invalidation.
 - `usePost<T>(defaultEndpoint?, onSuccess?, invalidateKeys?)` — wraps `useMutation`. Accepts either `PostArg { endpoint, data, config }` or raw data.
-- `usePatch`, `useDelete` — similar patterns
+- `usePatch<T>(onSuccess?, invalidateKeys?, defaultEndpoint?)` — wraps `useMutation`. Accepts `{ url, data, config? }` or raw data (uses `defaultEndpoint` as fallback URL).
+- `useDelete<T>(onSuccess?, invalidateKeys?)` — wraps `useMutation`. Accepts `{ url: string }`.
 
 The axios instance normalises every response to `{ data, meta }`, handles JWT refresh automatically on 401 `jwt expired`, and rewrites `/api/*` URLs to `window.location.origin/api/*` so they hit Next.js BFF routes.
 
@@ -84,13 +89,13 @@ The axios instance normalises every response to `{ data, meta }`, handles JWT re
 
 Located in [src/lib/redux/features/](src/lib/redux/features/):
 
-| Slice                           | Responsibility                                                       |
-| ------------------------------- | -------------------------------------------------------------------- |
-| `auth`                          | `userInformation`, `loading`, `isLoginModalOpen`                     |
-| `permission`                    | Role-derived permission map (`canAccessAdmin`, `canAddToCart`, etc.) |
-| `cart`                          | Cart items (client-side)                                             |
-| `filter`                        | Product filter/search state synced to URL                            |
-| `user`, `wishlist`, `organizer` | Supporting slices                                                    |
+| Slice        | Responsibility                                                       |
+| ------------ | -------------------------------------------------------------------- |
+| `auth`       | `userInformation`, `loading`, `isLoginModalOpen`                     |
+| `permission` | Role-derived permission map (`canAccessAdmin`, `canAddToCart`, etc.) |
+| `cart`       | Cart items (client-side)                                             |
+| `filter`     | Product filter/search state synced to URL                            |
+| `user`, `organizer` | Supporting slices                                           |
 
 Always use the typed hooks from [src/lib/redux/hooks.ts](src/lib/redux/hooks.ts): `useAppDispatch()` and `useAppSelector`.
 
@@ -100,15 +105,44 @@ Always use the typed hooks from [src/lib/redux/hooks.ts](src/lib/redux/hooks.ts)
 
 Four roles: `GUEST` → `USER` → `ADMIN` → `SUPER_ADMIN`. Role is decoded from the JWT and normalised in [src/lib/redux/features/permission/permissionSlice.ts](src/lib/redux/features/permission/permissionSlice.ts). Admins cannot add to cart; users cannot access admin routes.
 
+Use `isAdminRole(role)` from [src/utils/UserRoleEnum.ts](src/utils/UserRoleEnum.ts) to test admin access. Both `ADMIN` and `SUPER_ADMIN` pass this check.
+
 ### Form pattern
 
-All form pages use React Hook Form with `FormProvider`. Reusable controlled fields live in [src/components/shared/FromController/](src/components/shared/FromController/) (note: directory is named `FromController`, not `FormController`). These components call `useFormContext()` internally and must be rendered inside a `FormProvider`. Use `ControlledInputField`, `ControlledSelectField`, `ControlledTextEditorField`, etc.
+All form pages use React Hook Form with `FormProvider`. Reusable controlled fields live in [src/components/shared/FromController/](src/components/shared/FromController/) (note: directory is named `FromController`, not `FormController`). These components call `useFormContext()` internally and must be rendered inside a `FormProvider`. Available fields:
+
+- `ControlledInputField`, `ControlledTextareaField`, `ControlledSelectField`, `ControlledMultiSelectField`
+- `ControlledTextEditorField` — wraps TipTap
+- `ControlledDatePicker`, `ControlledTimeField`, `ControlledTimePickerField`
+- `ControlledCheckField`, `ControlledCheckboxField`, `ControlledSwitchField`, `ControlledToggleField`
+- `ControlledComboboxSelect`
+- `FileUploadController` — single image/file input with preview and background-removal support
+- `MultipleImageFileInput` — multi-image upload
+
+For edit forms, use `getChangedFields(newData, initialData)` from [src/utils/getChangedFields.ts](src/utils/getChangedFields.ts) to send only modified fields in PATCH requests.
+
+### Admin data table
+
+Admin list pages use the custom `DataTable` component from [src/components/ui/data-table.tsx](src/components/ui/data-table.tsx) (this is the project's own table implementation, not `@tanstack/react-table` directly). Define columns with the local `ColumnDef<T>` type exported from that file. The table integrates pagination, search, status filter, and a create button internally.
+
+For delete confirmations, use `DeleteConfirmDialog` from [src/components/shared/DeleteConfirmDialog.tsx](src/components/shared/DeleteConfirmDialog.tsx) — a pre-wired `AlertDialog` with `isOpen`, `onClose`, `onConfirm`, and optional label/style props.
 
 ### Shared utility components
 
 - **`SectionTitle`** ([src/components/SectionTitle.tsx](src/components/SectionTitle.tsx)) — reusable section heading with title + description; use this instead of inline headings.
 - **`InternetStatus`** ([src/components/InternetStatus.tsx](src/components/InternetStatus.tsx)) — renders an offline banner; included in the `(root)` layout.
 - **`Partners`** ([src/components/Partners.tsx](src/components/Partners.tsx)) — marquee partner logos pulled from `public/partners/`.
+- **`AdminBackButton`** ([src/components/shared/AdminBackButton/](src/components/shared/AdminBackButton/)) — back navigation for admin detail/edit pages.
+- **`DynamicBreadcrumb`** — breadcrumb component for admin pages.
+
+### Shared types
+
+Key types live in [src/components/shared/types/common.ts](src/components/shared/types/common.ts):
+
+- `IGenericErrorResponse` — error shape returned by all mutation hooks (`{ statusCode, message, errorMessages, errors? }`)
+- `StatusType` enum — `COMPLETED`, `PENDING`, `CANCELLED`, `ACTIVE`, `INACTIVE`, `IN_PROGRESS`, `VERIFIED`, `UNVERIFIED`
+- `ITableProps<T>` — prop interface for custom table pages
+- `ISelectOption` — `{ label, value }` for select fields
 
 ### Static data
 
