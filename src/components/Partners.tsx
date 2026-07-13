@@ -45,24 +45,13 @@ const Partners = () => {
               "/partners/client5.png",
               "/partners/client6.png",
               "/partners/client7.png",
-              "/partners/client8.png",
-              "/partners/client9.png",
-              "/partners/client10.png",
-              "/partners/client11.png",
-              "/partners/client12.png",
-              "/partners/client13.png",
-              "/partners/client14.png",
-              "/partners/client15.png",
-              "/partners/client16.png",
-              "/partners/client17.png",
-              "/partners/client18.png",
-              "/partners/client19.png",
+
             ].map((item, index) => (
-              <div className="mx-5 lg:mx-16 h-auto lg:h-16" key={index}>
+              <div className="mx-5 lg:mx-16 h-auto lg:h-25" key={index}>
                 <Image
                   src={item}
                   alt="power"
-                  height={166}
+                  height={200}
                   width={240}
                   className="object-contain h-full w-full"
                 />
