@@ -6,7 +6,7 @@ import { useState } from "react";
 import { IHeroManagement } from "./types";
 import { Button } from "@/src/components/ui/button";
 import Paragraph from "@/src/components/shared/Paragraph";
-import { Edit, Image as ImageIcon, ChevronRight, Bell } from "lucide-react";
+import { Edit, Image as ImageIcon, ChevronRight } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 
 interface HeroPreviewProps {
@@ -136,33 +136,6 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
             </Paragraph>
           </div>
 
-          {/* Notices Section */}
-          {data.notices && data.notices.length > 0 && (
-            <div className="md:col-span-2 bg-gray-50 rounded-xl p-5 border border-gray-100">
-              <div className="flex items-center gap-2 mb-3">
-                <Bell className="w-5 h-5 text-pBlue" />
-                <Paragraph className="font-semibold text-pBlue uppercase">
-                  Notices ({data.notices.length})
-                </Paragraph>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {data.notices.map((notice, index) => (
-                  <span
-                    key={index}
-                    className={cn(
-                      "px-3 py-1.5 rounded-full border text-sm font-medium",
-                      notice.isActive
-                        ? "bg-primary/10 text-primary border-primary/20"
-                        : "bg-gray-100 text-gray-400 border-gray-200 line-through"
-                    )}
-                  >
-                    {notice.message}
-                    {!notice.isActive && " (Inactive)"}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>

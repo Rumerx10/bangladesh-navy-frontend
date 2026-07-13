@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { INotice } from "./admin/ContentManagement/home/hero-management/types";
+import { INotice } from "./admin/ContentManagement/home/notice-management/types";
 import { cn } from "@/src/lib/utils";
 import {
   Tooltip,

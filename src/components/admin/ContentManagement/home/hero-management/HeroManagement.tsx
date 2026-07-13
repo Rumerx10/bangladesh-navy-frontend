@@ -19,10 +19,6 @@ const DUMMY_HERO_DATA: IHeroManagement = {
     "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800",
     "https://images.unsplash.com/photo-1579684385128-1ef15d508118?w=800",
   ],
-  notices: [
-    { message: "Rume the best", isActive: true },
-    { message: "Hello world", isActive: false },
-  ],
 };
 
 const HeroManagement = () => {
