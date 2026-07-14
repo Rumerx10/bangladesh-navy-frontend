@@ -50,7 +50,7 @@ export default function ProductServiceDropdown() {
             href="/how-to-pay"
             className="rounded-md px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-liteBlue transition-colors"
           >
-            How to Pay
+            How to Collect
           </Link>
 
           {/* Notices to Mariners — hover to expand */}

@@ -56,6 +56,7 @@ No tests are configured (`test` script is a no-op). Husky + lint-staged runs ESL
 The `admin` route is organized into sub-groups: `(products)`, `(categories)`, `(users)`, `(content-management)`, and `(career)`. The `(content-management)` group covers six feature areas: `about-us`, `banner-poster`, `home`, `media-gallery`, `notices`, and `products`. Components for each live under [src/components/admin/](src/components/admin/) in matching subdirectories.
 
 **Content management component structure:**
+
 - `about-us` — gallery-management, history-management, mission-vision-management, survey-ships-management
 - `home` — biography-management, hero-management, notice-management, partner-management
 
@@ -89,13 +90,13 @@ The axios instance normalises every response to `{ data, meta }`, handles JWT re
 
 Located in [src/lib/redux/features/](src/lib/redux/features/):
 
-| Slice        | Responsibility                                                       |
-| ------------ | -------------------------------------------------------------------- |
-| `auth`       | `userInformation`, `loading`, `isLoginModalOpen`                     |
-| `permission` | Role-derived permission map (`canAccessAdmin`, `canAddToCart`, etc.) |
-| `cart`       | Cart items (client-side)                                             |
-| `filter`     | Product filter/search state synced to URL                            |
-| `user`, `organizer` | Supporting slices                                           |
+| Slice               | Responsibility                                                       |
+| ------------------- | -------------------------------------------------------------------- |
+| `auth`              | `userInformation`, `loading`, `isLoginModalOpen`                     |
+| `permission`        | Role-derived permission map (`canAccessAdmin`, `canAddToCart`, etc.) |
+| `cart`              | Cart items (client-side)                                             |
+| `filter`            | Product filter/search state synced to URL                            |
+| `user`, `organizer` | Supporting slices                                                    |
 
 Always use the typed hooks from [src/lib/redux/hooks.ts](src/lib/redux/hooks.ts): `useAppDispatch()` and `useAppSelector`.
 

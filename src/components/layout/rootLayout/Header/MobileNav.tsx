@@ -28,7 +28,7 @@ const NAV_LINKS = [
   { label: "Survey Ships", href: "/about/survey-ships" },
   { label: "Gallery", href: "/about/gallery" },
   { label: "Products & Services", href: "/product-service" },
-  { label: "How to Pay", href: "/how-to-pay" },
+  { label: "How to Collect", href: "/how-to-collect" },
   { label: "BN Hydrographic Institute", href: "/skill-development" },
   { label: "Courses", href: "/skill-development/courses" },
   { label: "Contact Information", href: "/contact-us/information" },
