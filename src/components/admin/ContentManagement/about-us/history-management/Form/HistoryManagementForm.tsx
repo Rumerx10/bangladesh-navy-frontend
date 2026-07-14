@@ -7,7 +7,6 @@ import { useFormContext } from "react-hook-form";
 import { Button } from "@/src/components/ui/button";
 import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
-import ControlledTextareaField from "@/src/components/shared/FromController/ControlledTextareaField";
 import { FileUploadController } from "@/src/components/shared/FromController/FileUploadController";
 import Paragraph from "@/src/components/shared/Paragraph";
 import SubmitButton from "@/src/components/shared/SubmitButton";
@@ -15,6 +14,8 @@ import { ErrorType } from "@/src/components/shared/types/common";
 import { HistoryManagementSchemaForm } from "../Schema/historyManagementSchema";
 import KeyMilestonesField from "./KeyMilestonesField";
 import TimelineItemsField from "./TimelineItemsField";
+import InputLabel from "@/src/components/shared/InputLabel";
+import TextEditor from "@/src/components/shared/text-editor/TextEditor";
 
 interface HistoryManagementFormProps {
   isEditMode?: boolean;
@@ -34,6 +35,7 @@ const SectionHeader = ({
   showCancel?: boolean;
 }) => {
   const [iconLoaded, setIconLoaded] = useState(false);
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
@@ -75,7 +77,12 @@ const HistoryManagementForm = ({
   isPending = false,
   onCancel,
 }: HistoryManagementFormProps) => {
-  const { handleSubmit } = useFormContext<HistoryManagementSchemaForm>();
+  const {
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext<HistoryManagementSchemaForm>();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
@@ -115,14 +122,17 @@ const HistoryManagementForm = ({
               className="bg-light shadow-none"
             />
           </div>
-          <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Description
-            </Paragraph>
-            <ControlledTextareaField
-              name="description"
-              placeholder="Write here your..."
-              className="bg-light shadow-none"
+          <div className="lg:col-span-4">
+            <InputLabel
+              label="Description"
+              className="font-semibold text-pBlue uppercase mb-2"
+            />
+            <TextEditor
+              value={watch("description")}
+              onChange={(value) =>
+                setValue("description", value, { shouldValidate: true })
+              }
+              error={errors?.description}
             />
           </div>
         </div>

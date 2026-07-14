@@ -56,7 +56,7 @@ export function getMenuItems(): MenuItem[] {
       href: "/admin/product-service",
       children: [
         { label: "All Products", href: "/admin/products" },
-        { label: "How to Pay", href: "/admin/how-to-pay" },
+        { label: "How to Collect", href: "/admin/how-to-collect" },
       ],
     },
     {

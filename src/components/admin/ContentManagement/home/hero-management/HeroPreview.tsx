@@ -135,7 +135,6 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
               {data.description}
             </Paragraph>
           </div>
-
         </div>
       </div>
     </div>

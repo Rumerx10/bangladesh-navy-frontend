@@ -8,6 +8,7 @@ import {
 import { clearRolePermissions } from "@/src/lib/redux/features/permission/permissionSlice";
 import { useAppDispatch, useAppSelector } from "@/src/lib/redux/hooks";
 import { LogOut, User } from "lucide-react";
+import { IoIosArrowDown } from "react-icons/io";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
@@ -51,7 +52,7 @@ export function ProfileDropdown() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
-          className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-gray-50 transition-colors focus:outline-none cursor-pointer"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-50 transition-colors focus:outline-none cursor-pointer"
           aria-label="Open profile menu"
         >
           {userInformation.profilePicture ? (
@@ -75,6 +76,7 @@ export function ProfileDropdown() {
               My Account
             </span>
           </div>
+          <IoIosArrowDown />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent

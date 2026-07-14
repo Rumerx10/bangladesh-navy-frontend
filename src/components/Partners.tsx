@@ -45,7 +45,6 @@ const Partners = () => {
               "/partners/client5.png",
               "/partners/client6.png",
               "/partners/client7.png",
-
             ].map((item, index) => (
               <div className="mx-5 lg:mx-16 h-auto lg:h-25" key={index}>
                 <Image

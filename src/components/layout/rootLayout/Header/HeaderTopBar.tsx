@@ -50,13 +50,13 @@ export const NavigationItems: NavItem[] = [
     label: "Products & Services",
     link: "/product-service",
     asLink: true,
-    activeMatches: ["/notices-mariners", "/how-to-pay"],
+    activeMatches: ["/notices-mariners", "/how-to-collect"],
     subLinks: [
       ...navyCategories.map((cat) => ({
         label: cat.nameEn,
         link: `/product-service?category=${cat.slug}`,
       })),
-      { label: "How to Pay", link: "/how-to-pay" },
+      { label: "How to Collect", link: "/how-to-collect" },
     ],
   },
   {
