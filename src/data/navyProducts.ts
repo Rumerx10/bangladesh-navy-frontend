@@ -36,6 +36,14 @@ export const navyProducts: INavyProduct[] = [
         updatedAt: "",
       },
       {
+        id: "1252-geo",
+        productId: "prod-1252",
+        key: "Geographic Location",
+        value: "Bay of Bengal",
+        createdAt: "",
+        updatedAt: "",
+      },
+      {
         id: "1252-02",
         productId: "prod-1252",
         key: "Scale",
@@ -125,6 +133,14 @@ export const navyProducts: INavyProduct[] = [
         productId: "prod-1253",
         key: "Chart Number",
         value: "1253",
+        createdAt: "",
+        updatedAt: "",
+      },
+      {
+        id: "1253-geo",
+        productId: "prod-1253",
+        key: "Geographic Location",
+        value: "Bay of Bengal",
         createdAt: "",
         updatedAt: "",
       },
@@ -222,6 +238,14 @@ export const navyProducts: INavyProduct[] = [
         updatedAt: "",
       },
       {
+        id: "1254-geo",
+        productId: "prod-1254",
+        key: "Geographic Location",
+        value: "Bay of Bengal",
+        createdAt: "",
+        updatedAt: "",
+      },
+      {
         id: "1254-02",
         productId: "prod-1254",
         key: "Scale",
@@ -315,6 +339,14 @@ export const navyProducts: INavyProduct[] = [
         updatedAt: "",
       },
       {
+        id: "1501-geo",
+        productId: "prod-1501",
+        key: "Geographic Location",
+        value: "Bay of Bengal",
+        createdAt: "",
+        updatedAt: "",
+      },
+      {
         id: "1501-02",
         productId: "prod-1501",
         key: "Scale",
@@ -404,6 +436,14 @@ export const navyProducts: INavyProduct[] = [
         productId: "prod-1502",
         key: "Chart Number",
         value: "1502",
+        createdAt: "",
+        updatedAt: "",
+      },
+      {
+        id: "1502-geo",
+        productId: "prod-1502",
+        key: "Geographic Location",
+        value: "Bay of Bengal",
         createdAt: "",
         updatedAt: "",
       },
@@ -542,6 +582,14 @@ export const navyProducts: INavyProduct[] = [
         updatedAt: "",
       },
       {
+        id: "2508-geo",
+        productId: "prod-2508",
+        key: "Geographic Location",
+        value: "Bay of Bengal",
+        createdAt: "",
+        updatedAt: "",
+      },
+      {
         id: "2508-02",
         productId: "prod-2508",
         key: "Scale",
@@ -631,6 +679,14 @@ export const navyProducts: INavyProduct[] = [
         productId: "prod-3001",
         key: "Chart Number",
         value: "3001 (INT7427)",
+        createdAt: "",
+        updatedAt: "",
+      },
+      {
+        id: "3001-geo",
+        productId: "prod-3001",
+        key: "Geographic Location",
+        value: "Bay of Bengal",
         createdAt: "",
         updatedAt: "",
       },
@@ -728,6 +784,14 @@ export const navyProducts: INavyProduct[] = [
         updatedAt: "",
       },
       {
+        id: "3002-geo",
+        productId: "prod-3002",
+        key: "Geographic Location",
+        value: "Bay of Bengal",
+        createdAt: "",
+        updatedAt: "",
+      },
+      {
         id: "3002-02",
         productId: "prod-3002",
         key: "Scale",
@@ -821,6 +885,14 @@ export const navyProducts: INavyProduct[] = [
         updatedAt: "",
       },
       {
+        id: "3003-geo",
+        productId: "prod-3003",
+        key: "Geographic Location",
+        value: "Bay of Bengal",
+        createdAt: "",
+        updatedAt: "",
+      },
+      {
         id: "3003-02",
         productId: "prod-3003",
         key: "Scale",
@@ -910,6 +982,14 @@ export const navyProducts: INavyProduct[] = [
         productId: "prod-3004",
         key: "Chart Number",
         value: "3004 (7452)",
+        createdAt: "",
+        updatedAt: "",
+      },
+      {
+        id: "3004-geo",
+        productId: "prod-3004",
+        key: "Geographic Location",
+        value: "Bay of Bengal",
         createdAt: "",
         updatedAt: "",
       },
@@ -1022,4 +1102,20 @@ export function getProductSlug(product: INavyProduct): string {
  */
 export function findProductBySlug(slug: string): INavyProduct | undefined {
   return navyProducts.find((p) => getProductSlug(p) === slug);
+}
+
+/**
+ * Utility: find product by its "Chart Number" attribute. The bare number
+ * matches values with an INT designation, e.g. "2508" → "2508 (INT7451)".
+ */
+export function findProductByChartNumber(
+  chartNumber: string
+): INavyProduct | undefined {
+  return navyProducts.find((p) =>
+    p.productAttributes?.some(
+      (a) =>
+        a.key === "Chart Number" &&
+        (a.value === chartNumber || a.value.startsWith(`${chartNumber} `))
+    )
+  );
 }
