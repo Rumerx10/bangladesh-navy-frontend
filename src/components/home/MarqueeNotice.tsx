@@ -1,6 +1,20 @@
 "use client";
 
-export default function MarqueeNotice() {
+import { useGet } from "@/src/hooks/useGet";
+
+interface INoticeList {
+  name: string;
+}
+
+const MarqueeNotice = () => {
+  const { data } = useGet<INoticeList[]>("/notice/list", [
+    "notice-list-marquee",
+  ]);
+
+  const notices = Array.isArray(data?.data) ? data.data : [];
+
+  if (notices.length === 0) return null;
+
   return (
     <div className="bg-liteBlue text-white py-2 overflow-hidden flex items-center">
       <div className="container px-4 flex items-center">
@@ -9,15 +23,16 @@ export default function MarqueeNotice() {
         </span>
         <div className="flex-1 overflow-hidden relative flex">
           <div className="animate-marquee whitespace-nowrap text-sm tracking-wider font-medium pt-1">
-            <span className="pr-16">
-              The Annual Summary of Notices to Mariners 2026 is available now
-            </span>
-            {/* <span className="pr-16">
-              Mariners are advised to regularly check updated charts, tide tables, sailing directions, and hydrographic publications for safe navigation.
-            </span> */}
+            {notices.map((notice, index) => (
+              <span key={index} className="px-10">
+                {notice.name}
+              </span>
+            ))}
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default MarqueeNotice;
