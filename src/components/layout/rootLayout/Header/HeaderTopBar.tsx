@@ -52,6 +52,7 @@ export const NavigationItems: NavItem[] = [
     asLink: true,
     activeMatches: ["/notices-mariners", "/how-to-collect"],
     subLinks: [
+      { label: "New Chart", link: "/chart" },
       ...navyCategories.map((cat) => ({
         label: cat.nameEn,
         link: `/product-service?category=${cat.slug}`,
