@@ -55,7 +55,7 @@ const Partners = () => {
                   className="object-contain h-full w-full"
                 />
               </div>
-            ))}{" "}
+            ))}
           </Marquee>
         </div>
         <Link

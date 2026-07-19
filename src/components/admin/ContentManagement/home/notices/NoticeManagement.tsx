@@ -1,21 +1,18 @@
 "use client";
 
-
-import { useGet } from "@/src/hooks/useGet";
-import { useEffect, useState } from "react";
-import { useAppSelector } from "@/src/lib/redux/hooks";
-import { usePagination } from "@/src/hooks/usePagination";
 import { DataTable } from "@/src/components/ui/data-table";
-
+import { useGet } from "@/src/hooks/useGet";
+import { usePagination } from "@/src/hooks/usePagination";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
-import { ICategory } from "../types";
-import { GetCategoryColumns } from "../TableColumns/CategoryColumns";
-import CreateUpdateCategory from "../Form/CreateUpdateCategory";
+import { useAppSelector } from "@/src/lib/redux/hooks";
+import { useEffect, useState } from "react";
+import CreateUpdateNoticeManagement from "./Form/CreateUpdateNoticeManagement";
+import { INoticeManagement } from "./types";
+import GetNoticeColumns from "./TableColumns/NoticeColumns";
 
-
-const CategoryList = () => {
+const NoticeManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<ICategory | undefined>();
+  const [selectedItem, setSelectedItem] = useState<INoticeManagement | undefined>();
   const {
     setCurrentPage,
     itemsPerPage,
@@ -28,10 +25,10 @@ const CategoryList = () => {
     useSearchDebounce(300);
   const { sortBy } = useAppSelector((state) => state.filter);
 
-  const { data, isLoading } = useGet<ICategory[]>(
-    "/category",
+  const { data, isLoading } = useGet<INoticeManagement[]>(
+    "/notice",
     [
-      "category",
+      "notice-management",
       currentPage.toString(),
       itemsPerPage.toString(),
       debouncedSearch,
@@ -44,8 +41,11 @@ const CategoryList = () => {
       }),
       search: debouncedSearch,
       ...(sortBy && { status: sortBy }),
+      sortOrder: "asc",
     }
   );
+
+  console.log("Notice Data ::-------->",data);
 
   useEffect(() => {
     if (data) {
@@ -54,7 +54,7 @@ const CategoryList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  const handleEdit = (item: ICategory) => {
+  const handleEdit = (item: INoticeManagement) => {
     setSelectedItem(item);
     setIsModalOpen(true);
   };
@@ -64,7 +64,7 @@ const CategoryList = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetCategoryColumns(handleEdit);
+  const columns = GetNoticeColumns(handleEdit);
 
   return (
     <div>
@@ -77,13 +77,14 @@ const CategoryList = () => {
         itemsPerPage={itemsPerPage}
         onPageChange={setCurrentPage}
         setItemsPerPage={setItemsPerPage}
-        title="Categories"
+        title="Notice Management"
         searchValue={search}
         onSearchChange={handleSearchChange}
         IsCreate
         setIsModalOpen={setIsModalOpen}
+        searchPlaceholder="Search notices..."
       />
-      <CreateUpdateCategory
+      <CreateUpdateNoticeManagement
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
@@ -92,4 +93,4 @@ const CategoryList = () => {
   );
 };
 
-export default CategoryList;
+export default NoticeManagement;

@@ -1,42 +1,39 @@
 "use client";
 
-import { toast } from "react-toastify";
-import { useEffect } from "react";
-import { usePost } from "@/src/hooks/usePost";
-import { usePatch } from "@/src/hooks/usePatch";
-import { ICategory } from "../types";
-import CategoryForm from "./CategoryForm";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, Resolver, useForm } from "react-hook-form";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/src/components/ui/dialog";
-import { CategoryFormValues, categorySchema } from "../Schema/categorySchema";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { INoticeManagement } from "../types";
+import { usePost } from "@/src/hooks/usePost";
+import { usePatch } from "@/src/hooks/usePatch";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FormProvider, Resolver, useForm } from "react-hook-form";
+import { NoticeFormValues, noticeSchema } from "../Schema/noticeManagementSchema";
+import NoticeForm from "./NoticeForm";
 
-interface CreateUpdateCategoryProps {
+interface CreateUpdateNoticeManagementProps {
   isOpen: boolean;
   onClose: () => void;
-  initialValues?: ICategory;
+  initialValues?: INoticeManagement;
 }
 
-const CreateUpdateCategory = ({
+const CreateUpdateNoticeManagement = ({
   isOpen,
   onClose,
   initialValues,
-}: CreateUpdateCategoryProps) => {
+}: CreateUpdateNoticeManagementProps) => {
   const isUpdate = !!initialValues;
 
-  const methods = useForm<CategoryFormValues>({
-    resolver: yupResolver(categorySchema) as Resolver<CategoryFormValues>,
+  const methods = useForm<NoticeFormValues>({
+    resolver: yupResolver(noticeSchema) as Resolver<NoticeFormValues>,
     defaultValues: {
-      nameBn: "",
-      nameEn: "",
-      icon: undefined,
-      descriptionEn: "",
-      descriptionBn: "",
+      name: "",
+      description: "",
       status: "ACTIVE",
     },
   });
@@ -44,20 +41,14 @@ const CreateUpdateCategory = ({
   useEffect(() => {
     if (isOpen) {
       methods.reset({
-        nameBn: initialValues?.nameBn || "",
-        nameEn: initialValues?.nameEn || "",
-        icon: initialValues?.icon || undefined,
-        descriptionEn: initialValues?.descriptionEn || "",
-        descriptionBn: initialValues?.descriptionBn || "",
+        name: initialValues?.name || "",
+        description: initialValues?.description || "",
         status: initialValues?.status === "INACTIVE" ? "INACTIVE" : "ACTIVE",
       });
     } else {
       methods.reset({
-        nameBn: "",
-        nameEn: "",
-        icon: undefined,
-        descriptionEn: "",
-        descriptionBn: "",
+        name: "",
+        description: "",
         status: "ACTIVE",
       });
     }
@@ -69,12 +60,12 @@ const CreateUpdateCategory = ({
     error,
     reset: resetCreateError,
   } = usePost(
-    "/category",
+    "/notice",
     () => {
-      toast.success("Category created successfully!");
+      toast.success("Notice created successfully!");
       onClose();
     },
-    [["category"]]
+    [["notice-management"]]
   );
 
   const {
@@ -83,9 +74,9 @@ const CreateUpdateCategory = ({
     error: updateError,
     reset: resetUpdateError,
   } = usePatch(() => {
-    toast.success("Category updated successfully!");
+    toast.success("Notice updated successfully!");
     onClose();
-  }, [["category"]]);
+  }, [["notice-management"]]);
 
   const handleClose = () => {
     resetCreateError();
@@ -102,12 +93,10 @@ const CreateUpdateCategory = ({
 
   const isPending = isCreating || isUpdating;
 
-  const onSubmit = (values: CategoryFormValues) => {
-
-
+  const onSubmit = (values: NoticeFormValues) => {
     if (isUpdate && initialValues) {
       updateMutate({
-        url: `/category/${initialValues.id}`,
+        url: `/notice/${initialValues.id}`,
         data: values,
       });
     } else {
@@ -125,12 +114,12 @@ const CreateUpdateCategory = ({
       <DialogContent className="bg-white min-w-[40vw] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-secondary text-xl font-semibold">
-            {isUpdate ? "Update" : "Create"} Category
+            {isUpdate ? "Update" : "Create"} Notice
           </DialogTitle>
         </DialogHeader>
 
         <FormProvider {...methods}>
-          <CategoryForm
+          <NoticeForm
             isEditMode={isUpdate}
             onSubmit={onSubmit}
             onCancel={handleClose}
@@ -143,4 +132,4 @@ const CreateUpdateCategory = ({
   );
 };
 
-export default CreateUpdateCategory;
+export default CreateUpdateNoticeManagement;

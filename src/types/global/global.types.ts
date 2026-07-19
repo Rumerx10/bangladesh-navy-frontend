@@ -12,3 +12,4 @@ export type ApiResponse<T = unknown> = {
 export type ApiError = {
   message: string;
 };
+

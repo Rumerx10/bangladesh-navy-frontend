@@ -1,18 +1,17 @@
 "use client";
-
-import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
-import { useGet } from "@/src/hooks/useGet";
-import { usePagination } from "@/src/hooks/usePagination";
-import { usePatch } from "@/src/hooks/usePatch";
-import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
-import { useAppSelector } from "@/src/lib/redux/hooks";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import CreateUpdateUser from "../Form/CreateUpdateUser";
-import { GetUserColumns } from "../TableColumns/UserColumns";
 import { IUser } from "../types";
 import UsersTable from "../UsersTable";
+import { toast } from "react-toastify";
+import { useGet } from "@/src/hooks/useGet";
+import { useEffect, useState } from "react";
+import { usePatch } from "@/src/hooks/usePatch";
 import ViewUserInfoModal from "../ViewUserInfoModal";
+import { useAppSelector } from "@/src/lib/redux/hooks";
+import CreateUpdateUser from "../Form/CreateUpdateUser";
+import { usePagination } from "@/src/hooks/usePagination";
+import { GetUserColumns } from "../TableColumns/UserColumns";
+import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
+import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 
 type TStatusAction = "activate" | "deactivate" | null;
 
