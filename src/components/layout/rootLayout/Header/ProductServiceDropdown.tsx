@@ -36,6 +36,13 @@ export default function ProductServiceDropdown() {
       </Link>
       <div className="absolute left-1/2 top-full z-50 hidden -translate-x-1/2 rounded-xl border border-gray-200 bg-white shadow-xl group-hover:block">
         <div className="flex flex-col gap-0.5 p-2 min-w-55">
+          <Link
+            href="/chart"
+            className="rounded-md px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-liteBlue transition-colors"
+          >
+            New Chart
+          </Link>
+
           {navyCategories.map((cat) => (
             <Link
               key={cat.id}

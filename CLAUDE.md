@@ -14,6 +14,8 @@ yarn spotless     # lint --fix + format (combined)
 
 No tests are configured (`test` script is a no-op). Husky + lint-staged runs ESLint --fix + Prettier automatically on every commit.
 
+CI (GitHub Actions): PRs to `main` run `yarn spotless` + `yarn build` and deploy a Vercel preview ([.github/workflows/preview.yml](.github/workflows/preview.yml)); pushes to `main` run the release pipeline ([.github/workflows/release.yml](.github/workflows/release.yml)). A change must build cleanly to pass CI.
+
 ## Environment variables
 
 | Variable                                               | Default                        | Purpose          |
@@ -22,6 +24,8 @@ No tests are configured (`test` script is a no-op). Husky + lint-staged runs ESL
 | `NEXT_PUBLIC_GOOGLE_CLIENT_ID`                         | _(empty)_                      | Google OAuth     |
 | `NEXT_PUBLIC_SITE_NAME`                                | `Bangladesh Navy`              | Site metadata    |
 | `NEXT_PUBLIC_CURRENCY` / `NEXT_PUBLIC_CURRENCY_SYMBOL` | `BDT` / `৳`                    | Currency display |
+
+[src/config/siteConfig.ts](src/config/siteConfig.ts) reads a few more `NEXT_PUBLIC_*` vars (site description, address, phones, email), all with defaults.
 
 ## Architecture
 
@@ -53,12 +57,7 @@ No tests are configured (`test` script is a no-op). Husky + lint-staged runs ESL
 | `admin`  | Sidebar + DashboardHeader                               | Admin dashboard                                              |
 | `auth`   | Minimal                                                 | Login / signup                                               |
 
-The `admin` route is organized into sub-groups: `(products)`, `(categories)`, `(users)`, `(content-management)`, and `(career)`. The `(content-management)` group covers six feature areas: `about-us`, `banner-poster`, `home`, `media-gallery`, `notices`, and `products`. Components for each live under [src/components/admin/](src/components/admin/) in matching subdirectories.
-
-**Content management component structure:**
-
-- `about-us` — gallery-management, history-management, mission-vision-management, survey-ships-management
-- `home` — biography-management, hero-management, notice-management, partner-management
+The `admin` route itself is flat but its pages are organized in sub-groups: `(categories)`, `(users)`, `(career)` (career listings + applicant list), and `(content-management)` — which holds products, notices, banner-poster, media-gallery, `about-us/` (gallery, history, mission-vision, survey-ships), and `home/` (biography, hero-management, partner). Components for each live under [src/components/admin/](src/components/admin/) in matching subdirectories.
 
 ### Route guards (proxy.ts pattern)
 
@@ -90,13 +89,13 @@ The axios instance normalises every response to `{ data, meta }`, handles JWT re
 
 Located in [src/lib/redux/features/](src/lib/redux/features/):
 
-| Slice               | Responsibility                                                       |
-| ------------------- | -------------------------------------------------------------------- |
-| `auth`              | `userInformation`, `loading`, `isLoginModalOpen`                     |
-| `permission`        | Role-derived permission map (`canAccessAdmin`, `canAddToCart`, etc.) |
-| `cart`              | Cart items (client-side)                                             |
-| `filter`            | Product filter/search state synced to URL                            |
-| `user`, `organizer` | Supporting slices                                                    |
+| Slice                           | Responsibility                                                       |
+| ------------------------------- | -------------------------------------------------------------------- |
+| `auth`                          | `userInformation`, `loading`, `isLoginModalOpen`                     |
+| `permission`                    | Role-derived permission map (`canAccessAdmin`, `canAddToCart`, etc.) |
+| `cart`                          | Cart items (client-side)                                             |
+| `filter`                        | Product filter/search state synced to URL                            |
+| `user`, `organizer`             | Supporting slices                                                    |
 
 Always use the typed hooks from [src/lib/redux/hooks.ts](src/lib/redux/hooks.ts): `useAppDispatch()` and `useAppSelector`.
 
