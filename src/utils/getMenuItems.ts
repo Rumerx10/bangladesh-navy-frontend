@@ -31,7 +31,7 @@ export function getMenuItems(): MenuItem[] {
       href: "/admin/hero-management",
       children: [
         { label: "Hero", href: "/admin/home/hero-management" },
-        { label: "Notices", href: "/admin/home/notice-list-management" },
+        { label: "Notices", href: "/admin/home/notice-management" },
         { label: "Chief's Biography", href: "/admin/home/biography" },
         { label: "Partner Management", href: "/admin/home/partner" },
       ],
@@ -50,7 +50,7 @@ export function getMenuItems(): MenuItem[] {
       ],
     },
     {
-      segment: "Content Management",
+      segment: "Training Management",
       label: "Training & Courses",
       icon: GraduationCap,
       href: "/admin/skill-development",
@@ -81,37 +81,37 @@ export function getMenuItems(): MenuItem[] {
     },
     {
       segment: "Content Management",
-      label: "Important Notice",
+      label: "News & Events",
       icon: AlertTriangle,
       href: "/admin/notices",
     },
-    {
-      segment: "Product Management",
-      label: "Manage Product",
-      icon: Package,
-      children: [
-        { label: "All Products", href: "/admin/products" },
-        { label: "How to Collect", href: "/admin/how-to-collect" },
-        { label: "Category Management", href: "/admin/category" },
-      ],
-    },
-    {
-      segment: "Order Management",
-      label: "Orders",
-      icon: ShoppingCart,
-      children: [{ label: "All Orders", href: "/admin/orders" }],
-    },
+    // {
+    //   segment: "Product Management",
+    //   label: "Manage Product",
+    //   icon: Package,
+    //   children: [
+    //     { label: "All Products", href: "/admin/products" },
+    //     { label: "How to Collect", href: "/admin/how-to-collect" },
+    //     { label: "Category Management", href: "/admin/category" },
+    //   ],
+    // },
+    // {
+    //   segment: "Order Management",
+    //   label: "Orders",
+    //   icon: ShoppingCart,
+    //   children: [{ label: "All Orders", href: "/admin/orders" }],
+    // },
     {
       segment: "User Management",
       label: "Users",
       icon: Users,
       href: "/admin/users",
     },
-    {
-      label: "Admin",
-      icon: Settings,
-      href: "/admin/admin",
-    },
+    // {
+    //   label: "Admin",
+    //   icon: Settings,
+    //   href: "/admin/admin",
+    // },
   ];
 
   return menuItems.filter(Boolean) as MenuItem[];
