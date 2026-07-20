@@ -73,10 +73,9 @@ export const GetUserColumns = (
       header: "Verified",
       accessorKey: "isVerified",
       cell: (value) => {
-        const isVerified = Boolean(value);
         return (
           <StatusBadge
-            status={isVerified ? StatusType.VERIFIED : StatusType.UNVERIFIED}
+            status={value as StatusType}
             className="px-2.5 py-0.5 text-xs font-medium"
           />
         );

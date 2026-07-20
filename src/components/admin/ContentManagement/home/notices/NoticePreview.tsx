@@ -12,6 +12,8 @@ interface NoticePreviewProps {
 }
 
 const NoticePreview = ({ data, onEdit }: NoticePreviewProps) => {
+  const isActive = data.status === "ACTIVE";
+
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
       <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-8 py-6 border-b border-gray-100">
@@ -30,8 +32,7 @@ const NoticePreview = ({ data, onEdit }: NoticePreviewProps) => {
               Notices Preview
             </Paragraph>
             <Paragraph className="text-sm! text-gray-500">
-              {data.notices.length} notice
-              {data.notices.length !== 1 ? "s" : ""} configured
+              {data ? "1 notice configured" : "No notice configured"}
             </Paragraph>
           </div>
         </div>
@@ -47,39 +48,39 @@ const NoticePreview = ({ data, onEdit }: NoticePreviewProps) => {
       </div>
 
       <div className="p-8 pt-10">
-        {data.notices.length === 0 ? (
+        {!data ? (
           <div className="text-center py-8 text-gray-400">
             <Bell className="w-10 h-10 mx-auto mb-2 opacity-40" />
             <Paragraph className="text-sm!">No notices added yet.</Paragraph>
           </div>
         ) : (
-          <div className="space-y-3">
-            {data.notices.map((notice, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-3 bg-gray-50 rounded-xl p-4 border border-gray-100"
+          <div className="flex items-center gap-3 bg-gray-50 rounded-xl p-4 border border-gray-100">
+            {isActive ? (
+              <Check className="w-4 h-4 text-green-500 shrink-0" />
+            ) : (
+              <Circle className="w-4 h-4 text-gray-400 shrink-0" />
+            )}
+            <div className="flex-1">
+              <Paragraph
+                className={`text-sm! font-medium ${!isActive ? "line-through text-gray-400" : ""}`}
               >
-                {notice.isActive ? (
-                  <Check className="w-4 h-4 text-green-500 shrink-0" />
-                ) : (
-                  <Circle className="w-4 h-4 text-gray-400 shrink-0" />
-                )}
-                <Paragraph
-                  className={`text-sm! flex-1 ${!notice.isActive ? "line-through text-gray-400" : ""}`}
-                >
-                  {notice.message}
+                {data.name}
+              </Paragraph>
+              {data.description && (
+                <Paragraph className="text-xs! text-gray-500 mt-1">
+                  {data.description}
                 </Paragraph>
-                <span
-                  className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                    notice.isActive
-                      ? "bg-green-100 text-green-700"
-                      : "bg-gray-200 text-gray-500"
-                  }`}
-                >
-                  {notice.isActive ? "Active" : "Inactive"}
-                </span>
-              </div>
-            ))}
+              )}
+            </div>
+            <span
+              className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                isActive
+                  ? "bg-green-100 text-green-700"
+                  : "bg-gray-200 text-gray-500"
+              }`}
+            >
+              {isActive ? "Active" : "Inactive"}
+            </span>
           </div>
         )}
       </div>

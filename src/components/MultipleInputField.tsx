@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { INotice } from "./admin/ContentManagement/home/notice-management/types";
 import { cn } from "@/src/lib/utils";
 import {
   Tooltip,
@@ -12,6 +11,7 @@ import { Input } from "@/src/components/ui/input";
 import { Button } from "@/src/components/ui/button";
 import { Plus, X, Check, Circle } from "lucide-react";
 import { Controller, useFormContext } from "react-hook-form";
+import { INotice } from "./admin/ContentManagement/home/notices/types";
 
 interface MultipleInputFieldProps {
   name: string;

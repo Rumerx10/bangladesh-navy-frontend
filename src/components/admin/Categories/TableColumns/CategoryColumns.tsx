@@ -1,10 +1,10 @@
-import StatusBadge from "@/src/components/shared/Status/Status";
+import Image from "next/image";
+import { Pencil, UserRound } from "lucide-react";
+import { ICategory } from "../types";
 import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { StatusType } from "@/src/components/shared/types/common";
-import { Pencil, UserRound } from "lucide-react";
-import Image from "next/image";
-import { ICategory } from "../types";
+import StatusBadge from "@/src/components/shared/Status/Status";
 
 export const GetCategoryColumns = (
   onEdit?: (item: ICategory) => void
@@ -75,15 +75,14 @@ export const GetCategoryColumns = (
     },
     {
       header: "Action",
-      accessorKey: "actions",
+      accessorKey: "id",
       cell: (_value, row) => {
-        const item = row as ICategory;
         return (
           <div className="flex items-center justify-end gap-2 w-full">
             <Button
               className="w-9! min-h-9 border border-[#E6E6E6] flex items-center justify-center rounded-lg bg-light hover:bg-light"
               size="sm"
-              onClick={() => onEdit?.(item)}
+              onClick={() => onEdit?.(row)}
             >
               <Pencil className="h-4 w-4 text-secondary-foreground" />
             </Button>

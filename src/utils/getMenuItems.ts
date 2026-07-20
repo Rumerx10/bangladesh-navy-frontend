@@ -31,7 +31,7 @@ export function getMenuItems(): MenuItem[] {
       href: "/admin/hero-management",
       children: [
         { label: "Hero", href: "/admin/home/hero-management" },
-        { label: "Notices", href: "/admin/home/notice-management" },
+        { label: "Notices", href: "/admin/home/notice-list-management" },
         { label: "Chief's Biography", href: "/admin/home/biography" },
         { label: "Partner Management", href: "/admin/home/partner" },
       ],
@@ -47,16 +47,6 @@ export function getMenuItems(): MenuItem[] {
         { label: "Organogram", href: "/admin/about-us/organogram" },
         { label: "Survey Ships", href: "/admin/about-us/survey-ships" },
         { label: "Gallery", href: "/admin/about-us/gallery" },
-      ],
-    },
-    {
-      segment: "Content Management",
-      label: "Products & Services",
-      icon: Package,
-      href: "/admin/product-service",
-      children: [
-        { label: "All Products", href: "/admin/products" },
-        { label: "How to Collect", href: "/admin/how-to-collect" },
       ],
     },
     {
@@ -99,18 +89,10 @@ export function getMenuItems(): MenuItem[] {
       segment: "Product Management",
       label: "Manage Product",
       icon: Package,
-      children: [{ label: "All Products", href: "/admin/products" }],
-    },
-    {
-      label: "Categories & Attributes",
-      icon: Layers,
-      segment: "Product Management",
       children: [
-        {
-          label: "Category List",
-          href: "/admin/category",
-          matchRoutes: ["/admin/category"],
-        },
+        { label: "All Products", href: "/admin/products" },
+        { label: "How to Collect", href: "/admin/how-to-collect" },
+        { label: "Category Management", href: "/admin/category" },
       ],
     },
     {
