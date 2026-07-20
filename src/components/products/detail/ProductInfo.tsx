@@ -7,6 +7,7 @@ import { useAppDispatch } from "@/src/lib/redux/hooks";
 import { Check, Minus, Plus, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 interface ProductInfoProps {
   product: INavyProduct;
@@ -46,71 +47,6 @@ export default function ProductInfo({
       <h1 className="text-2xl lg:text-5xl font-bold text-pBlue leading-tight">
         {product.nameEn}
       </h1>
-
-      {/* Price */}
-      {/* <div className="mt-5 flex items-baseline gap-3">
-        <span className="text-3xl font-bold text-pBlue">
-          {formatPrice(discountedPrice)}
-        </span>
-        {hasDiscount && (
-          <>
-            <span className="text-lg text-gray-400 line-through">
-              {formatPrice(product.price)}
-            </span>
-            <span className="px-2.5 py-1 rounded-md bg-red-50 text-red-600 text-xs font-bold">
-              {product.discountType === DiscountType.PERCENTAGE
-                ? `${product.discountValue}% OFF`
-                : `৳${product.discountValue} OFF`}
-            </span>
-          </>
-        )}
-      </div> */}
-
-      {/* Stock */}
-      {/* <div className="mt-4 flex items-center gap-2">
-        <Check size={16} className="text-green-500" />
-        <span className="text-sm text-green-600 font-medium">In Stock</span>
-      </div> */}
-
-      {/* Description */}
-      {product.descriptionEn && (
-        <p className="mt-5 text-sm text-gray-600 leading-relaxed">
-          {parse(product.descriptionEn)}
-        </p>
-      )}
-
-      {/* Quantity + Add to Cart */}
-      {/* <div className="mt-6 flex items-center gap-4">
-        <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
-          <button
-            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-            className="w-10 h-10 flex items-center justify-center hover:bg-gray-50 transition-colors cursor-pointer"
-            disabled={quantity <= 1}
-          >
-            <Minus size={16} />
-          </button>
-          <span className="w-12 h-10 flex items-center justify-center text-sm font-semibold border-x border-gray-200">
-            {quantity}
-          </span>
-          <button
-            onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
-            className="w-10 h-10 flex items-center justify-center hover:bg-gray-50 transition-colors cursor-pointer"
-            disabled={quantity >= product.stock}
-          >
-            <Plus size={16} />
-          </button>
-        </div>
-
-        <button
-          onClick={handleAddToCart}
-          disabled={product.stock <= 0}
-          className="flex-1 flex items-center justify-center gap-2 h-10 rounded-lg bg-liteBlue text-white font-semibold text-sm hover:bg-[#004d8a] disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
-        >
-          <ShoppingCart size={18} />
-          Add to Cart
-        </button>
-      </div> */}
-
       {/* Category */}
       <div className="mt-6 pt-5 border-t border-gray-100">
         <p className="text-sm text-gray-500">
@@ -120,6 +56,15 @@ export default function ProductInfo({
           </span>
         </p>
       </div>
+      {/* Description */}
+      {product.descriptionEn && (
+        <p className="mt-5 text-sm text-gray-600 leading-relaxed">
+          {parse(product.descriptionEn)}
+        </p>
+      )}
+      <Link href="/how-to-collect">
+      <button className="bg-green-500 shadow-md hover:bg-green-600 duration-300 text-white font-semibold rounded-lg mt-10 lg:mt-20 py-2 px-5 max-w-40">How to collect</button>
+      </Link>
     </div>
   );
 }

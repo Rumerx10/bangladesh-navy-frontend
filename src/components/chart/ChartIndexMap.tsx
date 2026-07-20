@@ -88,84 +88,86 @@ export default function ChartIndexMap() {
     // mt-33 (132px) clears the fixed header on both breakpoints: mobile
     // 32+56+44 = 132; desktop 172 minus the <header>'s own lg:pb-10 flow
     // height (40px) = 132.
-    <section className="mt-33 flex h-[calc(100vh-8.25rem)] lg:h-[calc(100vh-10.75rem)] w-full flex-col bg-white">
+    <section className="my-33 flex h-[calc(100vh-8.25rem)] lg:h-[calc(100vh-10.75rem)] w-full flex-col bg-white">
       {/* Toolbar: chart number search */}
-      <div className="relative z-20 flex items-center justify-between gap-4 border-b border-slate-100 bg-white px-4 py-2.5 shadow-sm">
-        <div className="relative w-64 sm:w-80">
-          <SearchIcon className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
-          <input
-            type="text"
-            inputMode="numeric"
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setDropdownOpen(true);
-            }}
-            onFocus={() => query.trim() && setDropdownOpen(true)}
-            onBlur={() => setDropdownOpen(false)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && results[0]) selectResult(results[0]);
-              if (e.key === "Escape") clearSearch();
-            }}
-            placeholder="Search chart number…"
-            aria-label="Search chart by number"
-            className="h-10 w-full rounded-lg border border-slate-200 bg-white pr-9 pl-9 text-sm text-gray-800 outline-none placeholder:text-gray-400 focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
-          />
-          {query && (
-            <button
-              type="button"
-              onClick={clearSearch}
-              aria-label="Clear search"
-              className="absolute top-1/2 right-2 -translate-y-1/2 rounded p-1 text-gray-400 transition-colors hover:text-pBlue"
-            >
-              <XIcon className="h-4 w-4" />
-            </button>
-          )}
+      <div className=" border-b shadow-sm relative z-20 bg-white px-4 py-2.5">
+        <div className="container px-4 mx-auto flex items-center justify-between gap-4">
+          <div className="relative w-64 sm:w-80">
+            <SearchIcon className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              inputMode="numeric"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setDropdownOpen(true);
+              }}
+              onFocus={() => query.trim() && setDropdownOpen(true)}
+              onBlur={() => setDropdownOpen(false)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && results[0]) selectResult(results[0]);
+                if (e.key === "Escape") clearSearch();
+              }}
+              placeholder="Search chart number…"
+              aria-label="Search chart by number"
+              className="h-10 w-full rounded-lg border border-slate-200 bg-white pr-9 pl-9 text-sm text-gray-800 outline-none placeholder:text-gray-400 focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={clearSearch}
+                aria-label="Clear search"
+                className="absolute top-1/2 right-2 -translate-y-1/2 rounded p-1 text-gray-400 transition-colors hover:text-pBlue"
+              >
+                <XIcon className="h-4 w-4" />
+              </button>
+            )}
 
-          {dropdownOpen && query.trim() && (
-            <ul
-              className="absolute top-11 right-0 left-0 z-30 max-h-64 overflow-auto rounded-lg border border-slate-100 bg-white py-1 shadow-xl"
-              onMouseDown={(e) => e.preventDefault()}
-            >
-              {results.length > 0 ? (
-                results.map((area) => {
-                  const product = findProductByChartNumber(area.number);
-                  return (
-                    <li key={area.number}>
-                      <button
-                        type="button"
-                        onClick={() => selectResult(area)}
-                        className="flex w-full items-baseline gap-2 px-3 py-2 text-left transition-colors hover:bg-slate-50"
-                      >
-                        <span className="text-sm font-bold text-pBlue">
-                          {area.number}
-                        </span>
-                        {area.int && (
-                          <span className="text-xs text-gray-400">
-                            ({area.int})
+            {dropdownOpen && query.trim() && (
+              <ul
+                className="absolute top-11 right-0 left-0 z-30 max-h-64 overflow-auto rounded-lg border border-slate-100 bg-white py-1 shadow-xl"
+                onMouseDown={(e) => e.preventDefault()}
+              >
+                {results.length > 0 ? (
+                  results.map((area) => {
+                    const product = findProductByChartNumber(area.number);
+                    return (
+                      <li key={area.number}>
+                        <button
+                          type="button"
+                          onClick={() => selectResult(area)}
+                          className="flex w-full items-baseline gap-2 px-3 py-2 text-left transition-colors hover:bg-slate-50"
+                        >
+                          <span className="text-sm font-bold text-pBlue">
+                            {area.number}
                           </span>
-                        )}
-                        {product && (
-                          <span className="min-w-0 flex-1 truncate text-xs text-gray-500">
-                            {product.nameEn}
-                          </span>
-                        )}
-                      </button>
-                    </li>
-                  );
-                })
-              ) : (
-                <li className="px-3 py-2 text-sm text-gray-400">
-                  No chart matches “{query.trim()}”
-                </li>
-              )}
-            </ul>
-          )}
+                          {area.int && (
+                            <span className="text-xs text-gray-400">
+                              ({area.int})
+                            </span>
+                          )}
+                          {product && (
+                            <span className="min-w-0 flex-1 truncate text-xs text-gray-500">
+                              {product.nameEn}
+                            </span>
+                          )}
+                        </button>
+                      </li>
+                    );
+                  })
+                ) : (
+                  <li className="px-3 py-2 text-sm text-gray-400">
+                    No chart matches “{query.trim()}”
+                  </li>
+                )}
+              </ul>
+            )}
+          </div>
+
+          <p className="hidden text-xs text-gray-400 md:block border py-2 rounded-full px-5">
+            Hover a rectangle to identify a chart — click it to view details
+          </p>
         </div>
-
-        <p className="hidden text-xs text-gray-400 md:block">
-          Hover a rectangle to identify a chart — click it to view details
-        </p>
       </div>
 
       <div
@@ -257,7 +259,6 @@ export default function ChartIndexMap() {
             Chart {chartLabel(hovered)}
           </div>
         )}
-
       </div>
 
       <ChartInfoDialog selected={selected} onClose={() => setSelected(null)} />
@@ -298,7 +299,9 @@ function ChartInfoDialog({
         if (!open) onClose();
       }}
     >
-      <DialogContent className={product && image ? "sm:max-w-md" : "sm:max-w-sm"}>
+      <DialogContent
+        className={product && image ? "sm:max-w-md" : "sm:max-w-sm"}
+      >
         <DialogHeader>
           <DialogTitle className="text-pBlue">Chart Information</DialogTitle>
           <DialogDescription>
@@ -342,10 +345,7 @@ function ChartInfoDialog({
             <div className="grid grid-cols-2 gap-2">
               <SpecTile label="Scale" value={attr("Scale")} />
               <SpecTile label="Projection" value={attr("Projection")} />
-              <SpecTile
-                label="Published"
-                value={attr("Date of Publication")}
-              />
+              <SpecTile label="Published" value={attr("Date of Publication")} />
               <SpecTile label="Edition" value={attr("Edition")} />
             </div>
 

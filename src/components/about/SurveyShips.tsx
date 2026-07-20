@@ -114,7 +114,7 @@ export default function SurveyShips() {
                             className="text-cyan-400/80 shrink-0"
                           />
                           <span className="text-base font-medium text-white uppercase tracking-widest">
-                            Survey Equipment
+                            Capabilities
                           </span>
                         </div>
                         <div className="p-4 flex flex-col gap-2.5">

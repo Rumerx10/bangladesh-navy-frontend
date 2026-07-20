@@ -33,10 +33,10 @@ export default function NavyHeroCarousel() {
           {/* Title */}
           <h1 className="text-white font-bold leading-tight tracking-tight mb-4">
             <span className="block text-4xl md:text-6xl lg:text-7xl">
-              Guardians of the
+              Ensuring Safe & Efficient Marine
             </span>
             <span className="block text-4xl md:text-6xl lg:text-7xl text-amber-400 mt-1">
-              Bay of Bengal
+              Activities for Sustainable Bangladesh
             </span>
           </h1>
 

@@ -11,7 +11,7 @@ const Partners = () => {
         <div className="space-y-4">
           <SectionTitle
             title="Our Trusted Partners"
-            desc="Empowering maritime safety and oceanographic research through strategic collaborations with national and international stakeholders, hydrographic organizations, and global defense partners."
+            // desc="Empowering maritime safety and oceanographic research through strategic collaborations with national and international stakeholders, hydrographic organizations, and global defense partners."
           />
         </div>
         {/* <div className="space-y-4">
