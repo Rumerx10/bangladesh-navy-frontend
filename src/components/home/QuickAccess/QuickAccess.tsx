@@ -103,49 +103,52 @@ export default function QuickAccess() {
               </div>
             </div>
 
-            {/* Right — 30%: Chief Message card */}
+            {/* Right — 20%: Chief Message card */}
             <motion.div
-              className="w-full lg:w-[20%] lg:sticky lg:top-28"
+              className="w-full lg:w-[20%] lg:sticky lg:top-28 lg:self-start"
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="relative rounded-2xl overflow-hidden bg-gray-100 shadow-md border border-gray-300">
+              <div className="relative rounded-2xl overflow-hidden bg-white shadow-md border border-gray-300">
+                {/* Chief title - at top */}
+                <div className="underline px-2.5 py-2 text-sm sm:text-md text-center font-semibold text-[#ffb900] tracking-wider bg-white">
+                  Chief Hydrographer
+                </div>
+
                 {/* Chief image */}
-                <div className="relative h-100 overflow-hidden">
+                <div className="relative h-64 sm:h-72 md:h-80 lg:h-72 xl:h-80 2xl:h-96 overflow-hidden">
                   <Image
                     src="/CHIEF.jpeg"
                     alt={chiefMessage.name}
                     fill
                     className="object-contain p-4"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                   />
-                  <div className="px-2.5 py-2 underline text-md text-center font-semibold text-[#ffb900] tracking-wider">
-                    Chief Hydrographer
-                  </div>
                 </div>
 
-                {/* Content panel - pure gray */}
-                <div className="relative flex flex-col items-center justify-center px-5 pb-6 pt-3 bg-white">
-                  <Quote size={26} className="text-gray-400 mb-2" />
+                {/* Content panel */}
+                <div className="relative flex flex-col items-center justify-center px-4 sm:px-5 pb-4 sm:pb-6 pt-2 sm:pt-3 bg-white">
+                  <Quote size={20} className="text-gray-400 mb-1 sm:mb-2" />
 
-                  <h3 className="text-pBlue text-center font-bold text-base leading-snug">
+                  <h3 className="text-pBlue text-center font-bold text-sm sm:text-base leading-snug">
                     {chiefMessage.name}
                   </h3>
-                  <p className="text-gray-500 text-center text-xs font-semibold uppercase tracking-wider mt-0.5 mb-4">
+                  <p className="text-gray-500 text-center text-xs font-semibold uppercase tracking-wider mt-0.5 mb-3 sm:mb-4">
                     {chiefMessage.designation}
                   </p>
-                  {/* <div className="my-5 h-px bg-gray-200" /> */}
+
                   <button
                     onClick={openModal}
-                    className="mt-10 cursor-pointer group w-full flex items-center justify-between px-4 py-3 rounded-xl bg-gray-50 hover:bg-gray-200 border border-gray-200 hover:border-gray-400 transition-all duration-200"
+                    className="mt-4 sm:mt-6 lg:mt-10 cursor-pointer group w-full flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-gray-50 hover:bg-gray-200 border border-gray-200 hover:border-gray-400 transition-all duration-200"
                   >
-                    <span className="text-gray-700 text-sm font-semibold">
+                    <span className="text-gray-700 text-xs sm:text-sm font-semibold">
                       Read Full Biography
                     </span>
                     <ChevronRight
-                      size={16}
-                      className="text-gray-500 transition-transform duration-200 group-hover:translate-x-1"
+                      size={14}
+                      className="text-gray-500 transition-transform duration-200 group-hover:translate-x-1 sm:size-4"
                     />
                   </button>
                 </div>

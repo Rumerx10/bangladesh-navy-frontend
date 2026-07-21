@@ -20,10 +20,10 @@ export default function NavyHeroCarousel() {
       {/* <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-black/20" /> */}
 
       {/* Content */}
-      <div className="absolute inset-0 flex items-center">
+      <div className="absolute top-33 lg:top-0 inset-0 flex items-center">
         <div className="container mx-auto px-6 md:px-12 lg:px-20 max-w-6xl">
           {/* Badge */}
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-3 lg:mb-6">
             <span className="h-px w-10 bg-amber-400" />
             <span className="text-amber-400 text-xs font-semibold tracking-[0.25em] uppercase">
               Excellence in Maritime Service
@@ -32,10 +32,10 @@ export default function NavyHeroCarousel() {
 
           {/* Title */}
           <h1 className="text-white font-bold leading-tight tracking-tight mb-4">
-            <span className="block text-4xl md:text-6xl lg:text-7xl">
+            <span className="block text-2xl md:text-6xl lg:text-7xl">
               Ensuring Safe & Efficient Marine
             </span>
-            <span className="block text-4xl md:text-6xl lg:text-7xl text-amber-400 mt-1">
+            <span className="block text-2xl md:text-6xl lg:text-7xl text-amber-400 mt-1">
               Activities for Sustainable Bangladesh
             </span>
           </h1>
