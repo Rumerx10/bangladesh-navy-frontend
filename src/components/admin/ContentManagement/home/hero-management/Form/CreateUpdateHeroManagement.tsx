@@ -1,16 +1,15 @@
-// src/modules/admin/hero-management/components/Form/CreateUpdateHeroManagement.tsx
 "use client";
 
-import { FormProvider, useForm } from "react-hook-form";
+import { usePost } from "@/src/hooks/usePost";
+import { usePatch } from "@/src/hooks/usePatch";
+import { IHeroManagement } from "../types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import HeroManagementForm from "./HeroManagementForm";
+import { FormProvider, Resolver, useForm } from "react-hook-form";
 import {
-  heroManagementSchema,
   HeroManagementSchemaForm,
+  heroManagementSchema,
 } from "../Schema/heroManagementSchema";
-import { IHeroManagement } from "../types";
-import { usePost } from "@/src/hooks/usePost"; // ✅ Correct import
-import { usePatch } from "@/src/hooks/usePatch"; // ✅ Correct import
 
 interface CreateUpdateHeroManagementProps {
   initialValues?: IHeroManagement;
@@ -23,22 +22,28 @@ const CreateUpdateHeroManagement = ({
   onSuccess,
   onCancel,
 }: CreateUpdateHeroManagementProps) => {
-  const isEditMode = !!initialValues?.title;
+  const isEditMode = !!initialValues?.id;
 
-  // src/modules/admin/hero-management/components/Form/CreateUpdateHeroManagement.tsx
   const methods = useForm<HeroManagementSchemaForm>({
-    resolver: yupResolver(heroManagementSchema),
+    resolver: yupResolver(heroManagementSchema) as Resolver<HeroManagementSchemaForm>,
     defaultValues: {
-      title: initialValues?.title || "",
-      slogan: initialValues?.slogan || "",
-      description: initialValues?.description || "",
-      images: initialValues?.images || [],
+      titleEn: initialValues?.titleEn || "",
+      titleBn: initialValues?.titleBn || "",
+      subTitleEn: initialValues?.subTitleEn || "",
+      subTitleBn: initialValues?.subTitleBn || "",
+      descriptionEn: initialValues?.descriptionEn || "",
+      descriptionBn: initialValues?.descriptionBn || "",
+      images: initialValues?.imageUrls || [],
+      status: initialValues?.status || "ACTIVE",
     },
   });
 
-  const { mutate: createHero, isPending: isCreating } = usePost<{
-    data: IHeroManagement;
-  }>(
+  const {
+    mutate: createHero,
+    isPending: isCreating,
+    error,
+    reset: resetCreateError,
+  } = usePost(
     "/hero-management",
     () => {
       onSuccess?.();
@@ -46,52 +51,46 @@ const CreateUpdateHeroManagement = ({
     [["hero-management"]]
   );
 
-  const { mutate: updateHero, isPending: isUpdating } = usePatch<{
-    data: IHeroManagement;
-  }>(
-    () => {
-      onSuccess?.();
-    },
-    [["hero-management"]],
-    "/hero-management"
-  );
+  const {
+    mutate: updateHero,
+    isPending: isUpdating,
+    error: updateError,
+    reset: resetUpdateError,
+  } = usePatch(() => {
+    onSuccess?.();
+  }, [["hero-management"]]);
 
   const isPending = isCreating || isUpdating;
 
   const onSubmit = (data: HeroManagementSchemaForm) => {
     const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("slogan", data.slogan);
-    formData.append("description", data.description);
+    formData.append("titleEn", data.titleEn);
+    formData.append("titleBn", data.titleBn);
+    formData.append("subTitleEn", data.subTitleEn);
+    formData.append("subTitleBn", data.subTitleBn);
+    formData.append("descriptionEn", data.descriptionEn);
+    formData.append("descriptionBn", data.descriptionBn);
+    formData.append("status", data.status);
 
-    data.images.forEach((image) => {
+    data.images?.forEach((image) => {
       if (image instanceof File) {
         formData.append("images", image);
-      } else if (typeof image === "string") {
-        formData.append("existingImages", image);
       }
     });
 
     if (isEditMode && initialValues?.id) {
       updateHero({
-        url: `/hero-management/${initialValues.id}`,
+        url: `/hero-management`,
         data: formData,
-        config: {
-          headers: { "Content-Type": "multipart/form-data" },
-        },
       });
     } else {
-      createHero({
-        endpoint: "/hero-management",
-        data: formData,
-        config: {
-          headers: { "Content-Type": "multipart/form-data" },
-        },
-      });
+      createHero({ data: formData });
     }
   };
 
   const handleCancel = () => {
+    resetCreateError();
+    resetUpdateError();
     methods.reset();
     onCancel?.();
   };
@@ -103,6 +102,7 @@ const CreateUpdateHeroManagement = ({
         onSubmit={onSubmit}
         isPending={isPending}
         onCancel={handleCancel}
+        error={error || updateError}
       />
     </FormProvider>
   );

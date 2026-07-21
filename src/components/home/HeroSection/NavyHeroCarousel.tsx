@@ -2,14 +2,47 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useGet } from "@/src/hooks/useGet";
 
-export default function NavyHeroCarousel() {
+interface IHeroManagement {
+  id: string;
+  titleEn: string;
+  titleBn: string;
+  subTitleEn: string;
+  subTitleBn: string;
+  descriptionEn: string;
+  descriptionBn: string;
+  imageUrls: string[];
+  status: "ACTIVE" | "INACTIVE";
+  createdAt: string;
+  updatedAt: string;
+}
+
+const NavyHeroCarousel = () => {
+  const { data, isLoading } = useGet<IHeroManagement>("/hero-management", [
+    "hero-management",
+  ]);
+
+  const heroData = data?.data;
+  const imageUrl = heroData?.imageUrls?.[0] || "/heroImages/heroImg1.jpg";
+
+  if (isLoading) {
+    return (
+      <div className="relative w-full h-screen overflow-hidden bg-gray-900">
+        <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/20 to-transparent" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-12 h-12 border-4 border-amber-400 border-t-transparent rounded-full animate-spin" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full h-screen overflow-hidden bg-gray-900">
       {/* Background image */}
       <Image
-        src="/heroImages/heroImg1.jpg"
-        alt="Bangladesh Navy Maritime Heritage"
+        src={imageUrl || "/heroImages/heroImg1.jpg"}
+        alt={heroData?.titleEn || "Bangladesh Navy Maritime Heritage"}
         fill
         priority
         className="object-cover object-center"
@@ -17,7 +50,6 @@ export default function NavyHeroCarousel() {
 
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/20 to-transparent" />
-      {/* <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-black/20" /> */}
 
       {/* Content */}
       <div className="absolute top-33 lg:top-0 inset-0 flex items-center">
@@ -26,18 +58,18 @@ export default function NavyHeroCarousel() {
           <div className="flex items-center gap-3 mb-3 lg:mb-6">
             <span className="h-px w-10 bg-amber-400" />
             <span className="text-amber-400 text-xs font-semibold tracking-[0.25em] uppercase">
-              Excellence in Maritime Service
+              {heroData?.subTitleEn || "Excellence in Maritime Service"}
             </span>
           </div>
 
           {/* Title */}
           <h1 className="text-white font-bold leading-tight tracking-tight mb-4">
             <span className="block text-2xl md:text-6xl lg:text-7xl">
-              Ensuring Safe & Efficient Marine
+              {heroData?.titleEn || "Ensuring Safe & Efficient Marine"}
             </span>
-            <span className="block text-2xl md:text-6xl lg:text-7xl text-amber-400 mt-1">
-              Activities for Sustainable Bangladesh
-            </span>
+            {/* <span className="block text-2xl md:text-6xl lg:text-7xl text-amber-400 mt-1">
+              {heroData?.titleBn || "Activities for Sustainable Bangladesh"}
+            </span> */}
           </h1>
 
           {/* Divider */}
@@ -48,9 +80,8 @@ export default function NavyHeroCarousel() {
 
           {/* Description */}
           <p className="text-white/80 text-base md:text-lg leading-relaxed max-w-xl font-light">
-            Bangladesh Navy stands as the premier maritime defense force,
-            protecting our sovereign waters and advancing naval excellence
-            across the Indo-Pacific region.
+            {heroData?.descriptionEn ||
+              "Bangladesh Navy stands as the premier maritime defense force, protecting our sovereign waters and advancing naval excellence across the Indo-Pacific region."}
           </p>
 
           {/* CTAs */}
@@ -85,4 +116,6 @@ export default function NavyHeroCarousel() {
       </div>
     </div>
   );
-}
+};
+
+export default NavyHeroCarousel;
