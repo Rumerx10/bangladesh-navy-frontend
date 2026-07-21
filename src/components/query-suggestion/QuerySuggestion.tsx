@@ -1,4 +1,4 @@
-import QueryDirectApproach from "./QueryDirectApproach";
+import DirectApproach from "../contact-us/DirectApproach";
 import QueryForm from "./QueryForm";
 import QueryHero from "./QueryHero";
 
@@ -12,7 +12,7 @@ export default function QuerySuggestion() {
         <div className="container px-4 sm:px-0 py-8 lg:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             <QueryForm />
-            <QueryDirectApproach />
+            <DirectApproach />
           </div>
         </div>
       </section>

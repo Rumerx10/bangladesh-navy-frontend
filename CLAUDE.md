@@ -57,7 +57,22 @@ CI (GitHub Actions): PRs to `main` run `yarn spotless` + `yarn build` and deploy
 | `admin`  | Sidebar + DashboardHeader                               | Admin dashboard                                              |
 | `auth`   | Minimal                                                 | Login / signup                                               |
 
-The `admin` route itself is flat but its pages are organized in sub-groups: `(categories)`, `(users)`, `(career)` (career listings + applicant list), and `(content-management)` — which holds products, notices, banner-poster, media-gallery, `about-us/` (gallery, history, mission-vision, survey-ships), and `home/` (biography, hero-management, partner). Components for each live under [src/components/admin/](src/components/admin/) in matching subdirectories.
+The `admin` route itself is flat but its pages are organized in sub-groups: `(categories)`, `(users)`, `(career)` (career listings + applicant list), and `(content-management)` — which holds products, notices, banner-poster, media-gallery, `about-us/` (gallery, history, mission-vision, survey-ships), and `home/` (biography, hero-management, notice-management, partner). Components for each live under [src/components/admin/](src/components/admin/) in matching subdirectories.
+
+Every admin management feature follows a consistent file layout inside its subdirectory:
+
+```
+FeatureManagement.tsx         # list/index page — renders DataTable
+FeaturePreview.tsx            # read-only detail/preview view
+Form/
+  FeatureForm.tsx             # inner field layout (used by Create and Update)
+  CreateUpdateFeature.tsx     # top-level form wrapper; handles usePost/usePatch, reset, and navigation
+  *Field.tsx                  # reusable sub-field components for complex form sections (array fields, etc.)
+TableColumns/
+  FeatureColumns.tsx          # ColumnDef<T>[] for DataTable
+Skeleton/
+  FeaturePreviewSkeleton.tsx  # loading state for the preview component
+```
 
 ### Route guards (proxy.ts pattern)
 
@@ -120,6 +135,10 @@ All form pages use React Hook Form with `FormProvider`. Reusable controlled fiel
 - `MultipleImageFileInput` — multi-image upload
 
 For edit forms, use `getChangedFields(newData, initialData)` from [src/utils/getChangedFields.ts](src/utils/getChangedFields.ts) to send only modified fields in PATCH requests.
+
+**Validation schemas** are co-located with their feature component — either as `schema/FeatureSchema.ts` (e.g. `src/components/contact-us/schema/ContactSchema.ts`) or as `featureValidationSchema.tsx` alongside the form component. Schemas export both the Yup schema object and the inferred TypeScript type (`yup.InferType<typeof schema>`).
+
+**Contact-us sub-pages** (`(root)/contact-us/query-suggestion`, `/contact-us/hydrographic-note`, `/contact-us/information`) reuse the shared `ContactForm` component with a `defaultType` prop to tag submissions (e.g. `<ContactForm defaultType="hydrographic-note" />`). All contact submissions go to the `/contact-support` endpoint.
 
 ### Admin data table
 
