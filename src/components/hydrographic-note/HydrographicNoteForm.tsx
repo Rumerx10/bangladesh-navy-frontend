@@ -37,7 +37,9 @@ const HydrographicNoteForm = () => {
   );
 
   const methods = useForm<HydrographicNoteFormType>({
-    resolver: yupResolver(hydrographicNoteValidationSchema) as unknown as Resolver<HydrographicNoteFormType>,
+    resolver: yupResolver(
+      hydrographicNoteValidationSchema
+    ) as unknown as Resolver<HydrographicNoteFormType>,
     mode: "onChange",
     defaultValues: {
       date: "",
@@ -106,7 +108,11 @@ const HydrographicNoteForm = () => {
           <div className="grid grid-cols-1 gap-5 px-6 pb-6 md:grid-cols-2">
             <div>
               <InputLabel label="Date" required />
-              <ControlledInputField type="date" name="date" className="bg-white" />
+              <ControlledInputField
+                type="date"
+                name="date"
+                className="bg-white"
+              />
             </div>
             <div>
               <InputLabel label="Ref Number" required />

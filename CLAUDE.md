@@ -104,13 +104,13 @@ The axios instance normalises every response to `{ data, meta }`, handles JWT re
 
 Located in [src/lib/redux/features/](src/lib/redux/features/):
 
-| Slice                           | Responsibility                                                       |
-| ------------------------------- | -------------------------------------------------------------------- |
-| `auth`                          | `userInformation`, `loading`, `isLoginModalOpen`                     |
-| `permission`                    | Role-derived permission map (`canAccessAdmin`, `canAddToCart`, etc.) |
-| `cart`                          | Cart items (client-side)                                             |
-| `filter`                        | Product filter/search state synced to URL                            |
-| `user`, `organizer`             | Supporting slices                                                    |
+| Slice               | Responsibility                                                       |
+| ------------------- | -------------------------------------------------------------------- |
+| `auth`              | `userInformation`, `loading`, `isLoginModalOpen`                     |
+| `permission`        | Role-derived permission map (`canAccessAdmin`, `canAddToCart`, etc.) |
+| `cart`              | Cart items (client-side)                                             |
+| `filter`            | Product filter/search state synced to URL                            |
+| `user`, `organizer` | Supporting slices                                                    |
 
 Always use the typed hooks from [src/lib/redux/hooks.ts](src/lib/redux/hooks.ts): `useAppDispatch()` and `useAppSelector`.
 

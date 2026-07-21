@@ -26,8 +26,7 @@ export default function CategoryForm({
   isPending?: boolean;
   error?: ErrorType;
 }) {
-  const { handleSubmit } =
-    useFormContext<CategoryFormValues>();
+  const { handleSubmit } = useFormContext<CategoryFormValues>();
   const { mutateAsync: generateBanglaName, isPending: isGenerating } =
     useMutation({
       mutationFn: async (input: string) => {

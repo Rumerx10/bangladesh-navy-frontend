@@ -18,8 +18,18 @@ const MotionLink = motion.create(Link);
 
 const galleryImages = [
   { id: 1, src: "/img4.jpeg", alt: "Survey Operation", size: "large" },
-  { id: 2, src: "/newsImages/news2.jpg", alt: "IHO Celebration", size: "small" },
-  { id: 3, src: "/newsImages/news3.jpg", alt: "Nautical Charts", size: "small" },
+  {
+    id: 2,
+    src: "/newsImages/news2.jpg",
+    alt: "IHO Celebration",
+    size: "small",
+  },
+  {
+    id: 3,
+    src: "/newsImages/news3.jpg",
+    alt: "Nautical Charts",
+    size: "small",
+  },
   { id: 4, src: "/img5.jpeg", alt: "Survey Launch", size: "small" },
   { id: 5, src: "/img8.jpeg", alt: "Tide Prediction", size: "small" },
 ];

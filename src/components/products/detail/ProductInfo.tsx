@@ -63,7 +63,9 @@ export default function ProductInfo({
         </p>
       )}
       <Link href="/how-to-collect">
-      <button className="bg-green-500 shadow-md hover:bg-green-600 duration-300 text-white font-semibold rounded-lg mt-10 lg:mt-20 py-2 px-5 max-w-40">How to collect</button>
+        <button className="bg-green-500 shadow-md hover:bg-green-600 duration-300 text-white font-semibold rounded-lg mt-10 lg:mt-20 py-2 px-5 max-w-40">
+          How to collect
+        </button>
       </Link>
     </div>
   );

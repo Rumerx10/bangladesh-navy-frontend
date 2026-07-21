@@ -11,18 +11,13 @@ export const hydrographicNoteValidationSchema = yup.object({
 
   address: yup.string().required("Address is required"),
 
-  email: yup
-    .string()
-    .email("Invalid email")
-    .required("Email is required"),
+  email: yup.string().email("Invalid email").required("Email is required"),
 
   tel: yup.string().required("Telephone number is required"),
 
   fax: yup.string().ensure(),
 
-  generalLocality: yup
-    .string()
-    .required("General locality is required"),
+  generalLocality: yup.string().required("General locality is required"),
 
   subject: yup.string().required("Subject is required"),
 
@@ -36,9 +31,7 @@ export const hydrographicNoteValidationSchema = yup.object({
 
   accuracy: yup.string().ensure(),
 
-  bnChartsAffected: yup
-    .string()
-    .required("BN Charts affected is required"),
+  bnChartsAffected: yup.string().required("BN Charts affected is required"),
 
   edition: yup.string().ensure(),
 
@@ -69,5 +62,6 @@ export const hydrographicNoteValidationSchema = yup.object({
     .required("Name of observer/reporter is required"),
 });
 
-export type HydrographicNoteFormType =
-  yup.InferType<typeof hydrographicNoteValidationSchema>;
+export type HydrographicNoteFormType = yup.InferType<
+  typeof hydrographicNoteValidationSchema
+>;

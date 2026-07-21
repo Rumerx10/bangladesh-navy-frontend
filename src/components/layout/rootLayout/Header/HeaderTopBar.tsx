@@ -55,7 +55,7 @@ export const NavigationItems: NavItem[] = [
     subLinks: [
       ...navyCategories.map((cat) => ({
         label: cat.nameEn,
-        link: `/product-service/${cat.nameEn.toLowerCase().replace(" ","-")}`,
+        link: `/product-service/${cat.nameEn.toLowerCase().replace(" ", "-")}`,
       })),
       { label: "How to Collect", link: "/how-to-collect" },
     ],

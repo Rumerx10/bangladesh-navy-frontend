@@ -1,9 +1,7 @@
-import ChartIndexMap from '@/src/components/chart/ChartIndexMap';
+import ChartIndexMap from "@/src/components/chart/ChartIndexMap";
 
 const page = () => {
-  return (
-    <ChartIndexMap />
-  );
-}
+  return <ChartIndexMap />;
+};
 
 export default page;
