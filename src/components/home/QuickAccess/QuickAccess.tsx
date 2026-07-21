@@ -120,7 +120,7 @@ export default function QuickAccess() {
                     fill
                     className="object-contain p-4"
                   />
-                  <div className="px-2.5 py-2 text-lg text-center font-semibold text-[#ffb900] tracking-wider">
+                  <div className="px-2.5 py-2 underline text-md text-center font-semibold text-[#ffb900] tracking-wider">
                     Chief Hydrographer
                   </div>
                 </div>

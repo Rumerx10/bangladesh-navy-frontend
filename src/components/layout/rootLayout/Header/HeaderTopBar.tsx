@@ -39,6 +39,7 @@ export const NavigationItems: NavItem[] = [
     label: "About Us",
     link: "/about",
     subLinks: [
+      { label: "News & Events", link: "/about/news" },
       { label: "History", link: "/about/history" },
       { label: "Vision & Mission", link: "/about/vision-mission" },
       { label: "Organogram", link: "/about/organogram" },
