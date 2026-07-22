@@ -56,6 +56,8 @@ export const NavigationItems: NavItem[] = [
         label: cat.nameEn,
         link: `/product-service?category=${cat.slug}`,
       })),
+      { label: "Chart Index", link: "/chart" },
+      { label: "Electronic Chart (ENC)", link: "/electronic-chart" },
       { label: "How to Pay", link: "/how-to-pay" },
     ],
   },

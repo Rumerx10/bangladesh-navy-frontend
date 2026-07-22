@@ -28,6 +28,8 @@ const NAV_LINKS = [
   { label: "Survey Ships", href: "/about/survey-ships" },
   { label: "Gallery", href: "/about/gallery" },
   { label: "Products & Services", href: "/product-service" },
+  { label: "Chart Index", href: "/chart" },
+  { label: "Electronic Chart (ENC)", href: "/electronic-chart" },
   { label: "How to Pay", href: "/how-to-pay" },
   { label: "BN Hydrographic Institute", href: "/skill-development" },
   { label: "Courses", href: "/skill-development/courses" },
