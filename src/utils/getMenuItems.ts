@@ -4,12 +4,9 @@ import {
     Home,
     Info,
     LayoutDashboard,
-    Package,
     Phone,
-    Settings,
-    ShoppingCart,
     Users,
-    type LucideIcon
+    type LucideIcon,
 } from "lucide-react";
 
 export interface MenuItem {
