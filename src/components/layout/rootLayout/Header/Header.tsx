@@ -3,7 +3,7 @@
 import MarqueeNotice from "@/src/components/home/MarqueeNotice";
 import { useEffect, useState } from "react";
 import HeaderTopBar from "./HeaderTopBar";
-// import MobileNav from "./MobileNav";
+import MobileNav from "./MobileNav";
 import TopInfoBar from "./TopInfoBar";
 
 const Header = () => {
@@ -32,7 +32,7 @@ const Header = () => {
       </div>
 
       {/* Mobile Navigation Drawer + Bottom Nav */}
-      {/* <MobileNav open={menuOpen} setOpen={setMenuOpen} /> */}
+      <MobileNav open={menuOpen} setOpen={setMenuOpen} />
     </header>
   );
 };

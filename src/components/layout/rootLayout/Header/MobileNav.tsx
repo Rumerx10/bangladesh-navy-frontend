@@ -309,7 +309,7 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
         <button
           onClick={() => setOpen(false)}
           className="fixed z-80 top-3 bg-white/90 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center shadow-lg border border-gray-200"
-          style={{ left: "calc(min(320px, 85vw) + 8px)" }}
+          style={{ right: "calc(min(320px, 85vw) + 8px)" }}
           aria-label="Close menu"
         >
           <X size={18} className="text-gray-600" />
@@ -318,8 +318,8 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 left-0 z-70 h-screen w-80 max-w-[85vw] bg-white transform transition-transform duration-300 flex flex-col ${
-          open ? "translate-x-0" : "-translate-x-full"
+        className={`fixed top-0 right-0 z-70 h-screen w-80 max-w-[85vw] bg-white transform transition-transform duration-300 flex flex-col ${
+          open ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Search — top */}
