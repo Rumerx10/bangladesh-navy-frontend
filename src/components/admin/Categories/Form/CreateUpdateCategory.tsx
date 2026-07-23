@@ -103,8 +103,6 @@ const CreateUpdateCategory = ({
   const isPending = isCreating || isUpdating;
 
   const onSubmit = (values: CategoryFormValues) => {
-
-
     if (isUpdate && initialValues) {
       updateMutate({
         url: `/category/${initialValues.id}`,

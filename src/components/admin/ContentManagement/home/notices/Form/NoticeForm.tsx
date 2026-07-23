@@ -51,7 +51,10 @@ const NoticeForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       <div className="space-y-2">
-        <Label htmlFor="name" className="text-sm font-medium text-secondary-dark">
+        <Label
+          htmlFor="name"
+          className="text-sm font-medium text-secondary-dark"
+        >
           Name <span className="text-red-500">*</span>
         </Label>
         <Input
@@ -66,7 +69,10 @@ const NoticeForm = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="description" className="text-sm font-medium text-secondary-dark">
+        <Label
+          htmlFor="description"
+          className="text-sm font-medium text-secondary-dark"
+        >
           Description <span className="text-red-500">*</span>
         </Label>
         <Textarea
@@ -81,7 +87,10 @@ const NoticeForm = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="status" className="text-sm font-medium text-secondary-dark">
+        <Label
+          htmlFor="status"
+          className="text-sm font-medium text-secondary-dark"
+        >
           Status <span className="text-red-500">*</span>
         </Label>
         <Select
@@ -105,7 +114,9 @@ const NoticeForm = ({
 
       {error && (
         <p className="text-red-500 text-sm">
-          {error?.response?.data?.message || error?.message || "Something went wrong"}
+          {error?.response?.data?.message ||
+            error?.message ||
+            "Something went wrong"}
         </p>
       )}
 
@@ -129,8 +140,8 @@ const NoticeForm = ({
               ? "Updating..."
               : "Creating..."
             : isEditMode
-            ? "Update"
-            : "Create"}
+              ? "Update"
+              : "Create"}
         </Button>
       </div>
     </form>

@@ -7,7 +7,7 @@ export interface INoticeManagement {
   id: string;
   name: string;
   description: string;
-  status: 'ACTIVE' | 'INACTIVE' | 'DRAFT';
+  status: "ACTIVE" | "INACTIVE" | "DRAFT";
   createdAt: string;
-  updatedAt: string;    
+  updatedAt: string;
 }

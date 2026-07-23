@@ -1,15 +1,13 @@
 "use client";
-
-import { openLoginModal } from "@/src/lib/redux/features/auth/authSlice";
-import { IUserInformation } from "@/src/lib/redux/features/auth/authTypes";
-import { useAppDispatch } from "@/src/lib/redux/hooks";
-import { useDebounce } from "@/src/hooks/useDebounce";
-import { ArrowRight, Search, ShoppingCart, User, X } from "lucide-react";
-import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ProfileDropdown } from "./ProfileDropdown";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useDebounce } from "@/src/hooks/useDebounce";
+import { useAppDispatch } from "@/src/lib/redux/hooks";
 import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, Search, User, X } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { openLoginModal } from "@/src/lib/redux/features/auth/authSlice";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { IUserInformation } from "@/src/lib/redux/features/auth/authTypes";
 
 interface HeaderTopBarActionsProps {
   cartCount: number;
@@ -47,7 +45,6 @@ const NAV_LINKS = [
 ];
 
 export default function HeaderTopBarActions({
-  cartCount,
   userInformation,
   authLoading,
 }: HeaderTopBarActionsProps) {
@@ -212,29 +209,7 @@ export default function HeaderTopBarActions({
           </div>
         </AnimatePresence>
       </div>
-
-      {/* Cart */}
-      {!isSearchOpen && (
-        <Link
-          href="/cart"
-          className="relative flex items-center justify-center w-10 h-10 text-gray-600 hover:text-liteBlue hover:bg-gray-50 rounded-full transition-colors"
-          aria-label="Shopping Cart"
-        >
-          <ShoppingCart size={20} />
-          {cartCount > 0 && (
-            <motion.span
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="absolute top-0.5 right-0.5 min-w-4.5 h-4.5 flex items-center justify-center rounded-full bg-liteBlue text-white text-[10px] font-bold px-1"
-            >
-              {cartCount > 99 ? "99+" : cartCount}
-            </motion.span>
-          )}
-        </Link>
-      )}
-
       <div className="hidden lg:block w-px h-7 bg-gray-200 mx-1" />
-
       {/* Auth */}
       {authLoading ? (
         <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200">

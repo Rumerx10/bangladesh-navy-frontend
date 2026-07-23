@@ -17,7 +17,7 @@ interface QueryFormProps {
   defaultType?: string;
 }
 
-export default function QueryForm({ defaultType }: QueryFormProps) {
+const QueryForm = ({ defaultType }: QueryFormProps) => {
   const { mutateAsync, error, isPending } = usePost(
     "/contact-support",
     () => {
@@ -122,4 +122,6 @@ export default function QueryForm({ defaultType }: QueryFormProps) {
       </FormProvider>
     </div>
   );
-}
+};
+
+export default QueryForm;
