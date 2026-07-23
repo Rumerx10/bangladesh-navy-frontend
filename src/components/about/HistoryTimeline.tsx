@@ -35,14 +35,14 @@ export default function HistoryTimeline({
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="container px-4 mx-auto"
+        className=""
       >
-        <div className="text-[1.05rem] md:text-[1.15rem] text-[#3a4858] leading-[1.9] text-justify">
-          <div className="float-left mr-7 mb-4 w-60 md:w-90 shrink-0">
+        <div className="text-base md:text-lg text-[#3a4858] leading-[1.9] text-justify">
+          <div className="float-left mr-7 mb-4 w-50 md:w-150 shrink-0">
             <Image
               src="/shipImages/bns-darshak.png"
               alt="BNS Darshak – Bangladesh Navy Hydrographic Survey Ship"
-              width={360}
+              width={640}
               height={240}
               className="rounded-xl object-cover w-full shadow-md"
             />
@@ -57,7 +57,7 @@ export default function HistoryTimeline({
       </motion.div>
 
       {/* ── Era Navigation (centered) ── */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.25 }}
@@ -102,11 +102,11 @@ export default function HistoryTimeline({
             </button>
           );
         })}
-      </motion.div>
+      </motion.div> */}
 
       {/* ── Active Era Detail ── */}
 
-      <motion.div
+      {/* <motion.div
         key={activeEra}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -114,7 +114,7 @@ export default function HistoryTimeline({
         transition={{ duration: 0.4 }}
         className="rounded-lg bg-white border border-[#e8edf3] overflow-hidden shadow-[0_4px_32px_rgba(0,24,54,0.06)]"
       >
-        {/* header strip */}
+        header strip
         <div className="flex items-center gap-4 px-5 py-5 md:px-8 md:py-6 bg-[var(--primary,#003f71)] text-white">
           <div className="w-12 h-12 rounded-xl bg-white/18 flex items-center justify-center shrink-0">
             {eraIcons[eras[activeEra].icon] ?? <Anchor size={22} />}
@@ -129,12 +129,12 @@ export default function HistoryTimeline({
           </div>
         </div>
 
-        {/* summary */}
+        summary
         <p className="px-5 md:px-8 pt-6 text-[0.92rem] text-[#4a5568] leading-relaxed">
           {eras[activeEra].summary}
         </p>
 
-        {/* detail points */}
+        detail points
         <ul className="pb-6 list-none px-5 md:px-8 pt-5 m-0 flex flex-col gap-3">
           {eras[activeEra].details.map((d, i) => (
             <motion.li
@@ -153,7 +153,7 @@ export default function HistoryTimeline({
           ))}
         </ul>
 
-        {/* highlight quote */}
+        highlight quote
         {eras[activeEra].highlight && (
           <motion.blockquote
             initial={{ opacity: 0 }}
@@ -164,10 +164,10 @@ export default function HistoryTimeline({
             {eras[activeEra].highlight}
           </motion.blockquote>
         )}
-      </motion.div>
+      </motion.div> */}
 
       {/* ── Milestones Ribbon ── */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
@@ -185,7 +185,7 @@ export default function HistoryTimeline({
                   : "bg-[#f7f9fc] border-[#e8edf3]"
               }`}
             >
-              {/* dot */}
+              dot
               <div
                 className={`w-2.5 h-2.5 rounded-full absolute -top-1.25 left-5 border-2 border-white ${
                   m.highlight
@@ -202,7 +202,7 @@ export default function HistoryTimeline({
             </div>
           ))}
         </div>
-      </motion.div>
+      </motion.div> */}
     </div>
   );
 }

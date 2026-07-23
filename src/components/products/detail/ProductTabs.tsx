@@ -15,14 +15,14 @@ export default function ProductTabs({ product }: ProductTabsProps) {
 
   return (
     <div className="rounded-xl border border-gray-100 overflow-hidden">
-      <div className="flex border-b border-gray-100">
+      <div className="flex border-b border-gray-100 bg-gray-50">
         {tabs.map((tab, i) => (
           <button
             key={tab}
             onClick={() => setActiveTab(i)}
-            className={`px-5 py-3 text-sm font-medium transition-colors cursor-pointer ${
+            className={`px-5 py-3 font-semibold text-sm font-medium transition-colors cursor-pointer ${
               activeTab === i
-                ? "text-liteBlue border-b-2 border-liteBlue bg-white"
+                ? "text-liteBlue border-liteBlue bg-white"
                 : "text-gray-500 hover:text-gray-700 bg-gray-50"
             }`}
           >

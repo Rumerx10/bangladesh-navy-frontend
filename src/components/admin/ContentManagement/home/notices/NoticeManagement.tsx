@@ -12,7 +12,9 @@ import GetNoticeColumns from "./TableColumns/NoticeColumns";
 
 const NoticeManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<INoticeManagement | undefined>();
+  const [selectedItem, setSelectedItem] = useState<
+    INoticeManagement | undefined
+  >();
   const {
     setCurrentPage,
     itemsPerPage,
@@ -45,7 +47,7 @@ const NoticeManagement = () => {
     }
   );
 
-  console.log("Notice Data ::-------->",data);
+  console.log("Notice Data ::-------->", data);
 
   useEffect(() => {
     if (data) {

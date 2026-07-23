@@ -39,6 +39,7 @@ export const NavigationItems: NavItem[] = [
     label: "About Us",
     link: "/about",
     subLinks: [
+      { label: "News & Events", link: "/about/news" },
       { label: "History", link: "/about/history" },
       { label: "Vision & Mission", link: "/about/vision-mission" },
       { label: "Organogram", link: "/about/organogram" },
@@ -52,10 +53,9 @@ export const NavigationItems: NavItem[] = [
     asLink: true,
     activeMatches: ["/notices-mariners", "/how-to-collect"],
     subLinks: [
-      { label: "New Chart", link: "/chart" },
       ...navyCategories.map((cat) => ({
         label: cat.nameEn,
-        link: `/product-service?category=${cat.slug}`,
+        link: `/product-service/${cat.nameEn.toLowerCase().replace(" ", "-")}`,
       })),
       { label: "How to Collect", link: "/how-to-collect" },
     ],
@@ -80,24 +80,17 @@ export const NavigationItems: NavItem[] = [
     label: "Important Notice",
     link: "#",
     subLinks: [
-      { label: "Hydrographic Notes", link: "/contact-us/query-suggestion" },
       {
-        label: "Notices to Mariners",
-        link: "#",
-        subLinks: [
-          {
-            label: "Publications",
-            link: "/product-service?category=publications",
-          },
-          {
-            label: "Notices",
-            link: "/product-service?category=notices-to-mariners",
-          },
-          {
-            label: "Hydrographic Note",
-            link: "/contact-us/hydrographic-note",
-          },
-        ],
+        label: "Publications",
+        link: "/product-service?category=publications",
+      },
+      {
+        label: "Notices",
+        link: "/product-service?category=notices-to-mariners",
+      },
+      {
+        label: "Hydrographic Note",
+        link: "/contact-us/hydrographic-note",
       },
     ],
   },

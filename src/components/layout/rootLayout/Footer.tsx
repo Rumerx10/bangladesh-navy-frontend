@@ -74,9 +74,7 @@ const importantLinks = [
 ];
 
 const contactPageLinks = [
-  { label: "Query & Suggestion", href: "/contact-us" },
   { label: "Contact Information", href: "/contact-us/information" },
-  { label: "Hydrographic Note", href: "/contact-us/hydrographic-note" },
 ];
 
 const Footer = () => {

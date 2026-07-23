@@ -13,7 +13,10 @@ import { usePost } from "@/src/hooks/usePost";
 import { usePatch } from "@/src/hooks/usePatch";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, Resolver, useForm } from "react-hook-form";
-import { NoticeFormValues, noticeSchema } from "../Schema/noticeManagementSchema";
+import {
+  NoticeFormValues,
+  noticeSchema,
+} from "../Schema/noticeManagementSchema";
 import NoticeForm from "./NoticeForm";
 
 interface CreateUpdateNoticeManagementProps {

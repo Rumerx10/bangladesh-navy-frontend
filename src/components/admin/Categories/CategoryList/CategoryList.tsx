@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useGet } from "@/src/hooks/useGet";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "@/src/lib/redux/hooks";
@@ -11,7 +10,6 @@ import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { ICategory } from "../types";
 import { GetCategoryColumns } from "../TableColumns/CategoryColumns";
 import CreateUpdateCategory from "../Form/CreateUpdateCategory";
-
 
 const CategoryList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

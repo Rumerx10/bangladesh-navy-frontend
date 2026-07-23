@@ -9,14 +9,13 @@ interface SidebarSimpleLinkProps {
   isActive: boolean;
   onNavigate: () => void;
 }
-
-export default function SidebarSimpleLink({
+const SidebarSimpleLink=({
   label,
   icon: Icon,
   href,
   isActive,
   onNavigate,
-}: SidebarSimpleLinkProps) {
+}: SidebarSimpleLinkProps)=> {
   return (
     <Link
       href={href}
@@ -34,7 +33,10 @@ export default function SidebarSimpleLink({
           isActive ? "text-white" : "text-current"
         )}
       />
-      <span className="truncate">{label}</span>
+      <span className="truncate font-medium">{label}</span>
     </Link>
   );
 }
+
+
+export default SidebarSimpleLink;
