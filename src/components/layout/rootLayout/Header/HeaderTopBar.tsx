@@ -57,7 +57,9 @@ export const NavigationItems: NavItem[] = [
         label: cat.nameEn,
         link: `/product-service/${cat.nameEn.toLowerCase().replace(" ", "-")}`,
       })),
-      { label: "How to Collect", link: "/how-to-collect" },
+      { label: "Chart Index", link: "/chart" },
+      { label: "Electronic Chart (ENC)", link: "/electronic-chart" },
+      { label: "How to Pay", link: "/how-to-pay" },
     ],
   },
   {
