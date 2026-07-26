@@ -1,9 +1,3 @@
-/**
- * The API returns coordinates in two shapes:
- *   decimal  — "22.356833"
- *   DMS/DM   — "22° 14.5' N", "091°48.074′E", "20°37.94″N"
- * Both are normalised to signed decimal degrees; unparseable input returns null.
- */
 export const parseCoordinate = (
   raw?: string | number | null
 ): number | null => {

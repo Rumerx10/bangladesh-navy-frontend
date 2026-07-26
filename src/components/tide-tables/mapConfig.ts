@@ -4,9 +4,7 @@ import L from "leaflet";
 
 export const BOUNDARY = bangladeshBoundary as MultiPolygon;
 
-/** OSM renders no tiles past 19; beyond this Leaflet upscales the z19 tile. */
 export const TILE_NATIVE_MAX_ZOOM = 19;
-/** How far the user may actually zoom in — the last few levels are stretched. */
 export const MAX_ZOOM = 22;
 
 export const TILE_URL = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
@@ -16,12 +14,12 @@ export const TILE_ATTRIBUTION =
 
 export const BORDER_COLOR = "#006a4e";
 export const PIN_COLOR = "#dc2626";
-/** Bangladesh green, laid over the tiles so the country reads as one mass. */
+/** White ring so the red pin stays legible over green land and blue water. */
+export const PIN_BORDER_COLOR = "#ffffff";
+export const PIN_BORDER_WIDTH = 1.5;
 export const COUNTRY_FILL = "#009a5b";
 
-/** Breathing room around the country when computing the zoom floor, in pixels. */
 export const FIT_PADDING: L.PointTuple = [40, 40];
-/** Breathing room around the stations at the opening view, in pixels. */
 export const STATION_FIT_PADDING: L.PointTuple = [48, 48];
 
 export const COUNTRY_STYLE: L.PathOptions = {
@@ -29,7 +27,6 @@ export const COUNTRY_STYLE: L.PathOptions = {
   weight: 4,
   opacity: 1,
   lineJoin: "round",
-  // Translucent, so roads and rivers still read through the green.
   fill: true,
   fillColor: COUNTRY_FILL,
   fillOpacity: 0.28,
