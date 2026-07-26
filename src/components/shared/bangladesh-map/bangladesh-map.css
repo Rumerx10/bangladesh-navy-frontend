@@ -1,0 +1,40 @@
+/* Leaflet's panes climb to z-index 800, which would sit over the site's
+   fixed header (z-50). Giving the container its own stacking context keeps
+   every pane, control and popup trapped inside the map. */
+.bn-map {
+  position: relative;
+  z-index: 0;
+}
+
+/* Marker — red location pin, tip anchored on the station. */
+.bn-marker {
+  background: transparent;
+  border: 0;
+}
+
+.bn-marker__pin {
+  display: block;
+  transform-origin: 50% 100%;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.35));
+  transition:
+    transform 0.15s ease,
+    filter 0.15s ease;
+}
+
+.bn-marker:hover .bn-marker__pin,
+.bn-marker--active .bn-marker__pin {
+  transform: scale(1.18);
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.45));
+}
+
+.bn-map .leaflet-control-zoom a {
+  border-radius: 8px;
+  color: #001836;
+  border: 0;
+  box-shadow: 0 2px 6px rgba(0, 24, 54, 0.18);
+}
+
+.bn-map .leaflet-control-attribution {
+  background: rgba(255, 255, 255, 0.75);
+  font-size: 10px;
+}
