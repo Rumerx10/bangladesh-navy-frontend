@@ -20,38 +20,37 @@ const TideTables = () => {
   const stations = data?.data ?? [];
 
   return (
+    // The map renders straight away on the default Bangladesh view; markers are
+    // added by the map itself once the request resolves, so a slow API delays
+    // the pins rather than the whole page.
     <section className="relative mt-33">
-      {isLoading ? (
-        <TidalStationMapSkeleton />
-      ) : (
-        <>
-          <TidalStationMap stations={stations} />
+      <TidalStationMap stations={stations} />
 
-          <div className="pointer-events-none absolute top-4 left-4 z-10 max-w-xs rounded-xl bg-white/95 px-4 py-3 shadow-lg ring-1 ring-black/5 sm:top-6 sm:left-6">
-            <h1 className="text-lg font-bold text-pBlue lg:text-xl">
-              Tide Tables
-            </h1>
-            {stations.length > 0 ? (
-              <>
-                <p className="mt-1 text-xs text-gray-500 lg:text-sm">
-                  <span className="font-semibold text-pBlue">
-                    {stations.length}
-                  </span>{" "}
-                  tidal {stations.length === 1 ? "station" : "stations"} across
-                  Bangladesh
-                </p>
-                <p className="mt-1 text-[11px] text-gray-400">
-                  Click a marker for station details
-                </p>
-              </>
-            ) : (
-              <p className="mt-1 text-xs text-gray-500 lg:text-sm">
-                Tidal observation stations across Bangladesh
-              </p>
-            )}
-          </div>
-        </>
-      )}
+      <div className="pointer-events-none absolute top-4 left-4 z-10 max-w-xs rounded-xl bg-white/95 px-4 py-3 shadow-lg ring-1 ring-black/5 sm:top-6 sm:left-6">
+        <h1 className="text-lg font-bold text-pBlue lg:text-xl">Tide Tables</h1>
+        {isLoading ? (
+          <p className="mt-1 text-xs text-gray-500 lg:text-sm">
+            Loading tidal stations…
+          </p>
+        ) : stations.length > 0 ? (
+          <>
+            <p className="mt-1 text-xs text-gray-500 lg:text-sm">
+              <span className="font-semibold text-pBlue">
+                {stations.length}
+              </span>{" "}
+              tidal {stations.length === 1 ? "station" : "stations"} across
+              Bangladesh
+            </p>
+            <p className="mt-1 text-[11px] text-gray-400">
+              Click a marker for station details
+            </p>
+          </>
+        ) : (
+          <p className="mt-1 text-xs text-gray-500 lg:text-sm">
+            Tidal observation stations across Bangladesh
+          </p>
+        )}
+      </div>
     </section>
   );
 };
