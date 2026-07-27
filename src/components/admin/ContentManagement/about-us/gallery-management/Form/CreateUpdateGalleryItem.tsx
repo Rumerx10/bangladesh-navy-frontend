@@ -108,7 +108,7 @@ const CreateUpdateGalleryItem = ({
   const onSubmit = (values: GalleryItemFormValues) => {
     const formData = new FormData();
     formData.append("titleEn", values.titleEn);
-    formData.append("titleBn", values.titleBn);
+    formData.append("titleBn", values.titleBn || "");
     formData.append("galleryCategoryId", values.galleryCategoryId);
     formData.append("position", String(values.position));
 

@@ -6,29 +6,29 @@ import SubmitButton from "@/src/components/shared/SubmitButton";
 import { Button } from "@/src/components/ui/button";
 import { ErrorType } from "@/src/components/shared/types/common";
 import { useFormContext } from "react-hook-form";
-import { GalleryCategoryFormValues } from "../Schema/galleryCategorySchema";
+import { SurveyCategoryFormValues } from "../Schema/surveyCategorySchema";
 
 const STATUS_OPTIONS = [
   { label: "Active", value: "ACTIVE" },
   { label: "Inactive", value: "INACTIVE" },
 ];
 
-interface GalleryCategoryFormProps {
+interface SurveyCategoryFormProps {
   isEditMode?: boolean;
-  onSubmit: (data: GalleryCategoryFormValues) => void;
+  onSubmit: (data: SurveyCategoryFormValues) => void;
   onCancel: () => void;
   isPending?: boolean;
   error?: ErrorType;
 }
 
-export default function GalleryCategoryForm({
+export default function SurveyCategoryForm({
   isEditMode = false,
   onSubmit,
   onCancel,
   isPending = false,
   error,
-}: GalleryCategoryFormProps) {
-  const { handleSubmit } = useFormContext<GalleryCategoryFormValues>();
+}: SurveyCategoryFormProps) {
+  const { handleSubmit } = useFormContext<SurveyCategoryFormValues>();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-5 mt-2">

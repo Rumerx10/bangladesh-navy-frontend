@@ -5,220 +5,185 @@ import { useState } from "react";
 import { cn } from "@/src/lib/utils";
 import { useFormContext } from "react-hook-form";
 import { Button } from "@/src/components/ui/button";
-import { Input } from "@/src/components/ui/input";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/src/components/ui/tooltip";
-import { Plus, X } from "lucide-react";
-import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
-import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
+import InputLabel from "@/src/components/shared/InputLabel";
 import Paragraph from "@/src/components/shared/Paragraph";
 import SubmitButton from "@/src/components/shared/SubmitButton";
+import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
+import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
+import ControlledSelectField from "@/src/components/shared/FromController/ControlledSelectField";
+import ControlledTextareaField from "@/src/components/shared/FromController/ControlledTextareaField";
+import { MultipleImageUploadController } from "@/src/components/shared/FromController/MultipleImageFileInput";
 import { ErrorType } from "@/src/components/shared/types/common";
-import { ProductsSchemaForm } from "../Schema/productsSchema";
-import ProductItemsField from "./ProductItemsField";
+import { useGet } from "@/src/hooks/useGet";
+import { mapToSelectOptions } from "@/src/utils/mapToSelectOptions";
+import { IProductCategory, IProduct } from "../types";
+import { ProductFormValues } from "../Schema/productsSchema";
+import ProductAttributesField from "./ProductAttributesField";
 
-interface ProductsFormProps {
+const STATUS_OPTIONS = [
+  { label: "Active", value: "ACTIVE" },
+  { label: "Inactive", value: "INACTIVE" },
+];
+
+interface ProductFormProps {
   isEditMode?: boolean;
-  onSubmit: (data: ProductsSchemaForm) => void;
-  error?: ErrorType | null;
+  onSubmit: (data: ProductFormValues) => void;
+  onCancel: () => void;
   isPending?: boolean;
-  onCancel?: () => void;
+  error?: ErrorType;
+  initialValues?: IProduct;
 }
 
-const SectionHeader = ({
-  label,
-  onCancel,
-  showCancel = false,
-}: {
-  label: string;
-  onCancel?: () => void;
-  showCancel?: boolean;
-}) => {
+const SectionHeader = ({ label }: { label: string }) => {
   const [iconLoaded, setIconLoaded] = useState(false);
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
-          <Image
-            src="/icons/media.svg"
-            alt={label}
-            width={36}
-            height={36}
-            className={cn(
-              "w-4 transition-opacity duration-700 ease-in-out",
-              iconLoaded ? "opacity-100" : "opacity-0"
-            )}
-            onLoad={() => setIconLoaded(true)}
-            onError={() => setIconLoaded(true)}
-          />
-        </div>
-        <Paragraph className="xl:text-lg font-medium text-pBlue">
-          {label}
-        </Paragraph>
-      </div>
-      {showCancel && (
-        <Button
-          type="button"
-          onClick={onCancel}
-          className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer"
-        >
-          Cancel
-        </Button>
-      )}
-    </div>
-  );
-};
-
-const CategoriesEditor = ({ disabled }: { disabled?: boolean }) => {
-  const { setValue, watch } = useFormContext<ProductsSchemaForm>();
-  const categories: string[] = watch("categories") || [];
-  const [input, setInput] = useState("");
-
-  const isAddDisabled = !input.trim() || !!disabled;
-
-  const handleAdd = () => {
-    const trimmed = input.trim();
-    if (!trimmed || categories.includes(trimmed)) return;
-    setValue("categories", [...categories, trimmed]);
-    setInput("");
-  };
-
-  const handleRemove = (i: number) => {
-    setValue(
-      "categories",
-      categories.filter((_, idx) => idx !== i)
-    );
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleAdd();
-    }
-  };
-
-  return (
-    <div className="space-y-3">
-      {categories.length > 0 && (
-        <div className="flex flex-wrap gap-2">
-          {categories.map((cat, i) => (
-            <span
-              key={i}
-              className="flex items-center gap-1.5 text-sm bg-primary/10 text-primary border border-primary/20 px-3 py-1 rounded-full"
-            >
-              {cat}
-              <button
-                type="button"
-                onClick={() => handleRemove(i)}
-                className="text-primary hover:text-red-500 transition-colors"
-                disabled={disabled}
-              >
-                <X className="w-3 h-3" />
-              </button>
-            </span>
-          ))}
-        </div>
-      )}
-      <div className="flex items-center gap-2">
-        <Input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={
-            categories.length > 0
-              ? "Add another category..."
-              : "e.g. Paper Charts, ENC, Publications..."
-          }
-          disabled={disabled}
-          className="bg-light shadow-none flex-1"
+    <div className="flex items-center gap-3 mb-6">
+      <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
+        <Image
+          src="/icons/file.svg"
+          alt={label}
+          width={36}
+          height={36}
+          className={cn(
+            "w-4 transition-opacity duration-700 ease-in-out",
+            iconLoaded ? "opacity-100" : "opacity-0"
+          )}
+          onLoad={() => setIconLoaded(true)}
+          onError={() => setIconLoaded(true)}
         />
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <span className="inline-block">
-                <Button
-                  type="button"
-                  onClick={handleAdd}
-                  disabled={isAddDisabled}
-                  className="cursor-pointer h-10 px-4 bg-primary hover:bg-primary/90 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <Plus size={20} className="w-5 h-5 mr-1" />
-                  Add
-                </Button>
-              </span>
-            </TooltipTrigger>
-            {isAddDisabled && !disabled && (
-              <TooltipContent side="bottom" className="text-xs mt-1">
-                Please fill the field first
-              </TooltipContent>
-            )}
-          </Tooltip>
-        </TooltipProvider>
       </div>
+      <Paragraph className="xl:text-lg font-medium text-pBlue">{label}</Paragraph>
     </div>
   );
 };
 
-const ProductsForm = ({
+export default function ProductForm({
   isEditMode = false,
   onSubmit,
-  error,
-  isPending = false,
   onCancel,
-}: ProductsFormProps) => {
-  const { handleSubmit } = useFormContext<ProductsSchemaForm>();
+  isPending = false,
+  error,
+  initialValues,
+}: ProductFormProps) {
+  const { handleSubmit } = useFormContext<ProductFormValues>();
+
+  const { data: categoryData } = useGet<IProductCategory[]>(
+    "/category/list",
+    ["category-list"]
+  );
+
+  const categoryOptions = mapToSelectOptions(
+    Array.isArray(categoryData?.data) ? categoryData.data : [],
+    "nameEn",
+    "id"
+  );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
-      {/* Basic Information */}
-      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-white">
-        <SectionHeader
-          label="Basic Information"
-          onCancel={onCancel}
-          showCancel
+      {/* English Content */}
+      <div className="border border-light-silver rounded-lg p-8 bg-white">
+        <div className="flex items-center justify-between mb-6">
+          <SectionHeader label="English Content" />
+          <Button
+            type="button"
+            onClick={onCancel}
+            className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer -mt-6"
+          >
+            Cancel
+          </Button>
+        </div>
+        <div className="flex flex-col gap-y-6">
+          <div>
+            <InputLabel label="Product Name (English)" required />
+            <ControlledInputField
+              name="nameEn"
+              placeholder="e.g. Bay of Bengal Coastal Chart"
+              className="bg-light shadow-none"
+            />
+          </div>
+          <div>
+            <InputLabel label="Description (English)" required />
+            <ControlledTextareaField
+              name="descriptionEn"
+              placeholder="Enter product description in English"
+              className="bg-light shadow-none min-h-24"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Bengali Content */}
+      <div className="border border-light-silver rounded-lg p-8 bg-white">
+        <SectionHeader label="Bengali Content" />
+        <div className="flex flex-col gap-y-6">
+          <div>
+            <InputLabel label="Product Name (Bengali)" />
+            <ControlledInputField
+              name="nameBn"
+              placeholder="পণ্যের নাম বাংলায় লিখুন"
+              className="bg-light shadow-none"
+            />
+          </div>
+          <div>
+            <InputLabel label="Description (Bengali)" />
+            <ControlledTextareaField
+              name="descriptionBn"
+              placeholder="পণ্যের বিবরণ বাংলায় লিখুন"
+              className="bg-light shadow-none min-h-24"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Images */}
+      <div className="border border-light-silver rounded-lg p-8 bg-white">
+        <SectionHeader label="Product Images" />
+        <InputLabel label="Images" required />
+        <MultipleImageUploadController
+          name="images"
+          label="Upload product images"
+          initialUrls={initialValues?.images || []}
         />
-        <div className="flex flex-col gap-y-6 mt-6">
+      </div>
+
+      {/* Category, Status, Chart Code */}
+      <div className="border border-light-silver rounded-lg p-8 bg-white">
+        <SectionHeader label="Details" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Title
-            </Paragraph>
-            <ControlledInputField
-              name="title"
-              placeholder="Products & Services"
-              className="bg-light shadow-none"
+            <InputLabel label="Category" required />
+            <ControlledSelectField
+              name="categoryId"
+              options={categoryOptions}
+              placeholder="Select a category"
             />
           </div>
           <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Sub Title
-            </Paragraph>
+            <InputLabel label="Status" required />
+            <ControlledSelectField
+              name="status"
+              options={STATUS_OPTIONS}
+              placeholder="Select status"
+            />
+          </div>
+          <div>
+            <InputLabel label="Chart Code" required />
             <ControlledInputField
-              name="subTitle"
-              placeholder="Hydrographic charts, publications and maritime services"
+              name="chartCode"
+              type="number"
+              placeholder="e.g. 123456"
               className="bg-light shadow-none"
             />
           </div>
         </div>
       </div>
 
-      {/* Categories */}
-      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-white">
-        <SectionHeader label="Categories" />
-        <div className="mt-6">
-          <CategoriesEditor />
-        </div>
-      </div>
-
-      {/* Products */}
-      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-white">
-        <SectionHeader label="Products" />
-        <div className="mt-6">
-          <ProductItemsField name="products" />
-        </div>
+      {/* Attributes */}
+      <div className="border border-light-silver rounded-lg p-8 bg-white">
+        <SectionHeader label="Product Attributes" />
+        <ProductAttributesField
+          existingAttributes={initialValues?.productAttributes}
+        />
       </div>
 
       <ErrorMessage error={error} />
@@ -233,11 +198,9 @@ const ProductsForm = ({
         </Button>
         <SubmitButton
           isLoading={isPending}
-          label={isEditMode ? "Updating Changes" : "Update Changes"}
+          label={isEditMode ? "Update Product" : "Create Product"}
         />
       </div>
     </form>
   );
-};
-
-export default ProductsForm;
+}

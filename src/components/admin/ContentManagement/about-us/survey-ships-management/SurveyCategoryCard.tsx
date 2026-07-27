@@ -1,18 +1,19 @@
 "use client";
-import { IGalleryCategory } from "./types";
+
 import { useEffect, useState } from "react";
+import { Tag } from "lucide-react";
 import { useGet } from "@/src/hooks/useGet";
 import { usePagination } from "@/src/hooks/usePagination";
-import { DataTable } from "@/src/components/ui/data-table";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
-import CreateUpdateGalleryCategory from "./Form/CreateUpdateGalleryCategory";
-import { GetGalleryCategoryColumns } from "./TableColumns/GalleryCategoryColumns";
+import { DataTable } from "@/src/components/ui/data-table";
+import Paragraph from "@/src/components/shared/Paragraph";
+import { ISurveyCategory } from "./types";
+import { GetSurveyCategoryColumns } from "./TableColumns/SurveyCategoryColumns";
+import CreateUpdateSurveyCategory from "./Form/CreateUpdateSurveyCategory";
 
-const GalleryCategoryCard = () => {
+const SurveyCategoryCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<
-    IGalleryCategory | undefined
-  >();
+  const [selectedItem, setSelectedItem] = useState<ISurveyCategory | undefined>();
 
   const {
     setCurrentPage,
@@ -23,13 +24,12 @@ const GalleryCategoryCard = () => {
     setItemsPerPage,
   } = usePagination();
 
-  const { search, handleSearchChange, debouncedSearch } =
-    useSearchDebounce(300);
+  const { search, handleSearchChange, debouncedSearch } = useSearchDebounce(300);
 
-  const { data, isLoading } = useGet<IGalleryCategory[]>(
-    "/gallery-category",
+  const { data, isLoading } = useGet<ISurveyCategory[]>(
+    "/survey-category",
     [
-      "gallery-category",
+      "survey-category",
       currentPage.toString(),
       itemsPerPage.toString(),
       debouncedSearch,
@@ -48,7 +48,7 @@ const GalleryCategoryCard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  const handleEdit = (item: IGalleryCategory) => {
+  const handleEdit = (item: ISurveyCategory) => {
     setSelectedItem(item);
     setIsModalOpen(true);
   };
@@ -58,10 +58,24 @@ const GalleryCategoryCard = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetGalleryCategoryColumns(handleEdit);
+  const columns = GetSurveyCategoryColumns(handleEdit);
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="flex items-center gap-3 px-6 py-5 border-b border-gray-100 bg-linear-to-r from-primary/5 via-primary/10 to-transparent">
+        <div className="bg-primary/10 w-10 h-10 flex items-center justify-center rounded-xl border border-primary/20">
+          <Tag className="w-5 h-5 text-primary" />
+        </div>
+        <div>
+          <Paragraph className="font-semibold text-lg! text-pBlue">
+            Survey Categories
+          </Paragraph>
+          <Paragraph className="text-sm! text-gray-500">
+            Manage category options for survey ships
+          </Paragraph>
+        </div>
+      </div>
+
       <div className="p-4">
         <DataTable
           columns={columns}
@@ -72,7 +86,7 @@ const GalleryCategoryCard = () => {
           itemsPerPage={itemsPerPage}
           onPageChange={setCurrentPage}
           setItemsPerPage={setItemsPerPage}
-          title="Gallery Categories"
+          title="Survey Categories"
           searchValue={search}
           onSearchChange={handleSearchChange}
           searchPlaceholder="Search categories..."
@@ -83,7 +97,7 @@ const GalleryCategoryCard = () => {
         />
       </div>
 
-      <CreateUpdateGalleryCategory
+      <CreateUpdateSurveyCategory
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
@@ -92,4 +106,4 @@ const GalleryCategoryCard = () => {
   );
 };
 
-export default GalleryCategoryCard;
+export default SurveyCategoryCard;

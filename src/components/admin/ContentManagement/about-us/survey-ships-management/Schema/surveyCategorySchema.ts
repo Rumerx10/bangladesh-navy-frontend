@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const galleryCategorySchema = Yup.object({
+export const surveyCategorySchema = Yup.object({
   nameEn: Yup.string()
     .required("English name is required")
     .max(200, "Max 200 characters"),
@@ -10,4 +10,4 @@ export const galleryCategorySchema = Yup.object({
     .required("Status is required"),
 });
 
-export type GalleryCategoryFormValues = Yup.InferType<typeof galleryCategorySchema>;
+export type SurveyCategoryFormValues = Yup.InferType<typeof surveyCategorySchema>;

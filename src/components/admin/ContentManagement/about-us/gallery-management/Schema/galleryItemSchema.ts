@@ -7,9 +7,7 @@ export const galleryItemSchema = Yup.object({
   titleEn: Yup.string()
     .required("English title is required")
     .max(200, "Max 200 characters"),
-  titleBn: Yup.string()
-    .required("Bengali title is required")
-    .max(200, "Max 200 characters"),
+  titleBn: Yup.string().max(200, "Max 200 characters").optional(),
   galleryCategoryId: Yup.string().required("Category is required"),
   position: Yup.number()
     .typeError("Position must be a number")

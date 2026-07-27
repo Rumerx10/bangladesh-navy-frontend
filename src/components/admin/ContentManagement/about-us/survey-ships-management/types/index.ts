@@ -1,25 +1,32 @@
-export interface IBasicInformation {
+export interface ISurveyCategory {
+  id: string;
+  nameEn: string;
+  nameBn: string;
+  status: "ACTIVE" | "INACTIVE";
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ISurveyShipCategory {
+  id: string;
+  nameEn: string;
+  nameBn: string;
+}
+
+export interface ISurveyShip {
+  id: string;
+  nameEn: string;
+  nameBn: string;
+  descriptionEn: string;
+  descriptionBn: string;
   length: string;
   beam: string;
   draft: string;
   crew: string;
-}
-
-export interface ISurveyShip {
-  image: File | string;
-  isActive: boolean;
-  name: string;
-  type: string;
-  description: string;
-  basicInformation: IBasicInformation;
-  surveyEquipment: string[];
-  detailsLink: string;
-}
-
-export interface ISurveyShipsManagement {
-  id?: string;
-  title: string;
-  subTitle: string;
-  shipTypes: string[];
-  surveyShips: ISurveyShip[];
+  surveyEquipment: string;
+  image: string;
+  status: "ACTIVE" | "INACTIVE";
+  surveyCategory: ISurveyShipCategory;
+  createdAt?: string;
+  updatedAt?: string;
 }

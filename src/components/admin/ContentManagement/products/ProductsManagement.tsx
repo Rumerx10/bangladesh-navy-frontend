@@ -1,88 +1,131 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Package, Tag } from "lucide-react";
 import { useGet } from "@/src/hooks/useGet";
-import CreateUpdateProducts from "./Form/CreateUpdateProducts";
-import { IProductsManagement } from "./types";
-import ProductsPreview from "./ProductsPreview";
-import ProductsPreviewSkeleton from "./Skeleton/ProductsPreviewSkeleton";
+import { useAppSelector } from "@/src/lib/redux/hooks";
+import { usePagination } from "@/src/hooks/usePagination";
+import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
+import { DataTable } from "@/src/components/ui/data-table";
+import { IProduct } from "./types";
+import { GetProductColumns } from "./TableColumns/ProductColumns";
+import CreateUpdateProduct from "./Form/CreateUpdateProducts";
+import ProductCategoryCard from "./ProductCategoryCard";
 
-const DUMMY_PRODUCTS_DATA: IProductsManagement = {
-  id: "dummy-products-123",
-  title: "Products & Services",
-  subTitle:
-    "Hydrographic charts, publications and maritime services by Bangladesh Navy",
-  categories: ["Paper Charts", "ENC", "Publications", "Maritime Services"],
-  products: [
-    {
-      image:
-        "https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?w=800",
-      title: "Bay of Bengal Coastal Chart",
-      category: "Paper Charts",
-      shortDescription:
-        "Detailed nautical chart covering the coastal waters of the Bay of Bengal, essential for safe navigation.",
-      specifications: {
-        chartNumber: "INT 702",
-        scale: "1:25,000",
-        projection: "Mercator",
-        northLatitude: "22°45'N",
-        southLatitude: "21°30'N",
-        eastLongitude: "91°00'E",
-        westLongitude: "90°00'E",
-        edition: "3rd Edition",
-        publicationDate: "January 2024",
-      },
-      description:
-        "This comprehensive nautical chart provides detailed information for mariners navigating the coastal waters of the Bay of Bengal. Published by the Hydrographic Department of Bangladesh Navy, it includes depth soundings, navigational hazards, port information, and anchorage areas.",
-    },
-    {
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800",
-      title: "Electronic Navigational Chart – Chittagong Port",
-      category: "ENC",
-      shortDescription:
-        "Official Electronic Navigational Chart for Chittagong Port and surrounding waters, compatible with ECDIS systems.",
-      specifications: {
-        chartNumber: "BD-ENC-001",
-        scale: "1:10,000",
-        projection: "Mercator",
-        northLatitude: "22°23'N",
-        southLatitude: "22°15'N",
-        eastLongitude: "91°52'E",
-        westLongitude: "91°44'E",
-        edition: "1st Edition",
-        publicationDate: "March 2024",
-      },
-      description:
-        "An authoritative ENC for Chittagong Port, covering the main channel, berths, and anchorages. Fully S-57 compliant and suitable for use with all major ECDIS platforms.",
-    },
-  ],
-};
+type ActiveTab = "products" | "categories";
+
+const TABS: { key: ActiveTab; label: string; icon: React.ElementType }[] = [
+  { key: "products", label: "Products", icon: Package },
+  { key: "categories", label: "Categories", icon: Tag },
+];
 
 const ProductsManagement = () => {
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [activeTab, setActiveTab] = useState<ActiveTab>("products");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<IProduct | undefined>();
 
-  const { data, isLoading } = useGet<IProductsManagement>(`/products-content`, [
-    "products-content",
-  ]);
+  const {
+    setCurrentPage,
+    itemsPerPage,
+    currentPage,
+    totalItems,
+    setTotalItems,
+    setItemsPerPage,
+  } = usePagination();
 
-  const productsData = data?.data || DUMMY_PRODUCTS_DATA;
+  const { search, handleSearchChange, debouncedSearch } =
+    useSearchDebounce(300);
+  const { sortBy } = useAppSelector((state) => state.filter);
 
-  if (isLoading) {
-    return <ProductsPreviewSkeleton />;
-  }
+  const { data, isLoading } = useGet<IProduct[]>(
+    "/product",
+    [
+      "product",
+      currentPage.toString(),
+      itemsPerPage.toString(),
+      debouncedSearch,
+      sortBy,
+    ],
+    {
+      ...(itemsPerPage !== -1 && {
+        page: currentPage.toString(),
+        limit: itemsPerPage.toString(),
+      }),
+      search: debouncedSearch,
+      ...(sortBy && { status: sortBy }),
+    }
+  );
 
-  if (productsData && !isEditMode) {
-    return (
-      <ProductsPreview data={productsData} onEdit={() => setIsEditMode(true)} />
-    );
-  }
+  useEffect(() => {
+    if (data) setTotalItems(data.meta?.totalItems || 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  const handleEdit = (item: IProduct) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedItem(undefined);
+  };
+
+  const columns = GetProductColumns(handleEdit);
 
   return (
-    <CreateUpdateProducts
-      initialValues={productsData}
-      onSuccess={() => setIsEditMode(false)}
-      onCancel={() => setIsEditMode(false)}
-    />
+    <div className="space-y-6">
+      {/* Tab switcher */}
+      <div className="flex justify-center">
+        <div className="inline-flex items-center gap-1 bg-gray-100 p-1 rounded-xl">
+          {TABS.map(({ key, label, icon: Icon }) => (
+            <button
+              key={key}
+              onClick={() => setActiveTab(key)}
+              className={`flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                activeTab === key
+                  ? "bg-white text-pBlue shadow-sm"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              <Icon className="w-4 h-4" />
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Tab content */}
+      {activeTab === "categories" && <ProductCategoryCard />}
+
+      {activeTab === "products" && (
+        <>
+          <DataTable
+            columns={columns}
+            data={Array.isArray(data?.data) ? data.data : []}
+            isLoading={isLoading}
+            totalItems={totalItems}
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+            setItemsPerPage={setItemsPerPage}
+            title="Products"
+            searchValue={search}
+            onSearchChange={handleSearchChange}
+            searchPlaceholder="Search products..."
+            isShowStatus={false}
+            IsCreate
+            setIsModalOpen={setIsModalOpen}
+            createTitle="Add Product"
+          />
+          <CreateUpdateProduct
+            isOpen={isModalOpen}
+            onClose={handleModalClose}
+            initialValues={selectedItem}
+          />
+        </>
+      )}
+    </div>
   );
 };
 

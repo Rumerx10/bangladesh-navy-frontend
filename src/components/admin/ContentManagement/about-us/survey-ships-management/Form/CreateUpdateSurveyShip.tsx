@@ -12,35 +12,41 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/src/components/ui/dialog";
-import { productSchema, ProductFormValues } from "../Schema/productsSchema";
-import { IProduct } from "../types";
-import ProductForm from "./ProductsForm";
+import {
+  SurveyShipFormValues,
+  surveyShipSchema,
+} from "../Schema/surveyShipSchema";
+import { ISurveyShip } from "../types";
+import SurveyShipForm from "./SurveyShipForm";
 
-interface CreateUpdateProductProps {
+interface CreateUpdateSurveyShipProps {
   isOpen: boolean;
   onClose: () => void;
-  initialValues?: IProduct;
+  initialValues?: ISurveyShip;
 }
 
-const CreateUpdateProduct = ({
+const CreateUpdateSurveyShip = ({
   isOpen,
   onClose,
   initialValues,
-}: CreateUpdateProductProps) => {
+}: CreateUpdateSurveyShipProps) => {
   const isUpdate = !!initialValues;
 
-  const methods = useForm<ProductFormValues>({
-    resolver: yupResolver(productSchema) as Resolver<ProductFormValues>,
+  const methods = useForm<SurveyShipFormValues>({
+    resolver: yupResolver(surveyShipSchema) as Resolver<SurveyShipFormValues>,
     defaultValues: {
       nameEn: "",
       nameBn: "",
       descriptionEn: "",
       descriptionBn: "",
-      categoryId: "",
-      chartCode: undefined,
+      surveyCategoryId: "",
+      length: "",
+      beam: "",
+      draft: "",
+      crew: "",
+      surveyEquipment: "",
       status: "ACTIVE",
-      images: [],
-      productAttributes: [],
+      image: undefined,
     },
   });
 
@@ -51,14 +57,14 @@ const CreateUpdateProduct = ({
         nameBn: initialValues?.nameBn || "",
         descriptionEn: initialValues?.descriptionEn || "",
         descriptionBn: initialValues?.descriptionBn || "",
-        categoryId: initialValues?.category?.id || "",
-        chartCode: initialValues?.chartCode ?? undefined,
+        surveyCategoryId: initialValues?.surveyCategory?.id || "",
+        length: initialValues?.length || "",
+        beam: initialValues?.beam || "",
+        draft: initialValues?.draft || "",
+        crew: initialValues?.crew || "",
+        surveyEquipment: initialValues?.surveyEquipment || "",
         status: initialValues?.status || "ACTIVE",
-        images: initialValues?.images || [],
-        productAttributes: initialValues?.productAttributes?.map((a) => ({
-          key: a.key,
-          value: a.value,
-        })) || [],
+        image: initialValues?.image || undefined,
       });
     } else {
       methods.reset({
@@ -66,11 +72,14 @@ const CreateUpdateProduct = ({
         nameBn: "",
         descriptionEn: "",
         descriptionBn: "",
-        categoryId: "",
-        chartCode: undefined,
+        surveyCategoryId: "",
+        length: "",
+        beam: "",
+        draft: "",
+        crew: "",
+        surveyEquipment: "",
         status: "ACTIVE",
-        images: [],
-        productAttributes: [],
+        image: undefined,
       });
     }
   }, [isOpen, initialValues, methods]);
@@ -81,12 +90,12 @@ const CreateUpdateProduct = ({
     error,
     reset: resetCreateError,
   } = usePost(
-    "/product",
+    "/survey-ships",
     () => {
-      toast.success("Product created successfully!");
+      toast.success("Survey ship created successfully!");
       onClose();
     },
-    [["product"]]
+    [["survey-ships"]]
   );
 
   const {
@@ -96,10 +105,10 @@ const CreateUpdateProduct = ({
     reset: resetUpdateError,
   } = usePatch(
     () => {
-      toast.success("Product updated successfully!");
+      toast.success("Survey ship updated successfully!");
       onClose();
     },
-    [["product"]]
+    [["survey-ships"]]
   );
 
   const handleClose = () => {
@@ -115,32 +124,27 @@ const CreateUpdateProduct = ({
     }
   }, [isOpen, resetCreateError, resetUpdateError]);
 
-  const onSubmit = (values: ProductFormValues) => {
+  const onSubmit = (values: SurveyShipFormValues) => {
     const formData = new FormData();
     formData.append("nameEn", values.nameEn);
     formData.append("nameBn", values.nameBn || "");
     formData.append("descriptionEn", values.descriptionEn);
     formData.append("descriptionBn", values.descriptionBn || "");
-    formData.append("categoryId", values.categoryId);
-    formData.append("chartCode", String(values.chartCode));
+    formData.append("surveyCategoryId", values.surveyCategoryId);
+    formData.append("length", values.length);
+    formData.append("beam", values.beam);
+    formData.append("draft", values.draft);
+    formData.append("crew", values.crew);
+    formData.append("surveyEquipment", values.surveyEquipment);
     formData.append("status", values.status);
 
-    (values.images || []).forEach((img) => {
-      if (img instanceof File) {
-        formData.append("images", img);
-      } else if (typeof img === "string") {
-        formData.append("existingImages", img);
-      }
-    });
-
-    (values.productAttributes || []).forEach((attr, i) => {
-      formData.append(`productAttributes[${i}][key]`, attr.key);
-      formData.append(`productAttributes[${i}][value]`, attr.value);
-    });
+    if (values.image instanceof File) {
+      formData.append("image", values.image);
+    }
 
     if (isUpdate && initialValues) {
       updateMutate({
-        url: `/product/${initialValues.id}`,
+        url: `/survey-ships/${initialValues.id}`,
         data: formData,
         config: { headers: { "Content-Type": "multipart/form-data" } },
       });
@@ -159,21 +163,20 @@ const CreateUpdateProduct = ({
         if (!open) handleClose();
       }}
     >
-      <DialogContent className="bg-white min-w-[70vw] max-h-[90vh] flex flex-col">
+      <DialogContent className="bg-white min-w-[65vw] max-h-[90vh] flex flex-col">
         <DialogHeader className="shrink-0">
           <DialogTitle className="text-secondary text-xl font-semibold">
-            {isUpdate ? "Update" : "Create"} Product
+            {isUpdate ? "Update" : "Create"} Survey Ship
           </DialogTitle>
         </DialogHeader>
         <div className="overflow-y-auto flex-1 mt-2 pr-2 scrollbar-modern">
           <FormProvider {...methods}>
-            <ProductForm
+            <SurveyShipForm
               isEditMode={isUpdate}
               onSubmit={onSubmit}
               onCancel={handleClose}
               isPending={isCreating || isUpdating}
               error={error || updateError}
-              initialValues={initialValues}
             />
           </FormProvider>
         </div>
@@ -182,4 +185,4 @@ const CreateUpdateProduct = ({
   );
 };
 
-export default CreateUpdateProduct;
+export default CreateUpdateSurveyShip;

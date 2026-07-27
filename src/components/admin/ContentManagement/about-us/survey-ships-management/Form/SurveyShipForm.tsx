@@ -12,33 +12,39 @@ import SubmitButton from "@/src/components/shared/SubmitButton";
 import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
 import ControlledSelectField from "@/src/components/shared/FromController/ControlledSelectField";
+import ControlledTextareaField from "@/src/components/shared/FromController/ControlledTextareaField";
 import { FileUploadController } from "@/src/components/shared/FromController/FileUploadController";
 import { Button } from "@/src/components/ui/button";
 import { ErrorType } from "@/src/components/shared/types/common";
-import { IGalleryCategory } from "../types";
-import { GalleryItemFormValues } from "../Schema/galleryItemSchema";
+import { ISurveyCategory } from "../types";
+import { SurveyShipFormValues } from "../Schema/surveyShipSchema";
 
-interface GalleryItemFormProps {
+const STATUS_OPTIONS = [
+  { label: "Active", value: "ACTIVE" },
+  { label: "Inactive", value: "INACTIVE" },
+];
+
+interface SurveyShipFormProps {
   isEditMode?: boolean;
-  onSubmit: (data: GalleryItemFormValues) => void;
+  onSubmit: (data: SurveyShipFormValues) => void;
   onCancel: () => void;
   isPending?: boolean;
   error?: ErrorType;
 }
 
-export default function GalleryItemForm({
+export default function SurveyShipForm({
   isEditMode = false,
   onSubmit,
   onCancel,
   isPending = false,
   error,
-}: GalleryItemFormProps) {
+}: SurveyShipFormProps) {
   const [iconLoaded, setIconLoaded] = useState(false);
-  const { handleSubmit } = useFormContext<GalleryItemFormValues>();
+  const { handleSubmit } = useFormContext<SurveyShipFormValues>();
 
-  const { data: categoryData } = useGet<IGalleryCategory[]>(
-    "/gallery-category/list",
-    ["gallery-category-list"]
+  const { data: categoryData } = useGet<ISurveyCategory[]>(
+    "/survey-category/list",
+    ["survey-category-list"]
   );
 
   const categoryOptions = mapToSelectOptions(
@@ -80,13 +86,23 @@ export default function GalleryItemForm({
           </Button>
         </div>
 
-        <div className="mt-6">
-          <InputLabel label="Title (English)" required />
-          <ControlledInputField
-            name="titleEn"
-            placeholder="Enter title in English"
-            className="bg-light shadow-none"
-          />
+        <div className="flex flex-col gap-y-6 mt-6">
+          <div>
+            <InputLabel label="Ship Name (English)" required />
+            <ControlledInputField
+              name="nameEn"
+              placeholder="e.g. BNS Anushandhan"
+              className="bg-light shadow-none"
+            />
+          </div>
+          <div>
+            <InputLabel label="Description (English)" required />
+            <ControlledTextareaField
+              name="descriptionEn"
+              placeholder="Enter ship description in English"
+              className="bg-light shadow-none min-h-24"
+            />
+          </div>
         </div>
       </div>
 
@@ -107,15 +123,27 @@ export default function GalleryItemForm({
           </Paragraph>
         </div>
 
-        <InputLabel label="Title (Bengali)" />
-        <ControlledInputField
-          name="titleBn"
-          placeholder="Enter title in Bengali"
-          className="bg-light shadow-none"
-        />
+        <div className="flex flex-col gap-y-6">
+          <div>
+            <InputLabel label="Ship Name (Bengali)" />
+            <ControlledInputField
+              name="nameBn"
+              placeholder="জাহাজের নাম বাংলায় লিখুন"
+              className="bg-light shadow-none"
+            />
+          </div>
+          <div>
+            <InputLabel label="Description (Bengali)" />
+            <ControlledTextareaField
+              name="descriptionBn"
+              placeholder="জাহাজের বিবরণ বাংলায় লিখুন"
+              className="bg-light shadow-none min-h-24"
+            />
+          </div>
+        </div>
       </div>
 
-      {/* Image, Category & Position */}
+      {/* Image, Category & Status */}
       <div className="border border-light-silver rounded-lg p-8 bg-white">
         <div className="flex items-center gap-3 mb-6">
           <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
@@ -128,16 +156,16 @@ export default function GalleryItemForm({
             />
           </div>
           <Paragraph className="xl:text-lg font-medium text-pBlue">
-            Image, Category & Position
+            Image, Category & Status
           </Paragraph>
         </div>
 
         <div className="flex flex-col gap-y-6">
           <div>
-            <InputLabel label="Gallery Image" required />
+            <InputLabel label="Ship Image" required />
             <FileUploadController
               name="image"
-              label="Upload gallery image"
+              label="Upload ship image"
               accept={["image/jpeg", "image/png", "image/webp"]}
             />
           </div>
@@ -145,21 +173,82 @@ export default function GalleryItemForm({
           <div>
             <InputLabel label="Category" required />
             <ControlledSelectField
-              name="galleryCategoryId"
+              name="surveyCategoryId"
               options={categoryOptions}
               placeholder="Select a category"
             />
           </div>
 
           <div>
-            <InputLabel label="Position" required />
+            <InputLabel label="Status" required />
+            <ControlledSelectField
+              name="status"
+              options={STATUS_OPTIONS}
+              placeholder="Select status"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Vessel Specifications */}
+      <div className="border border-light-silver rounded-lg p-8 bg-white">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
+            <Image
+              src="/icons/file.svg"
+              alt="specifications"
+              width={36}
+              height={36}
+              className="w-4"
+            />
+          </div>
+          <Paragraph className="xl:text-lg font-medium text-pBlue">
+            Vessel Specifications
+          </Paragraph>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <InputLabel label="Length" required />
             <ControlledInputField
-              name="position"
-              type="number"
-              placeholder="Enter display position (e.g. 1)"
+              name="length"
+              placeholder="e.g. 60 m"
               className="bg-light shadow-none"
             />
           </div>
+          <div>
+            <InputLabel label="Beam" required />
+            <ControlledInputField
+              name="beam"
+              placeholder="e.g. 10 m"
+              className="bg-light shadow-none"
+            />
+          </div>
+          <div>
+            <InputLabel label="Draft" required />
+            <ControlledInputField
+              name="draft"
+              placeholder="e.g. 3 m"
+              className="bg-light shadow-none"
+            />
+          </div>
+          <div>
+            <InputLabel label="Crew" required />
+            <ControlledInputField
+              name="crew"
+              placeholder="e.g. 45"
+              className="bg-light shadow-none"
+            />
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <InputLabel label="Survey Equipment" required />
+          <ControlledTextareaField
+            name="surveyEquipment"
+            placeholder="e.g. Multibeam echo sounder, side scan sonar, DGPS navigation system"
+            className="bg-light shadow-none min-h-24"
+          />
         </div>
       </div>
 
@@ -175,7 +264,7 @@ export default function GalleryItemForm({
         </Button>
         <SubmitButton
           isLoading={isPending}
-          label={isEditMode ? "Update Gallery Item" : "Create Gallery Item"}
+          label={isEditMode ? "Update Survey Ship" : "Create Survey Ship"}
         />
       </div>
     </form>
