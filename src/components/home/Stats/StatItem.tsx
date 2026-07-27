@@ -1,6 +1,6 @@
 "use client";
 
-import { IStatItem } from "@/src/components/home/types";
+import { IStatItem } from "@/src/components/types";
 import { useEffect, useRef, useState } from "react";
 
 interface StatItemProps {

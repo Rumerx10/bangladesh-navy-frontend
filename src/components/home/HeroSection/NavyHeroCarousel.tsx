@@ -19,26 +19,18 @@ interface IHeroManagement {
 }
 
 const NavyHeroCarousel = () => {
-  const { data, isLoading } = useGet<IHeroManagement>("/hero-management", [
+  const { data } = useGet<IHeroManagement>("/hero-management", [
     "hero-management",
   ]);
 
   const heroData = data?.data;
   const imageUrl = heroData?.imageUrls?.[0] || "/heroImages/heroImg1.jpg";
 
-  if (isLoading) {
-    return (
-      <div className="relative w-full h-screen overflow-hidden bg-gray-900">
-        <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/20 to-transparent" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-12 h-12 border-4 border-amber-400 border-t-transparent rounded-full animate-spin" />
-        </div>
-      </div>
-    );
-  }
+
+  console.log("Image Url ::: ",imageUrl)
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-gray-900">
+    <div className="relative w-full h-screen overflow-hidden bg-white">
       {/* Background image */}
       <Image
         src={imageUrl || "/heroImages/heroImg1.jpg"}

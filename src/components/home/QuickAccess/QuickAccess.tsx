@@ -1,4 +1,6 @@
 "use client";
+import { IBiography } from "../../types";
+import { useGet } from "@/src/hooks/useGet";
 import BiographyCard from "./BiographyCard";
 import BiographyModal from "./BiographyModal";
 import QuickAccessCard from "./QuickAccessCard";
@@ -12,6 +14,13 @@ const QuickAccess = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = useCallback(() => setModalOpen(true), []);
   const closeModal = useCallback(() => setModalOpen(false), []);
+
+  const { data } = useGet<IBiography>(
+    "/biography",
+    ["biography"]
+  );
+
+  const biographyData = data?.data;
 
   useEffect(() => {
     if (!modalOpen) return;
@@ -83,14 +92,18 @@ const QuickAccess = () => {
             </div>
 
             {/* Right — 20%: Chief Message card */}
-            <BiographyCard openModal={openModal} />
+            {biographyData && (
+              <BiographyCard data={biographyData} openModal={openModal} />
+            )}
           </div>
         </div>
       </section>
 
       {/* Full Biography Modal */}
       <AnimatePresence>
-        {modalOpen && <BiographyModal closeModal={closeModal} />}
+        {modalOpen && biographyData && (
+          <BiographyModal data={biographyData} closeModal={closeModal} />
+        )}
       </AnimatePresence>
     </>
   );

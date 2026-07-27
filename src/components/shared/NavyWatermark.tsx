@@ -218,10 +218,10 @@ export default function NavyWatermark({
           {/* Tick marks */}
           {[0, 30, 60, 120, 150, 210, 240, 300, 330].map((deg) => {
             const rad = (deg * Math.PI) / 180;
-            const x1 = 100 + 75 * Math.sin(rad);
-            const y1 = 100 - 75 * Math.cos(rad);
-            const x2 = 100 + 82 * Math.sin(rad);
-            const y2 = 100 - 82 * Math.cos(rad);
+            const x1 = Math.round((100 + 75 * Math.sin(rad)) * 1e6) / 1e6;
+            const y1 = Math.round((100 - 75 * Math.cos(rad)) * 1e6) / 1e6;
+            const x2 = Math.round((100 + 82 * Math.sin(rad)) * 1e6) / 1e6;
+            const y2 = Math.round((100 - 82 * Math.cos(rad)) * 1e6) / 1e6;
             return (
               <line
                 key={deg}
@@ -304,10 +304,10 @@ export default function NavyWatermark({
             {/* Spokes */}
             {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => {
               const rad = (deg * Math.PI) / 180;
-              const x1 = 100 + 20 * Math.sin(rad);
-              const y1 = 100 - 20 * Math.cos(rad);
-              const x2 = 100 + 63 * Math.sin(rad);
-              const y2 = 100 - 63 * Math.cos(rad);
+              const x1 = Math.round((100 + 20 * Math.sin(rad)) * 1e6) / 1e6;
+              const y1 = Math.round((100 - 20 * Math.cos(rad)) * 1e6) / 1e6;
+              const x2 = Math.round((100 + 63 * Math.sin(rad)) * 1e6) / 1e6;
+              const y2 = Math.round((100 - 63 * Math.cos(rad)) * 1e6) / 1e6;
               return (
                 <line
                   key={deg}
@@ -324,8 +324,8 @@ export default function NavyWatermark({
             {/* Handle knobs */}
             {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => {
               const rad = (deg * Math.PI) / 180;
-              const cx = 100 + 75 * Math.sin(rad);
-              const cy = 100 - 75 * Math.cos(rad);
+              const cx = Math.round((100 + 75 * Math.sin(rad)) * 1e6) / 1e6;
+              const cy = Math.round((100 - 75 * Math.cos(rad)) * 1e6) / 1e6;
               return <circle key={deg} cx={cx} cy={cy} r="8" />;
             })}
           </g>

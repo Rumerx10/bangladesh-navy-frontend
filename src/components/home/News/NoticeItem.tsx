@@ -1,4 +1,4 @@
-import { INoticeItem } from "@/src/components/home/types";
+import { INoticeItem } from "@/src/components/types";
 import { AlertTriangle, Info, RefreshCw } from "lucide-react";
 import Link from "next/link";
 

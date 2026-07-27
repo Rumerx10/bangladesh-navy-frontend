@@ -1,57 +1,97 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGet } from "@/src/hooks/useGet";
-import CreateUpdateGallery from "./Form/CreateUpdateGallery";
-import { IGalleryManagement } from "./types";
-import GalleryPreview from "./GalleryPreview";
-import GalleryPreviewSkeleton from "./Skeleton/GalleryPreviewSkeleton";
-
-const DUMMY_GALLERY_DATA: IGalleryManagement = {
-  id: "dummy-123",
-  title: "Photo Gallery",
-  subTitle: "Glimpses of Bangladesh Navy operations and activities",
-  categories: ["All", "Ships", "Survey", "Operations", "Training"],
-  galleryItems: [
-    {
-      image:
-        "https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?w=400",
-      title: "Survey Vessel at Sea",
-      category: "Ships",
-    },
-    {
-      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400",
-      title: "Hydrographic Survey Operation",
-      category: "Survey",
-    },
-  ],
-};
+import { useAppSelector } from "@/src/lib/redux/hooks";
+import { usePagination } from "@/src/hooks/usePagination";
+import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
+import { DataTable } from "@/src/components/ui/data-table";
+import { IGalleryItem } from "./types";
+import { GetGalleryColumns } from "./TableColumns/GalleryColumns";
+import CreateUpdateGalleryItem from "./Form/CreateUpdateGalleryItem";
+import GalleryCategoryCard from "./GalleryCategoryCard";
 
 const GalleryManagement = () => {
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<IGalleryItem | undefined>();
 
-  const { data, isLoading } = useGet<IGalleryManagement>(`/gallery`, [
-    "gallery",
-  ]);
+  const {
+    setCurrentPage,
+    itemsPerPage,
+    currentPage,
+    totalItems,
+    setTotalItems,
+    setItemsPerPage,
+  } = usePagination();
 
-  const galleryData = data?.data || DUMMY_GALLERY_DATA;
+  const { search, handleSearchChange, debouncedSearch } = useSearchDebounce(300);
+  const { sortBy } = useAppSelector((state) => state.filter);
 
-  if (isLoading) {
-    return <GalleryPreviewSkeleton />;
-  }
+  const { data, isLoading } = useGet<IGalleryItem[]>(
+    "/gallery",
+    [
+      "gallery",
+      currentPage.toString(),
+      itemsPerPage.toString(),
+      debouncedSearch,
+      sortBy,
+    ],
+    {
+      ...(itemsPerPage !== -1 && {
+        page: currentPage.toString(),
+        limit: itemsPerPage.toString(),
+      }),
+      search: debouncedSearch,
+      ...(sortBy && { status: sortBy }),
+    }
+  );
 
-  if (galleryData && !isEditMode) {
-    return (
-      <GalleryPreview data={galleryData} onEdit={() => setIsEditMode(true)} />
-    );
-  }
+  useEffect(() => {
+    if (data) setTotalItems(data.meta?.totalItems || 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  const handleEdit = (item: IGalleryItem) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedItem(undefined);
+  };
+
+  const columns = GetGalleryColumns(handleEdit);
 
   return (
-    <CreateUpdateGallery
-      initialValues={galleryData}
-      onSuccess={() => setIsEditMode(false)}
-      onCancel={() => setIsEditMode(false)}
-    />
+    <div className="space-y-8">
+      <GalleryCategoryCard />
+
+      <DataTable
+        columns={columns}
+        data={Array.isArray(data?.data) ? data.data : []}
+        isLoading={isLoading}
+        totalItems={totalItems}
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        onPageChange={setCurrentPage}
+        setItemsPerPage={setItemsPerPage}
+        title="Gallery"
+        searchValue={search}
+        onSearchChange={handleSearchChange}
+        searchPlaceholder="Search gallery items..."
+        isShowStatus={false}
+        IsCreate
+        setIsModalOpen={setIsModalOpen}
+        createTitle="Add Gallery Item"
+      />
+
+      <CreateUpdateGalleryItem
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        initialValues={selectedItem}
+      />
+    </div>
   );
 };
 

@@ -48,6 +48,8 @@ export default function HeaderTopBarActions({
   userInformation,
   authLoading,
 }: HeaderTopBarActionsProps) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const router = useRouter();
@@ -211,7 +213,7 @@ export default function HeaderTopBarActions({
       </div>
       <div className="hidden lg:block w-px h-7 bg-gray-200 mx-1" />
       {/* Auth */}
-      {authLoading ? (
+      {!mounted || authLoading ? (
         <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200">
           <div className="w-4 h-4 rounded-full bg-gray-200 animate-pulse" />
           <div className="w-14 h-2.5 bg-gray-200 rounded animate-pulse" />

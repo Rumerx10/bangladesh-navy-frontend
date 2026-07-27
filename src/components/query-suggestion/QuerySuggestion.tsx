@@ -1,8 +1,8 @@
-import DirectApproach from "../contact-us/DirectApproach";
 import QueryForm from "./QueryForm";
 import QueryHero from "./QueryHero";
+import DirectApproach from "../contact/DirectApproach";
 
-export default function QuerySuggestion() {
+const QuerySuggestion = () => {
   return (
     <div className="bg-white">
       <QueryHero />
@@ -18,4 +18,6 @@ export default function QuerySuggestion() {
       </section>
     </div>
   );
-}
+};
+
+export default QuerySuggestion;

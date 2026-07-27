@@ -1,11 +1,7 @@
 import BiographyManagement from "@/src/components/admin/ContentManagement/home/biography-management/BiographyManagement";
 
 const page = () => {
-  return (
-    <div>
-      <BiographyManagement />
-    </div>
-  );
+  return <BiographyManagement />;
 };
 
 export default page;

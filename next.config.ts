@@ -1,27 +1,21 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    useTypeScriptCli: true,
+  },
   images: {
-    dangerouslyAllowSVG: true,
-    unoptimized: process.env.NODE_ENV === "development",
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "localhost",
-        port: "8001",
-        pathname: "/uploads/**",
+        hostname: "**",
       },
       {
         protocol: "https",
-        hostname: "picsum.photos",
-      },
-      {
-        protocol: "https",
-        hostname: "i.pravatar.cc",
+        hostname: "**",
       },
     ],
   },
-  allowedDevOrigins: ["localhost"],
 };
-
 export default nextConfig;

@@ -83,7 +83,14 @@ export function getMenuItems(): MenuItem[] {
       segment: "Content Management",
       label: "News & Events",
       icon: AlertTriangle,
-      href: "/admin/notices",
+      href: "/admin/news-events",
+      children: [
+        { label: "News and Events", href: "/admin/news-events" },
+        {
+          label: "Category Settings",
+          href: "/admin/news-events/category",
+        },
+      ],
     },
     // {
     //   segment: "Product Management",

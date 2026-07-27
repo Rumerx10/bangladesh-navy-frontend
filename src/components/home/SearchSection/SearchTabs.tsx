@@ -1,4 +1,4 @@
-import { ISearchTab } from "@/src/components/home/types";
+import { ISearchTab } from "@/src/components/types";
 
 interface SearchTabsProps {
   tabs: ISearchTab[];

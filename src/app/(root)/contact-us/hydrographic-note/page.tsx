@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import HydrographicNote from "@/src/components/hydrographic-note/HydrographicNote";
+import HydrographicNote from "@/src/components/admin/contact/hydrographic-note/HydrographicNote";
 
 export const metadata: Metadata = {
   title: "Hydrographic Note | BNHOC",

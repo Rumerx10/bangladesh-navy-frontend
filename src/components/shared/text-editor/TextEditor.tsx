@@ -1,29 +1,27 @@
 "use client";
-
-import Bold from "@tiptap/extension-bold";
-import BulletList from "@tiptap/extension-bullet-list";
-import Document from "@tiptap/extension-document";
-import Italic from "@tiptap/extension-italic";
-import ListItem from "@tiptap/extension-list-item";
-import OrderedList from "@tiptap/extension-ordered-list";
-import Paragraph from "@tiptap/extension-paragraph";
-import Placeholder from "@tiptap/extension-placeholder";
-import Text from "@tiptap/extension-text";
-import TextAlign from "@tiptap/extension-text-align";
-import { Color, TextStyle } from "@tiptap/extension-text-style";
-import Underline from "@tiptap/extension-underline";
-
-import { EditorContent, useEditor } from "@tiptap/react";
-import { useEffect, useState } from "react";
-
-import { cn } from "@/src/lib/utils";
+import "./TextEditor.css";
 import Image from "next/image";
+import { cn } from "@/src/lib/utils";
+import ToolbarButton from "./Toolbar";
+import Text from "@tiptap/extension-text";
+import Bold from "@tiptap/extension-bold";
+import { useEffect, useState } from "react";
 import { FieldError } from "react-hook-form";
 import FontSize from "./extensions/font-size";
-import "./TextEditor.css";
-import ToolbarButton from "./Toolbar";
-import ColorPickerDropdown from "./toolbar/ColorPickerDropdown";
+import Italic from "@tiptap/extension-italic";
+import Document from "@tiptap/extension-document";
+import ListItem from "@tiptap/extension-list-item";
+import Paragraph from "@tiptap/extension-paragraph";
+import Underline from "@tiptap/extension-underline";
+import TextAlign from "@tiptap/extension-text-align";
+import BulletList from "@tiptap/extension-bullet-list";
+import Placeholder from "@tiptap/extension-placeholder";
+import OrderedList from "@tiptap/extension-ordered-list";
+import { EditorContent, useEditor } from "@tiptap/react";
 import FontSizeSelector from "./toolbar/FontSizeSelector";
+import { Color, TextStyle } from "@tiptap/extension-text-style";
+import ColorPickerDropdown from "./toolbar/ColorPickerDropdown";
+
 
 interface TextEditorProps {
   value?: string;
