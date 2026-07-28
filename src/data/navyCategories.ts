@@ -12,8 +12,8 @@ export const navyCategories: INavyCategory[] = [
   {
     id: "cat-2",
     nameBn: "ইলেক্ট্রনিক চার্ট",
-    nameEn: "Electronic Charts",
-    slug: "electronic-charts",
+    nameEn: "Electronic Navigational Charts (ENC)",
+    slug: "electronic-navigational-charts",
     description: "ENC & ECDIS compatible digital charts",
     productCount: 32,
   },
@@ -25,20 +25,11 @@ export const navyCategories: INavyCategory[] = [
     description: "Annual tide prediction tables",
     productCount: 12,
   },
-  // {
-  //   id: "cat-4",
-  //   nameBn: "নাবিকদের জন্য বিজ্ঞপ্তি",
-  //   nameEn: "Notices to Mariners",
-  //   slug: "notices-to-mariners",
-  //   description: "Navigation warnings & corrections",
-  //   productCount: 28,
-  // },
-
   {
     id: "cat-6",
     nameBn: "সামুদ্রিক আবহাওয়া",
-    nameEn: "Marine Weather",
-    slug: "marine-weather",
+    nameEn: "Marine Weather Forecast",
+    slug: "marine-weather-forecast",
     description: "Weather data & forecasting services",
     productCount: 8,
   },

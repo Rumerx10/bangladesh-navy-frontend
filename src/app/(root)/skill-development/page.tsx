@@ -21,11 +21,11 @@ export default function SkillDevelopmentPage() {
               <BookOpen size={24} />
             </div>
             <h2 className="text-2xl lg:text-3xl font-bold text-pBlue">
-              About Us
+              About BN Hydrographic Institute
             </h2>
           </div>
 
-          <div className="text-gray-600 leading-relaxed space-y-4 text-[15px]">
+          <div className="text-gray-600 leading-relaxed space-y-4 text-justify">
             <p>
               BN Hydrographic Institute, formerly known as BN Hydrographic
               School, was established on 04 May 1983 at BNS ISSA KHAN with the
@@ -58,7 +58,7 @@ export default function SkillDevelopmentPage() {
                 </div>
                 <h3 className="text-lg font-bold text-pBlue">Vision</h3>
               </div>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-sm text-gray-600 leading-relaxed text-justify">
                 To become a centre of excellence in hydrographic education,
                 training and research, upholding internationally recognized
                 standards and contributing to safe navigation and sustainable
@@ -82,7 +82,7 @@ export default function SkillDevelopmentPage() {
                   "Enhance the operational and technical capabilities of the Bangladesh Navy and the wider maritime sector.",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-liteBlue shrink-0" />
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-liteBlue shrink-0 text-justify" />
                     {item}
                   </li>
                 ))}
@@ -95,7 +95,7 @@ export default function SkillDevelopmentPage() {
             <h3 className="text-lg font-bold text-pBlue mb-3">
               Training Overview
             </h3>
-            <div className="text-sm text-gray-600 leading-relaxed space-y-3">
+            <div className="text-sm text-gray-600 leading-relaxed space-y-3 text-justify">
               <p>
                 All training is aligned with international standards,
                 particularly those set by the IBSC, ensuring high-quality

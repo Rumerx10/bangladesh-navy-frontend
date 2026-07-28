@@ -31,9 +31,7 @@ const HydrographicHero = () => {
           </h1>
 
           <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-gray-300">
-            Report navigational hazards, depth anomalies, or other hydrographic
-            observations to the Bangladesh Navy Hydrographic &amp; Oceanographic
-            Center.
+            Hydrographic Note H.102
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-8">

@@ -1,30 +1,26 @@
 "use client";
-
-import { navyCategories } from "@/src/data/navyCategories";
-import { useAppSelector } from "@/src/lib/redux/hooks";
-import { ChevronDown, ChevronRight } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import HeaderTopBarActions from "./HeaderTopBarActions";
 import Logo from "./Logo";
+import Link from "next/link";
 import MobileHeader from "./MobileHeader";
+import { usePathname } from "next/navigation";
+import { useAppSelector } from "@/src/lib/redux/hooks";
+import HeaderTopBarActions from "./HeaderTopBarActions";
+import { ChevronDown, ChevronRight } from "lucide-react";
+import { navyCategories } from "@/src/data/navyCategories";
 
 interface HeaderTopBarProps {
   menuOpen: boolean;
   setMenuOpen: (value: boolean) => void;
 }
-
 export interface NestedSubLink {
   label: string;
   link: string;
 }
-
 export interface SubLink {
   label: string;
   link: string;
   subLinks?: NestedSubLink[];
 }
-
 export interface NavItem {
   label: string;
   link: string;
@@ -39,16 +35,16 @@ export const NavigationItems: NavItem[] = [
     label: "About Us",
     link: "/about",
     subLinks: [
-      { label: "News & Events", link: "/about/news" },
       { label: "History", link: "/about/history" },
       { label: "Vision & Mission", link: "/about/vision-mission" },
       { label: "Organogram", link: "/about/organogram" },
       { label: "Survey Ships", link: "/about/survey-ships" },
+      { label: "News & Events", link: "/about/news" },          
       { label: "Gallery", link: "/about/gallery" },
     ],
   },
   {
-    label: "Products & Services",
+    label: "Nautical Products",
     link: "/product-service",
     asLink: true,
     activeMatches: ["/notices-mariners", "/how-to-collect"],
@@ -97,7 +93,7 @@ export const NavigationItems: NavItem[] = [
 ];
 
 // Primary items always shown in the main nav row
-const PRIMARY_LABELS = ["Home", "About Us", "Products & Services"];
+const PRIMARY_LABELS = ["Home", "About Us", "Nautical Products"];
 // Items collapsed into "Others" below 1800 px
 const OTHERS_LABELS = ["Training and Courses", "Contact", "Important Notice"];
 

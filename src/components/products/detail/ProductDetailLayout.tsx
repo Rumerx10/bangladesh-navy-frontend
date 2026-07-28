@@ -26,7 +26,7 @@ export default function ProductDetailLayout({
         <span className="hover:text-liteBlue cursor-pointer">Home</span>
         <span className="mx-2">›</span>
         <span className="hover:text-liteBlue cursor-pointer">
-          Products & Services
+          Nautical Products
         </span>
         <span className="mx-2">›</span>
         <span className="text-pBlue font-medium">{product.nameEn}</span>

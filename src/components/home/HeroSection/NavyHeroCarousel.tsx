@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useGet } from "@/src/hooks/useGet";
 
 interface IHeroManagement {
@@ -47,16 +46,16 @@ const NavyHeroCarousel = () => {
       <div className="absolute top-33 lg:top-0 inset-0 flex items-center">
         <div className="container mx-auto px-6 md:px-12 lg:px-20 max-w-6xl">
           {/* Badge */}
-          <div className="flex items-center gap-3 mb-3 lg:mb-6">
+          {/* <div className="flex items-center gap-3 mb-3 lg:mb-6">
             <span className="h-px w-10 bg-amber-400" />
             <span className="text-amber-400 text-xs font-semibold tracking-[0.25em] uppercase">
               {heroData?.subTitleEn || "Excellence in Maritime Service"}
             </span>
-          </div>
+          </div> */}
 
           {/* Title */}
           <h1 className="text-white font-bold leading-tight tracking-tight mb-4">
-            <span className="block text-2xl md:text-6xl lg:text-7xl">
+            <span className="block text-2xl text-center lg:text-start md:text-6xl lg:text-7xl max-w-7xl">
               {heroData?.titleEn || "Ensuring Safe & Efficient Marine"}
             </span>
             {/* <span className="block text-2xl md:text-6xl lg:text-7xl text-amber-400 mt-1">
@@ -65,19 +64,19 @@ const NavyHeroCarousel = () => {
           </h1>
 
           {/* Divider */}
-          <div className="flex items-center gap-3 my-6">
+          {/* <div className="flex items-center gap-3 my-6">
             <span className="h-0.5 w-12 bg-amber-400" />
             <span className="h-0.5 w-4 bg-amber-400/40" />
-          </div>
+          </div> */}
 
           {/* Description */}
-          <p className="text-white/80 text-base md:text-lg leading-relaxed max-w-xl font-light">
+          {/* <p className="text-white/80 text-base md:text-lg leading-relaxed max-w-xl font-light">
             {heroData?.descriptionEn ||
               "Bangladesh Navy stands as the premier maritime defense force, protecting our sovereign waters and advancing naval excellence across the Indo-Pacific region."}
-          </p>
+          </p> */}
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 mt-10">
+          {/* <div className="flex flex-col sm:flex-row gap-4 mt-10">
             <Link
               href="/about"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-amber-400 hover:bg-amber-300 text-gray-900 text-sm font-semibold tracking-wider uppercase transition-colors duration-200"
@@ -103,7 +102,7 @@ const NavyHeroCarousel = () => {
             >
               Join the Navy
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

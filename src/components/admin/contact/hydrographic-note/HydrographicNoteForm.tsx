@@ -1,7 +1,10 @@
 "use client";
+import Link from "next/link";
 
 import { toast } from "react-toastify";
+import { Download } from "lucide-react";
 import { usePost } from "@/src/hooks/usePost";
+import { Button } from "@/src/components/ui/button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { type Resolver, FormProvider, useForm } from "react-hook-form";
 
@@ -13,7 +16,6 @@ import InputLabel from "@/src/components/shared/InputLabel";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
 import ControlledSelectField from "@/src/components/shared/FromController/ControlledSelectField";
 import ControlledTextareaField from "@/src/components/shared/FromController/ControlledTextareaField";
-import { Button } from "@/src/components/ui/button";
 
 const REPLACEMENT_OPTIONS = [
   { label: "Required", value: "required" },
@@ -87,9 +89,19 @@ const HydrographicNoteForm = () => {
   return (
     <div className="w-full">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-pBlue lg:text-3xl">
-          Hydrographic Note Form
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-pBlue lg:text-3xl">
+            Hydrographic Note Form
+          </h2>
+          <Link
+            href="/Hydrographic Note H-102.pdf"
+            download="/Hydrographic Note H-102.pdf"
+            title="Download the File"
+            className="border w-10 h-10 flex items-center text-white bg-green-500 hover:bg-green-600 justify-center rounded-sm cursor-pointer hover:scale-105 duration-300"
+          >
+            <Download />
+          </Link>
+        </div>
         <p className="mt-2 text-sm leading-relaxed text-gray-500 lg:text-base">
           Fill out this form to report navigational hazards, depth anomalies, or
           other hydrographic observations.

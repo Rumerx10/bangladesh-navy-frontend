@@ -19,7 +19,7 @@ const BiographyCard = ({ data, openModal }: BiographyCardProps) => {
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: 0.2 }}
     >
-      <div className="rounded-xl overflow-hidden bg-white shadow-md border border-gray-200">
+      <div className="rounded-md overflow-hidden bg-white shadow-md border border-gray-200">
         {/* Navy header */}
         <div className="bg-[#1B2A4A] px-4 py-3 text-center">
           <span className="text-white font-bold text-sm tracking-wide">
@@ -28,7 +28,7 @@ const BiographyCard = ({ data, openModal }: BiographyCardProps) => {
         </div>
 
         {/* Portrait image */}
-        <div className="relative h-64 sm:h-72 md:h-80 lg:h-72 xl:h-80 2xl:h-96 overflow-hidden bg-gray-50">
+        <div className="relative h-76 overflow-hidden bg-gray-50">
           <Image
             src={data.imageUrl || "/CHIEF.jpeg"}
             alt={data.nameEn}
