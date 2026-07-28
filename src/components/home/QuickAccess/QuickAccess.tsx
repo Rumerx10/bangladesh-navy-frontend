@@ -9,16 +9,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
 
-
 const QuickAccess = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = useCallback(() => setModalOpen(true), []);
   const closeModal = useCallback(() => setModalOpen(false), []);
 
-  const { data } = useGet<IBiography>(
-    "/biography",
-    ["biography"]
-  );
+  const { data } = useGet<IBiography>("/biography", ["biography"]);
 
   const biographyData = data?.data;
 

@@ -35,6 +35,7 @@ export const NavigationItems: NavItem[] = [
     label: "About Us",
     link: "/about",
     subLinks: [
+      { label: "News & Events", link: "/about/news" },
       { label: "History", link: "/about/history" },
       { label: "Vision & Mission", link: "/about/vision-mission" },
       { label: "Organogram", link: "/about/organogram" },
@@ -53,7 +54,9 @@ export const NavigationItems: NavItem[] = [
         label: cat.nameEn,
         link: `/product-service/${cat.nameEn.toLowerCase().replace(" ", "-")}`,
       })),
-      { label: "How to Collect", link: "/how-to-collect" },
+      { label: "Chart Index", link: "/chart" },
+      { label: "Electronic Chart (ENC)", link: "/electronic-chart" },
+      { label: "How to Pay", link: "/how-to-pay" },
     ],
   },
   {

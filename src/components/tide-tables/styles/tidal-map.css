@@ -1,0 +1,130 @@
+/* Map container and marker styling live in shared/bangladesh-map. */
+
+/* Popup — dark rounded card anchored on the pin. */
+.tidal-popup .leaflet-popup-content-wrapper {
+  background: #001836;
+  color: #ffffff;
+  border-radius: 14px;
+  padding: 0;
+  box-shadow: 0 12px 28px rgba(0, 24, 54, 0.35);
+}
+
+.tidal-popup .leaflet-popup-content {
+  margin: 0;
+  width: auto !important;
+  min-width: 240px;
+  max-width: 280px;
+}
+
+.tidal-popup .leaflet-popup-tip {
+  background: #001836;
+  box-shadow: none;
+}
+
+/* Sits over the banner image, so it carries its own scrim. */
+.tidal-popup .leaflet-popup-close-button {
+  top: 8px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  background: rgba(0, 24, 54, 0.55);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.tidal-popup .leaflet-popup-close-button:hover {
+  color: #ffffff;
+  background: rgba(0, 24, 54, 0.8);
+}
+
+.tidal-popup__card {
+  display: block;
+  padding: 0;
+}
+
+/* Full-bleed banner across the top; the card's own radius is clipped here
+   because the image is the first child of the rounded wrapper. */
+.tidal-popup__thumb {
+  display: block;
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 14px 14px 0 0;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tidal-popup__body {
+  padding: 12px 14px 14px;
+}
+
+.tidal-popup__title {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.tidal-popup__area {
+  margin-top: 2px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.tidal-popup__coords {
+  margin-top: 6px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+  font-variant-numeric: tabular-nums;
+}
+
+.tidal-popup__product {
+  margin-top: 8px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.tidal-popup__action {
+  display: block;
+  margin-top: 10px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: #006a4e;
+  color: #ffffff !important;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.tidal-popup__action:hover {
+  background: #00815f;
+  text-decoration: none;
+}
+
+.tidal-popup__attrs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.tidal-popup__attr {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tidal-popup__attr-key {
+  color: rgba(255, 255, 255, 0.55);
+}
+

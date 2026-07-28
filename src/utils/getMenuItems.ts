@@ -1,16 +1,12 @@
 import {
-  Home,
-  Layers,
-  LayoutDashboard,
-  Package,
-  Settings,
-  ShoppingCart,
-  Users,
-  Info,
-  GraduationCap,
-  Phone,
-  AlertTriangle,
-  type LucideIcon,
+    AlertTriangle,
+    GraduationCap,
+    Home,
+    Info,
+    LayoutDashboard,
+    Phone,
+    Users,
+    type LucideIcon,
 } from "lucide-react";
 
 export interface MenuItem {

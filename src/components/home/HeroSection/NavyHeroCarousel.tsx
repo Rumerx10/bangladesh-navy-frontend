@@ -25,8 +25,7 @@ const NavyHeroCarousel = () => {
   const heroData = data?.data;
   const imageUrl = heroData?.imageUrls?.[0] || "/heroImages/heroImg1.jpg";
 
-
-  console.log("Image Url ::: ",imageUrl)
+  console.log("Image Url ::: ", imageUrl);
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-white">
