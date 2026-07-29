@@ -1,105 +1,20 @@
 "use client";
-
-import { navyCategories } from "@/src/data/navyCategories";
-import { useAppSelector } from "@/src/lib/redux/hooks";
-import { ChevronDown, ChevronRight } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import HeaderTopBarActions from "./HeaderTopBarActions";
 import Logo from "./Logo";
+import Link from "next/link";
 import MobileHeader from "./MobileHeader";
+import { usePathname } from "next/navigation";
+import { useAppSelector } from "@/src/lib/redux/hooks";
+import HeaderTopBarActions from "./HeaderTopBarActions";
+import { ChevronDown, ChevronRight } from "lucide-react";
+import { NavItem, NavigationItems, SubLink } from "@/src/data/navigationItems";
 
 interface HeaderTopBarProps {
   menuOpen: boolean;
   setMenuOpen: (value: boolean) => void;
 }
 
-export interface NestedSubLink {
-  label: string;
-  link: string;
-}
-
-export interface SubLink {
-  label: string;
-  link: string;
-  subLinks?: NestedSubLink[];
-}
-
-export interface NavItem {
-  label: string;
-  link: string;
-  asLink?: boolean;
-  activeMatches?: string[];
-  subLinks?: SubLink[];
-}
-
-export const NavigationItems: NavItem[] = [
-  { label: "Home", link: "/" },
-  {
-    label: "About Us",
-    link: "/about",
-    subLinks: [
-      { label: "News & Events", link: "/about/news" },
-      { label: "History", link: "/about/history" },
-      { label: "Vision & Mission", link: "/about/vision-mission" },
-      { label: "Organogram", link: "/about/organogram" },
-      { label: "Survey Ships", link: "/about/survey-ships" },
-      { label: "Gallery", link: "/about/gallery" },
-    ],
-  },
-  {
-    label: "Products & Services",
-    link: "/product-service",
-    asLink: true,
-    activeMatches: ["/notices-mariners", "/how-to-collect"],
-    subLinks: [
-      ...navyCategories.map((cat) => ({
-        label: cat.nameEn,
-        link: `/product-service/${cat.nameEn.toLowerCase().replace(" ", "-")}`,
-      })),
-      { label: "Chart Index", link: "/chart" },
-      { label: "Electronic Chart (ENC)", link: "/electronic-chart" },
-      { label: "How to Pay", link: "/how-to-pay" },
-    ],
-  },
-  {
-    label: "Training and Courses",
-    link: "/skill-development",
-    subLinks: [
-      { label: "BN Hydrographic Institute", link: "/skill-development" },
-      { label: "Courses", link: "/skill-development/courses" },
-    ],
-  },
-  {
-    label: "Contact",
-    link: "/contact-us",
-    subLinks: [
-      { label: "Contact Information", link: "/contact-us" },
-      { label: "Query & Suggestion", link: "/contact-us/query-suggestion" },
-    ],
-  },
-  {
-    label: "Important Notice",
-    link: "#",
-    subLinks: [
-      {
-        label: "Publications",
-        link: "/product-service?category=publications",
-      },
-      {
-        label: "Notices",
-        link: "/product-service?category=notices-to-mariners",
-      },
-      {
-        label: "Hydrographic Note",
-        link: "/contact-us/hydrographic-note",
-      },
-    ],
-  },
-];
-
 // Primary items always shown in the main nav row
-const PRIMARY_LABELS = ["Home", "About Us", "Products & Services"];
+const PRIMARY_LABELS = ["Home", "About Us", "Nautical Products"];
 // Items collapsed into "Others" below 1800 px
 const OTHERS_LABELS = ["Training and Courses", "Contact", "Important Notice"];
 

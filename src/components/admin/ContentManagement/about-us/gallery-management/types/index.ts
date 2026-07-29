@@ -1,13 +1,25 @@
-export interface IGalleryItem {
-  image: File | string;
-  title: string;
-  category: string;
+export interface IGalleryCategory {
+  id: string;
+  nameEn: string;
+  nameBn: string;
+  status: "ACTIVE" | "INACTIVE";
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface IGalleryManagement {
-  id?: string;
-  title: string;
-  subTitle: string;
-  categories: string[];
-  galleryItems: IGalleryItem[];
+export interface IGalleryItemCategory {
+  id: string;
+  nameEn: string;
+  nameBn: string;
+}
+
+export interface IGalleryItem {
+  id: string;
+  titleEn: string;
+  titleBn: string;
+  imageUrl: string;
+  position: number;
+  galleryCategory: IGalleryItemCategory;
+  createdAt?: string;
+  updatedAt?: string;
 }

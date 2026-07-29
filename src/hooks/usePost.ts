@@ -24,8 +24,7 @@ export const usePost = <T>(
     mutationFn: (arg) => {
       let endpoint: string | undefined = defaultEndpoint;
       let data: FormData | Record<string, unknown> = arg as
-        | FormData
-        | Record<string, unknown>;
+        FormData | Record<string, unknown>;
       let config: AxiosRequestConfig = {};
 
       if (typeof arg === "object" && "data" in arg) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { navyCategories } from "@/src/data/navyCategories";
+import { navyCategories } from "@/src/data/navigationItems";
 import { IProductFilter } from "@/src/components/products/types";
 import { Filter } from "lucide-react";
 import CategoryFilter from "./filters/CategoryFilter";

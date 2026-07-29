@@ -1,51 +1,70 @@
 ﻿"use client";
 
-import NavyWatermark from "@/src/components/shared/NavyWatermark";
-import NewsCard from "@/src/components/home/News/NewsCard";
-import { newsItems } from "@/src/data/homeData";
-import { INewsItem } from "@/src/components/home/types";
-import { motion } from "framer-motion";
-import {
-  ArrowLeft,
-  Calendar,
-  ChevronRight,
-  Home,
-  Share2,
-  Tag,
-} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useGet } from "@/src/hooks/useGet";
+import { motion } from "framer-motion";
+import { ArrowLeft, ChevronRight, Home, Share2, Tag } from "lucide-react";
+import { INewsItem } from "../types";
+import NewsCard from "@/src/components/home/News/NewsCard";
+import NavyWatermark from "@/src/components/shared/NavyWatermark";
 
 interface NewsDetailProps {
-  news: INewsItem;
+  slug: string;
 }
 
-export default function NewsDetail({ news }: NewsDetailProps) {
-  // Related news — same category, exclude current
-  const relatedNews = newsItems
-    .filter((n) => n.category === news.category && n.id !== news.id)
-    .slice(0, 3);
+const NewsDetail = ({ slug }: NewsDetailProps) => {
+  const { data: newsData, isLoading: newsLoading } = useGet<INewsItem>(
+    `/news-events/${slug}`,
+    ["news-event-detail", slug]
+  );
 
-  // If not enough related by category, fill with other recent
-  const displayRelated =
-    relatedNews.length >= 2
-      ? relatedNews
-      : [
-          ...relatedNews,
-          ...newsItems
-            .filter(
-              (n) => n.id !== news.id && !relatedNews.find((r) => r.id === n.id)
-            )
-            .slice(0, 3 - relatedNews.length),
-        ];
+  const news = newsData?.data;
+
+  const { data: relatedData } = useGet<INewsItem[]>(
+    `/news-events/related/${news?.newsCategory?.id}/${slug}`,
+    ["news-events-related", news?.newsCategory?.id || "", slug],
+    {},
+    { enabled: !!news?.newsCategory?.id }
+  );
+
+  const relatedNews = Array.isArray(relatedData?.data) ? relatedData.data : [];
+
+  if (newsLoading) {
+    return (
+      <div className="mt-28 lg:mt-26">
+        <div className="h-85 lg:h-105 bg-gray-200 animate-pulse" />
+        <div className="max-w-3xl mx-auto px-4 py-10 space-y-4">
+          <div className="h-6 w-32 bg-gray-200 animate-pulse rounded" />
+          <div className="h-10 w-full bg-gray-200 animate-pulse rounded" />
+          <div className="h-4 w-full bg-gray-200 animate-pulse rounded" />
+          <div className="h-4 w-3/4 bg-gray-200 animate-pulse rounded" />
+        </div>
+      </div>
+    );
+  }
+
+  if (!news) {
+    return (
+      <div className="mt-28 lg:mt-26 text-center py-20">
+        <p className="text-gray-500 text-lg">News not found.</p>
+        <Link
+          href="/news"
+          className="text-liteBlue hover:underline mt-4 inline-block"
+        >
+          Back to News
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-28 lg:mt-26">
       {/* Hero Image */}
       <section className="relative h-85 lg:h-105 overflow-hidden bg-pBlue">
         <Image
-          src={news.image}
-          alt={news.title}
+          src={news.imageUrl}
+          alt={news.titleEn}
           fill
           priority
           className="object-cover"
@@ -69,7 +88,7 @@ export default function NewsDetail({ news }: NewsDetailProps) {
               </Link>
               <ChevronRight size={14} />
               <span className="text-white font-medium truncate max-w-50">
-                {news.title}
+                {news.titleEn}
               </span>
             </nav>
           </div>
@@ -98,11 +117,7 @@ export default function NewsDetail({ news }: NewsDetailProps) {
             >
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-liteBlue/10 text-liteBlue text-xs font-bold uppercase tracking-wider">
                 <Tag size={12} />
-                {news.category}
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-sm text-gray-500">
-                <Calendar size={14} />
-                {news.date}
+                {news.newsCategory?.nameEn || "News"}
               </span>
             </motion.div>
 
@@ -113,8 +128,18 @@ export default function NewsDetail({ news }: NewsDetailProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 }}
             >
-              {news.title}
+              {news.titleEn}
             </motion.h1>
+
+            {/* Bengali Title - commented out */}
+            {/* <motion.h2
+              className="text-xl lg:text-2xl font-semibold text-gray-500 mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.15 }}
+            >
+              {news.titleBn}
+            </motion.h2> */}
 
             {/* Article content */}
             <motion.article
@@ -123,18 +148,13 @@ export default function NewsDetail({ news }: NewsDetailProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
             >
-              {news.content.map((para, i) => (
-                <p
-                  key={i}
-                  className={`text-base leading-relaxed ${
-                    i === 0
-                      ? "text-gray-800 text-lg font-medium"
-                      : "text-gray-600"
-                  }`}
-                >
-                  {para}
-                </p>
-              ))}
+              <p className="leading-relaxed text-gray-800 text-lg font-medium">
+                {news.contentEn}
+              </p>
+              {/* Bengali Content - commented out */}
+              {/* <p className="text-base leading-relaxed text-gray-600">
+                {news.contentBn}
+              </p> */}
             </motion.article>
 
             {/* Share & Back */}
@@ -150,7 +170,7 @@ export default function NewsDetail({ news }: NewsDetailProps) {
                 onClick={() => {
                   if (navigator.share) {
                     navigator.share({
-                      title: news.title,
+                      title: news.titleEn,
                       url: window.location.href,
                     });
                   } else {
@@ -168,14 +188,14 @@ export default function NewsDetail({ news }: NewsDetailProps) {
       </section>
 
       {/* Related News */}
-      {displayRelated.length > 0 && (
+      {relatedNews.length > 0 && (
         <section className="py-12 lg:py-16 bg-gray-50">
           <div className="container px-4 sm:px-6 lg:px-8">
             <h2 className="text-xl lg:text-2xl font-bold text-pBlue mb-8">
               Related News
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {displayRelated.map((item, i) => (
+              {relatedNews.map((item, i) => (
                 <motion.div
                   key={item.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -191,4 +211,6 @@ export default function NewsDetail({ news }: NewsDetailProps) {
       )}
     </div>
   );
-}
+};
+
+export default NewsDetail;

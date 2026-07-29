@@ -1,6 +1,6 @@
 "use client";
 
-import { navyCategories } from "@/src/data/navyCategories";
+import { navyCategories } from "@/src/data/navigationItems";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

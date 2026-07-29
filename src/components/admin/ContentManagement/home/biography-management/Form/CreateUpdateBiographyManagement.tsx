@@ -1,15 +1,14 @@
 "use client";
 
-import { FormProvider, useForm } from "react-hook-form";
+import { usePost } from "@/src/hooks/usePost";
+import { IBiographyManagement } from "../types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import BiographyManagementForm from "./BiographyManagementForm";
+import { FormProvider, Resolver, useForm } from "react-hook-form";
 import {
-  biographyManagementSchema,
   BiographyManagementSchemaForm,
+  biographyManagementSchema,
 } from "../Schema/biographyManagementSchema";
-import { IBiographyManagement } from "../types";
-import { usePost } from "@/src/hooks/usePost";
-import { usePatch } from "@/src/hooks/usePatch";
 
 interface CreateUpdateBiographyManagementProps {
   initialValues?: IBiographyManagement;
@@ -22,57 +21,58 @@ const CreateUpdateBiographyManagement = ({
   onSuccess,
   onCancel,
 }: CreateUpdateBiographyManagementProps) => {
-  const isEditMode = !!initialValues?.title;
+  const isEditMode = !!initialValues?.id;
 
   const methods = useForm<BiographyManagementSchemaForm>({
-    resolver: yupResolver(biographyManagementSchema),
+    resolver: yupResolver(
+      biographyManagementSchema
+    ) as Resolver<BiographyManagementSchemaForm>,
     defaultValues: {
-      title: initialValues?.title || "",
-      name: initialValues?.name || "",
-      designation: initialValues?.designation || "",
-      description: initialValues?.description || "",
+      nameEn: initialValues?.nameEn || "",
+      nameBn: initialValues?.nameBn || "",
+      designationEn: initialValues?.designationEn || "",
+      designationBn: initialValues?.designationBn || "",
+      messageEn: initialValues?.messageEn || "",
+      messageBn: initialValues?.messageBn || "",
+      image: initialValues?.imageUrl || undefined,
+      status: initialValues?.status || "ACTIVE",
     },
   });
 
-  const { mutate: createBiography, isPending: isCreating } = usePost<{
-    data: IBiographyManagement;
-  }>(
-    "/biography-management",
+  const {
+    mutate: submitBiography,
+    isPending,
+    error,
+    reset: resetError,
+  } = usePost(
+    "/biography",
     () => {
       onSuccess?.();
     },
     [["biography-management"]]
   );
 
-  const { mutate: updateBiography, isPending: isUpdating } = usePatch<{
-    data: IBiographyManagement;
-  }>(
-    () => {
-      onSuccess?.();
-    },
-    [["biography-management"]],
-    "/biography-management"
-  );
-
-  const isPending = isCreating || isUpdating;
-
-  const onSubmit = (data: BiographyManagementSchemaForm) => {
-    if (isEditMode && initialValues?.id) {
-      updateBiography({
-        url: `/biography-management/${initialValues.id}`,
-        data,
-      });
-    } else {
-      createBiography({
-        endpoint: "/biography-management",
-        data,
-      });
-    }
-  };
-
   const handleCancel = () => {
+    resetError();
     methods.reset();
     onCancel?.();
+  };
+
+  const onSubmit = (data: BiographyManagementSchemaForm) => {
+    const formData = new FormData();
+    formData.append("nameEn", data.nameEn);
+    formData.append("nameBn", data.nameBn);
+    formData.append("designationEn", data.designationEn);
+    formData.append("designationBn", data.designationBn || "");
+    formData.append("messageEn", data.messageEn);
+    formData.append("messageBn", data.messageBn);
+    formData.append("status", data.status);
+
+    if (data.image instanceof File) {
+      formData.append("image", data.image);
+    }
+
+    submitBiography({ data: formData });
   };
 
   return (
@@ -82,6 +82,7 @@ const CreateUpdateBiographyManagement = ({
         onSubmit={onSubmit}
         isPending={isPending}
         onCancel={handleCancel}
+        error={error}
       />
     </FormProvider>
   );

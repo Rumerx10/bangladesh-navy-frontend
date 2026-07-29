@@ -1,12 +1,13 @@
 import {
-    AlertTriangle,
-    GraduationCap,
-    Home,
-    Info,
-    LayoutDashboard,
-    Phone,
-    Users,
-    type LucideIcon,
+  AlertTriangle,
+  GraduationCap,
+  Home,
+  Info,
+  LayoutDashboard,
+  Package,
+  Phone,
+  Users,
+  type LucideIcon,
 } from "lucide-react";
 
 export interface MenuItem {
@@ -46,6 +47,19 @@ export function getMenuItems(): MenuItem[] {
       ],
     },
     {
+      segment: "Content Management",
+      label: "News & Events",
+      icon: AlertTriangle,
+      href: "/admin/news-events",
+      children: [
+        { label: "News and Events", href: "/admin/news-events" },
+        {
+          label: "Category Settings",
+          href: "/admin/news-events/category",
+        },
+      ],
+    },
+    {
       segment: "Training Management",
       label: "Training & Courses",
       icon: GraduationCap,
@@ -59,7 +73,7 @@ export function getMenuItems(): MenuItem[] {
       ],
     },
     {
-      segment: "Content Management",
+      segment: "Contact Management",
       label: "Contact",
       icon: Phone,
       href: "/admin/contact-us",
@@ -76,21 +90,12 @@ export function getMenuItems(): MenuItem[] {
       ],
     },
     {
-      segment: "Content Management",
-      label: "News & Events",
-      icon: AlertTriangle,
-      href: "/admin/notices",
+      segment: "Product Management",
+      label: "Manage Product",
+      icon: Package,
+      href: "/admin/products",
+      children: [{ label: "All Products", href: "/admin/products" }],
     },
-    // {
-    //   segment: "Product Management",
-    //   label: "Manage Product",
-    //   icon: Package,
-    //   children: [
-    //     { label: "All Products", href: "/admin/products" },
-    //     { label: "How to Collect", href: "/admin/how-to-collect" },
-    //     { label: "Category Management", href: "/admin/category" },
-    //   ],
-    // },
     // {
     //   segment: "Order Management",
     //   label: "Orders",

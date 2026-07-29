@@ -25,7 +25,9 @@ const CreateUpdateHeroManagement = ({
   const isEditMode = !!initialValues?.id;
 
   const methods = useForm<HeroManagementSchemaForm>({
-    resolver: yupResolver(heroManagementSchema) as Resolver<HeroManagementSchemaForm>,
+    resolver: yupResolver(
+      heroManagementSchema
+    ) as Resolver<HeroManagementSchemaForm>,
     defaultValues: {
       titleEn: initialValues?.titleEn || "",
       titleBn: initialValues?.titleBn || "",

@@ -130,10 +130,10 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Products & Services */}
+          {/* Nautical Products */}
           <div>
             <h4 className="text-sm font-semibold text-white mb-4 lg:mb-5">
-              Products & Services
+              Nautical Products
             </h4>
             <ul className="space-y-2.5">
               {productLinks.map((link) => (

@@ -1,25 +1,21 @@
 "use client";
 
+import { Button } from "../ui/button";
+import { toast } from "react-toastify";
 import { usePost } from "@/src/hooks/usePost";
+import InputLabel from "../shared/InputLabel";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import ControlledInputField from "../shared/FromController/ControlledInputField";
+import ControlledTextareaField from "../shared/FromController/ControlledTextareaField";
 import {
   ContactFormType,
   contactValidationSchema,
-} from "../contact-us/schema/ContactSchema";
-import ControlledInputField from "../shared/FromController/ControlledInputField";
-import ControlledTextareaField from "../shared/FromController/ControlledTextareaField";
-import InputLabel from "../shared/InputLabel";
-import { Button } from "../ui/button";
+} from "../contact/contactFormSchema";
 
-interface QueryFormProps {
-  defaultType?: string;
-}
-
-const QueryForm = ({ defaultType }: QueryFormProps) => {
+const QueryForm = () => {
   const { mutateAsync, error, isPending } = usePost(
-    "/contact-support",
+    "/contact",
     () => {
       console.log("POST success");
     },
@@ -30,11 +26,11 @@ const QueryForm = ({ defaultType }: QueryFormProps) => {
     resolver: yupResolver(contactValidationSchema),
     mode: "onChange",
     defaultValues: {
-      type: defaultType || "",
       name: "",
       email: "",
       phone: "",
       message: "",
+      contactType: "QUERY_SUGGESTION",
     },
   });
 

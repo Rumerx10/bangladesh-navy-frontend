@@ -1,6 +1,6 @@
 "use client";
 
-import { galleryItems } from "@/src/data/aboutData";
+import { useGet } from "@/src/hooks/useGet";
 import {
   motion,
   AnimatePresence,
@@ -11,10 +11,18 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 
-const allCategories = [
-  "All",
-  ...Array.from(new Set(galleryItems.map((g) => g.category))),
-];
+interface GalleryItem {
+  id: string;
+  titleEn: string;
+  titleBn: string;
+  imageUrl: string;
+  position: number;
+  galleryCategory: {
+    id: string;
+    nameEn: string;
+    nameBn: string;
+  };
+}
 
 const gridVariants: Variants = {
   hidden: {},
@@ -48,10 +56,40 @@ export default function GalleryGrid() {
   const [activeCategory, setActiveCategory] = useState("All");
   const shouldReduceMotion = useReducedMotion();
 
+  const { data, isLoading } = useGet<GalleryItem[]>("/gallery/list", [
+    "gallery-list",
+  ]);
+
+  const galleryItems: GalleryItem[] = Array.isArray(data?.data)
+    ? data.data
+    : [];
+
+  const allCategories = [
+    "All",
+    ...Array.from(new Set(galleryItems.map((g) => g.galleryCategory.nameEn))),
+  ];
+
   const filteredItems =
     activeCategory === "All"
       ? galleryItems
-      : galleryItems.filter((g) => g.category === activeCategory);
+      : galleryItems.filter((g) => g.galleryCategory.nameEn === activeCategory);
+
+  if (isLoading) {
+    return (
+      <section className="py-8 lg:py-20 bg-white">
+        <div className="container px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div
+                key={i}
+                className="aspect-4/5 rounded-2xl bg-gray-100 animate-pulse"
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <motion.section
@@ -117,8 +155,8 @@ export default function GalleryGrid() {
                 ) : null}
 
                 <Image
-                  src={item.image}
-                  alt={item.title}
+                  src={item.imageUrl}
+                  alt={item.titleEn}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -149,10 +187,10 @@ export default function GalleryGrid() {
                   animate={shouldReduceMotion ? undefined : { y: 0 }}
                 >
                   <span className="inline-block px-2 py-0.5 rounded-md bg-blue-500 text-white text-[10px] font-bold uppercase tracking-wider mb-2">
-                    {item.category}
+                    {item.galleryCategory.nameEn}
                   </span>
                   <h4 className="text-white text-base lg:text-lg font-bold leading-tight line-clamp-2">
-                    {item.title}
+                    {item.titleEn}
                   </h4>
                 </motion.div>
               </motion.div>

@@ -1,151 +1,216 @@
 "use client";
 
-import { FormProvider, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import ProductsForm from "./ProductsForm";
-import { productsSchema, ProductsSchemaForm } from "../Schema/productsSchema";
-import { IProductsManagement } from "../types";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 import { usePost } from "@/src/hooks/usePost";
 import { usePatch } from "@/src/hooks/usePatch";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FormProvider, Resolver, useForm } from "react-hook-form";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/src/components/ui/dialog";
+import { productSchema, ProductFormValues } from "../Schema/productsSchema";
+import { IProduct } from "../types";
+import ProductForm from "./ProductsForm";
 
-interface CreateUpdateProductsProps {
-  initialValues?: IProductsManagement;
-  onSuccess?: () => void;
-  onCancel?: () => void;
+interface CreateUpdateProductProps {
+  isOpen: boolean;
+  onClose: () => void;
+  initialValues?: IProduct;
 }
 
-const CreateUpdateProducts = ({
+const CreateUpdateProduct = ({
+  isOpen,
+  onClose,
   initialValues,
-  onSuccess,
-  onCancel,
-}: CreateUpdateProductsProps) => {
-  const isEditMode = !!initialValues?.title;
+}: CreateUpdateProductProps) => {
+  const isUpdate = !!initialValues;
 
-  const methods = useForm<ProductsSchemaForm>({
-    resolver: yupResolver(productsSchema),
+  const methods = useForm<ProductFormValues>({
+    resolver: yupResolver(productSchema) as Resolver<ProductFormValues>,
     defaultValues: {
-      title: initialValues?.title || "",
-      subTitle: initialValues?.subTitle || "",
-      categories: initialValues?.categories || [],
-      products: initialValues?.products || [],
+      nameEn: "",
+      nameBn: "",
+      descriptionEn: "",
+      descriptionBn: "",
+      categoryId: "",
+      chartCode: undefined,
+      status: "ACTIVE",
+      images: [],
+      geographicLocation: "",
+      scale: "",
+      projection: "",
+      northLatitude: "",
+      southLatitude: "",
+      eastLongitude: "",
+      westLongitude: "",
+      edition: "",
+      publicationDate: "",
     },
   });
 
-  const { mutate: createProducts, isPending: isCreating } = usePost<{
-    data: IProductsManagement;
-  }>(
-    "/products-content",
+  useEffect(() => {
+    if (isOpen) {
+      methods.reset({
+        nameEn: initialValues?.nameEn || "",
+        nameBn: initialValues?.nameBn || "",
+        descriptionEn: initialValues?.descriptionEn || "",
+        descriptionBn: initialValues?.descriptionBn || "",
+        categoryId: initialValues?.category?.id || "",
+        chartCode: initialValues?.chartCode ?? undefined,
+        status: initialValues?.status || "ACTIVE",
+        images: initialValues?.images || [],
+        geographicLocation: initialValues?.geographicLocation || "",
+        scale: initialValues?.scale || "",
+        projection: initialValues?.projection || "",
+        northLatitude: initialValues?.northLatitude || "",
+        southLatitude: initialValues?.southLatitude || "",
+        eastLongitude: initialValues?.eastLongitude || "",
+        westLongitude: initialValues?.westLongitude || "",
+        edition: initialValues?.edition || "",
+        publicationDate: initialValues?.publicationDate
+          ? initialValues.publicationDate.split("T")[0]
+          : "",
+      });
+    } else {
+      methods.reset({
+        nameEn: "",
+        nameBn: "",
+        descriptionEn: "",
+        descriptionBn: "",
+        categoryId: "",
+        chartCode: undefined,
+        status: "ACTIVE",
+        images: [],
+        geographicLocation: "",
+        scale: "",
+        projection: "",
+        northLatitude: "",
+        southLatitude: "",
+        eastLongitude: "",
+        westLongitude: "",
+        edition: "",
+        publicationDate: "",
+      });
+    }
+  }, [isOpen, initialValues, methods]);
+
+  const {
+    mutate: createMutate,
+    isPending: isCreating,
+    error,
+    reset: resetCreateError,
+  } = usePost(
+    "/product",
     () => {
-      onSuccess?.();
+      toast.success("Product created successfully!");
+      onClose();
     },
-    [["products-content"]]
+    [["product"]]
   );
 
-  const { mutate: updateProducts, isPending: isUpdating } = usePatch<{
-    data: IProductsManagement;
-  }>(
-    () => {
-      onSuccess?.();
-    },
-    [["products-content"]],
-    "/products-content"
-  );
+  const {
+    mutate: updateMutate,
+    isPending: isUpdating,
+    error: updateError,
+    reset: resetUpdateError,
+  } = usePatch(() => {
+    toast.success("Product updated successfully!");
+    onClose();
+  }, [["product"]]);
 
-  const isPending = isCreating || isUpdating;
+  const handleClose = () => {
+    resetCreateError();
+    resetUpdateError();
+    onClose();
+  };
 
-  const onSubmit = (data: ProductsSchemaForm) => {
+  useEffect(() => {
+    if (!isOpen) {
+      resetCreateError();
+      resetUpdateError();
+    }
+  }, [isOpen, resetCreateError, resetUpdateError]);
+
+  const onSubmit = (values: ProductFormValues) => {
     const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("subTitle", data.subTitle);
+    formData.append("nameEn", values.nameEn);
+    formData.append("nameBn", values.nameBn || "");
+    formData.append("descriptionEn", values.descriptionEn);
+    formData.append("descriptionBn", values.descriptionBn || "");
+    formData.append("categoryId", values.categoryId);
+    formData.append("chartCode", String(values.chartCode));
+    formData.append("status", values.status);
 
-    (data.categories || []).forEach((cat, i) => {
-      formData.append(`categories[${i}]`, cat);
-    });
+    if (values.geographicLocation)
+      formData.append("geographicLocation", values.geographicLocation);
+    if (values.scale) formData.append("scale", values.scale);
+    if (values.projection) formData.append("projection", values.projection);
+    if (values.northLatitude)
+      formData.append("northLatitude", values.northLatitude);
+    if (values.southLatitude)
+      formData.append("southLatitude", values.southLatitude);
+    if (values.eastLongitude)
+      formData.append("eastLongitude", values.eastLongitude);
+    if (values.westLongitude)
+      formData.append("westLongitude", values.westLongitude);
+    if (values.edition) formData.append("edition", values.edition);
+    if (values.publicationDate)
+      formData.append("publicationDate", values.publicationDate);
 
-    data.products.forEach((product, i) => {
-      formData.append(`products[${i}][title]`, product.title);
-      formData.append(`products[${i}][category]`, product.category);
-      formData.append(
-        `products[${i}][shortDescription]`,
-        product.shortDescription
-      );
-      formData.append(`products[${i}][description]`, product.description);
-
-      const specs = product.specifications;
-      formData.append(
-        `products[${i}][specifications][chartNumber]`,
-        specs.chartNumber || ""
-      );
-      formData.append(
-        `products[${i}][specifications][scale]`,
-        specs.scale || ""
-      );
-      formData.append(
-        `products[${i}][specifications][projection]`,
-        specs.projection || ""
-      );
-      formData.append(
-        `products[${i}][specifications][northLatitude]`,
-        specs.northLatitude || ""
-      );
-      formData.append(
-        `products[${i}][specifications][southLatitude]`,
-        specs.southLatitude || ""
-      );
-      formData.append(
-        `products[${i}][specifications][eastLongitude]`,
-        specs.eastLongitude || ""
-      );
-      formData.append(
-        `products[${i}][specifications][westLongitude]`,
-        specs.westLongitude || ""
-      );
-      formData.append(
-        `products[${i}][specifications][edition]`,
-        specs.edition || ""
-      );
-      formData.append(
-        `products[${i}][specifications][publicationDate]`,
-        specs.publicationDate || ""
-      );
-
-      if (product.image instanceof File) {
-        formData.append(`products[${i}][image]`, product.image);
-      } else if (typeof product.image === "string" && product.image.trim()) {
-        formData.append(`products[${i}][existingImage]`, product.image);
+    (values.images || []).forEach((img) => {
+      if (img instanceof File) {
+        formData.append("images", img);
+      } else if (typeof img === "string") {
+        formData.append("existingImages", img);
       }
     });
 
-    if (isEditMode && initialValues?.id) {
-      updateProducts({
-        url: `/products-content/${initialValues.id}`,
+    if (isUpdate && initialValues) {
+      updateMutate({
+        url: `/product/${initialValues.id}`,
         data: formData,
         config: { headers: { "Content-Type": "multipart/form-data" } },
       });
     } else {
-      createProducts({
-        endpoint: "/products-content",
+      createMutate({
         data: formData,
         config: { headers: { "Content-Type": "multipart/form-data" } },
       });
     }
   };
 
-  const handleCancel = () => {
-    methods.reset();
-    onCancel?.();
-  };
-
   return (
-    <FormProvider {...methods}>
-      <ProductsForm
-        isEditMode={isEditMode}
-        onSubmit={onSubmit}
-        isPending={isPending}
-        onCancel={handleCancel}
-      />
-    </FormProvider>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) handleClose();
+      }}
+    >
+      <DialogContent className="bg-white min-w-[70vw] max-h-[90vh] flex flex-col">
+        <DialogHeader className="shrink-0">
+          <DialogTitle className="text-secondary text-xl font-semibold">
+            {isUpdate ? "Update" : "Create"} Product
+          </DialogTitle>
+        </DialogHeader>
+        <div className="overflow-y-auto flex-1 mt-2 pr-2 scrollbar-modern">
+          <FormProvider {...methods}>
+            <ProductForm
+              isEditMode={isUpdate}
+              onSubmit={onSubmit}
+              onCancel={handleClose}
+              isPending={isCreating || isUpdating}
+              error={error || updateError}
+              initialValues={initialValues}
+            />
+          </FormProvider>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 
-export default CreateUpdateProducts;
+export default CreateUpdateProduct;

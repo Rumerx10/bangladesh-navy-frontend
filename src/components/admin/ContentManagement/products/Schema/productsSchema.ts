@@ -8,55 +8,54 @@ const SUPPORTED_FORMATS = [
 ];
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
-const imageFieldSchema = Yup.mixed<File | string>()
-  .test("fileType", "Only JPEG, PNG, JPG, WebP allowed", (value) => {
-    if (!value || typeof value === "string") return true;
-    return SUPPORTED_FORMATS.includes((value as File).type);
-  })
-  .test("fileSize", "Max file size is 5MB", (value) => {
-    if (!value || typeof value === "string") return true;
-    return (value as File).size <= MAX_FILE_SIZE;
-  })
-  .required("Product image is required");
-
-const specificationsSchema = Yup.object({
-  chartNumber: Yup.string().default(""),
-  scale: Yup.string().default(""),
-  projection: Yup.string().default(""),
-  northLatitude: Yup.string().default(""),
-  southLatitude: Yup.string().default(""),
-  eastLongitude: Yup.string().default(""),
-  westLongitude: Yup.string().default(""),
-  edition: Yup.string().default(""),
-  publicationDate: Yup.string().default(""),
-});
-
-const productSchema = Yup.object({
-  image: imageFieldSchema,
-  title: Yup.string()
-    .required("Product title is required")
+export const productSchema = Yup.object({
+  nameEn: Yup.string()
+    .required("English name is required")
     .max(200, "Max 200 characters"),
-  category: Yup.string().required("Category is required"),
-  shortDescription: Yup.string().required("Short description is required"),
-  specifications: specificationsSchema.required(),
-  description: Yup.string().required("Description is required"),
+  nameBn: Yup.string().max(200, "Max 200 characters").optional(),
+  descriptionEn: Yup.string().required("English description is required"),
+  descriptionBn: Yup.string().optional(),
+  categoryId: Yup.string().required("Category is required"),
+  chartCode: Yup.number()
+    .typeError("Chart code must be a number")
+    .required("Chart code is required")
+    .integer("Must be an integer")
+    .positive("Must be positive"),
+  status: Yup.string<"ACTIVE" | "INACTIVE">()
+    .oneOf(["ACTIVE", "INACTIVE"])
+    .required("Status is required"),
+  images: Yup.array()
+    .of(
+      Yup.mixed<File | string>()
+        .test("fileType", "Only JPEG, PNG, JPG, WebP allowed", (value) => {
+          if (!value || typeof value === "string") return true;
+          return SUPPORTED_FORMATS.includes((value as File).type);
+        })
+        .test("fileSize", "Max file size is 5MB", (value) => {
+          if (!value || typeof value === "string") return true;
+          return (value as File).size <= MAX_FILE_SIZE;
+        })
+        .required()
+    )
+    .min(1, "At least one image is required")
+    .required("Images are required"),
+  geographicLocation: Yup.string().optional(),
+  scale: Yup.string().optional(),
+  projection: Yup.string().optional(),
+  northLatitude: Yup.string().optional(),
+  southLatitude: Yup.string().optional(),
+  eastLongitude: Yup.string().optional(),
+  westLongitude: Yup.string().optional(),
+  edition: Yup.string().optional(),
+  publicationDate: Yup.string().optional(),
+  productAttributes: Yup.array()
+    .of(
+      Yup.object({
+        key: Yup.string().required(),
+        value: Yup.string().required(),
+      })
+    )
+    .optional(),
 });
 
-export const productsSchema = Yup.object({
-  title: Yup.string()
-    .required("Title is required")
-    .max(200, "Max 200 characters"),
-  subTitle: Yup.string()
-    .required("Sub title is required")
-    .max(300, "Max 300 characters"),
-  categories: Yup.array()
-    .of(Yup.string().required())
-    .min(1, "At least one category is required")
-    .required(),
-  products: Yup.array()
-    .of(productSchema)
-    .required()
-    .min(1, "At least one product is required"),
-});
-
-export type ProductsSchemaForm = Yup.InferType<typeof productsSchema>;
+export type ProductFormValues = Yup.InferType<typeof productSchema>;

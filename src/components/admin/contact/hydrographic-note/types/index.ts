@@ -1,0 +1,32 @@
+export interface IHydrographicNote {
+  id: string;
+  date: string;
+  refNumber: string;
+  nameOfShip: string;
+  imoNumber?: string;
+  address: string;
+  email: string;
+  tel: string;
+  fax?: string;
+  generalLocality: string;
+  subject: string;
+  latitude: string;
+  longitude: string;
+  gps?: string;
+  datum?: string;
+  accuracy?: string;
+  bnChartsAffected: string;
+  edition?: string;
+  latestNoticesToMariners?: string;
+  replacementCopyOfChartNo?: string;
+  replacementRequired?: string;
+  encsAffected?: string;
+  latestUpdateApplied?: string;
+  modelAndAgeOfECDIS?: string;
+  publicationsAffected?: string;
+  dateOfLatestSupplement?: string;
+  detailsOfObservation: string;
+  nameOfObserver: string;
+  createdAt: string;
+  updatedAt: string;
+}

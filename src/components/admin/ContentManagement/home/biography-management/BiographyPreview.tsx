@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { Edit } from "lucide-react";
 import { IBiographyManagement } from "./types";
 import { Button } from "@/src/components/ui/button";
 import Paragraph from "@/src/components/shared/Paragraph";
-import { Edit, ChevronRight, User } from "lucide-react";
 
 interface BiographyPreviewProps {
   data: IBiographyManagement;
@@ -15,26 +15,13 @@ const BiographyPreview = ({ data, onEdit }: BiographyPreviewProps) => {
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
       <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-8 py-6 border-b border-gray-100">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="bg-primary/10 w-10 h-10 flex items-center justify-center rounded-xl border border-primary/20">
-              <Image
-                src="/icons/media.svg"
-                alt="biography preview"
-                width={40}
-                height={40}
-                className="w-5"
-              />
-            </div>
-            <div>
-              <Paragraph className="font-semibold text-lg! text-pBlue">
-                Biography Section Preview
-              </Paragraph>
-              <Paragraph className="text-sm! text-gray-500">
-                Current biography content
-              </Paragraph>
-            </div>
-          </div>
+        <div>
+          <Paragraph className="font-semibold text-lg! text-pBlue">
+            Biography Preview
+          </Paragraph>
+          <Paragraph className="text-sm! text-gray-500">
+            {data.nameEn || "No biography configured"}
+          </Paragraph>
         </div>
 
         <Button
@@ -43,44 +30,76 @@ const BiographyPreview = ({ data, onEdit }: BiographyPreviewProps) => {
         >
           <Edit className="w-4 h-4" />
           Edit Biography
-          <ChevronRight className="w-4 h-4" />
         </Button>
       </div>
 
-      <div className="p-8 pt-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="md:col-span-2 bg-gray-50 rounded-xl p-5 border border-gray-100">
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Title
+      <div className="p-8 pt-10 space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+            <Paragraph className="text-xs! text-gray-500 uppercase tracking-wider mb-1">
+              English Name
             </Paragraph>
-            <Paragraph className="text-base">{data.title}</Paragraph>
+            <Paragraph className="text-sm! font-medium text-secondary-dark">
+              {data.nameEn || "—"}
+            </Paragraph>
           </div>
+          <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+            <Paragraph className="text-xs! text-gray-500 uppercase tracking-wider mb-1">
+              Bengali Name
+            </Paragraph>
+            <Paragraph className="text-sm! font-medium text-secondary-dark">
+              {data.nameBn || "—"}
+            </Paragraph>
+          </div>
+          <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+            <Paragraph className="text-xs! text-gray-500 uppercase tracking-wider mb-1">
+              English Designation
+            </Paragraph>
+            <Paragraph className="text-sm! font-medium text-secondary-dark">
+              {data.designationEn || "—"}
+            </Paragraph>
+          </div>
+          <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+            <Paragraph className="text-xs! text-gray-500 uppercase tracking-wider mb-1">
+              Bengali Designation
+            </Paragraph>
+            <Paragraph className="text-sm! font-medium text-secondary-dark">
+              {data.designationBn || "—"}
+            </Paragraph>
+          </div>
+        </div>
 
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
-            <div className="flex items-center gap-2 mb-2">
-              <User className="w-4 h-4 text-pBlue" />
-              <Paragraph className="font-semibold text-pBlue uppercase">
-                Name
-              </Paragraph>
+        <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+          <Paragraph className="text-xs! text-gray-500 uppercase tracking-wider mb-2">
+            Profile Image
+          </Paragraph>
+          {data.imageUrl ? (
+            <div className="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200">
+              <Image
+                src={data.imageUrl}
+                alt={data.nameEn}
+                fill
+                className="object-cover"
+              />
             </div>
-            <Paragraph className="text-base">{data.name}</Paragraph>
-          </div>
+          ) : (
+            <Paragraph className="text-sm! text-gray-400">
+              No image uploaded
+            </Paragraph>
+          )}
+        </div>
 
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Designation
-            </Paragraph>
-            <Paragraph className="text-base">{data.designation}</Paragraph>
-          </div>
-
-          <div className="md:col-span-2 bg-gray-50 rounded-xl p-5 border border-gray-100">
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Description
-            </Paragraph>
-            <Paragraph className="text-base leading-relaxed">
-              {data.description}
-            </Paragraph>
-          </div>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-gray-500">Status:</span>
+          <span
+            className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+              data.status === "ACTIVE"
+                ? "bg-green-100 text-green-700"
+                : "bg-gray-200 text-gray-500"
+            }`}
+          >
+            {data.status}
+          </span>
         </div>
       </div>
     </div>

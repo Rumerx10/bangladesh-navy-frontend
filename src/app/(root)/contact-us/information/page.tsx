@@ -1,6 +1,6 @@
-import AboutHero from "@/src/components/about/AboutHero";
-import DirectApproach from "@/src/components/contact-us/DirectApproach";
 import { Metadata } from "next";
+import AboutHero from "@/src/components/about/AboutHero";
+import DirectApproach from "@/src/components/contact/DirectApproach";
 
 export const metadata: Metadata = {
   title: "Contact Information | BNHOC",

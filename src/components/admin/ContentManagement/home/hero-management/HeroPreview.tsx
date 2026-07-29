@@ -104,7 +104,10 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
           </Paragraph>
           <div className="flex gap-3 flex-wrap">
             {data.imageUrls?.map((url, index) => (
-              <div key={index} className="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200">
+              <div
+                key={index}
+                className="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200"
+              >
                 <Image
                   src={url}
                   alt={`Hero image ${index + 1}`}

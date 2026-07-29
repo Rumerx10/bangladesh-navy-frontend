@@ -1,25 +1,25 @@
-﻿import { INewsItem } from "@/src/components/home/types";
-import { ArrowRight, Calendar, Newspaper, Tag } from "lucide-react";
+﻿import Link from "next/link";
 import Image from "next/image";
-import Link from "next/link";
+import { INewsItem } from "../../types";
+import { ArrowRight, Calendar, Tag } from "lucide-react";
 
 interface NewsCardProps {
   item: INewsItem;
   hideImage?: boolean;
 }
 
-export default function NewsCard({ item, hideImage = false }: NewsCardProps) {
+const NewsCard = ({ item, hideImage = false }: NewsCardProps) => {
   return (
     <Link
-      href={item.href}
+      href={`/news/${item.id}`}
       className="group flex flex-col h-full rounded-2xl bg-white border border-gray-100 overflow-hidden hover:shadow-xl hover:border-liteBlue/15 transition-all duration-300"
     >
       {/* Image */}
       {!hideImage && (
-        <div className="relative aspect-[16/9] overflow-hidden bg-linear-to-br from-pBlue to-liteBlue">
+        <div className="relative aspect-video overflow-hidden bg-linear-to-br from-pBlue to-liteBlue">
           <Image
-            src={item.image}
-            alt={item.title}
+            src={item.imageUrl}
+            alt={item.titleEn}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-500"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -28,7 +28,7 @@ export default function NewsCard({ item, hideImage = false }: NewsCardProps) {
           {/* Category badge */}
           <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-liteBlue/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
             <Tag size={10} />
-            {item.category}
+            {item.newsCategory?.nameEn || "News"}
           </span>
         </div>
       )}
@@ -37,16 +37,16 @@ export default function NewsCard({ item, hideImage = false }: NewsCardProps) {
         <div className="flex items-center gap-2 mb-3">
           <Calendar size={14} className="text-liteBlue" />
           <span className="text-xs font-semibold text-liteBlue">
-            {item.date}
+            {new Date().toLocaleDateString()}
           </span>
         </div>
 
         <h3 className="text-base font-bold text-pBlue group-hover:text-liteBlue transition-colors line-clamp-2 leading-snug mb-2">
-          {item.title}
+          {item.titleEn}
         </h3>
 
         <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-4 flex-1">
-          {item.description}
+          {item.contentEn}
         </p>
 
         <span className="inline-flex items-center gap-1.5 text-sm text-liteBlue font-medium group-hover:gap-2.5 transition-all">
@@ -55,4 +55,6 @@ export default function NewsCard({ item, hideImage = false }: NewsCardProps) {
       </div>
     </Link>
   );
-}
+};
+
+export default NewsCard;

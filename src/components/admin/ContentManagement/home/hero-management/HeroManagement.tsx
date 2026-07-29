@@ -10,10 +10,9 @@ import CreateUpdateHeroManagement from "./Form/CreateUpdateHeroManagement";
 const HeroManagement = () => {
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const { data, isLoading } = useGet<IHeroManagement>(
-    "/hero-management",
-    ["hero-management"]
-  );
+  const { data, isLoading } = useGet<IHeroManagement>("/hero-management", [
+    "hero-management",
+  ]);
 
   const heroData = data?.data;
 

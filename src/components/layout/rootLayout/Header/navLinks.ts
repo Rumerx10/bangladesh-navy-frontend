@@ -7,7 +7,7 @@ export interface NavLink {
 export const navLinks: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about", isDropdown: true },
-  { label: "Products & Services", href: "/product-service", isDropdown: true },
+  { label: "Nautical Products", href: "/product-service", isDropdown: true },
   { label: "Skill Development", href: "/#skill-development" },
   { label: "Contact", href: "/#contact" },
 ];

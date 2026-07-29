@@ -7,11 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/src/components/ui/dialog";
-import {
-  ENC_VIEWBOX,
-  encIndexAreas,
-  IEncCell,
-} from "@/src/data/encIndexAreas";
+import { ENC_VIEWBOX, encIndexAreas, IEncCell } from "@/src/data/encIndexAreas";
 import { SearchIcon, XIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 

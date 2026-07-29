@@ -17,7 +17,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { NavItem, NavigationItems, SubLink } from "./HeaderTopBar";
+import { NavItem, NavigationItems, SubLink } from "@/src/data/navigationItems";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -27,10 +27,9 @@ const NAV_LINKS = [
   { label: "Organogram", href: "/about/organogram" },
   { label: "Survey Ships", href: "/about/survey-ships" },
   { label: "Gallery", href: "/about/gallery" },
-  { label: "Products & Services", href: "/product-service" },
-  { label: "Chart Index", href: "/chart" },
-  { label: "Electronic Chart (ENC)", href: "/electronic-chart" },
-  { label: "How to Pay", href: "/how-to-pay" },
+  { label: "Nautical Products", href: "/product-service" },
+  { label: "New Chart", href: "/chart" },
+  { label: "How to Collect", href: "/how-to-collect" },
   { label: "BN Hydrographic Institute", href: "/skill-development" },
   { label: "Courses", href: "/skill-development/courses" },
   { label: "Contact Information", href: "/contact-us/information" },
@@ -310,7 +309,7 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
         <button
           onClick={() => setOpen(false)}
           className="fixed z-80 top-3 bg-white/90 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center shadow-lg border border-gray-200"
-          style={{ left: "calc(min(320px, 85vw) + 8px)" }}
+          style={{ right: "calc(min(320px, 85vw) + 8px)" }}
           aria-label="Close menu"
         >
           <X size={18} className="text-gray-600" />
@@ -319,8 +318,8 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 left-0 z-70 h-screen w-80 max-w-[85vw] bg-white transform transition-transform duration-300 flex flex-col ${
-          open ? "translate-x-0" : "-translate-x-full"
+        className={`fixed top-0 right-0 z-70 h-screen w-80 max-w-[85vw] bg-white transform transition-transform duration-300 flex flex-col ${
+          open ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Search — top */}

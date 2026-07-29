@@ -1,76 +1,131 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Ship, Tag } from "lucide-react";
 import { useGet } from "@/src/hooks/useGet";
-import CreateUpdateSurveyShips from "./Form/CreateUpdateSurveyShips";
-import { ISurveyShipsManagement } from "./types";
-import SurveyShipsPreview from "./SurveyShipsPreview";
-import SurveyShipsPreviewSkeleton from "./Skeleton/SurveyShipsPreviewSkeleton";
+import { useAppSelector } from "@/src/lib/redux/hooks";
+import { usePagination } from "@/src/hooks/usePagination";
+import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
+import { DataTable } from "@/src/components/ui/data-table";
+import { ISurveyShip } from "./types";
+import { GetSurveyShipColumns } from "./TableColumns/SurveyShipColumns";
+import CreateUpdateSurveyShip from "./Form/CreateUpdateSurveyShip";
+import SurveyCategoryCard from "./SurveyCategoryCard";
 
-const DUMMY_SURVEY_SHIPS_DATA: ISurveyShipsManagement = {
-  id: "dummy-123",
-  title: "Our Survey Ships",
-  subTitle: "State-of-the-art hydrographic survey vessels of Bangladesh Navy",
-  shipTypes: [
-    "Hydrographic Survey Vessel",
-    "Research Vessel",
-    "Patrol Vessel",
-    "Training Ship",
-  ],
-  surveyShips: [
-    {
-      image:
-        "https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?w=800",
-      isActive: true,
-      name: "BNS Anusandhani",
-      type: "Hydrographic Survey Vessel",
-      description:
-        "BNS Anusandhani is the primary hydrographic survey vessel of Bangladesh Navy, equipped with state-of-the-art survey equipment for coastal and deep-sea surveys.",
-      basicInformation: {
-        length: "58.5 m",
-        beam: "10.2 m",
-        draft: "3.5 m",
-        crew: "65",
-      },
-      surveyEquipment: [
-        "Multibeam Echosounder",
-        "Single Beam Echosounder",
-        "Sub-bottom Profiler",
-        "DGPS Navigation System",
-      ],
-      detailsLink: "",
-    },
-  ],
-};
+type ActiveTab = "ships" | "categories";
+
+const TABS: { key: ActiveTab; label: string; icon: React.ElementType }[] = [
+  { key: "ships", label: "Survey Ships", icon: Ship },
+  { key: "categories", label: "Ship Categories", icon: Tag },
+];
 
 const SurveyShipsManagement = () => {
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [activeTab, setActiveTab] = useState<ActiveTab>("ships");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<ISurveyShip | undefined>();
 
-  const { data, isLoading } = useGet<ISurveyShipsManagement>(`/survey-ships`, [
-    "survey-ships",
-  ]);
+  const {
+    setCurrentPage,
+    itemsPerPage,
+    currentPage,
+    totalItems,
+    setTotalItems,
+    setItemsPerPage,
+  } = usePagination();
 
-  const surveyShipsData = data?.data || DUMMY_SURVEY_SHIPS_DATA;
+  const { search, handleSearchChange, debouncedSearch } =
+    useSearchDebounce(300);
+  const { sortBy } = useAppSelector((state) => state.filter);
 
-  if (isLoading) {
-    return <SurveyShipsPreviewSkeleton />;
-  }
+  const { data, isLoading } = useGet<ISurveyShip[]>(
+    "/survey-ships",
+    [
+      "survey-ships",
+      currentPage.toString(),
+      itemsPerPage.toString(),
+      debouncedSearch,
+      sortBy,
+    ],
+    {
+      ...(itemsPerPage !== -1 && {
+        page: currentPage.toString(),
+        limit: itemsPerPage.toString(),
+      }),
+      search: debouncedSearch,
+      ...(sortBy && { status: sortBy }),
+    }
+  );
 
-  if (surveyShipsData && !isEditMode) {
-    return (
-      <SurveyShipsPreview
-        data={surveyShipsData}
-        onEdit={() => setIsEditMode(true)}
-      />
-    );
-  }
+  useEffect(() => {
+    if (data) setTotalItems(data.meta?.totalItems || 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  const handleEdit = (item: ISurveyShip) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedItem(undefined);
+  };
+
+  const columns = GetSurveyShipColumns(handleEdit);
 
   return (
-    <CreateUpdateSurveyShips
-      initialValues={surveyShipsData}
-      onSuccess={() => setIsEditMode(false)}
-      onCancel={() => setIsEditMode(false)}
-    />
+    <div className="space-y-6">
+      {/* Tab switcher */}
+      <div className="flex justify-center">
+        <div className="inline-flex items-center gap-1 bg-gray-100 p-1 rounded-xl">
+          {TABS.map(({ key, label, icon: Icon }) => (
+            <button
+              key={key}
+              onClick={() => setActiveTab(key)}
+              className={`flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                activeTab === key
+                  ? "bg-white text-pBlue shadow-sm"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              <Icon className="w-4 h-4" />
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Tab content */}
+      {activeTab === "categories" && <SurveyCategoryCard />}
+
+      {activeTab === "ships" && (
+        <>
+          <DataTable
+            columns={columns}
+            data={Array.isArray(data?.data) ? data.data : []}
+            isLoading={isLoading}
+            totalItems={totalItems}
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+            setItemsPerPage={setItemsPerPage}
+            title="Survey Ships"
+            searchValue={search}
+            onSearchChange={handleSearchChange}
+            searchPlaceholder="Search survey ships..."
+            isShowStatus={false}
+            IsCreate
+            setIsModalOpen={setIsModalOpen}
+            createTitle="Add Survey Ship"
+          />
+          <CreateUpdateSurveyShip
+            isOpen={isModalOpen}
+            onClose={handleModalClose}
+            initialValues={selectedItem}
+          />
+        </>
+      )}
+    </div>
   );
 };
 

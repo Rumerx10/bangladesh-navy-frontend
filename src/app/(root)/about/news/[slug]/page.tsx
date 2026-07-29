@@ -1,7 +1,6 @@
-import NewsDetail from "@/src/components/news/NewsDetail";
-import { newsItems } from "@/src/data/homeData";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import NewsDetail from "@/src/components/news/NewsDetail";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -11,31 +10,21 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const news = newsItems.find((n) => n.slug === slug);
-
-  if (!news) {
-    return { title: "News Not Found — BNHOC" };
-  }
 
   return {
-    title: `${news.title} — BNHOC`,
-    description: news.description,
+    title: `News Detail — BNHOC`,
+    description: `Read the full news article`,
   };
 }
 
-export function generateStaticParams() {
-  return newsItems.map((item) => ({
-    slug: item.slug,
-  }));
-}
-
-export default async function NewsDetailPage({ params }: PageProps) {
+const NewsDetailPage = async ({ params }: PageProps) => {
   const { slug } = await params;
-  const news = newsItems.find((n) => n.slug === slug);
 
-  if (!news) {
+  if (!slug) {
     notFound();
   }
 
-  return <NewsDetail news={news} />;
-}
+  return <NewsDetail slug={slug} />;
+};
+
+export default NewsDetailPage;
