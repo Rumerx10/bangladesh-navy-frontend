@@ -2,9 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  experimental: {
-    useTypeScriptCli: true,
-  },
+  // experimental: {
+  //   useTypeScriptCli: true,
+  // },
   images: {
     unoptimized: true,
     remotePatterns: [
