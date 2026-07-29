@@ -70,13 +70,10 @@ const CreateUpdateGalleryCategory = ({
     isPending: isUpdating,
     error: updateError,
     reset: resetUpdateError,
-  } = usePatch(
-    () => {
-      toast.success("Category updated successfully!");
-      onClose();
-    },
-    [["gallery-category"], ["gallery-category-list"]]
-  );
+  } = usePatch(() => {
+    toast.success("Category updated successfully!");
+    onClose();
+  }, [["gallery-category"], ["gallery-category-list"]]);
 
   const handleClose = () => {
     resetCreateError();

@@ -39,6 +39,7 @@ export default function ProductAttributesField({
 
   useEffect(() => {
     if (!knownKeys.length || initialised) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setInitialised(true);
 
     const predefined: Record<string, string> = {};
@@ -66,7 +67,10 @@ export default function ProductAttributesField({
         .map(([k, v]) => ({ key: k, value: v })),
       ...custom,
     ];
-    setValue("productAttributes", combined as ProductFormValues["productAttributes"]);
+    setValue(
+      "productAttributes",
+      combined as ProductFormValues["productAttributes"]
+    );
   };
 
   const handlePredefinedChange = (key: string, value: string) => {

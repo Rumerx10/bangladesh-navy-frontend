@@ -1,6 +1,11 @@
 import * as Yup from "yup";
 
-const SUPPORTED_FORMATS = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
+const SUPPORTED_FORMATS = [
+  "image/jpeg",
+  "image/png",
+  "image/jpg",
+  "image/webp",
+];
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 export const surveyShipSchema = Yup.object({

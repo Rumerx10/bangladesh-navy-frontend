@@ -10,4 +10,6 @@ export const galleryCategorySchema = Yup.object({
     .required("Status is required"),
 });
 
-export type GalleryCategoryFormValues = Yup.InferType<typeof galleryCategorySchema>;
+export type GalleryCategoryFormValues = Yup.InferType<
+  typeof galleryCategorySchema
+>;

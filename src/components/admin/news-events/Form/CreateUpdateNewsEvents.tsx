@@ -12,7 +12,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/src/components/ui/dialog";
-import { NewsEventsFormValues, newsEventsSchema } from "../Schema/newsEventsSchema";
+import {
+  NewsEventsFormValues,
+  newsEventsSchema,
+} from "../Schema/newsEventsSchema";
 import { INewsEvent } from "../types";
 import NewsEventsForm from "./NewsEventsForm";
 
@@ -82,13 +85,10 @@ const CreateUpdateNewsEvents = ({
     isPending: isUpdating,
     error: updateError,
     reset: resetUpdateError,
-  } = usePatch(
-    () => {
-      toast.success("News & event updated successfully!");
-      onClose();
-    },
-    [["news-events"]]
-  );
+  } = usePatch(() => {
+    toast.success("News & event updated successfully!");
+    onClose();
+  }, [["news-events"]]);
 
   const handleClose = () => {
     resetCreateError();

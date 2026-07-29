@@ -33,9 +33,7 @@ const CreateUpdateGalleryItem = ({
   const isUpdate = !!initialValues;
 
   const methods = useForm<GalleryItemFormValues>({
-    resolver: yupResolver(
-      galleryItemSchema
-    ) as Resolver<GalleryItemFormValues>,
+    resolver: yupResolver(galleryItemSchema) as Resolver<GalleryItemFormValues>,
     defaultValues: {
       titleEn: "",
       titleBn: "",
@@ -84,13 +82,10 @@ const CreateUpdateGalleryItem = ({
     isPending: isUpdating,
     error: updateError,
     reset: resetUpdateError,
-  } = usePatch(
-    () => {
-      toast.success("Gallery item updated successfully!");
-      onClose();
-    },
-    [["gallery"]]
-  );
+  } = usePatch(() => {
+    toast.success("Gallery item updated successfully!");
+    onClose();
+  }, [["gallery"]]);
 
   const handleClose = () => {
     resetCreateError();

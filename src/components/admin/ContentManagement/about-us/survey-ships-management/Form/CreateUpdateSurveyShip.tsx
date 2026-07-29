@@ -103,13 +103,10 @@ const CreateUpdateSurveyShip = ({
     isPending: isUpdating,
     error: updateError,
     reset: resetUpdateError,
-  } = usePatch(
-    () => {
-      toast.success("Survey ship updated successfully!");
-      onClose();
-    },
-    [["survey-ships"]]
-  );
+  } = usePatch(() => {
+    toast.success("Survey ship updated successfully!");
+    onClose();
+  }, [["survey-ships"]]);
 
   const handleClose = () => {
     resetCreateError();

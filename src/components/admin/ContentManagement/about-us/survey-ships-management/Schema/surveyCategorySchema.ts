@@ -10,4 +10,6 @@ export const surveyCategorySchema = Yup.object({
     .required("Status is required"),
 });
 
-export type SurveyCategoryFormValues = Yup.InferType<typeof surveyCategorySchema>;
+export type SurveyCategoryFormValues = Yup.InferType<
+  typeof surveyCategorySchema
+>;

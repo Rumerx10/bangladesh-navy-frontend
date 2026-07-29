@@ -11,7 +11,9 @@ import HydrographicNoteDetailModal from "./Form/HydrographicNoteDetailModal";
 
 const HydrographicNoteManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<IHydrographicNote | undefined>();
+  const [selectedItem, setSelectedItem] = useState<
+    IHydrographicNote | undefined
+  >();
   const {
     setCurrentPage,
     itemsPerPage,
@@ -20,7 +22,8 @@ const HydrographicNoteManagement = () => {
     setTotalItems,
     setItemsPerPage,
   } = usePagination();
-  const { search, handleSearchChange, debouncedSearch } = useSearchDebounce(300);
+  const { search, handleSearchChange, debouncedSearch } =
+    useSearchDebounce(300);
 
   const { data, isLoading } = useGet<IHydrographicNote[]>(
     "/hydrographic-note",

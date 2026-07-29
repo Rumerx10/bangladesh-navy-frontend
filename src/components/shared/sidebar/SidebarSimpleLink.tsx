@@ -9,13 +9,13 @@ interface SidebarSimpleLinkProps {
   isActive: boolean;
   onNavigate: () => void;
 }
-const SidebarSimpleLink=({
+const SidebarSimpleLink = ({
   label,
   icon: Icon,
   href,
   isActive,
   onNavigate,
-}: SidebarSimpleLinkProps)=> {
+}: SidebarSimpleLinkProps) => {
   return (
     <Link
       href={href}
@@ -36,7 +36,6 @@ const SidebarSimpleLink=({
       <span className="truncate font-medium">{label}</span>
     </Link>
   );
-}
-
+};
 
 export default SidebarSimpleLink;

@@ -85,35 +85,35 @@ export const quickAccessItems: IQuickAccessItem[] = [
     title: "Paper Charts",
     description: "Official nautical charts for Bangladesh waters",
     icon: "map",
-    href: "/product-service?category=paper-charts",
+    href: "/product-service/paper-charts",
   },
   {
     id: "qa-2",
     title: "Electronic Charts",
     description: "ENC & ECDIS compatible digital charts",
     icon: "monitor",
-    href: "/product-service?category=electronic-charts",
+    href: "/product-service/electronic-charts",
   },
   {
     id: "qa-3",
     title: "Tide Tables",
     description: "Annual tide prediction tables",
     icon: "waves",
-    href: "/product-service?category=tide-tables",
+    href: "/product-service/tide-tables",
   },
   {
     id: "qa-4",
     title: "Notices to Mariners",
     description: "Navigation warnings & corrections",
     icon: "alert-triangle",
-    href: "/product-service?category=notices-to-mariners",
+    href: "/product-service/notices-to-mariners",
   },
   {
     id: "qa-6",
     title: "Marine Weather",
     description: "Weather data & forecasting",
     icon: "cloud-sun",
-    href: "/product-service?category=marine-weather",
+    href: "/product-service/marine-weather",
   },
 ];
 
@@ -134,7 +134,6 @@ export const chiefMessage: IChiefMessage = {
   designation: "BN Chief Hydrographer",
   initials: "FA",
 };
-
 
 export const noticeItems: INoticeItem[] = [
   {

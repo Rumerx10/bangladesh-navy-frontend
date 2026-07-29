@@ -1,15 +1,17 @@
 import * as Yup from "yup";
 
-const SUPPORTED_FORMATS = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
+const SUPPORTED_FORMATS = [
+  "image/jpeg",
+  "image/png",
+  "image/jpg",
+  "image/webp",
+];
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
-const attributeSchema = Yup.object({
-  key: Yup.string().required("Key is required"),
-  value: Yup.string().required("Value is required"),
-});
-
 export const productSchema = Yup.object({
-  nameEn: Yup.string().required("English name is required").max(200, "Max 200 characters"),
+  nameEn: Yup.string()
+    .required("English name is required")
+    .max(200, "Max 200 characters"),
   nameBn: Yup.string().max(200, "Max 200 characters").optional(),
   descriptionEn: Yup.string().required("English description is required"),
   descriptionBn: Yup.string().optional(),
@@ -37,7 +39,23 @@ export const productSchema = Yup.object({
     )
     .min(1, "At least one image is required")
     .required("Images are required"),
-  productAttributes: Yup.array().of(attributeSchema).default([]),
+  geographicLocation: Yup.string().optional(),
+  scale: Yup.string().optional(),
+  projection: Yup.string().optional(),
+  northLatitude: Yup.string().optional(),
+  southLatitude: Yup.string().optional(),
+  eastLongitude: Yup.string().optional(),
+  westLongitude: Yup.string().optional(),
+  edition: Yup.string().optional(),
+  publicationDate: Yup.string().optional(),
+  productAttributes: Yup.array()
+    .of(
+      Yup.object({
+        key: Yup.string().required(),
+        value: Yup.string().required(),
+      })
+    )
+    .optional(),
 });
 
 export type ProductFormValues = Yup.InferType<typeof productSchema>;

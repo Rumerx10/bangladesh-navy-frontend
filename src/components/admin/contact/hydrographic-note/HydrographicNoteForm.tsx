@@ -97,9 +97,10 @@ const HydrographicNoteForm = () => {
             href="/Hydrographic Note H-102.pdf"
             download="/Hydrographic Note H-102.pdf"
             title="Download the File"
-            className="border w-10 h-10 flex items-center text-white bg-green-500 hover:bg-green-600 justify-center rounded-sm cursor-pointer hover:scale-105 duration-300"
+            className="border px-3 gap-3 h-10 flex items-center text-white bg-green-500 hover:bg-green-600 justify-center rounded-sm cursor-pointer hover:scale-105 duration-300"
           >
-            <Download />
+            <Download size={20} />{" "}
+            <span className="text-md font-medium"> Download File </span>
           </Link>
         </div>
         <p className="mt-2 text-sm leading-relaxed text-gray-500 lg:text-base">

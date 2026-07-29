@@ -24,7 +24,9 @@ const CreateUpdateBiographyManagement = ({
   const isEditMode = !!initialValues?.id;
 
   const methods = useForm<BiographyManagementSchemaForm>({
-    resolver: yupResolver(biographyManagementSchema) as Resolver<BiographyManagementSchemaForm>,
+    resolver: yupResolver(
+      biographyManagementSchema
+    ) as Resolver<BiographyManagementSchemaForm>,
     defaultValues: {
       nameEn: initialValues?.nameEn || "",
       nameBn: initialValues?.nameBn || "",

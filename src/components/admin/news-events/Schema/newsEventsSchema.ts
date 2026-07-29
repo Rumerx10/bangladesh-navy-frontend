@@ -13,10 +13,16 @@ export const newsEventsSchema = Yup.object({
     .nullable()
     .transform((value) => (value === null ? undefined : value))
     .default(undefined)
-    .test("fileType", "Only JPEG, PNG, and WebP files are allowed.", (value) => {
-      if (!value || typeof value === "string") return true;
-      return value instanceof File ? SUPPORTED_IMAGE_FORMATS.includes(value.type) : false;
-    })
+    .test(
+      "fileType",
+      "Only JPEG, PNG, and WebP files are allowed.",
+      (value) => {
+        if (!value || typeof value === "string") return true;
+        return value instanceof File
+          ? SUPPORTED_IMAGE_FORMATS.includes(value.type)
+          : false;
+      }
+    )
     .test("fileSize", "Image size must be less than 5MB.", (value) => {
       if (!value || typeof value === "string") return true;
       return value instanceof File ? value.size <= IMAGE_MAX_SIZE : true;

@@ -7,4 +7,6 @@ export const querySuggestionSchema = yup.object({
     .required("Status is required"),
 });
 
-export type QuerySuggestionFormValues = yup.InferType<typeof querySuggestionSchema>;
+export type QuerySuggestionFormValues = yup.InferType<
+  typeof querySuggestionSchema
+>;

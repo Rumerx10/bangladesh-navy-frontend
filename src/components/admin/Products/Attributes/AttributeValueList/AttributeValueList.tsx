@@ -57,6 +57,7 @@ export default function AttributeValueList() {
 
   useEffect(() => {
     if (!selectedAttributeId && attributeOptions.length > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedAttributeId(attributeOptions[0].value);
     }
   }, [attributeOptions, selectedAttributeId]);

@@ -11,7 +11,6 @@ import { GetGalleryColumns } from "./TableColumns/GalleryColumns";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import CreateUpdateGalleryItem from "./Form/CreateUpdateGalleryItem";
 
-
 type ActiveTab = "gallery" | "categories";
 
 const TABS: { key: ActiveTab; label: string; icon: React.ElementType }[] = [
@@ -33,7 +32,8 @@ const GalleryManagement = () => {
     setItemsPerPage,
   } = usePagination();
 
-  const { search, handleSearchChange, debouncedSearch } = useSearchDebounce(300);
+  const { search, handleSearchChange, debouncedSearch } =
+    useSearchDebounce(300);
   const { sortBy } = useAppSelector((state) => state.filter);
 
   const { data, isLoading } = useGet<IGalleryItem[]>(

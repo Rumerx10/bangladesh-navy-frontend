@@ -18,7 +18,6 @@ import { useGet } from "@/src/hooks/useGet";
 import { mapToSelectOptions } from "@/src/utils/mapToSelectOptions";
 import { IProductCategory, IProduct } from "../types";
 import { ProductFormValues } from "../Schema/productsSchema";
-import ProductAttributesField from "./ProductAttributesField";
 
 const STATUS_OPTIONS = [
   { label: "Active", value: "ACTIVE" },
@@ -52,7 +51,9 @@ const SectionHeader = ({ label }: { label: string }) => {
           onError={() => setIconLoaded(true)}
         />
       </div>
-      <Paragraph className="xl:text-lg font-medium text-pBlue">{label}</Paragraph>
+      <Paragraph className="xl:text-lg font-medium text-pBlue">
+        {label}
+      </Paragraph>
     </div>
   );
 };
@@ -67,10 +68,9 @@ export default function ProductForm({
 }: ProductFormProps) {
   const { handleSubmit } = useFormContext<ProductFormValues>();
 
-  const { data: categoryData } = useGet<IProductCategory[]>(
-    "/category/list",
-    ["category-list"]
-  );
+  const { data: categoryData } = useGet<IProductCategory[]>("/category/list", [
+    "category-list",
+  ]);
 
   const categoryOptions = mapToSelectOptions(
     Array.isArray(categoryData?.data) ? categoryData.data : [],
@@ -178,12 +178,83 @@ export default function ProductForm({
         </div>
       </div>
 
-      {/* Attributes */}
+      {/* Nautical Chart Details */}
       <div className="border border-light-silver rounded-lg p-8 bg-white">
-        <SectionHeader label="Product Attributes" />
-        <ProductAttributesField
-          existingAttributes={initialValues?.productAttributes}
-        />
+        <SectionHeader label="Nautical Chart Details" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="sm:col-span-2">
+            <InputLabel label="Geographic Location" />
+            <ControlledInputField
+              name="geographicLocation"
+              placeholder="e.g. Bay of Bengal"
+              className="bg-light shadow-none"
+            />
+          </div>
+          <div>
+            <InputLabel label="Scale" />
+            <ControlledInputField
+              name="scale"
+              placeholder="e.g. 1:12 500"
+              className="bg-light shadow-none"
+            />
+          </div>
+          <div>
+            <InputLabel label="Projection" />
+            <ControlledInputField
+              name="projection"
+              placeholder="e.g. Mercator"
+              className="bg-light shadow-none"
+            />
+          </div>
+          <div>
+            <InputLabel label="North Latitude" />
+            <ControlledInputField
+              name="northLatitude"
+              placeholder="e.g. 22°30.64'N"
+              className="bg-light shadow-none"
+            />
+          </div>
+          <div>
+            <InputLabel label="South Latitude" />
+            <ControlledInputField
+              name="southLatitude"
+              placeholder="e.g. 22°26.59'N"
+              className="bg-light shadow-none"
+            />
+          </div>
+          <div>
+            <InputLabel label="East Longitude" />
+            <ControlledInputField
+              name="eastLongitude"
+              placeholder="e.g. 092°15.05'E"
+              className="bg-light shadow-none"
+            />
+          </div>
+          <div>
+            <InputLabel label="West Longitude" />
+            <ControlledInputField
+              name="westLongitude"
+              placeholder="e.g. 092°02.20'E"
+              className="bg-light shadow-none"
+            />
+          </div>
+          <div>
+            <InputLabel label="Edition" />
+            <ControlledInputField
+              name="edition"
+              placeholder="e.g. 1st Edition"
+              className="bg-light shadow-none"
+            />
+          </div>
+          <div>
+            <InputLabel label="Publication Date" />
+            <ControlledInputField
+              name="publicationDate"
+              type="date"
+              className="bg-light shadow-none"
+            />
+          </div>
+        </div>
       </div>
 
       <ErrorMessage error={error} />

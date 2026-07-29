@@ -70,13 +70,10 @@ const CreateUpdateSurveyCategory = ({
     isPending: isUpdating,
     error: updateError,
     reset: resetUpdateError,
-  } = usePatch(
-    () => {
-      toast.success("Category updated successfully!");
-      onClose();
-    },
-    [["survey-category"], ["survey-category-list"]]
-  );
+  } = usePatch(() => {
+    toast.success("Category updated successfully!");
+    onClose();
+  }, [["survey-category"], ["survey-category-list"]]);
 
   const handleClose = () => {
     resetCreateError();

@@ -17,7 +17,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { NavItem, NavigationItems, SubLink } from "./HeaderTopBar";
+import { NavItem, NavigationItems, SubLink } from "@/src/data/navigationItems";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },

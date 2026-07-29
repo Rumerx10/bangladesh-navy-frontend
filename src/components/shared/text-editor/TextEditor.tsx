@@ -22,7 +22,6 @@ import FontSizeSelector from "./toolbar/FontSizeSelector";
 import { Color, TextStyle } from "@tiptap/extension-text-style";
 import ColorPickerDropdown from "./toolbar/ColorPickerDropdown";
 
-
 interface TextEditorProps {
   value?: string;
   onChange?: (html: string) => void;

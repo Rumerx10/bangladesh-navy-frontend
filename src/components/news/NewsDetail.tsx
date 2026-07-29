@@ -4,13 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useGet } from "@/src/hooks/useGet";
 import { motion } from "framer-motion";
-import {
-  ArrowLeft,
-  ChevronRight,
-  Home,
-  Share2,
-  Tag,
-} from "lucide-react";
+import { ArrowLeft, ChevronRight, Home, Share2, Tag } from "lucide-react";
 import { INewsItem } from "../types";
 import NewsCard from "@/src/components/home/News/NewsCard";
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
@@ -54,7 +48,10 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
     return (
       <div className="mt-28 lg:mt-26 text-center py-20">
         <p className="text-gray-500 text-lg">News not found.</p>
-        <Link href="/news" className="text-liteBlue hover:underline mt-4 inline-block">
+        <Link
+          href="/news"
+          className="text-liteBlue hover:underline mt-4 inline-block"
+        >
           Back to News
         </Link>
       </div>

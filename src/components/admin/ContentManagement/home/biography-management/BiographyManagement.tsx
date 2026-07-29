@@ -10,10 +10,9 @@ import CreateUpdateBiographyManagement from "./Form/CreateUpdateBiographyManagem
 const BiographyManagement = () => {
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const { data, isLoading } = useGet<IBiographyManagement>(
-    "/biography",
-    ["biography-management"]
-  );
+  const { data, isLoading } = useGet<IBiographyManagement>("/biography", [
+    "biography-management",
+  ]);
 
   const biographyData = data?.data;
 

@@ -55,7 +55,8 @@ const NavyHeroCarousel = () => {
           {/* Title */}
           <h1 className="text-white font-bold leading-tight tracking-tight mb-4">
             <span className="block text-2xl text-center lg:text-start md:text-6xl lg:text-7xl max-w-7xl">
-              {heroData?.titleEn || "Ensuring Safe & Efficient Marine"}
+              {heroData?.titleEn ||
+                "Ensuring Safe & Efficient Marine Activities for Sustainable Bangladesh"}
             </span>
             {/* <span className="block text-2xl md:text-6xl lg:text-7xl text-amber-400 mt-1">
               {heroData?.titleBn || "Activities for Sustainable Bangladesh"}

@@ -11,7 +11,9 @@ import CreateUpdateNewsEventsCategory from "./Form/CreateUpdateNewsEventsCategor
 
 const NewsEventsCategoryManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<INewsEventsCategory | undefined>();
+  const [selectedItem, setSelectedItem] = useState<
+    INewsEventsCategory | undefined
+  >();
 
   const {
     setCurrentPage,
@@ -22,11 +24,17 @@ const NewsEventsCategoryManagement = () => {
     setItemsPerPage,
   } = usePagination();
 
-  const { search, handleSearchChange, debouncedSearch } = useSearchDebounce(300);
+  const { search, handleSearchChange, debouncedSearch } =
+    useSearchDebounce(300);
 
   const { data, isLoading } = useGet<INewsEventsCategory[]>(
     "/news-events-category",
-    ["news-events-category", currentPage.toString(), itemsPerPage.toString(), debouncedSearch],
+    [
+      "news-events-category",
+      currentPage.toString(),
+      itemsPerPage.toString(),
+      debouncedSearch,
+    ],
     {
       ...(itemsPerPage !== -1 && {
         page: currentPage.toString(),

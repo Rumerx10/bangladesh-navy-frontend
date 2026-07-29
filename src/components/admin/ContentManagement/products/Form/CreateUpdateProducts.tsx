@@ -40,7 +40,15 @@ const CreateUpdateProduct = ({
       chartCode: undefined,
       status: "ACTIVE",
       images: [],
-      productAttributes: [],
+      geographicLocation: "",
+      scale: "",
+      projection: "",
+      northLatitude: "",
+      southLatitude: "",
+      eastLongitude: "",
+      westLongitude: "",
+      edition: "",
+      publicationDate: "",
     },
   });
 
@@ -55,10 +63,17 @@ const CreateUpdateProduct = ({
         chartCode: initialValues?.chartCode ?? undefined,
         status: initialValues?.status || "ACTIVE",
         images: initialValues?.images || [],
-        productAttributes: initialValues?.productAttributes?.map((a) => ({
-          key: a.key,
-          value: a.value,
-        })) || [],
+        geographicLocation: initialValues?.geographicLocation || "",
+        scale: initialValues?.scale || "",
+        projection: initialValues?.projection || "",
+        northLatitude: initialValues?.northLatitude || "",
+        southLatitude: initialValues?.southLatitude || "",
+        eastLongitude: initialValues?.eastLongitude || "",
+        westLongitude: initialValues?.westLongitude || "",
+        edition: initialValues?.edition || "",
+        publicationDate: initialValues?.publicationDate
+          ? initialValues.publicationDate.split("T")[0]
+          : "",
       });
     } else {
       methods.reset({
@@ -70,7 +85,15 @@ const CreateUpdateProduct = ({
         chartCode: undefined,
         status: "ACTIVE",
         images: [],
-        productAttributes: [],
+        geographicLocation: "",
+        scale: "",
+        projection: "",
+        northLatitude: "",
+        southLatitude: "",
+        eastLongitude: "",
+        westLongitude: "",
+        edition: "",
+        publicationDate: "",
       });
     }
   }, [isOpen, initialValues, methods]);
@@ -94,13 +117,10 @@ const CreateUpdateProduct = ({
     isPending: isUpdating,
     error: updateError,
     reset: resetUpdateError,
-  } = usePatch(
-    () => {
-      toast.success("Product updated successfully!");
-      onClose();
-    },
-    [["product"]]
-  );
+  } = usePatch(() => {
+    toast.success("Product updated successfully!");
+    onClose();
+  }, [["product"]]);
 
   const handleClose = () => {
     resetCreateError();
@@ -125,17 +145,28 @@ const CreateUpdateProduct = ({
     formData.append("chartCode", String(values.chartCode));
     formData.append("status", values.status);
 
+    if (values.geographicLocation)
+      formData.append("geographicLocation", values.geographicLocation);
+    if (values.scale) formData.append("scale", values.scale);
+    if (values.projection) formData.append("projection", values.projection);
+    if (values.northLatitude)
+      formData.append("northLatitude", values.northLatitude);
+    if (values.southLatitude)
+      formData.append("southLatitude", values.southLatitude);
+    if (values.eastLongitude)
+      formData.append("eastLongitude", values.eastLongitude);
+    if (values.westLongitude)
+      formData.append("westLongitude", values.westLongitude);
+    if (values.edition) formData.append("edition", values.edition);
+    if (values.publicationDate)
+      formData.append("publicationDate", values.publicationDate);
+
     (values.images || []).forEach((img) => {
       if (img instanceof File) {
         formData.append("images", img);
       } else if (typeof img === "string") {
         formData.append("existingImages", img);
       }
-    });
-
-    (values.productAttributes || []).forEach((attr, i) => {
-      formData.append(`productAttributes[${i}][key]`, attr.key);
-      formData.append(`productAttributes[${i}][value]`, attr.value);
     });
 
     if (isUpdate && initialValues) {

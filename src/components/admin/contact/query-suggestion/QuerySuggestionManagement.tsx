@@ -12,7 +12,9 @@ import UpdateQuerySuggestionStatus from "./Form/UpdateQuerySuggestionStatus";
 
 const QuerySuggestionManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<IQuerySuggestion | undefined>();
+  const [selectedItem, setSelectedItem] = useState<
+    IQuerySuggestion | undefined
+  >();
   const {
     setCurrentPage,
     itemsPerPage,
@@ -21,7 +23,8 @@ const QuerySuggestionManagement = () => {
     setTotalItems,
     setItemsPerPage,
   } = usePagination();
-  const { search, handleSearchChange, debouncedSearch } = useSearchDebounce(300);
+  const { search, handleSearchChange, debouncedSearch } =
+    useSearchDebounce(300);
   const { sortBy } = useAppSelector((state) => state.filter);
 
   const { data, isLoading } = useGet<IQuerySuggestion[]>(

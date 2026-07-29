@@ -38,7 +38,9 @@ export function GetProductColumns(
       header: "Name (BN)",
       accessorKey: "nameBn",
       cell: (_, row) => (
-        <span className="text-gray-600 line-clamp-2 max-w-45">{row.nameBn}</span>
+        <span className="text-gray-600 line-clamp-2 max-w-45">
+          {row.nameBn}
+        </span>
       ),
     },
     {

@@ -19,7 +19,9 @@ export const GetNewsEventsCategoryColumns = (
     header: "Bengali Name",
     accessorKey: "nameBn",
     cell: (value) => (
-      <span className="text-sm text-secondary-gary">{(value as string) || "—"}</span>
+      <span className="text-sm text-secondary-gary">
+        {(value as string) || "—"}
+      </span>
     ),
   },
   {

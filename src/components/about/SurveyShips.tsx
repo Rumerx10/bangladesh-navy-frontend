@@ -52,7 +52,10 @@ export default function SurveyShips() {
         <div className="space-y-6">
           {ships.map((ship, i) => {
             const equipmentList = ship.surveyEquipment
-              ? ship.surveyEquipment.split(",").map((e) => e.trim()).filter(Boolean)
+              ? ship.surveyEquipment
+                  .split(",")
+                  .map((e) => e.trim())
+                  .filter(Boolean)
               : [];
 
             return (
@@ -144,7 +147,10 @@ export default function SurveyShips() {
                       {/* Survey Equipment */}
                       <div className="rounded-xl overflow-hidden border border-cyan-200/50 bg-[#f0f8ff]/60">
                         <div className="flex items-center gap-2 px-4 py-2.5 bg-pBlue">
-                          <Radar size={13} className="text-cyan-400/80 shrink-0" />
+                          <Radar
+                            size={13}
+                            className="text-cyan-400/80 shrink-0"
+                          />
                           <span className="text-base font-medium text-white uppercase tracking-widest">
                             Capabilities
                           </span>
@@ -152,7 +158,10 @@ export default function SurveyShips() {
                         <div className="p-4 flex flex-col gap-2.5">
                           {equipmentList.length > 0 ? (
                             equipmentList.map((eq) => (
-                              <div key={eq} className="flex items-start gap-2.5">
+                              <div
+                                key={eq}
+                                className="flex items-start gap-2.5"
+                              >
                                 <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-liteBlue shrink-0" />
                                 <span className="text-base text-pBlue font-medium leading-snug">
                                   {eq}

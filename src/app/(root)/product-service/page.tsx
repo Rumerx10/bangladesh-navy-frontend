@@ -37,10 +37,9 @@ export default function ProductServicePage() {
     }
   );
 
-  const { data: categoryData } = useGet<IProductCategory[]>(
-    "/category/list",
-    ["category-list-public"]
-  );
+  const { data: categoryData } = useGet<IProductCategory[]>("/category/list", [
+    "category-list-public",
+  ]);
 
   const products: IProduct[] = Array.isArray(data?.data) ? data.data : [];
   const categories: IProductCategory[] = Array.isArray(categoryData?.data)

@@ -82,13 +82,10 @@ const CreateUpdateCategory = ({
     isPending: isUpdating,
     error: updateError,
     reset: resetUpdateError,
-  } = usePatch(
-    () => {
-      toast.success("Category updated successfully!");
-      onClose();
-    },
-    [["category"], ["category-list"]]
-  );
+  } = usePatch(() => {
+    toast.success("Category updated successfully!");
+    onClose();
+  }, [["category"], ["category-list"]]);
 
   const handleClose = () => {
     resetCreateError();

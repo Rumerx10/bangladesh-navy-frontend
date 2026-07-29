@@ -66,17 +66,13 @@ export default function GalleryGrid() {
 
   const allCategories = [
     "All",
-    ...Array.from(
-      new Set(galleryItems.map((g) => g.galleryCategory.nameEn))
-    ),
+    ...Array.from(new Set(galleryItems.map((g) => g.galleryCategory.nameEn))),
   ];
 
   const filteredItems =
     activeCategory === "All"
       ? galleryItems
-      : galleryItems.filter(
-          (g) => g.galleryCategory.nameEn === activeCategory
-        );
+      : galleryItems.filter((g) => g.galleryCategory.nameEn === activeCategory);
 
   if (isLoading) {
     return (
@@ -179,9 +175,7 @@ export default function GalleryGrid() {
                         : { scale: [0.85, 1.05, 1], rotate: [0, 8, 0] }
                     }
                     transition={{ duration: 0.45, ease: "easeOut" }}
-                    whileHover={
-                      shouldReduceMotion ? undefined : { scale: 1.1 }
-                    }
+                    whileHover={shouldReduceMotion ? undefined : { scale: 1.1 }}
                   >
                     <Search size={20} />
                   </motion.div>

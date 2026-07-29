@@ -23,7 +23,8 @@ const NewsEventsManagement = () => {
     setItemsPerPage,
   } = usePagination();
 
-  const { search, handleSearchChange, debouncedSearch } = useSearchDebounce(300);
+  const { search, handleSearchChange, debouncedSearch } =
+    useSearchDebounce(300);
   const { sortBy } = useAppSelector((state) => state.filter);
 
   const { data, isLoading } = useGet<INewsEvent[]>(

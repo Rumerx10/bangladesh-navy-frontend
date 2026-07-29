@@ -60,7 +60,6 @@ export interface INoticeItem {
   type?: "warning" | "info" | "update";
 }
 
-
 export interface IBiography {
   id: string;
   nameEn: string;

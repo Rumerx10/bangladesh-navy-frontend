@@ -5,8 +5,7 @@ import GallerySection from "./Gallery/GallerySection";
 import MaritimeSearch from "./SearchSection/MaritimeSearch";
 import NavyHeroCarousel from "./HeroSection/NavyHeroCarousel";
 
-
-const Home=()=> {
+const Home = () => {
   return (
     <div>
       <NavyHeroCarousel />
@@ -18,7 +17,6 @@ const Home=()=> {
       <Partners />
     </div>
   );
-}
-
+};
 
 export default Home;

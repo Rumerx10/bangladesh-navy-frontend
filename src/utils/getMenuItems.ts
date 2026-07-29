@@ -1,12 +1,13 @@
 import {
-    AlertTriangle,
-    GraduationCap,
-    Home,
-    Info,
-    LayoutDashboard,
-    Phone,
-    Users,
-    type LucideIcon,
+  AlertTriangle,
+  GraduationCap,
+  Home,
+  Info,
+  LayoutDashboard,
+  Package,
+  Phone,
+  Users,
+  type LucideIcon,
 } from "lucide-react";
 
 export interface MenuItem {
@@ -93,9 +94,7 @@ export function getMenuItems(): MenuItem[] {
       label: "Manage Product",
       icon: Package,
       href: "/admin/products",
-      children: [
-        { label: "All Products", href: "/admin/products" },
-      ],
+      children: [{ label: "All Products", href: "/admin/products" }],
     },
     // {
     //   segment: "Order Management",

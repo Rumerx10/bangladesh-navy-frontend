@@ -13,7 +13,9 @@ import CreateUpdateSurveyCategory from "./Form/CreateUpdateSurveyCategory";
 
 const SurveyCategoryCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<ISurveyCategory | undefined>();
+  const [selectedItem, setSelectedItem] = useState<
+    ISurveyCategory | undefined
+  >();
 
   const {
     setCurrentPage,
@@ -24,7 +26,8 @@ const SurveyCategoryCard = () => {
     setItemsPerPage,
   } = usePagination();
 
-  const { search, handleSearchChange, debouncedSearch } = useSearchDebounce(300);
+  const { search, handleSearchChange, debouncedSearch } =
+    useSearchDebounce(300);
 
   const { data, isLoading } = useGet<ISurveyCategory[]>(
     "/survey-category",

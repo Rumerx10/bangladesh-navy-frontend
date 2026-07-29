@@ -3,7 +3,7 @@ import {
   INavyProduct,
   ProductStatus,
 } from "@/src/components/products/types";
-import { navyCategories } from "./navyCategories";
+import { navyCategories } from "./navigationItems";
 
 const cat = (slug: string) =>
   navyCategories.find((c) => c.slug === slug) ?? navyCategories[0];

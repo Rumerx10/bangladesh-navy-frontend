@@ -30,7 +30,9 @@ const UpdateQuerySuggestionStatus = ({
   initialValues,
 }: UpdateQuerySuggestionStatusProps) => {
   const methods = useForm<QuerySuggestionFormValues>({
-    resolver: yupResolver(querySuggestionSchema) as Resolver<QuerySuggestionFormValues>,
+    resolver: yupResolver(
+      querySuggestionSchema
+    ) as Resolver<QuerySuggestionFormValues>,
     defaultValues: {
       status: initialValues?.status || "PENDING",
     },
@@ -88,26 +90,42 @@ const UpdateQuerySuggestionStatus = ({
           <div className="space-y-3 bg-gray-50 rounded-lg p-4 border border-gray-100">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <p className="text-xs text-gray-500 uppercase tracking-wider">Name</p>
-                <p className="text-sm font-medium text-secondary-dark">{initialValues.name}</p>
+                <p className="text-xs text-gray-500 uppercase tracking-wider">
+                  Name
+                </p>
+                <p className="text-sm font-medium text-secondary-dark">
+                  {initialValues.name}
+                </p>
               </div>
               <div>
-                <p className="text-xs text-gray-500 uppercase tracking-wider">Email</p>
-                <p className="text-sm font-medium text-secondary-dark">{initialValues.email}</p>
+                <p className="text-xs text-gray-500 uppercase tracking-wider">
+                  Email
+                </p>
+                <p className="text-sm font-medium text-secondary-dark">
+                  {initialValues.email}
+                </p>
               </div>
               <div>
-                <p className="text-xs text-gray-500 uppercase tracking-wider">Phone</p>
-                <p className="text-sm font-medium text-secondary-dark">{initialValues.phone}</p>
+                <p className="text-xs text-gray-500 uppercase tracking-wider">
+                  Phone
+                </p>
+                <p className="text-sm font-medium text-secondary-dark">
+                  {initialValues.phone}
+                </p>
               </div>
               <div>
-                <p className="text-xs text-gray-500 uppercase tracking-wider">Submitted</p>
+                <p className="text-xs text-gray-500 uppercase tracking-wider">
+                  Submitted
+                </p>
                 <p className="text-sm font-medium text-secondary-dark">
                   {new Date(initialValues.createdAt).toLocaleDateString()}
                 </p>
               </div>
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Message</p>
+              <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
+                Message
+              </p>
               <p className="text-sm text-secondary-dark bg-white rounded p-3 border border-gray-100">
                 {initialValues.message}
               </p>

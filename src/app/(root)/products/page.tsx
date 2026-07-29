@@ -8,17 +8,27 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useGet } from "@/src/hooks/useGet";
 import { usePagination } from "@/src/hooks/usePagination";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
-import { IProduct, IProductCategory } from "@/src/components/admin/ContentManagement/products/types";
+import {
+  IProduct,
+  IProductCategory,
+} from "@/src/components/admin/ContentManagement/products/types";
 
 export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   const { currentPage, itemsPerPage, setCurrentPage } = usePagination();
-  const { search, handleSearchChange, debouncedSearch } = useSearchDebounce(300);
+  const { search, handleSearchChange, debouncedSearch } =
+    useSearchDebounce(300);
 
   const { data, isLoading } = useGet<IProduct[]>(
     "/product",
-    ["product-public", currentPage.toString(), itemsPerPage.toString(), debouncedSearch, selectedCategory],
+    [
+      "product-public",
+      currentPage.toString(),
+      itemsPerPage.toString(),
+      debouncedSearch,
+      selectedCategory,
+    ],
     {
       page: currentPage.toString(),
       limit: itemsPerPage.toString(),
@@ -27,10 +37,9 @@ export default function ProductsPage() {
     }
   );
 
-  const { data: categoryData } = useGet<IProductCategory[]>(
-    "/category/list",
-    ["category-list-public"]
-  );
+  const { data: categoryData } = useGet<IProductCategory[]>("/category/list", [
+    "category-list-public",
+  ]);
 
   const products: IProduct[] = Array.isArray(data?.data) ? data.data : [];
   const categories: IProductCategory[] = Array.isArray(categoryData?.data)
@@ -45,7 +54,8 @@ export default function ProductsPage() {
           Products &amp; Services
         </h1>
         <p className="mt-2 text-sm text-gray-500">
-          Hydrographic charts, publications and maritime services by Bangladesh Navy
+          Hydrographic charts, publications and maritime services by Bangladesh
+          Navy
         </p>
       </div>
 
@@ -60,7 +70,10 @@ export default function ProductsPage() {
         />
         <div className="flex flex-wrap gap-2">
           <button
-            onClick={() => { setSelectedCategory("all"); setCurrentPage(1); }}
+            onClick={() => {
+              setSelectedCategory("all");
+              setCurrentPage(1);
+            }}
             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors cursor-pointer ${
               selectedCategory === "all"
                 ? "bg-pBlue text-white"
@@ -72,7 +85,10 @@ export default function ProductsPage() {
           {categories.map((cat) => (
             <button
               key={cat.id}
-              onClick={() => { setSelectedCategory(cat.id); setCurrentPage(1); }}
+              onClick={() => {
+                setSelectedCategory(cat.id);
+                setCurrentPage(1);
+              }}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors cursor-pointer ${
                 selectedCategory === cat.id
                   ? "bg-pBlue text-white"
@@ -110,8 +126,12 @@ export default function ProductsPage() {
           <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-4">
             <LayoutGrid size={24} className="text-gray-400" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-800">No products found</h3>
-          <p className="text-sm text-gray-500 mt-1">Try adjusting your search or filter</p>
+          <h3 className="text-lg font-semibold text-gray-800">
+            No products found
+          </h3>
+          <p className="text-sm text-gray-500 mt-1">
+            Try adjusting your search or filter
+          </p>
         </motion.div>
       ) : (
         <AnimatePresence mode="popLayout">

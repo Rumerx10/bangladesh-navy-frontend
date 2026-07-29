@@ -22,7 +22,8 @@ function adaptToNavyProduct(p: IProduct): INavyProduct {
     price: 0,
     stock: 0,
     categoryId: p.category?.id || "",
-    status: p.status === "ACTIVE" ? ProductStatus.ACTIVE : ProductStatus.INACTIVE,
+    status:
+      p.status === "ACTIVE" ? ProductStatus.ACTIVE : ProductStatus.INACTIVE,
     createdAt: p.createdAt,
     updatedAt: p.updatedAt,
     category: {
@@ -43,10 +44,9 @@ function adaptToNavyProduct(p: IProduct): INavyProduct {
 }
 
 function ProductDetailContent({ slug }: { slug: string }) {
-  const { data, isLoading, isError } = useGet<IProduct>(
-    `/product/${slug}`,
-    [`product-detail-${slug}`]
-  );
+  const { data, isLoading, isError } = useGet<IProduct>(`/product/${slug}`, [
+    `product-detail-${slug}`,
+  ]);
 
   if (isLoading) {
     return (

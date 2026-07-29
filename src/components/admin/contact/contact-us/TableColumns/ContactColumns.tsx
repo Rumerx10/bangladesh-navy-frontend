@@ -65,12 +65,7 @@ const GetContactColumns = (
       cell: (value) => {
         const status = value as string | undefined;
         const variant = statusVariantMap[status || ""] || StatusType.INACTIVE;
-        return (
-          <StatusBadge
-            status={variant}
-            className="px-2 py-1"
-          />
-        );
+        return <StatusBadge status={variant} className="px-2 py-1" />;
       },
     },
     {

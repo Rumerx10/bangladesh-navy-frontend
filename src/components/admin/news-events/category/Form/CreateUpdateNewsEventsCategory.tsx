@@ -69,13 +69,10 @@ const CreateUpdateNewsEventsCategory = ({
     isPending: isUpdating,
     error: updateError,
     reset: resetUpdateError,
-  } = usePatch(
-    () => {
-      toast.success("Category updated successfully!");
-      onClose();
-    },
-    [["news-events-category"]]
-  );
+  } = usePatch(() => {
+    toast.success("Category updated successfully!");
+    onClose();
+  }, [["news-events-category"]]);
 
   const handleClose = () => {
     resetCreateError();
@@ -92,14 +89,22 @@ const CreateUpdateNewsEventsCategory = ({
 
   const onSubmit = (values: NewsEventsCategoryFormValues) => {
     if (isUpdate && initialValues) {
-      updateMutate({ url: `/news-events-category/${initialValues.id}`, data: values });
+      updateMutate({
+        url: `/news-events-category/${initialValues.id}`,
+        data: values,
+      });
     } else {
       createMutate({ data: values });
     }
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => { if (!open) handleClose(); }}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) handleClose();
+      }}
+    >
       <DialogContent className="bg-white min-w-[40vw] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-secondary text-xl font-semibold">
