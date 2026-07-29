@@ -1,0 +1,20 @@
+node_modules
+.next
+.git
+.github
+.husky
+.claude
+npm-debug.log*
+yarn-error.log*
+# .env IS shipped into the build context on purpose: `next build` reads it to bake
+# the NEXT_PUBLIC_* values into the bundle. Keep it free of server-side secrets.
+.env.*
+!.env.example
+README.md
+CLAUDE.md
+LICENSE
+*.pdf
+Dockerfile
+.dockerignore
+tsconfig.tsbuildinfo
+.DS_Store
