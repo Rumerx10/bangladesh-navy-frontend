@@ -1,66 +1,65 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Maximize2, X } from "lucide-react";
+import { Maximize2, ImageOff } from "lucide-react";
 import SectionTitle from "../../SectionTitle";
-import { useState, useEffect } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import type { Swiper as SwiperType } from "swiper/types";
-import "swiper/css";
-import {
-  IoIosArrowDropleftCircle,
-  IoIosArrowDroprightCircle,
-} from "react-icons/io";
+import { useState } from "react";
+import { useGet } from "@/src/hooks/useGet";
+import GalleryLightbox from "@/src/components/shared/GalleryLightbox";
+import { IGalleryItem } from "./types";
 
 const MotionLink = motion.create(Link);
 
-const galleryImages = [
-  { id: 1, src: "/img4.jpeg", alt: "Survey Operation", size: "large" },
-  {
-    id: 2,
-    src: "/newsImages/news2.jpg",
-    alt: "IHO Celebration",
-    size: "small",
-  },
-  {
-    id: 3,
-    src: "/newsImages/news3.jpg",
-    alt: "Nautical Charts",
-    size: "small",
-  },
-  { id: 4, src: "/img5.jpeg", alt: "Survey Launch", size: "small" },
-  { id: 5, src: "/img8.jpeg", alt: "Tide Prediction", size: "small" },
-];
-
-export default function GallerySection() {
+const GallerySection = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const [mainSwiper, setMainSwiper] = useState<SwiperType | null>(null);
 
-  const isOpen = lightboxIndex !== null;
+  const { data, isLoading } = useGet<IGalleryItem[]>("/gallery/list", [
+    "gallery-list",
+  ]);
+
+  const galleryImages = (Array.isArray(data?.data) ? data.data : []).slice(
+    0,
+    5
+  );
 
   const openLightbox = (index: number) => setLightboxIndex(index);
-  const closeLightbox = () => {
-    setLightboxIndex(null);
-    setMainSwiper(null);
-  };
+  const closeLightbox = () => setLightboxIndex(null);
 
-  useEffect(() => {
-    if (!isOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeLightbox();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [isOpen]);
+  if (isLoading) {
+    return (
+      <section className="py-20 lg:py-28 bg-[#f8fafc]">
+        <div className="container px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 lg:mb-16">
+            <SectionTitle title="Gallery" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 h-200 md:h-150 lg:h-175">
+            <div className="md:col-span-2 md:row-span-2 rounded-2xl bg-gray-200 animate-pulse" />
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="rounded-2xl bg-gray-200 animate-pulse" />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
+  if (galleryImages.length === 0) {
+    return (
+      <section className="py-20 lg:py-28 bg-[#f8fafc]">
+        <div className="container px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 lg:mb-16">
+            <SectionTitle title="Gallery" />
+          </div>
+          <div className="text-center py-10">
+            <ImageOff size={48} className="mx-auto text-gray-300 mb-4" />
+            <p className="text-gray-500">No gallery images available.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <>
@@ -83,8 +82,8 @@ export default function GallerySection() {
               onClick={() => openLightbox(0)}
             >
               <Image
-                src={galleryImages[0].src}
-                alt={galleryImages[0].alt}
+                src={galleryImages[0].imageUrl}
+                alt={galleryImages[0].titleEn}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -94,7 +93,7 @@ export default function GallerySection() {
                 </div>
               </div>
               <div className="absolute bottom-0 left-0 right-0 p-6 bg-linear-to-t from-black/80 to-transparent text-white">
-                <p className="font-bold text-lg">{galleryImages[0].alt}</p>
+                <p className="font-bold text-lg">{galleryImages[0].titleEn}</p>
               </div>
             </motion.div>
 
@@ -110,8 +109,8 @@ export default function GallerySection() {
                 onClick={() => openLightbox(index + 1)}
               >
                 <Image
-                  src={image.src}
-                  alt={image.alt}
+                  src={image.imageUrl}
+                  alt={image.titleEn}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
@@ -121,7 +120,7 @@ export default function GallerySection() {
                   </div>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-black/70 to-transparent text-white">
-                  <p className="font-semibold text-sm">{image.alt}</p>
+                  <p className="font-semibold text-sm">{image.titleEn}</p>
                 </div>
               </motion.div>
             ))}
@@ -141,88 +140,18 @@ export default function GallerySection() {
         </div>
       </section>
 
-      {/* Lightbox */}
-      <AnimatePresence>
-        {isOpen && lightboxIndex !== null && (
-          <motion.div
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/92 backdrop-blur-sm px-2 lg:px-14"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            onClick={closeLightbox}
-          >
-            {/* Close */}
-            <button
-              className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors"
-              onClick={closeLightbox}
-              aria-label="Close"
-            >
-              <X size={24} />
-            </button>
-
-            <div
-              className="w-full max-w-5xl flex flex-col gap-4"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Main swiper */}
-              <div className="relative">
-                <Swiper
-                  spaceBetween={0}
-                  loop
-                  onSwiper={(s) => {
-                    setMainSwiper(s);
-                    s.slideTo(lightboxIndex, 0);
-                  }}
-                  onRealIndexChange={(s) => setLightboxIndex(s.realIndex)}
-                  className="w-full h-130 rounded-xl overflow-hidden"
-                >
-                  {galleryImages.map((image, index) => (
-                    <SwiperSlide key={image.id}>
-                      <Image
-                        height={800}
-                        width={1200}
-                        src={image.src}
-                        alt={image.alt}
-                        className="w-full h-full object-cover"
-                        priority={index === lightboxIndex}
-                      />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-
-                {/* Prev */}
-                <button
-                  onClick={() => mainSwiper?.slidePrev()}
-                  className="opacity-0 md:opacity-100 absolute left-3 top-1/2 -translate-y-1/2 z-10 text-white/80 hover:text-white transition-colors drop-shadow-lg"
-                  aria-label="Previous"
-                >
-                  <IoIosArrowDropleftCircle size={46} />
-                </button>
-
-                {/* Next */}
-                <button
-                  onClick={() => mainSwiper?.slideNext()}
-                  className="opacity-0 md:opacity-100 absolute right-3 top-1/2 -translate-y-1/2 z-10 text-white/80 hover:text-white transition-colors drop-shadow-lg"
-                  aria-label="Next"
-                >
-                  <IoIosArrowDroprightCircle size={46} />
-                </button>
-              </div>
-
-              {/* Caption + counter centered */}
-              <div className="flex flex-col items-center gap-3">
-                <p className="text-white font-semibold text-base">
-                  {galleryImages[lightboxIndex].alt}
-                </p>
-                <span className="px-3 py-1 rounded-full bg-white/10 text-white/70 text-sm font-medium">
-                  {lightboxIndex + 1} / {galleryImages.length}
-                </span>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <GalleryLightbox
+        images={galleryImages.map((image) => ({
+          id: image.id,
+          src: image.imageUrl,
+          alt: image.titleEn,
+        }))}
+        activeIndex={lightboxIndex}
+        onClose={closeLightbox}
+        onIndexChange={setLightboxIndex}
+      />
     </>
   );
-}
+};
+
+export default GallerySection;

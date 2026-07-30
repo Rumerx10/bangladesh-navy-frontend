@@ -36,7 +36,7 @@ export default function NewsEventsCategoryForm({
       </div>
 
       <div>
-        <InputLabel label="Category Name (Bengali)" required />
+        <InputLabel label="Category Name (Bengali)" />
         <ControlledInputField
           className="bg-light"
           name="nameBn"

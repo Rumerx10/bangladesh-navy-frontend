@@ -13,40 +13,59 @@ import {
   DialogTitle,
 } from "@/src/components/ui/dialog";
 import {
-  NewsEventsCategoryFormValues,
-  newsEventsCategorySchema,
-} from "../Schema/newsEventsCategorySchema";
-import { INewsEventsCategory } from "../types";
-import NewsEventsCategoryForm from "./NewsEventsCategoryForm";
+  TidalStationFormValues,
+  tidalStationSchema,
+} from "../Schema/tidalStationSchema";
+import { ITidalStation } from "../types";
+import TidalStationForm from "./TidalStationForm";
 
-interface CreateUpdateNewsEventsCategoryProps {
+interface CreateUpdateTidalStationProps {
   isOpen: boolean;
   onClose: () => void;
-  initialValues?: INewsEventsCategory;
+  initialValues?: ITidalStation;
 }
 
-const CreateUpdateNewsEventsCategory = ({
+const CreateUpdateTidalStation = ({
   isOpen,
   onClose,
   initialValues,
-}: CreateUpdateNewsEventsCategoryProps) => {
+}: CreateUpdateTidalStationProps) => {
   const isUpdate = !!initialValues;
 
-  const methods = useForm<NewsEventsCategoryFormValues>({
+  const methods = useForm<TidalStationFormValues>({
     resolver: yupResolver(
-      newsEventsCategorySchema
-    ) as Resolver<NewsEventsCategoryFormValues>,
-    defaultValues: { nameEn: "", nameBn: "" },
+      tidalStationSchema
+    ) as Resolver<TidalStationFormValues>,
+    defaultValues: {
+      generalArea: "",
+      location: "",
+      latitude: "",
+      longitude: "",
+      productId: "",
+      status: "ACTIVE",
+    },
   });
 
   useEffect(() => {
     if (isOpen) {
       methods.reset({
-        nameEn: initialValues?.nameEn || "",
-        nameBn: initialValues?.nameBn || "",
+        generalArea: initialValues?.generalArea || "",
+        location: initialValues?.location || "",
+        latitude: initialValues?.latitude || "",
+        longitude: initialValues?.longitude || "",
+        productId: initialValues?.productId || "",
+        status:
+          initialValues?.status === "INACTIVE" ? "INACTIVE" : "ACTIVE",
       });
     } else {
-      methods.reset({ nameEn: "", nameBn: "" });
+      methods.reset({
+        generalArea: "",
+        location: "",
+        latitude: "",
+        longitude: "",
+        productId: "",
+        status: "ACTIVE",
+      });
     }
   }, [isOpen, initialValues, methods]);
 
@@ -56,12 +75,12 @@ const CreateUpdateNewsEventsCategory = ({
     error,
     reset: resetCreateError,
   } = usePost(
-    "/news-events-category",
+    "/tidal-station",
     () => {
-      toast.success("Category created successfully!");
+      toast.success("Tidal station created successfully!");
       onClose();
     },
-    [["news-events-category"]]
+    [["tidal-station"], ["tidal-station-list"]]
   );
 
   const {
@@ -70,9 +89,9 @@ const CreateUpdateNewsEventsCategory = ({
     error: updateError,
     reset: resetUpdateError,
   } = usePatch(() => {
-    toast.success("Category updated successfully!");
+    toast.success("Tidal station updated successfully!");
     onClose();
-  }, [["news-events-category"]]);
+  }, [["tidal-station"], ["tidal-station-list"]]);
 
   const handleClose = () => {
     resetCreateError();
@@ -87,19 +106,16 @@ const CreateUpdateNewsEventsCategory = ({
     }
   }, [isOpen, resetCreateError, resetUpdateError]);
 
-  const onSubmit = (values: NewsEventsCategoryFormValues) => {
-    const payload = {
-      nameEn: values.nameEn,
-      ...(values.nameBn?.trim() && { nameBn: values.nameBn }),
-    };
+  const isPending = isCreating || isUpdating;
 
+  const onSubmit = (values: TidalStationFormValues) => {
     if (isUpdate && initialValues) {
       updateMutate({
-        url: `/news-events-category/${initialValues.id}`,
-        data: payload,
+        url: `/tidal-station/${initialValues.id}`,
+        data: values,
       });
     } else {
-      createMutate({ data: payload });
+      createMutate({ data: values });
     }
   };
 
@@ -110,18 +126,18 @@ const CreateUpdateNewsEventsCategory = ({
         if (!open) handleClose();
       }}
     >
-      <DialogContent className="bg-white min-w-[40vw] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="bg-white min-w-[40vw] max-h-[90vh] overflow-y-auto scrollbar-modern">
         <DialogHeader>
           <DialogTitle className="text-secondary text-xl font-semibold">
-            {isUpdate ? "Update" : "Create"} News Events Category
+            {isUpdate ? "Update" : "Create"} Tidal Station
           </DialogTitle>
         </DialogHeader>
         <FormProvider {...methods}>
-          <NewsEventsCategoryForm
+          <TidalStationForm
             isEditMode={isUpdate}
             onSubmit={onSubmit}
             onCancel={handleClose}
-            isPending={isCreating || isUpdating}
+            isPending={isPending}
             error={error || updateError}
           />
         </FormProvider>
@@ -130,4 +146,4 @@ const CreateUpdateNewsEventsCategory = ({
   );
 };
 
-export default CreateUpdateNewsEventsCategory;
+export default CreateUpdateTidalStation;

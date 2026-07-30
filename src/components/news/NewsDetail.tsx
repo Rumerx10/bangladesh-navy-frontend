@@ -8,6 +8,7 @@ import { ArrowLeft, ChevronRight, Home, Share2, Tag } from "lucide-react";
 import { INewsItem } from "../types";
 import NewsCard from "@/src/components/home/News/NewsCard";
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
+import { sanitizeRichText } from "@/src/utils/sanitize";
 
 interface NewsDetailProps {
   slug: string;
@@ -49,7 +50,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
       <div className="mt-28 lg:mt-26 text-center py-20">
         <p className="text-gray-500 text-lg">News not found.</p>
         <Link
-          href="/news"
+          href="/about/news"
           className="text-liteBlue hover:underline mt-4 inline-block"
         >
           Back to News
@@ -83,7 +84,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
                 <Home size={14} /> Home
               </Link>
               <ChevronRight size={14} />
-              <Link href="/news" className="hover:text-white transition-colors">
+              <Link href="/about/news" className="hover:text-white transition-colors">
                 News
               </Link>
               <ChevronRight size={14} />
@@ -148,19 +149,23 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
             >
-              <p className="leading-relaxed text-gray-800 text-lg font-medium">
-                {news.contentEn}
-              </p>
+              <div
+                className="leading-relaxed text-gray-800 text-lg font-medium [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-5 [&_ol]:pl-5 [&_li]:mb-1 [&_a]:text-liteBlue [&_a]:underline"
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeRichText(news.contentEn),
+                }}
+              />
               {/* Bengali Content - commented out */}
-              {/* <p className="text-base leading-relaxed text-gray-600">
-                {news.contentBn}
-              </p> */}
+              {/* <div
+                className="text-base leading-relaxed text-gray-600 [&_p]:mb-4 [&_p:last-child]:mb-0"
+                dangerouslySetInnerHTML={{ __html: sanitizeRichText(news.contentBn) }}
+              /> */}
             </motion.article>
 
             {/* Share & Back */}
             <div className="flex items-center justify-between mt-10 pt-8 border-t border-gray-100">
               <Link
-                href="/news"
+                href="/about/news"
                 className="inline-flex items-center gap-2 text-sm font-medium text-liteBlue hover:text-[#004d8a] transition-colors"
               >
                 <ArrowLeft size={16} />

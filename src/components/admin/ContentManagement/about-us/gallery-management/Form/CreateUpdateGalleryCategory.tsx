@@ -89,13 +89,19 @@ const CreateUpdateGalleryCategory = ({
   }, [isOpen, resetCreateError, resetUpdateError]);
 
   const onSubmit = (values: GalleryCategoryFormValues) => {
+    const payload = {
+      nameEn: values.nameEn,
+      status: values.status,
+      ...(values.nameBn?.trim() && { nameBn: values.nameBn }),
+    };
+
     if (isUpdate && initialValues) {
       updateMutate({
         url: `/gallery-category/${initialValues.id}`,
-        data: values,
+        data: payload,
       });
     } else {
-      createMutate({ data: values });
+      createMutate({ data: payload });
     }
   };
 

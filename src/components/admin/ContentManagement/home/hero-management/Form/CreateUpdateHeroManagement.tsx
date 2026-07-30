@@ -1,7 +1,6 @@
 "use client";
 
 import { usePost } from "@/src/hooks/usePost";
-import { usePatch } from "@/src/hooks/usePatch";
 import { IHeroManagement } from "../types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import HeroManagementForm from "./HeroManagementForm";
@@ -41,11 +40,11 @@ const CreateUpdateHeroManagement = ({
   });
 
   const {
-    mutate: createHero,
-    isPending: isCreating,
+    mutate: saveHero,
+    isPending,
     error,
-    reset: resetCreateError,
-  } = usePost(
+    reset: resetError,
+  } = usePost<{ data: IHeroManagement }>(
     "/hero-management",
     () => {
       onSuccess?.();
@@ -53,26 +52,22 @@ const CreateUpdateHeroManagement = ({
     [["hero-management"]]
   );
 
-  const {
-    mutate: updateHero,
-    isPending: isUpdating,
-    error: updateError,
-    reset: resetUpdateError,
-  } = usePatch(() => {
-    onSuccess?.();
-  }, [["hero-management"]]);
-
-  const isPending = isCreating || isUpdating;
-
   const onSubmit = (data: HeroManagementSchemaForm) => {
     const formData = new FormData();
     formData.append("titleEn", data.titleEn);
-    formData.append("titleBn", data.titleBn);
     formData.append("subTitleEn", data.subTitleEn);
-    formData.append("subTitleBn", data.subTitleBn);
     formData.append("descriptionEn", data.descriptionEn);
-    formData.append("descriptionBn", data.descriptionBn);
     formData.append("status", data.status);
+
+    if (data.titleBn?.trim()) formData.append("titleBn", data.titleBn);
+    if (data.subTitleBn?.trim())
+      formData.append("subTitleBn", data.subTitleBn);
+    if (data.descriptionBn?.trim())
+      formData.append("descriptionBn", data.descriptionBn);
+
+    const existingImageUrls = data.images?.filter(
+      (image): image is string => typeof image === "string"
+    );
 
     data.images?.forEach((image) => {
       if (image instanceof File) {
@@ -80,19 +75,18 @@ const CreateUpdateHeroManagement = ({
       }
     });
 
-    if (isEditMode && initialValues?.id) {
-      updateHero({
-        url: `/hero-management`,
-        data: formData,
-      });
-    } else {
-      createHero({ data: formData });
-    }
+    const removedImageUrls = (initialValues?.imageUrls || []).filter(
+      (url) => !existingImageUrls?.includes(url)
+    );
+    removedImageUrls.forEach((url) => {
+      formData.append("deleteImages", url);
+    });
+
+    saveHero({ data: formData });
   };
 
   const handleCancel = () => {
-    resetCreateError();
-    resetUpdateError();
+    resetError();
     methods.reset();
     onCancel?.();
   };
@@ -104,7 +98,7 @@ const CreateUpdateHeroManagement = ({
         onSubmit={onSubmit}
         isPending={isPending}
         onCancel={handleCancel}
-        error={error || updateError}
+        error={error}
       />
     </FormProvider>
   );

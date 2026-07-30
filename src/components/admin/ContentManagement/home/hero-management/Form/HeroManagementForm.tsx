@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { Button } from "@/src/components/ui/button";
 import { useFormContext } from "react-hook-form";
@@ -33,6 +34,7 @@ const HeroManagementForm = ({
 }: HeroManagementFormProps) => {
   const { handleSubmit } = useFormContext<HeroManagementSchemaForm>();
   const [iconLoaded, setIconLoaded] = useState(false);
+  const [showBnFields, setShowBnFields] = useState(false);
 
   const statusOptions = [
     { label: "Active", value: "ACTIVE" },
@@ -105,28 +107,10 @@ const HeroManagementForm = ({
           </div>
 
           <div>
-            <InputLabel label="Bengali Title" required />
-            <ControlledInputField
-              name="titleBn"
-              placeholder="Enter bengali title"
-              className="bg-light shadow-none"
-            />
-          </div>
-
-          <div>
             <InputLabel label="English Subtitle" required />
             <ControlledInputField
               name="subTitleEn"
               placeholder="Enter english subtitle"
-              className="bg-light shadow-none"
-            />
-          </div>
-
-          <div>
-            <InputLabel label="Bengali Subtitle" required />
-            <ControlledInputField
-              name="subTitleBn"
-              placeholder="Enter bengali subtitle"
               className="bg-light shadow-none"
             />
           </div>
@@ -141,21 +125,85 @@ const HeroManagementForm = ({
           </div>
 
           <div>
-            <InputLabel label="Bengali Description" required />
-            <ControlledTextareaField
-              name="descriptionBn"
-              placeholder="Enter bengali description"
-              className="bg-light shadow-none"
-            />
-          </div>
-
-          <div>
             <InputLabel label="Status" required />
             <ControlledSelectField
               name="status"
               options={statusOptions}
               placeholder="Select status"
             />
+          </div>
+        </div>
+      </div>
+
+      {/* Bengali Fields Section (optional, collapsed by default) */}
+      <div className="border border-light-silver rounded-lg bg-white">
+        <button
+          type="button"
+          onClick={() => setShowBnFields((prev) => !prev)}
+          className="w-full flex items-center justify-between gap-3 p-8 cursor-pointer"
+        >
+          <div className="flex items-center gap-3">
+            <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
+              <Image
+                src="/icons/file.svg"
+                alt="bengali content"
+                width={36}
+                height={36}
+                className="w-4"
+              />
+            </div>
+            <div className="text-left">
+              <Paragraph className="xl:text-lg font-medium text-pBlue">
+                Bengali Fields
+              </Paragraph>
+              <Paragraph className="text-xs! text-gray-500">
+                Optional — shown on the site when provided
+              </Paragraph>
+            </div>
+          </div>
+          <ChevronDown
+            className={cn(
+              "w-5 h-5 text-gray-500 transition-transform duration-300",
+              showBnFields && "rotate-180"
+            )}
+          />
+        </button>
+
+        <div
+          className={cn(
+            "grid transition-all duration-300 ease-in-out",
+            showBnFields ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+          )}
+        >
+          <div className="overflow-hidden">
+            <div className="flex flex-col gap-y-6 px-8 pb-8">
+              <div>
+                <InputLabel label="Bengali Title" />
+                <ControlledInputField
+                  name="titleBn"
+                  placeholder="Enter bengali title"
+                  className="bg-light shadow-none"
+                />
+              </div>
+
+              <div>
+                <InputLabel label="Bengali Subtitle" />
+                <ControlledInputField
+                  name="subTitleBn"
+                  placeholder="Enter bengali subtitle"
+                  className="bg-light shadow-none"
+                />
+              </div>
+
+              <div>
+                <InputLabel label="Bengali Description" />
+                <ControlledTextareaField
+                  name="descriptionBn"
+                  placeholder="Enter bengali description"
+                  className="bg-light shadow-none"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

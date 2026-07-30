@@ -1,91 +1,37 @@
 "use client";
 
-import { IContact } from "./types";
+import { useState } from "react";
 import { useGet } from "@/src/hooks/useGet";
-import { useEffect, useState } from "react";
-import { useAppSelector } from "@/src/lib/redux/hooks";
-import { usePagination } from "@/src/hooks/usePagination";
-import { DataTable } from "@/src/components/ui/data-table";
-import UpdateContactStatus from "./Form/UpdateContactStatus";
-import GetContactColumns from "./TableColumns/ContactColumns";
-import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
+import { IContactInfo } from "./types";
+import ContactPreview from "./ContactPreview";
+import ContactInfoPreviewSkeleton from "./Skeleton/ContactInfoPreviewSkeleton";
+import CreateUpdateContactInfo from "./Form/CreateUpdateContactInfo";
 
 const ContactManagement = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<IContact | undefined>();
-  const {
-    setCurrentPage,
-    itemsPerPage,
-    currentPage,
-    totalItems,
-    setTotalItems,
-    setItemsPerPage,
-  } = usePagination();
-  const { search, handleSearchChange, debouncedSearch } =
-    useSearchDebounce(300);
-  const { sortBy } = useAppSelector((state) => state.filter);
+  const [isEditMode, setIsEditMode] = useState(false);
 
-  const { data, isLoading } = useGet<IContact[]>(
-    "/contact",
-    [
-      "contact-management",
-      currentPage.toString(),
-      itemsPerPage.toString(),
-      debouncedSearch,
-      sortBy,
-    ],
-    {
-      ...(itemsPerPage !== -1 && {
-        page: currentPage.toString(),
-        limit: itemsPerPage.toString(),
-      }),
-      search: debouncedSearch,
-      ...(sortBy && { status: sortBy }),
-    }
-  );
+  const { data, isLoading } = useGet<IContactInfo | null>("/contact-info", [
+    "contact-info",
+  ]);
 
-  useEffect(() => {
-    if (data) {
-      setTotalItems(data.meta?.totalItems || 0);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  const contactInfo = data?.data;
 
-  const handleView = (item: IContact) => {
-    setSelectedItem(item);
-    setIsModalOpen(true);
-  };
+  if (isLoading) {
+    return <ContactInfoPreviewSkeleton />;
+  }
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-    setSelectedItem(undefined);
-  };
-
-  const columns = GetContactColumns(handleView);
+  if (contactInfo && !isEditMode) {
+    return (
+      <ContactPreview data={contactInfo} onEdit={() => setIsEditMode(true)} />
+    );
+  }
 
   return (
-    <div>
-      <DataTable
-        columns={columns}
-        data={Array.isArray(data?.data) ? data.data : []}
-        isLoading={isLoading}
-        totalItems={totalItems}
-        currentPage={currentPage}
-        itemsPerPage={itemsPerPage}
-        onPageChange={setCurrentPage}
-        setItemsPerPage={setItemsPerPage}
-        title="Contact Management"
-        searchValue={search}
-        onSearchChange={handleSearchChange}
-        searchPlaceholder="Search contacts..."
-        isShowStatus={false}
-      />
-      <UpdateContactStatus
-        isOpen={isModalOpen}
-        onClose={handleModalClose}
-        initialValues={selectedItem}
-      />
-    </div>
+    <CreateUpdateContactInfo
+      initialValues={contactInfo || undefined}
+      onSuccess={() => setIsEditMode(false)}
+      onCancel={() => setIsEditMode(false)}
+    />
   );
 };
 

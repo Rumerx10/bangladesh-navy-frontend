@@ -90,14 +90,6 @@ export const NavigationItems: NavItem[] = [
     ],
   },
   {
-    label: "Contact",
-    link: "/contact-us",
-    subLinks: [
-      { label: "Contact Information", link: "/contact-us" },
-      { label: "Query & Suggestion", link: "/contact-us/query-suggestion" },
-    ],
-  },
-  {
     label: "Important Notice",
     link: "#",
     subLinks: [
@@ -113,6 +105,14 @@ export const NavigationItems: NavItem[] = [
         label: "Hydrographic Note",
         link: "/contact-us/hydrographic-note",
       },
+    ],
+  },
+  {
+    label: "Contact",
+    link: "/contact-us",
+    subLinks: [
+      { label: "Contact Information", link: "/contact-us" },
+      { label: "Query & Suggestion", link: "/contact-us/query-suggestion" },
     ],
   },
 ];

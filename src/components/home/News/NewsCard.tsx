@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { INewsItem } from "../../types";
 import { ArrowRight, Calendar, Tag } from "lucide-react";
+import { htmlToPlainText } from "@/src/utils/sanitize";
 
 interface NewsCardProps {
   item: INewsItem;
@@ -11,7 +12,7 @@ interface NewsCardProps {
 const NewsCard = ({ item, hideImage = false }: NewsCardProps) => {
   return (
     <Link
-      href={`/news/${item.id}`}
+      href={`/about/news/${item.id}`}
       className="group flex flex-col h-full rounded-2xl bg-white border border-gray-100 overflow-hidden hover:shadow-xl hover:border-liteBlue/15 transition-all duration-300"
     >
       {/* Image */}
@@ -34,19 +35,25 @@ const NewsCard = ({ item, hideImage = false }: NewsCardProps) => {
       )}
 
       <div className="flex-1 p-5 lg:p-6 flex flex-col">
-        <div className="flex items-center gap-2 mb-3">
-          <Calendar size={14} className="text-liteBlue" />
-          <span className="text-xs font-semibold text-liteBlue">
-            {new Date().toLocaleDateString()}
-          </span>
-        </div>
+        {item.createdAt && (
+          <div className="flex items-center gap-2 mb-3">
+            <Calendar size={14} className="text-liteBlue" />
+            <span className="text-xs font-semibold text-liteBlue">
+              {new Date(item.createdAt).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}
+            </span>
+          </div>
+        )}
 
         <h3 className="text-base font-bold text-pBlue group-hover:text-liteBlue transition-colors line-clamp-2 leading-snug mb-2">
           {item.titleEn}
         </h3>
 
-        <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-4 flex-1">
-          {item.contentEn}
+        <p className="line-clamp-2 text-sm! text-gray-500 leading-relaxed mb-4 flex-1">
+          {htmlToPlainText(item.contentEn)}
         </p>
 
         <span className="inline-flex items-center gap-1.5 text-sm text-liteBlue font-medium group-hover:gap-2.5 transition-all">

@@ -10,6 +10,7 @@ import {
 import { StatusType } from "@/src/components/shared/types/common";
 import { BadgeCheck, Mail, Phone, Shield, UserRound } from "lucide-react";
 import Image from "next/image";
+import { useGet } from "@/src/hooks/useGet";
 import { IUser } from "./types";
 
 interface ViewUserInfoModalProps {
@@ -24,8 +25,16 @@ const valueClass = "text-sm font-medium text-secondary break-words";
 export default function ViewUserInfoModal({
   isOpen,
   onClose,
-  user,
+  user: rowUser,
 }: ViewUserInfoModalProps) {
+  const { data: profileData } = useGet<IUser>(
+    `/user/profile/${rowUser?.id}`,
+    ["user-profile", rowUser?.id || ""],
+    {},
+    { enabled: isOpen && !!rowUser?.id }
+  );
+
+  const user = profileData?.data || rowUser;
   const fullName = `${user?.firstName || ""} ${user?.lastName || ""}`.trim();
 
   return (

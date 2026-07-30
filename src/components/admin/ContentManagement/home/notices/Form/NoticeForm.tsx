@@ -73,7 +73,7 @@ const NoticeForm = ({
           htmlFor="description"
           className="text-sm font-medium text-secondary-dark"
         >
-          Description <span className="text-red-500">*</span>
+          Description
         </Label>
         <Textarea
           id="description"
@@ -91,7 +91,7 @@ const NoticeForm = ({
           htmlFor="status"
           className="text-sm font-medium text-secondary-dark"
         >
-          Status <span className="text-red-500">*</span>
+          Status
         </Label>
         <Select
           value={status}

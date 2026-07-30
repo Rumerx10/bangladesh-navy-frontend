@@ -89,13 +89,19 @@ const CreateUpdateSurveyCategory = ({
   }, [isOpen, resetCreateError, resetUpdateError]);
 
   const onSubmit = (values: SurveyCategoryFormValues) => {
+    const payload = {
+      nameEn: values.nameEn,
+      status: values.status,
+      ...(values.nameBn?.trim() && { nameBn: values.nameBn }),
+    };
+
     if (isUpdate && initialValues) {
       updateMutate({
         url: `/survey-category/${initialValues.id}`,
-        data: values,
+        data: payload,
       });
     } else {
-      createMutate({ data: values });
+      createMutate({ data: payload });
     }
   };
 
