@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Package, Tag } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useGet } from "@/src/hooks/useGet";
 import { useAppSelector } from "@/src/lib/redux/hooks";
 import { usePagination } from "@/src/hooks/usePagination";
@@ -9,7 +10,6 @@ import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { DataTable } from "@/src/components/ui/data-table";
 import { IProduct } from "./types";
 import { GetProductColumns } from "./TableColumns/ProductColumns";
-import CreateUpdateProduct from "./Form/CreateUpdateProducts";
 import ProductCategoryCard from "./ProductCategoryCard";
 
 type ActiveTab = "products" | "categories";
@@ -21,8 +21,7 @@ const TABS: { key: ActiveTab; label: string; icon: React.ElementType }[] = [
 
 const ProductsManagement = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>("products");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<IProduct | undefined>();
+  const router = useRouter();
 
   const {
     setCurrentPage,
@@ -62,13 +61,7 @@ const ProductsManagement = () => {
   }, [data]);
 
   const handleEdit = (item: IProduct) => {
-    setSelectedItem(item);
-    setIsModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-    setSelectedItem(undefined);
+    router.push(`/admin/products/${item.id}/edit`);
   };
 
   const columns = GetProductColumns(handleEdit);
@@ -99,31 +92,24 @@ const ProductsManagement = () => {
       {activeTab === "categories" && <ProductCategoryCard />}
 
       {activeTab === "products" && (
-        <>
-          <DataTable
-            columns={columns}
-            data={Array.isArray(data?.data) ? data.data : []}
-            isLoading={isLoading}
-            totalItems={totalItems}
-            currentPage={currentPage}
-            itemsPerPage={itemsPerPage}
-            onPageChange={setCurrentPage}
-            setItemsPerPage={setItemsPerPage}
-            title="Products"
-            searchValue={search}
-            onSearchChange={handleSearchChange}
-            searchPlaceholder="Search products..."
-            isShowStatus={false}
-            IsCreate
-            setIsModalOpen={setIsModalOpen}
-            createTitle="Add Product"
-          />
-          <CreateUpdateProduct
-            isOpen={isModalOpen}
-            onClose={handleModalClose}
-            initialValues={selectedItem}
-          />
-        </>
+        <DataTable
+          columns={columns}
+          data={Array.isArray(data?.data) ? data.data : []}
+          isLoading={isLoading}
+          totalItems={totalItems}
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+          setItemsPerPage={setItemsPerPage}
+          title="Products"
+          searchValue={search}
+          onSearchChange={handleSearchChange}
+          searchPlaceholder="Search products..."
+          isShowStatus={false}
+          IsCreate
+          routeURL="/admin/products/create"
+          createTitle="Add Product"
+        />
       )}
     </div>
   );

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { useFormContext } from "react-hook-form";
 import { Button } from "@/src/components/ui/button";
@@ -67,6 +68,7 @@ export default function ProductForm({
   initialValues,
 }: ProductFormProps) {
   const { handleSubmit } = useFormContext<ProductFormValues>();
+  const [showBnFields, setShowBnFields] = useState(false);
 
   const { data: categoryData } = useGet<IProductCategory[]>("/category/list", [
     "category-list",
@@ -112,25 +114,65 @@ export default function ProductForm({
         </div>
       </div>
 
-      {/* Bengali Content */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
-        <SectionHeader label="Bengali Content" />
-        <div className="flex flex-col gap-y-6">
-          <div>
-            <InputLabel label="Product Name (Bengali)" />
-            <ControlledInputField
-              name="nameBn"
-              placeholder="পণ্যের নাম বাংলায় লিখুন"
-              className="bg-light shadow-none"
-            />
+      {/* Bengali Fields Section (optional, collapsed by default) */}
+      <div className="border border-light-silver rounded-lg bg-white">
+        <button
+          type="button"
+          onClick={() => setShowBnFields((prev) => !prev)}
+          className="w-full flex items-center justify-between gap-3 p-8 cursor-pointer"
+        >
+          <div className="flex items-center gap-3">
+            <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
+              <Image
+                src="/icons/file.svg"
+                alt="bengali content"
+                width={36}
+                height={36}
+                className="w-4"
+              />
+            </div>
+            <div className="text-left">
+              <Paragraph className="xl:text-lg font-medium text-pBlue">
+                Bengali Content
+              </Paragraph>
+              <Paragraph className="text-xs! text-gray-500">
+                Optional — shown on the site when provided
+              </Paragraph>
+            </div>
           </div>
-          <div>
-            <InputLabel label="Description (Bengali)" />
-            <ControlledTextareaField
-              name="descriptionBn"
-              placeholder="পণ্যের বিবরণ বাংলায় লিখুন"
-              className="bg-light shadow-none min-h-24"
-            />
+          <ChevronDown
+            className={cn(
+              "w-5 h-5 text-gray-500 transition-transform duration-300",
+              showBnFields && "rotate-180"
+            )}
+          />
+        </button>
+
+        <div
+          className={cn(
+            "grid transition-all duration-300 ease-in-out",
+            showBnFields ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+          )}
+        >
+          <div className="overflow-hidden">
+            <div className="flex flex-col gap-y-6 px-8 pb-8">
+              <div>
+                <InputLabel label="Product Name (Bengali)" />
+                <ControlledInputField
+                  name="nameBn"
+                  placeholder="পণ্যের নাম বাংলায় লিখুন"
+                  className="bg-light shadow-none"
+                />
+              </div>
+              <div>
+                <InputLabel label="Description (Bengali)" />
+                <ControlledTextareaField
+                  name="descriptionBn"
+                  placeholder="পণ্যের বিবরণ বাংলায় লিখুন"
+                  className="bg-light shadow-none min-h-24"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -2,31 +2,21 @@
 
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { usePost } from "@/src/hooks/usePost";
 import { usePatch } from "@/src/hooks/usePatch";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, Resolver, useForm } from "react-hook-form";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/src/components/ui/dialog";
 import { productSchema, ProductFormValues } from "../Schema/productsSchema";
 import { IProduct } from "../types";
 import ProductForm from "./ProductsForm";
 
 interface CreateUpdateProductProps {
-  isOpen: boolean;
-  onClose: () => void;
   initialValues?: IProduct;
 }
 
-const CreateUpdateProduct = ({
-  isOpen,
-  onClose,
-  initialValues,
-}: CreateUpdateProductProps) => {
+const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
+  const router = useRouter();
   const isUpdate = !!initialValues;
 
   const methods = useForm<ProductFormValues>({
@@ -53,61 +43,42 @@ const CreateUpdateProduct = ({
   });
 
   useEffect(() => {
-    if (isOpen) {
+    if (initialValues) {
       methods.reset({
-        nameEn: initialValues?.nameEn || "",
-        nameBn: initialValues?.nameBn || "",
-        descriptionEn: initialValues?.descriptionEn || "",
-        descriptionBn: initialValues?.descriptionBn || "",
-        categoryId: initialValues?.category?.id || "",
-        chartCode: initialValues?.chartCode ?? undefined,
-        status: initialValues?.status || "ACTIVE",
-        images: initialValues?.images || [],
-        geographicLocation: initialValues?.geographicLocation || "",
-        scale: initialValues?.scale || "",
-        projection: initialValues?.projection || "",
-        northLatitude: initialValues?.northLatitude || "",
-        southLatitude: initialValues?.southLatitude || "",
-        eastLongitude: initialValues?.eastLongitude || "",
-        westLongitude: initialValues?.westLongitude || "",
-        edition: initialValues?.edition || "",
-        publicationDate: initialValues?.publicationDate
+        nameEn: initialValues.nameEn || "",
+        nameBn: initialValues.nameBn || "",
+        descriptionEn: initialValues.descriptionEn || "",
+        descriptionBn: initialValues.descriptionBn || "",
+        categoryId: initialValues.category?.id || "",
+        chartCode: initialValues.chartCode ?? undefined,
+        status: initialValues.status || "ACTIVE",
+        images: initialValues.images || [],
+        geographicLocation: initialValues.geographicLocation || "",
+        scale: initialValues.scale || "",
+        projection: initialValues.projection || "",
+        northLatitude: initialValues.northLatitude || "",
+        southLatitude: initialValues.southLatitude || "",
+        eastLongitude: initialValues.eastLongitude || "",
+        westLongitude: initialValues.westLongitude || "",
+        edition: initialValues.edition || "",
+        publicationDate: initialValues.publicationDate
           ? initialValues.publicationDate.split("T")[0]
           : "",
       });
-    } else {
-      methods.reset({
-        nameEn: "",
-        nameBn: "",
-        descriptionEn: "",
-        descriptionBn: "",
-        categoryId: "",
-        chartCode: undefined,
-        status: "ACTIVE",
-        images: [],
-        geographicLocation: "",
-        scale: "",
-        projection: "",
-        northLatitude: "",
-        southLatitude: "",
-        eastLongitude: "",
-        westLongitude: "",
-        edition: "",
-        publicationDate: "",
-      });
     }
-  }, [isOpen, initialValues, methods]);
+  }, [initialValues, methods]);
+
+  const goToList = () => router.push("/admin/products");
 
   const {
     mutate: createMutate,
     isPending: isCreating,
     error,
-    reset: resetCreateError,
   } = usePost(
     "/product",
     () => {
       toast.success("Product created successfully!");
-      onClose();
+      goToList();
     },
     [["product"]]
   );
@@ -116,24 +87,10 @@ const CreateUpdateProduct = ({
     mutate: updateMutate,
     isPending: isUpdating,
     error: updateError,
-    reset: resetUpdateError,
   } = usePatch(() => {
     toast.success("Product updated successfully!");
-    onClose();
+    goToList();
   }, [["product"]]);
-
-  const handleClose = () => {
-    resetCreateError();
-    resetUpdateError();
-    onClose();
-  };
-
-  useEffect(() => {
-    if (!isOpen) {
-      resetCreateError();
-      resetUpdateError();
-    }
-  }, [isOpen, resetCreateError, resetUpdateError]);
 
   const onSubmit = (values: ProductFormValues) => {
     const formData = new FormData();
@@ -184,32 +141,16 @@ const CreateUpdateProduct = ({
   };
 
   return (
-    <Dialog
-      open={isOpen}
-      onOpenChange={(open) => {
-        if (!open) handleClose();
-      }}
-    >
-      <DialogContent className="bg-white min-w-[70vw] max-h-[90vh] flex flex-col">
-        <DialogHeader className="shrink-0">
-          <DialogTitle className="text-secondary text-xl font-semibold">
-            {isUpdate ? "Update" : "Create"} Product
-          </DialogTitle>
-        </DialogHeader>
-        <div className="overflow-y-auto flex-1 mt-2 pr-2 scrollbar-modern">
-          <FormProvider {...methods}>
-            <ProductForm
-              isEditMode={isUpdate}
-              onSubmit={onSubmit}
-              onCancel={handleClose}
-              isPending={isCreating || isUpdating}
-              error={error || updateError}
-              initialValues={initialValues}
-            />
-          </FormProvider>
-        </div>
-      </DialogContent>
-    </Dialog>
+    <FormProvider {...methods}>
+      <ProductForm
+        isEditMode={isUpdate}
+        onSubmit={onSubmit}
+        onCancel={goToList}
+        isPending={isCreating || isUpdating}
+        error={error || updateError}
+        initialValues={initialValues}
+      />
+    </FormProvider>
   );
 };
 
