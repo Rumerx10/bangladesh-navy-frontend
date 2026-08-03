@@ -1,5 +1,5 @@
-import MarineWeather from "@/src/components/marine-weather/MarineWeather";
 import { Metadata } from "next";
+import MarineWeather from "@/src/components/marine-weather/MarineWeather";
 
 export const metadata: Metadata = {
   title: "Marine Weather",

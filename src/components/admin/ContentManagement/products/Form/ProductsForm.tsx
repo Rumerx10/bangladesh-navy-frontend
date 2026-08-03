@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { useFormContext } from "react-hook-form";
@@ -13,10 +13,12 @@ import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
 import ControlledSelectField from "@/src/components/shared/FromController/ControlledSelectField";
 import ControlledTextareaField from "@/src/components/shared/FromController/ControlledTextareaField";
+import ControlledComboboxSelect from "@/src/components/shared/FromController/ControlledComboboxSelect";
 import { MultipleImageUploadController } from "@/src/components/shared/FromController/MultipleImageFileInput";
 import { ErrorType } from "@/src/components/shared/types/common";
 import { useGet } from "@/src/hooks/useGet";
 import { mapToSelectOptions } from "@/src/utils/mapToSelectOptions";
+import { chartIndexAreas } from "@/src/data/chartIndexAreas";
 import { IProductCategory, IProduct } from "../types";
 import { ProductFormValues } from "../Schema/productsSchema";
 
@@ -79,6 +81,19 @@ export default function ProductForm({
     "nameEn",
     "id"
   );
+
+  const chartCodeOptions = useMemo(() => {
+    const byNumber = new Map<string, (typeof chartIndexAreas)[number]>();
+    for (const area of chartIndexAreas) {
+      if (!byNumber.has(area.number)) byNumber.set(area.number, area);
+    }
+    return [...byNumber.values()]
+      .sort((a, b) => Number(a.number) - Number(b.number))
+      .map((area) => ({
+        value: area.number,
+        label: area.int ? `${area.number} (${area.int})` : area.number,
+      }));
+  }, []);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
@@ -210,11 +225,11 @@ export default function ProductForm({
           </div>
           <div>
             <InputLabel label="Chart Code" required />
-            <ControlledInputField
+            <ControlledComboboxSelect
               name="chartCode"
-              type="number"
-              placeholder="e.g. 123456"
-              className="bg-light shadow-none"
+              options={chartCodeOptions}
+              placeholder="Select a chart code"
+              searchPlaceholder="Search chart code..."
             />
           </div>
         </div>

@@ -1,7 +1,8 @@
-import Login from "@/src/components/auth/Login/Login";
 import { Suspense } from "react";
+import Login from "@/src/components/auth/Login/Login";
 
-export default function page() {
+
+const page=()=> {
   return (
     <div>
       <Suspense>
@@ -10,3 +11,6 @@ export default function page() {
     </div>
   );
 }
+
+
+export default page;

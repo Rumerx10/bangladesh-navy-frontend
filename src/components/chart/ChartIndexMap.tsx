@@ -12,10 +12,8 @@ import {
   chartIndexAreas,
   IChartArea,
 } from "@/src/data/chartIndexAreas";
-import {
-  findProductByChartNumber,
-  getProductSlug,
-} from "@/src/data/navyProducts";
+import { useGet } from "@/src/hooks/useGet";
+import { IProduct } from "@/src/components/admin/ContentManagement/products/types";
 import { SearchIcon, XIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -37,6 +35,22 @@ export default function ChartIndexMap() {
   const [query, setQuery] = useState("");
   const [searchedNumber, setSearchedNumber] = useState<string | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const { data: productsData } = useGet<IProduct[]>(
+    "/product",
+    ["product", "chart-index-all"],
+    { limit: "1000" }
+  );
+
+  // Chart code (national chart number) -> product, for the search preview
+  // and the click-through info dialog.
+  const productByChartCode = useMemo(() => {
+    const map = new Map<number, IProduct>();
+    for (const p of productsData?.data || []) {
+      map.set(p.chartCode, p);
+    }
+    return map;
+  }, [productsData]);
 
   // Largest rectangles first so the smallest (most specific) chart renders
   // on top and wins hover/click where coverage areas overlap.
@@ -130,7 +144,7 @@ export default function ChartIndexMap() {
               >
                 {results.length > 0 ? (
                   results.map((area) => {
-                    const product = findProductByChartNumber(area.number);
+                    const product = productByChartCode.get(Number(area.number));
                     return (
                       <li key={area.number}>
                         <button
@@ -261,7 +275,11 @@ export default function ChartIndexMap() {
         )}
       </div>
 
-      <ChartInfoDialog selected={selected} onClose={() => setSelected(null)} />
+      <ChartInfoDialog
+        selected={selected}
+        product={selected ? productByChartCode.get(Number(selected.number)) : undefined}
+        onClose={() => setSelected(null)}
+      />
     </section>
   );
 }
@@ -282,15 +300,21 @@ function SpecTile({ label, value }: { label: string; value?: string }) {
 
 function ChartInfoDialog({
   selected,
+  product,
   onClose,
 }: {
   selected: IChartArea | null;
+  product?: IProduct;
   onClose: () => void;
 }) {
-  const product = selected ? findProductByChartNumber(selected.number) : null;
   const image = product?.images?.[0];
-  const attr = (key: string) =>
-    product?.productAttributes.find((a) => a.key === key)?.value;
+  const publishedDate = product?.publicationDate
+    ? new Date(product.publicationDate).toLocaleDateString("en-GB", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+      })
+    : undefined;
 
   return (
     <Dialog
@@ -336,23 +360,26 @@ function ChartInfoDialog({
                 {product.nameEn}
               </h3>
               <p className="mt-0.5 text-sm text-gray-500">
-                {attr("Geographic Location") ?? "Bay of Bengal"} ·{" "}
+                {product.geographicLocation ?? "Bay of Bengal"} ·{" "}
                 {product.category.nameEn}
               </p>
             </div>
 
             {/* Specifications */}
             <div className="grid grid-cols-2 gap-2">
-              <SpecTile label="Scale" value={attr("Scale")} />
-              <SpecTile label="Projection" value={attr("Projection")} />
-              <SpecTile label="Published" value={attr("Date of Publication")} />
-              <SpecTile label="Edition" value={attr("Edition")} />
+              <SpecTile label="Scale" value={product.scale ?? undefined} />
+              <SpecTile
+                label="Projection"
+                value={product.projection ?? undefined}
+              />
+              <SpecTile label="Published" value={publishedDate} />
+              <SpecTile label="Edition" value={product.edition ?? undefined} />
             </div>
 
             {/* CTA */}
             <div className="border-t border-gray-100 pt-4">
               <Link
-                href={`/products/${getProductSlug(product)}`}
+                href={`/product-service/paper-charts/${selected.number}`}
                 className="block w-full rounded-lg bg-pBlue py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-pBlue/90"
               >
                 View Details
@@ -361,21 +388,26 @@ function ChartInfoDialog({
           </div>
         ) : (
           selected && (
-            <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 py-8 text-center">
-              <p className="text-[11px] font-medium uppercase tracking-wider text-gray-400">
-                Serial Number
-              </p>
-              <p className="mt-1 text-4xl font-extrabold tracking-wide text-pBlue">
-                {selected.number}
-              </p>
-              {selected.int && (
-                <p className="mt-1 text-sm font-semibold text-gray-600">
-                  {selected.int}
+            <div className="space-y-4">
+              <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 py-8 text-center">
+                <p className="text-[11px] font-medium uppercase tracking-wider text-gray-400">
+                  Serial Number
                 </p>
-              )}
-              <p className="mt-3 text-xs text-gray-400">
-                Detailed information for this chart is coming soon.
-              </p>
+                <p className="mt-1 text-4xl font-extrabold tracking-wide text-pBlue">
+                  {selected.number}
+                </p>
+                {selected.int && (
+                  <p className="mt-1 text-sm font-semibold text-gray-600">
+                    {selected.int}
+                  </p>
+                )}
+              </div>
+              <Link
+                href={`/product-service/paper-charts/${selected.number}`}
+                className="block w-full rounded-lg bg-pBlue py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-pBlue/90"
+              >
+                View Details
+              </Link>
             </div>
           )
         )}

@@ -27,7 +27,7 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
       descriptionEn: "",
       descriptionBn: "",
       categoryId: "",
-      chartCode: undefined,
+      chartCode: "",
       status: "ACTIVE",
       images: [],
       geographicLocation: "",
@@ -50,7 +50,10 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
         descriptionEn: initialValues.descriptionEn || "",
         descriptionBn: initialValues.descriptionBn || "",
         categoryId: initialValues.category?.id || "",
-        chartCode: initialValues.chartCode ?? undefined,
+        chartCode:
+          initialValues.chartCode !== undefined
+            ? String(initialValues.chartCode)
+            : "",
         status: initialValues.status || "ACTIVE",
         images: initialValues.images || [],
         geographicLocation: initialValues.geographicLocation || "",

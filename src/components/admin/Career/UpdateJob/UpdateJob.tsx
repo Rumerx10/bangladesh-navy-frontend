@@ -14,11 +14,7 @@ export default function UpdateJob() {
   return (
     <div>
       <div className="mb-6">
-        <AdminBackButton
-          routeURL="/admin/job-list"
-          title="Job Details"
-          desc="View job information"
-        />
+        <AdminBackButton title="Job Details" desc="View job information" />
       </div>
       {isLoading ? <BlogFormSkeleton /> : <CreateUpdateCareer />}
     </div>

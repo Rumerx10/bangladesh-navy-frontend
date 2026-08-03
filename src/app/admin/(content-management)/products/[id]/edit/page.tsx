@@ -20,7 +20,6 @@ const EditProductPage = () => {
     <div>
       <div className="mb-6">
         <AdminBackButton
-          routeURL="/admin/products"
           title="Update Product"
           desc="Update product information"
         />

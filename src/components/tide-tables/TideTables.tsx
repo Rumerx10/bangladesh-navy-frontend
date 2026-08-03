@@ -1,9 +1,8 @@
 "use client";
-
-import { useGet } from "@/src/hooks/useGet";
 import dynamic from "next/dynamic";
-import TidalStationMapSkeleton from "./Skeleton/TidalStationMapSkeleton";
 import { ITidalStation } from "./types";
+import { useGet } from "@/src/hooks/useGet";
+import TidalStationMapSkeleton from "./Skeleton/TidalStationMapSkeleton";
 
 const TidalStationMap = dynamic(() => import("./TidalStationMap"), {
   ssr: false,
@@ -18,7 +17,7 @@ const TideTables = () => {
   const stations = data?.data ?? [];
 
   return (
-    <section className="relative mt-20">
+    <section className="relative mt-33">
       <TidalStationMap stations={stations} />
 
       <div className="pointer-events-none absolute top-4 left-4 z-10 max-w-xs rounded-xl bg-white/95 px-4 py-3 shadow-lg ring-1 ring-black/5 sm:top-6 sm:left-6">

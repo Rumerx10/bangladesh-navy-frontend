@@ -6,7 +6,6 @@ const CreateProductPage = () => {
     <div>
       <div className="mb-6">
         <AdminBackButton
-          // routeURL="/admin/products"
           title="Add Product"
           desc="Add a new product to the catalog"
         />
