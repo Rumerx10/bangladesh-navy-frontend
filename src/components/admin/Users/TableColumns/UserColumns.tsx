@@ -75,7 +75,7 @@ export const GetUserColumns = (
       cell: (value) => {
         return (
           <StatusBadge
-            status={value as StatusType}
+            status={value ? StatusType.VERIFIED : StatusType.UNVERIFIED}
             className="px-2.5 py-0.5 text-xs font-medium"
           />
         );

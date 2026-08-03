@@ -16,6 +16,7 @@ import { Controller, useFormContext } from "react-hook-form";
 interface MultipleStringFieldProps {
   name: string;
   placeholder?: string;
+  itemLabel?: string;
   className?: string;
   disabled?: boolean;
 }
@@ -23,6 +24,7 @@ interface MultipleStringFieldProps {
 const MultipleStringField = ({
   name,
   placeholder = "Add an item...",
+  itemLabel = "Item",
   className,
   disabled,
 }: MultipleStringFieldProps) => {
@@ -73,7 +75,7 @@ const MultipleStringField = ({
                   <Input
                     value={item}
                     onChange={(e) => handleUpdate(index, e.target.value)}
-                    placeholder={`Highlight ${index + 1}`}
+                    placeholder={`${itemLabel} ${index + 1}`}
                     disabled={disabled}
                     className={cn(
                       "bg-light shadow-none flex-1",
@@ -102,7 +104,7 @@ const MultipleStringField = ({
               onChange={(e) => setCurrentInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={
-                items.length > 0 ? "Add another highlight..." : placeholder
+                items.length > 0 ? `Add another ${itemLabel.toLowerCase()}...` : placeholder
               }
               disabled={disabled}
               className={cn(

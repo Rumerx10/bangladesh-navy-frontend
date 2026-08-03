@@ -1,5 +1,9 @@
 "use client";
-
+import Link from "next/link";
+import Image from "next/image";
+import { useGet } from "@/src/hooks/useGet";
+import { SearchIcon, XIcon } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,8 +12,12 @@ import {
   DialogTitle,
 } from "@/src/components/ui/dialog";
 import { ENC_VIEWBOX, encIndexAreas, IEncCell } from "@/src/data/encIndexAreas";
-import { SearchIcon, XIcon } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+
+import { IProduct } from "@/src/components/admin/ContentManagement/products/types";
+
+
+
+
 
 const IMAGE_SRC = "/chart/enc-index.jpg";
 
@@ -30,6 +38,21 @@ export default function ElectronicChartMap() {
   const [query, setQuery] = useState("");
   const [searchedCell, setSearchedCell] = useState<string | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const { data: productsData } = useGet<IProduct[]>(
+    "/product",
+    ["product", "enc-index-all"],
+    { limit: "1000" }
+  );
+
+  // National chart number -> product, for the click-through info dialog.
+  const productByNationalNo = useMemo(() => {
+    const map = new Map<number, IProduct>();
+    for (const p of productsData?.data || []) {
+      map.set(p.chartCode, p);
+    }
+    return map;
+  }, [productsData]);
 
   // Largest rectangles first so the smallest (most specific) cell renders on
   // top and wins hover/click where coverage areas overlap.
@@ -247,7 +270,13 @@ export default function ElectronicChartMap() {
         )}
       </div>
 
-      <EncInfoDialog selected={selected} onClose={() => setSelected(null)} />
+      <EncInfoDialog
+        selected={selected}
+        product={
+          selected ? productByNationalNo.get(Number(selected.nationalNo)) : undefined
+        }
+        onClose={() => setSelected(null)}
+      />
     </section>
   );
 }
@@ -268,11 +297,15 @@ function SpecTile({ label, value }: { label: string; value?: string }) {
 
 function EncInfoDialog({
   selected,
+  product,
   onClose,
 }: {
   selected: IEncCell | null;
+  product?: IProduct;
   onClose: () => void;
 }) {
+  const image = product?.images?.[0];
+
   return (
     <Dialog
       open={selected !== null}
@@ -290,6 +323,19 @@ function EncInfoDialog({
 
         {selected && (
           <div className="space-y-4">
+            {/* Chart preview */}
+            {image && (
+              <div className="relative h-56 w-full overflow-hidden rounded-xl border border-slate-200 bg-linear-to-br from-slate-50 to-slate-100">
+                <Image
+                  src={image}
+                  alt={product?.nameEn || selected.title}
+                  fill
+                  className="object-contain p-2"
+                  sizes="(max-width: 640px) 100vw, 448px"
+                />
+              </div>
+            )}
+
             {/* Cell identity */}
             <div className="flex flex-wrap items-center gap-2">
               <span className="rounded-md bg-pBlue px-2.5 py-1 text-sm font-bold text-white">
@@ -321,6 +367,16 @@ function EncInfoDialog({
               <SpecTile label="Published" value={selected.published} />
               <SpecTile label="New Edition" value={selected.edition} />
               <SpecTile label="National No." value={selected.nationalNo} />
+            </div>
+
+            {/* CTA */}
+            <div className="border-t border-gray-100 pt-4">
+              <Link
+                href={`/product-service/electronic-navigational-charts/${selected.nationalNo}`}
+                className="block w-full rounded-lg bg-pBlue py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-pBlue/90"
+              >
+                View Details
+              </Link>
             </div>
           </div>
         )}

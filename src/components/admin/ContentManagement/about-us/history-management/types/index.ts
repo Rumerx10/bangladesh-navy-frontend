@@ -15,10 +15,15 @@ export interface ITimelineItem {
 
 export interface IHistoryManagement {
   id?: string;
-  title: string;
-  subTitle: string;
-  image: File | string;
-  description: string;
-  keyMilestones: IKeyMilestone[];
-  timelineItems: ITimelineItem[];
+  contentEn: string;
+  contentBn?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  // Commented out — Title/Subtitle/Image/Key Milestones/Timeline are not part of the
+  // current /history API. Kept for potential future re-enablement.
+  // title?: string;
+  // subTitle?: string;
+  // image?: File | string;
+  // keyMilestones?: IKeyMilestone[];
+  // timelineItems?: ITimelineItem[];
 }

@@ -2,20 +2,23 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { useFormContext } from "react-hook-form";
 import { Button } from "@/src/components/ui/button";
 import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
-import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
-import { FileUploadController } from "@/src/components/shared/FromController/FileUploadController";
 import Paragraph from "@/src/components/shared/Paragraph";
 import SubmitButton from "@/src/components/shared/SubmitButton";
 import { ErrorType } from "@/src/components/shared/types/common";
 import { HistoryManagementSchemaForm } from "../Schema/historyManagementSchema";
-import KeyMilestonesField from "./KeyMilestonesField";
-import TimelineItemsField from "./TimelineItemsField";
 import InputLabel from "@/src/components/shared/InputLabel";
 import TextEditor from "@/src/components/shared/text-editor/TextEditor";
+// Commented out — Key Milestones/Timeline are not part of the current /history API.
+// Kept for potential future re-enablement.
+// import { FileUploadController } from "@/src/components/shared/FromController/FileUploadController";
+// import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
+// import KeyMilestonesField from "./KeyMilestonesField";
+// import TimelineItemsField from "./TimelineItemsField";
 
 interface HistoryManagementFormProps {
   isEditMode?: boolean;
@@ -23,14 +26,17 @@ interface HistoryManagementFormProps {
   error?: ErrorType | null;
   isPending?: boolean;
   onCancel?: () => void;
+  onImageUpload?: (file: File) => Promise<string>;
 }
 
 const SectionHeader = ({
   label,
+  description,
   onCancel,
   showCancel = false,
 }: {
   label: string;
+  description?: string;
   onCancel?: () => void;
   showCancel?: boolean;
 }) => {
@@ -53,9 +59,16 @@ const SectionHeader = ({
             onError={() => setIconLoaded(true)}
           />
         </div>
-        <Paragraph className="xl:text-lg font-medium text-pBlue">
-          {label}
-        </Paragraph>
+        <div>
+          <Paragraph className="xl:text-lg font-medium text-pBlue">
+            {label}
+          </Paragraph>
+          {description && (
+            <Paragraph className="text-xs! text-gray-500">
+              {description}
+            </Paragraph>
+          )}
+        </div>
       </div>
       {showCancel && (
         <Button
@@ -76,6 +89,7 @@ const HistoryManagementForm = ({
   error,
   isPending = false,
   onCancel,
+  onImageUpload,
 }: HistoryManagementFormProps) => {
   const {
     handleSubmit,
@@ -83,26 +97,28 @@ const HistoryManagementForm = ({
     setValue,
     formState: { errors },
   } = useFormContext<HistoryManagementSchemaForm>();
+  const [showBnContent, setShowBnContent] = useState(false);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
       {/* Basic Information */}
       <div className="border border-light-silver rounded-lg p-8 bg-white">
         <SectionHeader
-          label="Basic Information"
+          label="History Content"
           onCancel={onCancel}
           showCancel
         />
 
-        <div className="mt-6">
+        {/* Commented out — Image/Title/Sub Title are not part of the current /history API. */}
+        {/* <div className="mt-6">
           <Paragraph className="font-semibold text-pBlue uppercase mb-2">
             Image
           </Paragraph>
           <FileUploadController name="image" label="Upload history image" />
-        </div>
+        </div> */}
 
         <div className="flex flex-col gap-y-6 mt-6">
-          <div>
+          {/* <div>
             <Paragraph className="font-semibold text-pBlue uppercase mb-2">
               Title
             </Paragraph>
@@ -121,36 +137,99 @@ const HistoryManagementForm = ({
               placeholder="A legacy of maritime excellence"
               className="bg-light shadow-none"
             />
-          </div>
-          <div className="lg:col-span-4">
+          </div> */}
+          <div>
             <InputLabel
-              label="Description"
+              label="English Content"
+              required
               className="font-semibold text-pBlue uppercase mb-2"
             />
             <TextEditor
-              value={watch("description")}
+              value={watch("contentEn")}
               onChange={(value) =>
-                setValue("description", value, { shouldValidate: true })
+                setValue("contentEn", value, { shouldValidate: true })
               }
-              error={errors?.description}
+              error={errors?.contentEn}
+              onImageUpload={onImageUpload}
             />
           </div>
         </div>
       </div>
-      {/* Timeline Items */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+
+      {/* Bengali Content Section (optional, collapsed by default) */}
+      <div className="border border-light-silver rounded-lg bg-white">
+        <button
+          type="button"
+          onClick={() => setShowBnContent((prev) => !prev)}
+          className="w-full flex items-center justify-between gap-3 p-8 cursor-pointer"
+        >
+          <div className="flex items-center gap-3">
+            <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
+              <Image
+                src="/icons/media.svg"
+                alt="bengali content"
+                width={36}
+                height={36}
+                className="w-4"
+              />
+            </div>
+            <div className="text-left">
+              <Paragraph className="xl:text-lg font-medium text-pBlue">
+                Bengali Content
+              </Paragraph>
+              <Paragraph className="text-xs! text-gray-500">
+                Optional — shown on the site when provided
+              </Paragraph>
+            </div>
+          </div>
+          <ChevronDown
+            className={cn(
+              "w-5 h-5 text-gray-500 transition-transform duration-300",
+              showBnContent && "rotate-180"
+            )}
+          />
+        </button>
+
+        <div
+          className={cn(
+            "grid transition-all duration-300 ease-in-out",
+            showBnContent ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+          )}
+        >
+          <div className="overflow-hidden">
+            <div className="px-8 pb-8">
+              <InputLabel
+                label="Bengali Content"
+                className="font-semibold text-pBlue uppercase mb-2"
+              />
+              <TextEditor
+                value={watch("contentBn")}
+                onChange={(value) =>
+                  setValue("contentBn", value, { shouldValidate: true })
+                }
+                error={errors?.contentBn}
+                onImageUpload={onImageUpload}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Commented out — Timeline is not part of the current /history API. */}
+      {/* <div className="border border-light-silver rounded-lg p-8 bg-white">
         <SectionHeader label="Timeline" />
         <div className="mt-6">
           <TimelineItemsField name="timelineItems" />
         </div>
-      </div>
-      {/* Key Milestones */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      </div> */}
+
+      {/* Commented out — Key Milestones is not part of the current /history API. */}
+      {/* <div className="border border-light-silver rounded-lg p-8 bg-white">
         <SectionHeader label="Key Milestones" />
         <div className="mt-6">
           <KeyMilestonesField name="keyMilestones" />
         </div>
-      </div>
+      </div> */}
 
       <ErrorMessage error={error} />
 
@@ -165,7 +244,7 @@ const HistoryManagementForm = ({
 
         <SubmitButton
           isLoading={isPending}
-          label={isEditMode ? "Updating Changes" : "Update Changes"}
+          label={isEditMode ? "Update History" : "Create History"}
         />
       </div>
     </form>

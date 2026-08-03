@@ -5,7 +5,7 @@ import { cn } from "@/src/lib/utils";
 import ToolbarButton from "./Toolbar";
 import Text from "@tiptap/extension-text";
 import Bold from "@tiptap/extension-bold";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FieldError } from "react-hook-form";
 import FontSize from "./extensions/font-size";
 import Italic from "@tiptap/extension-italic";
@@ -17,6 +17,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import BulletList from "@tiptap/extension-bullet-list";
 import Placeholder from "@tiptap/extension-placeholder";
 import OrderedList from "@tiptap/extension-ordered-list";
+import TiptapImage from "@tiptap/extension-image";
 import { EditorContent, useEditor } from "@tiptap/react";
 import FontSizeSelector from "./toolbar/FontSizeSelector";
 import { Color, TextStyle } from "@tiptap/extension-text-style";
@@ -27,10 +28,19 @@ interface TextEditorProps {
   onChange?: (html: string) => void;
   className?: string;
   error?: FieldError;
+  onImageUpload?: (file: File) => Promise<string>;
 }
 
-const TextEditor = ({ value, onChange, className, error }: TextEditorProps) => {
+const TextEditor = ({
+  value,
+  onChange,
+  className,
+  error,
+  onImageUpload,
+}: TextEditorProps) => {
   const [currentFontSize, setCurrentFontSize] = useState("16");
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   const editor = useEditor({
     extensions: [
@@ -55,6 +65,7 @@ const TextEditor = ({ value, onChange, className, error }: TextEditorProps) => {
       TextAlign.configure({
         types: ["paragraph"],
       }),
+      ...(onImageUpload ? [TiptapImage] : []),
     ],
     content: value,
     immediatelyRender: false,
@@ -83,6 +94,22 @@ const TextEditor = ({ value, onChange, className, error }: TextEditorProps) => {
     } else {
       editor.chain().focus().setFontSize(`${size}px`).run();
       setCurrentFontSize(size);
+    }
+  };
+
+  const handleImageFileChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file || !onImageUpload) return;
+
+    setIsUploadingImage(true);
+    try {
+      const url = await onImageUpload(file);
+      editor.chain().focus().setImage({ src: url }).run();
+    } finally {
+      setIsUploadingImage(false);
     }
   };
 
@@ -202,6 +229,35 @@ const TextEditor = ({ value, onChange, className, error }: TextEditorProps) => {
               />
             </ToolbarButton>
           </div>
+
+          {onImageUpload && (
+            <>
+              <span className="h-10 w-px bg-[#EAECF0]"></span>
+              <div className="py-2.5">
+                <ToolbarButton
+                  onClick={() => imageInputRef.current?.click()}
+                  isActive={false}
+                  disabled={isUploadingImage}
+                  title={isUploadingImage ? "Uploading..." : "Insert Image"}
+                >
+                  <Image
+                    src="/icons/media.svg"
+                    alt="Insert image"
+                    width={20}
+                    height={20}
+                    className={cn(isUploadingImage && "opacity-50")}
+                  />
+                </ToolbarButton>
+                <input
+                  ref={imageInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/jpg,image/webp"
+                  className="hidden"
+                  onChange={handleImageFileChange}
+                />
+              </div>
+            </>
+          )}
         </div>
 
         {/* EDITOR */}

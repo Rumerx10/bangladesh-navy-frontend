@@ -88,6 +88,8 @@ export interface INewsItem {
   contentBn: string;
   imageUrl: string;
   newsCategory: INewsCategory;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface INewsListResponse {

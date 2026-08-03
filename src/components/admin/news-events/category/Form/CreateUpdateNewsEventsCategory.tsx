@@ -88,13 +88,18 @@ const CreateUpdateNewsEventsCategory = ({
   }, [isOpen, resetCreateError, resetUpdateError]);
 
   const onSubmit = (values: NewsEventsCategoryFormValues) => {
+    const payload = {
+      nameEn: values.nameEn,
+      ...(values.nameBn?.trim() && { nameBn: values.nameBn }),
+    };
+
     if (isUpdate && initialValues) {
       updateMutate({
         url: `/news-events-category/${initialValues.id}`,
-        data: values,
+        data: payload,
       });
     } else {
-      createMutate({ data: values });
+      createMutate({ data: payload });
     }
   };
 

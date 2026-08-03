@@ -1,12 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
 import { IHistoryManagement } from "./types";
 import { Button } from "@/src/components/ui/button";
 import Paragraph from "@/src/components/shared/Paragraph";
-import { Edit, ChevronRight, Target, Clock } from "lucide-react";
-import { cn } from "@/src/lib/utils";
+import { Edit, ChevronRight } from "lucide-react";
 
 interface HistoryPreviewProps {
   data: IHistoryManagement;
@@ -14,22 +12,6 @@ interface HistoryPreviewProps {
 }
 
 const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageFailed, setImageFailed] = useState(false);
-  const [loadedIcons, setLoadedIcons] = useState<Record<number, boolean>>({});
-  const [failedIcons, setFailedIcons] = useState<Record<number, boolean>>({});
-
-  const getImageSrc = (img: File | string): string => {
-    if (img instanceof File) return URL.createObjectURL(img);
-    return img || "/placeholder.svg";
-  };
-
-  const getIconSrc = (icon: File | string, index: number): string => {
-    if (failedIcons[index]) return "/placeholder.svg";
-    if (icon instanceof File) return URL.createObjectURL(icon);
-    return icon || "/placeholder.svg";
-  };
-
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
       {/* Header */}
@@ -64,52 +46,50 @@ const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
         </Button>
       </div>
 
-      <div className="p-8 pt-10 space-y-8">
-        {/* Main image */}
-        {data.image && (
+      <div className="p-8 pt-10 space-y-6">
+        {/* Commented out — Image is not part of the current /history API. */}
+        {/* {data.image && (
           <div className="relative w-full h-56 rounded-xl overflow-hidden border border-gray-200">
-            <Image
-              src={imageFailed ? "/placeholder.svg" : getImageSrc(data.image)}
-              alt={data.title}
-              fill
-              className={cn(
-                "object-cover duration-700 ease-in-out",
-                imageLoaded ? "opacity-100" : "opacity-0"
-              )}
-              onLoad={() => setImageLoaded(true)}
-              onError={() => setImageFailed(true)}
+            <Image src={getImageSrc(data.image)} alt={data.title} fill className="object-cover" />
+          </div>
+        )} */}
+
+        {/* Commented out — Title/Sub Title are not part of the current /history API. */}
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+            <Paragraph className="font-semibold text-pBlue uppercase mb-2">Title</Paragraph>
+            <Paragraph className="text-base">{data.title}</Paragraph>
+          </div>
+          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+            <Paragraph className="font-semibold text-pBlue uppercase mb-2">Sub Title</Paragraph>
+            <Paragraph className="text-base">{data.subTitle}</Paragraph>
+          </div>
+        </div> */}
+
+        <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+          <Paragraph className="font-semibold text-pBlue uppercase mb-2">
+            English Content
+          </Paragraph>
+          <div
+            className="preview-content text-sm leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: data.contentEn || "" }}
+          />
+        </div>
+
+        {data.contentBn && (
+          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
+              Bengali Content
+            </Paragraph>
+            <div
+              className="preview-content text-sm leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: data.contentBn }}
             />
           </div>
         )}
 
-        {/* Basic fields */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Title
-            </Paragraph>
-            <Paragraph className="text-base">{data.title}</Paragraph>
-          </div>
-
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Sub Title
-            </Paragraph>
-            <Paragraph className="text-base">{data.subTitle}</Paragraph>
-          </div>
-
-          <div className="md:col-span-2 bg-gray-50 rounded-xl p-5 border border-gray-100">
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Description
-            </Paragraph>
-            <Paragraph className="text-base leading-relaxed">
-              {data.description}
-            </Paragraph>
-          </div>
-        </div>
-
-        {/* Key Milestones */}
-        {data.keyMilestones && data.keyMilestones.length > 0 && (
+        {/* Commented out — Key Milestones is not part of the current /history API. */}
+        {/* {data.keyMilestones && data.keyMilestones.length > 0 && (
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Target className="w-5 h-5 text-pBlue" />
@@ -119,24 +99,19 @@ const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {data.keyMilestones.map((milestone, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-50 rounded-xl p-5 border border-gray-100 flex gap-4"
-                >
+                <div key={index} className="bg-gray-50 rounded-xl p-5 border border-gray-100 flex gap-4">
                   <div className="bg-primary/10 text-primary border border-primary/20 rounded-lg px-3 py-1 text-sm font-semibold h-fit shrink-0">
                     {milestone.year}
                   </div>
-                  <Paragraph className="text-sm leading-relaxed">
-                    {milestone.description}
-                  </Paragraph>
+                  <Paragraph className="text-sm leading-relaxed">{milestone.description}</Paragraph>
                 </div>
               ))}
             </div>
           </div>
-        )}
+        )} */}
 
-        {/* Timeline Items */}
-        {data.timelineItems && data.timelineItems.length > 0 && (
+        {/* Commented out — Timeline is not part of the current /history API. */}
+        {/* {data.timelineItems && data.timelineItems.length > 0 && (
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Clock className="w-5 h-5 text-pBlue" />
@@ -146,34 +121,11 @@ const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
             </div>
             <div className="space-y-4">
               {data.timelineItems.map((item, index) => (
-                <div
-                  key={item.id || index}
-                  className="bg-gray-50 rounded-xl p-5 border border-gray-100"
-                >
+                <div key={item.id || index} className="bg-gray-50 rounded-xl p-5 border border-gray-100">
                   <div className="flex items-start gap-4">
                     {item.icon && (
                       <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-gray-200 bg-white shrink-0">
-                        <Image
-                          src={getIconSrc(item.icon, index)}
-                          alt={item.title}
-                          fill
-                          className={cn(
-                            "object-contain duration-700 ease-in-out",
-                            loadedIcons[index] ? "opacity-100" : "opacity-0"
-                          )}
-                          onLoad={() =>
-                            setLoadedIcons((prev) => ({
-                              ...prev,
-                              [index]: true,
-                            }))
-                          }
-                          onError={() =>
-                            setFailedIcons((prev) => ({
-                              ...prev,
-                              [index]: true,
-                            }))
-                          }
-                        />
+                        <Image src={getIconSrc(item.icon, index)} alt={item.title} fill className="object-contain" />
                       </div>
                     )}
                     <div className="flex-1 min-w-0">
@@ -182,34 +134,21 @@ const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
                           {item.period}
                         </span>
                       </div>
-                      <Paragraph className="font-semibold text-pBlue mb-2">
-                        {item.title}
-                      </Paragraph>
-                      <Paragraph className="text-sm leading-relaxed mb-3">
-                        {item.summary}
-                      </Paragraph>
-
+                      <Paragraph className="font-semibold text-pBlue mb-2">{item.title}</Paragraph>
+                      <Paragraph className="text-sm leading-relaxed mb-3">{item.summary}</Paragraph>
                       {item.highlights && item.highlights.length > 0 && (
                         <ul className="space-y-1 mb-3">
                           {item.highlights.map((h, hi) => (
-                            <li
-                              key={hi}
-                              className="flex items-start gap-2 text-sm"
-                            >
-                              <span className="text-primary mt-1 shrink-0">
-                                •
-                              </span>
+                            <li key={hi} className="flex items-start gap-2 text-sm">
+                              <span className="text-primary mt-1 shrink-0">•</span>
                               <span>{h}</span>
                             </li>
                           ))}
                         </ul>
                       )}
-
                       {item.note && (
                         <div className="border-l-2 border-primary/40 pl-3">
-                          <Paragraph className="text-sm italic text-gray-600">
-                            {item.note}
-                          </Paragraph>
+                          <Paragraph className="text-sm italic text-gray-600">{item.note}</Paragraph>
                         </div>
                       )}
                     </div>
@@ -218,7 +157,7 @@ const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
               ))}
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

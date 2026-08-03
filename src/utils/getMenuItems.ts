@@ -94,7 +94,10 @@ export function getMenuItems(): MenuItem[] {
       label: "Manage Product",
       icon: Package,
       href: "/admin/products",
-      children: [{ label: "All Products", href: "/admin/products" }],
+      children: [
+        { label: "All Products", href: "/admin/products" },
+        { label: "Tidal Stations", href: "/admin/products/tidal-stations" },
+      ],
     },
     // {
     //   segment: "Order Management",

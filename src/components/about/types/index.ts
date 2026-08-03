@@ -1,5 +1,13 @@
 // ─── About Page Types ───
 
+export interface IHistoryContent {
+  id: string;
+  contentEn: string;
+  contentBn?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export interface ITimelineItem {
   id: string;
   year: string;

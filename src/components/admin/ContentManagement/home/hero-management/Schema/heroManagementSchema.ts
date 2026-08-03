@@ -2,17 +2,14 @@ import * as yup from "yup";
 
 export const heroManagementSchema = yup.object({
   titleEn: yup.string().required("English title is required").trim(),
-  titleBn: yup.string().required("Bengali title is required").trim(),
+  titleBn: yup.string().trim().optional(),
   subTitleEn: yup.string().required("English subtitle is required").trim(),
-  subTitleBn: yup.string().required("Bengali subtitle is required").trim(),
+  subTitleBn: yup.string().trim().optional(),
   descriptionEn: yup
     .string()
     .required("English description is required")
     .trim(),
-  descriptionBn: yup
-    .string()
-    .required("Bengali description is required")
-    .trim(),
+  descriptionBn: yup.string().trim().optional(),
   images: yup
     .array()
     .of(yup.mixed<File | string>())

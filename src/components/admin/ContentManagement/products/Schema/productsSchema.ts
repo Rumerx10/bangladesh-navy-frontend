@@ -16,11 +16,7 @@ export const productSchema = Yup.object({
   descriptionEn: Yup.string().required("English description is required"),
   descriptionBn: Yup.string().optional(),
   categoryId: Yup.string().required("Category is required"),
-  chartCode: Yup.number()
-    .typeError("Chart code must be a number")
-    .required("Chart code is required")
-    .integer("Must be an integer")
-    .positive("Must be positive"),
+  chartCode: Yup.string().required("Chart code is required"),
   status: Yup.string<"ACTIVE" | "INACTIVE">()
     .oneOf(["ACTIVE", "INACTIVE"])
     .required("Status is required"),

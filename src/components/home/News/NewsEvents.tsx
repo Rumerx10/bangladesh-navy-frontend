@@ -90,7 +90,7 @@ const NewsEvents = () => {
               transition={{ duration: 0.4, delay: 0.3 }}
             >
               <Link
-                href="/news"
+                href="/about/news"
                 className="inline-flex items-center justify-center gap-2 px-8 h-11 py-4 rounded-lg bg-liteBlue text-white font-medium text-base hover:bg-[#004d8a] transition-colors"
               >
                 View All News <ArrowRight size={18} />

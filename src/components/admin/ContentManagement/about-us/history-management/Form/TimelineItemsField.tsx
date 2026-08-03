@@ -15,7 +15,7 @@ import {
 import { Controller, useFormContext } from "react-hook-form";
 import Paragraph from "@/src/components/shared/Paragraph";
 import { ITimelineItem } from "../types";
-import MultipleStringField from "./MultipleStringField";
+import MultipleStringField from "@/src/components/shared/FromController/MultipleStringField";
 
 interface TimelineItemsFieldProps {
   name: string;
@@ -237,6 +237,7 @@ const TimelineItemsField = ({ name, disabled }: TimelineItemsFieldProps) => {
                     <MultipleStringField
                       name={`${name}.${index}.highlights`}
                       placeholder="Add a highlight and press Add..."
+                      itemLabel="Highlight"
                       disabled={disabled}
                     />
                   </div>

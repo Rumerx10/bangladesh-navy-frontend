@@ -73,7 +73,7 @@ export default function CreateUpdateUser({
     }
 
     updateMutate({
-      url: `/user/profile/${initialValues.id}`,
+      url: `/user/${initialValues.id}`,
       data: formData,
     });
   };
