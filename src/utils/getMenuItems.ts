@@ -18,7 +18,7 @@ export interface MenuItem {
   matchRoutes?: string[];
   children?: { label: string; href: string; matchRoutes?: string[] }[];
 }
-export function getMenuItems(): MenuItem[] {
+const getMenuItems = (): MenuItem[] => {
   const menuItems: (MenuItem | false)[] = [
     { label: "Dashboard", icon: LayoutDashboard, href: "/admin" },
     {
@@ -119,4 +119,6 @@ export function getMenuItems(): MenuItem[] {
   ];
 
   return menuItems.filter(Boolean) as MenuItem[];
-}
+};
+
+export default getMenuItems;
