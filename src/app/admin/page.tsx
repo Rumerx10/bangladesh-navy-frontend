@@ -47,7 +47,7 @@ const quickLinks: QuickLink[] = [
   {
     title: "Training & Courses",
     desc: "BN Hydrographic Institute courses and programs.",
-    href: "/admin/skill-development",
+    href: "/admin/training-courses/institute",
     icon: GraduationCap,
   },
   {

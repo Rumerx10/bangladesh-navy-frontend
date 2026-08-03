@@ -91,19 +91,19 @@ export const NavigationItems: NavItem[] = [
   },
   {
     label: "Important Notice",
-    link: "#",
+    link: "/important-notice",
     subLinks: [
       {
         label: "Publications",
-        link: "/product-service?category=publications",
+        link: "/important-notice/publications",
       },
       {
         label: "Notices",
-        link: "/product-service?category=notices-to-mariners",
+        link: "/important-notice/notices",
       },
       {
         label: "Hydrographic Note",
-        link: "/contact-us/hydrographic-note",
+        link: "/important-notice/hydrographic-note",
       },
     ],
   },
