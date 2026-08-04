@@ -96,6 +96,7 @@ export default function ProductForm({
       }));
   }, []);
 
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
       {/* English Content */}
