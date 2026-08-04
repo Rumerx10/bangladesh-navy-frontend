@@ -5,13 +5,13 @@ import { useGet } from "@/src/hooks/useGet";
 import { usePagination } from "@/src/hooks/usePagination";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { DataTable } from "@/src/components/ui/data-table";
-import { IPartner } from "./types";
-import { GetPartnerColumns } from "./TableColumns/PartnerColumns";
-import CreateUpdatePartner from "./Form/CreateUpdatePartner";
+import { IImportantLink } from "./types";
+import { GetImportantLinkColumns } from "./TableColumns/ImportantLinkColumns";
+import CreateUpdateImportantLink from "./Form/CreateUpdateImportantLink";
 
-const PartnerManagement = () => {
+const ImportantLinksManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<IPartner | undefined>();
+  const [selectedItem, setSelectedItem] = useState<IImportantLink | undefined>();
 
   const {
     setCurrentPage,
@@ -25,10 +25,10 @@ const PartnerManagement = () => {
   const { search, handleSearchChange, debouncedSearch } =
     useSearchDebounce(300);
 
-  const { data, isLoading } = useGet<IPartner[]>(
-    "/partners",
+  const { data, isLoading } = useGet<IImportantLink[]>(
+    "/important-links",
     [
-      "partners",
+      "important-links",
       currentPage.toString(),
       itemsPerPage.toString(),
       debouncedSearch,
@@ -47,7 +47,7 @@ const PartnerManagement = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  const handleEdit = (item: IPartner) => {
+  const handleEdit = (item: IImportantLink) => {
     setSelectedItem(item);
     setIsModalOpen(true);
   };
@@ -57,7 +57,7 @@ const PartnerManagement = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetPartnerColumns(handleEdit);
+  const columns = GetImportantLinkColumns(handleEdit);
 
   return (
     <>
@@ -70,16 +70,16 @@ const PartnerManagement = () => {
         itemsPerPage={itemsPerPage}
         onPageChange={setCurrentPage}
         setItemsPerPage={setItemsPerPage}
-        title="Partners"
+        title="Important Links"
         searchValue={search}
         onSearchChange={handleSearchChange}
-        searchPlaceholder="Search partners..."
+        searchPlaceholder="Search important links..."
         isShowStatus={false}
         IsCreate
         setIsModalOpen={setIsModalOpen}
-        createTitle="Add Partner"
+        createTitle="Add Link"
       />
-      <CreateUpdatePartner
+      <CreateUpdateImportantLink
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
@@ -88,4 +88,4 @@ const PartnerManagement = () => {
   );
 };
 
-export default PartnerManagement;
+export default ImportantLinksManagement;

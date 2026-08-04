@@ -5,11 +5,13 @@ import { Label } from "../../ui/label";
 interface ControlledCheckFieldProps {
   name: string;
   label: string;
+  disabled?: boolean;
 }
 
 export function ControlledCheckField({
   name,
   label,
+  disabled,
 }: ControlledCheckFieldProps) {
   const { control } = useFormContext();
 
@@ -24,8 +26,12 @@ export function ControlledCheckField({
               id={name}
               checked={!!field.value}
               onCheckedChange={(checked) => field.onChange(!!checked)}
+              disabled={disabled}
             />
-            <Label htmlFor={name} className="text-[#666666] cursor-pointer">
+            <Label
+              htmlFor={name}
+              className={`text-[#666666] ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+            >
               {label}
             </Label>
           </div>

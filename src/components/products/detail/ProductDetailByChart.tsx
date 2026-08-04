@@ -4,9 +4,16 @@ import { notFound } from "next/navigation";
 import { useGet } from "@/src/hooks/useGet";
 import ProductDetailLayout from "@/src/components/products/detail/ProductDetailLayout";
 import { INavyProduct, ProductStatus } from "@/src/components/products/types";
-import { IProduct } from "@/src/components/admin/ContentManagement/products/types";
+import {
+  IProduct,
+  PRODUCT_CATEGORY_LABELS,
+} from "@/src/components/admin/ContentManagement/products/types";
 
 function adaptToNavyProduct(p: IProduct): INavyProduct {
+  const categoryLabel = p.category
+    ? PRODUCT_CATEGORY_LABELS[p.category]
+    : "Tidal Product";
+
   return {
     id: p.id,
     nameEn: p.nameEn,
@@ -14,27 +21,20 @@ function adaptToNavyProduct(p: IProduct): INavyProduct {
     images: p.images,
     descriptionEn: p.descriptionEn,
     descriptionBn: p.descriptionBn,
-    price: 0,
+    price: p.price ?? 0,
     stock: 0,
-    categoryId: p.category?.id || "",
+    categoryId: p.category || "",
     status:
       p.status === "ACTIVE" ? ProductStatus.ACTIVE : ProductStatus.INACTIVE,
     createdAt: p.createdAt,
     updatedAt: p.updatedAt,
     category: {
-      id: p.category?.id || "",
-      nameEn: p.category?.nameEn || "",
-      nameBn: p.category?.nameBn || "",
+      id: p.category || "",
+      nameEn: categoryLabel,
+      nameBn: categoryLabel,
       slug: "",
     },
-    productAttributes: (p.productAttributes || []).map((a) => ({
-      id: a.id,
-      productId: p.id,
-      key: a.key,
-      value: a.value,
-      createdAt: p.createdAt,
-      updatedAt: p.updatedAt,
-    })),
+    productAttributes: [],
   };
 }
 

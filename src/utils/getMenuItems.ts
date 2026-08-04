@@ -18,7 +18,7 @@ export interface MenuItem {
   matchRoutes?: string[];
   children?: { label: string; href: string; matchRoutes?: string[] }[];
 }
-export function getMenuItems(): MenuItem[] {
+const getMenuItems = (): MenuItem[] => {
   const menuItems: (MenuItem | false)[] = [
     { label: "Dashboard", icon: LayoutDashboard, href: "/admin" },
     {
@@ -31,6 +31,7 @@ export function getMenuItems(): MenuItem[] {
         { label: "Notices", href: "/admin/home/notice-management" },
         { label: "Chief's Biography", href: "/admin/home/biography" },
         { label: "Partner Management", href: "/admin/home/partner" },
+        { label: "Important Links", href: "/admin/home/important-links" },
       ],
     },
     {
@@ -63,13 +64,13 @@ export function getMenuItems(): MenuItem[] {
       segment: "Training Management",
       label: "Training & Courses",
       icon: GraduationCap,
-      href: "/admin/skill-development",
+      href: "/admin/training-courses",
       children: [
         {
           label: "BN Hydrographic Institute",
-          href: "/admin/skill-development",
+          href: "/admin/training-courses/institute",
         },
-        { label: "Courses", href: "/admin/skill-development/courses" },
+        { label: "Courses", href: "/admin/training-courses/courses" },
       ],
     },
     {
@@ -119,4 +120,6 @@ export function getMenuItems(): MenuItem[] {
   ];
 
   return menuItems.filter(Boolean) as MenuItem[];
-}
+};
+
+export default getMenuItems;

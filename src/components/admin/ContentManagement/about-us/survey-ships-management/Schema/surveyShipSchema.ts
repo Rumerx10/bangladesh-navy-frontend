@@ -20,7 +20,10 @@ export const surveyShipSchema = Yup.object({
   beam: Yup.string().required("Beam is required"),
   draft: Yup.string().required("Draft is required"),
   crew: Yup.string().required("Crew is required"),
-  surveyEquipment: Yup.string().required("Survey equipment is required"),
+  surveyEquipment: Yup.array()
+    .of(Yup.string().required())
+    .min(1, "At least one survey equipment item is required")
+    .required("Survey equipment is required"),
   status: Yup.string()
     .oneOf(["ACTIVE", "INACTIVE"] as const)
     .required("Status is required"),

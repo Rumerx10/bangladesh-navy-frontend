@@ -15,7 +15,23 @@ export const productSchema = Yup.object({
   nameBn: Yup.string().max(200, "Max 200 characters").optional(),
   descriptionEn: Yup.string().required("English description is required"),
   descriptionBn: Yup.string().optional(),
-  categoryId: Yup.string().required("Category is required"),
+  isTidal: Yup.boolean().default(false),
+  category: Yup.string()
+    .oneOf(["", "PAPPER_CHART", "ELECTRONIC_NAVIGATIONAL_CHART"])
+    .when("isTidal", {
+      is: false,
+      then: (schema) =>
+        schema.test(
+          "category-required",
+          "Category is required",
+          (value) => !!value
+        ),
+      otherwise: (schema) => schema.optional(),
+    }),
+  price: Yup.number()
+    .typeError("Price must be a number")
+    .required("Price is required")
+    .min(0, "Price must be positive"),
   chartCode: Yup.string().required("Chart code is required"),
   status: Yup.string<"ACTIVE" | "INACTIVE">()
     .oneOf(["ACTIVE", "INACTIVE"])
@@ -44,14 +60,6 @@ export const productSchema = Yup.object({
   westLongitude: Yup.string().optional(),
   edition: Yup.string().optional(),
   publicationDate: Yup.string().optional(),
-  productAttributes: Yup.array()
-    .of(
-      Yup.object({
-        key: Yup.string().required(),
-        value: Yup.string().required(),
-      })
-    )
-    .optional(),
 });
 
 export type ProductFormValues = Yup.InferType<typeof productSchema>;

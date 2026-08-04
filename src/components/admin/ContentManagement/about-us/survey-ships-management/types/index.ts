@@ -23,7 +23,7 @@ export interface ISurveyShip {
   beam: string;
   draft: string;
   crew: string;
-  surveyEquipment: string;
+  surveyEquipment: string[];
   image: string;
   status: "ACTIVE" | "INACTIVE";
   surveyCategory: ISurveyShipCategory;
