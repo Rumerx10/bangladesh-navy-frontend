@@ -1,12 +1,3 @@
-export interface IProductAttribute {
-  id: string;
-  productId: string;
-  key: string;
-  value: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface IProductCategory {
   id: string;
   nameEn: string;
@@ -19,11 +10,23 @@ export interface IProductCategory {
   updatedAt: string;
 }
 
-export interface IProductItemCategory {
-  id: string;
-  nameEn: string;
-  nameBn: string;
-}
+export type ProductCategory = "PAPPER_CHART" | "ELECTRONIC_NAVIGATIONAL_CHART";
+
+export const PRODUCT_CATEGORY_OPTIONS: {
+  label: string;
+  value: ProductCategory;
+}[] = [
+  { label: "Paper Chart", value: "PAPPER_CHART" },
+  {
+    label: "Electronic Navigational Chart",
+    value: "ELECTRONIC_NAVIGATIONAL_CHART",
+  },
+];
+
+export const PRODUCT_CATEGORY_LABELS: Record<ProductCategory, string> = {
+  PAPPER_CHART: "Paper Chart",
+  ELECTRONIC_NAVIGATIONAL_CHART: "Electronic Navigational Chart",
+};
 
 export interface IProduct {
   id: string;
@@ -33,8 +36,10 @@ export interface IProduct {
   descriptionBn: string;
   images: string[];
   chartCode: number;
+  category: ProductCategory | null;
+  isTidal?: boolean;
+  price: number | null;
   status: "ACTIVE" | "INACTIVE";
-  category: IProductItemCategory;
   geographicLocation: string | null;
   scale: string | null;
   projection: string | null;
@@ -44,7 +49,6 @@ export interface IProduct {
   westLongitude: string | null;
   edition: string | null;
   publicationDate: string | null;
-  productAttributes?: IProductAttribute[];
   createdAt: string;
   updatedAt: string;
 }

@@ -10,7 +10,8 @@ import { usePagination } from "@/src/hooks/usePagination";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import {
   IProduct,
-  IProductCategory,
+  PRODUCT_CATEGORY_LABELS,
+  PRODUCT_CATEGORY_OPTIONS,
 } from "@/src/components/admin/ContentManagement/products/types";
 
 export default function ProductServicePage() {
@@ -33,18 +34,11 @@ export default function ProductServicePage() {
       page: currentPage.toString(),
       limit: itemsPerPage.toString(),
       search: debouncedSearch,
-      ...(selectedCategory !== "all" && { categoryId: selectedCategory }),
+      ...(selectedCategory !== "all" && { category: selectedCategory }),
     }
   );
 
-  const { data: categoryData } = useGet<IProductCategory[]>("/category/list", [
-    "category-list-public",
-  ]);
-
   const products: IProduct[] = Array.isArray(data?.data) ? data.data : [];
-  const categories: IProductCategory[] = Array.isArray(categoryData?.data)
-    ? categoryData.data
-    : [];
 
   return (
     <section className="container px-4 sm:px-6 lg:px-8 py-8 lg:py-16 mt-24 lg:mt-28">
@@ -82,20 +76,20 @@ export default function ProductServicePage() {
           >
             All
           </button>
-          {categories.map((cat) => (
+          {PRODUCT_CATEGORY_OPTIONS.map((cat) => (
             <button
-              key={cat.id}
+              key={cat.value}
               onClick={() => {
-                setSelectedCategory(cat.id);
+                setSelectedCategory(cat.value);
                 setCurrentPage(1);
               }}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors cursor-pointer ${
-                selectedCategory === cat.id
+                selectedCategory === cat.value
                   ? "bg-pBlue text-white"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }`}
             >
-              {cat.nameEn}
+              {cat.label}
             </button>
           ))}
         </div>
@@ -166,7 +160,9 @@ export default function ProductServicePage() {
                       </div>
                     )}
                     <span className="absolute bottom-3 left-3 px-2.5 py-1 rounded-md bg-black/40 backdrop-blur-sm text-white text-[11px] font-medium">
-                      {product.category?.nameEn}
+                      {product.category
+                        ? PRODUCT_CATEGORY_LABELS[product.category]
+                        : "Tidal Product"}
                     </span>
                   </div>
                   <div className="flex-1 p-4 flex flex-col gap-1">

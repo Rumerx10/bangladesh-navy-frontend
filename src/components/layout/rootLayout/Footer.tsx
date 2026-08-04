@@ -1,3 +1,5 @@
+"use client";
+
 import logo from "@/public/logo.png";
 import { siteConfig } from "@/src/config/siteConfig";
 import { Facebook, Mail, MapPin, Phone, Youtube } from "lucide-react";

@@ -13,7 +13,10 @@ import {
   IChartArea,
 } from "@/src/data/chartIndexAreas";
 import { useGet } from "@/src/hooks/useGet";
-import { IProduct } from "@/src/components/admin/ContentManagement/products/types";
+import {
+  IProduct,
+  PRODUCT_CATEGORY_LABELS,
+} from "@/src/components/admin/ContentManagement/products/types";
 import { SearchIcon, XIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -360,8 +363,9 @@ function ChartInfoDialog({
                 {product.nameEn}
               </h3>
               <p className="mt-0.5 text-sm text-gray-500">
-                {product.geographicLocation ?? "Bay of Bengal"} ·{" "}
-                {product.category.nameEn}
+                {product.geographicLocation ?? "Bay of Bengal"}
+                {product.category &&
+                  ` · ${PRODUCT_CATEGORY_LABELS[product.category]}`}
               </p>
             </div>
 

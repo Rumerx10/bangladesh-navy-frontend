@@ -1,16 +1,15 @@
 "use client";
-
+import { IProduct } from "./types";
 import { useEffect, useState } from "react";
 import { Package, Tag } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useGet } from "@/src/hooks/useGet";
 import { useAppSelector } from "@/src/lib/redux/hooks";
-import { usePagination } from "@/src/hooks/usePagination";
-import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
-import { DataTable } from "@/src/components/ui/data-table";
-import { IProduct } from "./types";
-import { GetProductColumns } from "./TableColumns/ProductColumns";
 import ProductCategoryCard from "./ProductCategoryCard";
+import { usePagination } from "@/src/hooks/usePagination";
+import { DataTable } from "@/src/components/ui/data-table";
+import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
+import { GetProductColumns } from "./TableColumns/ProductColumns";
 
 type ActiveTab = "products" | "categories";
 

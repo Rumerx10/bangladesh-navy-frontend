@@ -44,7 +44,7 @@ const CreateUpdateSurveyShip = ({
       beam: "",
       draft: "",
       crew: "",
-      surveyEquipment: "",
+      surveyEquipment: [],
       status: "ACTIVE",
       image: undefined,
     },
@@ -62,7 +62,7 @@ const CreateUpdateSurveyShip = ({
         beam: initialValues?.beam || "",
         draft: initialValues?.draft || "",
         crew: initialValues?.crew || "",
-        surveyEquipment: initialValues?.surveyEquipment || "",
+        surveyEquipment: initialValues?.surveyEquipment || [],
         status: initialValues?.status || "ACTIVE",
         image: initialValues?.image || undefined,
       });
@@ -77,7 +77,7 @@ const CreateUpdateSurveyShip = ({
         beam: "",
         draft: "",
         crew: "",
-        surveyEquipment: "",
+        surveyEquipment: [],
         status: "ACTIVE",
         image: undefined,
       });
@@ -132,7 +132,9 @@ const CreateUpdateSurveyShip = ({
     formData.append("beam", values.beam);
     formData.append("draft", values.draft);
     formData.append("crew", values.crew);
-    formData.append("surveyEquipment", values.surveyEquipment);
+    values.surveyEquipment.forEach((item) => {
+      formData.append("surveyEquipment", item);
+    });
     formData.append("status", values.status);
 
     if (values.image instanceof File) {

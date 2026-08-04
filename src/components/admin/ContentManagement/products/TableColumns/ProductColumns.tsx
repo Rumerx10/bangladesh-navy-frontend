@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Pencil } from "lucide-react";
 import { ColumnDef } from "@/src/components/ui/data-table";
-import { IProduct } from "../types";
+import { IProduct, PRODUCT_CATEGORY_LABELS } from "../types";
 
 export function GetProductColumns(
   onEdit: (item: IProduct) => void
@@ -47,7 +47,13 @@ export function GetProductColumns(
       header: "Category",
       accessorKey: "category",
       cell: (_, row) => (
-        <span className="text-sm text-gray-600">{row.category?.nameEn}</span>
+        <span className="text-sm text-gray-600">
+          {row.category
+            ? PRODUCT_CATEGORY_LABELS[row.category]
+            : row.isTidal
+              ? "Tidal Product"
+              : "—"}
+        </span>
       ),
     },
     {

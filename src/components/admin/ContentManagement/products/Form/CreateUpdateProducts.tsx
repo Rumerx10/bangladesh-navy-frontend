@@ -26,7 +26,9 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
       nameBn: "",
       descriptionEn: "",
       descriptionBn: "",
-      categoryId: "",
+      isTidal: false,
+      category: "",
+      price: undefined,
       chartCode: "",
       status: "ACTIVE",
       images: [],
@@ -49,7 +51,9 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
         nameBn: initialValues.nameBn || "",
         descriptionEn: initialValues.descriptionEn || "",
         descriptionBn: initialValues.descriptionBn || "",
-        categoryId: initialValues.category?.id || "",
+        isTidal: initialValues.isTidal || false,
+        category: initialValues.category || "",
+        price: initialValues.price ?? undefined,
         chartCode:
           initialValues.chartCode !== undefined
             ? String(initialValues.chartCode)
@@ -101,7 +105,18 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
     formData.append("nameBn", values.nameBn || "");
     formData.append("descriptionEn", values.descriptionEn);
     formData.append("descriptionBn", values.descriptionBn || "");
-    formData.append("categoryId", values.categoryId);
+    // Category and isTidal are mutually exclusive: picking a category always
+    // wins and forces isTidal off; otherwise isTidal decides and category is
+    // cleared. Category is always sent (even empty) so edits correctly clear
+    // a previously-set value when switching a product to tidal.
+    if (values.category) {
+      formData.append("category", values.category);
+      formData.append("isTidal", "false");
+    } else {
+      formData.append("category", "");
+      formData.append("isTidal", String(!!values.isTidal));
+    }
+    formData.append("price", String(values.price));
     formData.append("chartCode", String(values.chartCode));
     formData.append("status", values.status);
 

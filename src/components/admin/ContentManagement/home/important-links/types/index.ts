@@ -1,6 +1,6 @@
-export interface IPartner {
+export interface IImportantLink {
   id: string;
-  image: string;
+  name: string;
   link: string;
   status: "ACTIVE" | "INACTIVE";
   createdAt?: string;

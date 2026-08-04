@@ -1,10 +1,10 @@
 "use client";
 
-import { getMenuItems } from "@/src/utils/getMenuItems";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import SidebarMenuGroup from "./SidebarMenuGroup";
+import { usePathname } from "next/navigation";
 import SidebarMenuItem from "./SidebarMenuItem";
+import SidebarMenuGroup from "./SidebarMenuGroup";
+import getMenuItems from "@/src/utils/getMenuItems";
 
 interface SidebarMenuProps {
   onNavigate: () => void;

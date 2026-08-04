@@ -31,6 +31,7 @@ const getMenuItems = (): MenuItem[] => {
         { label: "Notices", href: "/admin/home/notice-management" },
         { label: "Chief's Biography", href: "/admin/home/biography" },
         { label: "Partner Management", href: "/admin/home/partner" },
+        { label: "Important Links", href: "/admin/home/important-links" },
       ],
     },
     {
