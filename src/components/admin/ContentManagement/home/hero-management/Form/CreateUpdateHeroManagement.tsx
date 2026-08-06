@@ -60,8 +60,7 @@ const CreateUpdateHeroManagement = ({
     formData.append("status", data.status);
 
     if (data.titleBn?.trim()) formData.append("titleBn", data.titleBn);
-    if (data.subTitleBn?.trim())
-      formData.append("subTitleBn", data.subTitleBn);
+    if (data.subTitleBn?.trim()) formData.append("subTitleBn", data.subTitleBn);
     if (data.descriptionBn?.trim())
       formData.append("descriptionBn", data.descriptionBn);
 

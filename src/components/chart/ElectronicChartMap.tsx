@@ -15,10 +15,6 @@ import { ENC_VIEWBOX, encIndexAreas, IEncCell } from "@/src/data/encIndexAreas";
 
 import { IProduct } from "@/src/components/admin/ContentManagement/products/types";
 
-
-
-
-
 const IMAGE_SRC = "/chart/enc-index.jpg";
 
 /** Outline every hotspot to calibrate coordinates against the printed rectangles. */
@@ -49,7 +45,7 @@ export default function ElectronicChartMap() {
   const productByNationalNo = useMemo(() => {
     const map = new Map<number, IProduct>();
     for (const p of productsData?.data || []) {
-      map.set(p.chartCode, p);
+      if (p.chartCode !== null) map.set(p.chartCode, p);
     }
     return map;
   }, [productsData]);
@@ -273,7 +269,9 @@ export default function ElectronicChartMap() {
       <EncInfoDialog
         selected={selected}
         product={
-          selected ? productByNationalNo.get(Number(selected.nationalNo)) : undefined
+          selected
+            ? productByNationalNo.get(Number(selected.nationalNo))
+            : undefined
         }
         onClose={() => setSelected(null)}
       />

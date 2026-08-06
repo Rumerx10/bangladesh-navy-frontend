@@ -51,9 +51,10 @@ export default function SurveyShips() {
       <div className="container px-4 sm:px-6 lg:px-8">
         <div className="space-y-6">
           {ships.map((ship, i) => {
-            const equipmentList = ship.surveyEquipment && Array.isArray(ship.surveyEquipment)
-              ? ship.surveyEquipment
-              : [];
+            const equipmentList =
+              ship.surveyEquipment && Array.isArray(ship.surveyEquipment)
+                ? ship.surveyEquipment
+                : [];
 
             return (
               <motion.div

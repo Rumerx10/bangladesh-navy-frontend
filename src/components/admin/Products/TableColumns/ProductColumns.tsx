@@ -3,7 +3,8 @@ import { ColumnDef } from "@/src/components/ui/data-table";
 import { Eye, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { IProductListItem } from "../types";
-
+import StatusBadge from "@/src/components/shared/Status/Status";
+import { StatusType } from "@/src/components/shared/types/common";
 export const GetProductColumns = (
   onView?: (id: string) => void,
   onDelete?: (id: string) => void
@@ -73,18 +74,7 @@ export const GetProductColumns = (
       header: "Status",
       accessorKey: "status",
       cell: (value) => {
-        const isActive = value as boolean;
-        return (
-          <span
-            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-              isActive
-                ? "bg-green-100 text-green-800"
-                : "bg-red-100 text-red-800"
-            }`}
-          >
-            {isActive ? "Active" : "Inactive"}
-          </span>
-        );
+        return <StatusBadge status={value as StatusType} />;
       },
     },
     {

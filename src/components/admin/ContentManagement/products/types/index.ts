@@ -23,7 +23,7 @@ export interface IProduct {
   descriptionEn: string;
   descriptionBn: string;
   images: string[];
-  chartCode: number;
+  chartCode: number | null;
   category: ProductCategory | null;
   isTidal?: boolean;
   price: number | null;

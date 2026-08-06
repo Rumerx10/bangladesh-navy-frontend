@@ -28,6 +28,7 @@ interface ControlledComboboxSelectProps {
   emptyMessage?: string;
   className?: string;
   listClassName?: string;
+  disabled?: boolean;
 }
 
 const ControlledComboboxSelect: React.FC<ControlledComboboxSelectProps> = ({
@@ -38,6 +39,7 @@ const ControlledComboboxSelect: React.FC<ControlledComboboxSelectProps> = ({
   emptyMessage = "No results found.",
   className,
   listClassName,
+  disabled,
 }) => {
   const { control } = useFormContext();
   const [open, setOpen] = React.useState(false);
@@ -51,13 +53,14 @@ const ControlledComboboxSelect: React.FC<ControlledComboboxSelectProps> = ({
 
         return (
           <div className="w-full">
-            <Popover open={open} onOpenChange={setOpen}>
+            <Popover open={open && !disabled} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
                 <Button
                   type="button"
                   variant="outline"
                   role="combobox"
                   aria-expanded={open}
+                  disabled={disabled}
                   className={cn(
                     "h-10.5 w-full justify-between font-inter text-sm font-normal file:text-foreground placeholder:text-muted-foreground ",
                     error && "border-rose-500",

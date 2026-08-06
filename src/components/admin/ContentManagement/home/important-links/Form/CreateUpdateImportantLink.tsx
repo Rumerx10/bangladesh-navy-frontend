@@ -33,7 +33,9 @@ const CreateUpdateImportantLink = ({
   const isUpdate = !!initialValues;
 
   const methods = useForm<ImportantLinkFormValues>({
-    resolver: yupResolver(importantLinkSchema) as Resolver<ImportantLinkFormValues>,
+    resolver: yupResolver(
+      importantLinkSchema
+    ) as Resolver<ImportantLinkFormValues>,
     defaultValues: {
       name: "",
       link: "",

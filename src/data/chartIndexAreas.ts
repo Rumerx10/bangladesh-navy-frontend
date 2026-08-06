@@ -1,4 +1,3 @@
-
 export const CHART_VIEWBOX = { w: 2000, h: 1414 };
 
 export interface IChartArea {

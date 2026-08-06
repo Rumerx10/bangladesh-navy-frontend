@@ -107,20 +107,27 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
     formData.append("descriptionBn", values.descriptionBn || "");
     // Category and isTidal are mutually exclusive: picking a category always
     // wins and forces isTidal off; otherwise isTidal decides and category is
-    // cleared. Category is always sent (even when cleared) so edits correctly
-    // null out a previously-set value when switching a product to tidal.
-    // FormData can't carry a real null, so the literal string "null" is sent
-    // instead of "" — an empty string was being ignored server-side, leaving
-    // the old category in place.
+    // cleared client-side. category is only sent when set — empirically, the
+    // backend silently ignores "", omitted, and even a real JSON null on this
+    // field (never clears an already-set category), and the literal string
+    // "null" fails enum validation outright. So there's currently no payload
+    // that can null out an existing category through this endpoint; omitting
+    // it at least avoids the validation error, even though the stored value
+    // won't actually clear until the backend handles an explicit null.
     if (values.category) {
       formData.append("category", values.category);
       formData.append("isTidal", "false");
     } else {
-      formData.append("category", "null");
       formData.append("isTidal", String(!!values.isTidal));
     }
-    if (values.price !== undefined) formData.append("price", String(values.price));
-    if (values.chartCode) formData.append("chartCode", String(values.chartCode));
+    if (values.price !== undefined)
+      formData.append("price", String(values.price));
+    // chartCode is a numeric field server-side (@IsNumber()), so it can only
+    // be sent as an actual numeric value — unlike category, it can't be
+    // cleared with a "null" sentinel string, since that fails validation.
+    // It's simply omitted when empty (tidal products, or none chosen yet).
+    if (values.chartCode)
+      formData.append("chartCode", String(values.chartCode));
     formData.append("status", values.status || "ACTIVE");
 
     if (values.geographicLocation)

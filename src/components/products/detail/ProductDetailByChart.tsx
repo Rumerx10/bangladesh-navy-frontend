@@ -47,10 +47,9 @@ interface ProductDetailByChartProps {
 export default function ProductDetailByChart({
   chartId,
 }: ProductDetailByChartProps) {
-  const { data, isLoading, isError } = useGet<IProduct>(
-    `/product/${chartId}`,
-    [`product-detail-${chartId}`]
-  );
+  const { data, isLoading, isError } = useGet<IProduct>(`/product/${chartId}`, [
+    `product-detail-${chartId}`,
+  ]);
 
   if (isLoading) {
     return (

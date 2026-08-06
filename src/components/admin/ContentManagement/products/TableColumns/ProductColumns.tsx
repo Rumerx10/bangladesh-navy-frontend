@@ -5,6 +5,8 @@ import { Pencil } from "lucide-react";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { siteConfig } from "@/src/config/siteConfig";
 import { IProduct, PRODUCT_CATEGORY_LABELS } from "../types";
+import StatusBadge from "@/src/components/shared/Status/Status";
+import { StatusType } from "@/src/components/shared/types/common";
 
 export function GetProductColumns(
   onEdit: (item: IProduct) => void
@@ -91,17 +93,9 @@ export function GetProductColumns(
     {
       header: "Status",
       accessorKey: "status",
-      cell: (_, row) => (
-        <span
-          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-            row.status === "ACTIVE"
-              ? "bg-green-100 text-green-700"
-              : "bg-gray-100 text-gray-500"
-          }`}
-        >
-          {row.status}
-        </span>
-      ),
+      cell: (value) => {
+        return <StatusBadge status={value as StatusType} />;
+      },
     },
     {
       header: "Action",

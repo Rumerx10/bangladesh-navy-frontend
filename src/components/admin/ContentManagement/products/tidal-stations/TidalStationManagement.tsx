@@ -15,9 +15,7 @@ import { ITidalStation } from "./types";
 
 const TidalStationManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<
-    ITidalStation | undefined
-  >();
+  const [selectedItem, setSelectedItem] = useState<ITidalStation | undefined>();
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const {

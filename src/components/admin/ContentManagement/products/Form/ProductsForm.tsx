@@ -70,8 +70,7 @@ export default function ProductForm({
   error,
   initialValues,
 }: ProductFormProps) {
-  const { handleSubmit, watch, setValue } =
-    useFormContext<ProductFormValues>();
+  const { handleSubmit, watch, setValue } = useFormContext<ProductFormValues>();
   const [showBnFields, setShowBnFields] = useState(false);
 
   const isTidal = watch("isTidal");
@@ -83,6 +82,7 @@ export default function ProductForm({
   useEffect(() => {
     if (isTidal) {
       setValue("category", "", { shouldValidate: true });
+      setValue("chartCode", "", { shouldValidate: true });
     }
   }, [isTidal, setValue]);
 
@@ -121,17 +121,25 @@ export default function ProductForm({
       }));
   }, [usedChartCodes]);
 
+  // chartCode is stored as a number server-side, so ENC options submit the
+  // numeric national chart number (nationalNo) rather than the alphanumeric
+  // cell number (cellNo, e.g. "BD307425") — the latter fails backend
+  // validation ("chartCode must be a number"). The cell number is still
+  // shown in the label since that's what's recognizable to the user.
   const encChartOptions = useMemo(() => {
-    const byCellNo = new Map<string, (typeof encIndexAreas)[number]>();
+    const byNationalNo = new Map<string, (typeof encIndexAreas)[number]>();
     for (const cell of encIndexAreas) {
-      if (!byCellNo.has(cell.cellNo)) byCellNo.set(cell.cellNo, cell);
+      if (!byNationalNo.has(cell.nationalNo))
+        byNationalNo.set(cell.nationalNo, cell);
     }
-    return [...byCellNo.values()]
-      .filter((cell) => !usedChartCodes.has(cell.cellNo))
-      .sort((a, b) => a.cellNo.localeCompare(b.cellNo))
+    return [...byNationalNo.values()]
+      .filter((cell) => !usedChartCodes.has(cell.nationalNo))
+      .sort((a, b) => Number(a.nationalNo) - Number(b.nationalNo))
       .map((cell) => ({
-        value: cell.cellNo,
-        label: cell.intNo ? `${cell.cellNo} (${cell.intNo})` : cell.cellNo,
+        value: cell.nationalNo,
+        label: cell.intNo
+          ? `${cell.cellNo} (${cell.intNo}) — #${cell.nationalNo}`
+          : `${cell.cellNo} — #${cell.nationalNo}`,
       }));
   }, [usedChartCodes]);
 
@@ -143,7 +151,6 @@ export default function ProductForm({
       : category === "PAPPER_CHART"
         ? paperChartOptions
         : [];
-
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
@@ -202,7 +209,7 @@ export default function ProductForm({
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
-            <InputLabel label="Category" />
+            <InputLabel label="Category" required={!isTidal} />
             <ControlledSelectField
               name="category"
               options={PRODUCT_CATEGORY_OPTIONS}
@@ -228,7 +235,7 @@ export default function ProductForm({
             />
           </div>
           <div>
-            <InputLabel label="Chart Code" />
+            <InputLabel label="Chart Code" required={!isTidal} />
             <ControlledComboboxSelect
               name="chartCode"
               options={chartCodeOptions}
@@ -236,6 +243,7 @@ export default function ProductForm({
               searchPlaceholder="Search chart code..."
               emptyMessage="Already used"
               listClassName="scrollbar-modern"
+              disabled={!!isTidal}
             />
           </div>
         </div>

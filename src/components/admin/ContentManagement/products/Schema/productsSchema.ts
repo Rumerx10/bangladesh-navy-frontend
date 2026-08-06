@@ -18,7 +18,16 @@ export const productSchema = Yup.object({
   isTidal: Yup.boolean().default(false),
   category: Yup.string()
     .oneOf(["", "PAPPER_CHART", "ELECTRONIC_NAVIGATIONAL_CHART"])
-    .optional(),
+    .when("isTidal", {
+      is: false,
+      then: (schema) =>
+        schema.test(
+          "category-required",
+          "Category is required",
+          (value) => !!value
+        ),
+      otherwise: (schema) => schema.optional(),
+    }),
   price: Yup.number()
     .transform((value, originalValue) =>
       originalValue === "" ? undefined : value
@@ -26,7 +35,11 @@ export const productSchema = Yup.object({
     .typeError("Price must be a number")
     .min(0, "Price must be positive")
     .optional(),
-  chartCode: Yup.string().optional(),
+  chartCode: Yup.string().when("isTidal", {
+    is: false,
+    then: (schema) => schema.required("Chart code is required"),
+    otherwise: (schema) => schema.optional(),
+  }),
   status: Yup.string<"ACTIVE" | "INACTIVE">()
     .oneOf(["ACTIVE", "INACTIVE"])
     .optional(),

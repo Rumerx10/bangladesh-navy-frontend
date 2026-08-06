@@ -10,6 +10,4 @@ export const importantLinkSchema = Yup.object({
     .required("Status is required"),
 });
 
-export type ImportantLinkFormValues = Yup.InferType<
-  typeof importantLinkSchema
->;
+export type ImportantLinkFormValues = Yup.InferType<typeof importantLinkSchema>;

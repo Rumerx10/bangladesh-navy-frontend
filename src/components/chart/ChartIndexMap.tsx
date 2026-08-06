@@ -50,7 +50,7 @@ export default function ChartIndexMap() {
   const productByChartCode = useMemo(() => {
     const map = new Map<number, IProduct>();
     for (const p of productsData?.data || []) {
-      map.set(p.chartCode, p);
+      if (p.chartCode !== null) map.set(p.chartCode, p);
     }
     return map;
   }, [productsData]);
@@ -280,7 +280,9 @@ export default function ChartIndexMap() {
 
       <ChartInfoDialog
         selected={selected}
-        product={selected ? productByChartCode.get(Number(selected.number)) : undefined}
+        product={
+          selected ? productByChartCode.get(Number(selected.number)) : undefined
+        }
         onClose={() => setSelected(null)}
       />
     </section>

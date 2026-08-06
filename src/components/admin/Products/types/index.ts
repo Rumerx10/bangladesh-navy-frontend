@@ -1,3 +1,5 @@
+import { StatusType } from "@/src/components/shared/types/common";
+
 // ─── DB Entity Types ────────────────────────────────────────────────
 export interface IProduct {
   id: string;
@@ -88,7 +90,7 @@ export interface IProductListItem {
   category: string;
   price: number;
   stock: number;
-  status: boolean;
+  status: StatusType;
   hasVariants: boolean;
   isNewArrival: boolean;
   actions?: string;

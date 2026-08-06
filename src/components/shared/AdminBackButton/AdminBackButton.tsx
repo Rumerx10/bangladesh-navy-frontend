@@ -33,7 +33,6 @@ export default function AdminBackButton({
           height={32}
         />
       </Button> */}
-      
     </div>
   );
 }
