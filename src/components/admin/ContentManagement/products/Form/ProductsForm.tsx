@@ -152,6 +152,7 @@ export default function ProductForm({
         ? paperChartOptions
         : [];
 
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
       {/* English Content */}
