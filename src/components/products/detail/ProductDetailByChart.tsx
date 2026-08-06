@@ -21,7 +21,9 @@ function adaptToNavyProduct(p: IProduct): INavyProduct {
     images: p.images,
     descriptionEn: p.descriptionEn,
     descriptionBn: p.descriptionBn,
-    price: p.price ?? 0,
+    // INavyProduct.price is in poysha (formatPrice divides by 100); the real
+    // backend stores a flat BDT amount, so scale it up to match.
+    price: (p.price ?? 0) * 100,
     stock: 0,
     categoryId: p.category || "",
     status:
@@ -72,5 +74,10 @@ export default function ProductDetailByChart({
     notFound();
   }
 
-  return <ProductDetailLayout product={adaptToNavyProduct(data.data)} />;
+  return (
+    <ProductDetailLayout
+      product={adaptToNavyProduct(data.data)}
+      chartDetails={data.data}
+    />
+  );
 }

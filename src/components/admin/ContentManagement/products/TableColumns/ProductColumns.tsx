@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Pencil } from "lucide-react";
 import { ColumnDef } from "@/src/components/ui/data-table";
+import { siteConfig } from "@/src/config/siteConfig";
 import { IProduct, PRODUCT_CATEGORY_LABELS } from "../types";
 
 export function GetProductColumns(
@@ -57,10 +58,34 @@ export function GetProductColumns(
       ),
     },
     {
+      header: "Tidal",
+      accessorKey: "isTidal",
+      cell: (_, row) => (
+        <span
+          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+            row.isTidal
+              ? "bg-blue-100 text-blue-700"
+              : "bg-gray-100 text-gray-500"
+          }`}
+        >
+          {row.isTidal ? "Yes" : "No"}
+        </span>
+      ),
+    },
+    {
       header: "Chart Code",
       accessorKey: "chartCode",
       cell: (_, row) => (
         <span className="font-mono text-sm text-gray-700">{row.chartCode}</span>
+      ),
+    },
+    {
+      header: "Price",
+      accessorKey: "price",
+      cell: (_, row) => (
+        <span className="text-sm text-gray-700">
+          {row.price != null ? `${siteConfig.currencySymbol}${row.price}` : "—"}
+        </span>
       ),
     },
     {

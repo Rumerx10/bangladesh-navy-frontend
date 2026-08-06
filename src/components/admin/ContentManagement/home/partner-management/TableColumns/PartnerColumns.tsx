@@ -26,16 +26,19 @@ export function GetPartnerColumns(
     {
       header: "Link",
       accessorKey: "link",
-      cell: (_, row) => (
-        <a
-          href={row.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block max-w-60 truncate text-sm text-liteBlue hover:underline"
-        >
-          {row.link}
-        </a>
-      ),
+      cell: (_, row) =>
+        row.link ? (
+          <a
+            href={row.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block max-w-60 truncate text-sm text-liteBlue hover:underline"
+          >
+            {row.link}
+          </a>
+        ) : (
+          <span className="text-sm text-gray-400">—</span>
+        ),
     },
     {
       header: "Status",

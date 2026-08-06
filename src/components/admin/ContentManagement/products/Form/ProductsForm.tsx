@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { useFormContext } from "react-hook-form";
+import { useGet } from "@/src/hooks/useGet";
 import { Button } from "@/src/components/ui/button";
 import InputLabel from "@/src/components/shared/InputLabel";
 import Paragraph from "@/src/components/shared/Paragraph";
@@ -18,6 +19,7 @@ import ControlledSwitchField from "@/src/components/shared/FromController/Contro
 import { MultipleImageUploadController } from "@/src/components/shared/FromController/MultipleImageFileInput";
 import { ErrorType } from "@/src/components/shared/types/common";
 import { chartIndexAreas } from "@/src/data/chartIndexAreas";
+import { encIndexAreas } from "@/src/data/encIndexAreas";
 import { IProduct, PRODUCT_CATEGORY_OPTIONS } from "../types";
 import { ProductFormValues } from "../Schema/productsSchema";
 
@@ -73,6 +75,7 @@ export default function ProductForm({
   const [showBnFields, setShowBnFields] = useState(false);
 
   const isTidal = watch("isTidal");
+  const category = watch("category");
 
   // One-directional: switching on "Tidal Product" clears any chosen category
   // and the category select disables itself. The switch itself is never
@@ -83,18 +86,63 @@ export default function ProductForm({
     }
   }, [isTidal, setValue]);
 
-  const chartCodeOptions = useMemo(() => {
+  // Every existing product's chart code, so already-assigned codes drop out
+  // of the suggestion lists. The product being edited is excluded from this
+  // set so its own current code stays selectable.
+  const { data: allProductsData } = useGet<IProduct[]>("/product", [
+    "product-chart-codes",
+  ]);
+
+  const usedChartCodes = useMemo(() => {
+    const products = Array.isArray(allProductsData?.data)
+      ? allProductsData.data
+      : [];
+    const used = new Set<string>();
+    for (const product of products) {
+      if (product.chartCode === undefined || product.chartCode === null)
+        continue;
+      if (initialValues && product.id === initialValues.id) continue;
+      used.add(String(product.chartCode));
+    }
+    return used;
+  }, [allProductsData, initialValues]);
+
+  const paperChartOptions = useMemo(() => {
     const byNumber = new Map<string, (typeof chartIndexAreas)[number]>();
     for (const area of chartIndexAreas) {
       if (!byNumber.has(area.number)) byNumber.set(area.number, area);
     }
     return [...byNumber.values()]
+      .filter((area) => !usedChartCodes.has(area.number))
       .sort((a, b) => Number(a.number) - Number(b.number))
       .map((area) => ({
         value: area.number,
         label: area.int ? `${area.number} (${area.int})` : area.number,
       }));
-  }, []);
+  }, [usedChartCodes]);
+
+  const encChartOptions = useMemo(() => {
+    const byCellNo = new Map<string, (typeof encIndexAreas)[number]>();
+    for (const cell of encIndexAreas) {
+      if (!byCellNo.has(cell.cellNo)) byCellNo.set(cell.cellNo, cell);
+    }
+    return [...byCellNo.values()]
+      .filter((cell) => !usedChartCodes.has(cell.cellNo))
+      .sort((a, b) => a.cellNo.localeCompare(b.cellNo))
+      .map((cell) => ({
+        value: cell.cellNo,
+        label: cell.intNo ? `${cell.cellNo} (${cell.intNo})` : cell.cellNo,
+      }));
+  }, [usedChartCodes]);
+
+  // Chart Code suggestions follow the selected category: paper chart serial
+  // numbers for PAPPER_CHART, ENC cell numbers for ELECTRONIC_NAVIGATIONAL_CHART.
+  const chartCodeOptions =
+    category === "ELECTRONIC_NAVIGATIONAL_CHART"
+      ? encChartOptions
+      : category === "PAPPER_CHART"
+        ? paperChartOptions
+        : [];
 
 
   return (
@@ -121,7 +169,7 @@ export default function ProductForm({
             />
           </div>
           <div>
-            <InputLabel label="Description (English)" required />
+            <InputLabel label="Description (English)" />
             <ControlledTextareaField
               name="descriptionEn"
               placeholder="Enter product description in English"
@@ -154,7 +202,7 @@ export default function ProductForm({
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
-            <InputLabel label="Category" required={!isTidal} />
+            <InputLabel label="Category" />
             <ControlledSelectField
               name="category"
               options={PRODUCT_CATEGORY_OPTIONS}
@@ -163,7 +211,7 @@ export default function ProductForm({
             />
           </div>
           <div>
-            <InputLabel label="Price" required />
+            <InputLabel label="Price" />
             <ControlledInputField
               name="price"
               type="number"
@@ -172,7 +220,7 @@ export default function ProductForm({
             />
           </div>
           <div>
-            <InputLabel label="Status" required />
+            <InputLabel label="Status" />
             <ControlledSelectField
               name="status"
               options={STATUS_OPTIONS}
@@ -180,12 +228,14 @@ export default function ProductForm({
             />
           </div>
           <div>
-            <InputLabel label="Chart Code" required />
+            <InputLabel label="Chart Code" />
             <ControlledComboboxSelect
               name="chartCode"
               options={chartCodeOptions}
               placeholder="Select a chart code"
               searchPlaceholder="Search chart code..."
+              emptyMessage="Already used"
+              listClassName="scrollbar-modern"
             />
           </div>
         </div>

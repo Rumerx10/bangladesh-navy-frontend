@@ -47,6 +47,17 @@ export default function ProductInfo({
       <h1 className="text-2xl lg:text-5xl font-bold text-pBlue leading-tight">
         {product.nameEn}
       </h1>
+      {/* Price */}
+      <div className="mt-5 flex items-baseline gap-3">
+        <span className="text-3xl font-bold text-pBlue">
+          {formatPrice(discountedPrice)}
+        </span>
+        {hasDiscount && (
+          <span className="text-lg text-gray-400 line-through">
+            {formatPrice(product.price)}
+          </span>
+        )}
+      </div>
       {/* Category */}
       <div className="mt-6 pt-5 border-t border-gray-100">
         <p className="text-sm text-gray-500">

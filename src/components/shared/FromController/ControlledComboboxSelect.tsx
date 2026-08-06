@@ -25,7 +25,9 @@ interface ControlledComboboxSelectProps {
   options: Option[];
   placeholder?: string;
   searchPlaceholder?: string;
+  emptyMessage?: string;
   className?: string;
+  listClassName?: string;
 }
 
 const ControlledComboboxSelect: React.FC<ControlledComboboxSelectProps> = ({
@@ -33,7 +35,9 @@ const ControlledComboboxSelect: React.FC<ControlledComboboxSelectProps> = ({
   options,
   placeholder = "Select option...",
   searchPlaceholder = "Search...",
+  emptyMessage = "No results found.",
   className,
+  listClassName,
 }) => {
   const { control } = useFormContext();
   const [open, setOpen] = React.useState(false);
@@ -71,8 +75,8 @@ const ControlledComboboxSelect: React.FC<ControlledComboboxSelectProps> = ({
                     placeholder={searchPlaceholder}
                     className="h-9"
                   />
-                  <CommandList>
-                    <CommandEmpty>No results found.</CommandEmpty>
+                  <CommandList className={listClassName}>
+                    <CommandEmpty>{emptyMessage}</CommandEmpty>
                     <CommandGroup>
                       {options.map((opt) => (
                         <CommandItem

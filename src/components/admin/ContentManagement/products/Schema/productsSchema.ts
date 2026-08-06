@@ -13,29 +13,23 @@ export const productSchema = Yup.object({
     .required("English name is required")
     .max(200, "Max 200 characters"),
   nameBn: Yup.string().max(200, "Max 200 characters").optional(),
-  descriptionEn: Yup.string().required("English description is required"),
+  descriptionEn: Yup.string().optional(),
   descriptionBn: Yup.string().optional(),
   isTidal: Yup.boolean().default(false),
   category: Yup.string()
     .oneOf(["", "PAPPER_CHART", "ELECTRONIC_NAVIGATIONAL_CHART"])
-    .when("isTidal", {
-      is: false,
-      then: (schema) =>
-        schema.test(
-          "category-required",
-          "Category is required",
-          (value) => !!value
-        ),
-      otherwise: (schema) => schema.optional(),
-    }),
+    .optional(),
   price: Yup.number()
+    .transform((value, originalValue) =>
+      originalValue === "" ? undefined : value
+    )
     .typeError("Price must be a number")
-    .required("Price is required")
-    .min(0, "Price must be positive"),
-  chartCode: Yup.string().required("Chart code is required"),
+    .min(0, "Price must be positive")
+    .optional(),
+  chartCode: Yup.string().optional(),
   status: Yup.string<"ACTIVE" | "INACTIVE">()
     .oneOf(["ACTIVE", "INACTIVE"])
-    .required("Status is required"),
+    .optional(),
   images: Yup.array()
     .of(
       Yup.mixed<File | string>()

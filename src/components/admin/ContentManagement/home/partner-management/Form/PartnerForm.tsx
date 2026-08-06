@@ -44,7 +44,7 @@ export default function PartnerForm({
         />
       </div>
       <div>
-        <InputLabel label="Website Link" required />
+        <InputLabel label="Website Link" />
         <ControlledInputField
           name="link"
           placeholder="https://example.com"
@@ -52,7 +52,7 @@ export default function PartnerForm({
         />
       </div>
       <div>
-        <InputLabel label="Status" required />
+        <InputLabel label="Status" />
         <ControlledSelectField
           name="status"
           options={STATUS_OPTIONS}

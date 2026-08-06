@@ -103,22 +103,25 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
     const formData = new FormData();
     formData.append("nameEn", values.nameEn);
     formData.append("nameBn", values.nameBn || "");
-    formData.append("descriptionEn", values.descriptionEn);
+    formData.append("descriptionEn", values.descriptionEn || "");
     formData.append("descriptionBn", values.descriptionBn || "");
     // Category and isTidal are mutually exclusive: picking a category always
     // wins and forces isTidal off; otherwise isTidal decides and category is
-    // cleared. Category is always sent (even empty) so edits correctly clear
-    // a previously-set value when switching a product to tidal.
+    // cleared. Category is always sent (even when cleared) so edits correctly
+    // null out a previously-set value when switching a product to tidal.
+    // FormData can't carry a real null, so the literal string "null" is sent
+    // instead of "" — an empty string was being ignored server-side, leaving
+    // the old category in place.
     if (values.category) {
       formData.append("category", values.category);
       formData.append("isTidal", "false");
     } else {
-      formData.append("category", "");
+      formData.append("category", "null");
       formData.append("isTidal", String(!!values.isTidal));
     }
-    formData.append("price", String(values.price));
-    formData.append("chartCode", String(values.chartCode));
-    formData.append("status", values.status);
+    if (values.price !== undefined) formData.append("price", String(values.price));
+    if (values.chartCode) formData.append("chartCode", String(values.chartCode));
+    formData.append("status", values.status || "ACTIVE");
 
     if (values.geographicLocation)
       formData.append("geographicLocation", values.geographicLocation);
@@ -136,11 +139,12 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
     if (values.publicationDate)
       formData.append("publicationDate", values.publicationDate);
 
+    // Only newly-added files are sent; untouched existing image URLs are
+    // left off the payload entirely so the backend keeps them as-is
+    // (the update DTO doesn't accept an "existingImages" field).
     (values.images || []).forEach((img) => {
       if (img instanceof File) {
         formData.append("images", img);
-      } else if (typeof img === "string") {
-        formData.append("existingImages", img);
       }
     });
 

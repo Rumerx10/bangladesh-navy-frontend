@@ -1,14 +1,3 @@
-/**
- * Hotspot geometry for the interactive chart index page (/chart).
- *
- * Coordinates are in a fixed 2000x1414 viewBox space that matches the
- * aspect ratio of /public/chart/chart-index.jpg (landscape, north-up:
- * Khulna left, Teknaf right; scan rotated 90° CW from the 7017x9925
- * portrait original). They are digitized against the printed purple
- * rectangles and calibrated with a rendered overlay; tune any entry
- * here and the overlay follows. Set DEBUG_OUTLINES in ChartIndexMap.tsx
- * to outline every hotspot while calibrating.
- */
 
 export const CHART_VIEWBOX = { w: 2000, h: 1414 };
 
