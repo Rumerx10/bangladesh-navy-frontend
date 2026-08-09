@@ -26,7 +26,6 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
       nameBn: "",
       descriptionEn: "",
       descriptionBn: "",
-      isTidal: false,
       category: "",
       price: undefined,
       chartCode: "",
@@ -51,11 +50,10 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
         nameBn: initialValues.nameBn || "",
         descriptionEn: initialValues.descriptionEn || "",
         descriptionBn: initialValues.descriptionBn || "",
-        isTidal: initialValues.isTidal || false,
         category: initialValues.category || "",
         price: initialValues.price ?? undefined,
         chartCode:
-          initialValues.chartCode !== undefined
+          initialValues.chartCode != null
             ? String(initialValues.chartCode)
             : "",
         status: initialValues.status || "ACTIVE",
@@ -105,29 +103,27 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
     formData.append("nameBn", values.nameBn || "");
     formData.append("descriptionEn", values.descriptionEn || "");
     formData.append("descriptionBn", values.descriptionBn || "");
-    // Category and isTidal are mutually exclusive: picking a category always
-    // wins and forces isTidal off; otherwise isTidal decides and category is
-    // cleared client-side. category is only sent when set — empirically, the
-    // backend silently ignores "", omitted, and even a real JSON null on this
-    // field (never clears an already-set category), and the literal string
-    // "null" fails enum validation outright. So there's currently no payload
-    // that can null out an existing category through this endpoint; omitting
-    // it at least avoids the validation error, even though the stored value
-    // won't actually clear until the backend handles an explicit null.
     if (values.category) {
       formData.append("category", values.category);
-      formData.append("isTidal", "false");
-    } else {
-      formData.append("isTidal", String(!!values.isTidal));
     }
     if (values.price !== undefined)
       formData.append("price", String(values.price));
     // chartCode is a numeric field server-side (@IsNumber()), so it can only
-    // be sent as an actual numeric value — unlike category, it can't be
-    // cleared with a "null" sentinel string, since that fails validation.
-    // It's simply omitted when empty (tidal products, or none chosen yet).
-    if (values.chartCode)
+    // be sent as an actual numeric value, or explicitly empty to clear it.
+    // Switching an existing paper/ENC product to Tidal needs that explicit
+    // clear so the previously assigned chart code doesn't linger; a Tidal
+    // product that never had one just omits the field.
+    if (values.category === "TIDAL") {
+      if (
+        isUpdate &&
+        initialValues?.chartCode !== null &&
+        initialValues?.chartCode !== undefined
+      ) {
+        formData.append("chartCode", "");
+      }
+    } else if (values.chartCode) {
       formData.append("chartCode", String(values.chartCode));
+    }
     formData.append("status", values.status || "ACTIVE");
 
     if (values.geographicLocation)
