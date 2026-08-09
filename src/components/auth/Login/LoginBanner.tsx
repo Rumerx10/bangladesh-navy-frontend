@@ -31,10 +31,11 @@ export default function LoginBanner() {
           object-cover transition-opacity duration-700 ease-in-out
           }
         `}
-        
           />
         </div>
-        <h1 className="mt-10 text-4xl font-bold text-white w-3xl text-center">Bangladesh Hydrographic & Oceanographic Centre</h1>
+        <h1 className="mt-10 text-4xl font-bold text-white w-3xl text-center">
+          Bangladesh Hydrographic & Oceanographic Centre
+        </h1>
       </div>
     </div>
   );

@@ -54,8 +54,7 @@ const CreateUpdateTidalStation = ({
         latitude: initialValues?.latitude || "",
         longitude: initialValues?.longitude || "",
         productId: initialValues?.productId || "",
-        status:
-          initialValues?.status === "INACTIVE" ? "INACTIVE" : "ACTIVE",
+        status: initialValues?.status === "INACTIVE" ? "INACTIVE" : "ACTIVE",
       });
     } else {
       methods.reset({

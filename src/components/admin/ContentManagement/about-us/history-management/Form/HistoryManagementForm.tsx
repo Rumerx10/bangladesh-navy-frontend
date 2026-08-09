@@ -103,11 +103,7 @@ const HistoryManagementForm = ({
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
       {/* Basic Information */}
       <div className="border border-light-silver rounded-lg p-8 bg-white">
-        <SectionHeader
-          label="History Content"
-          onCancel={onCancel}
-          showCancel
-        />
+        <SectionHeader label="History Content" onCancel={onCancel} showCancel />
 
         {/* Commented out — Image/Title/Sub Title are not part of the current /history API. */}
         {/* <div className="mt-6">

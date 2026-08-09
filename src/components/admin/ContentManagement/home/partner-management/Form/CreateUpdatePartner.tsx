@@ -96,8 +96,12 @@ const CreateUpdatePartner = ({
     if (values.image instanceof File) {
       formData.append("image", values.image);
     }
-    formData.append("link", values.link);
-    formData.append("status", values.status);
+    if (values.link) {
+      formData.append("link", values.link);
+    }
+    if (values.status) {
+      formData.append("status", values.status);
+    }
 
     if (isUpdate && initialValues) {
       updateMutate({

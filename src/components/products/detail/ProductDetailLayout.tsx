@@ -2,18 +2,22 @@
 
 import { formatPrice, getDiscountedPrice } from "@/src/data/navyProducts";
 import { INavyProduct } from "@/src/components/products/types";
+import { IProduct } from "@/src/components/admin/ContentManagement/products/types";
 import ProductAttributes from "./ProductAttributes";
 import ProductInfo from "./ProductInfo";
+import ProductKeyFeatures from "./ProductKeyFeatures";
 import ProductTabs from "./ProductTabs";
 import TiffPreview from "../TiffPreview";
 import Image from "next/image";
 
 interface ProductDetailLayoutProps {
   product: INavyProduct;
+  chartDetails?: IProduct;
 }
 
 export default function ProductDetailLayout({
   product,
+  chartDetails,
 }: ProductDetailLayoutProps) {
   const discountedPrice = getDiscountedPrice(product);
   const imageUrl = product.images?.[0] ?? "/img1.jpeg";
@@ -77,11 +81,14 @@ export default function ProductDetailLayout({
         </div>
 
         {/* Info Section */}
-        <ProductInfo
-          product={product}
-          discountedPrice={discountedPrice}
-          formatPrice={formatPrice}
-        />
+        <div className="flex flex-col gap-6">
+          <ProductInfo
+            product={product}
+            discountedPrice={discountedPrice}
+            formatPrice={formatPrice}
+          />
+          {chartDetails && <ProductKeyFeatures product={chartDetails} />}
+        </div>
       </div>
 
       {/* Attributes */}

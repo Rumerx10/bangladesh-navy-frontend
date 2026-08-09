@@ -1,15 +1,3 @@
-export interface IProductCategory {
-  id: string;
-  nameEn: string;
-  nameBn: string;
-  icon: string;
-  descriptionEn: string;
-  descriptionBn: string;
-  status: "ACTIVE" | "INACTIVE";
-  createdAt: string;
-  updatedAt: string;
-}
-
 export type ProductCategory = "PAPPER_CHART" | "ELECTRONIC_NAVIGATIONAL_CHART";
 
 export const PRODUCT_CATEGORY_OPTIONS: {
@@ -35,7 +23,7 @@ export interface IProduct {
   descriptionEn: string;
   descriptionBn: string;
   images: string[];
-  chartCode: number;
+  chartCode: number | null;
   category: ProductCategory | null;
   isTidal?: boolean;
   price: number | null;

@@ -38,23 +38,36 @@ const Partners = () => {
             </div>
           ) : (
             <Marquee pauseOnHover={true} speed={100}>
-              {partners.map((partner) => (
-                <div className="mx-5 lg:mx-16 h-auto lg:h-25" key={partner.id}>
-                  <Link
-                    href={partner.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
+              {partners.map((partner) => {
+                const logo = (
+                  <Image
+                    src={partner.image}
+                    alt="Partner logo"
+                    height={200}
+                    width={240}
+                    className="object-contain h-full w-full"
+                  />
+                );
+
+                return (
+                  <div
+                    className="mx-5 lg:mx-16 h-auto lg:h-25"
+                    key={partner.id}
                   >
-                    <Image
-                      src={partner.image}
-                      alt="Partner logo"
-                      height={200}
-                      width={240}
-                      className="object-contain h-full w-full"
-                    />
-                  </Link>
-                </div>
-              ))}
+                    {partner.link ? (
+                      <Link
+                        href={partner.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {logo}
+                      </Link>
+                    ) : (
+                      logo
+                    )}
+                  </div>
+                );
+              })}
             </Marquee>
           )}
         </div>

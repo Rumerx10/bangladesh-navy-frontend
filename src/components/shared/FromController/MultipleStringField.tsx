@@ -104,7 +104,9 @@ const MultipleStringField = ({
               onChange={(e) => setCurrentInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={
-                items.length > 0 ? `Add another ${itemLabel.toLowerCase()}...` : placeholder
+                items.length > 0
+                  ? `Add another ${itemLabel.toLowerCase()}...`
+                  : placeholder
               }
               disabled={disabled}
               className={cn(

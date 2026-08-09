@@ -84,7 +84,10 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
                 <Home size={14} /> Home
               </Link>
               <ChevronRight size={14} />
-              <Link href="/about/news" className="hover:text-white transition-colors">
+              <Link
+                href="/about/news"
+                className="hover:text-white transition-colors"
+              >
                 News
               </Link>
               <ChevronRight size={14} />

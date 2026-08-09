@@ -25,7 +25,10 @@ interface ControlledComboboxSelectProps {
   options: Option[];
   placeholder?: string;
   searchPlaceholder?: string;
+  emptyMessage?: string;
   className?: string;
+  listClassName?: string;
+  disabled?: boolean;
 }
 
 const ControlledComboboxSelect: React.FC<ControlledComboboxSelectProps> = ({
@@ -33,7 +36,10 @@ const ControlledComboboxSelect: React.FC<ControlledComboboxSelectProps> = ({
   options,
   placeholder = "Select option...",
   searchPlaceholder = "Search...",
+  emptyMessage = "No results found.",
   className,
+  listClassName,
+  disabled,
 }) => {
   const { control } = useFormContext();
   const [open, setOpen] = React.useState(false);
@@ -47,13 +53,14 @@ const ControlledComboboxSelect: React.FC<ControlledComboboxSelectProps> = ({
 
         return (
           <div className="w-full">
-            <Popover open={open} onOpenChange={setOpen}>
+            <Popover open={open && !disabled} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
                 <Button
                   type="button"
                   variant="outline"
                   role="combobox"
                   aria-expanded={open}
+                  disabled={disabled}
                   className={cn(
                     "h-10.5 w-full justify-between font-inter text-sm font-normal file:text-foreground placeholder:text-muted-foreground ",
                     error && "border-rose-500",
@@ -71,8 +78,8 @@ const ControlledComboboxSelect: React.FC<ControlledComboboxSelectProps> = ({
                     placeholder={searchPlaceholder}
                     className="h-9"
                   />
-                  <CommandList>
-                    <CommandEmpty>No results found.</CommandEmpty>
+                  <CommandList className={listClassName}>
+                    <CommandEmpty>{emptyMessage}</CommandEmpty>
                     <CommandGroup>
                       {options.map((opt) => (
                         <CommandItem

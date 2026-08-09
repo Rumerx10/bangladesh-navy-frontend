@@ -11,7 +11,9 @@ import CreateUpdateImportantLink from "./Form/CreateUpdateImportantLink";
 
 const ImportantLinksManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<IImportantLink | undefined>();
+  const [selectedItem, setSelectedItem] = useState<
+    IImportantLink | undefined
+  >();
 
   const {
     setCurrentPage,

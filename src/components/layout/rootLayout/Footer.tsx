@@ -2,6 +2,8 @@
 
 import logo from "@/public/logo.png";
 import { siteConfig } from "@/src/config/siteConfig";
+import { useGet } from "@/src/hooks/useGet";
+import { IImportantLink } from "@/src/components/admin/ContentManagement/home/important-links/types";
 import { Facebook, Mail, MapPin, Phone, Youtube } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -44,42 +46,19 @@ const serviceLinks = [
   },
 ];
 
-const importantLinks = [
-  {
-    label: "Bangladesh Navy",
-    href: "https://www.navy.mil.bd",
-  },
-  {
-    label: "United Kingdom Hydrographic Office (UKHO)",
-    href: "https://www.admiralty.co.uk",
-  },
-  {
-    label: "IC-ENC",
-    href: "https://www.ic-enc.org",
-  },
-  {
-    label: "Chattogram Port Authority (CPA)",
-    href: "https://cpa.gov.bd",
-  },
-  {
-    label: "Bangladesh Inland Water Transport Authority (BIWTA)",
-    href: "https://biwta.gov.bd",
-  },
-  {
-    label: "Bangladesh Inland Water Transport Authority (BIMRAD)",
-    href: "https://bimrad.gov.bd",
-  },
-  {
-    label: "Bangladesh Oceanographic Research Institute (BORI)",
-    href: "https://bori.gov.bd",
-  },
-];
-
 const contactPageLinks = [
   { label: "Contact Information", href: "/contact-us/information" },
 ];
 
 const Footer = () => {
+  const { data } = useGet<IImportantLink[]>("/important-links/list", [
+    "important-links-list",
+  ]);
+
+  const importantLinks = (Array.isArray(data?.data) ? data.data : []).filter(
+    (link) => link.status === "ACTIVE"
+  );
+
   return (
     <footer className="bg-pBlue text-gray-300 pt-12 lg:pt-16">
       <div className="container px-4 sm:px-6 lg:px-8">
@@ -195,12 +174,14 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2.5">
               {importantLinks.map((link) => (
-                <li key={link.label}>
+                <li key={link.id}>
                   <Link
-                    href={link.href}
+                    href={link.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-sm text-gray-400 hover:text-white transition-colors"
                   >
-                    {link.label}
+                    {link.name}
                   </Link>
                 </li>
               ))}

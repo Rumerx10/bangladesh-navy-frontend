@@ -19,10 +19,10 @@ export const partnerSchema = Yup.object({
       if (!value || typeof value === "string") return true;
       return (value as File).size <= MAX_FILE_SIZE;
     }),
-  link: Yup.string().required("Link is required").url("Enter a valid URL"),
+  link: Yup.string().url("Enter a valid URL").notRequired(),
   status: Yup.string<"ACTIVE" | "INACTIVE">()
     .oneOf(["ACTIVE", "INACTIVE"])
-    .required("Status is required"),
+    .notRequired(),
 });
 
 export type PartnerFormValues = Yup.InferType<typeof partnerSchema>;

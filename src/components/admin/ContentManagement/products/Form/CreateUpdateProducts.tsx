@@ -103,22 +103,32 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
     const formData = new FormData();
     formData.append("nameEn", values.nameEn);
     formData.append("nameBn", values.nameBn || "");
-    formData.append("descriptionEn", values.descriptionEn);
+    formData.append("descriptionEn", values.descriptionEn || "");
     formData.append("descriptionBn", values.descriptionBn || "");
     // Category and isTidal are mutually exclusive: picking a category always
     // wins and forces isTidal off; otherwise isTidal decides and category is
-    // cleared. Category is always sent (even empty) so edits correctly clear
-    // a previously-set value when switching a product to tidal.
+    // cleared client-side. category is only sent when set — empirically, the
+    // backend silently ignores "", omitted, and even a real JSON null on this
+    // field (never clears an already-set category), and the literal string
+    // "null" fails enum validation outright. So there's currently no payload
+    // that can null out an existing category through this endpoint; omitting
+    // it at least avoids the validation error, even though the stored value
+    // won't actually clear until the backend handles an explicit null.
     if (values.category) {
       formData.append("category", values.category);
       formData.append("isTidal", "false");
     } else {
-      formData.append("category", "");
       formData.append("isTidal", String(!!values.isTidal));
     }
-    formData.append("price", String(values.price));
-    formData.append("chartCode", String(values.chartCode));
-    formData.append("status", values.status);
+    if (values.price !== undefined)
+      formData.append("price", String(values.price));
+    // chartCode is a numeric field server-side (@IsNumber()), so it can only
+    // be sent as an actual numeric value — unlike category, it can't be
+    // cleared with a "null" sentinel string, since that fails validation.
+    // It's simply omitted when empty (tidal products, or none chosen yet).
+    if (values.chartCode)
+      formData.append("chartCode", String(values.chartCode));
+    formData.append("status", values.status || "ACTIVE");
 
     if (values.geographicLocation)
       formData.append("geographicLocation", values.geographicLocation);
@@ -136,11 +146,12 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
     if (values.publicationDate)
       formData.append("publicationDate", values.publicationDate);
 
+    // Only newly-added files are sent; untouched existing image URLs are
+    // left off the payload entirely so the backend keeps them as-is
+    // (the update DTO doesn't accept an "existingImages" field).
     (values.images || []).forEach((img) => {
       if (img instanceof File) {
         formData.append("images", img);
-      } else if (typeof img === "string") {
-        formData.append("existingImages", img);
       }
     });
 

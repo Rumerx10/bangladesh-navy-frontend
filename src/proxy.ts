@@ -12,7 +12,12 @@ function decodeJwtPayload(token: string): Record<string, unknown> | null {
 }
 
 const AUTH_PAGE_PREFIXES = ["/auth/login", "/auth/signup"];
-const CUSTOMER_ONLY_PREFIXES = ["/cart", "/checkout", "/orders", "/account/orders"];
+const CUSTOMER_ONLY_PREFIXES = [
+  "/cart",
+  "/checkout",
+  "/orders",
+  "/account/orders",
+];
 
 const matchesPrefix = (pathname: string, prefixes: string[]) =>
   prefixes.some((p) => pathname === p || pathname.startsWith(`${p}/`));

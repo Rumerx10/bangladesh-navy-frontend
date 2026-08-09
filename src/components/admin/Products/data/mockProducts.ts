@@ -1,3 +1,4 @@
+import { StatusType } from "@/src/components/shared/types/common";
 import { IProductDetail, IProductListItem } from "../types";
 
 export const MOCK_PRODUCTS: IProductListItem[] = [
@@ -8,7 +9,7 @@ export const MOCK_PRODUCTS: IProductListItem[] = [
     category: "Electronics",
     price: 159999,
     stock: 25,
-    status: true,
+    status: StatusType.ACTIVE,
     hasVariants: true,
     isNewArrival: true,
   },
@@ -19,7 +20,7 @@ export const MOCK_PRODUCTS: IProductListItem[] = [
     category: "Clothing",
     price: 12500,
     stock: 45,
-    status: true,
+    status: StatusType.ACTIVE,
     hasVariants: true,
     isNewArrival: false,
   },
@@ -30,7 +31,7 @@ export const MOCK_PRODUCTS: IProductListItem[] = [
     category: "Electronics",
     price: 139999,
     stock: 12,
-    status: true,
+    status: StatusType.ACTIVE,
     hasVariants: true,
     isNewArrival: true,
   },
@@ -41,7 +42,7 @@ export const MOCK_PRODUCTS: IProductListItem[] = [
     category: "Clothing",
     price: 18000,
     stock: 0,
-    status: false,
+    status: StatusType.INACTIVE,
     hasVariants: false,
     isNewArrival: false,
   },
@@ -52,7 +53,7 @@ export const MOCK_PRODUCTS: IProductListItem[] = [
     category: "Electronics",
     price: 35000,
     stock: 8,
-    status: true,
+    status: StatusType.ACTIVE,
     hasVariants: false,
     isNewArrival: false,
   },
@@ -63,7 +64,7 @@ export const MOCK_PRODUCTS: IProductListItem[] = [
     category: "Home & Kitchen",
     price: 8500,
     stock: 3,
-    status: true,
+    status: StatusType.ACTIVE,
     hasVariants: false,
     isNewArrival: false,
   },

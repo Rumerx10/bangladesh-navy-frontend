@@ -24,9 +24,7 @@ const CreateUpdateContactInfo = ({
   const isEditMode = !!initialValues?.id;
 
   const methods = useForm<ContactInfoFormValues>({
-    resolver: yupResolver(
-      contactInfoSchema
-    ) as Resolver<ContactInfoFormValues>,
+    resolver: yupResolver(contactInfoSchema) as Resolver<ContactInfoFormValues>,
     defaultValues: {
       phones: initialValues?.phones || [],
       emails: initialValues?.emails || [],

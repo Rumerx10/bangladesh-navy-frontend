@@ -4,7 +4,6 @@ import { IExternalStation } from "./types";
 import { useGet } from "@/src/hooks/useGet";
 import WeatherStationMapSkeleton from "./Skeleton/WeatherStationMapSkeleton";
 
-
 const WeatherStationMap = dynamic(() => import("./WeatherStationMap"), {
   ssr: false,
   loading: () => <WeatherStationMapSkeleton />,
