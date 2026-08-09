@@ -15,7 +15,6 @@ import ControlledInputField from "@/src/components/shared/FromController/Control
 import ControlledSelectField from "@/src/components/shared/FromController/ControlledSelectField";
 import ControlledTextareaField from "@/src/components/shared/FromController/ControlledTextareaField";
 import ControlledComboboxSelect from "@/src/components/shared/FromController/ControlledComboboxSelect";
-import ControlledSwitchField from "@/src/components/shared/FromController/ControlledSwitchField";
 import { MultipleImageUploadController } from "@/src/components/shared/FromController/MultipleImageFileInput";
 import { ErrorType } from "@/src/components/shared/types/common";
 import { chartIndexAreas } from "@/src/data/chartIndexAreas";
@@ -70,21 +69,27 @@ export default function ProductForm({
   error,
   initialValues,
 }: ProductFormProps) {
-  const { handleSubmit, watch, setValue } = useFormContext<ProductFormValues>();
+  const {
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { dirtyFields },
+  } = useFormContext<ProductFormValues>();
   const [showBnFields, setShowBnFields] = useState(false);
 
-  const isTidal = watch("isTidal");
   const category = watch("category");
 
-  // One-directional: switching on "Tidal Product" clears any chosen category
-  // and the category select disables itself. The switch itself is never
-  // disabled, so it can always be flipped back — no dead end for the user.
+  // Chart Code doesn't apply to the Tidal category — clear it client-side
+  // when the user switches into Tidal so a stale value isn't left behind.
+  // Gated on dirtyFields.category so this only reacts to the user actually
+  // picking Tidal from the dropdown, not to the initial `reset()` that
+  // populates an already-Tidal product on the edit page (reset() doesn't
+  // mark fields dirty).
   useEffect(() => {
-    if (isTidal) {
-      setValue("category", "", { shouldValidate: true });
+    if (category === "TIDAL" && dirtyFields.category) {
       setValue("chartCode", "", { shouldValidate: true });
     }
-  }, [isTidal, setValue]);
+  }, [category, dirtyFields.category, setValue]);
 
   // Every existing product's chart code, so already-assigned codes drop out
   // of the suggestion lists. The product being edited is excluded from this
@@ -152,7 +157,6 @@ export default function ProductForm({
         ? paperChartOptions
         : [];
 
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
       {/* English Content */}
@@ -201,21 +205,13 @@ export default function ProductForm({
       {/* Category, Status, Chart Code */}
       <div className="border border-light-silver rounded-lg p-8 bg-white">
         <SectionHeader label="Details" />
-        <div className="mb-6">
-          <ControlledSwitchField
-            name="isTidal"
-            label="Tidal Product"
-            description="Turn on if this product is a tidal station product (no chart category)."
-          />
-        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
-            <InputLabel label="Category" required={!isTidal} />
+            <InputLabel label="Category" required />
             <ControlledSelectField
               name="category"
               options={PRODUCT_CATEGORY_OPTIONS}
               placeholder="Select a category"
-              disabled={!!isTidal}
             />
           </div>
           <div>
@@ -236,7 +232,7 @@ export default function ProductForm({
             />
           </div>
           <div>
-            <InputLabel label="Chart Code" required={!isTidal} />
+            <InputLabel label="Chart Code" required={category !== "TIDAL"} />
             <ControlledComboboxSelect
               name="chartCode"
               options={chartCodeOptions}
@@ -244,7 +240,7 @@ export default function ProductForm({
               searchPlaceholder="Search chart code..."
               emptyMessage="Already used"
               listClassName="scrollbar-modern"
-              disabled={!!isTidal}
+              disabled={category === "TIDAL"}
             />
           </div>
         </div>

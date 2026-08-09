@@ -15,19 +15,9 @@ export const productSchema = Yup.object({
   nameBn: Yup.string().max(200, "Max 200 characters").optional(),
   descriptionEn: Yup.string().optional(),
   descriptionBn: Yup.string().optional(),
-  isTidal: Yup.boolean().default(false),
   category: Yup.string()
-    .oneOf(["", "PAPPER_CHART", "ELECTRONIC_NAVIGATIONAL_CHART"])
-    .when("isTidal", {
-      is: false,
-      then: (schema) =>
-        schema.test(
-          "category-required",
-          "Category is required",
-          (value) => !!value
-        ),
-      otherwise: (schema) => schema.optional(),
-    }),
+    .oneOf(["", "PAPPER_CHART", "ELECTRONIC_NAVIGATIONAL_CHART", "TIDAL"])
+    .test("category-required", "Category is required", (value) => !!value),
   price: Yup.number()
     .transform((value, originalValue) =>
       originalValue === "" ? undefined : value
@@ -35,8 +25,8 @@ export const productSchema = Yup.object({
     .typeError("Price must be a number")
     .min(0, "Price must be positive")
     .optional(),
-  chartCode: Yup.string().when("isTidal", {
-    is: false,
+  chartCode: Yup.string().when("category", {
+    is: (value: string) => value !== "TIDAL",
     then: (schema) => schema.required("Chart code is required"),
     otherwise: (schema) => schema.optional(),
   }),

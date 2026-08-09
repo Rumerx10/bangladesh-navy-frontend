@@ -42,6 +42,16 @@ const ControlledSelectField: React.FC<ControlledSelectFieldProps> = ({
               <Select
                 disabled={disabled}
                 onValueChange={(val) => {
+                  // Radix's Select mirrors a hidden native <select> for
+                  // accessibility/autofill; when `value` is set
+                  // programmatically (e.g. a form `reset()`) rather than by
+                  // a real user pick, that native element can fire a
+                  // spurious onValueChange("") — never a real option here,
+                  // since none of our options use "" as a value. Number("")
+                  // is 0, so without this guard the isNaN branch below would
+                  // silently coerce the field to 0 and wipe out the real
+                  // selection.
+                  if (val === "") return;
                   if (val === "true") field.onChange(true);
                   else if (val === "false") field.onChange(false);
                   else if (!isNaN(Number(val))) field.onChange(Number(val));

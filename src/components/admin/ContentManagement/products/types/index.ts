@@ -1,4 +1,5 @@
-export type ProductCategory = "PAPPER_CHART" | "ELECTRONIC_NAVIGATIONAL_CHART";
+export type ProductCategory =
+  "PAPPER_CHART" | "ELECTRONIC_NAVIGATIONAL_CHART" | "TIDAL";
 
 export const PRODUCT_CATEGORY_OPTIONS: {
   label: string;
@@ -9,11 +10,13 @@ export const PRODUCT_CATEGORY_OPTIONS: {
     label: "Electronic Navigational Chart",
     value: "ELECTRONIC_NAVIGATIONAL_CHART",
   },
+  { label: "Tidal", value: "TIDAL" },
 ];
 
 export const PRODUCT_CATEGORY_LABELS: Record<ProductCategory, string> = {
   PAPPER_CHART: "Paper Chart",
   ELECTRONIC_NAVIGATIONAL_CHART: "Electronic Navigational Chart",
+  TIDAL: "Tidal",
 };
 
 export interface IProduct {
@@ -25,7 +28,6 @@ export interface IProduct {
   images: string[];
   chartCode: number | null;
   category: ProductCategory | null;
-  isTidal?: boolean;
   price: number | null;
   status: "ACTIVE" | "INACTIVE";
   geographicLocation: string | null;

@@ -51,26 +51,7 @@ export function GetProductColumns(
       accessorKey: "category",
       cell: (_, row) => (
         <span className="text-sm text-gray-600">
-          {row.category
-            ? PRODUCT_CATEGORY_LABELS[row.category]
-            : row.isTidal
-              ? "Tidal Product"
-              : "—"}
-        </span>
-      ),
-    },
-    {
-      header: "Tidal",
-      accessorKey: "isTidal",
-      cell: (_, row) => (
-        <span
-          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-            row.isTidal
-              ? "bg-blue-100 text-blue-700"
-              : "bg-gray-100 text-gray-500"
-          }`}
-        >
-          {row.isTidal ? "Yes" : "No"}
+          {row.category ? PRODUCT_CATEGORY_LABELS[row.category] : "—"}
         </span>
       ),
     },
@@ -78,7 +59,9 @@ export function GetProductColumns(
       header: "Chart Code",
       accessorKey: "chartCode",
       cell: (_, row) => (
-        <span className="font-mono text-sm text-gray-700">{row.chartCode}</span>
+        <span className="font-mono text-sm text-gray-700">
+          {row.category === "TIDAL" ? "—" : (row.chartCode ?? "—")}
+        </span>
       ),
     },
     {
