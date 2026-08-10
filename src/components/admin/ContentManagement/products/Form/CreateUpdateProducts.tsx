@@ -39,6 +39,7 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
       eastLongitude: "",
       westLongitude: "",
       edition: "",
+      editionDate: "",
       publicationDate: "",
     },
   });
@@ -66,6 +67,9 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
         eastLongitude: initialValues.eastLongitude || "",
         westLongitude: initialValues.westLongitude || "",
         edition: initialValues.edition || "",
+        editionDate: initialValues.editionDate
+          ? initialValues.editionDate.split("T")[0]
+          : "",
         publicationDate: initialValues.publicationDate
           ? initialValues.publicationDate.split("T")[0]
           : "",
@@ -139,6 +143,7 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
     if (values.westLongitude)
       formData.append("westLongitude", values.westLongitude);
     if (values.edition) formData.append("edition", values.edition);
+    if (values.editionDate) formData.append("editionDate", values.editionDate);
     if (values.publicationDate)
       formData.append("publicationDate", values.publicationDate);
 

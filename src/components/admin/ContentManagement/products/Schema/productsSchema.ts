@@ -56,6 +56,7 @@ export const productSchema = Yup.object({
   eastLongitude: Yup.string().optional(),
   westLongitude: Yup.string().optional(),
   edition: Yup.string().optional(),
+  editionDate: Yup.string().optional(),
   publicationDate: Yup.string().optional(),
 });
 

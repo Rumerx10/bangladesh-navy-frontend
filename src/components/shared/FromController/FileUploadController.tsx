@@ -110,9 +110,7 @@ export function FileUploadController({
             }
           }
 
-          return (
-            <Image src="/icons/file.svg" alt="File" width={40} height={40} />
-          );
+          return <FileText className="w-10 h-10 text-gray-400" />;
         };
 
         return (

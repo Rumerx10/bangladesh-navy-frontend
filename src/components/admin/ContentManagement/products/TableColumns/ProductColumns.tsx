@@ -38,15 +38,6 @@ export function GetProductColumns(
       ),
     },
     {
-      header: "Name (BN)",
-      accessorKey: "nameBn",
-      cell: (_, row) => (
-        <span className="text-gray-600 line-clamp-2 max-w-45">
-          {row.nameBn}
-        </span>
-      ),
-    },
-    {
       header: "Category",
       accessorKey: "category",
       cell: (_, row) => (
@@ -70,6 +61,21 @@ export function GetProductColumns(
       cell: (_, row) => (
         <span className="text-sm text-gray-700">
           {row.price != null ? `${siteConfig.currencySymbol}${row.price}` : "—"}
+        </span>
+      ),
+    },
+    {
+      header: "Edition Date",
+      accessorKey: "editionDate",
+      cell: (_, row) => (
+        <span className="text-sm text-gray-700">
+          {row.editionDate
+            ? new Date(row.editionDate).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              })
+            : "—"}
         </span>
       ),
     },

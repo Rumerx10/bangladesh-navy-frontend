@@ -1,5 +1,12 @@
+import { Metadata } from "next";
 import AboutHero from "@/src/components/about/AboutHero";
 import GalleryGrid from "@/src/components/about/GalleryGrid";
+
+export const metadata: Metadata = {
+  title: "Gallery | Bangladesh Navy Hydrographic & Oceanographic Center",
+  description:
+    "Visual documentation of BNHOC operations, events, and facilities.",
+};
 
 export default function GalleryPage() {
   return (

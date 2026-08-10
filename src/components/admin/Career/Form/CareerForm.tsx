@@ -9,7 +9,7 @@ import SubmitButton from "@/src/components/shared/SubmitButton";
 import TextEditor from "@/src/components/shared/text-editor/TextEditor";
 import { Button } from "@/src/components/ui/button";
 import { ErrorType, StatusType } from "@/src/components/shared/types/common";
-import Image from "next/image";
+import { Users } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useFormContext } from "react-hook-form";
 import { CareerSchemaForm } from "../Schema/careerSchema";
@@ -47,13 +47,7 @@ export default function CareerForm({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
-              <Image
-                src={"/icons/group.svg"}
-                alt="career information"
-                width={36}
-                height={36}
-                className="w-4"
-              />
+              <Users className="w-4 h-4 text-primary" />
             </div>
             <Paragraph className="xl:text-lg font-medium">
               Career Information

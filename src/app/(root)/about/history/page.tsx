@@ -1,5 +1,12 @@
+import { Metadata } from "next";
 import AboutHero from "@/src/components/about/AboutHero";
 import HistoryTimeline from "@/src/components/about/HistoryTimeline";
+
+export const metadata: Metadata = {
+  title: "Our History | Bangladesh Navy Hydrographic & Oceanographic Center",
+  description:
+    "The journey of Bangladesh Navy Hydrographic and Oceanographic Center.",
+};
 
 export default function HistoryPage() {
   return (
