@@ -1,17 +1,14 @@
-// components/auth/SignupForm.tsx
 "use client";
-
-import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
-import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
-import GoogleSignInButton from "@/src/components/shared/GoogleSignInButton/GoogleSignInButton";
-import InputLabel from "@/src/components/shared/InputLabel";
-import { Button } from "@/src/components/ui/button";
-import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { Eye, EyeOff } from "lucide-react";
 import { SignupFormType } from "../Schema";
 import { SignupFormProps } from "../types";
+import { useFormContext } from "react-hook-form";
+import { Button } from "@/src/components/ui/button";
+import InputLabel from "@/src/components/shared/InputLabel";
+import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
+import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
 
 export default function SignupForm({
   onSubmit,
@@ -27,16 +24,16 @@ export default function SignupForm({
       <h2 className="text-[32px] font-semibold mb-6 text-primary">Sign Up</h2>
 
       {/* Google Sign Up */}
-      <GoogleSignInButton label="Sign up with Google" />
+      {/* <GoogleSignInButton label="Sign up with Google" /> */}
 
       {/* Divider */}
-      <div className="flex items-center gap-3 my-6">
+      {/* <div className="flex items-center gap-3 my-6">
         <span className="flex-1 h-px bg-gray-200" />
         <span className="text-xs text-gray-400 font-medium uppercase tracking-wider">
           or sign up with email
         </span>
         <span className="flex-1 h-px bg-gray-200" />
-      </div>
+      </div> */}
 
       <div className="mb-6 grid grid-cols-1 lg:grid-cols-2 gap-3">
         <div>
