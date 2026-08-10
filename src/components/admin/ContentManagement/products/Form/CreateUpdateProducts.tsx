@@ -148,8 +148,7 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
       formData.append("publicationDate", values.publicationDate);
 
     // Only newly-added files are sent; untouched existing image URLs are
-    // left off the payload entirely so the backend keeps them as-is
-    // (the update DTO doesn't accept an "existingImages" field).
+    // left off the payload entirely and kept as-is by the backend.
     (values.images || []).forEach((img) => {
       if (img instanceof File) {
         formData.append("images", img);
@@ -157,6 +156,18 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
     });
 
     if (isUpdate && initialValues) {
+      // Existing image URLs removed by the user in this session are sent via
+      // deleteImages so the backend actually removes them instead of just
+      // leaving them out of the response.
+      const remainingUrls = new Set(
+        (values.images || []).filter(
+          (img): img is string => typeof img === "string"
+        )
+      );
+      (initialValues.images || [])
+        .filter((url) => !remainingUrls.has(url))
+        .forEach((url) => formData.append("deleteImages", url));
+
       updateMutate({
         url: `/product/${initialValues.id}`,
         data: formData,
