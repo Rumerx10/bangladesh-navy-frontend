@@ -24,6 +24,16 @@ export default function ProductKeyFeatures({
     { label: "Coordinates", value: coordinates },
     { label: "Edition", value: product.edition },
     {
+      label: "Edition Date",
+      value: product.editionDate
+        ? new Date(product.editionDate).toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          })
+        : undefined,
+    },
+    {
       label: "Publication Date",
       value: product.publicationDate
         ? new Date(product.publicationDate).toLocaleDateString("en-GB", {

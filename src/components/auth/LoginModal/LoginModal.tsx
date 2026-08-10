@@ -1,7 +1,6 @@
 "use client";
 
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
-import GoogleSignInButton from "@/src/components/shared/GoogleSignInButton/GoogleSignInButton";
 import { useAuth } from "@/src/hooks/useAuth";
 import {
   closeLoginModal,
@@ -11,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/src/lib/redux/hooks";
 import { isAdminRole } from "@/src/utils/UserRoleEnum";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Eye, EyeOff, Lock, ShieldCheck, X } from "lucide-react";
-import Link from "next/link";
+
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
@@ -106,12 +105,12 @@ export default function LoginModal() {
         <div className="text-center">
           <h2 className="text-lg font-bold text-foreground">Welcome back</h2>
           <p className="text-xs text-muted-foreground mt-1">
-            Sign in to continue your shopping
+            Sign in to continue
           </p>
         </div>
 
         {/* Google Sign In */}
-        <div>
+        {/* <div>
           <GoogleSignInButton
             label="Continue with Google"
             onSuccess={(role) => {
@@ -123,16 +122,16 @@ export default function LoginModal() {
               resetAuthError();
             }}
           />
-        </div>
+        </div> */}
 
         {/* Divider */}
-        <div className="flex items-center gap-3">
+        {/* <div className="flex items-center gap-3">
           <span className="flex-1 h-px bg-border" />
           <span className="text-[11px] text-muted-foreground">
             or sign in with email
           </span>
           <span className="flex-1 h-px bg-border" />
-        </div>
+        </div> */}
 
         {/* Form */}
         <FormProvider {...methods}>
@@ -171,13 +170,13 @@ export default function LoginModal() {
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
-              <Link
+              {/* <Link
                 href="/forgot-password"
                 className="text-[11px] text-primary hover:underline mt-1 inline-block"
                 onClick={handleCloseModal}
               >
                 Forgot password?
-              </Link>
+              </Link> */}
             </div>
             {error && <ErrorMessage error={error} />}
             <button
@@ -200,7 +199,7 @@ export default function LoginModal() {
         </FormProvider>
 
         {/* Footer */}
-        <p className="text-center text-xs text-muted-foreground">
+        {/* <p className="text-center text-xs text-muted-foreground">
           Don&apos;t have an account?{" "}
           <Link
             href="/auth/signup"
@@ -209,7 +208,7 @@ export default function LoginModal() {
           >
             Sign Up
           </Link>
-        </p>
+        </p> */}
 
         {/* Trust */}
         <div className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground">

@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
-import { cn } from "@/src/lib/utils";
+import { FileText } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { useFormContext } from "react-hook-form";
 import InputLabel from "@/src/components/shared/InputLabel";
@@ -31,8 +30,6 @@ const BiographyManagementForm = ({
   onCancel,
   onSubmit,
 }: BiographyManagementFormProps) => {
-  const [iconLoaded, setIconLoaded] = useState(false);
-
   const {
     watch,
     setValue,
@@ -52,18 +49,7 @@ const BiographyManagementForm = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
-              <Image
-                src="/icons/file.svg"
-                alt="english content"
-                width={36}
-                height={36}
-                className={cn(
-                  "w-4 transition-opacity duration-700 ease-in-out",
-                  iconLoaded ? "opacity-100" : "opacity-0"
-                )}
-                onLoad={() => setIconLoaded(true)}
-                onError={() => setIconLoaded(true)}
-              />
+              <FileText className="w-4 h-4 text-primary" />
             </div>
             <Paragraph className="xl:text-lg font-medium text-pBlue">
               English Content
@@ -114,13 +100,7 @@ const BiographyManagementForm = ({
       <div className="border border-light-silver rounded-lg p-8 bg-white">
         <div className="flex items-center gap-3 mb-6">
           <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
-            <Image
-              src="/icons/file.svg"
-              alt="bengali content"
-              width={36}
-              height={36}
-              className="w-4"
-            />
+            <FileText className="w-4 h-4 text-primary" />
           </div>
           <Paragraph className="xl:text-lg font-medium text-pBlue">
             Bengali Content

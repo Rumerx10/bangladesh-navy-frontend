@@ -46,10 +46,6 @@ export enum StatusType {
   VERIFIED = "VERIFIED",
   UNVERIFIED = "UNVERIFIED",
 }
-export enum BookingType {
-  ONSITE = "onsite",
-  TELE = "tele",
-}
 export interface ITableProps<T> {
   columns: ColumnDef<T>[];
   data: T[];

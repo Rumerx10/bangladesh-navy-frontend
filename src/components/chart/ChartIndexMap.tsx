@@ -320,6 +320,13 @@ function ChartInfoDialog({
         day: "2-digit",
       })
     : undefined;
+  const editionDate = product?.editionDate
+    ? new Date(product.editionDate).toLocaleDateString("en-GB", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+      })
+    : undefined;
 
   return (
     <Dialog
@@ -380,6 +387,7 @@ function ChartInfoDialog({
               />
               <SpecTile label="Published" value={publishedDate} />
               <SpecTile label="Edition" value={product.edition ?? undefined} />
+              <SpecTile label="Edition Date" value={editionDate} />
             </div>
 
             {/* CTA */}

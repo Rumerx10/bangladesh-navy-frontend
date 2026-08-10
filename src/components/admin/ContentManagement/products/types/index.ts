@@ -38,6 +38,7 @@ export interface IProduct {
   eastLongitude: string | null;
   westLongitude: string | null;
   edition: string | null;
+  editionDate: string | null;
   publicationDate: string | null;
   createdAt: string;
   updatedAt: string;

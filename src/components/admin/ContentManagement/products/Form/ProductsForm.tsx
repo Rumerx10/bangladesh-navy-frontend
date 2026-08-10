@@ -1,8 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, FileText } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { useFormContext } from "react-hook-form";
 import { useGet } from "@/src/hooks/useGet";
@@ -37,22 +36,10 @@ interface ProductFormProps {
 }
 
 const SectionHeader = ({ label }: { label: string }) => {
-  const [iconLoaded, setIconLoaded] = useState(false);
   return (
     <div className="flex items-center gap-3 mb-6">
       <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
-        <Image
-          src="/icons/file.svg"
-          alt={label}
-          width={36}
-          height={36}
-          className={cn(
-            "w-4 transition-opacity duration-700 ease-in-out",
-            iconLoaded ? "opacity-100" : "opacity-0"
-          )}
-          onLoad={() => setIconLoaded(true)}
-          onError={() => setIconLoaded(true)}
-        />
+        <FileText className="w-4 h-4 text-primary" />
       </div>
       <Paragraph className="xl:text-lg font-medium text-pBlue">
         {label}
@@ -315,6 +302,14 @@ export default function ProductForm({
             />
           </div>
           <div>
+            <InputLabel label="Edition Date" />
+            <ControlledInputField
+              name="editionDate"
+              type="date"
+              className="bg-light shadow-none"
+            />
+          </div>
+          <div>
             <InputLabel label="Publication Date" />
             <ControlledInputField
               name="publicationDate"
@@ -334,13 +329,7 @@ export default function ProductForm({
         >
           <div className="flex items-center gap-3">
             <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
-              <Image
-                src="/icons/file.svg"
-                alt="bengali content"
-                width={36}
-                height={36}
-                className="w-4"
-              />
+              <FileText className="w-4 h-4 text-primary" />
             </div>
             <div className="text-left">
               <Paragraph className="xl:text-lg font-medium text-pBlue">

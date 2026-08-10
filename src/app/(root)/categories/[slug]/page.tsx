@@ -1,3 +1,10 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Category | Bangladesh Navy Hydrographic & Oceanographic Center",
+  description: "Browse nautical products in this category.",
+};
+
 export default function CategoryProductsPage({
   params,
 }: {
