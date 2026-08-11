@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -43,19 +44,23 @@ export default function DynamicBreadcrumb() {
           }`;
 
           return (
-            <BreadcrumbItem key={href}>
+            <React.Fragment key={href}>
               {showSeparator && <BreadcrumbSeparator />}
 
-              {isLast ? (
-                <BreadcrumbPage className={className}>{label}</BreadcrumbPage>
-              ) : (
-                <BreadcrumbLink asChild>
-                  <Link href={href} className={className}>
+              <BreadcrumbItem>
+                {isLast ? (
+                  <BreadcrumbPage className={className}>
                     {label}
-                  </Link>
-                </BreadcrumbLink>
-              )}
-            </BreadcrumbItem>
+                  </BreadcrumbPage>
+                ) : (
+                  <BreadcrumbLink asChild>
+                    <Link href={href} className={className}>
+                      {label}
+                    </Link>
+                  </BreadcrumbLink>
+                )}
+              </BreadcrumbItem>
+            </React.Fragment>
           );
         })}
       </BreadcrumbList>

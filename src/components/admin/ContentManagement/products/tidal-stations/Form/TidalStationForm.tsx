@@ -36,8 +36,8 @@ export default function TidalStationForm({
   const { handleSubmit } = useFormContext<TidalStationFormValues>();
 
   const { data: productData } = useGet<ITidalProductOption[]>(
-    "/product/is-tidal/list",
-    ["product-is-tidal-list"]
+    "/product/tidal/list",
+    ["product-tidal-list"]
   );
 
   const productOptions = mapToSelectOptions(

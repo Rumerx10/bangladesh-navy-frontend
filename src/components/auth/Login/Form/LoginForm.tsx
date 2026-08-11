@@ -1,23 +1,20 @@
 "use client";
-
-import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
-import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
-import GoogleSignInButton from "@/src/components/shared/GoogleSignInButton/GoogleSignInButton";
-import InputLabel from "@/src/components/shared/InputLabel";
-import { Button } from "@/src/components/ui/button";
-import { Eye, EyeOff } from "lucide-react";
-import Link from "next/link";
 import { useState } from "react";
-import { useFormContext } from "react-hook-form";
 import { LoginFormType } from "../Schema";
 import { LoginFormProps } from "../types";
+import { Eye, EyeOff } from "lucide-react";
+import { useFormContext } from "react-hook-form";
+import { Button } from "@/src/components/ui/button";
+import InputLabel from "@/src/components/shared/InputLabel";
+import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
+import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
 
-export default function LoginForm({
+const LoginForm = ({
   onSubmit,
-  onGoogleSuccess,
+
   error,
   isPending = false,
-}: LoginFormProps) {
+}: LoginFormProps) => {
   const methods = useFormContext<LoginFormType>();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -26,19 +23,19 @@ export default function LoginForm({
       <h2 className="text-[32px] font-semibold mb-6 text-primary">Log in</h2>
 
       {/* Google Sign In */}
-      <GoogleSignInButton
+      {/* <GoogleSignInButton
         label="Sign in with Google"
         onSuccess={onGoogleSuccess}
-      />
+      /> */}
 
       {/* Divider */}
-      <div className="flex items-center gap-3 my-6">
+      {/* <div className="flex items-center gap-3 my-6">
         <span className="flex-1 h-px bg-gray-200" />
         <span className="text-xs text-gray-400 font-medium uppercase tracking-wider">
           or continue with email
         </span>
         <span className="flex-1 h-px bg-gray-200" />
-      </div>
+      </div> */}
 
       <div className="mb-6">
         <InputLabel label="Email" required />
@@ -61,17 +58,17 @@ export default function LoginForm({
           <Button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute inset-y-1 right-1 flex items-center text-black bg-transparent hover:bg-transparent shadow-none"
+            className="absolute inset-y-0 right-1 flex items-center text-black bg-transparent hover:bg-transparent shadow-none"
           >
             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </Button>
         </div>
-        <Link
+        {/* <Link
           href="/forgot-password"
           className="mt-3 block text-right text-primary-light font-semibold underline"
         >
           Forgot password?
-        </Link>
+        </Link> */}
       </div>
 
       <div className="mt-3">
@@ -86,7 +83,7 @@ export default function LoginForm({
         {isPending ? "Loading..." : "Sign in"}
       </Button>
 
-      <p className="mt-4 text-left text-sm text-[#BDBDBD]">
+      {/* <p className="mt-4 text-left text-sm text-[#BDBDBD]">
         Don&apos;t have an account?{" "}
         <Link
           href="/auth/signup"
@@ -94,7 +91,9 @@ export default function LoginForm({
         >
           Sign Up
         </Link>
-      </p>
+      </p> */}
     </form>
   );
-}
+};
+
+export default LoginForm;
