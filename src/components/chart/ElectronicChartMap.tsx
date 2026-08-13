@@ -35,20 +35,14 @@ export default function ElectronicChartMap() {
   const [searchedCell, setSearchedCell] = useState<string | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const { data: productsData } = useGet<IProduct[]>(
-    "/product",
-    ["product", "enc-index-all"],
-    { limit: "1000" }
+  // Product for the currently selected cell, fetched on demand (by national
+  // chart number) rather than pulling the entire product catalogue up front.
+  const { data: selectedProductData } = useGet<IProduct>(
+    `/product/${selected?.nationalNo}`,
+    ["product-detail", selected?.nationalNo ?? ""],
+    undefined,
+    { enabled: selected !== null }
   );
-
-  // National chart number -> product, for the click-through info dialog.
-  const productByNationalNo = useMemo(() => {
-    const map = new Map<number, IProduct>();
-    for (const p of productsData?.data || []) {
-      if (p.chartCode !== null) map.set(p.chartCode, p);
-    }
-    return map;
-  }, [productsData]);
 
   // Largest rectangles first so the smallest (most specific) cell renders on
   // top and wins hover/click where coverage areas overlap.
@@ -268,11 +262,7 @@ export default function ElectronicChartMap() {
 
       <EncInfoDialog
         selected={selected}
-        product={
-          selected
-            ? productByNationalNo.get(Number(selected.nationalNo))
-            : undefined
-        }
+        product={selectedProductData?.data}
         onClose={() => setSelected(null)}
       />
     </section>
@@ -319,14 +309,14 @@ function EncInfoDialog({
           </DialogDescription>
         </DialogHeader>
 
-        {selected && (
+        {selected && product ? (
           <div className="space-y-4">
             {/* Chart preview */}
             {image && (
               <div className="relative h-56 w-full overflow-hidden rounded-xl border border-slate-200 bg-linear-to-br from-slate-50 to-slate-100">
                 <Image
                   src={image}
-                  alt={product?.nameEn || selected.title}
+                  alt={product.nameEn}
                   fill
                   className="object-contain p-2"
                   sizes="(max-width: 640px) 100vw, 448px"
@@ -352,18 +342,21 @@ function EncInfoDialog({
             {/* Title */}
             <div>
               <h3 className="text-lg leading-snug font-bold text-pBlue">
-                {selected.title}
+                {product.nameEn}
               </h3>
               <p className="mt-0.5 text-sm text-gray-500">
-                Electronic Navigational Chart (ENC) · Bay of Bengal
+                {product.geographicLocation ??
+                  "Electronic Navigational Chart (ENC) · Bay of Bengal"}
               </p>
             </div>
 
             {/* Specifications */}
             <div className="grid grid-cols-2 gap-2">
-              <SpecTile label="Compilation Scale" value={selected.scale} />
-              <SpecTile label="Published" value={selected.published} />
-              <SpecTile label="New Edition" value={selected.edition} />
+              <SpecTile label="Scale" value={product.scale ?? undefined} />
+              <SpecTile
+                label="Edition"
+                value={product.edition ?? undefined}
+              />
               <SpecTile label="National No." value={selected.nationalNo} />
             </div>
 
@@ -377,6 +370,24 @@ function EncInfoDialog({
               </Link>
             </div>
           </div>
+        ) : (
+          selected && (
+            <div className="space-y-4">
+              <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 py-8 text-center">
+                <p className="text-[11px] font-medium uppercase tracking-wider text-gray-400">
+                  Cell Number
+                </p>
+                <p className="mt-1 text-4xl font-extrabold tracking-wide text-pBlue">
+                  {selected.cellNo}
+                </p>
+                {selected.intNo && (
+                  <p className="mt-1 text-sm font-semibold text-gray-600">
+                    {selected.intNo}
+                  </p>
+                )}
+              </div>
+            </div>
+          )
         )}
       </DialogContent>
     </Dialog>

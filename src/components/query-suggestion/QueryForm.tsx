@@ -47,19 +47,19 @@ const QueryForm = () => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="rounded-3xl border border-gray-100 bg-[#f8fafc] p-6 lg:p-10">
       <div className="mb-10">
         <h2 className="text-2xl lg:text-3xl font-bold text-pBlue mb-4">
           Submit a Query or Suggestion
         </h2>
-        <p className="text-gray-500 text-sm lg:text-base leading-relaxed">
+        <p className="max-w-2xl text-gray-500 text-sm lg:text-base leading-relaxed">
           Have a query or suggestion about our services or resources? Fill out
           the form below and our team will review and respond accordingly.
         </p>
       </div>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)} className="w-full">
-          <div className="flex flex-col gap-5">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
             <div>
               <InputLabel label="Name" required />
               <ControlledInputField
@@ -79,7 +79,7 @@ const QueryForm = () => {
               />
             </div>
 
-            <div>
+            <div className="md:col-span-2">
               <InputLabel label="Phone" required />
               <ControlledInputField
                 type="tel"
@@ -89,17 +89,17 @@ const QueryForm = () => {
               />
             </div>
 
-            <div>
+            <div className="md:col-span-2">
               <InputLabel label="Message" required />
               <ControlledTextareaField
                 name="message"
                 placeholder="Write your query or suggestion here..."
-                className="bg-white min-h-30"
+                className="bg-white min-h-40"
               />
             </div>
 
             {error && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+              <div className="md:col-span-2 bg-red-50 border border-red-200 rounded-lg p-4">
                 <p className="text-red-700 text-sm">
                   {error.message || "Failed to send message. Please try again."}
                 </p>
@@ -109,7 +109,7 @@ const QueryForm = () => {
             <Button
               disabled={isPending}
               type="submit"
-              className="capitalize bg-primary text-white rounded-lg px-6 lg:px-10 py-3 h-11 lg:h-12 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed hover:bg-primary/90 transition-colors w-full lg:w-auto"
+              className="md:col-span-2 capitalize bg-primary text-white rounded-lg px-6 lg:px-10 py-3 h-11 lg:h-12 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed hover:bg-primary/90 transition-colors w-full lg:w-auto"
             >
               {isPending ? "Sending..." : "Submit →"}
             </Button>

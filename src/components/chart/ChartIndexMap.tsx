@@ -39,21 +39,14 @@ export default function ChartIndexMap() {
   const [searchedNumber, setSearchedNumber] = useState<string | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const { data: productsData } = useGet<IProduct[]>(
-    "/product",
-    ["product", "chart-index-all"],
-    { limit: "1000" }
+  // Product for the currently selected chart, fetched on demand (by chart
+  // code) rather than pulling the entire product catalogue up front.
+  const { data: selectedProductData } = useGet<IProduct>(
+    `/product/${selected?.number}`,
+    ["product-detail", selected?.number ?? ""],
+    undefined,
+    { enabled: selected !== null }
   );
-
-  // Chart code (national chart number) -> product, for the search preview
-  // and the click-through info dialog.
-  const productByChartCode = useMemo(() => {
-    const map = new Map<number, IProduct>();
-    for (const p of productsData?.data || []) {
-      if (p.chartCode !== null) map.set(p.chartCode, p);
-    }
-    return map;
-  }, [productsData]);
 
   // Largest rectangles first so the smallest (most specific) chart renders
   // on top and wins hover/click where coverage areas overlap.
@@ -146,32 +139,24 @@ export default function ChartIndexMap() {
                 onMouseDown={(e) => e.preventDefault()}
               >
                 {results.length > 0 ? (
-                  results.map((area) => {
-                    const product = productByChartCode.get(Number(area.number));
-                    return (
-                      <li key={area.number}>
-                        <button
-                          type="button"
-                          onClick={() => selectResult(area)}
-                          className="flex w-full items-baseline gap-2 px-3 py-2 text-left transition-colors hover:bg-slate-50"
-                        >
-                          <span className="text-sm font-bold text-pBlue">
-                            {area.number}
+                  results.map((area) => (
+                    <li key={area.number}>
+                      <button
+                        type="button"
+                        onClick={() => selectResult(area)}
+                        className="flex w-full items-baseline gap-2 px-3 py-2 text-left transition-colors hover:bg-slate-50"
+                      >
+                        <span className="text-sm font-bold text-pBlue">
+                          {area.number}
+                        </span>
+                        {area.int && (
+                          <span className="text-xs text-gray-400">
+                            ({area.int})
                           </span>
-                          {area.int && (
-                            <span className="text-xs text-gray-400">
-                              ({area.int})
-                            </span>
-                          )}
-                          {product && (
-                            <span className="min-w-0 flex-1 truncate text-xs text-gray-500">
-                              {product.nameEn}
-                            </span>
-                          )}
-                        </button>
-                      </li>
-                    );
-                  })
+                        )}
+                      </button>
+                    </li>
+                  ))
                 ) : (
                   <li className="px-3 py-2 text-sm text-gray-400">
                     No chart matches “{query.trim()}”
@@ -280,9 +265,7 @@ export default function ChartIndexMap() {
 
       <ChartInfoDialog
         selected={selected}
-        product={
-          selected ? productByChartCode.get(Number(selected.number)) : undefined
-        }
+        product={selectedProductData?.data}
         onClose={() => setSelected(null)}
       />
     </section>
@@ -416,12 +399,6 @@ function ChartInfoDialog({
                   </p>
                 )}
               </div>
-              <Link
-                href={`/product-service/paper-charts/${selected.number}`}
-                className="block w-full rounded-lg bg-pBlue py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-pBlue/90"
-              >
-                View Details
-              </Link>
             </div>
           )
         )}
