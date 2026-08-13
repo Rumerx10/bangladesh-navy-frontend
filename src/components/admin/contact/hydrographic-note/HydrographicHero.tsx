@@ -5,7 +5,7 @@ import { Anchor, FileText, MapPin } from "lucide-react";
 
 const HydrographicHero = () => {
   return (
-    <section className="relative overflow-hidden bg-pBlue pt-32 pb-20 lg:pt-48 lg:pb-32">
+    <section className="relative overflow-hidden bg-pBlue pt-32 pb-20 sm:pt-40 lg:pt-48 lg:pb-32">
       <div className="absolute inset-0">
         <div className="absolute top-0 right-0 h-125 w-125 -mr-64 -mt-64 rounded-full bg-blue-500 blur-[120px]" />
         <div className="absolute bottom-0 left-0 h-100 w-100 -mb-48 -ml-48 rounded-full bg-cyan-500 blur-[100px]" />

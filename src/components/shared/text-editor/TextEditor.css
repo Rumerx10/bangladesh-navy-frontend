@@ -175,7 +175,7 @@
 .image-resize-container[data-wrap="inline"] {
   display: inline;
   vertical-align: middle;
-  margin: 0 4px !important;
+  margin: 0 20px !important;
 }
 
 .image-resize-container[data-wrap="inline"] .resizable-image {
@@ -321,7 +321,7 @@
 .preview-content .image-wrap-inline {
   display: inline;
   vertical-align: middle;
-  margin: 0 4px !important;
+  margin: 0 20px !important;
 }
 
 .preview-content .image-wrap-inline .resizable-image {

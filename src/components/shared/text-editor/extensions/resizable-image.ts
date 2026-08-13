@@ -2,6 +2,17 @@ import { type CommandProps, type NodeViewProps } from "@tiptap/core";
 import Image from "@tiptap/extension-image";
 import { ResizableImageAttributes } from "../types/editor";
 
+// Attrs are stored as CSS length strings (e.g. "300px") to match the
+// schema default — a bare number serializes to invalid CSS ("width: 350;"
+// has no unit and gets dropped by the browser), which is what made resized
+// images silently fall back to their natural size after a save/reload.
+const toPx = (value?: string | number): string | undefined => {
+  if (value === undefined || value === null || value === "") return undefined;
+  return typeof value === "number" || /^\d+$/.test(String(value))
+    ? `${parseInt(String(value), 10)}px`
+    : String(value);
+};
+
 const ResizableImage = Image.extend({
   name: "resizableImage",
 
@@ -90,8 +101,8 @@ const ResizableImage = Image.extend({
           const { width, height, wrap, align, ...baseAttrs } = options;
           const attrs: Record<string, unknown> = {
             ...baseAttrs,
-            width: width ? parseInt(width) : undefined,
-            height: height ? parseInt(height) : undefined,
+            width: toPx(width),
+            height: toPx(height),
           };
           if (wrap) attrs.wrap = wrap;
           if (align) attrs.align = align;
@@ -104,15 +115,15 @@ const ResizableImage = Image.extend({
         (options: Partial<ResizableImageAttributes>) =>
         ({ chain }: CommandProps) => {
           const updateAttrs: Record<string, unknown> = { ...options };
-          if (options.width) updateAttrs.width = parseInt(options.width);
-          if (options.height) updateAttrs.height = parseInt(options.height);
+          if (options.width) updateAttrs.width = toPx(options.width);
+          if (options.height) updateAttrs.height = toPx(options.height);
           return chain().updateAttributes(this.name, updateAttrs).run();
         },
       setResizableImageSize:
         (width: string, height: string = "auto") =>
         ({ chain }: CommandProps) => {
-          const attrs: Record<string, unknown> = { width: parseInt(width) };
-          if (height !== "auto") attrs.height = parseInt(height);
+          const attrs: Record<string, unknown> = { width: toPx(width) };
+          if (height !== "auto") attrs.height = toPx(height);
           return chain().updateAttributes(this.name, attrs).run();
         },
       setResizableImageWrap:
@@ -129,39 +140,51 @@ const ResizableImage = Image.extend({
   addNodeView() {
     const editor = this.editor;
     return (props: unknown) => {
-      const { node, getPos } = props as unknown as NodeViewProps;
+      const { node: initialNode, getPos } = props as unknown as NodeViewProps;
+      // Reassigned on every `update()` call so the resize/select handlers
+      // always read the node's current attrs instead of a stale snapshot
+      // captured only when the view was first created.
+      let node = initialNode;
+
       const dom = document.createElement("span");
-      dom.className = `image-resize-container image-wrap-${node.attrs.wrap}`;
-      dom.setAttribute("data-wrap", node.attrs.wrap);
-
       const img = document.createElement("img");
-      img.src = node.attrs.src;
-      img.alt = node.attrs.alt || "";
-      img.title = node.attrs.title || "";
       img.className = "resizable-image";
-      const width = node.attrs.width ? `${node.attrs.width}px` : "300px";
-      const height = node.attrs.height ? `${node.attrs.height}px` : "auto";
-      img.style.width = width;
-      img.style.height = height;
-      img.style.maxWidth = "100%";
 
-      // Apply wrapping styles
-      switch (node.attrs.wrap) {
-        case "wrap":
-          img.style.float = "left";
-          img.style.marginRight = "12px";
-          img.style.marginBottom = "6px";
-          break;
-        case "break":
-          img.style.display = "block";
-          img.style.margin = "12px auto";
-          img.style.float = "none";
-          break;
-        default:
-          img.style.display = "inline";
-          img.style.verticalAlign = "middle";
-          img.style.margin = "0 4px";
-      }
+      const applyAttrs = (n: typeof node) => {
+        dom.className = `image-resize-container image-wrap-${n.attrs.wrap}`;
+        dom.setAttribute("data-wrap", n.attrs.wrap);
+
+        img.src = n.attrs.src;
+        img.alt = n.attrs.alt || "";
+        img.title = n.attrs.title || "";
+        img.style.width = toPx(n.attrs.width) ?? "300px";
+        img.style.height = (n.attrs.height && toPx(n.attrs.height)) || "auto";
+        img.style.maxWidth = "100%";
+
+        // Apply wrapping styles
+        switch (n.attrs.wrap) {
+          case "wrap":
+            img.style.float = "left";
+            img.style.marginRight = "12px";
+            img.style.marginBottom = "6px";
+            img.style.display = "block";
+            img.style.verticalAlign = "";
+            img.style.margin = "0 12px 6px 0";
+            break;
+          case "break":
+            img.style.display = "block";
+            img.style.margin = "12px auto";
+            img.style.float = "none";
+            break;
+          default:
+            img.style.display = "inline";
+            img.style.verticalAlign = "middle";
+            img.style.margin = "0 20px";
+            img.style.float = "none";
+        }
+      };
+
+      applyAttrs(node);
 
       // Resize handle
       const resizeHandle = document.createElement("div");
@@ -268,8 +291,8 @@ const ResizableImage = Image.extend({
             };
             transaction.setNodeMarkup(pos, undefined, {
               ...node.attrs,
-              width: parseInt(img.style.width),
-              height: parseInt(img.style.height),
+              width: toPx(img.style.width),
+              height: toPx(img.style.height),
             });
             return true;
           });
@@ -280,6 +303,18 @@ const ResizableImage = Image.extend({
 
       return {
         dom,
+        // Without this, ProseMirror can't patch the view in place when
+        // attrs change (e.g. right after a resize commits, or on
+        // undo/redo) — it falls back to destroying and rebuilding the
+        // whole node, which is where the "resize doesn't stick" symptom
+        // came from. Updating in place also keeps `node` (and therefore
+        // any attrs read during a *second* resize) current.
+        update: (updatedNode: typeof node) => {
+          if (updatedNode.type !== node.type) return false;
+          node = updatedNode;
+          if (!isResizing) applyAttrs(node);
+          return true;
+        },
         destroy: () => {
           img.removeEventListener("click", handleClick);
           resizeHandle.removeEventListener("mousedown", startResize);

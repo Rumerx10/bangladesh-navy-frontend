@@ -5,7 +5,7 @@ import { cn } from "@/src/lib/utils";
 import ToolbarButton from "./Toolbar";
 import Text from "@tiptap/extension-text";
 import Bold from "@tiptap/extension-bold";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { FieldError } from "react-hook-form";
 import FontSize from "./extensions/font-size";
 import Italic from "@tiptap/extension-italic";
@@ -17,11 +17,13 @@ import TextAlign from "@tiptap/extension-text-align";
 import BulletList from "@tiptap/extension-bullet-list";
 import Placeholder from "@tiptap/extension-placeholder";
 import OrderedList from "@tiptap/extension-ordered-list";
-import TiptapImage from "@tiptap/extension-image";
+import ResizableImage from "./extensions/resizable-image";
 import { EditorContent, useEditor } from "@tiptap/react";
 import FontSizeSelector from "./toolbar/FontSizeSelector";
 import { Color, TextStyle } from "@tiptap/extension-text-style";
 import ColorPickerDropdown from "./toolbar/ColorPickerDropdown";
+import getCurrentImageWrap from "./utils/getCurrentImageWrap";
+import { useImageUpload } from "@/src/hooks/useImageUpload";
 
 interface TextEditorProps {
   value?: string;
@@ -38,10 +40,9 @@ const TextEditor = ({
   error,
   onImageUpload,
 }: TextEditorProps) => {
+  const { uploadImage, isLoading } = useImageUpload();
   const [currentFontSize, setCurrentFontSize] = useState("16");
-  const [isUploadingImage, setIsUploadingImage] = useState(false);
-  const imageInputRef = useRef<HTMLInputElement>(null);
-
+ const fileInputRef = useRef<HTMLInputElement>(null);
   const editor = useEditor({
     extensions: [
       Placeholder.configure({
@@ -65,7 +66,7 @@ const TextEditor = ({
       TextAlign.configure({
         types: ["paragraph"],
       }),
-      ...(onImageUpload ? [TiptapImage] : []),
+      ...(onImageUpload ? [ResizableImage] : []),
     ],
     content: value,
     immediatelyRender: false,
@@ -78,6 +79,34 @@ const TextEditor = ({
       setCurrentFontSize(size?.replace("px", "") || "");
     },
   });
+
+   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const imageUrl = await uploadImage(file);
+
+      if (imageUrl) {
+        editor
+          ?.chain()
+          .focus()
+          .setResizableImage({
+            src: "imageUrl",
+            alt: file.name,
+            title: file.name,
+            width: "300",
+            height: "auto",
+          })
+          .run();
+      }
+    } catch (err) {
+      console.error("Upload failed", err);
+      alert("Image upload failed. Please try again.");
+    } finally {
+      if (e.target) e.target.value = "";
+    }
+  };
 
   useEffect(() => {
     if (!editor) return;
@@ -97,20 +126,8 @@ const TextEditor = ({
     }
   };
 
-  const handleImageFileChange = async (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = e.target.files?.[0];
-    e.target.value = "";
-    if (!file || !onImageUpload) return;
-
-    setIsUploadingImage(true);
-    try {
-      const url = await onImageUpload(file);
-      editor.chain().focus().setImage({ src: url }).run();
-    } finally {
-      setIsUploadingImage(false);
-    }
+    const setImageWrap = (wrap: "inline" | "wrap" | "break") => {
+    editor.chain().focus().setResizableImageWrap(wrap).run();
   };
 
   return (
@@ -162,6 +179,30 @@ const TextEditor = ({
               />
             </ToolbarButton>
           </div>
+          <div className="toolbar-group">
+          <span>Text Wrap:</span>
+          <ToolbarButton
+            onClick={() => setImageWrap("inline")}
+            isActive={getCurrentImageWrap(editor) === "inline"}
+            title="Inline - Image behaves like text"
+          >
+            Inline
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={() => setImageWrap("wrap")}
+            isActive={getCurrentImageWrap(editor) === "wrap"}
+            title="Wrap - Text wraps around image"
+          >
+            Wrap
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={() => setImageWrap("break")}
+            isActive={getCurrentImageWrap(editor) === "break"}
+            title="Break - Image breaks text flow"
+          >
+            Break
+          </ToolbarButton>
+        </div>
 
           <span className="h-10 w-px bg-[#EAECF0]"></span>
 
@@ -230,34 +271,23 @@ const TextEditor = ({
             </ToolbarButton>
           </div>
 
-          {onImageUpload && (
-            <>
-              <span className="h-10 w-px bg-[#EAECF0]"></span>
-              <div className="py-2.5">
-                <ToolbarButton
-                  onClick={() => imageInputRef.current?.click()}
-                  isActive={false}
-                  disabled={isUploadingImage}
-                  title={isUploadingImage ? "Uploading..." : "Insert Image"}
-                >
-                  <Image
-                    src="/icons/media.svg"
-                    alt="Insert image"
-                    width={20}
-                    height={20}
-                    className={cn(isUploadingImage && "opacity-50")}
-                  />
-                </ToolbarButton>
-                <input
-                  ref={imageInputRef}
-                  type="file"
-                  accept="image/jpeg,image/png,image/jpg,image/webp"
-                  className="hidden"
-                  onChange={handleImageFileChange}
-                />
-              </div>
-            </>
-          )}
+          <div className="toolbar-group">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            ref={fileInputRef}
+            style={{ display: "none" }}
+          />
+          <ToolbarButton
+            onClick={() => fileInputRef.current?.click()}
+            isActive={false}
+            disabled={isLoading}
+            title="Insert Image"
+          >
+            {isLoading ? "📤" : "🖼️"}
+          </ToolbarButton>
+        </div>
         </div>
 
         {/* EDITOR */}

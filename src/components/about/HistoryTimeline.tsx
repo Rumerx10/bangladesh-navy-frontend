@@ -9,7 +9,7 @@ const narrativeStyles =
   "text-base md:text-lg text-[#3a4858] leading-[1.9] text-justify " +
   "[&_p]:mb-5 [&_p:last-child]:mb-0 " +
   "[&_img]:float-left [&_img]:w-50 md:[&_img]:w-150 [&_img]:max-w-full " +
-  "[&_img]:h-auto [&_img]:shrink-0 [&_img]:mr-7 [&_img]:mb-4 " +
+  "[&_img]:h-auto [&_img]:shrink-0 [&_img]:mr-5 [&_img]:mb-4 " +
   "[&_img]:rounded-xl [&_img]:shadow-md [&_img]:object-cover";
 
 export default function HistoryTimeline() {
@@ -27,7 +27,7 @@ export default function HistoryTimeline() {
   if (isLoading) {
     return (
       <div className="animate-pulse">
-        <div className="float-left mr-7 mb-4 w-50 md:w-150 h-40 md:h-75 rounded-xl bg-gray-200 shrink-0" />
+        <div className="float-left mr-5 mb-4 w-50 md:w-150 h-40 md:h-75 rounded-xl bg-gray-200 shrink-0" />
         <div className="space-y-3">
           {Array.from({ length: 8 }).map((_, i) => (
             <div
