@@ -16,7 +16,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { NavItem, NavigationItems, SubLink } from "@/src/data/navigationItems";
 
 const NAV_LINKS = [
@@ -80,6 +80,24 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
     };
   }, [open]);
 
+  // Parent (and nested group) labels that contain the active link — always shown expanded
+  const activeExpandedLabels = useMemo(() => {
+    const labels = new Set<string>();
+    for (const item of NavigationItems) {
+      if (!item.subLinks) continue;
+      for (const sub of item.subLinks) {
+        if (sub.link === pathname) {
+          labels.add(item.label);
+        }
+        if (sub.subLinks?.some((nested) => nested.link === pathname)) {
+          labels.add(item.label);
+          labels.add(sub.label);
+        }
+      }
+    }
+    return labels;
+  }, [pathname]);
+
   // Close suggestions on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -127,7 +145,8 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
 
   function renderSubItem(sub: SubLink) {
     if (sub.subLinks) {
-      const isExpanded = expandedItems.has(sub.label);
+      const isExpanded =
+        expandedItems.has(sub.label) || activeExpandedLabels.has(sub.label);
       return (
         <div key={sub.label}>
           <button
@@ -142,13 +161,17 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
             )}
           </button>
           {isExpanded && (
-            <div className="ml-3 pl-3 border-l border-gray-100 flex flex-col gap-0.5">
+            <div className="ml-3 pl-3 border-l border-[#ffb900] flex flex-col gap-0.5">
               {sub.subLinks.map((nested) => (
                 <Link
                   key={nested.label}
                   href={nested.link}
                   onClick={() => setOpen(false)}
-                  className="py-2 px-3 text-sm text-gray-600 hover:text-liteBlue rounded-md hover:bg-gray-50 block"
+                  className={`py-2 px-3 text-sm rounded-md block ${
+                    pathname === nested.link
+                      ? "text-liteBlue bg-liteBlue/5 font-medium"
+                      : "text-gray-600 hover:text-liteBlue hover:bg-gray-50"
+                  }`}
                 >
                   {nested.label}
                 </Link>
@@ -163,7 +186,11 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
         key={sub.label}
         href={sub.link}
         onClick={() => setOpen(false)}
-        className="py-2 px-3 text-sm text-gray-600 hover:text-liteBlue rounded-md hover:bg-gray-50 block"
+        className={`py-2 px-3 text-sm rounded-md block ${
+          pathname === sub.link
+            ? "text-liteBlue bg-liteBlue/5 font-medium"
+            : "text-gray-600 hover:text-liteBlue hover:bg-gray-50"
+        }`}
       >
         {sub.label}
       </Link>
@@ -175,7 +202,8 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
       item.link === "/"
         ? pathname === "/"
         : item.link !== "#" && pathname?.startsWith(item.link);
-    const isExpanded = expandedItems.has(item.label);
+    const isExpanded =
+      expandedItems.has(item.label) || activeExpandedLabels.has(item.label);
 
     if (!item.subLinks) {
       return (
@@ -200,7 +228,7 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
           onClick={() => toggleItem(item.label)}
           className={`flex items-center justify-between w-full py-2.5 px-3 rounded-md text-sm font-medium ${
             isActive
-              ? "text-liteBlue bg-liteBlue/5"
+              ? "text-liteBlue hover:bg-gray-50"
               : "text-gray-700 hover:bg-gray-50"
           }`}
         >
@@ -212,7 +240,7 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
           )}
         </button>
         {isExpanded && (
-          <div className="ml-3 pl-3 border-l border-gray-100 flex flex-col gap-0.5 mt-0.5">
+          <div className="ml-3 pl-3 border-l border-[#ffb900] flex flex-col gap-0.5 mt-0.5">
             {item.subLinks.map((sub) => renderSubItem(sub))}
           </div>
         )}

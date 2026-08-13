@@ -49,9 +49,7 @@ export default function DynamicBreadcrumb() {
 
               <BreadcrumbItem>
                 {isLast ? (
-                  <BreadcrumbPage className={className}>
-                    {label}
-                  </BreadcrumbPage>
+                  <BreadcrumbPage className={className}>{label}</BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink asChild>
                     <Link href={href} className={className}>
