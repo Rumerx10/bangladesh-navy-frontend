@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { getBaseUrl } from "../config/envConfig";
 
 export function useImageUpload() {
   const [url, setUrl] = useState<string>("");
@@ -18,7 +19,7 @@ export function useImageUpload() {
       const formData = new FormData();
       formData.append("image", file);
 
-      const res = await fetch(`${getBaseUrl}`, {
+      const res = await fetch(`${getBaseUrl()}/`, {
         method: "POST",
         body: formData,
       });

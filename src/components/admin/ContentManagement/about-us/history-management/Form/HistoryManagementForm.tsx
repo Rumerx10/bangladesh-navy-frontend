@@ -26,7 +26,6 @@ interface HistoryManagementFormProps {
   error?: ErrorType | null;
   isPending?: boolean;
   onCancel?: () => void;
-  onImageUpload?: (file: File) => Promise<string>;
 }
 
 const SectionHeader = ({
@@ -89,7 +88,6 @@ const HistoryManagementForm = ({
   error,
   isPending = false,
   onCancel,
-  onImageUpload,
 }: HistoryManagementFormProps) => {
   const {
     handleSubmit,
@@ -146,7 +144,6 @@ const HistoryManagementForm = ({
                 setValue("contentEn", value, { shouldValidate: true })
               }
               error={errors?.contentEn}
-              onImageUpload={onImageUpload}
             />
           </div>
         </div>
@@ -204,7 +201,6 @@ const HistoryManagementForm = ({
                   setValue("contentBn", value, { shouldValidate: true })
                 }
                 error={errors?.contentBn}
-                onImageUpload={onImageUpload}
               />
             </div>
           </div>

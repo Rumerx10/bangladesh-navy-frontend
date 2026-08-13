@@ -1,36 +1,41 @@
 "use client";
-import "./TextEditor.css";
-import Image from "next/image";
+import { usePost } from "@/src/hooks/usePost";
 import { cn } from "@/src/lib/utils";
-import ToolbarButton from "./Toolbar";
-import Text from "@tiptap/extension-text";
 import Bold from "@tiptap/extension-bold";
+import BulletList from "@tiptap/extension-bullet-list";
+import Document from "@tiptap/extension-document";
+import Italic from "@tiptap/extension-italic";
+import ListItem from "@tiptap/extension-list-item";
+import OrderedList from "@tiptap/extension-ordered-list";
+import Paragraph from "@tiptap/extension-paragraph";
+import Placeholder from "@tiptap/extension-placeholder";
+import Text from "@tiptap/extension-text";
+import TextAlign from "@tiptap/extension-text-align";
+import { Color, TextStyle } from "@tiptap/extension-text-style";
+import Underline from "@tiptap/extension-underline";
+import { EditorContent, useEditor } from "@tiptap/react";
+import Image from "next/image";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { FieldError } from "react-hook-form";
 import FontSize from "./extensions/font-size";
-import Italic from "@tiptap/extension-italic";
-import Document from "@tiptap/extension-document";
-import ListItem from "@tiptap/extension-list-item";
-import Paragraph from "@tiptap/extension-paragraph";
-import Underline from "@tiptap/extension-underline";
-import TextAlign from "@tiptap/extension-text-align";
-import BulletList from "@tiptap/extension-bullet-list";
-import Placeholder from "@tiptap/extension-placeholder";
-import OrderedList from "@tiptap/extension-ordered-list";
 import ResizableImage from "./extensions/resizable-image";
-import { EditorContent, useEditor } from "@tiptap/react";
-import FontSizeSelector from "./toolbar/FontSizeSelector";
-import { Color, TextStyle } from "@tiptap/extension-text-style";
+import "./TextEditor.css";
+import ToolbarButton from "./Toolbar";
 import ColorPickerDropdown from "./toolbar/ColorPickerDropdown";
+import FontSizeSelector from "./toolbar/FontSizeSelector";
 import getCurrentImageWrap from "./utils/getCurrentImageWrap";
-import { useImageUpload } from "@/src/hooks/useImageUpload";
 
 interface TextEditorProps {
   value?: string;
   onChange?: (html: string) => void;
   className?: string;
   error?: FieldError;
-  onImageUpload?: (file: File) => Promise<string>;
+  /** Fixed height of the editable area (scrolls past it). e.g. 300 | "20rem" */
+  height?: number | string;
+  /** Height the editable area grows from when `height` is not set. */
+  minHeight?: number | string;
+  /** Height the editable area stops growing at (scrolls past it). */
+  maxHeight?: number | string;
 }
 
 const TextEditor = ({
@@ -38,11 +43,15 @@ const TextEditor = ({
   onChange,
   className,
   error,
-  onImageUpload,
+  height,
+  minHeight = 128,
+  maxHeight,
 }: TextEditorProps) => {
-  const { uploadImage, isLoading } = useImageUpload();
+  const { mutateAsync: uploadImage, isPending: isLoading } = usePost<{
+    imageUrl: string;
+  }>("/history/upload-image");
   const [currentFontSize, setCurrentFontSize] = useState("16");
- const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const editor = useEditor({
     extensions: [
       Placeholder.configure({
@@ -66,7 +75,7 @@ const TextEditor = ({
       TextAlign.configure({
         types: ["paragraph"],
       }),
-      ...(onImageUpload ? [ResizableImage] : []),
+      ResizableImage,
     ],
     content: value,
     immediatelyRender: false,
@@ -80,19 +89,23 @@ const TextEditor = ({
     },
   });
 
-   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     try {
-      const imageUrl = await uploadImage(file);
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const response = await uploadImage({ data: formData });
+      const imageUrl = response?.imageUrl;
 
       if (imageUrl) {
         editor
           ?.chain()
           .focus()
           .setResizableImage({
-            src: "imageUrl",
+            src: imageUrl,
             alt: file.name,
             title: file.name,
             width: "300",
@@ -126,7 +139,7 @@ const TextEditor = ({
     }
   };
 
-    const setImageWrap = (wrap: "inline" | "wrap" | "break") => {
+  const setImageWrap = (wrap: "inline" | "wrap" | "break") => {
     editor.chain().focus().setResizableImageWrap(wrap).run();
   };
 
@@ -180,29 +193,29 @@ const TextEditor = ({
             </ToolbarButton>
           </div>
           <div className="toolbar-group">
-          <span>Text Wrap:</span>
-          <ToolbarButton
-            onClick={() => setImageWrap("inline")}
-            isActive={getCurrentImageWrap(editor) === "inline"}
-            title="Inline - Image behaves like text"
-          >
-            Inline
-          </ToolbarButton>
-          <ToolbarButton
-            onClick={() => setImageWrap("wrap")}
-            isActive={getCurrentImageWrap(editor) === "wrap"}
-            title="Wrap - Text wraps around image"
-          >
-            Wrap
-          </ToolbarButton>
-          <ToolbarButton
-            onClick={() => setImageWrap("break")}
-            isActive={getCurrentImageWrap(editor) === "break"}
-            title="Break - Image breaks text flow"
-          >
-            Break
-          </ToolbarButton>
-        </div>
+            <span>Text Wrap:</span>
+            <ToolbarButton
+              onClick={() => setImageWrap("inline")}
+              isActive={getCurrentImageWrap(editor) === "inline"}
+              title="Inline - Image behaves like text"
+            >
+              Inline
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => setImageWrap("wrap")}
+              isActive={getCurrentImageWrap(editor) === "wrap"}
+              title="Wrap - Text wraps around image"
+            >
+              Wrap
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => setImageWrap("break")}
+              isActive={getCurrentImageWrap(editor) === "break"}
+              title="Break - Image breaks text flow"
+            >
+              Break
+            </ToolbarButton>
+          </div>
 
           <span className="h-10 w-px bg-[#EAECF0]"></span>
 
@@ -272,27 +285,31 @@ const TextEditor = ({
           </div>
 
           <div className="toolbar-group">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            ref={fileInputRef}
-            style={{ display: "none" }}
-          />
-          <ToolbarButton
-            onClick={() => fileInputRef.current?.click()}
-            isActive={false}
-            disabled={isLoading}
-            title="Insert Image"
-          >
-            {isLoading ? "📤" : "🖼️"}
-          </ToolbarButton>
-        </div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              ref={fileInputRef}
+              style={{ display: "none" }}
+            />
+            <ToolbarButton
+              onClick={() => fileInputRef.current?.click()}
+              isActive={false}
+              disabled={isLoading}
+              title="Insert Image"
+            >
+              {isLoading ? "📤" : "🖼️"}
+            </ToolbarButton>
+          </div>
         </div>
 
         {/* EDITOR */}
         <div className="p-3 ">
-          <EditorContent editor={editor} className="min-h-32" />
+          <EditorContent
+            editor={editor}
+            className="overflow-y-auto"
+            style={{ height, minHeight, maxHeight }}
+          />
         </div>
       </div>
 
