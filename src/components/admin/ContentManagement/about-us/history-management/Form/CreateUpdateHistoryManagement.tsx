@@ -1,6 +1,5 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
 import { FormProvider, Resolver, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import HistoryManagementForm from "./HistoryManagementForm";
@@ -10,7 +9,6 @@ import {
 } from "../Schema/historyManagementSchema";
 import { IHistoryManagement } from "../types";
 import { usePost } from "@/src/hooks/usePost";
-import { axiosInstance } from "@/src/helpers/axios/axiosInstance";
 
 interface CreateUpdateHistoryManagementProps {
   initialValues?: IHistoryManagement;
@@ -48,18 +46,6 @@ const CreateUpdateHistoryManagement = ({
     [["history-management"]]
   );
 
-  const { mutateAsync: uploadImage } = useMutation({
-    mutationFn: async (file: File) => {
-      const formData = new FormData();
-      formData.append("image", file);
-      const response = await axiosInstance.post(
-        "/history/upload-image",
-        formData
-      );
-      return (response.data as { imageUrl: string }).imageUrl;
-    },
-  });
-
   const onSubmit = (data: HistoryManagementSchemaForm) => {
     saveHistory({
       data: {
@@ -83,7 +69,6 @@ const CreateUpdateHistoryManagement = ({
         error={error}
         isPending={isPending}
         onCancel={handleCancel}
-        onImageUpload={uploadImage}
       />
     </FormProvider>
   );

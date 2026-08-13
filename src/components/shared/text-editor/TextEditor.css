@@ -77,7 +77,8 @@
 
 .ProseMirror {
   outline: none;
-  /* min-height: 300px; */
+  /* fills the sized wrapper so the whole area is clickable */
+  height: 100%;
 }
 
 .ProseMirror p {

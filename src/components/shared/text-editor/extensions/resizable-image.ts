@@ -1,11 +1,8 @@
 import { type CommandProps, type NodeViewProps } from "@tiptap/core";
 import Image from "@tiptap/extension-image";
+import { TextSelection } from "@tiptap/pm/state";
 import { ResizableImageAttributes } from "../types/editor";
 
-// Attrs are stored as CSS length strings (e.g. "300px") to match the
-// schema default — a bare number serializes to invalid CSS ("width: 350;"
-// has no unit and gets dropped by the browser), which is what made resized
-// images silently fall back to their natural size after a save/reload.
 const toPx = (value?: string | number): string | undefined => {
   if (value === undefined || value === null || value === "") return undefined;
   return typeof value === "number" || /^\d+$/.test(String(value))
@@ -97,7 +94,7 @@ const ResizableImage = Image.extend({
     return {
       setResizableImage:
         (options: ResizableImageAttributes) =>
-        ({ commands }: CommandProps) => {
+        ({ chain }: CommandProps) => {
           const { width, height, wrap, align, ...baseAttrs } = options;
           const attrs: Record<string, unknown> = {
             ...baseAttrs,
@@ -106,10 +103,33 @@ const ResizableImage = Image.extend({
           };
           if (wrap) attrs.wrap = wrap;
           if (align) attrs.align = align;
-          return commands.insertContent({
-            type: this.name,
-            attrs,
-          });
+          return (
+            chain()
+              .insertContent({ type: this.name, attrs })
+              // The image is a block node, so `insertContent` leaves the
+              // cursor as a NodeSelection *on* the image whenever there is no
+              // text position right after it (e.g. it was inserted at the end
+              // of the doc). Typing then replaces the selected node — which is
+              // why a freshly inserted image vanished on the next keystroke.
+              // Drop a paragraph after it when needed and park the cursor there.
+              .command(({ tr, dispatch }) => {
+                const posAfterImage = tr.selection.to;
+                const nodeAfter = tr.doc.nodeAt(posAfterImage);
+
+                if (!dispatch) return true;
+
+                if (!nodeAfter?.isTextblock) {
+                  const paragraph = tr.doc.type.schema.nodes.paragraph.create();
+                  tr.insert(posAfterImage, paragraph);
+                }
+
+                tr.setSelection(
+                  TextSelection.near(tr.doc.resolve(posAfterImage))
+                );
+                return true;
+              })
+              .run()
+          );
         },
       updateResizableImage:
         (options: Partial<ResizableImageAttributes>) =>
