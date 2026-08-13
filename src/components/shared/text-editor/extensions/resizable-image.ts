@@ -179,7 +179,7 @@ const ResizableImage = Image.extend({
           default:
             img.style.display = "inline";
             img.style.verticalAlign = "middle";
-            img.style.margin = "0 4px";
+            img.style.margin = "0 20px";
             img.style.float = "none";
         }
       };
