@@ -13,7 +13,7 @@ interface BiographyCardProps {
 const BiographyCard = ({ data, openModal }: BiographyCardProps) => {
   return (
     <motion.div
-      className="w-full lg:w-[20%] lg:sticky lg:top-28 lg:self-start"
+      className="w-full lg:w-72 lg:shrink-0 xl:w-80 lg:sticky lg:top-28 lg:self-start"
       initial={{ opacity: 0, x: 30 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
@@ -28,13 +28,13 @@ const BiographyCard = ({ data, openModal }: BiographyCardProps) => {
         </div>
 
         {/* Portrait image */}
-        <div className="relative h-76 overflow-hidden bg-gray-50">
+        <div className="relative h-90 lg:h-76 overflow-hidden bg-gray-50">
           <Image
             src={data.imageUrl || "/CHIEF.jpeg"}
             alt={data.nameEn}
             fill
             className="object-cover object-top"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
           />
         </div>
 

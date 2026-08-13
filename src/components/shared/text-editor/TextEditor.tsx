@@ -17,7 +17,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import BulletList from "@tiptap/extension-bullet-list";
 import Placeholder from "@tiptap/extension-placeholder";
 import OrderedList from "@tiptap/extension-ordered-list";
-import TiptapImage from "@tiptap/extension-image";
+import ResizableImage from "./extensions/resizable-image";
 import { EditorContent, useEditor } from "@tiptap/react";
 import FontSizeSelector from "./toolbar/FontSizeSelector";
 import { Color, TextStyle } from "@tiptap/extension-text-style";
@@ -65,7 +65,7 @@ const TextEditor = ({
       TextAlign.configure({
         types: ["paragraph"],
       }),
-      ...(onImageUpload ? [TiptapImage] : []),
+      ...(onImageUpload ? [ResizableImage] : []),
     ],
     content: value,
     immediatelyRender: false,
@@ -107,7 +107,7 @@ const TextEditor = ({
     setIsUploadingImage(true);
     try {
       const url = await onImageUpload(file);
-      editor.chain().focus().setImage({ src: url }).run();
+      editor.chain().focus().setResizableImage({ src: url }).run();
     } finally {
       setIsUploadingImage(false);
     }

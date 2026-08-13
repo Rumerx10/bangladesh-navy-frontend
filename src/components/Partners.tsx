@@ -40,13 +40,15 @@ const Partners = () => {
             <Marquee pauseOnHover={true} speed={100}>
               {partners.map((partner) => {
                 const logo = (
-                  <Image
-                    src={partner.image}
-                    alt="Partner logo"
-                    height={200}
-                    width={240}
-                    className="object-contain h-full w-full"
-                  />
+                  <div className="h-16 w-32 flex items-center justify-center" key={partner.id}>
+                    <Image
+                      src={partner.image}
+                      alt="Partner logo"
+                      height={200}
+                      width={240}
+                      className="object-contain h-full w-full"
+                    />
+                  </div>
                 );
 
                 return (

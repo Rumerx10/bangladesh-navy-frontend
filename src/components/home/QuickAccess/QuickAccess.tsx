@@ -54,8 +54,8 @@ const QuickAccess = () => {
 
         <div className="relative container px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start">
-            {/* Left — 70%: title + cards */}
-            <div className="w-full lg:w-[80%]">
+            {/* Left — title + cards, fills remaining space next to the fixed-width biography card */}
+            <div className="w-full lg:flex-1 lg:min-w-0">
               <motion.div
                 className="mb-8 lg:mb-10"
                 initial={{ opacity: 0, x: -100 }}

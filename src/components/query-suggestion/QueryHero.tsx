@@ -5,7 +5,7 @@ import { Mail, MessageSquare, Phone } from "lucide-react";
 
 export default function QueryHero() {
   return (
-    <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-pBlue overflow-hidden">
+    <section className="relative pt-32 pb-20 sm:pt-40 lg:pt-48 lg:pb-32 bg-pBlue overflow-hidden">
       <div className="absolute inset-0">
         <div className="absolute top-0 right-0 w-125 h-125 bg-blue-500 rounded-full blur-[120px] -mr-64 -mt-64" />
         <div className="absolute bottom-0 left-0 w-100 h-100 bg-cyan-500 rounded-full blur-[100px] -ml-48 -mb-48" />
