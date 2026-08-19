@@ -85,8 +85,10 @@ export const NavigationItems: NavItem[] = [
     label: "Training and Courses",
     link: "/skill-development",
     subLinks: [
-      { label: "BN Hydrographic Institute", link: "/skill-development" },
-      { label: "Courses", link: "/skill-development/courses" },
+      { label: "Alumni", link: "/training-courses/alumni" },
+      { label: "Courses", link: "/training-courses/courses" },
+      { label: "BN Hydrographic Institute", link: "/training-courses" },
+      
     ],
   },
   {

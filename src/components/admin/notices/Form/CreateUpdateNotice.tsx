@@ -12,13 +12,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/src/components/ui/dialog";
-import {
-  NOTICES_ENDPOINT,
-  NOTICES_QUERY_KEY,
-} from "@/src/components/notices/useNotices";
 import { INotice } from "@/src/components/notices/types";
 import { NoticeFormValues, noticeSchema } from "../Schema/noticeSchema";
 import NoticeForm from "./NoticeForm";
+
+const NOTICES_ENDPOINT = "/notice-management";
+/** Both the admin table and the public list are refreshed after a write. */
+const INVALIDATE_KEYS = [["notice-management"], ["notice-management-list"]];
 
 interface CreateUpdateNoticeProps {
   isOpen: boolean;
@@ -76,10 +76,14 @@ const CreateUpdateNotice = ({
     isPending: isCreating,
     error,
     reset: resetCreateError,
-  } = usePost(NOTICES_ENDPOINT, () => {
-    toast.success("Notice created successfully!");
-    onClose();
-  }, [NOTICES_QUERY_KEY]);
+  } = usePost(
+    NOTICES_ENDPOINT,
+    () => {
+      toast.success("Notice created successfully!");
+      onClose();
+    },
+    INVALIDATE_KEYS
+  );
 
   const {
     mutate: updateMutate,
@@ -89,7 +93,7 @@ const CreateUpdateNotice = ({
   } = usePatch(() => {
     toast.success("Notice updated successfully!");
     onClose();
-  }, [NOTICES_QUERY_KEY]);
+  }, INVALIDATE_KEYS);
 
   const handleClose = () => {
     resetCreateError();
@@ -108,20 +112,27 @@ const CreateUpdateNotice = ({
     const formData = new FormData();
     formData.append("noticeNumber", values.noticeNumber);
     formData.append("titleEn", values.titleEn);
-    formData.append("titleBn", values.titleBn || "");
-    formData.append("descriptionEn", values.descriptionEn || "");
-    formData.append("descriptionBn", values.descriptionBn || "");
     formData.append("type", values.type);
-    formData.append("publishedAt", values.publishedAt);
     formData.append("status", values.status || "ACTIVE");
+    // The API stores an ISO timestamp; the date input gives yyyy-MM-dd.
+    formData.append("publishedAt", new Date(values.publishedAt).toISOString());
 
+    // Optional fields — only sent when filled, an empty string is rejected by
+    // the API as a missing value.
+    if (values.titleBn?.trim()) {
+      formData.append("titleBn", values.titleBn.trim());
+    }
+    if (values.descriptionEn?.trim()) {
+      formData.append("descriptionEn", values.descriptionEn.trim());
+    }
+    if (values.descriptionBn?.trim()) {
+      formData.append("descriptionBn", values.descriptionBn.trim());
+    }
+
+    // A new upload replaces whatever was attached before; leaving the field off
+    // keeps the existing PDF.
     if (values.pdf instanceof File) {
-      // A new upload replaces whatever was attached before.
       formData.append("pdf", values.pdf);
-    } else if (isUpdate && initialValues?.pdfUrl && !values.pdf) {
-      // The admin cleared an existing attachment — tell the backend to drop it
-      // rather than leaving the field off the payload (which means "unchanged").
-      formData.append("removePdf", "true");
     }
 
     return formData;

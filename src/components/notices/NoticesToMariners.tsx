@@ -2,23 +2,37 @@
 
 import { useMemo, useState } from "react";
 import { FileSearch, Search } from "lucide-react";
+import { useGet } from "@/src/hooks/useGet";
 import NoticeCard from "./NoticeCard";
 import NoticesHero from "./NoticesHero";
 import NoticeTypeFilter from "./NoticeTypeFilter";
 import NoticeListSkeleton from "./Skeleton/NoticeListSkeleton";
-import { filterNotices, useNotices } from "./useNotices";
-import { NOTICE_FILTER_OPTIONS, NoticeFilterValue, NoticeType } from "./types";
+import {
+  INotice,
+  NOTICE_FILTER_OPTIONS,
+  NoticeFilterValue,
+  NoticeType,
+} from "./types";
 
 const NoticesToMariners = () => {
   const [type, setType] = useState<NoticeFilterValue>("ALL");
   const [search, setSearch] = useState("");
-  const { notices, isLoading } = useNotices();
+
+  const { data, isLoading } = useGet<INotice[]>("/notice-management/list", [
+    "notice-management-list",
+  ]);
 
   // Only published notices reach the public page; drafts stay in the admin.
-  const published = useMemo(
-    () => notices.filter((notice) => notice.status === "ACTIVE"),
-    [notices]
-  );
+  // Newest first — the order mariners expect in a notice list.
+  const published = useMemo(() => {
+    const list = Array.isArray(data?.data) ? data.data : [];
+    return list
+      .filter((notice) => notice.status === "ACTIVE")
+      .sort(
+        (a, b) =>
+          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      );
+  }, [data]);
 
   const counts = useMemo(() => {
     const totals = Object.fromEntries(
@@ -26,15 +40,26 @@ const NoticesToMariners = () => {
     ) as Record<NoticeFilterValue, number>;
     totals.ALL = published.length;
     for (const notice of published) {
-      totals[notice.type as NoticeType] += 1;
+      const key = notice.type as NoticeType;
+      if (key in totals) totals[key] += 1;
     }
     return totals;
   }, [published]);
 
-  const visible = useMemo(
-    () => filterNotices(published, { type, search }),
-    [published, type, search]
-  );
+  // The list endpoint returns every notice at once, so type and text filtering
+  // both run in the browser — no extra request per filter change.
+  const visible = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    return published.filter((notice) => {
+      if (type !== "ALL" && notice.type !== type) return false;
+      if (!query) return true;
+      return (
+        notice.titleEn?.toLowerCase().includes(query) ||
+        notice.titleBn?.toLowerCase().includes(query) ||
+        notice.noticeNumber?.toLowerCase().includes(query)
+      );
+    });
+  }, [published, type, search]);
 
   return (
     <div className="bg-white">

@@ -2,18 +2,14 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
+import { useGet } from "@/src/hooks/useGet";
 import { useDelete } from "@/src/hooks/useDelete";
 import { usePagination } from "@/src/hooks/usePagination";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
+import { useAppSelector } from "@/src/lib/redux/hooks";
 import { DataTable } from "@/src/components/ui/data-table";
 import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import NoticeTypeFilter from "@/src/components/notices/NoticeTypeFilter";
-import {
-  NOTICES_ENDPOINT,
-  NOTICES_QUERY_KEY,
-  filterNotices,
-  useNotices,
-} from "@/src/components/notices/useNotices";
 import { INotice, NoticeFilterValue } from "@/src/components/notices/types";
 import { GetNoticesColumns } from "./TableColumns/NoticesColumns";
 import CreateUpdateNotice from "./Form/CreateUpdateNotice";
@@ -35,27 +31,59 @@ const NoticesManagement = () => {
 
   const { search, handleSearchChange, debouncedSearch } =
     useSearchDebounce(300);
+  const { sortBy } = useAppSelector((state) => state.filter);
 
-  const { notices, isLoading } = useNotices();
+  // The type filter is applied in the browser, so while one is active we pull
+  // the full set in a single page and paginate it here instead of letting the
+  // server page an unfiltered list.
+  const isTypeFiltered = type !== "ALL";
 
-  // useNotices fetches the whole list, so filtering and paging both happen
-  // here. Swap to server-side paging by passing page/limit into the hook once
-  // /notices supports them.
+  const { data, isLoading } = useGet<INotice[]>(
+    "/notice-management",
+    [
+      "notice-management",
+      currentPage.toString(),
+      itemsPerPage.toString(),
+      debouncedSearch,
+      type,
+      sortBy,
+    ],
+    {
+      ...(isTypeFiltered
+        ? { page: "1", limit: "1000" }
+        : itemsPerPage !== -1 && {
+            page: currentPage.toString(),
+            limit: itemsPerPage.toString(),
+          }),
+      search: debouncedSearch,
+      ...(sortBy && { status: sortBy }),
+    }
+  );
+
+  const notices = useMemo(
+    () => (Array.isArray(data?.data) ? data.data : []),
+    [data]
+  );
+
   const filtered = useMemo(
-    () => filterNotices(notices, { type, search: debouncedSearch }),
-    [notices, type, debouncedSearch]
+    () => (isTypeFiltered ? notices.filter((n) => n.type === type) : notices),
+    [notices, isTypeFiltered, type]
   );
 
   const visible = useMemo(() => {
-    if (itemsPerPage === -1) return filtered;
+    if (!isTypeFiltered || itemsPerPage === -1) return filtered;
     const start = (currentPage - 1) * itemsPerPage;
     return filtered.slice(start, start + itemsPerPage);
-  }, [filtered, currentPage, itemsPerPage]);
+  }, [filtered, isTypeFiltered, currentPage, itemsPerPage]);
 
   useEffect(() => {
-    setTotalItems(filtered.length);
+    if (data) {
+      setTotalItems(
+        isTypeFiltered ? filtered.length : data.meta?.totalItems || 0
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filtered.length]);
+  }, [data, isTypeFiltered, filtered.length]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -65,7 +93,7 @@ const NoticesManagement = () => {
   const { mutate: deleteMutate } = useDelete(() => {
     toast.success("Notice deleted successfully!");
     setPendingDelete(null);
-  }, [NOTICES_QUERY_KEY]);
+  }, [["notice-management"], ["notice-management-list"]]);
 
   const handleEdit = (item: INotice) => {
     setSelectedItem(item);
@@ -119,7 +147,7 @@ const NoticesManagement = () => {
         onClose={() => setPendingDelete(null)}
         onConfirm={() => {
           if (pendingDelete) {
-            deleteMutate({ url: `${NOTICES_ENDPOINT}/${pendingDelete.id}` });
+            deleteMutate({ url: `/notice-management/${pendingDelete.id}` });
           }
         }}
         title="Delete this notice?"
