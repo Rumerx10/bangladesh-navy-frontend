@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 const noticesLinks = [
   { label: "Publications", href: "/product-service?category=publications" },
-  { label: "Notices", href: "/product-service?category=notices-to-mariners" },
+  { label: "Notices", href: "/important-notice/notices" },
   { label: "Hydrographic Note", href: "/contact-us/hydrographic-note" },
 ];
 

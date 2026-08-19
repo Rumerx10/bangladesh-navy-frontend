@@ -4,6 +4,7 @@ import {
   Home,
   Info,
   LayoutDashboard,
+  Megaphone,
   Package,
   Phone,
   Users,
@@ -59,6 +60,12 @@ const getMenuItems = (): MenuItem[] => {
           href: "/admin/news-events/category",
         },
       ],
+    },
+    {
+      segment: "Content Management",
+      label: "Notices to Mariners",
+      icon: Megaphone,
+      href: "/admin/notices",
     },
     {
       segment: "Training Management",

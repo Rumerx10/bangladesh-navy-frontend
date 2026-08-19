@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { IProduct } from "./types";
 import { useRouter } from "next/navigation";
 import { useGet } from "@/src/hooks/useGet";
@@ -25,6 +25,11 @@ const ProductsManagement = () => {
     useSearchDebounce(300);
   const { sortBy } = useAppSelector((state) => state.filter);
 
+  // The /product backend endpoint ignores the `search` query param, so while
+  // searching we fetch the full list (no page/limit) and filter/paginate it
+  // client-side instead.
+  const isSearching = debouncedSearch.trim().length > 0;
+
   const { data, isLoading } = useGet<IProduct[]>(
     "/product",
     [
@@ -35,19 +40,48 @@ const ProductsManagement = () => {
       sortBy,
     ],
     {
-      ...(itemsPerPage !== -1 && {
-        page: currentPage.toString(),
-        limit: itemsPerPage.toString(),
-      }),
+      ...(isSearching
+        ? { page: "1", limit: "1000" }
+        : itemsPerPage !== -1 && {
+            page: currentPage.toString(),
+            limit: itemsPerPage.toString(),
+          }),
       search: debouncedSearch,
       ...(sortBy && { status: sortBy }),
     }
   );
 
+  const filteredProducts = useMemo(() => {
+    const list = Array.isArray(data?.data) ? data.data : [];
+    if (!isSearching) return list;
+    const q = debouncedSearch.trim().toLowerCase();
+    return list.filter(
+      (item) =>
+        item.nameEn?.toLowerCase().includes(q) ||
+        item.nameBn?.toLowerCase().includes(q) ||
+        item.chartCode?.toString().includes(q)
+    );
+  }, [data, isSearching, debouncedSearch]);
+
+  const visibleProducts = useMemo(() => {
+    if (!isSearching || itemsPerPage === -1) return filteredProducts;
+    const start = (currentPage - 1) * itemsPerPage;
+    return filteredProducts.slice(start, start + itemsPerPage);
+  }, [filteredProducts, isSearching, currentPage, itemsPerPage]);
+
   useEffect(() => {
-    if (data) setTotalItems(data.meta?.totalItems || 0);
+    if (data) {
+      setTotalItems(
+        isSearching ? filteredProducts.length : data.meta?.totalItems || 0
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  }, [data, isSearching, filteredProducts.length]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch]);
 
   const handleEdit = (item: IProduct) => {
     router.push(`/admin/products/${item.id}/edit`);
@@ -59,7 +93,7 @@ const ProductsManagement = () => {
     <div className="space-y-6">
       <DataTable
         columns={columns}
-        data={Array.isArray(data?.data) ? data.data : []}
+        data={visibleProducts}
         isLoading={isLoading}
         totalItems={totalItems}
         currentPage={currentPage}

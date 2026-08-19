@@ -94,12 +94,12 @@ export const NavigationItems: NavItem[] = [
     link: "/important-notice",
     subLinks: [
       {
-        label: "Publications",
-        link: "/important-notice/publications",
-      },
-      {
         label: "Notices",
         link: "/important-notice/notices",
+      },
+      {
+        label: "Publications",
+        link: "/important-notice/publications",
       },
       {
         label: "Hydrographic Note",

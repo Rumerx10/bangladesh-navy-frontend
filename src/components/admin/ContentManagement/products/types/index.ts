@@ -26,7 +26,11 @@ export interface IProduct {
   descriptionEn: string;
   descriptionBn: string;
   images: string[];
-  chartCode: number | null;
+  /**
+   * Paper charts store a numeric serial ("3001"); ENC products store the
+   * alphanumeric cell number ("BD307425"), so this is not always a number.
+   */
+  chartCode: string | number | null;
   category: ProductCategory | null;
   price: number | null;
   status: "ACTIVE" | "INACTIVE";

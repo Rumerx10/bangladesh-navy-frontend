@@ -50,7 +50,7 @@ const QueryForm = () => {
     <div className="rounded-3xl border border-gray-100 bg-[#f8fafc] p-6 lg:p-10">
       <div className="mb-10">
         <h2 className="text-2xl lg:text-3xl font-bold text-pBlue mb-4">
-          Submit a Query or Suggestion
+          Query or Suggestion
         </h2>
         <p className="max-w-2xl text-gray-500 text-sm lg:text-base leading-relaxed">
           Have a query or suggestion about our services or resources? Fill out

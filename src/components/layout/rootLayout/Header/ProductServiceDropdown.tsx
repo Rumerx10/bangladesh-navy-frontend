@@ -6,12 +6,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const noticesLinks = [
+  { label: "Notices", href: "/important-notice/notices" },
   { label: "Publications", href: "/product-service?category=publications" },
-  { label: "Notices", href: "/product-service?category=notices-to-mariners" },
   { label: "Hydrographic Note", href: "/contact-us/hydrographic-note" },
 ];
 
-export default function ProductServiceDropdown() {
+const ProductServiceDropdown=()=> {
   const pathname = usePathname();
   const isActive =
     pathname?.startsWith("/product-service") ||
@@ -88,3 +88,6 @@ export default function ProductServiceDropdown() {
     </li>
   );
 }
+
+
+export default ProductServiceDropdown;

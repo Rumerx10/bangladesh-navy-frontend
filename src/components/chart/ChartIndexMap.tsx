@@ -1,13 +1,6 @@
 "use client";
 
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/src/components/ui/dialog";
-import {
   CHART_VIEWBOX,
   chartIndexAreas,
   IChartArea,
@@ -18,9 +11,8 @@ import {
   PRODUCT_CATEGORY_LABELS,
 } from "@/src/components/admin/ContentManagement/products/types";
 import { SearchIcon, XIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import ChartInfoDialog from "../products/ChartInfoDialog";
 
 const IMAGE_SRC = "/chart/chart-index.jpg";
 
@@ -30,7 +22,16 @@ const DEBUG_OUTLINES = false;
 const chartLabel = (area: IChartArea) =>
   area.int ? `${area.number} (${area.int})` : area.number;
 
-export default function ChartIndexMap() {
+const formatChartDate = (value?: string | null) =>
+  value
+    ? new Date(value).toLocaleDateString("en-GB", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+      })
+    : undefined;
+
+const ChartIndexMap = () => {
   const [hovered, setHovered] = useState<IChartArea | null>(null);
   const [selected, setSelected] = useState<IChartArea | null>(null);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
@@ -47,6 +48,7 @@ export default function ChartIndexMap() {
     undefined,
     { enabled: selected !== null }
   );
+  const selectedProduct = selectedProductData?.data;
 
   // Largest rectangles first so the smallest (most specific) chart renders
   // on top and wins hover/click where coverage areas overlap.
@@ -264,145 +266,53 @@ export default function ChartIndexMap() {
       </div>
 
       <ChartInfoDialog
-        selected={selected}
-        product={selectedProductData?.data}
+        open={selected !== null}
         onClose={() => setSelected(null)}
+        image={selectedProduct?.images?.[0]}
+        imageBadge={selected ? `Chart ${selected.number}` : undefined}
+        imageBadgeSecondary={selected?.int}
+        heading={selectedProduct?.nameEn}
+        subheading={
+          selectedProduct
+            ? [
+                selectedProduct.geographicLocation ?? "Bay of Bengal",
+                selectedProduct.category &&
+                  PRODUCT_CATEGORY_LABELS[selectedProduct.category],
+              ]
+                .filter(Boolean)
+                .join(" · ")
+            : undefined
+        }
+        specs={[
+          { label: "Scale", value: selectedProduct?.scale },
+          { label: "Projection", value: selectedProduct?.projection },
+          {
+            label: "Published",
+            value: formatChartDate(selectedProduct?.publicationDate),
+          },
+          { label: "Edition", value: selectedProduct?.edition },
+          {
+            label: "Edition Date",
+            value: formatChartDate(selectedProduct?.editionDate),
+          },
+        ]}
+        detailsHref={
+          selected
+            ? `/product-service/paper-charts/${selected.number}`
+            : undefined
+        }
+        fallback={
+          selected
+            ? {
+                label: "Serial Number",
+                value: selected.number,
+                note: selected.int,
+              }
+            : undefined
+        }
       />
     </section>
   );
-}
+};
 
-function SpecTile({ label, value }: { label: string; value?: string }) {
-  if (!value) return null;
-  return (
-    <div className="rounded-lg border border-slate-100 bg-slate-50 px-3 py-2">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-gray-400">
-        {label}
-      </p>
-      <p className="mt-0.5 text-sm font-semibold wrap-break-word text-gray-800">
-        {value}
-      </p>
-    </div>
-  );
-}
-
-function ChartInfoDialog({
-  selected,
-  product,
-  onClose,
-}: {
-  selected: IChartArea | null;
-  product?: IProduct;
-  onClose: () => void;
-}) {
-  const image = product?.images?.[0];
-  const publishedDate = product?.publicationDate
-    ? new Date(product.publicationDate).toLocaleDateString("en-GB", {
-        year: "numeric",
-        month: "short",
-        day: "2-digit",
-      })
-    : undefined;
-  const editionDate = product?.editionDate
-    ? new Date(product.editionDate).toLocaleDateString("en-GB", {
-        year: "numeric",
-        month: "short",
-        day: "2-digit",
-      })
-    : undefined;
-
-  return (
-    <Dialog
-      open={selected !== null}
-      onOpenChange={(open) => {
-        if (!open) onClose();
-      }}
-    >
-      <DialogContent
-        className={product && image ? "sm:max-w-md" : "sm:max-w-sm"}
-      >
-        <DialogHeader>
-          <DialogTitle className="text-pBlue">Chart Information</DialogTitle>
-          <DialogDescription>
-            Bangladesh Navy Hydrographic &amp; Oceanographic Centre
-          </DialogDescription>
-        </DialogHeader>
-
-        {selected && product && image ? (
-          <div className="space-y-4">
-            {/* Chart preview */}
-            <div className="relative h-56 w-full overflow-hidden rounded-xl border border-slate-200 bg-linear-to-br from-slate-50 to-slate-100">
-              <Image
-                src={image}
-                alt={product.nameEn}
-                fill
-                className="object-contain p-2"
-                sizes="(max-width: 640px) 100vw, 448px"
-              />
-              <span className="absolute top-3 left-3 rounded-md bg-pBlue px-2.5 py-1 text-xs font-bold text-white shadow-md">
-                Chart {selected.number}
-              </span>
-              {selected.int && (
-                <span className="absolute top-3 right-3 rounded-md bg-white/90 px-2.5 py-1 text-xs font-semibold text-pBlue shadow-md">
-                  {selected.int}
-                </span>
-              )}
-            </div>
-
-            {/* Title */}
-            <div>
-              <h3 className="text-lg leading-snug font-bold text-pBlue">
-                {product.nameEn}
-              </h3>
-              <p className="mt-0.5 text-sm text-gray-500">
-                {product.geographicLocation ?? "Bay of Bengal"}
-                {product.category &&
-                  ` · ${PRODUCT_CATEGORY_LABELS[product.category]}`}
-              </p>
-            </div>
-
-            {/* Specifications */}
-            <div className="grid grid-cols-2 gap-2">
-              <SpecTile label="Scale" value={product.scale ?? undefined} />
-              <SpecTile
-                label="Projection"
-                value={product.projection ?? undefined}
-              />
-              <SpecTile label="Published" value={publishedDate} />
-              <SpecTile label="Edition" value={product.edition ?? undefined} />
-              <SpecTile label="Edition Date" value={editionDate} />
-            </div>
-
-            {/* CTA */}
-            <div className="border-t border-gray-100 pt-4">
-              <Link
-                href={`/product-service/paper-charts/${selected.number}`}
-                className="block w-full rounded-lg bg-pBlue py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-pBlue/90"
-              >
-                View Details
-              </Link>
-            </div>
-          </div>
-        ) : (
-          selected && (
-            <div className="space-y-4">
-              <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 py-8 text-center">
-                <p className="text-[11px] font-medium uppercase tracking-wider text-gray-400">
-                  Serial Number
-                </p>
-                <p className="mt-1 text-4xl font-extrabold tracking-wide text-pBlue">
-                  {selected.number}
-                </p>
-                {selected.int && (
-                  <p className="mt-1 text-sm font-semibold text-gray-600">
-                    {selected.int}
-                  </p>
-                )}
-              </div>
-            </div>
-          )
-        )}
-      </DialogContent>
-    </Dialog>
-  );
-}
+export default ChartIndexMap;

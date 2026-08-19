@@ -33,7 +33,7 @@ const NAV_LINKS = [
   { label: "Publications", href: "/product-service?category=publications" },
   {
     label: "Notices to Mariners",
-    href: "/product-service?category=notices-to-mariners",
+    href: "/important-notice/notices",
   },
   { label: "Paper Charts", href: "/product-service?category=paper-charts" },
   {

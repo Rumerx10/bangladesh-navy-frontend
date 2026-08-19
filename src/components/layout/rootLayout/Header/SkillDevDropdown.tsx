@@ -5,13 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
-  { label: "BN Hydrographic Institute", href: "/skill-development" },
-  { label: "Courses", href: "/skill-development/courses" },
+  { label: "BN Hydrographic Institute", href: "/training-courses" },
+  { label: "Courses", href: "/training-courses/courses" },
 ];
 
-export default function SkillDevDropdown() {
+const SkillDevDropdown=()=> {
   const pathname = usePathname();
-  const isActive = pathname?.startsWith("/skill-development");
+  const isActive = pathname?.startsWith("/training-courses");
 
   return (
     <li className="relative group">
@@ -50,3 +50,5 @@ export default function SkillDevDropdown() {
     </li>
   );
 }
+
+export default SkillDevDropdown;
