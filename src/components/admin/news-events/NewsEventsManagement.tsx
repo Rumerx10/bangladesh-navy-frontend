@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useGet } from "@/src/hooks/useGet";
 import { useAppSelector } from "@/src/lib/redux/hooks";
 import { usePagination } from "@/src/hooks/usePagination";
@@ -27,6 +27,11 @@ const NewsEventsManagement = () => {
     useSearchDebounce(300);
   const { sortBy } = useAppSelector((state) => state.filter);
 
+  // The /news-events backend endpoint ignores the `search` query param, so
+  // while searching we fetch the full list (no page/limit) and filter/paginate
+  // it client-side instead.
+  const isSearching = debouncedSearch.trim().length > 0;
+
   const { data, isLoading } = useGet<INewsEvent[]>(
     "/news-events",
     [
@@ -37,19 +42,47 @@ const NewsEventsManagement = () => {
       sortBy,
     ],
     {
-      ...(itemsPerPage !== -1 && {
-        page: currentPage.toString(),
-        limit: itemsPerPage.toString(),
-      }),
+      ...(isSearching
+        ? { page: "1", limit: "1000" }
+        : itemsPerPage !== -1 && {
+            page: currentPage.toString(),
+            limit: itemsPerPage.toString(),
+          }),
       search: debouncedSearch,
       ...(sortBy && { status: sortBy }),
     }
   );
 
+  const filteredNews = useMemo(() => {
+    const list = Array.isArray(data?.data) ? data.data : [];
+    if (!isSearching) return list;
+    const q = debouncedSearch.trim().toLowerCase();
+    return list.filter(
+      (item) =>
+        item.titleEn?.toLowerCase().includes(q) ||
+        item.titleBn?.toLowerCase().includes(q)
+    );
+  }, [data, isSearching, debouncedSearch]);
+
+  const visibleNews = useMemo(() => {
+    if (!isSearching || itemsPerPage === -1) return filteredNews;
+    const start = (currentPage - 1) * itemsPerPage;
+    return filteredNews.slice(start, start + itemsPerPage);
+  }, [filteredNews, isSearching, currentPage, itemsPerPage]);
+
   useEffect(() => {
-    if (data) setTotalItems(data.meta?.totalItems || 0);
+    if (data) {
+      setTotalItems(
+        isSearching ? filteredNews.length : data.meta?.totalItems || 0
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  }, [data, isSearching, filteredNews.length]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch]);
 
   const handleEdit = (item: INewsEvent) => {
     setSelectedItem(item);
@@ -67,7 +100,7 @@ const NewsEventsManagement = () => {
     <div>
       <DataTable
         columns={columns}
-        data={Array.isArray(data?.data) ? data.data : []}
+        data={visibleNews}
         isLoading={isLoading}
         totalItems={totalItems}
         currentPage={currentPage}

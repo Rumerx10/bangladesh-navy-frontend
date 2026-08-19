@@ -17,7 +17,7 @@ const productLinks = [
   { label: "Tide Tables", href: "/product-service?category=tide-tables" },
   {
     label: "Notices to Mariners",
-    href: "/product-service?category=notices-to-mariners",
+    href: "/important-notice/notices",
   },
   { label: "Publications", href: "/product-service?category=publications" },
 ];
@@ -31,19 +31,8 @@ const aboutLinks = [
 ];
 
 const serviceLinks = [
-  { label: "BN Hydrographic Institute", href: "/skill-development" },
-  {
-    label: "Long Hydrographic Course (Cat. A)",
-    href: "/skill-development/long-hydrographic-course-cat-a",
-  },
-  {
-    label: "Basic Hydrographic Course (Cat. B)",
-    href: "/skill-development/basic-hydrography-cat-b",
-  },
-  {
-    label: "Customized Courses",
-    href: "/skill-development/customized-courses",
-  },
+  { label: "BN Hydrographic Institute", href: "/training-courses" },
+  { label: "Courses", href: "/training-courses/courses" },
 ];
 
 const contactPageLinks = [
@@ -86,10 +75,6 @@ const Footer = () => {
                 </p>
               </div>
             </Link>
-            <p className="text-sm text-gray-400 leading-relaxed mb-5">
-              Providing accurate nautical charts and navigational information
-              for safe maritime navigation in Bangladesh waters.
-            </p>
             <div className="space-y-2.5 text-sm">
               <div className="flex items-start gap-2.5 text-gray-400">
                 <MapPin size={16} className="mt-0.5 shrink-0 text-gray-500" />
@@ -152,7 +137,7 @@ const Footer = () => {
           {/* Skill Development */}
           <div>
             <h4 className="text-sm font-semibold text-white mb-4 lg:mb-5">
-              Skill Development
+              Training and Courses
             </h4>
             <ul className="space-y-2.5">
               {serviceLinks.map((link) => (

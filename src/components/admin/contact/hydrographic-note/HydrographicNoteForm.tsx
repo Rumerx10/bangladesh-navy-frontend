@@ -121,7 +121,7 @@ const HydrographicNoteForm = () => {
 
           <div className="grid grid-cols-1 gap-5 px-6 pb-6 md:grid-cols-2">
             <div>
-              <InputLabel label="Date" required />
+              <InputLabel label="Date" />
               <ControlledInputField
                 type="date"
                 name="date"
@@ -129,7 +129,7 @@ const HydrographicNoteForm = () => {
               />
             </div>
             <div>
-              <InputLabel label="Ref Number" required />
+              <InputLabel label="Ref Number" />
               <ControlledInputField
                 name="refNumber"
                 placeholder="Enter reference number"
@@ -138,7 +138,7 @@ const HydrographicNoteForm = () => {
             </div>
 
             <div className="md:col-span-2">
-              <InputLabel label="Name of Ship or Sender" required />
+              <InputLabel label="Name of Ship or Sender" />
               <ControlledInputField
                 name="nameOfShip"
                 placeholder="Enter name of ship or sender"
@@ -155,7 +155,7 @@ const HydrographicNoteForm = () => {
               />
             </div>
             <div>
-              <InputLabel label="Address" required />
+              <InputLabel label="Address" />
               <ControlledInputField
                 name="address"
                 placeholder="Enter address"
@@ -164,7 +164,7 @@ const HydrographicNoteForm = () => {
             </div>
 
             <div>
-              <InputLabel label="E-mail" required />
+              <InputLabel label="E-mail" />
               <ControlledInputField
                 type="email"
                 name="email"
@@ -174,7 +174,7 @@ const HydrographicNoteForm = () => {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <InputLabel label="Tel" required />
+                <InputLabel label="Tel" />
                 <ControlledInputField
                   type="tel"
                   name="tel"
@@ -202,7 +202,7 @@ const HydrographicNoteForm = () => {
 
           <div className="grid grid-cols-1 gap-5 px-6 pb-6">
             <div>
-              <InputLabel label="General Locality" required />
+              <InputLabel label="General Locality" />
               <ControlledInputField
                 name="generalLocality"
                 placeholder="Enter general locality"
@@ -210,7 +210,7 @@ const HydrographicNoteForm = () => {
               />
             </div>
             <div>
-              <InputLabel label="Subject" required />
+              <InputLabel label="Subject" />
               <ControlledInputField
                 name="subject"
                 placeholder="Enter subject"
@@ -228,7 +228,7 @@ const HydrographicNoteForm = () => {
 
           <div className="grid grid-cols-1 gap-5 px-6 pb-6 md:grid-cols-2">
             <div>
-              <InputLabel label="Latitude" required />
+              <InputLabel label="Latitude" />
               <ControlledInputField
                 name="latitude"
                 placeholder="e.g. 22° 20′ N"
@@ -236,7 +236,7 @@ const HydrographicNoteForm = () => {
               />
             </div>
             <div>
-              <InputLabel label="Longitude" required />
+              <InputLabel label="Longitude" />
               <ControlledInputField
                 name="longitude"
                 placeholder="e.g. 91° 48′ E"
@@ -281,7 +281,7 @@ const HydrographicNoteForm = () => {
 
           <div className="grid grid-cols-1 gap-5 px-6 pb-6 md:grid-cols-2">
             <div>
-              <InputLabel label="BN Charts Affected" required />
+              <InputLabel label="BN Charts Affected" />
               <ControlledInputField
                 name="bnChartsAffected"
                 placeholder="Enter BN charts affected"
@@ -394,7 +394,7 @@ const HydrographicNoteForm = () => {
 
           <div className="grid grid-cols-1 gap-5 px-6 pb-6">
             <div>
-              <InputLabel label="Details of Observation" required />
+              <InputLabel label="Details of Observation" />
               <ControlledTextareaField
                 name="detailsOfObservation"
                 placeholder="Describe the hydrographic observation in detail..."
@@ -402,7 +402,7 @@ const HydrographicNoteForm = () => {
               />
             </div>
             <div>
-              <InputLabel label="Name of Observer / Reporter" required />
+              <InputLabel label="Name of Observer / Reporter" />
               <ControlledInputField
                 name="nameOfObserver"
                 placeholder="Enter name of observer or reporter"

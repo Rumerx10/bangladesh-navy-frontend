@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Ship, Tag } from "lucide-react";
 import { useGet } from "@/src/hooks/useGet";
 import { useAppSelector } from "@/src/lib/redux/hooks";
@@ -37,6 +37,11 @@ const SurveyShipsManagement = () => {
     useSearchDebounce(300);
   const { sortBy } = useAppSelector((state) => state.filter);
 
+  // The /survey-ships backend endpoint ignores the `search` query param, so
+  // while searching we fetch the full list (no page/limit) and filter/paginate
+  // it client-side instead.
+  const isSearching = debouncedSearch.trim().length > 0;
+
   const { data, isLoading } = useGet<ISurveyShip[]>(
     "/survey-ships",
     [
@@ -47,19 +52,47 @@ const SurveyShipsManagement = () => {
       sortBy,
     ],
     {
-      ...(itemsPerPage !== -1 && {
-        page: currentPage.toString(),
-        limit: itemsPerPage.toString(),
-      }),
+      ...(isSearching
+        ? { page: "1", limit: "1000" }
+        : itemsPerPage !== -1 && {
+            page: currentPage.toString(),
+            limit: itemsPerPage.toString(),
+          }),
       search: debouncedSearch,
       ...(sortBy && { status: sortBy }),
     }
   );
 
+  const filteredShips = useMemo(() => {
+    const list = Array.isArray(data?.data) ? data.data : [];
+    if (!isSearching) return list;
+    const q = debouncedSearch.trim().toLowerCase();
+    return list.filter(
+      (item) =>
+        item.nameEn?.toLowerCase().includes(q) ||
+        item.nameBn?.toLowerCase().includes(q)
+    );
+  }, [data, isSearching, debouncedSearch]);
+
+  const visibleShips = useMemo(() => {
+    if (!isSearching || itemsPerPage === -1) return filteredShips;
+    const start = (currentPage - 1) * itemsPerPage;
+    return filteredShips.slice(start, start + itemsPerPage);
+  }, [filteredShips, isSearching, currentPage, itemsPerPage]);
+
   useEffect(() => {
-    if (data) setTotalItems(data.meta?.totalItems || 0);
+    if (data) {
+      setTotalItems(
+        isSearching ? filteredShips.length : data.meta?.totalItems || 0
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  }, [data, isSearching, filteredShips.length]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch]);
 
   const handleEdit = (item: ISurveyShip) => {
     setSelectedItem(item);
@@ -102,7 +135,7 @@ const SurveyShipsManagement = () => {
         <>
           <DataTable
             columns={columns}
-            data={Array.isArray(data?.data) ? data.data : []}
+            data={visibleShips}
             isLoading={isLoading}
             totalItems={totalItems}
             currentPage={currentPage}

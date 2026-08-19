@@ -124,10 +124,18 @@ const CreateUpdateSurveyShip = ({
   const onSubmit = (values: SurveyShipFormValues) => {
     const formData = new FormData();
     formData.append("nameEn", values.nameEn);
-    formData.append("nameBn", values.nameBn || "");
     formData.append("descriptionEn", values.descriptionEn);
-    formData.append("descriptionBn", values.descriptionBn || "");
     formData.append("surveyCategoryId", values.surveyCategoryId);
+
+    // Optional Bengali fields — only send when filled, an empty string is
+    // rejected by the API as a missing value.
+    if (values.nameBn?.trim()) {
+      formData.append("nameBn", values.nameBn.trim());
+    }
+    if (values.descriptionBn?.trim()) {
+      formData.append("descriptionBn", values.descriptionBn.trim());
+    }
+
     formData.append("length", values.length);
     formData.append("beam", values.beam);
     formData.append("draft", values.draft);

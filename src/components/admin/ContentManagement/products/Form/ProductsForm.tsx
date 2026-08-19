@@ -26,6 +26,11 @@ const STATUS_OPTIONS = [
   { label: "Inactive", value: "INACTIVE" },
 ];
 
+// Codes are compared case-insensitively because ENC cell numbers are
+// alphanumeric ("BD307425") and can come back from the API in any casing.
+const normaliseCode = (code: string | number) =>
+  String(code).trim().toUpperCase();
+
 interface ProductFormProps {
   isEditMode?: boolean;
   onSubmit: (data: ProductFormValues) => void;
@@ -66,15 +71,17 @@ export default function ProductForm({
 
   const category = watch("category");
 
-  // Chart Code doesn't apply to the Tidal category — clear it client-side
-  // when the user switches into Tidal so a stale value isn't left behind.
+  // Chart Code suggestions are category-specific (paper serial numbers vs ENC
+  // cell numbers, none at all for Tidal), so any category change invalidates
+  // whatever code is currently selected — clear it so a code from the previous
+  // category's list can't be submitted.
   // Gated on dirtyFields.category so this only reacts to the user actually
-  // picking Tidal from the dropdown, not to the initial `reset()` that
-  // populates an already-Tidal product on the edit page (reset() doesn't
-  // mark fields dirty).
+  // picking a category from the dropdown, not to the initial `reset()` that
+  // populates an existing product on the edit page (reset() doesn't mark
+  // fields dirty).
   useEffect(() => {
-    if (category === "TIDAL" && dirtyFields.category) {
-      setValue("chartCode", "", { shouldValidate: true });
+    if (dirtyFields.category) {
+      setValue("chartCode", "", { shouldValidate: category === "TIDAL" });
     }
   }, [category, dirtyFields.category, setValue]);
 
@@ -94,7 +101,7 @@ export default function ProductForm({
       if (product.chartCode === undefined || product.chartCode === null)
         continue;
       if (initialValues && product.id === initialValues.id) continue;
-      used.add(String(product.chartCode));
+      used.add(normaliseCode(product.chartCode));
     }
     return used;
   }, [allProductsData, initialValues]);
@@ -105,7 +112,7 @@ export default function ProductForm({
       if (!byNumber.has(area.number)) byNumber.set(area.number, area);
     }
     return [...byNumber.values()]
-      .filter((area) => !usedChartCodes.has(area.number))
+      .filter((area) => !usedChartCodes.has(normaliseCode(area.number)))
       .sort((a, b) => Number(a.number) - Number(b.number))
       .map((area) => ({
         value: area.number,
@@ -113,22 +120,19 @@ export default function ProductForm({
       }));
   }, [usedChartCodes]);
 
-  // chartCode is stored as a number server-side, so ENC options submit the
-  // numeric national chart number (nationalNo) rather than the alphanumeric
-  // cell number (cellNo, e.g. "BD307425") — the latter fails backend
-  // validation ("chartCode must be a number"). The cell number is still
-  // shown in the label since that's what's recognizable to the user.
+  // ENC products are identified by their cell number (cellNo, e.g.
+  // "BD307425"), so that's what gets stored in chartCode. The national chart
+  // number is kept in the label for context only.
   const encChartOptions = useMemo(() => {
-    const byNationalNo = new Map<string, (typeof encIndexAreas)[number]>();
+    const byCellNo = new Map<string, (typeof encIndexAreas)[number]>();
     for (const cell of encIndexAreas) {
-      if (!byNationalNo.has(cell.nationalNo))
-        byNationalNo.set(cell.nationalNo, cell);
+      if (!byCellNo.has(cell.cellNo)) byCellNo.set(cell.cellNo, cell);
     }
-    return [...byNationalNo.values()]
-      .filter((cell) => !usedChartCodes.has(cell.nationalNo))
+    return [...byCellNo.values()]
+      .filter((cell) => !usedChartCodes.has(normaliseCode(cell.cellNo)))
       .sort((a, b) => Number(a.nationalNo) - Number(b.nationalNo))
       .map((cell) => ({
-        value: cell.nationalNo,
+        value: cell.cellNo,
         label: cell.intNo
           ? `${cell.cellNo} (${cell.intNo}) — #${cell.nationalNo}`
           : `${cell.cellNo} — #${cell.nationalNo}`,
@@ -137,6 +141,8 @@ export default function ProductForm({
 
   // Chart Code suggestions follow the selected category: paper chart serial
   // numbers for PAPPER_CHART, ENC cell numbers for ELECTRONIC_NAVIGATIONAL_CHART.
+  // Tidal has no chart code, and with nothing selected there's no list to
+  // draw from — both leave the field disabled below.
   const chartCodeOptions =
     category === "ELECTRONIC_NAVIGATIONAL_CHART"
       ? encChartOptions
@@ -219,15 +225,24 @@ export default function ProductForm({
             />
           </div>
           <div>
-            <InputLabel label="Chart Code" required={category !== "TIDAL"} />
+            <InputLabel
+              label="Chart Code"
+              required={!!category && category !== "TIDAL"}
+            />
             <ControlledComboboxSelect
               name="chartCode"
               options={chartCodeOptions}
-              placeholder="Select a chart code"
+              placeholder={
+                !category
+                  ? "Select a category first"
+                  : category === "TIDAL"
+                    ? "Not applicable for Tidal"
+                    : "Select a chart code"
+              }
               searchPlaceholder="Search chart code..."
               emptyMessage="Already used"
               listClassName="scrollbar-modern"
-              disabled={category === "TIDAL"}
+              disabled={!category || category === "TIDAL"}
             />
           </div>
         </div>

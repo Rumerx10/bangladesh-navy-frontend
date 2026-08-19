@@ -106,7 +106,7 @@ export const quickAccessItems: IQuickAccessItem[] = [
     title: "Notices to Mariners",
     description: "Navigation warnings & corrections",
     icon: "alert-triangle",
-    href: "/product-service/notices-to-mariners",
+    href: "/important-notice/notices",
   },
   {
     id: "qa-6",

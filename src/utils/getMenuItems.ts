@@ -4,6 +4,7 @@ import {
   Home,
   Info,
   LayoutDashboard,
+  Megaphone,
   Package,
   Phone,
   Users,
@@ -61,6 +62,12 @@ const getMenuItems = (): MenuItem[] => {
       ],
     },
     {
+      segment: "Content Management",
+      label: "Notices to Mariners",
+      icon: Megaphone,
+      href: "/admin/notices",
+    },
+    {
       segment: "Training Management",
       label: "Training & Courses",
       icon: GraduationCap,
@@ -71,6 +78,7 @@ const getMenuItems = (): MenuItem[] => {
           href: "/admin/training-courses/institute",
         },
         { label: "Courses", href: "/admin/training-courses/courses" },
+        { label: "Alumni", href: "/admin/training-courses/alumni" },
       ],
     },
     {

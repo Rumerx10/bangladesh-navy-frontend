@@ -25,15 +25,15 @@ const NAV_LINKS = [
   { label: "Gallery", href: "/about/gallery" },
   { label: "Nautical Products", href: "/product-service" },
   { label: "How to Collect", href: "/how-to-collect" },
-  { label: "BN Hydrographic Institute", href: "/skill-development" },
-  { label: "Courses", href: "/skill-development/courses" },
+  { label: "BN Hydrographic Institute", href: "/training-courses" },
+  { label: "Courses", href: "/training-courses/courses" },
   { label: "Contact Information", href: "/contact-us/information" },
   { label: "Query & Suggestion", href: "/contact-us/query-suggestion" },
   { label: "Hydrographic Note", href: "/contact-us/hydrographic-note" },
   { label: "Publications", href: "/product-service?category=publications" },
   {
     label: "Notices to Mariners",
-    href: "/product-service?category=notices-to-mariners",
+    href: "/important-notice/notices",
   },
   { label: "Paper Charts", href: "/product-service?category=paper-charts" },
   {

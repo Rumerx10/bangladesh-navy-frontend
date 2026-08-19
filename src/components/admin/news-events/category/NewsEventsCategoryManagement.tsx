@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useGet } from "@/src/hooks/useGet";
 import { usePagination } from "@/src/hooks/usePagination";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
@@ -27,6 +27,11 @@ const NewsEventsCategoryManagement = () => {
   const { search, handleSearchChange, debouncedSearch } =
     useSearchDebounce(300);
 
+  // The /news-events-category backend endpoint ignores the `search` query
+  // param, so while searching we fetch the full list (no page/limit) and
+  // filter/paginate it client-side instead.
+  const isSearching = debouncedSearch.trim().length > 0;
+
   const { data, isLoading } = useGet<INewsEventsCategory[]>(
     "/news-events-category",
     [
@@ -36,18 +41,46 @@ const NewsEventsCategoryManagement = () => {
       debouncedSearch,
     ],
     {
-      ...(itemsPerPage !== -1 && {
-        page: currentPage.toString(),
-        limit: itemsPerPage.toString(),
-      }),
+      ...(isSearching
+        ? { page: "1", limit: "1000" }
+        : itemsPerPage !== -1 && {
+            page: currentPage.toString(),
+            limit: itemsPerPage.toString(),
+          }),
       search: debouncedSearch,
     }
   );
 
+  const filteredCategories = useMemo(() => {
+    const list = Array.isArray(data?.data) ? data.data : [];
+    if (!isSearching) return list;
+    const q = debouncedSearch.trim().toLowerCase();
+    return list.filter(
+      (item) =>
+        item.nameEn?.toLowerCase().includes(q) ||
+        item.nameBn?.toLowerCase().includes(q)
+    );
+  }, [data, isSearching, debouncedSearch]);
+
+  const visibleCategories = useMemo(() => {
+    if (!isSearching || itemsPerPage === -1) return filteredCategories;
+    const start = (currentPage - 1) * itemsPerPage;
+    return filteredCategories.slice(start, start + itemsPerPage);
+  }, [filteredCategories, isSearching, currentPage, itemsPerPage]);
+
   useEffect(() => {
-    if (data) setTotalItems(data.meta?.totalItems || 0);
+    if (data) {
+      setTotalItems(
+        isSearching ? filteredCategories.length : data.meta?.totalItems || 0
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  }, [data, isSearching, filteredCategories.length]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch]);
 
   const handleEdit = (item: INewsEventsCategory) => {
     setSelectedItem(item);
@@ -65,7 +98,7 @@ const NewsEventsCategoryManagement = () => {
     <div>
       <DataTable
         columns={columns}
-        data={Array.isArray(data?.data) ? data.data : []}
+        data={visibleCategories}
         isLoading={isLoading}
         totalItems={totalItems}
         currentPage={currentPage}

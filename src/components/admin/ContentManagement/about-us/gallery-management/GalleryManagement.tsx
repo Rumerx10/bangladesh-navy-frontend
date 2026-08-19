@@ -2,7 +2,7 @@
 import { IGalleryItem } from "./types";
 import { Images, Tag } from "lucide-react";
 import { useGet } from "@/src/hooks/useGet";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAppSelector } from "@/src/lib/redux/hooks";
 import GalleryCategoryCard from "./GalleryCategoryCard";
 import { usePagination } from "@/src/hooks/usePagination";
@@ -36,6 +36,11 @@ const GalleryManagement = () => {
     useSearchDebounce(300);
   const { sortBy } = useAppSelector((state) => state.filter);
 
+  // The /gallery backend endpoint ignores the `search` query param, so while
+  // searching we fetch the full list (no page/limit) and filter/paginate it
+  // client-side instead.
+  const isSearching = debouncedSearch.trim().length > 0;
+
   const { data, isLoading } = useGet<IGalleryItem[]>(
     "/gallery",
     [
@@ -46,19 +51,47 @@ const GalleryManagement = () => {
       sortBy,
     ],
     {
-      ...(itemsPerPage !== -1 && {
-        page: currentPage.toString(),
-        limit: itemsPerPage.toString(),
-      }),
+      ...(isSearching
+        ? { page: "1", limit: "1000" }
+        : itemsPerPage !== -1 && {
+            page: currentPage.toString(),
+            limit: itemsPerPage.toString(),
+          }),
       search: debouncedSearch,
       ...(sortBy && { status: sortBy }),
     }
   );
 
+  const filteredItems = useMemo(() => {
+    const list = Array.isArray(data?.data) ? data.data : [];
+    if (!isSearching) return list;
+    const q = debouncedSearch.trim().toLowerCase();
+    return list.filter(
+      (item) =>
+        item.titleEn?.toLowerCase().includes(q) ||
+        item.titleBn?.toLowerCase().includes(q)
+    );
+  }, [data, isSearching, debouncedSearch]);
+
+  const visibleItems = useMemo(() => {
+    if (!isSearching || itemsPerPage === -1) return filteredItems;
+    const start = (currentPage - 1) * itemsPerPage;
+    return filteredItems.slice(start, start + itemsPerPage);
+  }, [filteredItems, isSearching, currentPage, itemsPerPage]);
+
   useEffect(() => {
-    if (data) setTotalItems(data.meta?.totalItems || 0);
+    if (data) {
+      setTotalItems(
+        isSearching ? filteredItems.length : data.meta?.totalItems || 0
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  }, [data, isSearching, filteredItems.length]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch]);
 
   const handleEdit = (item: IGalleryItem) => {
     setSelectedItem(item);
@@ -101,7 +134,7 @@ const GalleryManagement = () => {
         <>
           <DataTable
             columns={columns}
-            data={Array.isArray(data?.data) ? data.data : []}
+            data={visibleItems}
             isLoading={isLoading}
             totalItems={totalItems}
             currentPage={currentPage}

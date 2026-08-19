@@ -1,29 +1,33 @@
 import * as yup from "yup";
 
+// Every field on the Hydrographic Note is optional — observers often only
+// have partial information to report, so nothing is blocked at submit time.
+// `email` still validates its format when a value is entered (yup's email
+// test skips empty strings).
 export const hydrographicNoteValidationSchema = yup.object({
-  date: yup.string().required("Date is required"),
+  date: yup.string().ensure(),
 
-  refNumber: yup.string().required("Reference number is required"),
+  refNumber: yup.string().ensure(),
 
-  nameOfShip: yup.string().required("Name of ship or sender is required"),
+  nameOfShip: yup.string().ensure(),
 
   imoNumber: yup.string().ensure(),
 
-  address: yup.string().required("Address is required"),
+  address: yup.string().ensure(),
 
-  email: yup.string().email("Invalid email").required("Email is required"),
+  email: yup.string().email("Invalid email").ensure(),
 
-  tel: yup.string().required("Telephone number is required"),
+  tel: yup.string().ensure(),
 
   fax: yup.string().ensure(),
 
-  generalLocality: yup.string().required("General locality is required"),
+  generalLocality: yup.string().ensure(),
 
-  subject: yup.string().required("Subject is required"),
+  subject: yup.string().ensure(),
 
-  latitude: yup.string().required("Latitude is required"),
+  latitude: yup.string().ensure(),
 
-  longitude: yup.string().required("Longitude is required"),
+  longitude: yup.string().ensure(),
 
   gps: yup.string().ensure(),
 
@@ -31,7 +35,7 @@ export const hydrographicNoteValidationSchema = yup.object({
 
   accuracy: yup.string().ensure(),
 
-  bnChartsAffected: yup.string().required("BN Charts affected is required"),
+  bnChartsAffected: yup.string().ensure(),
 
   edition: yup.string().ensure(),
 
@@ -53,13 +57,9 @@ export const hydrographicNoteValidationSchema = yup.object({
 
   dateOfLatestSupplement: yup.string().ensure(),
 
-  detailsOfObservation: yup
-    .string()
-    .required("Details of observation is required"),
+  detailsOfObservation: yup.string().ensure(),
 
-  nameOfObserver: yup
-    .string()
-    .required("Name of observer/reporter is required"),
+  nameOfObserver: yup.string().ensure(),
 });
 
 export type HydrographicNoteFormType = yup.InferType<

@@ -10,7 +10,7 @@ interface ProductTabsProps {
 
 const tabs = ["Description"];
 
-export default function ProductTabs({ product }: ProductTabsProps) {
+const ProductTabs=({ product }: ProductTabsProps)=> {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
@@ -20,7 +20,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
           <button
             key={tab}
             onClick={() => setActiveTab(i)}
-            className={`px-5 py-3 font-semibold text-sm font-medium transition-colors cursor-pointer ${
+            className={`px-5 py-3 font-semibold text-sm transition-colors cursor-pointer ${
               activeTab === i
                 ? "text-liteBlue border-liteBlue bg-white"
                 : "text-gray-500 hover:text-gray-700 bg-gray-50"
@@ -42,3 +42,6 @@ export default function ProductTabs({ product }: ProductTabsProps) {
     </div>
   );
 }
+
+
+export default ProductTabs;

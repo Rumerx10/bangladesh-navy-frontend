@@ -204,7 +204,7 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
         <div
           className={`absolute left-1/2 top-full z-50 -translate-x-1/2 rounded-xl border border-gray-200 bg-white shadow-xl ${isOpen ? "block" : "hidden"}`}
         >
-          <div className="flex flex-col gap-0.5 p-2 min-w-52">
+          <div className="flex flex-col gap-0.5 p-2 min-w-52 whitespace-nowrap">
             {renderSubLinks(item.subLinks)}
           </div>
         </div>
