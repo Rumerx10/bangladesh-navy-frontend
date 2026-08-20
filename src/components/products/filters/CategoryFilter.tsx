@@ -8,11 +8,11 @@ interface CategoryFilterProps {
   onToggle: (id: string) => void;
 }
 
-const CategoryFilter=({
+const CategoryFilter = ({
   categories,
   selectedIds,
   onToggle,
-}: CategoryFilterProps)=> {
+}: CategoryFilterProps) => {
   return (
     <div className="border border-gray-100 rounded-xl p-4">
       <h3 className="text-sm font-semibold text-pBlue mb-3">Category</h3>
@@ -41,7 +41,6 @@ const CategoryFilter=({
       </div>
     </div>
   );
-}
-
+};
 
 export default CategoryFilter;

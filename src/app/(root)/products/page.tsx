@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Metadata } from "next";
 import ProductListingPage from "@/src/components/products/ProductListingPage";
 
@@ -9,5 +10,11 @@ export const metadata: Metadata = {
 };
 
 export default function ProductsPage() {
-  return <ProductListingPage />;
+  // ProductListingPage reads `?category=`, which needs a Suspense boundary to
+  // keep this route prerenderable.
+  return (
+    <Suspense>
+      <ProductListingPage />
+    </Suspense>
+  );
 }

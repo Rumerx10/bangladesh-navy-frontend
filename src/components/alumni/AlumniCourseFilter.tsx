@@ -1,20 +1,19 @@
 "use client";
 
 import { cn } from "@/src/lib/utils";
-import { IAlumniCourse } from "./types";
 
 interface AlumniCourseFilterProps {
-  courses: IAlumniCourse[];
+  courses: { id: string; name: string }[];
   value: string;
   onChange: (value: string) => void;
-  /** Batch count per course id, plus an `ALL` total. */
+  /** Member count per course id, plus an `ALL` total. */
   counts: Record<string, number>;
   className?: string;
 }
 
 /**
- * Pill filter over the course types. "All" is always first and is a UI-only
- * value — it is never stored on a batch.
+ * Pill filter over the courses. "All" is always first and is a UI-only value —
+ * it is never stored on a member.
  */
 const AlumniCourseFilter = ({
   courses,
@@ -25,7 +24,7 @@ const AlumniCourseFilter = ({
 }: AlumniCourseFilterProps) => {
   const options = [
     { id: "ALL", label: "All Courses" },
-    ...courses.map((course) => ({ id: course.id, label: course.nameEn })),
+    ...courses.map((course) => ({ id: course.id, label: course.name })),
   ];
 
   return (

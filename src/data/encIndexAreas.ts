@@ -10,9 +10,10 @@
  * ElectronicChartMap.tsx to outline every hotspot while calibrating.
  *
  * Metadata (title/INT/national no/scale/dates) is transcribed from the
- * "Index of ENC Cell" table, which is the authoritative source. The 1:12500
- * Karnaphuli River cell (BD501501) is in that index but is not yet drawn on
- * the catalogue map, so it has no hotspot here.
+ * "Index of ENC Cell" table, which is the authoritative source. A cell that
+ * is in that index but not drawn on the catalogue map (BD501501) is still
+ * listed here with its hotspot geometry omitted — the admin Chart Code
+ * picker needs every cell, the map only renders the ones it can place.
  */
 
 export const ENC_VIEWBOX = { w: 3072, h: 2205 };
@@ -32,11 +33,20 @@ export interface IEncCell {
   published?: string;
   /** New edition number / date, e.g. "Ed No. 03, 26 May 2025" */
   edition?: string;
-  x: number;
-  y: number;
-  w: number;
-  h: number;
+  /**
+   * Hotspot geometry. Omitted for cells that are listed in the "Index of ENC
+   * Cell" table but not drawn on the catalogue map — those are still valid
+   * products, they just have nothing to click on the map.
+   */
+  x?: number;
+  y?: number;
+  w?: number;
+  h?: number;
 }
+
+/** An entry that is actually drawn on the catalogue map. */
+export type IEncCellWithHotspot = IEncCell &
+  Required<Pick<IEncCell, "x" | "y" | "w" | "h">>;
 
 export const encIndexAreas: IEncCell[] = [
   // ── Chattogram / Karnaphuli ──────────────────────────────────────
@@ -188,7 +198,7 @@ export const encIndexAreas: IEncCell[] = [
 
   // ── Payra ────────────────────────────────────────────────────────
   {
-    cellNo: "BD5 7453",
+    cellNo: "BD507453",
     intNo: "INT 7453",
     nationalNo: "3002",
     title: "Payra Harbour",
@@ -277,4 +287,28 @@ export const encIndexAreas: IEncCell[] = [
     w: 2858,
     h: 1780,
   },
+
+  // ── Listed in the index, not drawn on the catalogue map ──────────
+  {
+    // TODO: nationalNo is inferred from the BD5-0-<national no> pattern used
+    // by BD503003 / BD503501 / BD503506 — verify against HP001_2026 before
+    // relying on it. No hotspot: this cell is absent from the catalogue map.
+    cellNo: "BD501501",
+    nationalNo: "1501",
+    title: "Karnaphuli River",
+    scale: "1:12 500",
+  },
 ];
+
+/**
+ * The subset the map can render. Searching for a cell with no hotspot would
+ * highlight nothing, so the map works from this list rather than the full
+ * index; the admin Chart Code picker uses `encIndexAreas` directly.
+ */
+export const encHotspotAreas = encIndexAreas.filter(
+  (cell): cell is IEncCellWithHotspot =>
+    cell.x !== undefined &&
+    cell.y !== undefined &&
+    cell.w !== undefined &&
+    cell.h !== undefined
+);

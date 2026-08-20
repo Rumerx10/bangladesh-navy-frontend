@@ -40,7 +40,10 @@ const Partners = () => {
             <Marquee pauseOnHover={true} speed={100}>
               {partners.map((partner) => {
                 const logo = (
-                  <div className="h-16 w-32 flex items-center justify-center" key={partner.id}>
+                  <div
+                    className="h-16 w-32 flex items-center justify-center"
+                    key={partner.id}
+                  >
                     <Image
                       src={partner.image}
                       alt="Partner logo"

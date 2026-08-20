@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import { getProductMetadata } from "@/src/utils/getProductMetadata";
 import ProductDetailByChart from "@/src/components/products/detail/ProductDetailByChart";
 
-
 interface TideTableDetailPageProps {
   params: Promise<{ chartId: string }>;
 }

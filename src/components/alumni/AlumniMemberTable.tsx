@@ -4,7 +4,7 @@ import { cn } from "@/src/lib/utils";
 import { IAlumniMember } from "./types";
 
 /** Colour the common remarks so a roster scans at a glance. */
-const remarkTone = (remarks?: string) => {
+const remarkTone = (remarks?: string | null) => {
   const value = remarks?.trim().toLowerCase() ?? "";
   if (!value) return "bg-gray-100 text-gray-500 ring-gray-500/20";
   if (value.includes("rtd") || value.includes("retire"))
@@ -13,7 +13,7 @@ const remarkTone = (remarks?: string) => {
   return "bg-emerald-50 text-emerald-700 ring-emerald-600/20";
 };
 
-const RemarkBadge = ({ remarks }: { remarks?: string }) => (
+const RemarkBadge = ({ remarks }: { remarks?: string | null }) => (
   <span
     className={cn(
       "inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap ring-1 ring-inset",
@@ -32,7 +32,7 @@ const AlumniMemberTable = ({ members }: { members: IAlumniMember[] }) => {
   if (members.length === 0) {
     return (
       <p className="rounded-lg border border-dashed border-gray-300 bg-gray-50 py-8 text-center text-sm text-gray-500">
-        No participants recorded for this batch yet.
+        No participants recorded for this course yet.
       </p>
     );
   }
@@ -64,7 +64,7 @@ const AlumniMemberTable = ({ members }: { members: IAlumniMember[] }) => {
           <tbody className="divide-y divide-gray-100">
             {members.map((member, index) => (
               <tr
-                key={member.id ?? `${member.pNo}-${index}`}
+                key={member.id}
                 className="bg-white transition-colors hover:bg-blue-50/40"
               >
                 <td className="px-4 py-3 text-sm font-semibold text-gray-400 tabular-nums">
@@ -74,7 +74,7 @@ const AlumniMemberTable = ({ members }: { members: IAlumniMember[] }) => {
                   {member.pNo || "—"}
                 </td>
                 <td className="px-4 py-3 text-sm font-medium text-gray-800">
-                  {member.rankName}
+                  {member.rankAndName}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-600">
                   {member.organization || "—"}
@@ -92,7 +92,7 @@ const AlumniMemberTable = ({ members }: { members: IAlumniMember[] }) => {
       <ul className="space-y-3 sm:hidden">
         {members.map((member, index) => (
           <li
-            key={member.id ?? `${member.pNo}-${index}`}
+            key={member.id}
             className="rounded-lg border border-gray-200 bg-white p-4"
           >
             <div className="flex items-start justify-between gap-3">
@@ -102,7 +102,7 @@ const AlumniMemberTable = ({ members }: { members: IAlumniMember[] }) => {
               <RemarkBadge remarks={member.remarks} />
             </div>
             <p className="mt-1 text-sm font-medium leading-snug text-gray-800">
-              {member.rankName}
+              {member.rankAndName}
             </p>
             <div className="mt-2 flex flex-wrap items-center gap-2 text-[11px] font-semibold">
               <span className="rounded-md bg-blue-50 px-2 py-1 text-pBlue">

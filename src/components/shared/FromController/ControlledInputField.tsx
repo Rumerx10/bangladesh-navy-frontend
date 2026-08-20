@@ -10,6 +10,8 @@ interface ControlledInputFieldProps {
   className?: string;
   disabled?: boolean;
   icon?: ReactElement;
+  /** id of a <datalist> rendered alongside the field, for free-text suggestions */
+  list?: string;
 
   // ✅ add this
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -22,6 +24,7 @@ const ControlledInputField: React.FC<ControlledInputFieldProps> = ({
   className,
   disabled,
   icon,
+  list,
   onKeyDown,
 }) => {
   const { control } = useFormContext();
@@ -42,6 +45,7 @@ const ControlledInputField: React.FC<ControlledInputFieldProps> = ({
             error={error?.message}
             className={className}
             disabled={disabled}
+            list={list}
             showErrorMessage={!!error}
             onKeyDown={onKeyDown}
           />

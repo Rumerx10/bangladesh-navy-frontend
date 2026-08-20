@@ -13,7 +13,6 @@ export type ApiError = {
   message: string;
 };
 
-
 export interface SurveyShipItem {
   id: string;
   nameEn: string;

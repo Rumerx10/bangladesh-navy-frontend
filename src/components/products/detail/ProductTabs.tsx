@@ -10,7 +10,7 @@ interface ProductTabsProps {
 
 const tabs = ["Description"];
 
-const ProductTabs=({ product }: ProductTabsProps)=> {
+const ProductTabs = ({ product }: ProductTabsProps) => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
@@ -41,7 +41,6 @@ const ProductTabs=({ product }: ProductTabsProps)=> {
       )}
     </div>
   );
-}
-
+};
 
 export default ProductTabs;
