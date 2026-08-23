@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
+import { AlertCircle } from "lucide-react";
 import { useGet } from "@/src/hooks/useGet";
 import { useDelete } from "@/src/hooks/useDelete";
 import { usePagination } from "@/src/hooks/usePagination";
@@ -11,6 +12,7 @@ import Paragraph from "@/src/components/shared/Paragraph";
 import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { ICourse } from "@/src/components/courses/types";
 import {
+  bySerial,
   COURSES_ENDPOINT,
   COURSES_LIST_QUERY_KEY,
   COURSES_QUERY_KEY,
@@ -18,6 +20,14 @@ import {
 import { ALUMNI_MEMBERS_TREE_QUERY_KEY } from "@/src/components/alumni/useAlumni";
 import CreateUpdateCourse from "./Form/CreateUpdateCourse";
 import { GetCourseColumns } from "./TableColumns/CourseColumns";
+
+/**
+ * The course list is the public statistics table — a handful of rows — so the
+ * whole set is fetched once and searched/paged in the browser. Only `page` and
+ * `limit` go to the API: it rejects any query key its DTO does not declare, so
+ * sending `search` there would empty the table the moment someone types.
+ */
+const FETCH_LIMIT = 50;
 
 const CoursesCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,32 +46,43 @@ const CoursesCard = () => {
   const { search, handleSearchChange, debouncedSearch } =
     useSearchDebounce(300);
 
-  const { data, isLoading } = useGet<ICourse[]>(
+  const { data, isLoading, isError, error } = useGet<ICourse[]>(
     COURSES_ENDPOINT,
-    [
-      ...COURSES_QUERY_KEY,
-      currentPage.toString(),
-      itemsPerPage.toString(),
-      debouncedSearch,
-    ],
-    {
-      ...(itemsPerPage !== -1 && {
-        page: currentPage.toString(),
-        limit: itemsPerPage.toString(),
-      }),
-      search: debouncedSearch,
-    }
+    COURSES_QUERY_KEY,
+    { page: "1", limit: FETCH_LIMIT.toString() }
   );
 
-  const courses = useMemo(
-    () => (Array.isArray(data?.data) ? data.data : []),
+  const allCourses = useMemo(
+    () => (Array.isArray(data?.data) ? [...data.data].sort(bySerial) : []),
     [data]
   );
 
+  const filtered = useMemo(() => {
+    const query = debouncedSearch.trim().toLowerCase();
+    if (!query) return allCourses;
+    return allCourses.filter(
+      (course) =>
+        course.name?.toLowerCase().includes(query) ||
+        course.duration?.toLowerCase().includes(query) ||
+        course.remarks?.toLowerCase().includes(query)
+    );
+  }, [allCourses, debouncedSearch]);
+
+  const visible = useMemo(() => {
+    if (itemsPerPage === -1) return filtered;
+    const start = (currentPage - 1) * itemsPerPage;
+    return filtered.slice(start, start + itemsPerPage);
+  }, [filtered, currentPage, itemsPerPage]);
+
   useEffect(() => {
-    if (data) setTotalItems(data.meta?.totalItems || 0);
+    setTotalItems(filtered.length);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  }, [filtered.length]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch]);
 
   const { mutate: deleteMutate } = useDelete(() => {
     toast.success("Course deleted successfully!");
@@ -82,20 +103,36 @@ const CoursesCard = () => {
     setSelectedItem(undefined);
   };
 
-  // Suggested serial for the next course — one past the highest on this page.
+  // Suggested serial for the next course — one past the last row.
   const nextSerial = useMemo(
     () =>
-      courses.reduce((max, course) => Math.max(max, course.serial ?? 0), 0) + 1,
-    [courses]
+      allCourses.reduce((max, course) => Math.max(max, course.serial ?? 0), 0) +
+      1,
+    [allCourses]
   );
 
   const columns = GetCourseColumns(handleEdit, setPendingDelete);
 
   return (
     <>
+      {/* Without this an auth or validation failure reads as "no courses yet". */}
+      {isError && (
+        <div className="mb-4 flex items-start gap-3 rounded-lg border border-rose-200 bg-rose-50 px-4 py-3">
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-rose-500" />
+          <div>
+            <Paragraph className="text-sm! font-medium text-rose-800">
+              Courses could not be loaded
+            </Paragraph>
+            <Paragraph className="text-xs! text-rose-700">
+              {error?.message || "The request to /courses failed."}
+            </Paragraph>
+          </div>
+        </div>
+      )}
+
       <DataTable
         columns={columns}
-        data={courses}
+        data={visible}
         isLoading={isLoading}
         totalItems={totalItems}
         currentPage={currentPage}

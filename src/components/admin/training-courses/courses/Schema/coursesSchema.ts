@@ -9,20 +9,9 @@ const courseSectionSchema = Yup.object({
 });
 
 /**
- * Every statistics cell is a string — the table mixes counts ("19"), spans
- * ("44 weeks") and placeholders ("—"), so it is never treated as a number.
+ * Narrative copy only. The statistics table is a separate record set, managed
+ * on Training & Courses → Alumni → Courses and served from `/courses`.
  */
-const courseStatisticSchema = Yup.object({
-  course: Yup.string().trim().required("Course name is required"),
-  conducted: Yup.string().trim().default(""),
-  duration: Yup.string().trim().default(""),
-  bn: Yup.string().trim().default(""),
-  otherMaritimeOrg: Yup.string().trim().default(""),
-  overseas: Yup.string().trim().default(""),
-  totalTrainees: Yup.string().trim().default(""),
-  remarks: Yup.string().trim().default(""),
-});
-
 export const coursesSchema = Yup.object({
   title: Yup.string()
     .required("Title is required")
@@ -36,10 +25,6 @@ export const coursesSchema = Yup.object({
     .of(courseSectionSchema)
     .min(1, "Add at least one course description")
     .required(),
-  statisticsTitle: Yup.string()
-    .required("Statistics title is required")
-    .max(200, "Max 200 characters"),
-  statistics: Yup.array().of(courseStatisticSchema).default([]),
 });
 
 export type CoursesSchemaForm = Yup.InferType<typeof coursesSchema>;

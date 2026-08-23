@@ -5,10 +5,11 @@ import InputLabel from "@/src/components/shared/InputLabel";
 import Paragraph from "@/src/components/shared/Paragraph";
 import SubmitButton from "@/src/components/shared/SubmitButton";
 import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
+import ControlledComboboxSelect from "@/src/components/shared/FromController/ControlledComboboxSelect";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
 import ControlledSelectField from "@/src/components/shared/FromController/ControlledSelectField";
 import { Button } from "@/src/components/ui/button";
-import { ErrorType, ISelectOption } from "@/src/components/shared/types/common";
+import { ErrorType } from "@/src/components/shared/types/common";
 import {
   ALUMNI_STATUS_OPTIONS,
   ORGANIZATION_SUGGESTIONS,
@@ -18,7 +19,8 @@ import { AlumniMemberFormValues } from "../Schema/alumniMemberSchema";
 
 interface AlumniMemberFormProps {
   isEditMode?: boolean;
-  courseOptions: ISelectOption[];
+  /** Course id → name, searchable in the combobox. */
+  courseOptions: { label: string; value: string }[];
   onSubmit: (data: AlumniMemberFormValues) => void;
   onCancel: () => void;
   isPending?: boolean;
@@ -40,10 +42,14 @@ const AlumniMemberForm = ({
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <InputLabel label="Course" required />
-          <ControlledSelectField
+          <ControlledComboboxSelect
             name="courseId"
             options={courseOptions}
             placeholder="Select a course"
+            searchPlaceholder="Search courses..."
+            emptyMessage="No matching course."
+            className="bg-light shadow-none"
+            listClassName="max-h-64"
           />
           {courseOptions.length === 0 && (
             <Paragraph className="mt-1 text-xs! text-amber-600">

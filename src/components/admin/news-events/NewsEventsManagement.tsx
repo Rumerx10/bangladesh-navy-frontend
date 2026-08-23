@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { toast } from "react-toastify";
 import { useGet } from "@/src/hooks/useGet";
+import { useDelete } from "@/src/hooks/useDelete";
 import { useAppSelector } from "@/src/lib/redux/hooks";
 import { usePagination } from "@/src/hooks/usePagination";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { DataTable } from "@/src/components/ui/data-table";
+import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { INewsEvent } from "./types";
 import { GetNewsEventsColumns } from "./TableColumns/NewsEventsColumns";
 import CreateUpdateNewsEvents from "./Form/CreateUpdateNewsEvents";
@@ -13,6 +16,7 @@ import CreateUpdateNewsEvents from "./Form/CreateUpdateNewsEvents";
 const NewsEventsManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<INewsEvent | undefined>();
+  const [pendingDelete, setPendingDelete] = useState<INewsEvent | null>(null);
 
   const {
     setCurrentPage,
@@ -84,6 +88,11 @@ const NewsEventsManagement = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch]);
 
+  const { mutate: deleteMutate } = useDelete(() => {
+    toast.success("News item deleted successfully!");
+    setPendingDelete(null);
+  }, [["news-events"]]);
+
   const handleEdit = (item: INewsEvent) => {
     setSelectedItem(item);
     setIsModalOpen(true);
@@ -94,7 +103,7 @@ const NewsEventsManagement = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetNewsEventsColumns(handleEdit);
+  const columns = GetNewsEventsColumns(handleEdit, setPendingDelete);
 
   return (
     <div>
@@ -120,6 +129,22 @@ const NewsEventsManagement = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
+      />
+
+      <DeleteConfirmDialog
+        isOpen={pendingDelete !== null}
+        onClose={() => setPendingDelete(null)}
+        onConfirm={() => {
+          if (pendingDelete) {
+            deleteMutate({ url: `/news-events/${pendingDelete.id}` });
+          }
+        }}
+        title="Delete this news item?"
+        description={
+          pendingDelete
+            ? `"${pendingDelete.titleEn || "This item"}" will be permanently removed from the news & events page.`
+            : undefined
+        }
       />
     </div>
   );

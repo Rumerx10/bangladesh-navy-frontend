@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { Tag } from "lucide-react";
 import { useGet } from "@/src/hooks/useGet";
+import { useDelete } from "@/src/hooks/useDelete";
 import { usePagination } from "@/src/hooks/usePagination";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { DataTable } from "@/src/components/ui/data-table";
 import Paragraph from "@/src/components/shared/Paragraph";
+import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { ISurveyCategory } from "./types";
 import { GetSurveyCategoryColumns } from "./TableColumns/SurveyCategoryColumns";
 import CreateUpdateSurveyCategory from "./Form/CreateUpdateSurveyCategory";
@@ -16,6 +19,9 @@ const SurveyCategoryCard = () => {
   const [selectedItem, setSelectedItem] = useState<
     ISurveyCategory | undefined
   >();
+  const [pendingDelete, setPendingDelete] = useState<ISurveyCategory | null>(
+    null
+  );
 
   const {
     setCurrentPage,
@@ -51,6 +57,12 @@ const SurveyCategoryCard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
+  // Ships carry the category, so the ship list is refetched too.
+  const { mutate: deleteMutate } = useDelete(() => {
+    toast.success("Survey category deleted successfully!");
+    setPendingDelete(null);
+  }, [["survey-category"], ["survey-ships"]]);
+
   const handleEdit = (item: ISurveyCategory) => {
     setSelectedItem(item);
     setIsModalOpen(true);
@@ -61,7 +73,7 @@ const SurveyCategoryCard = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetSurveyCategoryColumns(handleEdit);
+  const columns = GetSurveyCategoryColumns(handleEdit, setPendingDelete);
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -104,6 +116,22 @@ const SurveyCategoryCard = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
+      />
+
+      <DeleteConfirmDialog
+        isOpen={pendingDelete !== null}
+        onClose={() => setPendingDelete(null)}
+        onConfirm={() => {
+          if (pendingDelete) {
+            deleteMutate({ url: `/survey-category/${pendingDelete.id}` });
+          }
+        }}
+        title="Delete this category?"
+        description={
+          pendingDelete
+            ? `"${pendingDelete.nameEn}" will be permanently removed. Ships filed under it will lose their category.`
+            : undefined
+        }
       />
     </div>
   );

@@ -33,12 +33,6 @@ const CreateUpdateCourses = ({
       introduction: initialValues?.introduction || "",
       courseSequence: initialValues?.courseSequence || [],
       sections: initialValues?.sections || [],
-      statisticsTitle: initialValues?.statisticsTitle || "Course Statistics",
-      statistics:
-        initialValues?.statistics?.map((row) => ({
-          ...row,
-          remarks: row.remarks || "",
-        })) || [],
     },
   });
 

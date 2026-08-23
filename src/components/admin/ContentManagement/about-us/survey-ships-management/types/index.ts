@@ -25,6 +25,8 @@ export interface ISurveyShip {
   crew: string;
   surveyEquipment: string[];
   image: string;
+  /** Display order on the public page, ascending. Optional — may be unset. */
+  position?: number | null;
   status: "ACTIVE" | "INACTIVE";
   surveyCategory: ISurveyShipCategory;
   createdAt?: string;

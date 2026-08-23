@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { toast } from "react-toastify";
 import { useGet } from "@/src/hooks/useGet";
+import { useDelete } from "@/src/hooks/useDelete";
 import { usePagination } from "@/src/hooks/usePagination";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { DataTable } from "@/src/components/ui/data-table";
+import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { INewsEventsCategory } from "./types";
 import { GetNewsEventsCategoryColumns } from "./TableColumns/NewsEventsCategoryColumns";
 import CreateUpdateNewsEventsCategory from "./Form/CreateUpdateNewsEventsCategory";
@@ -14,6 +17,8 @@ const NewsEventsCategoryManagement = () => {
   const [selectedItem, setSelectedItem] = useState<
     INewsEventsCategory | undefined
   >();
+  const [pendingDelete, setPendingDelete] =
+    useState<INewsEventsCategory | null>(null);
 
   const {
     setCurrentPage,
@@ -82,6 +87,12 @@ const NewsEventsCategoryManagement = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch]);
 
+  // News items carry the category, so the news list is refetched too.
+  const { mutate: deleteMutate } = useDelete(() => {
+    toast.success("Category deleted successfully!");
+    setPendingDelete(null);
+  }, [["news-events-category"], ["news-events"]]);
+
   const handleEdit = (item: INewsEventsCategory) => {
     setSelectedItem(item);
     setIsModalOpen(true);
@@ -92,7 +103,7 @@ const NewsEventsCategoryManagement = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetNewsEventsCategoryColumns(handleEdit);
+  const columns = GetNewsEventsCategoryColumns(handleEdit, setPendingDelete);
 
   return (
     <div>
@@ -118,6 +129,22 @@ const NewsEventsCategoryManagement = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
+      />
+
+      <DeleteConfirmDialog
+        isOpen={pendingDelete !== null}
+        onClose={() => setPendingDelete(null)}
+        onConfirm={() => {
+          if (pendingDelete) {
+            deleteMutate({ url: `/news-events-category/${pendingDelete.id}` });
+          }
+        }}
+        title="Delete this category?"
+        description={
+          pendingDelete
+            ? `"${pendingDelete.nameEn}" will be permanently removed. News items filed under it will lose their category.`
+            : undefined
+        }
       />
     </div>
   );

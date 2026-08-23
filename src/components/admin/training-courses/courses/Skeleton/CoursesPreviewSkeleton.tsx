@@ -37,13 +37,10 @@ const CoursesPreviewSkeleton = () => {
           ))}
         </div>
 
-        <div className="rounded-xl border border-gray-200 overflow-hidden">
-          <div className="bg-gray-200 h-11 w-full" />
-          <div className="space-y-px">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="bg-gray-100 h-11 w-full" />
-            ))}
-          </div>
+        <div className="rounded-xl border border-gray-200 bg-gray-50 p-5 space-y-2">
+          <div className="bg-gray-200 h-4 w-40 rounded" />
+          <div className="bg-gray-200 h-4 w-full rounded" />
+          <div className="bg-gray-200 h-4 w-48 rounded" />
         </div>
       </div>
     </div>

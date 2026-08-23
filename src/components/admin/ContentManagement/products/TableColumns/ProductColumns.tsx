@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Pencil } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { siteConfig } from "@/src/config/siteConfig";
 import { IProduct, PRODUCT_CATEGORY_LABELS } from "../types";
@@ -9,7 +9,8 @@ import StatusBadge from "@/src/components/shared/Status/Status";
 import { StatusType } from "@/src/components/shared/types/common";
 
 export function GetProductColumns(
-  onEdit: (item: IProduct) => void
+  onEdit: (item: IProduct) => void,
+  onDelete?: (item: IProduct) => void
 ): ColumnDef<IProduct>[] {
   return [
     {
@@ -90,13 +91,24 @@ export function GetProductColumns(
       header: "Action",
       accessorKey: "id",
       cell: (_, row) => (
-        <button
-          onClick={() => onEdit(row)}
-          className="p-2 rounded-md hover:bg-gray-100 text-gray-500 hover:text-pBlue transition-colors cursor-pointer"
-          title="Edit"
-        >
-          <Pencil className="w-4 h-4" />
-        </button>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => onEdit(row)}
+            className="p-2 rounded-md hover:bg-gray-100 text-gray-500 hover:text-pBlue transition-colors cursor-pointer"
+            title="Edit"
+            aria-label={`Edit ${row.nameEn}`}
+          >
+            <Pencil className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => onDelete?.(row)}
+            className="p-2 rounded-md hover:bg-red-50 text-gray-500 hover:text-red-500 transition-colors cursor-pointer"
+            title="Delete"
+            aria-label={`Delete ${row.nameEn}`}
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
+        </div>
       ),
     },
   ];

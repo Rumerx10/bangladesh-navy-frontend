@@ -24,6 +24,8 @@ export interface SurveyShipItem {
   crew: string;
   surveyEquipment: string[];
   image: string;
+  /** Display order, ascending. Optional — may be unset on older records. */
+  position?: number | null;
   status: "ACTIVE" | "INACTIVE";
   surveyCategory: {
     id: string;

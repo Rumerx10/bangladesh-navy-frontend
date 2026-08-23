@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { ChevronRight, Edit } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import Paragraph from "@/src/components/shared/Paragraph";
@@ -11,20 +12,6 @@ interface CoursesPreviewProps {
   isUsingDefaults?: boolean;
   onEdit: () => void;
 }
-
-const STAT_COLUMNS: {
-  key: keyof ICoursesManagement["statistics"][number];
-  label: string;
-}[] = [
-  { key: "course", label: "Course" },
-  { key: "conducted", label: "Conducted" },
-  { key: "duration", label: "Duration" },
-  { key: "bn", label: "BN" },
-  { key: "otherMaritimeOrg", label: "Other Maritime Org" },
-  { key: "overseas", label: "Overseas" },
-  { key: "totalTrainees", label: "Total Trainees" },
-  { key: "remarks", label: "Remarks" },
-];
 
 const CoursesPreview = ({
   data,
@@ -119,52 +106,22 @@ const CoursesPreview = ({
           ))}
         </div>
 
-        {/* Statistics */}
-        <div>
-          <Paragraph className="font-semibold text-pBlue uppercase mb-3">
-            {data.statisticsTitle}
+        {/* Statistics live elsewhere now — say so, so nobody hunts for them. */}
+        <div className="rounded-xl border border-gray-200 bg-gray-50 p-5">
+          <Paragraph className="font-semibold text-pBlue uppercase mb-2">
+            Course Statistics
           </Paragraph>
-          {data.statistics.length > 0 ? (
-            <div className="overflow-x-auto rounded-xl border border-gray-200">
-              <table className="w-full border-collapse text-sm">
-                <thead>
-                  <tr className="bg-liteBlue text-white">
-                    {STAT_COLUMNS.map((column) => (
-                      <th
-                        key={column.key}
-                        className="border border-liteBlue/40 px-3 py-3 text-left font-semibold whitespace-nowrap"
-                      >
-                        {column.label}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="text-gray-700">
-                  {data.statistics.map((row, index) => (
-                    <tr
-                      key={index}
-                      className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
-                    >
-                      {STAT_COLUMNS.map((column) => (
-                        <td
-                          key={column.key}
-                          className="border border-gray-200 px-3 py-3"
-                        >
-                          {row[column.key] || "—"}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 py-8 text-center">
-              <Paragraph className="text-sm! text-gray-500">
-                No statistics rows yet.
-              </Paragraph>
-            </div>
-          )}
+          <Paragraph className="text-sm! text-gray-600">
+            The statistics table below this copy on the public page is built
+            from the course records, not from this content.
+          </Paragraph>
+          <Link
+            href="/admin/training-courses/alumni"
+            className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+          >
+            Edit courses &amp; statistics
+            <ChevronRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     </div>

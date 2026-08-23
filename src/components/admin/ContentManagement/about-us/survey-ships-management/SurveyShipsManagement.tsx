@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { toast } from "react-toastify";
 import { Ship, Tag } from "lucide-react";
 import { useGet } from "@/src/hooks/useGet";
+import { useDelete } from "@/src/hooks/useDelete";
 import { useAppSelector } from "@/src/lib/redux/hooks";
 import { usePagination } from "@/src/hooks/usePagination";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { DataTable } from "@/src/components/ui/data-table";
+import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { ISurveyShip } from "./types";
 import { GetSurveyShipColumns } from "./TableColumns/SurveyShipColumns";
 import CreateUpdateSurveyShip from "./Form/CreateUpdateSurveyShip";
@@ -23,6 +26,7 @@ const SurveyShipsManagement = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>("ships");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<ISurveyShip | undefined>();
+  const [pendingDelete, setPendingDelete] = useState<ISurveyShip | null>(null);
 
   const {
     setCurrentPage,
@@ -94,6 +98,11 @@ const SurveyShipsManagement = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch]);
 
+  const { mutate: deleteMutate } = useDelete(() => {
+    toast.success("Survey ship deleted successfully!");
+    setPendingDelete(null);
+  }, [["survey-ships"]]);
+
   const handleEdit = (item: ISurveyShip) => {
     setSelectedItem(item);
     setIsModalOpen(true);
@@ -104,7 +113,7 @@ const SurveyShipsManagement = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetSurveyShipColumns(handleEdit);
+  const columns = GetSurveyShipColumns(handleEdit, setPendingDelete);
 
   return (
     <div className="space-y-6">
@@ -155,6 +164,22 @@ const SurveyShipsManagement = () => {
             isOpen={isModalOpen}
             onClose={handleModalClose}
             initialValues={selectedItem}
+          />
+
+          <DeleteConfirmDialog
+            isOpen={pendingDelete !== null}
+            onClose={() => setPendingDelete(null)}
+            onConfirm={() => {
+              if (pendingDelete) {
+                deleteMutate({ url: `/survey-ships/${pendingDelete.id}` });
+              }
+            }}
+            title="Delete this survey ship?"
+            description={
+              pendingDelete
+                ? `"${pendingDelete.nameEn}" will be permanently removed from the survey ships page.`
+                : undefined
+            }
           />
         </>
       )}

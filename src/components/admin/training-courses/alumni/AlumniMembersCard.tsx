@@ -2,13 +2,13 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
-import { ClipboardPaste } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import { useGet } from "@/src/hooks/useGet";
 import { useDelete } from "@/src/hooks/useDelete";
 import { usePagination } from "@/src/hooks/usePagination";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { DataTable } from "@/src/components/ui/data-table";
-import { Button } from "@/src/components/ui/button";
+import Paragraph from "@/src/components/shared/Paragraph";
 import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { useCourseNameMap } from "@/src/components/courses/useCourses";
 import { IAlumniMember } from "@/src/components/alumni/types";
@@ -17,13 +17,11 @@ import {
   ALUMNI_MEMBERS_QUERY_KEY,
   ALUMNI_MEMBERS_TREE_QUERY_KEY,
 } from "@/src/components/alumni/useAlumni";
-import BulkAddMembers from "./Form/BulkAddMembers";
 import CreateUpdateAlumniMember from "./Form/CreateUpdateAlumniMember";
 import { GetAlumniMemberColumns } from "./TableColumns/AlumniMemberColumns";
 
 const AlumniMembersCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isBulkOpen, setIsBulkOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<IAlumniMember | undefined>();
   const [pendingDelete, setPendingDelete] = useState<IAlumniMember | null>(
     null
@@ -41,7 +39,7 @@ const AlumniMembersCard = () => {
   const { search, handleSearchChange, debouncedSearch } =
     useSearchDebounce(300);
 
-  const { data, isLoading } = useGet<IAlumniMember[]>(
+  const { data, isLoading, isError, error } = useGet<IAlumniMember[]>(
     ALUMNI_MEMBERS_ENDPOINT,
     [
       ...ALUMNI_MEMBERS_QUERY_KEY,
@@ -94,6 +92,21 @@ const AlumniMembersCard = () => {
 
   return (
     <>
+      {/* Without this an auth or validation failure reads as "no members yet". */}
+      {isError && (
+        <div className="mb-4 flex items-start gap-3 rounded-lg border border-rose-200 bg-rose-50 px-4 py-3">
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-rose-500" />
+          <div>
+            <Paragraph className="text-sm! font-medium text-rose-800">
+              Alumni members could not be loaded
+            </Paragraph>
+            <Paragraph className="text-xs! text-rose-700">
+              {error?.message || "The request to /alumni-members failed."}
+            </Paragraph>
+          </div>
+        </div>
+      )}
+
       <DataTable
         columns={columns}
         data={members}
@@ -111,27 +124,12 @@ const AlumniMembersCard = () => {
         IsCreate
         setIsModalOpen={setIsModalOpen}
         createTitle="Add Member"
-        rightComponents={
-          <Button
-            type="button"
-            onClick={() => setIsBulkOpen(true)}
-            className="h-11 cursor-pointer gap-2 border border-primary/30 bg-primary/5 px-5 text-primary shadow-none hover:bg-primary/10"
-          >
-            <ClipboardPaste className="h-4 w-4" />
-            Paste Roster
-          </Button>
-        }
       />
 
       <CreateUpdateAlumniMember
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
-      />
-
-      <BulkAddMembers
-        isOpen={isBulkOpen}
-        onClose={() => setIsBulkOpen(false)}
       />
 
       <DeleteConfirmDialog

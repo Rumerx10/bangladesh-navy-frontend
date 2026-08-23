@@ -3,18 +3,12 @@ export interface ICourseSection {
   description: string;
 }
 
-/** One row of the "Course Statistics" table on the public courses page. */
-export interface ICourseStatistic {
-  course: string;
-  conducted: string;
-  duration: string;
-  bn: string;
-  otherMaritimeOrg: string;
-  overseas: string;
-  totalTrainees: string;
-  remarks?: string;
-}
-
+/**
+ * Narrative copy for the public courses page. The "Course Statistics" table
+ * below it is not part of this record — those rows are courses in their own
+ * right (`/courses`, see src/components/courses/types.ts), edited on
+ * Training & Courses → Alumni → Courses.
+ */
 export interface ICoursesManagement {
   id?: string;
   title: string;
@@ -23,6 +17,4 @@ export interface ICoursesManagement {
   courseSequence: string[];
   /** Long-form description blocks, one per course category. */
   sections: ICourseSection[];
-  statisticsTitle: string;
-  statistics: ICourseStatistic[];
 }

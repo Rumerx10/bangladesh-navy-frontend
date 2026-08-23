@@ -11,7 +11,6 @@ import SubmitButton from "@/src/components/shared/SubmitButton";
 import { ErrorType } from "@/src/components/shared/types/common";
 import FormSectionHeader from "../../FormSectionHeader";
 import CourseSectionField from "./CourseSectionField";
-import CourseStatisticsField from "./CourseStatisticsField";
 import { CoursesSchemaForm } from "../Schema/coursesSchema";
 
 interface CoursesFormProps {
@@ -83,27 +82,6 @@ const CoursesForm = ({
         />
         <div className="mt-6">
           <CourseSectionField />
-        </div>
-      </div>
-
-      {/* Statistics */}
-      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-white">
-        <FormSectionHeader
-          label="Course Statistics"
-          description="Rows of the statistics table"
-        />
-        <div className="flex flex-col gap-y-6 mt-6">
-          <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Table Title
-            </Paragraph>
-            <ControlledInputField
-              name="statisticsTitle"
-              placeholder="Course Statistics"
-              className="bg-light shadow-none"
-            />
-          </div>
-          <CourseStatisticsField />
         </div>
       </div>
 

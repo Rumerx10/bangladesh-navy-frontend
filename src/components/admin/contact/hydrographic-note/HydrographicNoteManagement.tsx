@@ -1,10 +1,13 @@
 "use client";
 
+import { toast } from "react-toastify";
 import { useGet } from "@/src/hooks/useGet";
+import { useDelete } from "@/src/hooks/useDelete";
 import { useEffect, useState } from "react";
 import { IHydrographicNote } from "./types";
 import { usePagination } from "@/src/hooks/usePagination";
 import { DataTable } from "@/src/components/ui/data-table";
+import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import GetHydrographicNoteColumns from "./TableColumns/HydrographicNoteColumns";
 import HydrographicNoteDetailModal from "./Form/HydrographicNoteDetailModal";
@@ -14,6 +17,9 @@ const HydrographicNoteManagement = () => {
   const [selectedItem, setSelectedItem] = useState<
     IHydrographicNote | undefined
   >();
+  const [pendingDelete, setPendingDelete] = useState<IHydrographicNote | null>(
+    null
+  );
   const {
     setCurrentPage,
     itemsPerPage,
@@ -49,6 +55,11 @@ const HydrographicNoteManagement = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
+  const { mutate: deleteMutate } = useDelete(() => {
+    toast.success("Hydrographic note deleted successfully!");
+    setPendingDelete(null);
+  }, [["hydrographic-note-management"]]);
+
   const handleView = (item: IHydrographicNote) => {
     setSelectedItem(item);
     setIsModalOpen(true);
@@ -59,7 +70,7 @@ const HydrographicNoteManagement = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetHydrographicNoteColumns(handleView);
+  const columns = GetHydrographicNoteColumns(handleView, setPendingDelete);
 
   return (
     <div>
@@ -82,6 +93,22 @@ const HydrographicNoteManagement = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         data={selectedItem}
+      />
+
+      <DeleteConfirmDialog
+        isOpen={pendingDelete !== null}
+        onClose={() => setPendingDelete(null)}
+        onConfirm={() => {
+          if (pendingDelete) {
+            deleteMutate({ url: `/hydrographic-note/${pendingDelete.id}` });
+          }
+        }}
+        title="Delete this hydrographic note?"
+        description={
+          pendingDelete
+            ? `The note "${pendingDelete.refNumber || pendingDelete.subject}" from ${pendingDelete.nameOfShip || "this sender"} will be permanently removed.`
+            : undefined
+        }
       />
     </div>
   );

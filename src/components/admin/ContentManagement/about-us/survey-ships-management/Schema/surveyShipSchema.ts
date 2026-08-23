@@ -24,6 +24,16 @@ export const surveyShipSchema = Yup.object({
     .of(Yup.string().required())
     .min(1, "At least one survey equipment item is required")
     .required("Survey equipment is required"),
+  // Optional: `<input type="number">` returns "" when cleared, which Yup would
+  // otherwise cast to NaN — treat it as "no position set" instead.
+  position: Yup.number()
+    .transform((value, original) =>
+      original === "" || original === null ? undefined : value
+    )
+    .typeError("Position must be a number")
+    .integer("Position must be a whole number")
+    .min(1, "Position must be at least 1")
+    .optional(),
   status: Yup.string()
     .oneOf(["ACTIVE", "INACTIVE"] as const)
     .required("Status is required"),
