@@ -1,9 +1,12 @@
 "use client";
 import { IGalleryCategory } from "./types";
+import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useGet } from "@/src/hooks/useGet";
+import { useDelete } from "@/src/hooks/useDelete";
 import { usePagination } from "@/src/hooks/usePagination";
 import { DataTable } from "@/src/components/ui/data-table";
+import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import CreateUpdateGalleryCategory from "./Form/CreateUpdateGalleryCategory";
 import { GetGalleryCategoryColumns } from "./TableColumns/GalleryCategoryColumns";
@@ -13,6 +16,9 @@ const GalleryCategoryCard = () => {
   const [selectedItem, setSelectedItem] = useState<
     IGalleryCategory | undefined
   >();
+  const [pendingDelete, setPendingDelete] = useState<IGalleryCategory | null>(
+    null
+  );
 
   const {
     setCurrentPage,
@@ -48,6 +54,12 @@ const GalleryCategoryCard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
+  // Gallery items carry the category, so the item list is refetched too.
+  const { mutate: deleteMutate } = useDelete(() => {
+    toast.success("Gallery category deleted successfully!");
+    setPendingDelete(null);
+  }, [["gallery-category"], ["gallery"]]);
+
   const handleEdit = (item: IGalleryCategory) => {
     setSelectedItem(item);
     setIsModalOpen(true);
@@ -58,7 +70,7 @@ const GalleryCategoryCard = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetGalleryCategoryColumns(handleEdit);
+  const columns = GetGalleryCategoryColumns(handleEdit, setPendingDelete);
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -87,6 +99,22 @@ const GalleryCategoryCard = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
+      />
+
+      <DeleteConfirmDialog
+        isOpen={pendingDelete !== null}
+        onClose={() => setPendingDelete(null)}
+        onConfirm={() => {
+          if (pendingDelete) {
+            deleteMutate({ url: `/gallery-category/${pendingDelete.id}` });
+          }
+        }}
+        title="Delete this category?"
+        description={
+          pendingDelete
+            ? `"${pendingDelete.nameEn}" will be permanently removed. Gallery items filed under it will lose their category.`
+            : undefined
+        }
       />
     </div>
   );

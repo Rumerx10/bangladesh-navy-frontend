@@ -73,11 +73,11 @@ const getMenuItems = (): MenuItem[] => {
       icon: GraduationCap,
       href: "/admin/training-courses",
       children: [
-        {
-          label: "BN Hydrographic Institute",
-          href: "/admin/training-courses/institute",
-        },
-        { label: "Courses", href: "/admin/training-courses/courses" },
+        // {
+        //   label: "BN Hydrographic Institute",
+        //   href: "/admin/training-courses",
+        // },
+        // { label: "Courses", href: "/admin/training-courses/courses" },
         { label: "Alumni", href: "/admin/training-courses/alumni" },
       ],
     },

@@ -2,57 +2,50 @@
  * BN Hydrographic Institute alumni — shared between the public listing
  * (src/components/alumni) and the admin panel
  * (src/components/admin/training-courses/alumni).
+ *
+ * A member belongs to exactly one course (src/components/courses/types.ts);
+ * the public page renders one collapsible card per course.
  */
+
+import { ICourse } from "@/src/components/courses/types";
 
 export type AlumniStatus = "ACTIVE" | "INACTIVE";
 
-/**
- * A course type — "Basic Hydro", "Advanced Hydro", … Every batch belongs to
- * exactly one course, which is what the public page filters by.
- */
-export interface IAlumniCourse {
-  id: string;
-  nameEn: string;
-  nameBn?: string;
-  status: AlumniStatus;
-  createdAt?: string;
-  updatedAt?: string;
-}
-
 /** One roster row — mirrors the Ser / P.No / Rank & Name / Org / Remarks table. */
 export interface IAlumniMember {
-  id?: string;
-  /** "Ser" in the source document. 1-based, unique within a batch. */
+  id: string;
+  courseId: string;
+  /** "Ser" in the source document. 1-based, unique within a course. */
   serial: number;
   /** "P. No" — the officer's personal number. */
-  pNo?: string;
-  /** Full "Rank & Name" line, e.g. "Cdre A K M Mostak Sherafullah, (H1), psc, BN". */
-  rankName: string;
+  pNo?: string | null;
+  /** Full "Rank & Name" line, e.g. "Instr Cdre M Jashim Uddin, (H1) (Rtd)". */
+  rankAndName: string;
   /** "BN", "BIWTA", "Coast Guard", … */
-  organization?: string;
+  organization?: string | null;
   /** "Present Rank", "Rtd", "Change Branch", … */
-  remarks?: string;
-}
-
-/** A single run of a course — "1st Basic Hydro", 08 Mar 1997 → 07 Aug 1997. */
-export interface IAlumniBatch {
-  id: string;
-  /** 1, 2, 3 … rendered as "1st", "2nd", "3rd" and used for ordering. */
-  batchNo: number;
-  titleEn: string;
-  titleBn?: string;
-  /** ISO 8601. */
-  startDate: string;
-  /** ISO 8601. */
-  endDate: string;
-  descriptionEn?: string;
+  remarks?: string | null;
   status: AlumniStatus;
-  alumniCourseId?: string;
-  /** Populated by the API on read; absent on write payloads. */
-  alumniCourse?: IAlumniCourse;
-  members: IAlumniMember[];
+  /** Populated on reads that join the course; absent on write payloads. */
+  course?: Pick<ICourse, "id" | "name"> | null;
   createdAt?: string;
   updatedAt?: string;
+}
+
+/**
+ * One node of `GET /alumni-members/tree` — a course with its roster attached.
+ * This is the public listing's unit of display.
+ */
+export interface IAlumniCourseGroup {
+  id: string;
+  name: string;
+  duration?: string | null;
+  /** ISO 8601, nullable — older courses have no recorded dates. */
+  startDate?: string | null;
+  endDate?: string | null;
+  serial: number;
+  totalMembers: number;
+  members: IAlumniMember[];
 }
 
 /** `ALL` is a filter-only value — never stored or sent. */

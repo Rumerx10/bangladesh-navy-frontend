@@ -45,6 +45,7 @@ const CreateUpdateSurveyShip = ({
       draft: "",
       crew: "",
       surveyEquipment: [],
+      position: undefined,
       status: "ACTIVE",
       image: undefined,
     },
@@ -63,6 +64,7 @@ const CreateUpdateSurveyShip = ({
         draft: initialValues?.draft || "",
         crew: initialValues?.crew || "",
         surveyEquipment: initialValues?.surveyEquipment || [],
+        position: initialValues?.position ?? undefined,
         status: initialValues?.status || "ACTIVE",
         image: initialValues?.image || undefined,
       });
@@ -78,6 +80,7 @@ const CreateUpdateSurveyShip = ({
         draft: "",
         crew: "",
         surveyEquipment: [],
+        position: undefined,
         status: "ACTIVE",
         image: undefined,
       });
@@ -143,6 +146,13 @@ const CreateUpdateSurveyShip = ({
     values.surveyEquipment.forEach((item) => {
       formData.append("surveyEquipment", item);
     });
+
+    // Optional — omitted entirely when left blank, so the API keeps its own
+    // ordering rather than receiving an empty value it would reject.
+    if (values.position !== undefined && !Number.isNaN(values.position)) {
+      formData.append("position", String(values.position));
+    }
+
     formData.append("status", values.status);
 
     if (values.image instanceof File) {

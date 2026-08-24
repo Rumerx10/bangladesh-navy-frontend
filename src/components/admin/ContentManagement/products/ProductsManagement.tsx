@@ -1,16 +1,20 @@
 "use client";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { toast } from "react-toastify";
 import { IProduct } from "./types";
 import { useRouter } from "next/navigation";
 import { useGet } from "@/src/hooks/useGet";
+import { useDelete } from "@/src/hooks/useDelete";
 import { useAppSelector } from "@/src/lib/redux/hooks";
 import { usePagination } from "@/src/hooks/usePagination";
 import { DataTable } from "@/src/components/ui/data-table";
+import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { GetProductColumns } from "./TableColumns/ProductColumns";
 
 const ProductsManagement = () => {
   const router = useRouter();
+  const [pendingDelete, setPendingDelete] = useState<IProduct | null>(null);
 
   const {
     setCurrentPage,
@@ -83,11 +87,18 @@ const ProductsManagement = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch]);
 
+  // `product-public` is the key the public listing page uses, so a deleted
+  // product disappears from the storefront without a hard refresh.
+  const { mutate: deleteMutate } = useDelete(() => {
+    toast.success("Product deleted successfully!");
+    setPendingDelete(null);
+  }, [["product"], ["product-public"]]);
+
   const handleEdit = (item: IProduct) => {
     router.push(`/admin/products/${item.id}/edit`);
   };
 
-  const columns = GetProductColumns(handleEdit);
+  const columns = GetProductColumns(handleEdit, setPendingDelete);
 
   return (
     <div className="space-y-6">
@@ -108,6 +119,22 @@ const ProductsManagement = () => {
         IsCreate
         routeURL="/admin/products/create"
         createTitle="Add Product"
+      />
+
+      <DeleteConfirmDialog
+        isOpen={pendingDelete !== null}
+        onClose={() => setPendingDelete(null)}
+        onConfirm={() => {
+          if (pendingDelete) {
+            deleteMutate({ url: `/product/${pendingDelete.id}` });
+          }
+        }}
+        title="Delete this product?"
+        description={
+          pendingDelete
+            ? `"${pendingDelete.nameEn}" will be permanently removed from the catalogue and the public products page.`
+            : undefined
+        }
       />
     </div>
   );

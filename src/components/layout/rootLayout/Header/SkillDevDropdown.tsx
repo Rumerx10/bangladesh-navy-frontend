@@ -9,7 +9,7 @@ const links = [
   { label: "Courses", href: "/training-courses/courses" },
 ];
 
-const SkillDevDropdown=()=> {
+const SkillDevDropdown = () => {
   const pathname = usePathname();
   const isActive = pathname?.startsWith("/training-courses");
 
@@ -49,6 +49,6 @@ const SkillDevDropdown=()=> {
       </div>
     </li>
   );
-}
+};
 
 export default SkillDevDropdown;

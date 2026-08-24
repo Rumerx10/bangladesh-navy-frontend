@@ -1,12 +1,15 @@
 "use client";
 import { IGalleryItem } from "./types";
+import { toast } from "react-toastify";
 import { Images, Tag } from "lucide-react";
 import { useGet } from "@/src/hooks/useGet";
+import { useDelete } from "@/src/hooks/useDelete";
 import { useEffect, useMemo, useState } from "react";
 import { useAppSelector } from "@/src/lib/redux/hooks";
 import GalleryCategoryCard from "./GalleryCategoryCard";
 import { usePagination } from "@/src/hooks/usePagination";
 import { DataTable } from "@/src/components/ui/data-table";
+import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { GetGalleryColumns } from "./TableColumns/GalleryColumns";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import CreateUpdateGalleryItem from "./Form/CreateUpdateGalleryItem";
@@ -22,6 +25,7 @@ const GalleryManagement = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>("gallery");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<IGalleryItem | undefined>();
+  const [pendingDelete, setPendingDelete] = useState<IGalleryItem | null>(null);
 
   const {
     setCurrentPage,
@@ -93,6 +97,11 @@ const GalleryManagement = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch]);
 
+  const { mutate: deleteMutate } = useDelete(() => {
+    toast.success("Gallery item deleted successfully!");
+    setPendingDelete(null);
+  }, [["gallery"]]);
+
   const handleEdit = (item: IGalleryItem) => {
     setSelectedItem(item);
     setIsModalOpen(true);
@@ -103,7 +112,7 @@ const GalleryManagement = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetGalleryColumns(handleEdit);
+  const columns = GetGalleryColumns(handleEdit, setPendingDelete);
 
   return (
     <div className="space-y-6">
@@ -154,6 +163,22 @@ const GalleryManagement = () => {
             isOpen={isModalOpen}
             onClose={handleModalClose}
             initialValues={selectedItem}
+          />
+
+          <DeleteConfirmDialog
+            isOpen={pendingDelete !== null}
+            onClose={() => setPendingDelete(null)}
+            onConfirm={() => {
+              if (pendingDelete) {
+                deleteMutate({ url: `/gallery/${pendingDelete.id}` });
+              }
+            }}
+            title="Delete this gallery item?"
+            description={
+              pendingDelete
+                ? `"${pendingDelete.titleEn || "This item"}" will be permanently removed from the gallery.`
+                : undefined
+            }
           />
         </>
       )}

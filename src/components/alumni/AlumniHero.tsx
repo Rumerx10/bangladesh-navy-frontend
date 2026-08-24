@@ -4,26 +4,26 @@ import { motion } from "framer-motion";
 import { Anchor, CalendarRange, GraduationCap, Users } from "lucide-react";
 
 interface AlumniHeroProps {
-  totalBatches: number;
+  totalCourses: number;
   totalAlumni: number;
   /** "1997 – 2026", or null while the list is still loading. */
   yearsSpan: string | null;
 }
 
 const STATS = [
-  { key: "batches", label: "Courses Conducted", icon: GraduationCap },
+  { key: "courses", label: "Courses Conducted", icon: GraduationCap },
   { key: "alumni", label: "Alumni Trained", icon: Users },
   { key: "years", label: "Years of Training", icon: CalendarRange },
 ] as const;
 
 /** Mirrors the notices hero (src/components/notices/NoticesHero.tsx). */
 const AlumniHero = ({
-  totalBatches,
+  totalCourses,
   totalAlumni,
   yearsSpan,
 }: AlumniHeroProps) => {
   const values: Record<(typeof STATS)[number]["key"], string> = {
-    batches: totalBatches ? String(totalBatches) : "—",
+    courses: totalCourses ? String(totalCourses) : "—",
     alumni: totalAlumni ? String(totalAlumni) : "—",
     years: yearsSpan ?? "—",
   };
@@ -54,8 +54,8 @@ const AlumniHero = ({
           </h1>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
             Every officer trained at the Bangladesh Navy Hydrographic &amp;
-            Oceanographic Centre since 1997 — listed batch by batch, with rank,
-            personal number and parent organization.
+            Oceanographic Centre since 1997 — listed course by course, with
+            rank, personal number and parent organization.
           </p>
 
           {/* Stat tiles */}

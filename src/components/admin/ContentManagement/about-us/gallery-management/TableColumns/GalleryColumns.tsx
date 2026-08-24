@@ -1,11 +1,12 @@
 import Image from "next/image";
-import { Pencil, ImageOff } from "lucide-react";
+import { Pencil, ImageOff, Trash2 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { IGalleryItem } from "../types";
 
 export const GetGalleryColumns = (
-  onEdit?: (item: IGalleryItem) => void
+  onEdit?: (item: IGalleryItem) => void,
+  onDelete?: (item: IGalleryItem) => void
 ): ColumnDef<IGalleryItem>[] => [
   {
     header: "Image",
@@ -71,8 +72,17 @@ export const GetGalleryColumns = (
           className="w-9! min-h-9 border border-[#E6E6E6] flex items-center justify-center rounded-lg bg-light hover:bg-light"
           size="sm"
           onClick={() => onEdit?.(row)}
+          aria-label={`Edit ${row.titleEn}`}
         >
           <Pencil className="h-4 w-4 text-secondary-foreground" />
+        </Button>
+        <Button
+          className="w-9! min-h-9 border border-red-100 flex items-center justify-center rounded-lg bg-red-50 hover:bg-red-100"
+          size="sm"
+          onClick={() => onDelete?.(row)}
+          aria-label={`Delete ${row.titleEn}`}
+        >
+          <Trash2 className="h-4 w-4 text-red-500" />
         </Button>
       </div>
     ),

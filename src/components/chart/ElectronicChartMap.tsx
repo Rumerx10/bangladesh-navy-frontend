@@ -11,7 +11,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/src/components/ui/dialog";
-import { ENC_VIEWBOX, encIndexAreas, IEncCell } from "@/src/data/encIndexAreas";
+import {
+  ENC_VIEWBOX,
+  encHotspotAreas,
+  IEncCell,
+} from "@/src/data/encIndexAreas";
 
 import { IProduct } from "@/src/components/admin/ContentManagement/products/types";
 
@@ -47,14 +51,14 @@ export default function ElectronicChartMap() {
   // Largest rectangles first so the smallest (most specific) cell renders on
   // top and wins hover/click where coverage areas overlap.
   const areas = useMemo(
-    () => [...encIndexAreas].sort((a, b) => b.w * b.h - a.w * a.h),
+    () => [...encHotspotAreas].sort((a, b) => b.w * b.h - a.w * a.h),
     []
   );
 
   // Cells sorted by national number for the search dropdown.
   const allCells = useMemo(
     () =>
-      [...encIndexAreas].sort(
+      [...encHotspotAreas].sort(
         (a, b) => Number(a.nationalNo) - Number(b.nationalNo)
       ),
     []
@@ -353,10 +357,7 @@ function EncInfoDialog({
             {/* Specifications */}
             <div className="grid grid-cols-2 gap-2">
               <SpecTile label="Scale" value={product.scale ?? undefined} />
-              <SpecTile
-                label="Edition"
-                value={product.edition ?? undefined}
-              />
+              <SpecTile label="Edition" value={product.edition ?? undefined} />
               <SpecTile label="National No." value={selected.nationalNo} />
             </div>
 

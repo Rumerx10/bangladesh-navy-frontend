@@ -141,6 +141,20 @@ const SurveyShipForm = ({
               placeholder="Select status"
             />
           </div>
+
+          <div>
+            <InputLabel label="Position" />
+            <ControlledInputField
+              name="position"
+              type="number"
+              placeholder="e.g. 1"
+              className="bg-light shadow-none"
+            />
+            <Paragraph className="mt-1 text-xs! text-gray-500">
+              Optional — orders the ship on the public page, lowest first. Leave
+              empty to let the API decide.
+            </Paragraph>
+          </div>
         </div>
       </div>
 

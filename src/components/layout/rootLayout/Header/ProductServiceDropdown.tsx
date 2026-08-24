@@ -11,7 +11,7 @@ const noticesLinks = [
   { label: "Hydrographic Note", href: "/contact-us/hydrographic-note" },
 ];
 
-const ProductServiceDropdown=()=> {
+const ProductServiceDropdown = () => {
   const pathname = usePathname();
   const isActive =
     pathname?.startsWith("/product-service") ||
@@ -87,7 +87,6 @@ const ProductServiceDropdown=()=> {
       </div>
     </li>
   );
-}
-
+};
 
 export default ProductServiceDropdown;

@@ -1,11 +1,12 @@
 import Image from "next/image";
-import { Pencil, ImageOff } from "lucide-react";
+import { Pencil, ImageOff, Trash2 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { ISurveyShip } from "../types";
 
 export const GetSurveyShipColumns = (
-  onEdit?: (item: ISurveyShip) => void
+  onEdit?: (item: ISurveyShip) => void,
+  onDelete?: (item: ISurveyShip) => void
 ): ColumnDef<ISurveyShip>[] => [
   {
     header: "Image",
@@ -54,6 +55,15 @@ export const GetSurveyShipColumns = (
     },
   },
   {
+    header: "Position",
+    accessorKey: "position",
+    cell: (value) => (
+      <span className="text-sm text-secondary-gary tabular-nums">
+        {(value as number | null) ?? "—"}
+      </span>
+    ),
+  },
+  {
     header: "Status",
     accessorKey: "status",
     cell: (value) => {
@@ -80,8 +90,17 @@ export const GetSurveyShipColumns = (
           className="w-9! min-h-9 border border-[#E6E6E6] flex items-center justify-center rounded-lg bg-light hover:bg-light"
           size="sm"
           onClick={() => onEdit?.(row)}
+          aria-label={`Edit ${row.nameEn}`}
         >
           <Pencil className="h-4 w-4 text-secondary-foreground" />
+        </Button>
+        <Button
+          className="w-9! min-h-9 border border-red-100 flex items-center justify-center rounded-lg bg-red-50 hover:bg-red-100"
+          size="sm"
+          onClick={() => onDelete?.(row)}
+          aria-label={`Delete ${row.nameEn}`}
+        >
+          <Trash2 className="h-4 w-4 text-red-500" />
         </Button>
       </div>
     ),

@@ -1,44 +1,129 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { LayoutGrid, Package } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGet } from "@/src/hooks/useGet";
-import { usePagination } from "@/src/hooks/usePagination";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
+import Pagination from "@/src/components/shared/Pagination";
 import {
   IProduct,
   PRODUCT_CATEGORY_LABELS,
   PRODUCT_CATEGORY_OPTIONS,
 } from "@/src/components/admin/ContentManagement/products/types";
 
-export default function ProductListingPage() {
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+/** Three-column grid, so a full page is a clean four rows. */
+const PAGE_SIZE = 12;
 
-  const { currentPage, itemsPerPage, setCurrentPage } = usePagination();
+/**
+ * The catalogue is small (tens of charts), so the whole set is fetched once and
+ * paged in the browser. That is what lets "All" mix the categories below — the
+ * API returns them grouped, and it exposes no sort parameter to change that.
+ */
+const FETCH_LIMIT = 500;
+
+/**
+ * Products arrive grouped by category (every ENC, then every paper chart, then
+ * the tide tables), so an unfiltered first page would show one category only.
+ * Dealing one product from each category in turn makes "All" look like all.
+ */
+const interleaveByCategory = (products: IProduct[]) => {
+  const buckets = new Map<string, IProduct[]>();
+
+  for (const product of products) {
+    const key = product.category ?? "UNCATEGORISED";
+    const bucket = buckets.get(key);
+    if (bucket) bucket.push(product);
+    else buckets.set(key, [product]);
+  }
+
+  const queues = [...buckets.values()];
+  const longest = queues.reduce((max, queue) => Math.max(max, queue.length), 0);
+  const ordered: IProduct[] = [];
+
+  for (let index = 0; index < longest; index++) {
+    for (const queue of queues) {
+      if (index < queue.length) ordered.push(queue[index]);
+    }
+  }
+
+  return ordered;
+};
+
+/**
+ * The header dropdown links to `/product-service?category=<slug>`, so the slugs
+ * used there map onto the API's category enum. Anything unrecognised (or a
+ * category with no products behind it, like `publications`) falls back to
+ * showing everything.
+ */
+const CATEGORY_BY_SLUG: Record<string, string> = {
+  "paper-charts": "PAPPER_CHART",
+  "electronic-navigational-charts": "ELECTRONIC_NAVIGATIONAL_CHART",
+  "tide-tables": "TIDAL",
+};
+
+const toCategory = (value: string | null) => {
+  if (!value) return "all";
+  if (PRODUCT_CATEGORY_OPTIONS.some((option) => option.value === value))
+    return value;
+  return CATEGORY_BY_SLUG[value] ?? "all";
+};
+
+const ProductListingPage = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const [currentPage, setCurrentPage] = useState(1);
   const { search, handleSearchChange, debouncedSearch } =
     useSearchDebounce(300);
 
+  // The URL is the single source of truth for the filter, so a dropdown link
+  // followed while this page is already open selects the right pill.
+  const selectedCategory = toCategory(searchParams.get("category"));
+
+  const handleCategoryChange = (category: string) => {
+    setCurrentPage(1);
+
+    const params = new URLSearchParams(searchParams.toString());
+    if (category === "all") params.delete("category");
+    else params.set("category", category);
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, {
+      scroll: false,
+    });
+  };
+
+  // A narrower result set can have fewer pages than the one currently shown.
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentPage(1);
+    handleSearchChange(event);
+  };
+
   const { data, isLoading } = useGet<IProduct[]>(
     "/product",
-    [
-      "product-public",
-      currentPage.toString(),
-      itemsPerPage.toString(),
-      debouncedSearch,
-      selectedCategory,
-    ],
+    ["product-public", debouncedSearch, selectedCategory],
     {
-      page: currentPage.toString(),
-      limit: itemsPerPage.toString(),
+      page: "1",
+      limit: FETCH_LIMIT.toString(),
       search: debouncedSearch,
       ...(selectedCategory !== "all" && { category: selectedCategory }),
     }
   );
 
-  const products: IProduct[] = Array.isArray(data?.data) ? data.data : [];
+  // A single category is already homogeneous, so only "All" needs interleaving.
+  const ordered = useMemo(() => {
+    const fetched = Array.isArray(data?.data) ? data.data : [];
+    return selectedCategory === "all" ? interleaveByCategory(fetched) : fetched;
+  }, [data, selectedCategory]);
+
+  const totalItems = ordered.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / PAGE_SIZE));
+  const page = Math.min(currentPage, totalPages);
+  const products = ordered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
     <section className="container px-4 sm:px-6 lg:px-8 py-8 lg:py-16 mt-24 lg:mt-28">
@@ -58,16 +143,13 @@ export default function ProductListingPage() {
         <input
           type="search"
           value={search}
-          onChange={handleSearchChange}
+          onChange={handleSearch}
           placeholder="Search products..."
           className="flex-1 h-10 px-4 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
         />
         <div className="flex flex-wrap gap-2">
           <button
-            onClick={() => {
-              setSelectedCategory("all");
-              setCurrentPage(1);
-            }}
+            onClick={() => handleCategoryChange("all")}
             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors cursor-pointer ${
               selectedCategory === "all"
                 ? "bg-pBlue text-white"
@@ -79,10 +161,7 @@ export default function ProductListingPage() {
           {PRODUCT_CATEGORY_OPTIONS.map((cat) => (
             <button
               key={cat.value}
-              onClick={() => {
-                setSelectedCategory(cat.value);
-                setCurrentPage(1);
-              }}
+              onClick={() => handleCategoryChange(cat.value)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors cursor-pointer ${
                 selectedCategory === cat.value
                   ? "bg-pBlue text-white"
@@ -94,6 +173,16 @@ export default function ProductListingPage() {
           ))}
         </div>
       </div>
+
+      {/* Result count */}
+      {!isLoading && products.length > 0 && (
+        <p className="mb-4 text-sm text-gray-500">
+          Showing{" "}
+          <span className="font-semibold text-gray-700">{products.length}</span>{" "}
+          of <span className="font-semibold text-gray-700">{totalItems}</span>{" "}
+          {totalItems === 1 ? "product" : "products"}
+        </p>
+      )}
 
       {/* Grid */}
       {isLoading ? (
@@ -181,6 +270,25 @@ export default function ProductListingPage() {
           </motion.div>
         </AnimatePresence>
       )}
+
+      {/* The API groups products by category, so without these controls the
+          first page reads as if only one category exists. */}
+      {!isLoading && totalPages > 1 && (
+        <div className="mt-8 rounded-xl border border-gray-100 bg-white">
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={(page) => {
+              setCurrentPage(page);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            itemsPerPage={PAGE_SIZE}
+            totalItems={totalItems}
+          />
+        </div>
+      )}
     </section>
   );
-}
+};
+
+export default ProductListingPage;

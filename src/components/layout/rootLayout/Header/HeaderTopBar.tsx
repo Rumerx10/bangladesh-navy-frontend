@@ -348,5 +348,4 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
   );
 };
 
-
 export default HeaderTopBar;

@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import ShipCard from "./ShipCard";
 import { useGet } from "@/src/hooks/useGet";
 import { SurveyShipItem } from "@/src/types/global/global.types";
@@ -11,7 +12,17 @@ const SurveyShips = () => {
     "survey-ships-list",
   ]);
 
-  const ships: SurveyShipItem[] = Array.isArray(data?.data) ? data.data : [];
+  // The admin sets `position` to order this list. The API sorts by it too, but
+  // sorting here as well means the order holds regardless, and ships with no
+  // position fall to the end instead of jumping to the front.
+  const ships = useMemo<SurveyShipItem[]>(() => {
+    const list = Array.isArray(data?.data) ? data.data : [];
+    return [...list].sort(
+      (a, b) =>
+        (a.position ?? Number.MAX_SAFE_INTEGER) -
+        (b.position ?? Number.MAX_SAFE_INTEGER)
+    );
+  }, [data]);
 
   if (isLoading) {
     return (

@@ -88,7 +88,6 @@ export const NavigationItems: NavItem[] = [
       { label: "Alumni", link: "/training-courses/alumni" },
       { label: "Courses", link: "/training-courses/courses" },
       { label: "BN Hydrographic Institute", link: "/training-courses" },
-      
     ],
   },
   {

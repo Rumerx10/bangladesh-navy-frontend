@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import { useState } from "react";
@@ -6,13 +6,10 @@ import { motion } from "framer-motion";
 import { Anchor, ChevronDown, Radar, Ship } from "lucide-react";
 import { SurveyShipItem } from "@/src/types/global/global.types";
 
-
 const EQUIPMENT_LIMIT = 4;
 const DESCRIPTION_LIMIT = 320;
 
-
-
-const ShipCard=({ ship, index }: { ship: SurveyShipItem; index: number })=> {
+const ShipCard = ({ ship, index }: { ship: SurveyShipItem; index: number }) => {
   const [expanded, setExpanded] = useState(false);
 
   const equipmentList = Array.isArray(ship.surveyEquipment)
@@ -177,7 +174,6 @@ const ShipCard=({ ship, index }: { ship: SurveyShipItem; index: number })=> {
       </div>
     </motion.div>
   );
-}
-
+};
 
 export default ShipCard;
