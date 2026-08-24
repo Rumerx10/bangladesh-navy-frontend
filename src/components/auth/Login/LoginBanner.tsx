@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 
-export default function LoginBanner() {
+const LoginBanner = () => {
   const [loaded, setLoaded] = useState(false);
 
   return (
@@ -39,4 +39,6 @@ export default function LoginBanner() {
       </div>
     </div>
   );
-}
+};
+
+export default LoginBanner;

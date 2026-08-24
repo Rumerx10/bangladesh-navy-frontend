@@ -1,7 +1,7 @@
 import { siteConfig } from "@/src/config/siteConfig";
 import { Mail, MapPin, Phone } from "lucide-react";
 
-export default function TopInfoBar() {
+const TopInfoBar = () => {
   return (
     <div className="bg-pBlue text-white text-xs">
       <div className="container flex items-center justify-between h-8 px-4 sm:px-0">
@@ -38,4 +38,6 @@ export default function TopInfoBar() {
       </div>
     </div>
   );
-}
+};
+
+export default TopInfoBar;

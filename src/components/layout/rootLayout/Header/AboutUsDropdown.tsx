@@ -12,7 +12,7 @@ const aboutLinks = [
   { label: "Gallery", href: "/about/gallery" },
 ];
 
-export default function AboutUsDropdown() {
+const AboutUsDropdown = () => {
   const pathname = usePathname();
   const isActive = pathname?.startsWith("/about");
 
@@ -51,4 +51,6 @@ export default function AboutUsDropdown() {
       </div>
     </li>
   );
-}
+};
+
+export default AboutUsDropdown;

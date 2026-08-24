@@ -1,12 +1,12 @@
 "use client";
 
-export default function FontSizeSelector({
+const FontSizeSelector = ({
   currentFontSize,
   setFontSize,
 }: {
   currentFontSize: string;
   setFontSize: (fontSize: string) => void;
-}) {
+}) => {
   const fontSizes = [8, 10, 12, 14, 16, 18, 20, 24, 28, 32];
 
   return (
@@ -27,4 +27,6 @@ export default function FontSizeSelector({
       </select>
     </div>
   );
-}
+};
+
+export default FontSizeSelector;

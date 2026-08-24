@@ -2,7 +2,7 @@ import { cn } from "@/src/lib/utils";
 import { StatusType } from "@/src/components/shared/types/common";
 import { StatusBadgeProps } from "./types";
 
-export default function StatusBadge({ status, className }: StatusBadgeProps) {
+const StatusBadge = ({ status, className }: StatusBadgeProps) => {
   const statusStyles: Record<StatusType, string> = {
     [StatusType.COMPLETED]: "text-[#28A745] bg-[#ECFDF3]",
     [StatusType.VERIFIED]: "text-[#28A745] bg-[#ECFDF3]",
@@ -24,4 +24,6 @@ export default function StatusBadge({ status, className }: StatusBadgeProps) {
       {status?.toLocaleLowerCase()?.replace(/_/g, " ")}
     </span>
   );
-}
+};
+
+export default StatusBadge;

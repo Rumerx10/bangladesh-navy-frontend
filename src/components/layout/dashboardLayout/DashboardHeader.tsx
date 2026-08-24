@@ -5,11 +5,7 @@ import { Menu, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import UserSkeleton from "./Skeleton/UserSkeleton";
 
-export default function DashboardHeader({
-  toggleSidebar,
-}: {
-  toggleSidebar?: () => void;
-}) {
+const DashboardHeader = ({ toggleSidebar }: { toggleSidebar?: () => void }) => {
   const {
     userInformation: { firstName, role, profilePicture },
     loading,
@@ -62,4 +58,6 @@ export default function DashboardHeader({
       </div>
     </div>
   );
-}
+};
+
+export default DashboardHeader;

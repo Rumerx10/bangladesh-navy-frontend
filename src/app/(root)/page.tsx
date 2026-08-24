@@ -7,6 +7,8 @@ export const metadata: Metadata = {
     "Official site of the Bangladesh Navy Hydrographic & Oceanographic Center (BNHOC) — nautical charts, tide tables, notices to mariners, and hydrographic services for safe maritime navigation in Bangladesh waters.",
 };
 
-export default function HomePage() {
+const HomePage = () => {
   return <Home />;
-}
+};
+
+export default HomePage;

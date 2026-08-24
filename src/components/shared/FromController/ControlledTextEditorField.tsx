@@ -10,10 +10,10 @@ interface ControlledTextEditorFieldProps {
   disabled?: boolean;
 }
 
-export default function ControlledTextEditorField({
+const ControlledTextEditorField = ({
   name,
   className,
-}: ControlledTextEditorFieldProps) {
+}: ControlledTextEditorFieldProps) => {
   const { control } = useFormContext();
   return (
     <Controller
@@ -31,4 +31,6 @@ export default function ControlledTextEditorField({
       }}
     />
   );
-}
+};
+
+export default ControlledTextEditorField;

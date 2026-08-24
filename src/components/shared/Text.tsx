@@ -7,11 +7,7 @@ type TextProps = {
   as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 };
 
-export default function Text({
-  children,
-  className,
-  as: Tag = "h1",
-}: TextProps) {
+const Text = ({ children, className, as: Tag = "h1" }: TextProps) => {
   return (
     <Tag
       className={cn(
@@ -22,4 +18,6 @@ export default function Text({
       {children}
     </Tag>
   );
-}
+};
+
+export default Text;

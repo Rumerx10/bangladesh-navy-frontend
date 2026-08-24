@@ -10,11 +10,11 @@ import InputLabel from "@/src/components/shared/InputLabel";
 import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
 
-export default function SignupForm({
+const SignupForm = ({
   onSubmit,
   error,
   isPending = false,
-}: SignupFormProps) {
+}: SignupFormProps) => {
   const methods = useFormContext<SignupFormType>();
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
@@ -121,4 +121,6 @@ export default function SignupForm({
       </p>
     </form>
   );
-}
+};
+
+export default SignupForm;

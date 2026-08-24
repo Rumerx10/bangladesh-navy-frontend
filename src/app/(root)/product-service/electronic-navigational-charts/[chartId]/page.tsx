@@ -1,6 +1,7 @@
 import { Metadata } from "next";
-import ProductDetailByChart from "@/src/components/products/detail/ProductDetailByChart";
 import { getProductMetadata } from "@/src/utils/getProductMetadata";
+import ProductDetailByChart from "@/src/components/products/detail/ProductDetailByChart";
+
 
 interface EncDetailPageProps {
   params: Promise<{ chartId: string }>;

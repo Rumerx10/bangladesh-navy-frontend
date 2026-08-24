@@ -28,11 +28,11 @@ const courseOptions = courses.map((c) => ({
   value: c.title,
 }));
 
-export default function CourseEnrollForm({
+const CourseEnrollForm = ({
   open,
   onClose,
   defaultCourse,
-}: CourseEnrollFormProps) {
+}: CourseEnrollFormProps) => {
   const { mutateAsync, error, isPending } = usePost(
     "/course-enrollment",
     () => {
@@ -232,4 +232,6 @@ export default function CourseEnrollForm({
       </div>
     </div>
   );
-}
+};
+
+export default CourseEnrollForm;

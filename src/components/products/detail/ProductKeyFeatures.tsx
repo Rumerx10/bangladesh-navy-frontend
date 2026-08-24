@@ -4,9 +4,7 @@ interface ProductKeyFeaturesProps {
   product: IProduct;
 }
 
-export default function ProductKeyFeatures({
-  product,
-}: ProductKeyFeaturesProps) {
+const ProductKeyFeatures = ({ product }: ProductKeyFeaturesProps) => {
   const coordinates = [
     product.northLatitude && `N ${product.northLatitude}`,
     product.southLatitude && `S ${product.southLatitude}`,
@@ -64,4 +62,6 @@ export default function ProductKeyFeatures({
       </div>
     </div>
   );
-}
+};
+
+export default ProductKeyFeatures;

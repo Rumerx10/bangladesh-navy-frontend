@@ -8,6 +8,8 @@ export const metadata: Metadata = {
     "Submit queries or suggestions to the Bangladesh Navy Hydrographic & Oceanographic Center.",
 };
 
-export default function QuerySuggestionPage() {
+const QuerySuggestionPage = () => {
   return <QuerySuggestion />;
-}
+};
+
+export default QuerySuggestionPage;

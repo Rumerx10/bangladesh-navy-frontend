@@ -14,10 +14,10 @@ interface ProductDetailLayoutProps {
   chartDetails?: IProduct;
 }
 
-export default function ProductDetailLayout({
+const ProductDetailLayout = ({
   product,
   chartDetails,
-}: ProductDetailLayoutProps) {
+}: ProductDetailLayoutProps) => {
   const discountedPrice = getDiscountedPrice(product);
   const imageUrl = product.images?.[0] ?? "/img1.jpeg";
 
@@ -91,4 +91,6 @@ export default function ProductDetailLayout({
       )}
     </div>
   );
-}
+};
+
+export default ProductDetailLayout;

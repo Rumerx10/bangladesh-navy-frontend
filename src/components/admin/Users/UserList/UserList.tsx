@@ -15,7 +15,7 @@ import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 
 type TStatusAction = "activate" | "deactivate" | null;
 
-export default function UserList() {
+const UserList = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isStatusConfirmOpen, setIsStatusConfirmOpen] = useState(false);
@@ -172,4 +172,6 @@ export default function UserList() {
       />
     </div>
   );
-}
+};
+
+export default UserList;

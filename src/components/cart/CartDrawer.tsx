@@ -18,7 +18,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCartDrawer } from "./CartProvider";
 
-export default function CartDrawer() {
+const CartDrawer = () => {
   const { isOpen, closeDrawer } = useCartDrawer();
   const dispatch = useAppDispatch();
   const { items } = useAppSelector((state) => state.cart);
@@ -192,4 +192,6 @@ export default function CartDrawer() {
       </div>
     </>
   );
-}
+};
+
+export default CartDrawer;

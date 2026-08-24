@@ -4,12 +4,12 @@ import Image from "next/image";
 import { Controller, useFormContext } from "react-hook-form";
 import { ProfileFormValues } from "../Schema/profileSchema";
 
-export default function ProfilePictureSection({
+const ProfilePictureSection = ({
   firstName,
   lastName,
   email,
   initialProfilePicture,
-}: ProfilePictureSectionProps) {
+}: ProfilePictureSectionProps) => {
   const { control, watch } = useFormContext<ProfileFormValues>();
   const profilePicture = watch("profilePicture");
 
@@ -84,4 +84,6 @@ export default function ProfilePictureSection({
       </div>
     </div>
   );
-}
+};
+
+export default ProfilePictureSection;

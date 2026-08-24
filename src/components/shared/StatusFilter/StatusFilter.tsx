@@ -21,7 +21,7 @@ const defaultStatuses = [
   { label: "Inactive", value: StatusType.INACTIVE },
 ];
 
-export default function StatusFilter({ statusOptions }: StatusFilterProps) {
+const StatusFilter = ({ statusOptions }: StatusFilterProps) => {
   const dispatch = useAppDispatch();
 
   const optionsToRender =
@@ -51,4 +51,6 @@ export default function StatusFilter({ statusOptions }: StatusFilterProps) {
       </SelectContent>
     </Select>
   );
-}
+};
+
+export default StatusFilter;

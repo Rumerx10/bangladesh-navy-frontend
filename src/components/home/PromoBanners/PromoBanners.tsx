@@ -48,7 +48,7 @@ const promoBanners = [
   },
 ];
 
-export default function PromoBanners() {
+const PromoBanners = () => {
   return (
     <section className="py-8">
       <div className="container">
@@ -87,4 +87,6 @@ export default function PromoBanners() {
       </div>
     </section>
   );
-}
+};
+
+export default PromoBanners;

@@ -102,7 +102,18 @@ const AlumniBatchCard = ({ batch, isOpen, onToggle }: AlumniBatchCardProps) => {
                 {batch.descriptionEn}
               </p>
             )}
-            <AlumniMemberTable members={batch.members} />
+            <AlumniMemberTable
+              members={batch.members.map((member) => ({
+                id: member.id ?? String(member.serial),
+                courseId: batch.alumniCourseId ?? batch.id,
+                serial: member.serial,
+                pNo: member.pNo,
+                rankAndName: member.rankName,
+                organization: member.organization,
+                remarks: member.remarks,
+                status: "ACTIVE" as const,
+              }))}
+            />
           </div>
         </div>
       </div>

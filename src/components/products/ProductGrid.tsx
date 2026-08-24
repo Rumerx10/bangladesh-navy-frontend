@@ -13,12 +13,12 @@ interface ProductGridProps {
   setFilters: React.Dispatch<React.SetStateAction<IProductFilter>>;
 }
 
-export default function ProductGrid({
+const ProductGrid = ({
   products,
   totalCount,
   filters,
   setFilters,
-}: ProductGridProps) {
+}: ProductGridProps) => {
   return (
     <div className="min-h-150">
       {/* Toolbar */}
@@ -75,4 +75,6 @@ export default function ProductGrid({
       )}
     </div>
   );
-}
+};
+
+export default ProductGrid;

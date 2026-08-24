@@ -13,7 +13,7 @@ import { useFormContext } from "react-hook-form";
 import { toast } from "react-toastify";
 import { CategoryFormValues } from "../Schema/categorySchema";
 
-export default function CategoryForm({
+const CategoryForm = ({
   isEditMode = false,
   onSubmit,
   onCancel,
@@ -25,7 +25,7 @@ export default function CategoryForm({
   onCancel: () => void;
   isPending?: boolean;
   error?: ErrorType;
-}) {
+}) => {
   const { handleSubmit } = useFormContext<CategoryFormValues>();
   const { mutateAsync: generateBanglaName, isPending: isGenerating } =
     useMutation({
@@ -124,4 +124,6 @@ export default function CategoryForm({
       </div>
     </form>
   );
-}
+};
+
+export default CategoryForm;

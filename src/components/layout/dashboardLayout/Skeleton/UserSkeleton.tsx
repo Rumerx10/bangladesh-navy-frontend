@@ -1,6 +1,6 @@
 import { Skeleton } from "@/src/components/ui/skeleton";
 
-export default function UserSkeleton() {
+const UserSkeleton = () => {
   return (
     <div className="flex items-center gap-4">
       <Skeleton className="w-12 h-12 rounded-full" />
@@ -10,4 +10,6 @@ export default function UserSkeleton() {
       </div>
     </div>
   );
-}
+};
+
+export default UserSkeleton;

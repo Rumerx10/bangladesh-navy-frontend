@@ -19,13 +19,13 @@ interface AlumniCourseFormProps {
   error?: ErrorType;
 }
 
-export default function AlumniCourseForm({
+const AlumniCourseForm = ({
   isEditMode = false,
   onSubmit,
   onCancel,
   isPending = false,
   error,
-}: AlumniCourseFormProps) {
+}: AlumniCourseFormProps) => {
   const { handleSubmit } = useFormContext<AlumniCourseFormValues>();
 
   return (
@@ -74,4 +74,6 @@ export default function AlumniCourseForm({
       </div>
     </form>
   );
-}
+};
+
+export default AlumniCourseForm;

@@ -11,9 +11,7 @@ interface GoogleSignInButtonProps {
   onSuccess?: (role: string) => void;
 }
 
-export default function GoogleSignInButton({
-  onSuccess,
-}: GoogleSignInButtonProps) {
+const GoogleSignInButton = ({ onSuccess }: GoogleSignInButtonProps) => {
   const router = useRouter();
 
   const { mutateAsync: authenticateWithBackend, isPending } = useGoogleAuth(
@@ -51,4 +49,6 @@ export default function GoogleSignInButton({
       />
     </div>
   );
-}
+};
+
+export default GoogleSignInButton;

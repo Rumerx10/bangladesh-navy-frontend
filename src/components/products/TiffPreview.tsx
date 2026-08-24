@@ -9,7 +9,7 @@ interface Props {
   className?: string;
 }
 
-export default function TiffPreview({ src, className }: Props) {
+const TiffPreview = ({ src, className }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -55,4 +55,6 @@ export default function TiffPreview({ src, className }: Props) {
   }, [src]);
 
   return <canvas ref={canvasRef} className={className} />;
-}
+};
+
+export default TiffPreview;

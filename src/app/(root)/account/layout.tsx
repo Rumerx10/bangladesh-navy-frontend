@@ -41,11 +41,7 @@ const sidebarSections = [
   },
 ];
 
-export default function AccountLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const { userInformation } = useAppSelector((state) => state.auth);
   const canViewOwnOrders = useAppSelector(selectCanViewOwnOrders);
@@ -169,4 +165,6 @@ export default function AccountLayout({
       </div>
     </div>
   );
-}
+};
+
+export default AccountLayout;

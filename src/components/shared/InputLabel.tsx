@@ -1,6 +1,6 @@
 import { cn } from "@/src/lib/utils";
 
-export default function InputLabel({
+const InputLabel = ({
   label,
   required,
   className,
@@ -8,7 +8,7 @@ export default function InputLabel({
   label: string | undefined;
   required?: boolean;
   className?: string;
-}) {
+}) => {
   return (
     <div>
       {label && (
@@ -24,4 +24,6 @@ export default function InputLabel({
       )}
     </div>
   );
-}
+};
+
+export default InputLabel;

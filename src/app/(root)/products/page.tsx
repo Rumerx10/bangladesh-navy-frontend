@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Browse nautical charts, publications, and maritime services offered by the Bangladesh Navy Hydrographic & Oceanographic Center.",
 };
 
-export default function ProductsPage() {
+const ProductsPage = () => {
   // ProductListingPage reads `?category=`, which needs a Suspense boundary to
   // keep this route prerenderable.
   return (
@@ -17,4 +17,6 @@ export default function ProductsPage() {
       <ProductListingPage />
     </Suspense>
   );
-}
+};
+
+export default ProductsPage;

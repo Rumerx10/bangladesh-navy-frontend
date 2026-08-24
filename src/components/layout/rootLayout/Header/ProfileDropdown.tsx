@@ -25,7 +25,7 @@ import {
   userMenuItems,
 } from "../../../../utils/profileMenuItems";
 
-export function ProfileDropdown() {
+export const ProfileDropdown = () => {
   const dispatch = useAppDispatch();
   const { userInformation, loading } = useAppSelector((state) => state.auth);
   const canAccessAdmin = useAppSelector(selectCanAccessAdmin);
@@ -142,4 +142,4 @@ export function ProfileDropdown() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};

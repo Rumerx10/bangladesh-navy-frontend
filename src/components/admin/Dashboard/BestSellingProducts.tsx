@@ -6,7 +6,7 @@ import { useGet } from "@/src/hooks/useGet";
 import BestSellingProductsSkeleton from "./Skeleton/BestSellingProductsSkeleton";
 import type { BestSellingProduct } from "@/src/components/admin/Dashboard/types";
 
-export default function BestSellingProducts() {
+const BestSellingProducts = () => {
   const { data, isLoading } = useGet<BestSellingProduct[]>(
     "/api/dashboard/best-selling",
     ["dashboard", "best-selling"]
@@ -79,4 +79,6 @@ export default function BestSellingProducts() {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default BestSellingProducts;

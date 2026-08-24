@@ -34,7 +34,7 @@ interface ProductDetailsProps {
   product: IProduct;
 }
 
-export default function ProductDetails({ product }: ProductDetailsProps) {
+const ProductDetails = ({ product }: ProductDetailsProps) => {
   const router = useRouter();
   const canAddToCart = useAppSelector(selectCanAddToCart);
   const canCheckout = useAppSelector(selectCanCheckout);
@@ -1023,7 +1023,9 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
       )}
     </div>
   );
-}
+};
+
+export default ProductDetails;
 
 function getColorHex(colorName: string): string {
   const map: Record<string, string> = {

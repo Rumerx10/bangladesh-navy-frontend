@@ -1,4 +1,4 @@
-export default function ProfileDropdownSkeleton() {
+const ProfileDropdownSkeleton = () => {
   return (
     <div className="flex items-center gap-2 px-3 py-1.5 rounded-full">
       <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse" />
@@ -8,4 +8,6 @@ export default function ProfileDropdownSkeleton() {
       </div>
     </div>
   );
-}
+};
+
+export default ProfileDropdownSkeleton;

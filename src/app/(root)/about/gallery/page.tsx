@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "Visual documentation of BNHOC operations, events, and facilities.",
 };
 
-export default function GalleryPage() {
+const GalleryPage = () => {
   return (
     <>
       <AboutHero
@@ -18,4 +18,6 @@ export default function GalleryPage() {
       <GalleryGrid />
     </>
   );
-}
+};
+
+export default GalleryPage;

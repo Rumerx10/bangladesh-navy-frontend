@@ -22,7 +22,7 @@ interface DeleteConfirmDialogProps {
   confirmClassName?: string;
 }
 
-export default function DeleteConfirmDialog({
+const DeleteConfirmDialog = ({
   isOpen,
   onClose,
   onConfirm,
@@ -31,7 +31,7 @@ export default function DeleteConfirmDialog({
   confirmLabel = "Delete",
   cancelLabel = "Cancel",
   confirmClassName = "bg-red-500 hover:bg-red-600 text-white",
-}: DeleteConfirmDialogProps) {
+}: DeleteConfirmDialogProps) => {
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent className="bg-white">
@@ -48,4 +48,6 @@ export default function DeleteConfirmDialog({
       </AlertDialogContent>
     </AlertDialog>
   );
-}
+};
+
+export default DeleteConfirmDialog;

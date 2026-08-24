@@ -22,7 +22,7 @@ const REPLACEMENT_OPTIONS = [
   { label: "Not Required", value: "not-required" },
 ];
 
-function SectionHeader({ title }: { title: string }) {
+const SectionHeader = ({ title }: { title: string }) => {
   return (
     <div className="border-l-4 border-pBlue bg-blue-50 px-4 py-2.5 mb-5">
       <p className="text-sm font-semibold uppercase tracking-wide text-pBlue">
@@ -30,7 +30,7 @@ function SectionHeader({ title }: { title: string }) {
       </p>
     </div>
   );
-}
+};
 
 const HydrographicNoteForm = () => {
   const { mutateAsync, error, isPending } = usePost(

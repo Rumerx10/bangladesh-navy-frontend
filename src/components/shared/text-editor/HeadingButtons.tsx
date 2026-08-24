@@ -3,13 +3,13 @@ import ToolbarButton from "./Toolbar";
 
 const headingLevels: (1 | 2 | 3)[] = [1, 2, 3];
 
-export default function HeadingButtons({
+const HeadingButtons = ({
   editor,
   applyHeadingToSelection,
 }: {
   editor: Editor;
   applyHeadingToSelection: (level: 1 | 2 | 3) => void;
-}) {
+}) => {
   return (
     <>
       {headingLevels.map((level) => (
@@ -24,4 +24,6 @@ export default function HeadingButtons({
       ))}
     </>
   );
-}
+};
+
+export default HeadingButtons;

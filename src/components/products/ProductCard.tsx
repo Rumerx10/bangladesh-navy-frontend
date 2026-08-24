@@ -19,7 +19,7 @@ interface ProductCardProps {
   product: INavyProduct;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+const ProductCard = ({ product }: ProductCardProps) => {
   // const dispatch = useAppDispatch();
   const slug = getProductSlug(product);
   const discountedPrice = getDiscountedPrice(product);
@@ -132,4 +132,6 @@ export default function ProductCard({ product }: ProductCardProps) {
       </div>
     </Link>
   );
-}
+};
+
+export default ProductCard;

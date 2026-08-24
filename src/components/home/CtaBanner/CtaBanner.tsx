@@ -47,7 +47,7 @@ const ctaBanners = [
   },
 ];
 
-export default function CtaBanner() {
+const CtaBanner = () => {
   const [current, setCurrent] = useState(0);
 
   const next = useCallback(() => {
@@ -186,4 +186,6 @@ export default function CtaBanner() {
       </div>
     </section>
   );
-}
+};
+
+export default CtaBanner;

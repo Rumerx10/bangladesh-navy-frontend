@@ -7,14 +7,12 @@ type ParagraphProps = {
   as?: "p" | "span" | "div";
 };
 
-export default function Paragraph({
-  children,
-  className,
-  as: Tag = "p",
-}: ParagraphProps) {
+const Paragraph = ({ children, className, as: Tag = "p" }: ParagraphProps) => {
   return (
     <Tag className={cn("text-base text-secondary-foreground", className)}>
       {children}
     </Tag>
   );
-}
+};
+
+export default Paragraph;

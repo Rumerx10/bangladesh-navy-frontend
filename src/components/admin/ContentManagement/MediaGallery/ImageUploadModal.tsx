@@ -12,11 +12,11 @@ interface ImageUploadModalProps {
   onUpload: (items: MediaItem[]) => void;
 }
 
-export default function ImageUploadModal({
+const ImageUploadModal = ({
   isOpen,
   onClose,
   onUpload,
-}: ImageUploadModalProps) {
+}: ImageUploadModalProps) => {
   const [dragActive, setDragActive] = useState(false);
   const [files, setFiles] = useState<
     { file: File; preview: string; type: "product" | "category" }[]
@@ -261,4 +261,6 @@ export default function ImageUploadModal({
       </motion.div>
     </AnimatePresence>
   );
-}
+};
+
+export default ImageUploadModal;

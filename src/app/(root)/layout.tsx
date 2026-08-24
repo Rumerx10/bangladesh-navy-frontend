@@ -6,7 +6,7 @@ import Footer from "@/src/components/layout/rootLayout/Footer";
 import Header from "@/src/components/layout/rootLayout/Header/Header";
 import { Suspense } from "react";
 
-export default function layout({ children }: { children: React.ReactNode }) {
+const layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <CartDrawerProvider>
       <div>
@@ -21,4 +21,6 @@ export default function layout({ children }: { children: React.ReactNode }) {
       </div>
     </CartDrawerProvider>
   );
-}
+};
+
+export default layout;

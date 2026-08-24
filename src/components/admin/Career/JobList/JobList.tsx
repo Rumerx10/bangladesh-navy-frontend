@@ -9,7 +9,7 @@ import { GetCareerColumns } from "../TableColumns/CareerColumns";
 import { ICareer } from "../types";
 import ViewJobDetailsModal from "../ViewJobDetailsModal/ViewJobDetailsModal";
 
-export default function JobList() {
+const JobList = () => {
   const [openView, setOpenView] = useState(false);
   const [selectedJob, setSelectedJob] = useState<ICareer | undefined>();
   const {
@@ -81,4 +81,6 @@ export default function JobList() {
       />
     </div>
   );
-}
+};
+
+export default JobList;

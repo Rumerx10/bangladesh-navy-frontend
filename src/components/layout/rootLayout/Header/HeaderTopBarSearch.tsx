@@ -8,7 +8,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
-export default function HeaderTopBarSearch() {
+const HeaderTopBarSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
   const debouncedQuery = useDebounce(searchQuery, 400);
@@ -288,4 +288,6 @@ export default function HeaderTopBarSearch() {
       </div>
     </>
   );
-}
+};
+
+export default HeaderTopBarSearch;

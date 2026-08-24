@@ -5,15 +5,17 @@ export const metadata: Metadata = {
   description: "Browse nautical products in this category.",
 };
 
-export default function CategoryProductsPage({
+const CategoryProductsPage = ({
   params,
 }: {
   params: Promise<{ slug: string }>;
-}) {
+}) => {
   return (
     <div className="container py-8">
       <h1 className="text-2xl font-semibold">Category Products</h1>
       <p className="text-muted-foreground mt-2">Products in this category</p>
     </div>
   );
-}
+};
+
+export default CategoryProductsPage;

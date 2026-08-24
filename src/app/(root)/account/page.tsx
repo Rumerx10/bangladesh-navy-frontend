@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "Manage your account profile and settings.",
 };
 
-export default function MyProfilePage() {
+const MyProfilePage = () => {
   return <MyProfile />;
-}
+};
+
+export default MyProfilePage;

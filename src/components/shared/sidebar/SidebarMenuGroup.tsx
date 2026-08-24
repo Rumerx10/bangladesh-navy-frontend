@@ -13,13 +13,13 @@ interface SidebarMenuGroupProps {
   onNavigate: () => void;
 }
 
-export default function SidebarMenuGroup({
+const SidebarMenuGroup = ({
   item,
   showSegment,
   isExpanded,
   onToggleExpand,
   onNavigate,
-}: SidebarMenuGroupProps) {
+}: SidebarMenuGroupProps) => {
   const pathname = usePathname();
 
   const isActiveParent = item.href ? pathname === item.href : false;
@@ -76,4 +76,6 @@ export default function SidebarMenuGroup({
       </div>
     </div>
   );
-}
+};
+
+export default SidebarMenuGroup;

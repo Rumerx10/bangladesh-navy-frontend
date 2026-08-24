@@ -6,10 +6,12 @@ export const metadata: Metadata = {
   description: "Manage your saved delivery addresses.",
 };
 
-export default function page() {
+const page = () => {
   return (
     <div>
       <AddressList />
     </div>
   );
-}
+};
+
+export default page;

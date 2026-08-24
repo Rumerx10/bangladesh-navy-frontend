@@ -8,11 +8,7 @@ interface PriceRangeFilterProps {
   onChange: (min?: number, max?: number) => void;
 }
 
-export default function PriceRangeFilter({
-  min,
-  max,
-  onChange,
-}: PriceRangeFilterProps) {
+const PriceRangeFilter = ({ min, max, onChange }: PriceRangeFilterProps) => {
   // Constants for our range (in BDT)
   const MIN_LIMIT = 0;
   const MAX_LIMIT = 20000;
@@ -115,4 +111,6 @@ export default function PriceRangeFilter({
       </p>
     </div>
   );
-}
+};
+
+export default PriceRangeFilter;

@@ -4,7 +4,7 @@ import { useAppSelector } from "@/src/lib/redux/hooks";
 import { ShoppingCart } from "lucide-react";
 import { useCartDrawer } from "./CartProvider";
 
-export default function FloatingCartButton() {
+const FloatingCartButton = () => {
   const { toggleDrawer } = useCartDrawer();
   const cartItems = useAppSelector((state) => state.cart.items);
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -23,4 +23,6 @@ export default function FloatingCartButton() {
       )}
     </button>
   );
-}
+};
+
+export default FloatingCartButton;

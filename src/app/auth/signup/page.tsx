@@ -7,10 +7,12 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function page() {
+const page = () => {
   return (
     <div>
       <SignupPage />
     </div>
   );
-}
+};
+
+export default page;

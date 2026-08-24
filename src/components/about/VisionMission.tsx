@@ -9,7 +9,7 @@ const iconMap: Record<string, React.ReactNode> = {
   target: <Target size={24} />,
 };
 
-export default function VisionMission() {
+const VisionMission = () => {
   return (
     <section className="py-8 lg:py-20">
       <div className="container px-4 sm:px-6 lg:px-8">
@@ -54,4 +54,6 @@ export default function VisionMission() {
       </div>
     </section>
   );
-}
+};
+
+export default VisionMission;

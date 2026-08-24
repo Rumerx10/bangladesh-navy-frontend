@@ -18,12 +18,12 @@ import AddressForm from "./AddressForm";
 
 const getAddressId = (address?: IAddress) => address?.id || address?._id;
 
-export default function CreateUpdateAddress({
+const CreateUpdateAddress = ({
   isOpen,
   onClose,
   initialValues,
   userId,
-}: ICreateUpdateAddressProps) {
+}: ICreateUpdateAddressProps) => {
   const isUpdate = !!initialValues;
 
   const methods = useForm<AddressFormValues>({
@@ -164,4 +164,6 @@ export default function CreateUpdateAddress({
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default CreateUpdateAddress;

@@ -29,7 +29,7 @@ function renderParagraph(para: string) {
   return para;
 }
 
-export default function ChiefMessage() {
+const ChiefMessage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = useCallback(() => setIsModalOpen(true), []);
@@ -321,4 +321,6 @@ export default function ChiefMessage() {
       </AnimatePresence>
     </>
   );
-}
+};
+
+export default ChiefMessage;

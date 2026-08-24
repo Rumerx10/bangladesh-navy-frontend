@@ -11,11 +11,7 @@ interface SidebarProps {
   setIsOpen: (value: boolean) => void;
 }
 
-export default function Sidebar({
-  className,
-  isOpen,
-  setIsOpen,
-}: SidebarProps) {
+const Sidebar = ({ className, isOpen, setIsOpen }: SidebarProps) => {
   const handleNavigate = () => {
     setIsOpen(false);
   };
@@ -50,4 +46,6 @@ export default function Sidebar({
       </aside>
     </>
   );
-}
+};
+
+export default Sidebar;

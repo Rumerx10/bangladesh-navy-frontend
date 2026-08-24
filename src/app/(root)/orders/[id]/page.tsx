@@ -6,10 +6,8 @@ export const metadata: Metadata = {
   description: "View the details of your order.",
 };
 
-export default function OrderDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+const OrderDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
   return <OrderDetailClient params={params} />;
-}
+};
+
+export default OrderDetailPage;

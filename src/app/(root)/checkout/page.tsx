@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "Complete your order for nautical charts and publications.",
 };
 
-export default function CheckoutPage() {
+const CheckoutPage = () => {
   return <Checkout />;
-}
+};
+
+export default CheckoutPage;

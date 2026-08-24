@@ -24,13 +24,13 @@ interface PartnerFormProps {
   error?: ErrorType;
 }
 
-export default function PartnerForm({
+const PartnerForm = ({
   isEditMode = false,
   onSubmit,
   onCancel,
   isPending = false,
   error,
-}: PartnerFormProps) {
+}: PartnerFormProps) => {
   const { handleSubmit } = useFormContext<PartnerFormValues>();
 
   return (
@@ -77,4 +77,6 @@ export default function PartnerForm({
       </div>
     </form>
   );
-}
+};
+
+export default PartnerForm;

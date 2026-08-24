@@ -17,7 +17,7 @@ const statusColors: Record<OrderStatus, string> = {
   [OrderStatus.REFUNDED]: "bg-purple-50 text-purple-700 border-purple-200",
 };
 
-export default function OrdersClient() {
+const OrdersClient = () => {
   if (dummyOrders.length === 0) {
     return (
       <div className="container px-4 sm:px-6 lg:px-8">
@@ -128,4 +128,6 @@ export default function OrdersClient() {
       </div>
     </div>
   );
-}
+};
+
+export default OrdersClient;

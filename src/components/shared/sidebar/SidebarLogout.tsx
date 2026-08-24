@@ -7,7 +7,7 @@ interface SidebarLogoutProps {
   onLogout?: () => void;
 }
 
-export default function SidebarLogout({ onLogout }: SidebarLogoutProps) {
+const SidebarLogout = ({ onLogout }: SidebarLogoutProps) => {
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
@@ -26,4 +26,6 @@ export default function SidebarLogout({ onLogout }: SidebarLogoutProps) {
       </Button>
     </div>
   );
-}
+};
+
+export default SidebarLogout;

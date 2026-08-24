@@ -33,7 +33,7 @@ const brandLogos: Record<
   },
 };
 
-export default function PaymentMethodsClient() {
+const PaymentMethodsClient = () => {
   const [cards, setCards] = useState<IPaymentCard[]>(dummyPaymentMethods);
   const [showForm, setShowForm] = useState(false);
 
@@ -261,4 +261,6 @@ export default function PaymentMethodsClient() {
       )}
     </div>
   );
-}
+};
+
+export default PaymentMethodsClient;

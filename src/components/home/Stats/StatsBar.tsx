@@ -4,7 +4,7 @@ import { statsItems } from "@/src/data/homeData";
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
 import StatItem from "./StatItem";
 
-export default function StatsBar() {
+const StatsBar = () => {
   return (
     <section className="relative bg-pBlue py-10 lg:py-56 overflow-hidden">
       {/* Watermark */}
@@ -26,4 +26,6 @@ export default function StatsBar() {
       </div>
     </section>
   );
-}
+};
+
+export default StatsBar;

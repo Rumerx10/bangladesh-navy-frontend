@@ -3,7 +3,7 @@ import { siteConfig } from "@/src/config/siteConfig";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Logo() {
+const Logo = () => {
   return (
     <Link
       href="/"
@@ -27,4 +27,6 @@ export default function Logo() {
       </div>
     </Link>
   );
-}
+};
+
+export default Logo;

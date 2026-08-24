@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-export default function MyProfile() {
+const MyProfile = () => {
   const { userInformation } = useAppSelector((state) => state.auth);
 
   const methods = useForm<ProfileFormValues>({
@@ -110,4 +110,6 @@ export default function MyProfile() {
       </FormProvider>
     </div>
   );
-}
+};
+
+export default MyProfile;

@@ -3,7 +3,7 @@
 import { AlertTriangle } from "lucide-react";
 import Link from "next/link";
 
-export default function CheckoutFailClient() {
+const CheckoutFailClient = () => {
   return (
     <div className="container">
       <div
@@ -104,4 +104,6 @@ export default function CheckoutFailClient() {
       </div>
     </div>
   );
-}
+};
+
+export default CheckoutFailClient;

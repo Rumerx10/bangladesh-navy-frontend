@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "Our fleet of hydrographic survey and oceanographic research vessels.",
 };
 
-export default function SurveyShipsPage() {
+const SurveyShipsPage = () => {
   return (
     <>
       <AboutHero
@@ -18,4 +18,6 @@ export default function SurveyShipsPage() {
       <SurveyShips />
     </>
   );
-}
+};
+
+export default SurveyShipsPage;

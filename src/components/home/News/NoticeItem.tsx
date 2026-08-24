@@ -13,7 +13,7 @@ interface NoticeItemProps {
   isLast?: boolean;
 }
 
-export default function NoticeItem({ item, isLast }: NoticeItemProps) {
+const NoticeItem = ({ item, isLast }: NoticeItemProps) => {
   return (
     <Link
       href={item.href}
@@ -30,4 +30,6 @@ export default function NoticeItem({ item, isLast }: NoticeItemProps) {
       </div>
     </Link>
   );
-}
+};
+
+export default NoticeItem;

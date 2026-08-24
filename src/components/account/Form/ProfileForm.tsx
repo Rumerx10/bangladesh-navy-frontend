@@ -9,7 +9,7 @@ import { ProfileFormValues } from "../Schema/profileSchema";
 import { IProfileForm } from "../types";
 import ProfilePictureSection from "./ProfilePictureSection";
 
-export default function ProfileForm({
+const ProfileForm = ({
   onSubmit,
   onCancel,
   isPending = false,
@@ -18,7 +18,7 @@ export default function ProfileForm({
   userProfilePicture,
   firstName = "",
   lastName = "",
-}: IProfileForm) {
+}: IProfileForm) => {
   const { handleSubmit } = useFormContext<ProfileFormValues>();
 
   return (
@@ -103,4 +103,6 @@ export default function ProfileForm({
       </form>
     </>
   );
-}
+};
+
+export default ProfileForm;

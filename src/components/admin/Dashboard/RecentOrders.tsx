@@ -29,7 +29,7 @@ const statusDot: Record<OrderStatus, string> = {
   Cancelled: "bg-red-500",
 };
 
-export default function RecentOrders() {
+const RecentOrders = () => {
   const { data, isLoading } = useGet<RecentOrder[]>(
     "/api/dashboard/recent-orders",
     ["dashboard", "recent-orders"]
@@ -147,4 +147,6 @@ export default function RecentOrders() {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default RecentOrders;

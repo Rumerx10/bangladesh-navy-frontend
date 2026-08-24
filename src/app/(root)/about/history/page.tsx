@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "The journey of Bangladesh Navy Hydrographic and Oceanographic Center.",
 };
 
-export default function HistoryPage() {
+const HistoryPage = () => {
   return (
     <>
       <AboutHero
@@ -22,4 +22,6 @@ export default function HistoryPage() {
       </section>
     </>
   );
-}
+};
+
+export default HistoryPage;

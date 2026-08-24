@@ -8,12 +8,12 @@ interface SidebarChildLinkProps {
   onNavigate: () => void;
 }
 
-export default function SidebarChildLink({
+const SidebarChildLink = ({
   label,
   href,
   isActive,
   onNavigate,
-}: SidebarChildLinkProps) {
+}: SidebarChildLinkProps) => {
   return (
     <Link
       href={href}
@@ -28,4 +28,6 @@ export default function SidebarChildLink({
       <span className="truncate">{label}</span>
     </Link>
   );
-}
+};
+
+export default SidebarChildLink;

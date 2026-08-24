@@ -29,7 +29,7 @@ export function generateStaticParams() {
   }));
 }
 
-export default async function SurveyShipDetailPage({ params }: PageProps) {
+const SurveyShipDetailPage = async ({ params }: PageProps) => {
   const { slug } = await params;
   const ship = surveyShips.find((s) => s.slug === slug);
 
@@ -42,4 +42,6 @@ export default async function SurveyShipDetailPage({ params }: PageProps) {
       <SurveyShipDetail ship={ship} />
     </>
   );
-}
+};
+
+export default SurveyShipDetailPage;

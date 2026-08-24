@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import {
   Package,
@@ -64,7 +65,12 @@ const quickLinks: QuickLink[] = [
   },
 ];
 
-export default function AdminDashboardPage() {
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Overview and quick access to all admin management areas.",
+};
+
+const AdminDashboardPage = () => {
   return (
     <div className="space-y-8 lg:space-y-10">
       {/* Hero */}
@@ -117,4 +123,6 @@ export default function AdminDashboardPage() {
       </div>
     </div>
   );
-}
+};
+
+export default AdminDashboardPage;

@@ -9,13 +9,13 @@ import {
 import { Clock } from "lucide-react";
 import { Controller, useFormContext } from "react-hook-form";
 
-export function ControlledTimePickerField({
+export const ControlledTimePickerField = ({
   name,
   placeholder,
 }: {
   name: string;
   placeholder?: string;
-}) {
+}) => {
   const { control } = useFormContext();
 
   return (
@@ -51,4 +51,4 @@ export function ControlledTimePickerField({
       )}
     />
   );
-}
+};

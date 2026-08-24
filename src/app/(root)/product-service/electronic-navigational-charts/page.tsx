@@ -8,6 +8,8 @@ export const metadata: Metadata = {
     "Interactive catalogue of Bangladesh Navy Electronic Navigational Chart (ENC) cells covering the coast from Khulna to Cox's Bazar. Search by cell or chart number, hover a coverage area to identify a cell, and click to view its details.",
 };
 
-export default function ElectronicChartPage() {
+const ElectronicChartPage = () => {
   return <ElectronicChartMap />;
-}
+};
+
+export default ElectronicChartPage;

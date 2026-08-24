@@ -1,4 +1,4 @@
-export default function AddressListSkeleton() {
+const AddressListSkeleton = () => {
   return (
     <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 animate-pulse">
       {Array.from({ length: 4 }).map((_, index) => (
@@ -28,4 +28,6 @@ export default function AddressListSkeleton() {
       ))}
     </div>
   );
-}
+};
+
+export default AddressListSkeleton;

@@ -4,7 +4,7 @@ interface TableHeaderProps {
   title?: string;
 }
 
-export default function TableTopBarHeader({ title }: TableHeaderProps) {
+const TableTopBarHeader = ({ title }: TableHeaderProps) => {
   return (
     <div className="flex flex-col lg:flex-row w-full lg:items-center justify-between gap-4">
       <div className="flex items-center gap-3">
@@ -19,4 +19,6 @@ export default function TableTopBarHeader({ title }: TableHeaderProps) {
       </div>
     </div>
   );
-}
+};
+
+export default TableTopBarHeader;

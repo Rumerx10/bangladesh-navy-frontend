@@ -8,7 +8,7 @@ interface CartItemListProps {
   items: ICartItem[];
 }
 
-export default function CartItemList({ items }: CartItemListProps) {
+const CartItemList = ({ items }: CartItemListProps) => {
   const freeShippingCount = items.filter((item) => item.freeShipping).length;
 
   return (
@@ -46,4 +46,6 @@ export default function CartItemList({ items }: CartItemListProps) {
       </div>
     </div>
   );
-}
+};
+
+export default CartItemList;

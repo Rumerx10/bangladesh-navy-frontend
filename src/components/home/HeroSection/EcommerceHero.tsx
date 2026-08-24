@@ -5,7 +5,7 @@ import FlashSaleCards from "./FlashSaleCards";
 import HeroBanner from "./HeroBanner";
 import TrustBar from "./TrustBar";
 
-export default function EcommerceHero() {
+const EcommerceHero = () => {
   return (
     <section className="bg-gray-50 py-4 lg:py-5">
       <div className="container">
@@ -41,4 +41,6 @@ export default function EcommerceHero() {
       </div>
     </section>
   );
-}
+};
+
+export default EcommerceHero;

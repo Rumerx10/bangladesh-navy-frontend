@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { BookOpen, GraduationCap, Shield } from "lucide-react";
 
-export default function SkillBanner() {
+const SkillBanner = () => {
   return (
     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-pBlue overflow-hidden">
       {/* Decorative background elements */}
@@ -42,4 +42,6 @@ export default function SkillBanner() {
       </div>
     </section>
   );
-}
+};
+
+export default SkillBanner;

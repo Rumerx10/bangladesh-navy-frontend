@@ -7,11 +7,11 @@ import { useEffect, useRef, useState } from "react";
 import { ScrollArea } from "../../../ui/scroll-area";
 import { Specialty } from "./types";
 
-export default function SpecialtiesMegaMenu({
+const SpecialtiesMegaMenu = ({
   specialty,
 }: {
   specialty: Specialty[] | undefined;
-}) {
+}) => {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -92,4 +92,6 @@ export default function SpecialtiesMegaMenu({
       </AnimatePresence>
     </div>
   );
-}
+};
+
+export default SpecialtiesMegaMenu;

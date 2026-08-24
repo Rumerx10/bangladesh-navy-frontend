@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "Our guiding principles and strategic direction.",
 };
 
-export default function VisionMissionPage() {
+const VisionMissionPage = () => {
   return (
     <>
       <AboutHero
@@ -18,4 +18,6 @@ export default function VisionMissionPage() {
       <VisionMission />
     </>
   );
-}
+};
+
+export default VisionMissionPage;

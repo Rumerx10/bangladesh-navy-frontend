@@ -26,7 +26,7 @@ const defaultValues: CheckoutSchemaForm = {
   bankTransactionId: "",
 };
 
-export default function Checkout() {
+const Checkout = () => {
   const { items } = useAppSelector((state) => state.cart);
   const [isPending, setIsPending] = useState(false);
   const router = useRouter();
@@ -67,4 +67,6 @@ export default function Checkout() {
       <CheckoutForm items={items} isPending={isPending} onSubmit={onSubmit} />
     </FormProvider>
   );
-}
+};
+
+export default Checkout;

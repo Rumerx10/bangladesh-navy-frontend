@@ -99,7 +99,7 @@ const tabs = [
 ];
 
 /* ─────────────────────── Order Card ─────────────────────── */
-function OrderCard({ order }: { order: IOrder }) {
+const OrderCard = ({ order }: { order: IOrder }) => {
   const status = statusConfig[order.orderStatus];
 
   return (
@@ -212,10 +212,10 @@ function OrderCard({ order }: { order: IOrder }) {
       </div>
     </div>
   );
-}
+};
 
 /* ─────────────────────── Page ─────────────────────── */
-export default function AccountOrdersClient() {
+const AccountOrdersClient = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -339,4 +339,6 @@ export default function AccountOrdersClient() {
       )}
     </div>
   );
-}
+};
+
+export default AccountOrdersClient;

@@ -12,7 +12,7 @@ const availableCategories = [
   ...Array.from(new Set(courses.map((c) => c.category))),
 ] as (typeof ALL | CourseCategory)[];
 
-export default function SkillCourseList() {
+const SkillCourseList = () => {
   const [activeCategory, setActiveCategory] = useState<
     typeof ALL | CourseCategory
   >(ALL);
@@ -75,4 +75,6 @@ export default function SkillCourseList() {
       </div>
     </section>
   );
-}
+};
+
+export default SkillCourseList;

@@ -4,7 +4,7 @@ import LoginImg from "@/public/auth/signup.jpg";
 import Image from "next/image";
 import { useState } from "react";
 
-export default function LoginBanner() {
+const LoginBanner = () => {
   const [loaded, setLoaded] = useState(false);
 
   return (
@@ -23,4 +23,6 @@ export default function LoginBanner() {
       <div className="absolute inset-0 bg-black/5" />
     </div>
   );
-}
+};
+
+export default LoginBanner;

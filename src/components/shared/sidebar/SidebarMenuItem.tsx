@@ -9,11 +9,11 @@ interface SidebarMenuItemProps {
   onNavigate: () => void;
 }
 
-export default function SidebarMenuItem({
+const SidebarMenuItem = ({
   item,
   showSegment,
   onNavigate,
-}: SidebarMenuItemProps) {
+}: SidebarMenuItemProps) => {
   const pathname = usePathname();
   const isActive = item.href && pathname === item.href;
 
@@ -31,4 +31,6 @@ export default function SidebarMenuItem({
       />
     </div>
   );
-}
+};
+
+export default SidebarMenuItem;

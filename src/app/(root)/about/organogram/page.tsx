@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "Structure and departments of BNHOC.",
 };
 
-export default function OrganogramPage() {
+const OrganogramPage = () => {
   return (
     <>
       <AboutHero
@@ -17,4 +17,6 @@ export default function OrganogramPage() {
       <Organization />
     </>
   );
-}
+};
+
+export default OrganogramPage;

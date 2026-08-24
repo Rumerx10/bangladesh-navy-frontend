@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "Manage your saved payment methods.",
 };
 
-export default function PaymentMethodsPage() {
+const PaymentMethodsPage = () => {
   return <PaymentMethodsClient />;
-}
+};
+
+export default PaymentMethodsPage;

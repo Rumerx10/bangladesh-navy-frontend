@@ -8,11 +8,11 @@ interface ControlledCheckFieldProps {
   disabled?: boolean;
 }
 
-export function ControlledCheckField({
+export const ControlledCheckField = ({
   name,
   label,
   disabled,
-}: ControlledCheckFieldProps) {
+}: ControlledCheckFieldProps) => {
   const { control } = useFormContext();
 
   return (
@@ -44,4 +44,4 @@ export function ControlledCheckField({
       )}
     />
   );
-}
+};

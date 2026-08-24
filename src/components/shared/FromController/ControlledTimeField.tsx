@@ -17,13 +17,13 @@ function combineWithToday(time: string) {
   now.setHours(hours, minutes, 0, 0);
   return now.toISOString(); // you can also return `now` directly if you want a Date object
 }
-export function ControlledTimeField({
+export const ControlledTimeField = ({
   name,
   className,
 }: {
   name: string;
   className?: string;
-}) {
+}) => {
   const { control } = useFormContext();
   const inputRef = useRef<HTMLInputElement>(null);
   return (
@@ -48,4 +48,4 @@ export function ControlledTimeField({
       )}
     />
   );
-}
+};

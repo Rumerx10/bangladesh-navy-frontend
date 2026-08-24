@@ -3,7 +3,7 @@
 import { ArrowRight, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 
-export default function EmptyCart() {
+const EmptyCart = () => {
   return (
     <div className="container px-4 sm:px-0 h-[70vh] flex items-center justify-center">
       <div className="flex flex-col items-center justify-center py-16 sm:pt-40 text-center gap-4">
@@ -26,4 +26,6 @@ export default function EmptyCart() {
       </div>
     </div>
   );
-}
+};
+
+export default EmptyCart;

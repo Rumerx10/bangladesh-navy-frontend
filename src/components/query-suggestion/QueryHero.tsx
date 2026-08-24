@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Mail, MessageSquare, Phone } from "lucide-react";
 
-export default function QueryHero() {
+const QueryHero = () => {
   return (
     <section className="relative pt-40 pb-10 lg:pt-48 lg:pb-32 bg-pBlue overflow-hidden">
       <div className="absolute inset-0">
@@ -47,4 +47,6 @@ export default function QueryHero() {
       </div>
     </section>
   );
-}
+};
+
+export default QueryHero;

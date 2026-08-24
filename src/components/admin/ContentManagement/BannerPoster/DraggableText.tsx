@@ -12,14 +12,14 @@ interface DraggableTextProps {
   onDoubleClick: () => void;
 }
 
-export default function DraggableText({
+const DraggableText = ({
   element,
   isSelected,
   canvasScale,
   onSelect,
   onPositionChange,
   onDoubleClick,
-}: DraggableTextProps) {
+}: DraggableTextProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
   const startPos = useRef({ x: 0, y: 0 });
@@ -125,4 +125,6 @@ export default function DraggableText({
       </div>
     </div>
   );
-}
+};
+
+export default DraggableText;

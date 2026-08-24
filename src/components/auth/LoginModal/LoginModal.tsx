@@ -17,7 +17,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import ErrorMessage from "../../shared/Errors/ErrorMessage";
 import { LoginFormType, loginSchema } from "../Login/Schema";
 
-export default function LoginModal() {
+const LoginModal = () => {
   const dispatch = useAppDispatch();
   const isLoginModalOpen = useAppSelector(
     (state) => state.auth.isLoginModalOpen
@@ -218,4 +218,6 @@ export default function LoginModal() {
       </div>
     </div>
   );
-}
+};
+
+export default LoginModal;

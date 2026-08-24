@@ -18,12 +18,12 @@ interface TextControlPanelProps {
   onClose: () => void;
 }
 
-export default function TextControlPanel({
+const TextControlPanel = ({
   element,
   onUpdate,
   onDelete,
   onClose,
-}: TextControlPanelProps) {
+}: TextControlPanelProps) => {
   return (
     <div className="space-y-4">
       {/* Header */}
@@ -254,4 +254,6 @@ export default function TextControlPanel({
       </button>
     </div>
   );
-}
+};
+
+export default TextControlPanel;

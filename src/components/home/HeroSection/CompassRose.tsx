@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-export default function CompassRose() {
+const CompassRose = () => {
   return (
     <div className="relative w-70 h-70 lg:w-90 lg:h-90">
       {/* Outer glowing ring */}
@@ -137,4 +137,6 @@ export default function CompassRose() {
       </svg>
     </div>
   );
-}
+};
+
+export default CompassRose;

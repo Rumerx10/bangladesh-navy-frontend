@@ -10,7 +10,7 @@ interface SidebarMenuProps {
   onNavigate: () => void;
 }
 
-export default function SidebarMenu({ onNavigate }: SidebarMenuProps) {
+const SidebarMenu = ({ onNavigate }: SidebarMenuProps) => {
   const pathname = usePathname();
   const menuItems = getMenuItems();
 
@@ -72,4 +72,6 @@ export default function SidebarMenu({ onNavigate }: SidebarMenuProps) {
       </div>
     </nav>
   );
-}
+};
+
+export default SidebarMenu;

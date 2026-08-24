@@ -15,13 +15,13 @@ interface NewsEventsCategoryFormProps {
   error?: ErrorType;
 }
 
-export default function NewsEventsCategoryForm({
+const NewsEventsCategoryForm = ({
   isEditMode = false,
   onSubmit,
   onCancel,
   isPending = false,
   error,
-}: NewsEventsCategoryFormProps) {
+}: NewsEventsCategoryFormProps) => {
   const { handleSubmit } = useFormContext<NewsEventsCategoryFormValues>();
 
   return (
@@ -61,4 +61,6 @@ export default function NewsEventsCategoryForm({
       </div>
     </form>
   );
-}
+};
+
+export default NewsEventsCategoryForm;

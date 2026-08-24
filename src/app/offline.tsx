@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-export default function OfflinePage() {
+const OfflinePage = () => {
   return (
     <main className="min-h-screen flex items-center justify-center p-6">
       <div className="text-center">
@@ -24,4 +24,6 @@ export default function OfflinePage() {
       </div>
     </main>
   );
-}
+};
+
+export default OfflinePage;

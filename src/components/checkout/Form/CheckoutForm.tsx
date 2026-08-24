@@ -49,7 +49,7 @@ const paymentMethods = [
   },
 ];
 
-function CheckoutItemImage({ src, alt }: { src: string; alt: string }) {
+const CheckoutItemImage = ({ src, alt }: { src: string; alt: string }) => {
   if (!src) {
     return (
       <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground">
@@ -61,9 +61,9 @@ function CheckoutItemImage({ src, alt }: { src: string; alt: string }) {
   return (
     <Image src={src} alt={alt} fill className="object-cover" sizes="56px" />
   );
-}
+};
 
-export default function CheckoutForm({
+const CheckoutForm = ({
   items,
   onSubmit,
   isPending = false,
@@ -71,7 +71,7 @@ export default function CheckoutForm({
   items: ICartItem[];
   onSubmit: (data: CheckoutSchemaForm) => void | Promise<void>;
   isPending?: boolean;
-}) {
+}) => {
   const {
     handleSubmit,
     register,
@@ -403,4 +403,6 @@ export default function CheckoutForm({
       </div>
     </form>
   );
-}
+};
+
+export default CheckoutForm;

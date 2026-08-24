@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "Track your returned orders.",
 };
 
-export default function ReturnsPage() {
+const ReturnsPage = () => {
   return <ReturnsClient />;
-}
+};
+
+export default ReturnsPage;

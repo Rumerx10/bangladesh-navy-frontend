@@ -7,7 +7,7 @@ interface AboutHeroProps {
   description: string;
 }
 
-export default function AboutHero({ title, description }: AboutHeroProps) {
+const AboutHero = ({ title, description }: AboutHeroProps) => {
   return (
     <section className="relative mt-32 pt-32 pb-20 lg:pt-48 lg:pb-32 bg-pBlue overflow-hidden">
       {/* Decorative background elements */}
@@ -32,4 +32,6 @@ export default function AboutHero({ title, description }: AboutHeroProps) {
       </div>
     </section>
   );
-}
+};
+
+export default AboutHero;

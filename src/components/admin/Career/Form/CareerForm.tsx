@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { useFormContext } from "react-hook-form";
 import { CareerSchemaForm } from "../Schema/careerSchema";
 
-export default function CareerForm({
+const CareerForm = ({
   isEditMode = false,
   onSubmit,
   error,
@@ -24,7 +24,7 @@ export default function CareerForm({
   onSubmit: (data: CareerSchemaForm) => void;
   error?: ErrorType | null;
   isPending?: boolean;
-}) {
+}) => {
   const router = useRouter();
 
   const {
@@ -157,4 +157,6 @@ export default function CareerForm({
       </div>
     </form>
   );
-}
+};
+
+export default CareerForm;

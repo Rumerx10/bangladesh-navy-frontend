@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "There was a problem processing your payment.",
 };
 
-export default function CheckoutFailPage() {
+const CheckoutFailPage = () => {
   return <CheckoutFailClient />;
-}
+};
+
+export default CheckoutFailPage;

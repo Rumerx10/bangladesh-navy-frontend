@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "BN Hydrographic Institute — established 1983 at BNS Issa Khan. Training hydrographic professionals in surveying, oceanography and nautical charting.",
 };
 
-export default function SkillDevelopmentPage() {
+const SkillDevelopmentPage = () => {
   return (
     <main>
       <SkillBanner />
@@ -115,4 +115,6 @@ export default function SkillDevelopmentPage() {
       </section>
     </main>
   );
-}
+};
+
+export default SkillDevelopmentPage;

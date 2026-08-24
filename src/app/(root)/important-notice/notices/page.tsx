@@ -7,6 +7,8 @@ export const metadata: Metadata = {
     "Permanent, temporary, preliminary and gun fire notices to mariners issued by the Bangladesh Navy Hydrographic & Oceanographic Centre.",
 };
 
-export default function NoticesToMarinersPage() {
+const NoticesToMarinersPage = () => {
   return <NoticesToMariners />;
-}
+};
+
+export default NoticesToMarinersPage;

@@ -30,7 +30,7 @@ const cellLabel = (area: IEncCell) =>
 /** Normalise a cell number for search: upper-case, no spaces (e.g. "BD5 7453" -> "BD57453"). */
 const normalise = (value: string) => value.toUpperCase().replace(/\s+/g, "");
 
-export default function ElectronicChartMap() {
+const ElectronicChartMap = () => {
   const [hovered, setHovered] = useState<IEncCell | null>(null);
   const [selected, setSelected] = useState<IEncCell | null>(null);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
@@ -39,11 +39,11 @@ export default function ElectronicChartMap() {
   const [searchedCell, setSearchedCell] = useState<string | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  // Product for the currently selected cell, fetched on demand (by national
-  // chart number) rather than pulling the entire product catalogue up front.
+  // Product for the currently selected cell, fetched on demand (by ENC cell
+  // number) rather than pulling the entire product catalogue up front.
   const { data: selectedProductData } = useGet<IProduct>(
-    `/product/${selected?.nationalNo}`,
-    ["product-detail", selected?.nationalNo ?? ""],
+    `/product/${selected?.cellNo}`,
+    ["product-detail", selected?.cellNo ?? ""],
     undefined,
     { enabled: selected !== null }
   );
@@ -271,9 +271,11 @@ export default function ElectronicChartMap() {
       />
     </section>
   );
-}
+};
 
-function SpecTile({ label, value }: { label: string; value?: string }) {
+export default ElectronicChartMap;
+
+const SpecTile = ({ label, value }: { label: string; value?: string }) => {
   if (!value) return null;
   return (
     <div className="rounded-lg border border-slate-100 bg-slate-50 px-3 py-2">
@@ -285,9 +287,9 @@ function SpecTile({ label, value }: { label: string; value?: string }) {
       </p>
     </div>
   );
-}
+};
 
-function EncInfoDialog({
+const EncInfoDialog = ({
   selected,
   product,
   onClose,
@@ -295,7 +297,7 @@ function EncInfoDialog({
   selected: IEncCell | null;
   product?: IProduct;
   onClose: () => void;
-}) {
+}) => {
   const image = product?.images?.[0];
 
   return (
@@ -364,7 +366,7 @@ function EncInfoDialog({
             {/* CTA */}
             <div className="border-t border-gray-100 pt-4">
               <Link
-                href={`/product-service/electronic-navigational-charts/${selected.nationalNo}`}
+                href={`/product-service/electronic-navigational-charts/${selected.cellNo}`}
                 className="block w-full rounded-lg bg-pBlue py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-pBlue/90"
               >
                 View Details
@@ -393,4 +395,4 @@ function EncInfoDialog({
       </DialogContent>
     </Dialog>
   );
-}
+};

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRef, useState, useEffect, useCallback } from "react";
 import ProductCard from "../ProductCard/ProductCard";
 
-export default function NewArrivals() {
+const NewArrivals = () => {
   const products = dummyProducts.filter((p) => p.isActive && p.isNewArrival);
   const scrollRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -127,4 +127,6 @@ export default function NewArrivals() {
       </div>
     </section>
   );
-}
+};
+
+export default NewArrivals;

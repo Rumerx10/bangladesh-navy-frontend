@@ -1,5 +1,11 @@
+import { Metadata } from "next";
 import CreateUpdateProduct from "@/src/components/admin/ContentManagement/products/Form/CreateUpdateProducts";
 import AdminBackButton from "@/src/components/shared/AdminBackButton/AdminBackButton";
+
+export const metadata: Metadata = {
+  title: "Add Product",
+  description: "Add a new product to the catalog.",
+};
 
 const CreateProductPage = () => {
   return (

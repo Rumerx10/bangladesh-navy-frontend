@@ -13,7 +13,7 @@ import { SquarePen, User } from "lucide-react";
 import Image from "next/image";
 import { ICareer } from "../types";
 
-export default function ViewJobDetailsModal({
+const ViewJobDetailsModal = ({
   isOpen,
   onClose,
   data,
@@ -21,7 +21,7 @@ export default function ViewJobDetailsModal({
   isOpen: boolean;
   onClose: () => void;
   data?: ICareer;
-}) {
+}) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="bg-white min-w-[60vw] overflow-y-auto">
@@ -94,4 +94,6 @@ export default function ViewJobDetailsModal({
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default ViewJobDetailsModal;

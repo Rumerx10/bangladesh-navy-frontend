@@ -14,7 +14,7 @@ import { IAddress } from "../types";
 
 const getAddressId = (address: IAddress) => address.id || address._id || "";
 
-export default function AddressList() {
+const AddressList = () => {
   const { userInformation } = useAppSelector((state) => state.auth);
   const userId = userInformation?.id;
 
@@ -210,4 +210,6 @@ export default function AddressList() {
       />
     </div>
   );
-}
+};
+
+export default AddressList;

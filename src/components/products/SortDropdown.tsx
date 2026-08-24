@@ -13,7 +13,7 @@ interface SortDropdownProps {
   ) => void;
 }
 
-export default function SortDropdown({ value, onChange }: SortDropdownProps) {
+const SortDropdown = ({ value, onChange }: SortDropdownProps) => {
   return (
     <Select
       value={value}
@@ -40,4 +40,6 @@ export default function SortDropdown({ value, onChange }: SortDropdownProps) {
       </SelectContent>
     </Select>
   );
-}
+};
+
+export default SortDropdown;

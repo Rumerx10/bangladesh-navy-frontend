@@ -7,6 +7,8 @@ export const metadata: Metadata = {
     "Latest hydrographic surveys, maritime events, and BNHOC publications.",
 };
 
-export default function NewsPage() {
+const NewsPage = () => {
   return <NewsListing />;
-}
+};
+
+export default NewsPage;

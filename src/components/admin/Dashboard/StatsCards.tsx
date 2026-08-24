@@ -25,7 +25,7 @@ const cardVariants = {
   },
 };
 
-export default function StatsCards() {
+const StatsCards = () => {
   const { data, isLoading } = useGet<DashboardStatResponse[]>(
     "/api/dashboard/stats",
     ["dashboard", "stats"]
@@ -97,4 +97,6 @@ export default function StatsCards() {
       })}
     </motion.div>
   );
-}
+};
+
+export default StatsCards;

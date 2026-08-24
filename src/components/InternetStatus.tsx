@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export default function InternetStatus() {
+const InternetStatus = () => {
   const router = useRouter();
 
   useEffect(() => {
@@ -87,4 +87,6 @@ export default function InternetStatus() {
   }, [router]);
 
   return null;
-}
+};
+
+export default InternetStatus;

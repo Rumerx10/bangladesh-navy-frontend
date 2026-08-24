@@ -21,13 +21,13 @@ interface SurveyCategoryFormProps {
   error?: ErrorType;
 }
 
-export default function SurveyCategoryForm({
+const SurveyCategoryForm = ({
   isEditMode = false,
   onSubmit,
   onCancel,
   isPending = false,
   error,
-}: SurveyCategoryFormProps) {
+}: SurveyCategoryFormProps) => {
   const { handleSubmit } = useFormContext<SurveyCategoryFormValues>();
 
   return (
@@ -76,4 +76,6 @@ export default function SurveyCategoryForm({
       </div>
     </form>
   );
-}
+};
+
+export default SurveyCategoryForm;
