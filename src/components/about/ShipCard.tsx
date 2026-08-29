@@ -142,7 +142,7 @@ const ShipCard = ({ ship, index }: { ship: SurveyShipItem; index: number }) => {
               <div className="flex items-center gap-2 px-4 py-2.5 bg-pBlue">
                 <Radar size={13} className="text-cyan-400/80 shrink-0" />
                 <span className="text-base font-medium text-white uppercase tracking-widest">
-                  Capabilities
+                  Survey Capabilities
                 </span>
               </div>
               <div className="flex-1 p-4 flex flex-col gap-2.5">
