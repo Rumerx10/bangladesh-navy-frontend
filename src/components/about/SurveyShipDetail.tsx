@@ -9,7 +9,7 @@ interface SurveyShipDetailProps {
   ship: ISurveyShip;
 }
 
-export default function SurveyShipDetail({ ship }: SurveyShipDetailProps) {
+const SurveyShipDetail = ({ ship }: SurveyShipDetailProps) => {
   return (
     <section className="mt-40">
       <div className="container pb-10">
@@ -124,4 +124,6 @@ export default function SurveyShipDetail({ ship }: SurveyShipDetailProps) {
       </div>
     </section>
   );
-}
+};
+
+export default SurveyShipDetail;

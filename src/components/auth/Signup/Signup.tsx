@@ -8,7 +8,7 @@ import SignupForm from "./Form/SignupForm";
 import { SignupFormType, signupSchema } from "./Schema";
 import SignupBanner from "./SignupBanner";
 
-export default function SignupPage() {
+const SignupPage = () => {
   const router = useRouter();
   const methods = useForm<SignupFormType>({
     resolver: yupResolver(signupSchema),
@@ -53,4 +53,6 @@ export default function SignupPage() {
       </div>
     </div>
   );
-}
+};
+
+export default SignupPage;

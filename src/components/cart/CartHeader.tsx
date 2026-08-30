@@ -9,7 +9,7 @@ interface CartHeaderProps {
   totalItems: number;
 }
 
-export default function CartHeader({ totalItems }: CartHeaderProps) {
+const CartHeader = ({ totalItems }: CartHeaderProps) => {
   const dispatch = useAppDispatch();
 
   return (
@@ -34,4 +34,6 @@ export default function CartHeader({ totalItems }: CartHeaderProps) {
       </button>
     </div>
   );
-}
+};
+
+export default CartHeader;

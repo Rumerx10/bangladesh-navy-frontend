@@ -7,6 +7,8 @@ export const metadata: Metadata = {
     "Officers trained at the Bangladesh Navy Hydrographic & Oceanographic Centre, listed batch by batch with rank, personal number and parent organization.",
 };
 
-export default function AlumniPage() {
+const AlumniPage = () => {
   return <AlumniDirectory />;
-}
+};
+
+export default AlumniPage;

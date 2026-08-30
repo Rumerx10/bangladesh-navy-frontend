@@ -41,7 +41,7 @@ const cardVariants: Variants = {
   },
 };
 
-export default function GalleryGrid() {
+const GalleryGrid = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const shouldReduceMotion = useReducedMotion();
@@ -206,4 +206,6 @@ export default function GalleryGrid() {
       />
     </>
   );
-}
+};
+
+export default GalleryGrid;

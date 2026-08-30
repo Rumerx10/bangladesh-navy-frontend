@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { makeStore } from "../store";
 import { initCart } from "../features/cart/cartSlice";
 
-export default function StoreProvider({ children }: { children: ReactNode }) {
+const StoreProvider = ({ children }: { children: ReactNode }) => {
   const store = useMemo(() => makeStore(), []);
 
   useEffect(() => {
@@ -13,4 +13,6 @@ export default function StoreProvider({ children }: { children: ReactNode }) {
   }, [store]);
 
   return <Provider store={store}>{children}</Provider>;
-}
+};
+
+export default StoreProvider;

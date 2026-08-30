@@ -18,13 +18,13 @@ interface MultipleImageUploadControllerProps {
 const isFieldErrorMap = (error: unknown): error is Record<string, FieldError> =>
   typeof error === "object" && error !== null && !("message" in error);
 
-export function MultipleImageUploadController({
+export const MultipleImageUploadController = ({
   name,
   label,
   className,
   imgClassName,
   initialUrls = [],
-}: MultipleImageUploadControllerProps) {
+}: MultipleImageUploadControllerProps) => {
   const { control, setValue } = useFormContext();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -193,4 +193,4 @@ export function MultipleImageUploadController({
       }}
     />
   );
-}
+};

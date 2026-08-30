@@ -93,7 +93,7 @@ const MOCK_MEDIA: MediaItem[] = [
 
 type FilterTab = "all" | "product" | "category";
 
-export default function MediaGallery() {
+const MediaGallery = () => {
   const [media, setMedia] = useState<MediaItem[]>(MOCK_MEDIA);
   const [activeTab, setActiveTab] = useState<FilterTab>("all");
   const [search, setSearch] = useState("");
@@ -342,4 +342,6 @@ export default function MediaGallery() {
       </AnimatePresence>
     </div>
   );
-}
+};
+
+export default MediaGallery;

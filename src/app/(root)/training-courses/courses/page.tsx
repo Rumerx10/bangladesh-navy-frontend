@@ -7,11 +7,13 @@ export const metadata: Metadata = {
     "Browse professional maritime courses offered by BN Hydrographic Institute — hydrography, cartography, GIS, and customized programmes.",
 };
 
-export default function CoursesPage() {
+const CoursesPage = () => {
   return (
     <main className="pt-33">
       <CourseOverview />
       {/* <SkillCourseList /> */}
     </main>
   );
-}
+};
+
+export default CoursesPage;

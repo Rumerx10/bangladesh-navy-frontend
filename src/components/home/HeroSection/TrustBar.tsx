@@ -18,7 +18,7 @@ const badges = [
   { icon: <Lock size={18} />, label: "Secure Payment" },
 ];
 
-export default function TrustBar() {
+const TrustBar = () => {
   return (
     <div className="bg-white border border-gray-200 rounded-xl mt-5 overflow-hidden max-sm:border-none max-sm:bg-transparent max-sm:rounded-none max-sm:overflow-visible">
       <div className="flex items-stretch overflow-x-auto scrollbar-hide max-sm:gap-2.5 max-sm:px-1 max-sm:snap-x max-sm:snap-mandatory">
@@ -46,4 +46,6 @@ export default function TrustBar() {
       </div>
     </div>
   );
-}
+};
+
+export default TrustBar;

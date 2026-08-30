@@ -14,7 +14,7 @@ interface CartItemCardProps {
   index: number;
 }
 
-export default function CartItemCard({ item, index }: CartItemCardProps) {
+const CartItemCard = ({ item, index }: CartItemCardProps) => {
   const dispatch = useAppDispatch();
   const [imgError, setImgError] = useState(false);
 
@@ -128,4 +128,6 @@ export default function CartItemCard({ item, index }: CartItemCardProps) {
       </div>
     </div>
   );
-}
+};
+
+export default CartItemCard;

@@ -120,10 +120,7 @@ function renderMiniTexts(template: PosterTemplate, scale: number) {
   ));
 }
 
-export default function TemplateCard({
-  template,
-  onSelect,
-}: TemplateCardProps) {
+const TemplateCard = ({ template, onSelect }: TemplateCardProps) => {
   const isLandscape = template.canvasWidth > template.canvasHeight;
   const previewW = isLandscape ? 280 : 180;
   const previewH = isLandscape
@@ -214,4 +211,6 @@ export default function TemplateCard({
       </div>
     </motion.div>
   );
-}
+};
+
+export default TemplateCard;

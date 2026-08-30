@@ -10,7 +10,7 @@ interface CourseCardProps {
   course: ICourse;
 }
 
-export default function CourseCard({ course }: CourseCardProps) {
+const CourseCard = ({ course }: CourseCardProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -65,4 +65,6 @@ export default function CourseCard({ course }: CourseCardProps) {
       </div>
     </motion.div>
   );
-}
+};
+
+export default CourseCard;

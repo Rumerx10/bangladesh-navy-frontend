@@ -27,7 +27,7 @@ const dailySales = [
   { hour: "20:00", sales: 18 },
 ];
 
-export default function DailySalesChart() {
+const DailySalesChart = () => {
   return (
     <Card className="border-gray-100 shadow-sm rounded-2xl py-4 sm:py-5">
       <CardHeader className="pb-2 px-4 sm:px-6">
@@ -87,4 +87,6 @@ export default function DailySalesChart() {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default DailySalesChart;

@@ -3,13 +3,7 @@
 import Link from "next/link";
 import { Button } from "../components/ui/button";
 
-export default function GlobalError({
-  error,
-  reset,
-}: {
-  error: Error;
-  reset: () => void;
-}) {
+const GlobalError = ({ error, reset }: { error: Error; reset: () => void }) => {
   return (
     <main className="min-h-screen flex items-center justify-center p-6">
       <div className="text-center">
@@ -34,4 +28,6 @@ export default function GlobalError({
       </div>
     </main>
   );
-}
+};
+
+export default GlobalError;

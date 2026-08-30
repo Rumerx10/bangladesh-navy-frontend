@@ -13,7 +13,7 @@ interface TimelineCardProps {
   item: ITimelineItem;
 }
 
-export default function TimelineCard({ item }: TimelineCardProps) {
+const TimelineCard = ({ item }: TimelineCardProps) => {
   const isRight = item.position === "right";
 
   return (
@@ -47,4 +47,6 @@ export default function TimelineCard({ item }: TimelineCardProps) {
       <div className={`hidden md:block w-1/2 ${isRight ? "md:order-1" : ""}`} />
     </div>
   );
-}
+};
+
+export default TimelineCard;

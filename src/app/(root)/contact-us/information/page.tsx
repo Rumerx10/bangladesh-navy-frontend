@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "Phone numbers, email addresses, office hours, and location of the Bangladesh Navy Hydrographic & Oceanographic Center.",
 };
 
-export default function ContactInfoPage() {
+const ContactInfoPage = () => {
   return (
     <>
       <AboutHero
@@ -22,4 +22,6 @@ export default function ContactInfoPage() {
       </section>
     </>
   );
-}
+};
+
+export default ContactInfoPage;

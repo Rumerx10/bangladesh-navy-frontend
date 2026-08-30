@@ -7,6 +7,8 @@ export const metadata: Metadata = {
     "Get in touch with the Bangladesh Navy Hydrographic & Oceanographic Center for inquiries, support, and services.",
 };
 
-export default function ContactUsPage() {
+const ContactUsPage = () => {
   return <ContactUs />;
-}
+};
+
+export default ContactUsPage;

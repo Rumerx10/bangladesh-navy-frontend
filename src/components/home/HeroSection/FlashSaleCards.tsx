@@ -23,7 +23,7 @@ const flashSales = [
   },
 ];
 
-export default function FlashSaleCards() {
+const FlashSaleCards = () => {
   return (
     <div
       className="flex gap-3 overflow-x-auto lg:grid lg:grid-cols-2 lg:gap-4 mt-3 lg:mt-4 snap-x snap-mandatory"
@@ -70,4 +70,6 @@ export default function FlashSaleCards() {
       ))}
     </div>
   );
-}
+};
+
+export default FlashSaleCards;

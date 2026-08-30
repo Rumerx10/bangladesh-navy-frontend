@@ -16,7 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import CustomTooltip from "./CustomTooltip";
 import RevenueChartSkeleton from "./Skeleton/RevenueChartSkeleton";
 
-export default function RevenueChart() {
+const RevenueChart = () => {
   const { data, isLoading } = useGet<RevenueResponse>(
     "/api/dashboard/revenue",
     ["dashboard", "revenue"]
@@ -129,4 +129,6 @@ export default function RevenueChart() {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default RevenueChart;

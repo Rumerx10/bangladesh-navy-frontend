@@ -15,13 +15,13 @@ const ADDRESS_TYPE_OPTIONS = [
   { label: "Other", value: "OTHER" },
 ];
 
-export default function AddressForm({
+const AddressForm = ({
   isEditMode = false,
   onSubmit,
   onCancel,
   isPending = false,
   error,
-}: IAddressFormProps) {
+}: IAddressFormProps) => {
   const { handleSubmit } = useFormContext<AddressFormValues>();
 
   return (
@@ -155,4 +155,6 @@ export default function AddressForm({
       </div>
     </form>
   );
-}
+};
+
+export default AddressForm;

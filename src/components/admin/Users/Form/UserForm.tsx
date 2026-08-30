@@ -6,7 +6,7 @@ import { Button } from "@/src/components/ui/button";
 import { useFormContext } from "react-hook-form";
 import { UserFormValues } from "../Schema/userSchema";
 
-export default function UserForm({
+const UserForm = ({
   onSubmit,
   onCancel,
   isPending = false,
@@ -14,7 +14,7 @@ export default function UserForm({
   onSubmit: (data: UserFormValues) => void;
   onCancel: () => void;
   isPending?: boolean;
-}) {
+}) => {
   const { handleSubmit } = useFormContext<UserFormValues>();
 
   return (
@@ -69,4 +69,6 @@ export default function UserForm({
       </div>
     </form>
   );
-}
+};
+
+export default UserForm;

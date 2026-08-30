@@ -23,13 +23,13 @@ interface ImportantLinkFormProps {
   error?: ErrorType;
 }
 
-export default function ImportantLinkForm({
+const ImportantLinkForm = ({
   isEditMode = false,
   onSubmit,
   onCancel,
   isPending = false,
   error,
-}: ImportantLinkFormProps) {
+}: ImportantLinkFormProps) => {
   const { handleSubmit } = useFormContext<ImportantLinkFormValues>();
 
   return (
@@ -76,4 +76,6 @@ export default function ImportantLinkForm({
       </div>
     </form>
   );
-}
+};
+
+export default ImportantLinkForm;

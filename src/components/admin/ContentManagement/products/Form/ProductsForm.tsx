@@ -53,14 +53,14 @@ const SectionHeader = ({ label }: { label: string }) => {
   );
 };
 
-export default function ProductForm({
+const ProductForm = ({
   isEditMode = false,
   onSubmit,
   onCancel,
   isPending = false,
   error,
   initialValues,
-}: ProductFormProps) {
+}: ProductFormProps) => {
   const {
     handleSubmit,
     watch,
@@ -409,4 +409,6 @@ export default function ProductForm({
       </div>
     </form>
   );
-}
+};
+
+export default ProductForm;

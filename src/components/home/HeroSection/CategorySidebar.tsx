@@ -34,13 +34,13 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 /* ─── Recursive submenu items ─── */
-function CategoryChildren({
+const CategoryChildren = ({
   categories,
   depth = 0,
 }: {
   categories: Category[];
   depth?: number;
-}) {
+}) => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
@@ -82,10 +82,10 @@ function CategoryChildren({
       })}
     </ul>
   );
-}
+};
 
 /* ─── Main sidebar ─── */
-export default function CategorySidebar() {
+const CategorySidebar = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
@@ -143,4 +143,6 @@ export default function CategorySidebar() {
       </nav>
     </div>
   );
-}
+};
+
+export default CategorySidebar;

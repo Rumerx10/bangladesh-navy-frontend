@@ -1,7 +1,13 @@
+import { Metadata } from "next";
 import CreateUpdateCareer from "@/src/components/admin/Career/Form/CreateUpdateCareer";
 import AdminBackButton from "@/src/components/shared/AdminBackButton/AdminBackButton";
 
-export default function page() {
+export const metadata: Metadata = {
+  title: "Add Job",
+  description: "Post a new job opening for the careers page.",
+};
+
+const page = () => {
   return (
     <div>
       <div className="mb-6">
@@ -10,4 +16,6 @@ export default function page() {
       <CreateUpdateCareer />
     </div>
   );
-}
+};
+
+export default page;

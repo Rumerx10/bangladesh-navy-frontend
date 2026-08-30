@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "View your cancelled orders.",
 };
 
-export default function CancellationsPage() {
+const CancellationsPage = () => {
   return <CancellationsClient />;
-}
+};
+
+export default CancellationsPage;

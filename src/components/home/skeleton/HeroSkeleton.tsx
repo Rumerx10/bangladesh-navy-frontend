@@ -1,4 +1,4 @@
-export default function HeroSkeleton() {
+const HeroSkeleton = () => {
   return (
     <div className=" relative h-[75vh] w-full overflow-hidden bg-white animate-pulse">
       {/* Background */}
@@ -20,4 +20,6 @@ export default function HeroSkeleton() {
       </div>
     </div>
   );
-}
+};
+
+export default HeroSkeleton;

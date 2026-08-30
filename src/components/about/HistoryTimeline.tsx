@@ -12,7 +12,7 @@ const narrativeStyles =
   "[&_img]:h-auto [&_img]:shrink-0 [&_img]:mr-5 [&_img]:mb-4 " +
   "[&_img]:rounded-xl [&_img]:shadow-md [&_img]:object-cover";
 
-export default function HistoryTimeline() {
+const HistoryTimeline = () => {
   const { data, isLoading } = useGet<IHistoryContent | null>("/history", [
     "history",
   ]);
@@ -57,4 +57,6 @@ export default function HistoryTimeline() {
       <div className="clear-both" />
     </motion.div>
   );
-}
+};
+
+export default HistoryTimeline;

@@ -1,7 +1,7 @@
 import { Skeleton } from "@/src/components/ui/skeleton";
 import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
 
-export default function RevenueChartSkeleton() {
+const RevenueChartSkeleton = () => {
   return (
     <Card className="border-gray-100 shadow-sm rounded-2xl py-4 sm:py-5">
       <CardHeader className="pb-2 px-4 sm:px-6">
@@ -32,4 +32,6 @@ export default function RevenueChartSkeleton() {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default RevenueChartSkeleton;

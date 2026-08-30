@@ -1,5 +1,7 @@
 import { redirect } from "next/navigation";
 
-export default function AboutPage() {
+const AboutPage = () => {
   redirect("/about/history");
-}
+};
+
+export default AboutPage;

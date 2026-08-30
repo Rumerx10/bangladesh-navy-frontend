@@ -26,13 +26,13 @@ interface NewsEventsFormProps {
   error?: ErrorType;
 }
 
-export default function NewsEventsForm({
+const NewsEventsForm = ({
   isEditMode = false,
   onSubmit,
   onCancel,
   isPending = false,
   error,
-}: NewsEventsFormProps) {
+}: NewsEventsFormProps) => {
   const {
     watch,
     setValue,
@@ -185,4 +185,6 @@ export default function NewsEventsForm({
       </div>
     </form>
   );
-}
+};
+
+export default NewsEventsForm;

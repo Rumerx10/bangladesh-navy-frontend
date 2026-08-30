@@ -19,7 +19,7 @@ interface CourseDetailsProps {
   course: ICourse;
 }
 
-export default function CourseDetails({ course }: CourseDetailsProps) {
+const CourseDetails = ({ course }: CourseDetailsProps) => {
   const [enrollOpen, setEnrollOpen] = useState(false);
 
   return (
@@ -228,4 +228,6 @@ export default function CourseDetails({ course }: CourseDetailsProps) {
       />
     </div>
   );
-}
+};
+
+export default CourseDetails;

@@ -20,7 +20,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function CourseDetailsPage({ params }: PageProps) {
+const CourseDetailsPage = async ({ params }: PageProps) => {
   const { slug } = await params;
   const course = courses.find((c) => c.slug === slug);
 
@@ -29,7 +29,9 @@ export default async function CourseDetailsPage({ params }: PageProps) {
   }
 
   return <CourseDetails course={course} />;
-}
+};
+
+export default CourseDetailsPage;
 
 export async function generateStaticParams() {
   return courses.map((course) => ({

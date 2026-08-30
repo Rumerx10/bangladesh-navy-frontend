@@ -7,6 +7,8 @@ export const metadata: Metadata = {
     "Submit hydrographic notes and observations to the Bangladesh Navy Hydrographic & Oceanographic Center.",
 };
 
-export default function HydrographicNotePage() {
+const HydrographicNotePage = () => {
   return <HydrographicNote />;
-}
+};
+
+export default HydrographicNotePage;

@@ -74,3 +74,48 @@ export const REMARKS_SUGGESTIONS = [
   "Change Branch",
   "On Deputation",
 ];
+
+/**
+ * A course type — "Basic Hydro", "Advanced Hydro", … Every batch belongs to
+ * exactly one course, which is what the admin batch/course editor filters by.
+ * This is a separate admin-side model from `IAlumniCourseGroup` above.
+ */
+export interface IAlumniCourse {
+  id: string;
+  nameEn: string;
+  nameBn?: string;
+  status: AlumniStatus;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+/** One roster row within an `IAlumniBatch`. */
+export interface IAlumniBatchMember {
+  id?: string;
+  serial: number;
+  pNo?: string;
+  rankName: string;
+  organization?: string;
+  remarks?: string;
+}
+
+/** A single run of a course — "1st Basic Hydro", 08 Mar 1997 → 07 Aug 1997. */
+export interface IAlumniBatch {
+  id: string;
+  /** 1, 2, 3 … rendered as "1st", "2nd", "3rd" and used for ordering. */
+  batchNo: number;
+  titleEn: string;
+  titleBn?: string;
+  /** ISO 8601. */
+  startDate: string;
+  /** ISO 8601. */
+  endDate: string;
+  descriptionEn?: string;
+  status: AlumniStatus;
+  alumniCourseId?: string;
+  /** Populated by the API on read; absent on write payloads. */
+  alumniCourse?: IAlumniCourse;
+  members: IAlumniBatchMember[];
+  createdAt?: string;
+  updatedAt?: string;
+}

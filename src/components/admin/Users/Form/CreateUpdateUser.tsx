@@ -21,11 +21,11 @@ interface CreateUpdateUserProps {
   initialValues?: IUser;
 }
 
-export default function CreateUpdateUser({
+const CreateUpdateUser = ({
   isOpen,
   onClose,
   initialValues,
-}: CreateUpdateUserProps) {
+}: CreateUpdateUserProps) => {
   const methods = useForm<UserFormValues>({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resolver: yupResolver(userSchema) as any,
@@ -97,4 +97,6 @@ export default function CreateUpdateUser({
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default CreateUpdateUser;

@@ -6,7 +6,7 @@ import CartItemList from "./CartItemList";
 import EmptyCart from "./EmptyCart";
 import OrderSummary from "./OrderSummary";
 
-export default function Cart() {
+const Cart = () => {
   const { items } = useAppSelector((state) => state.cart);
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
@@ -26,4 +26,6 @@ export default function Cart() {
       </div>
     </div>
   );
-}
+};
+
+export default Cart;

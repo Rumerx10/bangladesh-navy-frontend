@@ -58,7 +58,7 @@ const LINE = `${NAVY}55`;
 
 // ─── Cards ────────────────────────────────────────────────────────────────────
 
-function RootCard({ title }: { title: string }) {
+const RootCard = ({ title }: { title: string }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: -8 }}
@@ -69,9 +69,15 @@ function RootCard({ title }: { title: string }) {
       {title}
     </motion.div>
   );
-}
+};
 
-function BranchCard({ title, delay = 0 }: { title: string; delay?: number }) {
+const BranchCard = ({
+  title,
+  delay = 0,
+}: {
+  title: string;
+  delay?: number;
+}) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
@@ -83,9 +89,9 @@ function BranchCard({ title, delay = 0 }: { title: string; delay?: number }) {
       {title}
     </motion.div>
   );
-}
+};
 
-function DeptCard({ title, delay = 0 }: { title: string; delay?: number }) {
+const DeptCard = ({ title, delay = 0 }: { title: string; delay?: number }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
@@ -97,9 +103,15 @@ function DeptCard({ title, delay = 0 }: { title: string; delay?: number }) {
       {title}
     </motion.div>
   );
-}
+};
 
-function DeputyCard({ title, delay = 0 }: { title: string; delay?: number }) {
+const DeputyCard = ({
+  title,
+  delay = 0,
+}: {
+  title: string;
+  delay?: number;
+}) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
@@ -111,12 +123,12 @@ function DeputyCard({ title, delay = 0 }: { title: string; delay?: number }) {
       {title}
     </motion.div>
   );
-}
+};
 
 // ─── Connectors ───────────────────────────────────────────────────────────────
 
 /** Horizontal right-pointing arrow: ──► */
-function HArrow() {
+const HArrow = () => {
   return (
     <div className="flex items-center shrink-0" style={{ width: 20 }}>
       <div className="flex-1 h-px" style={{ background: LINE }} />
@@ -131,10 +143,10 @@ function HArrow() {
       </svg>
     </div>
   );
-}
+};
 
 /** Vertical downward arrow: a line + arrowhead */
-function VArrow({ height = 18 }: { height?: number }) {
+const VArrow = ({ height = 18 }: { height?: number }) => {
   return (
     <div className="flex flex-col items-center mx-auto" style={{ height }}>
       <div className="w-px flex-1" style={{ background: LINE }} />
@@ -143,7 +155,7 @@ function VArrow({ height = 18 }: { height?: number }) {
       </svg>
     </div>
   );
-}
+};
 
 /**
  * Splits one parent into N equal-width children.
@@ -151,7 +163,7 @@ function VArrow({ height = 18 }: { height?: number }) {
  *   horizontal crossbar
  *   N vertical stems down to children
  */
-function ForkDown({ n }: { n: number }) {
+const ForkDown = ({ n }: { n: number }) => {
   const pcts = Array.from({ length: n }, (_, i) => (100 / n) * (i + 0.5));
   const lo = pcts[0];
   const hi = pcts[pcts.length - 1];
@@ -185,19 +197,19 @@ function ForkDown({ n }: { n: number }) {
       ))}
     </div>
   );
-}
+};
 
 /**
  * Root → two asymmetric branches.
  * leftPct / rightPct = horizontal % positions of the stems (relative to full container width).
  */
-function RootFork({
+const RootFork = ({
   leftPct,
   rightPct,
 }: {
   leftPct: number;
   rightPct: number;
-}) {
+}) => {
   return (
     <div className="relative w-full" style={{ height: 36 }}>
       <div
@@ -226,13 +238,13 @@ function RootFork({
       ))}
     </div>
   );
-}
+};
 
 /**
  * Connector from the center of the branch header down, then left to a left-edge sidebar.
  * Looks like: ┐ (mirrored L)
  */
-function DropLeftConnector() {
+const DropLeftConnector = () => {
   return (
     <div className="relative w-full" style={{ height: 28 }}>
       {/* vertical drop from center */}
@@ -252,11 +264,11 @@ function DropLeftConnector() {
       />
     </div>
   );
-}
+};
 
 // ─── Left branch row tree ─────────────────────────────────────────────────────
 
-function LeftRows({ rows }: { rows: string[][] }) {
+const LeftRows = ({ rows }: { rows: string[][] }) => {
   return (
     <div className="relative w-full">
       {/* Vertical sidebar spanning all rows */}
@@ -285,11 +297,11 @@ function LeftRows({ rows }: { rows: string[][] }) {
       </div>
     </div>
   );
-}
+};
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
-export default function Organization() {
+const Organization = () => {
   const { root, leftBranch, rightBranch } = orgData;
 
   // Fork stem positions relative to the 860 px-wide container.
@@ -387,7 +399,9 @@ export default function Organization() {
       </div>
     </section>
   );
-}
+};
+
+export default Organization;
 
 // "use client";
 

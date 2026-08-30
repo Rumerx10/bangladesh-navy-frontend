@@ -16,7 +16,7 @@ import { useMemo, useRef, useState } from "react";
 import SearchTabs from "./SearchTabs";
 import SectionTitle from "../../SectionTitle";
 
-export default function MaritimeSearch() {
+const MaritimeSearch = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("all");
   const [query, setQuery] = useState("");
@@ -203,4 +203,6 @@ export default function MaritimeSearch() {
       </div>
     </section>
   );
-}
+};
+
+export default MaritimeSearch;

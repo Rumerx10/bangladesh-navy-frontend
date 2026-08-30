@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "View your order history.",
 };
 
-export default function OrdersPage() {
+const OrdersPage = () => {
   return <OrdersClient />;
-}
+};
+
+export default OrdersPage;

@@ -23,7 +23,7 @@ interface QuickAccessCardProps {
   item: IQuickAccessItem;
 }
 
-export default function QuickAccessCard({ item }: QuickAccessCardProps) {
+const QuickAccessCard = ({ item }: QuickAccessCardProps) => {
   return (
     <Link
       href={item.href}
@@ -46,4 +46,6 @@ export default function QuickAccessCard({ item }: QuickAccessCardProps) {
       />
     </Link>
   );
-}
+};
+
+export default QuickAccessCard;

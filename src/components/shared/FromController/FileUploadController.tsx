@@ -24,14 +24,14 @@ interface FileUploadControllerProps {
   disabled?: boolean;
 }
 
-export function FileUploadController({
+export const FileUploadController = ({
   name,
   label,
   className,
   imgClassName,
   accept,
   disabled,
-}: FileUploadControllerProps) {
+}: FileUploadControllerProps) => {
   const { control, getValues } = useFormContext();
   const initialUrl = getValues(name);
 
@@ -231,4 +231,4 @@ export function FileUploadController({
       }}
     />
   );
-}
+};

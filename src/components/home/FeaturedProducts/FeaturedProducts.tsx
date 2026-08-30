@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRef, useState, useEffect, useCallback } from "react";
 import ProductCard from "../ProductCard/ProductCard";
 
-export default function FeaturedProducts() {
+const FeaturedProducts = () => {
   const products = dummyProducts.filter((p) => p.isActive);
   const scrollRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -129,4 +129,6 @@ export default function FeaturedProducts() {
       </div>
     </section>
   );
-}
+};
+
+export default FeaturedProducts;

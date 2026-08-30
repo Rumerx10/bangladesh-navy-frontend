@@ -15,11 +15,11 @@ interface ProductInfoProps {
   formatPrice: (poysha: number) => string;
 }
 
-export default function ProductInfo({
+const ProductInfo = ({
   product,
   discountedPrice,
   formatPrice,
-}: ProductInfoProps) {
+}: ProductInfoProps) => {
   const dispatch = useAppDispatch();
   const [quantity, setQuantity] = useState(1);
   const slug = getProductSlug(product);
@@ -80,4 +80,6 @@ export default function ProductInfo({
       </Link>
     </div>
   );
-}
+};
+
+export default ProductInfo;

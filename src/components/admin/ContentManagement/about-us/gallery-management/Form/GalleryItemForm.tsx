@@ -25,13 +25,13 @@ interface GalleryItemFormProps {
   error?: ErrorType;
 }
 
-export default function GalleryItemForm({
+const GalleryItemForm = ({
   isEditMode = false,
   onSubmit,
   onCancel,
   isPending = false,
   error,
-}: GalleryItemFormProps) {
+}: GalleryItemFormProps) => {
   const { handleSubmit } = useFormContext<GalleryItemFormValues>();
 
   const { data: categoryData } = useGet<IGalleryCategory[]>(
@@ -161,4 +161,6 @@ export default function GalleryItemForm({
       </div>
     </form>
   );
-}
+};
+
+export default GalleryItemForm;

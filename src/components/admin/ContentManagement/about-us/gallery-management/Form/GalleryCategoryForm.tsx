@@ -21,13 +21,13 @@ interface GalleryCategoryFormProps {
   error?: ErrorType;
 }
 
-export default function GalleryCategoryForm({
+const GalleryCategoryForm = ({
   isEditMode = false,
   onSubmit,
   onCancel,
   isPending = false,
   error,
-}: GalleryCategoryFormProps) {
+}: GalleryCategoryFormProps) => {
   const { handleSubmit } = useFormContext<GalleryCategoryFormValues>();
 
   return (
@@ -76,4 +76,6 @@ export default function GalleryCategoryForm({
       </div>
     </form>
   );
-}
+};
+
+export default GalleryCategoryForm;

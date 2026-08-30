@@ -62,3 +62,10 @@ export const courseYear = (value?: string | null) => {
  */
 export const paddedSerial = (value: number) =>
   Number.isFinite(value) ? String(Math.trunc(value)).padStart(2, "0") : "—";
+
+/**
+ * Zero-padded batch number for the badge — "01", "02", "12". Keeps every card
+ * badge the same width regardless of how many batches exist.
+ */
+export const paddedBatchNo = (value: number) =>
+  Number.isFinite(value) ? String(Math.trunc(value)).padStart(2, "0") : "—";

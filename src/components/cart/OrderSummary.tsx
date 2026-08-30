@@ -8,7 +8,7 @@ interface OrderSummaryProps {
   items: ICartItem[];
 }
 
-export default function OrderSummary({ items }: OrderSummaryProps) {
+const OrderSummary = ({ items }: OrderSummaryProps) => {
   const subtotal = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -69,4 +69,6 @@ export default function OrderSummary({ items }: OrderSummaryProps) {
       </div>
     </div>
   );
-}
+};
+
+export default OrderSummary;

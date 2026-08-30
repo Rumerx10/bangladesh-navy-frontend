@@ -4,11 +4,7 @@ import DashboardHeader from "@/src/components/layout/dashboardLayout/DashboardHe
 import Sidebar from "@/src/components/shared/sidebar/Sidebar";
 import { ReactNode, useState } from "react";
 
-export default function AdminLayoutClient({
-  children,
-}: {
-  children: ReactNode;
-}) {
+const AdminLayoutClient = ({ children }: { children: ReactNode }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -24,4 +20,6 @@ export default function AdminLayoutClient({
       </div>
     </div>
   );
-}
+};
+
+export default AdminLayoutClient;

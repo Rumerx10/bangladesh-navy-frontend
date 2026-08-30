@@ -44,9 +44,7 @@ interface ProductDetailByChartProps {
   chartId: string;
 }
 
-export default function ProductDetailByChart({
-  chartId,
-}: ProductDetailByChartProps) {
+const ProductDetailByChart = ({ chartId }: ProductDetailByChartProps) => {
   const { data, isLoading, isError } = useGet<IProduct>(`/product/${chartId}`, [
     `product-detail-${chartId}`,
   ]);
@@ -79,4 +77,6 @@ export default function ProductDetailByChart({
       chartDetails={data.data}
     />
   );
-}
+};
+
+export default ProductDetailByChart;

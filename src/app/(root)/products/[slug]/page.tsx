@@ -13,9 +13,9 @@ export async function generateMetadata({
   return getProductMetadata(slug, "Products");
 }
 
-export default async function ProductDetailPage({
-  params,
-}: ProductDetailPageProps) {
+const ProductDetailPage = async ({ params }: ProductDetailPageProps) => {
   const { slug } = await params;
   return <ProductDetailByChart chartId={slug} />;
-}
+};
+
+export default ProductDetailPage;

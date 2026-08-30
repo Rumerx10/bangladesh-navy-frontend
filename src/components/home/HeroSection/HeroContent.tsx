@@ -13,12 +13,12 @@ interface HeroContentProps {
   buttons: IHeroButton[];
 }
 
-export default function HeroContent({
+const HeroContent = ({
   title,
   highlightTitle,
   description,
   buttons,
-}: HeroContentProps) {
+}: HeroContentProps) => {
   return (
     <div className="max-w-xl lg:max-w-2xl">
       <motion.div
@@ -77,4 +77,6 @@ export default function HeroContent({
       </motion.div>
     </div>
   );
-}
+};
+
+export default HeroContent;

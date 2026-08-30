@@ -47,7 +47,7 @@ const flipVariants = {
   },
 };
 
-export default function HeroBanner() {
+const HeroBanner = () => {
   const [current, setCurrent] = useState(0);
   const [isFlip, setIsFlip] = useState(false);
 
@@ -144,4 +144,6 @@ export default function HeroBanner() {
       </div>
     </div>
   );
-}
+};
+
+export default HeroBanner;

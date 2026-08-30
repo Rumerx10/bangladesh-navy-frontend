@@ -5,11 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { careerSchema, CareerSchemaForm } from "../Schema/careerSchema";
 import CareerForm from "./CareerForm";
 
-export default function CreateUpdateCareer({
-  initialValues,
-}: {
-  initialValues?: never;
-}) {
+const CreateUpdateCareer = ({ initialValues }: { initialValues?: never }) => {
   const methods = useForm({
     resolver: yupResolver(careerSchema),
     defaultValues: {
@@ -46,4 +42,6 @@ export default function CreateUpdateCareer({
       <CareerForm isEditMode={!!initialValues} onSubmit={onSubmit} />
     </FormProvider>
   );
-}
+};
+
+export default CreateUpdateCareer;

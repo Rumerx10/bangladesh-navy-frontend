@@ -15,7 +15,7 @@ const predefinedColors = [
   "#FF9800",
 ];
 
-export default function ColorPickerDropdown({ editor }: { editor: Editor }) {
+const ColorPickerDropdown = ({ editor }: { editor: Editor }) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -60,4 +60,6 @@ export default function ColorPickerDropdown({ editor }: { editor: Editor }) {
       )}
     </div>
   );
-}
+};
+
+export default ColorPickerDropdown;

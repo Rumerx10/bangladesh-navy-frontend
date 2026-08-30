@@ -1,4 +1,4 @@
-export default function CareerFormSkeleton() {
+const CareerFormSkeleton = () => {
   return (
     <div className="w-full space-y-6 animate-pulse">
       <div className="border border-light-silver rounded-lg p-8 bg-white">
@@ -75,4 +75,6 @@ export default function CareerFormSkeleton() {
       </div>
     </div>
   );
-}
+};
+
+export default CareerFormSkeleton;

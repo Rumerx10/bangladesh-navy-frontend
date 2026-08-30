@@ -44,10 +44,10 @@ const NAV_LINKS = [
   { label: "Marine Weather", href: "/product-service?category=marine-weather" },
 ];
 
-export default function HeaderTopBarActions({
+const HeaderTopBarActions = ({
   userInformation,
   authLoading,
-}: HeaderTopBarActionsProps) {
+}: HeaderTopBarActionsProps) => {
   const [mounted, setMounted] = useState(false);
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), []);
@@ -232,4 +232,6 @@ export default function HeaderTopBarActions({
       )}
     </div>
   );
-}
+};
+
+export default HeaderTopBarActions;

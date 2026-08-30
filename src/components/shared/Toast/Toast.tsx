@@ -3,7 +3,7 @@
 import { ToastContainer } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 
-export default function Toast() {
+const Toast = () => {
   return (
     <ToastContainer
       aria-label="Notification"
@@ -18,4 +18,6 @@ export default function Toast() {
       pauseOnHover
     />
   );
-}
+};
+
+export default Toast;

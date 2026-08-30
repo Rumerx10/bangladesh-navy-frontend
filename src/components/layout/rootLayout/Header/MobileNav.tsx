@@ -55,7 +55,7 @@ interface MobileNavProps {
   setOpen: (value: boolean) => void;
 }
 
-export default function MobileNav({ open, setOpen }: MobileNavProps) {
+const MobileNav = ({ open, setOpen }: MobileNavProps) => {
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -393,4 +393,6 @@ export default function MobileNav({ open, setOpen }: MobileNavProps) {
       </div>
     </>
   );
-}
+};
+
+export default MobileNav;

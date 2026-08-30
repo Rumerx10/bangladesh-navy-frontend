@@ -6,7 +6,7 @@ import CreateUpdateCareer from "../Form/CreateUpdateCareer";
 import BlogFormSkeleton from "../Skeleton/CareerFormSkeleton";
 import { ICareer } from "../types";
 
-export default function UpdateJob() {
+const UpdateJob = () => {
   const params = useParams();
   const id = params.id as string;
   const { isLoading } = useGet<ICareer>(`/careers/${id}`, ["careers", id]);
@@ -19,4 +19,6 @@ export default function UpdateJob() {
       {isLoading ? <BlogFormSkeleton /> : <CreateUpdateCareer />}
     </div>
   );
-}
+};
+
+export default UpdateJob;

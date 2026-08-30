@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "Track and manage your orders.",
 };
 
-export default function AccountOrdersPage() {
+const AccountOrdersPage = () => {
   return <AccountOrdersClient />;
-}
+};
+
+export default AccountOrdersPage;

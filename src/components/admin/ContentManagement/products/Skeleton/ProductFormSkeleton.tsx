@@ -1,4 +1,4 @@
-export default function ProductFormSkeleton() {
+const ProductFormSkeleton = () => {
   return (
     <div className="w-full space-y-6 animate-pulse">
       {[1, 2, 3].map((section) => (
@@ -27,4 +27,6 @@ export default function ProductFormSkeleton() {
       </div>
     </div>
   );
-}
+};
+
+export default ProductFormSkeleton;

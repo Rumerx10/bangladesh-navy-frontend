@@ -10,7 +10,7 @@ const noticesLinks = [
   { label: "Hydrographic Note", href: "/contact-us/hydrographic-note" },
 ];
 
-export default function NoticesMarinersDropdown() {
+const NoticesMarinersDropdown = () => {
   const pathname = usePathname();
   // Using a custom check to determine if any of the links are active
   // Since some are query params, pathname alone won't highlight them perfectly, but it's a good start.
@@ -47,4 +47,6 @@ export default function NoticesMarinersDropdown() {
       </div>
     </li>
   );
-}
+};
+
+export default NoticesMarinersDropdown;

@@ -13,7 +13,7 @@ import {
   BreadcrumbSeparator,
 } from "@/src/components/ui/breadcrumb";
 
-export default function DynamicBreadcrumb() {
+const DynamicBreadcrumb = () => {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
 
@@ -64,4 +64,6 @@ export default function DynamicBreadcrumb() {
       </BreadcrumbList>
     </Breadcrumb>
   );
-}
+};
+
+export default DynamicBreadcrumb;

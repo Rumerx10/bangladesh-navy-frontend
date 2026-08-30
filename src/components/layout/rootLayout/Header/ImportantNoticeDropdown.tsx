@@ -9,7 +9,7 @@ const contactLinks = [
   { label: "Query & Suggestion", href: "/contact-us/query-suggestion" },
 ];
 
-export default function ImportantNoticeDropdown() {
+const ImportantNoticeDropdown = () => {
   const pathname = usePathname();
   const isActive = pathname?.startsWith("/contact-us");
 
@@ -48,4 +48,6 @@ export default function ImportantNoticeDropdown() {
       </div>
     </li>
   );
-}
+};
+
+export default ImportantNoticeDropdown;

@@ -11,12 +11,12 @@ interface QuantitySelectorProps {
   stock: number;
 }
 
-export default function QuantitySelector({
+const QuantitySelector = ({
   productId,
   selectedAttributes,
   quantity,
   stock,
-}: QuantitySelectorProps) {
+}: QuantitySelectorProps) => {
   const dispatch = useAppDispatch();
 
   return (
@@ -56,4 +56,6 @@ export default function QuantitySelector({
       </button>
     </div>
   );
-}
+};
+
+export default QuantitySelector;

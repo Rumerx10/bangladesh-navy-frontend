@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Paragraph from "../Paragraph";
 import Text from "../Text";
 
-export default function AdminBackButton({
+const AdminBackButton = ({
   // routeURL,
   title,
   desc,
@@ -13,7 +13,7 @@ export default function AdminBackButton({
   // routeURL: string;
   title: string;
   desc: string;
-}) {
+}) => {
   // const router = useRouter();
   return (
     <div className="flex items-center justify-between gap-4">
@@ -35,4 +35,6 @@ export default function AdminBackButton({
       </Button> */}
     </div>
   );
-}
+};
+
+export default AdminBackButton;

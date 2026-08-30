@@ -31,10 +31,7 @@ interface DesignerCanvasProps {
   onBack: () => void;
 }
 
-export default function DesignerCanvas({
-  template,
-  onBack,
-}: DesignerCanvasProps) {
+const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
   const canvasRef = useRef<HTMLDivElement>(null);
   const [textElements, setTextElements] = useState<TemplateTextElement[]>(
     template.textElements
@@ -938,12 +935,14 @@ export default function DesignerCanvas({
       </div>
     </div>
   );
-}
+};
+
+export default DesignerCanvas;
 
 // =============================================
 // Shape Renderer
 // =============================================
-function ShapeRenderer({
+const ShapeRenderer = ({
   shape,
   canvasWidth,
   canvasHeight,
@@ -951,7 +950,7 @@ function ShapeRenderer({
   shape: TemplateShape;
   canvasWidth: number;
   canvasHeight: number;
-}) {
+}) => {
   const sx = (shape.x / 100) * canvasWidth;
   const sy = (shape.y / 100) * canvasHeight;
   const sw = (shape.width / 100) * canvasWidth;
@@ -1094,12 +1093,12 @@ function ShapeRenderer({
   }
 
   return null;
-}
+};
 
 // =============================================
 // Social Icons
 // =============================================
-function SocialIcon({
+const SocialIcon = ({
   name,
   color,
   size,
@@ -1107,7 +1106,7 @@ function SocialIcon({
   name: string;
   color: string;
   size: number;
-}) {
+}) => {
   const iconMap: Record<string, string> = {
     facebook:
       "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z",
@@ -1133,4 +1132,4 @@ function SocialIcon({
       <path d={iconMap[name] || ""} />
     </svg>
   );
-}
+};

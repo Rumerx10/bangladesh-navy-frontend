@@ -10,12 +10,12 @@ interface ISubmitButtonProps {
   className?: string;
 }
 
-export default function SubmitButton({
+const SubmitButton = ({
   isLoading = false,
   disabled = false,
   label = "Submit",
   className = "",
-}: ISubmitButtonProps) {
+}: ISubmitButtonProps) => {
   return (
     <Button
       type="submit"
@@ -44,4 +44,6 @@ export default function SubmitButton({
       {label}
     </Button>
   );
-}
+};
+
+export default SubmitButton;

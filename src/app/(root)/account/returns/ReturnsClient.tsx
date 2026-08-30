@@ -12,7 +12,7 @@ const statusColors: Record<string, string> = {
   [OrderStatus.REFUNDED]: "bg-purple-50 text-purple-700 border-purple-200",
 };
 
-export default function ReturnsClient() {
+const ReturnsClient = () => {
   const returnedOrders = dummyOrders.filter(
     (order) =>
       order.orderStatus === OrderStatus.RETURNED ||
@@ -132,4 +132,6 @@ export default function ReturnsClient() {
       </div>
     </div>
   );
-}
+};
+
+export default ReturnsClient;

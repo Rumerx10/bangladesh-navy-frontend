@@ -11,10 +11,7 @@ interface ProductSidebarProps {
   setFilters: React.Dispatch<React.SetStateAction<IProductFilter>>;
 }
 
-export default function ProductSidebar({
-  filters,
-  setFilters,
-}: ProductSidebarProps) {
+const ProductSidebar = ({ filters, setFilters }: ProductSidebarProps) => {
   const handleCategoryToggle = (catId: string) => {
     setFilters((prev) => ({
       ...prev,
@@ -70,4 +67,6 @@ export default function ProductSidebar({
       />
     </div>
   );
-}
+};
+
+export default ProductSidebar;

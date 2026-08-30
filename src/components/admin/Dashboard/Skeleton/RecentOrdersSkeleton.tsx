@@ -1,7 +1,7 @@
 import { Skeleton } from "@/src/components/ui/skeleton";
 import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
 
-export default function RecentOrdersSkeleton() {
+const RecentOrdersSkeleton = () => {
   return (
     <Card className="border-gray-100 shadow-sm rounded-2xl py-4 sm:py-5 h-full">
       <CardHeader className="pb-2 px-4 sm:px-6">
@@ -63,4 +63,6 @@ export default function RecentOrdersSkeleton() {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default RecentOrdersSkeleton;

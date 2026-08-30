@@ -1,6 +1,6 @@
 import CourseStatisticsTable from "@/src/components/courses/CourseStatisticsTable";
 
-export default function CourseOverview() {
+const CourseOverview = () => {
   return (
     <section className="bg-white py-8 lg:py-20">
       <div className="container px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-12">
@@ -78,4 +78,6 @@ export default function CourseOverview() {
       </div>
     </section>
   );
-}
+};
+
+export default CourseOverview;

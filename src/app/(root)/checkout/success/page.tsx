@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "Your order has been placed successfully.",
 };
 
-export default function CheckoutSuccessPage() {
+const CheckoutSuccessPage = () => {
   return <CheckoutSuccessClient />;
-}
+};
+
+export default CheckoutSuccessPage;

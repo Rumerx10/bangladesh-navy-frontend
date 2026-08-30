@@ -10,7 +10,7 @@ import DesignerCanvas from "./DesignerCanvas";
 type ViewMode = "gallery" | "designer";
 type CategoryFilter = "all" | "poster" | "banner";
 
-export default function BannerPoster() {
+const BannerPoster = () => {
   const [viewMode, setViewMode] = useState<ViewMode>("gallery");
   const [selectedTemplate, setSelectedTemplate] =
     useState<PosterTemplate | null>(null);
@@ -159,4 +159,6 @@ export default function BannerPoster() {
       </AnimatePresence>
     </div>
   );
-}
+};
+
+export default BannerPoster;

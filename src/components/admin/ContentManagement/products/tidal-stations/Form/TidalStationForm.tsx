@@ -26,13 +26,13 @@ const STATUS_OPTIONS = [
   { label: "Inactive", value: "INACTIVE" },
 ];
 
-export default function TidalStationForm({
+const TidalStationForm = ({
   isEditMode = false,
   onSubmit,
   onCancel,
   isPending = false,
   error,
-}: TidalStationFormProps) {
+}: TidalStationFormProps) => {
   const { handleSubmit } = useFormContext<TidalStationFormValues>();
 
   const { data: productData } = useGet<ITidalProductOption[]>(
@@ -120,4 +120,6 @@ export default function TidalStationForm({
       </div>
     </form>
   );
-}
+};
+
+export default TidalStationForm;

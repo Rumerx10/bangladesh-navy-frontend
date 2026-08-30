@@ -22,11 +22,11 @@ interface ViewUserInfoModalProps {
 const labelClass = "text-xs uppercase tracking-wide text-gray-500 mb-1";
 const valueClass = "text-sm font-medium text-secondary break-words";
 
-export default function ViewUserInfoModal({
+const ViewUserInfoModal = ({
   isOpen,
   onClose,
   user: rowUser,
-}: ViewUserInfoModalProps) {
+}: ViewUserInfoModalProps) => {
   const { data: profileData } = useGet<IUser>(
     `/user/profile/${rowUser?.id}`,
     ["user-profile", rowUser?.id || ""],
@@ -145,4 +145,6 @@ export default function ViewUserInfoModal({
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default ViewUserInfoModal;

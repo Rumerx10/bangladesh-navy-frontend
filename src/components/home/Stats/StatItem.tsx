@@ -7,7 +7,7 @@ interface StatItemProps {
   stat: IStatItem;
 }
 
-export default function StatItem({ stat }: StatItemProps) {
+const StatItem = ({ stat }: StatItemProps) => {
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -48,4 +48,6 @@ export default function StatItem({ stat }: StatItemProps) {
       <p className="mt-1 text-sm text-gray-400 font-medium">{stat.label}</p>
     </div>
   );
-}
+};
+
+export default StatItem;

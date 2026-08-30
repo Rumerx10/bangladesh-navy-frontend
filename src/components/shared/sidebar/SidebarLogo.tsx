@@ -2,7 +2,7 @@ import { siteConfig } from "@/src/config/siteConfig";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-export default function SidebarLogo() {
+const SidebarLogo = () => {
   const router = useRouter();
 
   return (
@@ -27,4 +27,6 @@ export default function SidebarLogo() {
       </div>
     </div>
   );
-}
+};
+
+export default SidebarLogo;

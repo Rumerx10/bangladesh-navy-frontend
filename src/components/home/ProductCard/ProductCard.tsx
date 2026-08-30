@@ -9,7 +9,7 @@ interface ProductCardProps {
   product: IProduct;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+const ProductCard = ({ product }: ProductCardProps) => {
   const primaryImage =
     product.images.find((img) => img.isPrimary) ?? product.images[0];
   const hasDiscount =
@@ -101,4 +101,6 @@ export default function ProductCard({ product }: ProductCardProps) {
       </div>
     </Link>
   );
-}
+};
+
+export default ProductCard;

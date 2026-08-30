@@ -16,7 +16,7 @@ const CartDrawerContext = createContext<CartDrawerContextType>({
   toggleDrawer: () => {},
 });
 
-export function CartDrawerProvider({ children }: { children: ReactNode }) {
+export const CartDrawerProvider = ({ children }: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -31,7 +31,7 @@ export function CartDrawerProvider({ children }: { children: ReactNode }) {
       {children}
     </CartDrawerContext.Provider>
   );
-}
+};
 
 export function useCartDrawer() {
   return useContext(CartDrawerContext);

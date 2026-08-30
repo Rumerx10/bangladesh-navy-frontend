@@ -26,11 +26,7 @@ const STATUS_FLOW: OrderStatus[] = [
   OrderStatus.DELIVERED,
 ];
 
-export default function OrderDetailClient({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+const OrderDetailClient = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);
   const order = dummyOrders.find((o) => o.id === id);
 
@@ -500,4 +496,6 @@ export default function OrderDetailClient({
       </div>
     </div>
   );
-}
+};
+
+export default OrderDetailClient;

@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "Search nautical charts, publications, and services.",
 };
 
-export default function SearchPage() {
+const SearchPage = () => {
   return (
     <div className="container py-8">
       <h1 className="text-2xl font-semibold">Search Results</h1>
@@ -14,4 +14,6 @@ export default function SearchPage() {
       </p>
     </div>
   );
-}
+};
+
+export default SearchPage;

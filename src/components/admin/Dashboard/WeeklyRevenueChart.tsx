@@ -27,7 +27,7 @@ const weeklyRevenue = [
   { day: "Sun", revenue: 132000 },
 ];
 
-export default function WeeklyRevenueChart() {
+const WeeklyRevenueChart = () => {
   return (
     <Card className="border-gray-100 shadow-sm rounded-2xl py-4 sm:py-5">
       <CardHeader className="pb-2 px-4 sm:px-6">
@@ -108,4 +108,6 @@ export default function WeeklyRevenueChart() {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default WeeklyRevenueChart;

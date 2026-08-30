@@ -37,13 +37,13 @@ interface NoticeFormProps {
   error?: ErrorType;
 }
 
-export default function NoticeForm({
+const NoticeForm = ({
   isEditMode = false,
   onSubmit,
   onCancel,
   isPending = false,
   error,
-}: NoticeFormProps) {
+}: NoticeFormProps) => {
   const { handleSubmit } = useFormContext<NoticeFormValues>();
 
   return (
@@ -165,4 +165,6 @@ export default function NoticeForm({
       </div>
     </form>
   );
-}
+};
+
+export default NoticeForm;

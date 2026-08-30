@@ -8,7 +8,7 @@ import CareersTable from "../CareersTable";
 import { GetApplicantColumns } from "../TableColumns/ApplicantColumns";
 import { IApplicant } from "../types";
 
-export default function ApplicantList() {
+const ApplicantList = () => {
   const {
     setCurrentPage,
     itemsPerPage,
@@ -63,4 +63,6 @@ export default function ApplicantList() {
       />
     </div>
   );
-}
+};
+
+export default ApplicantList;

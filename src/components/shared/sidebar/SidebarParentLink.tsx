@@ -9,13 +9,13 @@ interface SidebarParentLinkProps {
   onToggle: () => void;
 }
 
-export default function SidebarParentLink({
+const SidebarParentLink = ({
   label,
   icon: Icon,
   isActive,
   isExpanded,
   onToggle,
-}: SidebarParentLinkProps) {
+}: SidebarParentLinkProps) => {
   return (
     <button
       type="button"
@@ -44,4 +44,6 @@ export default function SidebarParentLink({
       />
     </button>
   );
-}
+};
+
+export default SidebarParentLink;

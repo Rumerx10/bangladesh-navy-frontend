@@ -6,13 +6,13 @@ interface NavyWatermarkProps {
   animate?: "float" | "rotate" | "pulse" | "drift" | "bob" | "none";
 }
 
-export default function NavyWatermark({
+const NavyWatermark = ({
   variant = "ship",
   className = "",
   opacity = 0.04,
   size = 300,
   animate = "float",
-}: NavyWatermarkProps) {
+}: NavyWatermarkProps) => {
   const animationClass = {
     float: "animate-[watermarkFloat_12s_ease-in-out_infinite]",
     rotate: "animate-[watermarkRotate_40s_linear_infinite]",
@@ -424,4 +424,6 @@ export default function NavyWatermark({
     default:
       return null;
   }
-}
+};
+
+export default NavyWatermark;

@@ -7,11 +7,11 @@ interface AboutPageHeaderProps {
   breadcrumbs: { label: string; href?: string }[];
 }
 
-export default function AboutPageHeader({
+const AboutPageHeader = ({
   title,
   subtitle,
   breadcrumbs,
-}: AboutPageHeaderProps) {
+}: AboutPageHeaderProps) => {
   return (
     <div className="bg-white border-b border-gray-100 py-6 lg:py-8 mt-28 lg:mt-26">
       <div className="container px-4 sm:px-6 lg:px-8">
@@ -39,4 +39,6 @@ export default function AboutPageHeader({
       </div>
     </div>
   );
-}
+};
+
+export default AboutPageHeader;

@@ -8,7 +8,7 @@ import LoginForm from "./Form/LoginForm";
 import LoginBanner from "./LoginBanner";
 import { LoginFormType, loginSchema } from "./Schema";
 
-export default function LoginPage() {
+const LoginPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const methods = useForm<LoginFormType>({
@@ -64,4 +64,6 @@ export default function LoginPage() {
       <LoginBanner />
     </div>
   );
-}
+};
+
+export default LoginPage;

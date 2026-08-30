@@ -1,36 +1,13 @@
-"use client";
+import { Metadata } from "next";
+import EditProductClient from "./EditProductClient";
 
-import { useParams } from "next/navigation";
-import { useGet } from "@/src/hooks/useGet";
-import AdminBackButton from "@/src/components/shared/AdminBackButton/AdminBackButton";
-import CreateUpdateProduct from "@/src/components/admin/ContentManagement/products/Form/CreateUpdateProducts";
-import ProductFormSkeleton from "@/src/components/admin/ContentManagement/products/Skeleton/ProductFormSkeleton";
-import { IProduct } from "@/src/components/admin/ContentManagement/products/types";
+export const metadata: Metadata = {
+  title: "Update Product",
+  description: "Edit an existing product listing.",
+};
 
 const EditProductPage = () => {
-  const params = useParams();
-  const id = params.id as string;
-
-  const { data, isLoading } = useGet<IProduct>(`/product/${id}`, [
-    "product",
-    id,
-  ]);
-
-  return (
-    <div>
-      <div className="mb-6">
-        <AdminBackButton
-          title="Update Product"
-          desc="Update product information"
-        />
-      </div>
-      {isLoading ? (
-        <ProductFormSkeleton />
-      ) : (
-        <CreateUpdateProduct initialValues={data?.data} />
-      )}
-    </div>
-  );
+  return <EditProductClient />;
 };
 
 export default EditProductPage;
