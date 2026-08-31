@@ -195,10 +195,10 @@ const SurveyShipForm = ({
             />
           </div>
           <div>
-            <InputLabel label="Crew" required />
+            <InputLabel label="Displacement" required />
             <ControlledInputField
               name="crew"
-              placeholder="e.g. 45"
+              placeholder="e.g. 45 Tons"
               className="bg-light shadow-none"
             />
           </div>
