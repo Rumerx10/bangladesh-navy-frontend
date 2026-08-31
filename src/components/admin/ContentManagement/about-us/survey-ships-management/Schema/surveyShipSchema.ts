@@ -19,7 +19,7 @@ export const surveyShipSchema = Yup.object({
   length: Yup.string().required("Length is required"),
   beam: Yup.string().required("Beam is required"),
   draft: Yup.string().required("Draft is required"),
-  crew: Yup.string().required("Crew is required"),
+  crew: Yup.string().required("Displacement is required"),
   surveyEquipment: Yup.array()
     .of(Yup.string().required())
     .min(1, "At least one survey equipment item is required")

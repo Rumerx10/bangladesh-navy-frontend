@@ -1,5 +1,6 @@
 import {
   AlertTriangle,
+  BookOpen,
   GraduationCap,
   Home,
   Info,
@@ -68,16 +69,22 @@ const getMenuItems = (): MenuItem[] => {
       href: "/admin/notices",
     },
     {
+      segment: "Content Management",
+      label: "Publications",
+      icon: BookOpen,
+      href: "/admin/publications",
+    },
+    {
       segment: "Training Management",
       label: "Training & Courses",
       icon: GraduationCap,
       href: "/admin/training-courses",
       children: [
-        // {
-        //   label: "BN Hydrographic Institute",
-        //   href: "/admin/training-courses",
-        // },
-        // { label: "Courses", href: "/admin/training-courses/courses" },
+        {
+          label: "BN Hydrographic Institute",
+          href: "/admin/training-courses",
+        },
+        { label: "Courses", href: "/admin/training-courses/courses" },
         { label: "Alumni", href: "/admin/training-courses/alumni" },
       ],
     },

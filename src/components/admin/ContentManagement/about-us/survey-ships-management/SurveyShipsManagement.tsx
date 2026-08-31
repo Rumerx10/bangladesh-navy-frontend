@@ -1,19 +1,19 @@
 "use client";
+import { ISurveyShip } from "./types";
 
-import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { Ship, Tag } from "lucide-react";
 import { useGet } from "@/src/hooks/useGet";
 import { useDelete } from "@/src/hooks/useDelete";
+import { useEffect, useMemo, useState } from "react";
+import SurveyCategoryCard from "./SurveyCategoryCard";
 import { useAppSelector } from "@/src/lib/redux/hooks";
 import { usePagination } from "@/src/hooks/usePagination";
-import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { DataTable } from "@/src/components/ui/data-table";
-import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
-import { ISurveyShip } from "./types";
-import { GetSurveyShipColumns } from "./TableColumns/SurveyShipColumns";
+import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import CreateUpdateSurveyShip from "./Form/CreateUpdateSurveyShip";
-import SurveyCategoryCard from "./SurveyCategoryCard";
+import { GetSurveyShipColumns } from "./TableColumns/SurveyShipColumns";
+import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 
 type ActiveTab = "ships" | "categories";
 
@@ -23,8 +23,8 @@ const TABS: { key: ActiveTab; label: string; icon: React.ElementType }[] = [
 ];
 
 const SurveyShipsManagement = () => {
-  const [activeTab, setActiveTab] = useState<ActiveTab>("ships");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<ActiveTab>("ships");
   const [selectedItem, setSelectedItem] = useState<ISurveyShip | undefined>();
   const [pendingDelete, setPendingDelete] = useState<ISurveyShip | null>(null);
 

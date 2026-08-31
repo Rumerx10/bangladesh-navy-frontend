@@ -123,7 +123,7 @@ const ShipCard = ({ ship, index }: { ship: SurveyShipItem; index: number }) => {
                   { label: "Length", value: ship.length },
                   { label: "Beam", value: ship.beam },
                   { label: "Draft", value: ship.draft },
-                  { label: "Crew", value: ship.crew },
+                  { label: "Displacement", value: ship.crew },
                 ].map(({ label, value }) => (
                   <div key={label}>
                     <p className="text-xs font-medium uppercase tracking-wider text-gray-400 mb-0.5">
