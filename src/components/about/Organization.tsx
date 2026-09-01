@@ -301,14 +301,167 @@ const LeftRows = ({ rows }: { rows: string[][] }) => {
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
-const Organization = () => {
-  const { root, leftBranch, rightBranch } = orgData;
+const Legend = () => {
+  return (
+    <div className="mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[10px] text-gray-400 tracking-widest uppercase">
+      {[
+        { color: "#001836", label: "Chief Hydrographer" },
+        { color: "#003f71", label: "Addl Chief Hydrographer" },
+        {
+          color: "#eef4fa",
+          label: "Deputy Chief Hydrographer",
+          border: "#003f71",
+        },
+        { color: "#ffffff", label: "Department", border: "#003f71" },
+      ].map((item) => (
+        <span key={item.label} className="flex items-center gap-1.5">
+          <span
+            className="inline-block w-3 h-3 rounded-sm border shrink-0"
+            style={{
+              background: item.color,
+              borderColor: item.border ?? item.color,
+            }}
+          />
+          {item.label}
+        </span>
+      ))}
+    </div>
+  );
+};
 
+// ─── Mobile / tablet: stacked tree (no horizontal scroll needed) ─────────────
+
+const MobileOrgTree = ({
+  root,
+  leftBranch,
+  rightBranch,
+}: {
+  root: string;
+  leftBranch: typeof orgData.leftBranch;
+  rightBranch: typeof orgData.rightBranch;
+}) => {
+  const leftDepts = leftBranch.rows.flat();
+
+  return (
+    <div className="flex flex-col items-center">
+      <RootCard title={root} />
+      <VArrow height={24} />
+
+      {/* Left branch */}
+      <div className="w-full max-w-md flex flex-col items-center">
+        <BranchCard title={leftBranch.title} delay={0.1} />
+        <VArrow height={20} />
+        <div className="w-full flex flex-col gap-3">
+          {leftDepts.map((dept, i) => (
+            <Fragment key={dept}>
+              {i > 0 && <VArrow height={14} />}
+              <DeptCard title={dept} delay={0.05 * i} />
+            </Fragment>
+          ))}
+        </div>
+      </div>
+
+      <div className="w-full max-w-md h-px bg-pBlue/10 my-8" />
+
+      {/* Right branch */}
+      <div className="w-full max-w-md flex flex-col items-center">
+        <BranchCard title={rightBranch.title} delay={0.15} />
+        <VArrow height={20} />
+        <div className="w-full flex flex-col gap-5">
+          {rightBranch.columns.map((col, ci) => (
+            <div key={ci} className="w-full flex flex-col items-center gap-3">
+              {col.map((item, ii) => (
+                <Fragment key={ii}>
+                  {ii > 0 && <VArrow height={14} />}
+                  <DeputyCard
+                    title={item}
+                    delay={0.1 * ci + 0.05 * ii}
+                  />
+                </Fragment>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─── Desktop: horizontal tree ─────────────────────────────────────────────────
+
+const DesktopOrgTree = ({
+  root,
+  leftBranch,
+  rightBranch,
+}: {
+  root: string;
+  leftBranch: typeof orgData.leftBranch;
+  rightBranch: typeof orgData.rightBranch;
+}) => {
   // Fork stem positions relative to the 860 px-wide container.
   // Left box  ≈ 60 % wide → center at ~30 %
   // Right box ≈ 35 % wide, starting at ~63 % → center at ~63 + 17 = ~80 %
   const LEFT_PCT = 30;
   const RIGHT_PCT = 80;
+
+  return (
+    <div className="overflow-x-auto -mx-4 px-4 pb-6">
+      <div style={{ minWidth: 860 }} className="flex flex-col items-center">
+        {/* ROOT */}
+        <RootCard title={root} />
+
+        {/* Root → 2 branch stems */}
+        <RootFork leftPct={LEFT_PCT} rightPct={RIGHT_PCT} />
+
+        {/* BRANCH ROW */}
+        <div className="w-full flex items-start gap-4">
+          {/* ── LEFT BRANCH (wider) ── */}
+          <div style={{ flex: "0 0 60%" }} className="min-w-0">
+            <BranchCard title={leftBranch.title} delay={0.1} />
+            {/* ┐-shaped connector to left sidebar */}
+            <DropLeftConnector />
+            {/* 3 rows with → arrows */}
+            <LeftRows rows={leftBranch.rows} />
+          </div>
+
+          {/* Vertical divider */}
+          <div className="self-stretch w-px shrink-0 bg-pBlue/10 mt-1" />
+
+          {/* ── RIGHT BRANCH (narrower) ── */}
+          <div
+            style={{ flex: "0 0 35%" }}
+            className="min-w-0 flex flex-col items-center"
+          >
+            <BranchCard title={rightBranch.title} delay={0.15} />
+            {/* Branch → 2 column stems */}
+            <ForkDown n={rightBranch.columns.length} />
+            <div className="w-full flex items-start gap-3">
+              {rightBranch.columns.map((col, ci) => (
+                <div
+                  key={ci}
+                  className="flex-1 flex flex-col items-center min-w-0"
+                >
+                  {col.map((item, ii) => (
+                    <Fragment key={ii}>
+                      {ii > 0 && <VArrow height={18} />}
+                      <DeputyCard
+                        title={item}
+                        delay={0.22 + ci * 0.1 + ii * 0.08}
+                      />
+                    </Fragment>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Organization = () => {
+  const { root, leftBranch, rightBranch } = orgData;
 
   return (
     <section className="py-8 lg:py-20 bg-linear-to-b from-slate-50/60 to-white">
@@ -318,84 +471,25 @@ const Organization = () => {
           desc="Organisational structure of Bangladesh Navy Hydrographic & Oceanographic Centre (BNHOC)"
         />
 
-        {/* Horizontal scroll on mobile */}
-        <div className="overflow-x-auto -mx-4 px-4 pb-6">
-          <div style={{ minWidth: 860 }} className="flex flex-col items-center">
-            {/* ROOT */}
-            <RootCard title={root} />
-
-            {/* Root → 2 branch stems */}
-            <RootFork leftPct={LEFT_PCT} rightPct={RIGHT_PCT} />
-
-            {/* BRANCH ROW */}
-            <div className="w-full flex items-start gap-4">
-              {/* ── LEFT BRANCH (wider) ── */}
-              <div style={{ flex: "0 0 60%" }} className="min-w-0">
-                <BranchCard title={leftBranch.title} delay={0.1} />
-                {/* ┐-shaped connector to left sidebar */}
-                <DropLeftConnector />
-                {/* 3 rows with → arrows */}
-                <LeftRows rows={leftBranch.rows} />
-              </div>
-
-              {/* Vertical divider */}
-              <div className="self-stretch w-px shrink-0 bg-pBlue/10 mt-1" />
-
-              {/* ── RIGHT BRANCH (narrower) ── */}
-              <div
-                style={{ flex: "0 0 35%" }}
-                className="min-w-0 flex flex-col items-center"
-              >
-                <BranchCard title={rightBranch.title} delay={0.15} />
-                {/* Branch → 2 column stems */}
-                <ForkDown n={rightBranch.columns.length} />
-                <div className="w-full flex items-start gap-3">
-                  {rightBranch.columns.map((col, ci) => (
-                    <div
-                      key={ci}
-                      className="flex-1 flex flex-col items-center min-w-0"
-                    >
-                      {col.map((item, ii) => (
-                        <Fragment key={ii}>
-                          {ii > 0 && <VArrow height={18} />}
-                          <DeputyCard
-                            title={item}
-                            delay={0.22 + ci * 0.1 + ii * 0.08}
-                          />
-                        </Fragment>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* LEGEND */}
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-5 text-[10px] text-gray-400 tracking-widest uppercase">
-              {[
-                { color: "#001836", label: "Chief Hydrographer" },
-                { color: "#003f71", label: "Addl Chief Hydrographer" },
-                {
-                  color: "#eef4fa",
-                  label: "Deputy Chief Hydrographer",
-                  border: "#003f71",
-                },
-                { color: "#ffffff", label: "Department", border: "#003f71" },
-              ].map((item) => (
-                <span key={item.label} className="flex items-center gap-1.5">
-                  <span
-                    className="inline-block w-3 h-3 rounded-sm border"
-                    style={{
-                      background: item.color,
-                      borderColor: item.border ?? item.color,
-                    }}
-                  />
-                  {item.label}
-                </span>
-              ))}
-            </div>
-          </div>
+        {/* Stacked layout on small/medium screens, no horizontal scrolling required */}
+        <div className="lg:hidden">
+          <MobileOrgTree
+            root={root}
+            leftBranch={leftBranch}
+            rightBranch={rightBranch}
+          />
         </div>
+
+        {/* Full horizontal tree on large screens (falls back to scroll below its own min-width) */}
+        <div className="hidden lg:block">
+          <DesktopOrgTree
+            root={root}
+            leftBranch={leftBranch}
+            rightBranch={rightBranch}
+          />
+        </div>
+
+        <Legend />
       </div>
     </section>
   );

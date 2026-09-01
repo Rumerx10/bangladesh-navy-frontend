@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BookOpen, FileText, Library } from "lucide-react";
+import { Library } from "lucide-react";
 
 /** Mirrors the sibling Notices to Mariners hero (src/components/notices/NoticesHero.tsx). */
 const PublicationsHero = () => {
@@ -29,22 +29,6 @@ const PublicationsHero = () => {
               Publications
             </span>
           </h1>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Sailing directions, tide tables, lists of lights and other
-            reference publications issued by the Bangladesh Navy Hydrographic
-            &amp; Oceanographic Centre.
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-8">
-            <div className="flex items-center gap-3 text-white/80">
-              <BookOpen className="text-blue-400" size={20} />
-              <span className="text-sm font-medium">Reference Publications</span>
-            </div>
-            <div className="flex items-center gap-3 text-white/80">
-              <FileText className="text-blue-400" size={20} />
-              <span className="text-sm font-medium">Chart Corrections</span>
-            </div>
-          </div>
         </motion.div>
       </div>
     </section>

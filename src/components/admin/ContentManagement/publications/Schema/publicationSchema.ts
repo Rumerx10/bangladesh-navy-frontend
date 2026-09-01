@@ -19,13 +19,13 @@ export const publicationSchema = Yup.object({
       if (!value || typeof value === "string") return true;
       return (value as File).size <= MAX_FILE_SIZE;
     }),
-  title: Yup.string().required("Title is required").max(200),
-  // User only types the number after the fixed "P" prefix (e.g. "105" -> "P105").
-  code: Yup.string()
-    .required("Publication code is required")
-    .matches(/^[0-9]+$/, "Publication code must be numeric")
-    .max(20, "Publication code is too long"),
-  date: Yup.string().required("Date is required"),
+  titleEn: Yup.string().required("Title (English) is required").max(200),
+  titleBn: Yup.string().max(200).notRequired(),
+  code: Yup.string().max(50, "Publication code is too long").notRequired(),
+  date: Yup.string().notRequired(),
+  status: Yup.string<"ACTIVE" | "INACTIVE">()
+    .oneOf(["ACTIVE", "INACTIVE"])
+    .notRequired(),
 });
 
 export type PublicationFormValues = Yup.InferType<typeof publicationSchema>;
