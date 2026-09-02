@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, Resolver, useForm } from "react-hook-form";
 import {
@@ -9,7 +10,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/src/components/ui/dialog";
-import { IPublication } from "@/src/data/publications";
+import { usePost } from "@/src/hooks/usePost";
+import { usePatch } from "@/src/hooks/usePatch";
+import { IPublication } from "../types";
 import {
   publicationSchema,
   PublicationFormValues,
@@ -20,62 +23,119 @@ interface CreateUpdatePublicationProps {
   isOpen: boolean;
   onClose: () => void;
   initialValues?: IPublication;
-  onSubmit: (values: Omit<IPublication, "id">, id?: string) => void;
 }
 
 const CreateUpdatePublication = ({
   isOpen,
   onClose,
   initialValues,
-  onSubmit,
 }: CreateUpdatePublicationProps) => {
   const isUpdate = !!initialValues;
 
   const methods = useForm<PublicationFormValues>({
     resolver: yupResolver(publicationSchema) as Resolver<PublicationFormValues>,
-    defaultValues: { image: "", title: "", code: "", date: "" },
+    defaultValues: {
+      image: "",
+      titleEn: "",
+      titleBn: "",
+      code: "",
+      date: "",
+      status: "ACTIVE",
+    },
   });
 
   useEffect(() => {
     if (isOpen) {
       methods.reset({
-        image: initialValues?.image || "",
-        title: initialValues?.title || "",
-        // The field only holds the number after the fixed "P" prefix.
-        code: initialValues?.code?.match(/\d+$/)?.[0] || "",
-        date: initialValues?.date || "",
+        image: initialValues?.imageUrl || "",
+        titleEn: initialValues?.titleEn || "",
+        titleBn: initialValues?.titleBn || "",
+        code: initialValues?.code || "",
+        date: initialValues?.date ? initialValues.date.split("T")[0] : "",
+        status: initialValues?.status || "ACTIVE",
       });
     } else {
-      methods.reset({ image: "", title: "", code: "", date: "" });
+      methods.reset({
+        image: "",
+        titleEn: "",
+        titleBn: "",
+        code: "",
+        date: "",
+        status: "ACTIVE",
+      });
     }
   }, [isOpen, initialValues, methods]);
 
-  // Replace with API: once the `/publication` backend endpoint exists,
-  // build a FormData payload here (like CreateUpdateProducts.tsx does) and
-  // submit it via usePost/usePatch instead of resolving a local object URL
-  // and handing the plain values back to the parent's local state.
-  const handleSubmit = (values: PublicationFormValues) => {
-    const image =
-      values.image instanceof File
-        ? URL.createObjectURL(values.image)
-        : values.image;
+  const {
+    mutate: createMutate,
+    isPending: isCreating,
+    error,
+    reset: resetCreateError,
+  } = usePost(
+    "/publication",
+    () => {
+      toast.success("Publication created successfully!");
+      onClose();
+    },
+    [["publication"], ["publication-public"]]
+  );
 
-    onSubmit(
-      {
-        title: values.title,
-        code: `P${values.code}`,
-        date: values.date,
-        image,
-      },
-      initialValues?.id
-    );
+  const {
+    mutate: updateMutate,
+    isPending: isUpdating,
+    error: updateError,
+    reset: resetUpdateError,
+  } = usePatch(
+    () => {
+      toast.success("Publication updated successfully!");
+      onClose();
+    },
+    [["publication"], ["publication-public"]]
+  );
+
+  const handleClose = () => {
+    resetCreateError();
+    resetUpdateError();
+    onClose();
+  };
+
+  useEffect(() => {
+    if (!isOpen) {
+      resetCreateError();
+      resetUpdateError();
+    }
+  }, [isOpen, resetCreateError, resetUpdateError]);
+
+  const onSubmit = (values: PublicationFormValues) => {
+    const formData = new FormData();
+    if (values.image instanceof File) {
+      formData.append("image", values.image);
+    }
+    formData.append("titleEn", values.titleEn);
+    if (values.titleBn) formData.append("titleBn", values.titleBn);
+    if (values.code) formData.append("code", values.code);
+    if (values.date) formData.append("date", values.date);
+    if (values.status) formData.append("status", values.status);
+
+    if (isUpdate && initialValues) {
+      updateMutate({
+        url: `/publication/${initialValues.id}`,
+        data: formData,
+        config: { headers: { "Content-Type": "multipart/form-data" } },
+      });
+    } else {
+      createMutate({
+        data: formData,
+        config: { headers: { "Content-Type": "multipart/form-data" } },
+      });
+    }
   };
 
   return (
     <Dialog
       open={isOpen}
       onOpenChange={(open) => {
-        if (!open) onClose();
+        if (!open) handleClose();
       }}
     >
       <DialogContent className="bg-white sm:max-w-lg max-h-[90vh] flex flex-col">
@@ -88,8 +148,10 @@ const CreateUpdatePublication = ({
           <FormProvider {...methods}>
             <PublicationForm
               isEditMode={isUpdate}
-              onSubmit={handleSubmit}
-              onCancel={onClose}
+              onSubmit={onSubmit}
+              onCancel={handleClose}
+              isPending={isCreating || isUpdating}
+              error={error || updateError}
             />
           </FormProvider>
         </div>

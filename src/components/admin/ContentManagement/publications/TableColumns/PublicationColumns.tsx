@@ -3,9 +3,10 @@
 import Image from "next/image";
 import { Pencil, Trash2 } from "lucide-react";
 import { ColumnDef } from "@/src/components/ui/data-table";
-import { IPublication } from "@/src/data/publications";
+import { IPublication } from "../types";
 
-const formatDate = (value: string) => {
+const formatDate = (value?: string) => {
+  if (!value) return "—";
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "—";
   return date.toLocaleDateString("en-GB", {
@@ -22,12 +23,12 @@ export function GetPublicationColumns(
   return [
     {
       header: "Image",
-      accessorKey: "image",
+      accessorKey: "imageUrl",
       cell: (_, row) => (
         <div className="relative w-16 h-12 rounded overflow-hidden bg-gray-100">
           <Image
-            src={row.image}
-            alt={row.title}
+            src={row.imageUrl}
+            alt={row.titleEn}
             fill
             className="object-cover"
           />
@@ -36,10 +37,10 @@ export function GetPublicationColumns(
     },
     {
       header: "Title",
-      accessorKey: "title",
+      accessorKey: "titleEn",
       cell: (_, row) => (
         <span className="line-clamp-2 max-w-70 font-medium text-gray-800">
-          {row.title}
+          {row.titleEn}
         </span>
       ),
     },
@@ -47,7 +48,9 @@ export function GetPublicationColumns(
       header: "Code",
       accessorKey: "code",
       cell: (_, row) => (
-        <span className="font-mono text-sm text-gray-700">{row.code}</span>
+        <span className="font-mono text-sm text-gray-700">
+          {row.code || "—"}
+        </span>
       ),
     },
     {
@@ -55,6 +58,21 @@ export function GetPublicationColumns(
       accessorKey: "date",
       cell: (_, row) => (
         <span className="text-sm text-gray-600">{formatDate(row.date)}</span>
+      ),
+    },
+    {
+      header: "Status",
+      accessorKey: "status",
+      cell: (_, row) => (
+        <span
+          className={`rounded-full px-2 py-1 text-xs font-medium ${
+            row.status === "INACTIVE"
+              ? "bg-gray-100 text-gray-500"
+              : "bg-green-100 text-green-700"
+          }`}
+        >
+          {row.status || "ACTIVE"}
+        </span>
       ),
     },
     {

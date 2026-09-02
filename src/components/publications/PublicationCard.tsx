@@ -3,9 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CalendarDays, ArrowUpRight } from "lucide-react";
-import { IPublication } from "@/src/data/publications";
+import { IPublication } from "@/src/components/admin/ContentManagement/publications/types";
 
-const formatPublicationDate = (value: string) => {
+const formatPublicationDate = (value?: string) => {
+  if (!value) return "—";
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "—";
   return date.toLocaleDateString("en-GB", {
@@ -27,8 +28,8 @@ const PublicationCard = ({ publication }: { publication: IPublication }) => {
     >
       <div className="relative aspect-4/3 w-full overflow-hidden bg-gray-100">
         <Image
-          src={publication.image}
-          alt={publication.title}
+          src={publication.imageUrl}
+          alt={publication.titleEn}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-105"
           sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
@@ -36,12 +37,14 @@ const PublicationCard = ({ publication }: { publication: IPublication }) => {
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <span className="w-fit rounded-md bg-gray-100 px-2 py-1 text-[11px] font-semibold text-gray-600">
-          {publication.code}
-        </span>
+        {publication.code && (
+          <span className="w-fit rounded-md bg-gray-100 px-2 py-1 text-[11px] font-semibold text-gray-600">
+            {publication.code}
+          </span>
+        )}
 
         <h3 className="mt-3 line-clamp-2 text-base font-bold leading-snug text-pBlue">
-          {publication.title}
+          {publication.titleEn}
         </h3>
 
         <span className="mt-3 inline-flex items-center gap-1.5 text-xs text-gray-500">

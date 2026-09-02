@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { FileSearch, Search } from "lucide-react";
+import { useGet } from "@/src/hooks/useGet";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import Pagination from "@/src/components/shared/Pagination";
-import { publications as dummyPublications } from "@/src/data/publications";
+import { IPublication } from "@/src/components/admin/ContentManagement/publications/types";
 import PublicationCard from "./PublicationCard";
 import PublicationsHero from "./PublicationsHero";
 import PublicationListSkeleton from "./Skeleton/PublicationListSkeleton";
@@ -16,31 +17,20 @@ const Publications = () => {
   const { search, handleSearchChange, debouncedSearch } =
     useSearchDebounce(300);
 
-  // Replace with API: once the `/publication` backend endpoint exists, swap
-  // the two lines below for:
-  //   const { data, isLoading } = useGet<IPublication[]>("/publication", ["publication"]);
-  // and drop the `dummyPublications` import above.
-  const data = dummyPublications;
-  const isLoading = false;
+  const { data, isLoading } = useGet<IPublication[]>(
+    "/publication",
+    ["publication-public", currentPage.toString(), debouncedSearch],
+    {
+      page: currentPage.toString(),
+      limit: PAGE_SIZE.toString(),
+      search: debouncedSearch,
+      status: "ACTIVE",
+    }
+  );
 
-  const sorted = useMemo(() => {
-    return [...data].sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
-  }, [data]);
-
-  // The dummy list is small enough to hold in memory, so search and
-  // pagination both run client-side — same shape a debounced API search
-  // would take, just without the network round trip.
-  const filtered = useMemo(() => {
-    const query = debouncedSearch.trim().toLowerCase();
-    if (!query) return sorted;
-    return sorted.filter(
-      (pub) =>
-        pub.title.toLowerCase().includes(query) ||
-        pub.code.toLowerCase().includes(query)
-    );
-  }, [sorted, debouncedSearch]);
+  const visible = Array.isArray(data?.data) ? data.data : [];
+  const totalItems = data?.meta?.totalItems || 0;
+  const totalPages = Math.max(1, data?.meta?.totalPages || 1);
 
   // A narrower result set can have fewer pages than the one currently
   // shown, so every search keystroke jumps back to page 1.
@@ -48,11 +38,6 @@ const Publications = () => {
     setCurrentPage(1);
     handleSearchChange(event);
   };
-
-  const totalItems = filtered.length;
-  const totalPages = Math.max(1, Math.ceil(totalItems / PAGE_SIZE));
-  const page = Math.min(currentPage, totalPages);
-  const visible = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
     <div className="bg-white">
@@ -104,7 +89,7 @@ const Publications = () => {
           {!isLoading && totalPages > 1 && (
             <div className="mt-6 rounded-xl border border-gray-200">
               <Pagination
-                currentPage={page}
+                currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={(nextPage) => {
                   setCurrentPage(nextPage);

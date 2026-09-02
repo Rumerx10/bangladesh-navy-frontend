@@ -1,14 +1,20 @@
 "use client";
 
-import { Controller, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { Button } from "@/src/components/ui/button";
 import InputLabel from "@/src/components/shared/InputLabel";
 import SubmitButton from "@/src/components/shared/SubmitButton";
 import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
+import ControlledSelectField from "@/src/components/shared/FromController/ControlledSelectField";
 import { FileUploadController } from "@/src/components/shared/FromController/FileUploadController";
 import { ErrorType } from "@/src/components/shared/types/common";
 import { PublicationFormValues } from "../Schema/publicationSchema";
+
+const STATUS_OPTIONS = [
+  { label: "Active", value: "ACTIVE" },
+  { label: "Inactive", value: "INACTIVE" },
+];
 
 interface PublicationFormProps {
   isEditMode?: boolean;
@@ -25,7 +31,7 @@ const PublicationForm = ({
   isPending = false,
   error,
 }: PublicationFormProps) => {
-  const { handleSubmit, control } = useFormContext<PublicationFormValues>();
+  const { handleSubmit } = useFormContext<PublicationFormValues>();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
@@ -38,57 +44,43 @@ const PublicationForm = ({
         />
       </div>
       <div>
-        <InputLabel label="Title" required />
+        <InputLabel label="Title (English)" required />
         <ControlledInputField
-          name="title"
+          name="titleEn"
           placeholder="e.g. Sailing Directions for the Bay of Bengal"
           className="bg-light shadow-none"
         />
       </div>
       <div>
-        <InputLabel label="Publication Code" required />
-        <Controller
-          name="code"
-          control={control}
-          render={({ field, fieldState }) => (
-            <div>
-              <div
-                className={`flex h-11 w-full items-stretch overflow-hidden rounded-md border bg-light ${
-                  fieldState.error
-                    ? "border-rose-500"
-                    : "border-light-silver"
-                }`}
-              >
-                <span className="flex items-center border-r border-light-silver bg-gray-100 px-3 text-sm font-semibold text-gray-500">
-                  P
-                </span>
-                <input
-                  {...field}
-                  value={field.value ?? ""}
-                  onChange={(e) =>
-                    field.onChange(e.target.value.replace(/\D/g, ""))
-                  }
-                  type="text"
-                  inputMode="numeric"
-                  placeholder="105"
-                  className="flex-1 bg-transparent px-3 text-base outline-none md:text-sm"
-                />
-              </div>
-              {fieldState.error && (
-                <p className="mt-1 pl-2 text-xs text-rose-500">
-                  {fieldState.error.message}
-                </p>
-              )}
-            </div>
-          )}
+        <InputLabel label="Title (Bangla)" />
+        <ControlledInputField
+          name="titleBn"
+          placeholder="বাংলা শিরোনাম লিখুন"
+          className="bg-light shadow-none"
         />
       </div>
       <div>
-        <InputLabel label="Date" required />
+        <InputLabel label="Publication Code" />
+        <ControlledInputField
+          name="code"
+          placeholder="e.g. PUB 21/2026"
+          className="bg-light shadow-none"
+        />
+      </div>
+      <div>
+        <InputLabel label="Date" />
         <ControlledInputField
           name="date"
           type="date"
           className="bg-light shadow-none"
+        />
+      </div>
+      <div>
+        <InputLabel label="Status" />
+        <ControlledSelectField
+          name="status"
+          options={STATUS_OPTIONS}
+          placeholder="Select status"
         />
       </div>
 

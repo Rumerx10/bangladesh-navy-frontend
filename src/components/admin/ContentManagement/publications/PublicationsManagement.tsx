@@ -1,52 +1,67 @@
 "use client";
-
-import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
+import { IPublication } from "./types";
+import { useEffect, useState } from "react";
+import { useGet } from "@/src/hooks/useGet";
+import { useDelete } from "@/src/hooks/useDelete";
 import { usePagination } from "@/src/hooks/usePagination";
-import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { DataTable } from "@/src/components/ui/data-table";
-import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
-import { IPublication, publications as dummyPublications } from "@/src/data/publications";
-import { GetPublicationColumns } from "./TableColumns/PublicationColumns";
+import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import CreateUpdatePublication from "./Form/CreateUpdatePublication";
+import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
+import { GetPublicationColumns } from "./TableColumns/PublicationColumns";
+
 
 const PublicationsManagement = () => {
-  // Replace with API: once the `/publication` backend endpoint exists, swap
-  // this local state for `useGet<IPublication[]>("/publication", [...])` and
-  // replace handleSubmit/handleDelete below with usePost/usePatch/useDelete
-  // mutations — the DataTable wiring underneath stays the same.
-  const [items, setItems] = useState<IPublication[]>(dummyPublications);
-  const isLoading = false;
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<IPublication | undefined>();
   const [pendingDelete, setPendingDelete] = useState<IPublication | null>(
     null
   );
 
-  const { setCurrentPage, itemsPerPage, currentPage, setItemsPerPage } =
-    usePagination();
+  const {
+    setCurrentPage,
+    itemsPerPage,
+    currentPage,
+    totalItems,
+    setTotalItems,
+    setItemsPerPage,
+  } = usePagination();
+
   const { search, handleSearchChange, debouncedSearch } =
     useSearchDebounce(300);
 
-  const filtered = useMemo(() => {
-    const query = debouncedSearch.trim().toLowerCase();
-    if (!query) return items;
-    return items.filter(
-      (item) =>
-        item.title.toLowerCase().includes(query) ||
-        item.code.toLowerCase().includes(query)
-    );
-  }, [items, debouncedSearch]);
+  const { data, isLoading } = useGet<IPublication[]>(
+    "/publication",
+    [
+      "publication",
+      currentPage.toString(),
+      itemsPerPage.toString(),
+      debouncedSearch,
+    ],
+    {
+      ...(itemsPerPage !== -1 && {
+        page: currentPage.toString(),
+        limit: itemsPerPage.toString(),
+      }),
+      search: debouncedSearch,
+    }
+  );
 
-  const totalItems = filtered.length;
-  const visible =
-    itemsPerPage === -1
-      ? filtered
-      : filtered.slice(
-          (currentPage - 1) * itemsPerPage,
-          currentPage * itemsPerPage
-        );
+  useEffect(() => {
+    if (data) setTotalItems(data.meta?.totalItems || 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch]);
+
+  const { mutate: deleteMutate } = useDelete(() => {
+    toast.success("Publication deleted successfully!");
+    setPendingDelete(null);
+  }, [["publication"], ["publication-public"]]);
 
   const handleEdit = (item: IPublication) => {
     setSelectedItem(item);
@@ -58,36 +73,13 @@ const PublicationsManagement = () => {
     setSelectedItem(undefined);
   };
 
-  const handleFormSubmit = (
-    values: Omit<IPublication, "id">,
-    id?: string
-  ) => {
-    if (id) {
-      setItems((prev) =>
-        prev.map((item) => (item.id === id ? { ...item, ...values } : item))
-      );
-      toast.success("Publication updated successfully!");
-    } else {
-      setItems((prev) => [{ id: `pub-${Date.now()}`, ...values }, ...prev]);
-      toast.success("Publication created successfully!");
-    }
-    handleModalClose();
-  };
-
-  const handleDelete = () => {
-    if (!pendingDelete) return;
-    setItems((prev) => prev.filter((item) => item.id !== pendingDelete.id));
-    toast.success("Publication deleted successfully!");
-    setPendingDelete(null);
-  };
-
   const columns = GetPublicationColumns(handleEdit, setPendingDelete);
 
   return (
     <>
       <DataTable
         columns={columns}
-        data={visible}
+        data={Array.isArray(data?.data) ? data.data : []}
         isLoading={isLoading}
         totalItems={totalItems}
         currentPage={currentPage}
@@ -107,16 +99,19 @@ const PublicationsManagement = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
-        onSubmit={handleFormSubmit}
       />
       <DeleteConfirmDialog
         isOpen={pendingDelete !== null}
         onClose={() => setPendingDelete(null)}
-        onConfirm={handleDelete}
+        onConfirm={() => {
+          if (pendingDelete) {
+            deleteMutate({ url: `/publication/${pendingDelete.id}` });
+          }
+        }}
         title="Delete this publication?"
         description={
           pendingDelete
-            ? `"${pendingDelete.title}" will be permanently removed.`
+            ? `"${pendingDelete.titleEn}" will be permanently removed.`
             : undefined
         }
       />
