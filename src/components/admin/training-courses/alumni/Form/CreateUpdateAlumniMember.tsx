@@ -13,10 +13,11 @@ import {
   DialogTitle,
 } from "@/src/components/ui/dialog";
 import { mapToSelectOptions } from "@/src/utils/mapToSelectOptions";
-import { useCoursesList } from "@/src/components/courses/useCourses";
+import { useBatchesList } from "@/src/components/batches/useBatches";
 import { IAlumniMember } from "@/src/components/alumni/types";
 import {
   ALUMNI_MEMBERS_ENDPOINT,
+  ALUMNI_MEMBERS_LIST_QUERY_KEY,
   ALUMNI_MEMBERS_QUERY_KEY,
   ALUMNI_MEMBERS_TREE_QUERY_KEY,
   nextMemberSerial,
@@ -28,55 +29,63 @@ import {
 } from "../Schema/alumniMemberSchema";
 import AlumniMemberForm from "./AlumniMemberForm";
 
-const EMPTY_MEMBER: AlumniMemberFormValues = {
-  courseId: "",
+const emptyMember = (batchId = ""): AlumniMemberFormValues => ({
+  batchId,
   rankAndName: "",
   pNo: "",
   organization: "BN",
   remarks: "",
   serial: 1,
   status: "ACTIVE",
-};
+});
 
 interface CreateUpdateAlumniMemberProps {
   isOpen: boolean;
   onClose: () => void;
   initialValues?: IAlumniMember;
+  /** Pre-fills the batch select when opened from a batch-filtered view. */
+  initialBatchId?: string;
 }
 
 const CreateUpdateAlumniMember = ({
   isOpen,
   onClose,
   initialValues,
+  initialBatchId,
 }: CreateUpdateAlumniMemberProps) => {
   const isUpdate = !!initialValues;
 
-  const { courses } = useCoursesList();
+  const { batches } = useBatchesList();
   const { groups } = useAlumniTree({ includeInactive: true });
 
-  const courseOptions = useMemo(
-    () => mapToSelectOptions(courses, "name", "id"),
-    [courses]
+  const batchOptions = useMemo(
+    () =>
+      mapToSelectOptions(
+        batches,
+        (batch) => (batch.courseName ? `${batch.courseName} — ${batch.name}` : batch.name),
+        "id"
+      ),
+    [batches]
   );
 
   const methods = useForm<AlumniMemberFormValues>({
     resolver: yupResolver(
       alumniMemberSchema
     ) as Resolver<AlumniMemberFormValues>,
-    defaultValues: EMPTY_MEMBER,
+    defaultValues: emptyMember(initialBatchId),
   });
 
   const { watch, setValue } = methods;
-  const courseId = watch("courseId");
+  const batchId = watch("batchId");
 
   useEffect(() => {
     if (!isOpen) {
-      methods.reset(EMPTY_MEMBER);
+      methods.reset(emptyMember());
       return;
     }
 
     methods.reset({
-      courseId: initialValues?.courseId || "",
+      batchId: initialValues?.batchId || initialBatchId || "",
       rankAndName: initialValues?.rankAndName || "",
       pNo: initialValues?.pNo || "",
       organization: initialValues?.organization || "BN",
@@ -84,18 +93,19 @@ const CreateUpdateAlumniMember = ({
       serial: initialValues?.serial ?? 1,
       status: initialValues?.status || "ACTIVE",
     });
-  }, [isOpen, initialValues, methods]);
+  }, [isOpen, initialValues, initialBatchId, methods]);
 
-  // Picking a course on a new entry continues that course's numbering rather
+  // Picking a batch on a new entry continues that batch's numbering rather
   // than restarting at 1. An existing member keeps the serial it was saved with.
   useEffect(() => {
-    if (!isOpen || isUpdate || !courseId) return;
-    setValue("serial", nextMemberSerial(groups, courseId));
+    if (!isOpen || isUpdate || !batchId) return;
+    setValue("serial", nextMemberSerial(groups, batchId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [courseId, isOpen, isUpdate]);
+  }, [batchId, isOpen, isUpdate]);
 
   const invalidateKeys = [
     ALUMNI_MEMBERS_QUERY_KEY,
+    ALUMNI_MEMBERS_LIST_QUERY_KEY,
     ALUMNI_MEMBERS_TREE_QUERY_KEY,
   ];
 
@@ -146,7 +156,7 @@ const CreateUpdateAlumniMember = ({
     };
 
     const payload: Record<string, unknown> = {
-      courseId: values.courseId,
+      batchId: values.batchId,
       rankAndName: values.rankAndName.trim(),
       serial: Number(values.serial),
       status: values.status,
@@ -183,7 +193,7 @@ const CreateUpdateAlumniMember = ({
         <FormProvider {...methods}>
           <AlumniMemberForm
             isEditMode={isUpdate}
-            courseOptions={courseOptions}
+            batchOptions={batchOptions}
             onSubmit={onSubmit}
             onCancel={handleClose}
             isPending={isCreating || isUpdating}

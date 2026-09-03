@@ -1,21 +1,3 @@
-/** 1 → "1st", 2 → "2nd", 11 → "11th", 23 → "23rd". */
-export const ordinal = (value: number) => {
-  if (!Number.isFinite(value)) return "—";
-  const abs = Math.abs(Math.trunc(value));
-  const lastTwo = abs % 100;
-  if (lastTwo >= 11 && lastTwo <= 13) return `${abs}th`;
-  switch (abs % 10) {
-    case 1:
-      return `${abs}st`;
-    case 2:
-      return `${abs}nd`;
-    case 3:
-      return `${abs}rd`;
-    default:
-      return `${abs}th`;
-  }
-};
-
 /** "08 March 1997" — the long form used on the public course header. */
 export const formatLongDate = (value?: string | null) => {
   if (!value) return "—";
@@ -49,8 +31,8 @@ export const formatPeriod = (start?: string | null, end?: string | null) => {
   return `${formatLongDate(start)} — ${formatLongDate(end)}`;
 };
 
-/** Year the course started, for the hero stats. */
-export const courseYear = (value?: string | null) => {
+/** Year a batch started, for the hero stats. */
+export const yearOf = (value?: string | null) => {
   if (!value) return null;
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? null : date.getFullYear();
@@ -61,11 +43,4 @@ export const courseYear = (value?: string | null) => {
  * the same width regardless of how many courses exist.
  */
 export const paddedSerial = (value: number) =>
-  Number.isFinite(value) ? String(Math.trunc(value)).padStart(2, "0") : "—";
-
-/**
- * Zero-padded batch number for the badge — "01", "02", "12". Keeps every card
- * badge the same width regardless of how many batches exist.
- */
-export const paddedBatchNo = (value: number) =>
   Number.isFinite(value) ? String(Math.trunc(value)).padStart(2, "0") : "—";

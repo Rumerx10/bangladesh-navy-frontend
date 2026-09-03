@@ -1,7 +1,8 @@
 /**
  * Courses run by BN Hydrographic Institute. One record backs both the public
- * "Course Statistics" table (`/training-courses/courses`) and the course an
- * alumni member is grouped under (`/training-courses/alumni`).
+ * "Course Statistics" table (`/training-courses/courses`) and the course a
+ * batch (and, through it, an alumni member) is grouped under
+ * (`/training-courses/alumni`).
  */
 
 export type CourseStatus = "ACTIVE" | "INACTIVE";
@@ -10,12 +11,9 @@ export interface ICourse {
   id: string;
   name: string;
   /** How many times the course has been run to date. */
-  coursesConducted?: number | null;
+  batchConducted?: number | null;
   /** Free text — "24 weeks". */
   duration?: string | null;
-  /** ISO 8601, nullable — older courses have no recorded dates. */
-  startDate?: string | null;
-  endDate?: string | null;
   /** Trainee headcount by parent organization. */
   bn?: number | null;
   otherMaritimeOrg?: number | null;
@@ -32,7 +30,7 @@ export interface ICourse {
 
 /** Column totals for the statistics table — calculated by the API. */
 export interface ICourseTotals {
-  coursesConducted: number;
+  batchConducted: number;
   bn: number;
   otherMaritimeOrg: number;
   overseas: number;

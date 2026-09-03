@@ -76,7 +76,7 @@ const CourseForm = ({
         <SectionHeader
           icon={CalendarRange}
           label="Course Details"
-          description="Name, run dates and where the row sits in the statistics table"
+          description="Name, duration and where the row sits in the statistics table"
         />
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -98,9 +98,9 @@ const CourseForm = ({
             />
           </div>
           <div>
-            <InputLabel label="Courses Conducted" />
+            <InputLabel label="Batch Conducted" />
             <ControlledInputField
-              name="coursesConducted"
+              name="batchConducted"
               type="number"
               placeholder="e.g. 19"
               className="bg-light shadow-none"
@@ -119,22 +119,6 @@ const CourseForm = ({
             <ControlledInputField
               name="remarks"
               placeholder="e.g. Officers"
-              className="bg-light shadow-none"
-            />
-          </div>
-          <div>
-            <InputLabel label="Start Date" />
-            <ControlledInputField
-              name="startDate"
-              type="date"
-              className="bg-light shadow-none"
-            />
-          </div>
-          <div>
-            <InputLabel label="End Date" />
-            <ControlledInputField
-              name="endDate"
-              type="date"
               className="bg-light shadow-none"
             />
           </div>

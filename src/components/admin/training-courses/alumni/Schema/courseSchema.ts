@@ -18,20 +18,8 @@ export const courseSchema = Yup.object({
   name: Yup.string()
     .required("Course name is required")
     .max(200, "Max 200 characters"),
-  coursesConducted: optionalCount("Courses conducted"),
+  batchConducted: optionalCount("Batch conducted"),
   duration: Yup.string().max(50, "Max 50 characters").default(""),
-  startDate: Yup.string().default(""),
-  endDate: Yup.string()
-    .default("")
-    .test(
-      "after-start",
-      "End date must be on or after the start date",
-      function (value) {
-        const { startDate } = this.parent as { startDate?: string };
-        if (!value || !startDate) return true;
-        return new Date(value).getTime() >= new Date(startDate).getTime();
-      }
-    ),
   bn: optionalCount("BN"),
   otherMaritimeOrg: optionalCount("Other maritime org"),
   overseas: optionalCount("Overseas"),

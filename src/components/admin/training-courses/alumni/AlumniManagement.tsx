@@ -1,19 +1,35 @@
 "use client";
 
 import { useState } from "react";
-import { BookOpen, GraduationCap } from "lucide-react";
+import { BookOpen, GraduationCap, Layers } from "lucide-react";
+import { ICourse } from "@/src/components/courses/types";
+import { IBatch } from "@/src/components/batches/types";
 import AlumniMembersCard from "./AlumniMembersCard";
+import BatchesCard from "./BatchesCard";
 import CoursesCard from "./CoursesCard";
 
-type ActiveTab = "members" | "courses";
+type ActiveTab = "courses" | "batches" | "members";
 
 const TABS: { key: ActiveTab; label: string; icon: React.ElementType }[] = [
-  { key: "members", label: "Alumni Members", icon: GraduationCap },
   { key: "courses", label: "Courses", icon: BookOpen },
+  { key: "batches", label: "Batches", icon: Layers },
+  { key: "members", label: "Alumni Members", icon: GraduationCap },
 ];
 
 const AlumniManagement = () => {
-  const [activeTab, setActiveTab] = useState<ActiveTab>("members");
+  const [activeTab, setActiveTab] = useState<ActiveTab>("courses");
+  const [filterCourseId, setFilterCourseId] = useState<string | undefined>();
+  const [filterBatchId, setFilterBatchId] = useState<string | undefined>();
+
+  const handleViewBatches = (course: ICourse) => {
+    setFilterCourseId(course.id);
+    setActiveTab("batches");
+  };
+
+  const handleViewMembers = (batch: IBatch) => {
+    setFilterBatchId(batch.id);
+    setActiveTab("members");
+  };
 
   return (
     <div className="space-y-6">
@@ -37,7 +53,22 @@ const AlumniManagement = () => {
         </div>
       </div>
 
-      {activeTab === "members" ? <AlumniMembersCard /> : <CoursesCard />}
+      {activeTab === "courses" && (
+        <CoursesCard onViewBatches={handleViewBatches} />
+      )}
+      {activeTab === "batches" && (
+        <BatchesCard
+          courseId={filterCourseId}
+          onClearFilter={() => setFilterCourseId(undefined)}
+          onViewMembers={handleViewMembers}
+        />
+      )}
+      {activeTab === "members" && (
+        <AlumniMembersCard
+          batchId={filterBatchId}
+          onClearFilter={() => setFilterBatchId(undefined)}
+        />
+      )}
     </div>
   );
 };

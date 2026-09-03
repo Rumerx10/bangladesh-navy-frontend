@@ -1,10 +1,10 @@
 "use client";
 
 import { cn } from "@/src/lib/utils";
-import { CalendarDays, ChevronDown, Clock3, Users } from "lucide-react";
-import AlumniMemberTable from "./AlumniMemberTable";
+import { ChevronDown, Clock3, Users } from "lucide-react";
+import AlumniBatchCard from "./AlumniBatchCard";
 import { IAlumniCourseGroup } from "./types";
-import { formatPeriod, paddedSerial } from "./utils";
+import { paddedSerial } from "./utils";
 
 interface AlumniCourseGroupCardProps {
   group: IAlumniCourseGroup;
@@ -13,8 +13,9 @@ interface AlumniCourseGroupCardProps {
 }
 
 /**
- * One course — a collapsible header (serial, name, period, headcount) over the
- * roster. Collapsed by default so a page with twenty courses stays scannable.
+ * One course — a collapsible header (serial, name, duration, headcount) over
+ * its batches, each with its own roster. Collapsed by default so a page with
+ * twenty courses stays scannable.
  */
 const AlumniCourseGroupCard = ({
   group,
@@ -22,8 +23,7 @@ const AlumniCourseGroupCard = ({
   onToggle,
 }: AlumniCourseGroupCardProps) => {
   const panelId = `alumni-course-panel-${group.id}`;
-  const period = formatPeriod(group.startDate, group.endDate);
-  const count = group.members.length;
+  const count = group.totalMembers;
 
   return (
     <article
@@ -59,12 +59,6 @@ const AlumniCourseGroupCard = ({
           </h3>
 
           <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500">
-            {period && (
-              <span className="inline-flex items-center gap-1.5">
-                <CalendarDays className="h-3.5 w-3.5 shrink-0" />
-                {period}
-              </span>
-            )}
             {group.duration && (
               <span className="inline-flex items-center gap-1.5">
                 <Clock3 className="h-3.5 w-3.5 shrink-0" />
@@ -95,8 +89,16 @@ const AlumniCourseGroupCard = ({
         )}
       >
         <div className="overflow-hidden">
-          <div className="border-t border-gray-100 p-4 sm:p-5">
-            <AlumniMemberTable members={group.members} />
+          <div className="space-y-4 border-t border-gray-100 p-4 sm:p-5">
+            {group.batches.length > 0 ? (
+              group.batches.map((batch) => (
+                <AlumniBatchCard key={batch.id} batch={batch} />
+              ))
+            ) : (
+              <p className="rounded-lg border border-dashed border-gray-300 bg-gray-50 py-8 text-center text-sm text-gray-500">
+                No batches recorded for this course yet.
+              </p>
+            )}
           </div>
         </div>
       </div>
