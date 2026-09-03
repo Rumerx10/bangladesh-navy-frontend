@@ -1,13 +1,13 @@
-import { Pencil, Trash2 } from "lucide-react";
+import { Layers, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { ICourse } from "@/src/components/courses/types";
 import { formatFigure } from "@/src/components/courses/useCourses";
-import { formatShortDate } from "@/src/components/alumni/utils";
 
 export const GetCourseColumns = (
   onEdit?: (item: ICourse) => void,
-  onDelete?: (item: ICourse) => void
+  onDelete?: (item: ICourse) => void,
+  onViewBatches?: (item: ICourse) => void
 ): ColumnDef<ICourse>[] => [
   {
     header: "Course",
@@ -29,25 +29,13 @@ export const GetCourseColumns = (
     ),
   },
   {
-    header: "Conducted",
-    accessorKey: "coursesConducted",
+    header: "Batch Conducted",
+    accessorKey: "batchConducted",
     cell: (value) => (
       <span className="text-sm text-secondary-gary tabular-nums">
         {formatFigure(value as number | null)}
       </span>
     ),
-  },
-  {
-    header: "Period",
-    accessorKey: "startDate",
-    cell: (_value, row) =>
-      row.startDate || row.endDate ? (
-        <span className="text-sm whitespace-nowrap text-secondary-gary">
-          {formatShortDate(row.startDate)} — {formatShortDate(row.endDate)}
-        </span>
-      ) : (
-        <span className="text-sm text-secondary-gary">—</span>
-      ),
   },
   {
     header: "Trainees (BN / Other / Overseas)",
@@ -96,6 +84,15 @@ export const GetCourseColumns = (
     accessorKey: "id",
     cell: (_value, row) => (
       <div className="flex items-center gap-2">
+        <Button
+          className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-[#E6E6E6] bg-light hover:bg-light"
+          size="sm"
+          onClick={() => onViewBatches?.(row)}
+          aria-label={`View batches for ${row.name}`}
+          title="View batches"
+        >
+          <Layers className="h-4 w-4 text-secondary-foreground" />
+        </Button>
         <Button
           className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-[#E6E6E6] bg-light hover:bg-light"
           size="sm"

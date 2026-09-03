@@ -29,7 +29,12 @@ import { GetCourseColumns } from "./TableColumns/CourseColumns";
  */
 const FETCH_LIMIT = 50;
 
-const CoursesCard = () => {
+interface CoursesCardProps {
+  /** Jumps the parent tab shell to the Batches tab, pre-filtered to this course. */
+  onViewBatches?: (course: ICourse) => void;
+}
+
+const CoursesCard = ({ onViewBatches }: CoursesCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<ICourse | undefined>();
   const [pendingDelete, setPendingDelete] = useState<ICourse | null>(null);
@@ -111,7 +116,7 @@ const CoursesCard = () => {
     [allCourses]
   );
 
-  const columns = GetCourseColumns(handleEdit, setPendingDelete);
+  const columns = GetCourseColumns(handleEdit, setPendingDelete, onViewBatches);
 
   return (
     <>

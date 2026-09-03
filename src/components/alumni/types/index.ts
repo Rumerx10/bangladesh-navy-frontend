@@ -3,19 +3,19 @@
  * (src/components/alumni) and the admin panel
  * (src/components/admin/training-courses/alumni).
  *
- * A member belongs to exactly one course (src/components/courses/types.ts);
- * the public page renders one collapsible card per course.
+ * A member belongs to exactly one batch (src/components/batches/types.ts),
+ * which in turn belongs to exactly one course
+ * (src/components/courses/types.ts); the public page renders one collapsible
+ * card per course, with the batches beneath it.
  */
-
-import { ICourse } from "@/src/components/courses/types";
 
 export type AlumniStatus = "ACTIVE" | "INACTIVE";
 
 /** One roster row — mirrors the Ser / P.No / Rank & Name / Org / Remarks table. */
 export interface IAlumniMember {
   id: string;
-  courseId: string;
-  /** "Ser" in the source document. 1-based, unique within a course. */
+  batchId: string;
+  /** "Ser" in the source document. 1-based, unique within a batch. */
   serial: number;
   /** "P. No" — the officer's personal number. */
   pNo?: string | null;
@@ -26,26 +26,33 @@ export interface IAlumniMember {
   /** "Present Rank", "Rtd", "Change Branch", … */
   remarks?: string | null;
   status: AlumniStatus;
-  /** Populated on reads that join the course; absent on write payloads. */
-  course?: Pick<ICourse, "id" | "name"> | null;
   createdAt?: string;
   updatedAt?: string;
 }
 
-/**
- * One node of `GET /alumni-members/tree` — a course with its roster attached.
- * This is the public listing's unit of display.
- */
-export interface IAlumniCourseGroup {
+/** One batch within a `GET /alumni-members/tree` course node. */
+export interface IAlumniBatchGroup {
   id: string;
   name: string;
-  duration?: string | null;
-  /** ISO 8601, nullable — older courses have no recorded dates. */
+  /** ISO 8601, nullable — older batches have no recorded dates. */
   startDate?: string | null;
   endDate?: string | null;
   serial: number;
   totalMembers: number;
   members: IAlumniMember[];
+}
+
+/**
+ * One node of `GET /alumni-members/tree` — a course with its batches (and
+ * each batch's roster) attached. This is the public listing's unit of display.
+ */
+export interface IAlumniCourseGroup {
+  id: string;
+  name: string;
+  duration?: string | null;
+  serial: number;
+  totalMembers: number;
+  batches: IAlumniBatchGroup[];
 }
 
 /** `ALL` is a filter-only value — never stored or sent. */
@@ -74,48 +81,3 @@ export const REMARKS_SUGGESTIONS = [
   "Change Branch",
   "On Deputation",
 ];
-
-/**
- * A course type — "Basic Hydro", "Advanced Hydro", … Every batch belongs to
- * exactly one course, which is what the admin batch/course editor filters by.
- * This is a separate admin-side model from `IAlumniCourseGroup` above.
- */
-export interface IAlumniCourse {
-  id: string;
-  nameEn: string;
-  nameBn?: string;
-  status: AlumniStatus;
-  createdAt?: string;
-  updatedAt?: string;
-}
-
-/** One roster row within an `IAlumniBatch`. */
-export interface IAlumniBatchMember {
-  id?: string;
-  serial: number;
-  pNo?: string;
-  rankName: string;
-  organization?: string;
-  remarks?: string;
-}
-
-/** A single run of a course — "1st Basic Hydro", 08 Mar 1997 → 07 Aug 1997. */
-export interface IAlumniBatch {
-  id: string;
-  /** 1, 2, 3 … rendered as "1st", "2nd", "3rd" and used for ordering. */
-  batchNo: number;
-  titleEn: string;
-  titleBn?: string;
-  /** ISO 8601. */
-  startDate: string;
-  /** ISO 8601. */
-  endDate: string;
-  descriptionEn?: string;
-  status: AlumniStatus;
-  alumniCourseId?: string;
-  /** Populated by the API on read; absent on write payloads. */
-  alumniCourse?: IAlumniCourse;
-  members: IAlumniBatchMember[];
-  createdAt?: string;
-  updatedAt?: string;
-}

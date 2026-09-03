@@ -69,7 +69,7 @@ const CourseStatisticsTable = () => {
                     {course.name}
                   </td>
                   <td className={`${BODY_CELL} tabular-nums`}>
-                    {formatFigure(course.coursesConducted)}
+                    {formatFigure(course.batchConducted)}
                   </td>
                   <td className={`${BODY_CELL} whitespace-nowrap`}>
                     {course.duration?.trim() || "—"}
@@ -95,7 +95,7 @@ const CourseStatisticsTable = () => {
                   Total
                 </td>
                 <td className={`${TOTAL_CELL} tabular-nums`}>
-                  {totals.coursesConducted}
+                  {totals.batchConducted}
                 </td>
                 <td className={TOTAL_CELL}>—</td>
                 <td className={`${TOTAL_CELL} tabular-nums`}>{totals.bn}</td>

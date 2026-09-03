@@ -12,7 +12,7 @@ import AlumniCourseGroupCard from "./AlumniCourseGroupCard";
 import AlumniHero from "./AlumniHero";
 import AlumniListSkeleton from "./Skeleton/AlumniListSkeleton";
 import { filterAlumniGroups, useAlumniTree } from "./useAlumni";
-import { courseYear } from "./utils";
+import { yearOf } from "./utils";
 
 const AlumniDirectory = () => {
   const [courseId, setCourseId] = useState("ALL");
@@ -30,13 +30,13 @@ const AlumniDirectory = () => {
   );
 
   const totalAlumni = useMemo(
-    () => groups.reduce((sum, group) => sum + group.members.length, 0),
+    () => groups.reduce((sum, group) => sum + group.totalMembers, 0),
     [groups]
   );
 
   const counts = useMemo(() => {
     const totals: Record<string, number> = { ALL: totalAlumni };
-    for (const group of groups) totals[group.id] = group.members.length;
+    for (const group of groups) totals[group.id] = group.totalMembers;
     return totals;
   }, [groups, totalAlumni]);
 
@@ -47,7 +47,8 @@ const AlumniDirectory = () => {
 
   const yearsSpan = useMemo(() => {
     const years = groups
-      .map((group) => courseYear(group.startDate))
+      .flatMap((group) => group.batches)
+      .map((batch) => yearOf(batch.startDate))
       .filter((year): year is number => year !== null);
     if (years.length === 0) return null;
     const from = Math.min(...years);

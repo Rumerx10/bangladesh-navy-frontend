@@ -4,8 +4,8 @@ import { ColumnDef } from "@/src/components/ui/data-table";
 import { IAlumniMember } from "@/src/components/alumni/types";
 
 export const GetAlumniMemberColumns = (
-  /** `courseId` → course name; the list endpoint returns the id only. */
-  courseNames: Record<string, string>,
+  /** `batchId` → "Course — Batch" name; the list endpoint returns the id only. */
+  batchNames: Record<string, string>,
   onEdit?: (item: IAlumniMember) => void,
   onDelete?: (item: IAlumniMember) => void
 ): ColumnDef<IAlumniMember>[] => [
@@ -29,11 +29,11 @@ export const GetAlumniMemberColumns = (
     ),
   },
   {
-    header: "Course",
-    accessorKey: "courseId",
+    header: "Batch",
+    accessorKey: "batchId",
     cell: (_value, row) => (
       <span className="text-sm text-secondary-gary">
-        {row.course?.name || courseNames[row.courseId] || "—"}
+        {batchNames[row.batchId] || "—"}
       </span>
     ),
   },

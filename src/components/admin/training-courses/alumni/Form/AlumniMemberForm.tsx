@@ -19,8 +19,8 @@ import { AlumniMemberFormValues } from "../Schema/alumniMemberSchema";
 
 interface AlumniMemberFormProps {
   isEditMode?: boolean;
-  /** Course id → name, searchable in the combobox. */
-  courseOptions: { label: string; value: string }[];
+  /** Batch id → "Course — Batch" label, searchable in the combobox. */
+  batchOptions: { label: string; value: string }[];
   onSubmit: (data: AlumniMemberFormValues) => void;
   onCancel: () => void;
   isPending?: boolean;
@@ -29,7 +29,7 @@ interface AlumniMemberFormProps {
 
 const AlumniMemberForm = ({
   isEditMode = false,
-  courseOptions,
+  batchOptions,
   onSubmit,
   onCancel,
   isPending = false,
@@ -41,19 +41,19 @@ const AlumniMemberForm = ({
     <form onSubmit={handleSubmit(onSubmit)} className="mt-2 w-full space-y-5">
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div className="sm:col-span-2">
-          <InputLabel label="Course" required />
+          <InputLabel label="Batch" required />
           <ControlledComboboxSelect
-            name="courseId"
-            options={courseOptions}
-            placeholder="Select a course"
-            searchPlaceholder="Search courses..."
-            emptyMessage="No matching course."
+            name="batchId"
+            options={batchOptions}
+            placeholder="Select a batch"
+            searchPlaceholder="Search batches..."
+            emptyMessage="No matching batch."
             className="bg-light shadow-none"
             listClassName="max-h-64"
           />
-          {courseOptions.length === 0 && (
+          {batchOptions.length === 0 && (
             <Paragraph className="mt-1 text-xs! text-amber-600">
-              No courses yet — add one on the Courses tab first.
+              No batches yet — add one on the Batches tab first.
             </Paragraph>
           )}
         </div>

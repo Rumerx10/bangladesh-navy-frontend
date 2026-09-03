@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 export const alumniMemberSchema = Yup.object({
-  courseId: Yup.string().required("Course is required"),
+  batchId: Yup.string().required("Batch is required"),
   rankAndName: Yup.string()
     .required("Rank & name is required")
     .max(250, "Max 250 characters"),
