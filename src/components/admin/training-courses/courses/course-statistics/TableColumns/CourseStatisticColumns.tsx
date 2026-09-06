@@ -1,17 +1,16 @@
-import { Layers, Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
-import { ICourse } from "@/src/components/courses/types";
-import { formatFigure } from "@/src/components/courses/useCourses";
+import { ICourseStatistic } from "@/src/components/course-statistics/types";
+import { formatFigure } from "@/src/components/course-statistics/useCourseStatistics";
 
-export const GetCourseColumns = (
-  onEdit?: (item: ICourse) => void,
-  onDelete?: (item: ICourse) => void,
-  onViewBatches?: (item: ICourse) => void
-): ColumnDef<ICourse>[] => [
+export const GetCourseStatisticColumns = (
+  onEdit?: (item: ICourseStatistic) => void,
+  onDelete?: (item: ICourseStatistic) => void
+): ColumnDef<ICourseStatistic>[] => [
   {
     header: "Course",
-    accessorKey: "name",
+    accessorKey: "courseName",
     cell: (_value, row) => (
       <div className="flex items-center gap-3">
         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary tabular-nums">
@@ -19,13 +18,22 @@ export const GetCourseColumns = (
         </span>
         <div className="min-w-0">
           <p className="truncate text-sm font-medium text-secondary-dark">
-            {row.name || "—"}
+            {row.courseName || "—"}
           </p>
           <p className="truncate text-xs text-secondary-gary">
             {row.duration?.trim() || "Duration not set"}
           </p>
         </div>
       </div>
+    ),
+  },
+  {
+    header: "Conducted",
+    accessorKey: "coursesConducted",
+    cell: (_value, row) => (
+      <span className="text-sm tabular-nums text-secondary-dark">
+        {formatFigure(row.coursesConducted)}
+      </span>
     ),
   },
   {
@@ -78,17 +86,8 @@ export const GetCourseColumns = (
         <Button
           className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-[#E6E6E6] bg-light hover:bg-light"
           size="sm"
-          onClick={() => onViewBatches?.(row)}
-          aria-label={`View batches for ${row.name}`}
-          title="View batches"
-        >
-          <Layers className="h-4 w-4 text-secondary-foreground" />
-        </Button>
-        <Button
-          className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-[#E6E6E6] bg-light hover:bg-light"
-          size="sm"
           onClick={() => onEdit?.(row)}
-          aria-label={`Edit ${row.name}`}
+          aria-label={`Edit ${row.courseName}`}
         >
           <Pencil className="h-4 w-4 text-secondary-foreground" />
         </Button>
@@ -96,7 +95,7 @@ export const GetCourseColumns = (
           className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-red-100 bg-red-50 hover:bg-red-100"
           size="sm"
           onClick={() => onDelete?.(row)}
-          aria-label={`Delete ${row.name}`}
+          aria-label={`Delete ${row.courseName}`}
         >
           <Trash2 className="h-4 w-4 text-red-500" />
         </Button>
