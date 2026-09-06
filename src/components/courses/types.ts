@@ -10,8 +10,6 @@ export type CourseStatus = "ACTIVE" | "INACTIVE";
 export interface ICourse {
   id: string;
   name: string;
-  /** How many times the course has been run to date. */
-  batchConducted?: number | null;
   /** Free text — "24 weeks". */
   duration?: string | null;
   /** Trainee headcount by parent organization. */
@@ -30,7 +28,6 @@ export interface ICourse {
 
 /** Column totals for the statistics table — calculated by the API. */
 export interface ICourseTotals {
-  batchConducted: number;
   bn: number;
   otherMaritimeOrg: number;
   overseas: number;

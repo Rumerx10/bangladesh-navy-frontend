@@ -414,3 +414,37 @@ input[type="time"]::-moz-inner-spin-button {
   height: 0.75rem;
   background-color: rgb(255 255 255);
 }
+
+/* ================================
+   Rich text images (public pages)
+   Backs up the inline `style` the admin's resizable image editor writes
+   per-image (see resizable-image.ts) so wrap/align still renders correctly
+   for any saved content that predates that inline style, and keeps every
+   public dangerouslySetInnerHTML render (history, biography, news, job
+   details, …) consistent with what the admin sees in the editor preview.
+================================= */
+.image-wrap-inline {
+  display: inline;
+  vertical-align: middle;
+  margin: 0 20px;
+}
+
+.image-wrap-wrap.image-align-left {
+  float: left;
+  margin: 0 12px 6px 0;
+}
+
+.image-wrap-wrap.image-align-right {
+  float: right;
+  margin: 0 0 6px 12px;
+}
+
+.image-wrap-break {
+  display: block;
+  float: none;
+  margin: 12px auto;
+}
+
+.image-wrap-break.image-align-right {
+  margin: 12px 0 12px auto;
+}

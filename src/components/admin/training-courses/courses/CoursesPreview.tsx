@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { ChevronRight, Edit } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import Paragraph from "@/src/components/shared/Paragraph";
+import CourseStatisticsManagement from "./course-statistics/CourseStatisticsManagement";
 import { ICoursesManagement } from "./types";
 
 interface CoursesPreviewProps {
@@ -52,80 +52,23 @@ const CoursesPreview = ({
         </Button>
       </div>
 
-      <div className="p-6 sm:p-8 pt-10 space-y-8">
-        {isUsingDefaults && (
-          <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
-            <Paragraph className="text-sm! text-amber-800">
-              Nothing has been saved yet — this is the default copy currently
-              hardcoded on the public page. Edit and save to store it.
-            </Paragraph>
-          </div>
-        )}
+      <div className="p-6 sm:p-8 pt-10 space-y-4">
+        {/* <Paragraph className="font-semibold text-pBlue uppercase">
+          Course Statistics
+        </Paragraph>
+        <Paragraph className="text-sm! text-gray-500 -mt-3">
+          Rows shown in the public Course Statistics table, backed by its own
+          /course-statistics API — independent of Courses, Batches and Alumni
+          Members.
+        </Paragraph> */}
 
-        {/* Introduction */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Title
-            </Paragraph>
-            <Paragraph className="text-base mb-4">{data.title}</Paragraph>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Introduction
-            </Paragraph>
-            <Paragraph className="text-sm leading-relaxed text-gray-600 text-justify">
-              {data.introduction}
-            </Paragraph>
-          </div>
-
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Course Sequence
-            </Paragraph>
-            <ol className="list-decimal list-inside space-y-1 text-sm text-gray-600">
-              {data.courseSequence.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ol>
-          </div>
-        </div>
-
-        {/* Course descriptions */}
-        <div className="space-y-4">
-          <Paragraph className="font-semibold text-pBlue uppercase">
-            Course Descriptions
-          </Paragraph>
-          {data.sections.map((section, index) => (
-            <div key={index} className="border-l-4 border-liteBlue pl-5">
-              <Paragraph className="font-medium text-pBlue mb-1">
-                {index + 1}. {section.title}
-              </Paragraph>
-              <Paragraph className="text-sm leading-relaxed text-gray-600 text-justify">
-                {section.description}
-              </Paragraph>
-            </div>
-          ))}
-        </div>
-
-        {/* Statistics live elsewhere now — say so, so nobody hunts for them. */}
-        <div className="rounded-xl border border-gray-200 bg-gray-50 p-5">
-          <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-            Course Statistics
-          </Paragraph>
-          <Paragraph className="text-sm! text-gray-600">
-            The statistics table below this copy on the public page is built
-            from the course records, not from this content.
-          </Paragraph>
-          <Link
-            href="/admin/training-courses/alumni"
-            className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
-          >
-            Edit courses &amp; statistics
-            <ChevronRight className="w-4 h-4" />
-          </Link>
-        </div>
+        {/* Live, editable rows — "Add Row" and each row's edit icon open the
+            same input fields used by POST/PATCH /course-statistics. */}
+        <CourseStatisticsManagement />
       </div>
     </div>
   );
 };
 
 export default CoursesPreview;
+  

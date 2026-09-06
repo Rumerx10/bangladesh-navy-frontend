@@ -1,12 +1,14 @@
 "use client";
 
+import { Fragment } from "react";
 import { BarChart3 } from "lucide-react";
-import { formatFigure, useCoursesList } from "./useCourses";
+import { formatFigure, useCourseStatisticsList } from "./useCourseStatistics";
 
 const HEAD_CELL =
   "border border-liteBlue/40 px-3 py-3 text-center font-semibold";
 const BODY_CELL = "border border-gray-200 px-3 py-3 text-center";
 const TOTAL_CELL = "border border-gray-300 px-3 py-3 text-center";
+const COLUMN_COUNT = 7;
 
 const StatisticsSkeleton = () => (
   <div className="space-y-2 p-4">
@@ -17,12 +19,14 @@ const StatisticsSkeleton = () => (
 );
 
 /**
- * The "Course Statistics" table on the public courses page. Rows and the totals
- * row both come from `/courses/list` — the totals are calculated by the API so
- * the footer can never drift from the rows above it.
+ * The "Course Statistics" table on the public courses page. Rows, their
+ * grouping by `remarks` and the totals row all come from
+ * `/course-statistics/list` — the totals are calculated by the API so the
+ * footer can never drift from the rows above it.
  */
 const CourseStatisticsTable = () => {
-  const { courses, totals, isLoading } = useCoursesList();
+  const { groups, totals, isLoading } = useCourseStatisticsList();
+  const hasRows = groups.some((group) => group.rows.length > 0);
 
   return (
     <div>
@@ -31,7 +35,7 @@ const CourseStatisticsTable = () => {
       <div className="overflow-x-auto rounded-xl border border-gray-200">
         {isLoading ? (
           <StatisticsSkeleton />
-        ) : courses.length === 0 ? (
+        ) : !hasRows ? (
           <div className="py-14 text-center">
             <BarChart3 className="mx-auto h-8 w-8 text-gray-400" />
             <p className="mt-3 text-sm font-medium text-gray-600">
@@ -55,47 +59,61 @@ const CourseStatisticsTable = () => {
                 <th className={HEAD_CELL}>Other Maritime Org</th>
                 <th className={HEAD_CELL}>Overseas</th>
                 <th className={HEAD_CELL}>Total Trainees</th>
-                <th className={HEAD_CELL}>Remarks</th>
               </tr>
             </thead>
             <tbody className="text-gray-700">
-              {courses.map((course, index) => (
-                <tr
-                  key={course.id}
-                  className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
-                >
-                  <td className={`${BODY_CELL} tabular-nums`}>{index + 1}</td>
-                  <td className="border border-gray-200 px-3 py-3">
-                    {course.name}
-                  </td>
-                  <td className={`${BODY_CELL} tabular-nums`}>
-                    {formatFigure(course.batchConducted)}
-                  </td>
-                  <td className={`${BODY_CELL} whitespace-nowrap`}>
-                    {course.duration?.trim() || "—"}
-                  </td>
-                  <td className={`${BODY_CELL} tabular-nums`}>
-                    {formatFigure(course.bn)}
-                  </td>
-                  <td className={`${BODY_CELL} tabular-nums`}>
-                    {formatFigure(course.otherMaritimeOrg)}
-                  </td>
-                  <td className={`${BODY_CELL} tabular-nums`}>
-                    {formatFigure(course.overseas)}
-                  </td>
-                  <td className={`${BODY_CELL} tabular-nums`}>
-                    {formatFigure(course.totalTrainees)}
-                  </td>
-                  <td className={BODY_CELL}>{course.remarks?.trim() || "—"}</td>
-                </tr>
-              ))}
+              {groups.map((group) =>
+                group.rows.length === 0 ? null : (
+                  <Fragment key={`${group.remarks}-${group.rows[0].id}`}>
+                    <tr className="bg-liteBlue/10">
+                      <td
+                        colSpan={COLUMN_COUNT + 1}
+                        className="border border-gray-200 px-3 py-2 text-left text-xs font-bold uppercase tracking-wide text-pBlue"
+                      >
+                        {group.remarks?.trim() || "General"}
+                      </td>
+                    </tr>
+                    {group.rows.map((course, index) => (
+                      <tr
+                        key={course.id}
+                        className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                      >
+                        <td className={`${BODY_CELL} tabular-nums`}>
+                          {course.serial ?? "—"}
+                        </td>
+                        <td className="border border-gray-200 px-3 py-3">
+                          {course.courseName}
+                        </td>
+                        <td className={`${BODY_CELL} tabular-nums`}>
+                          {formatFigure(course.coursesConducted)}
+                        </td>
+                        <td className={`${BODY_CELL} whitespace-nowrap`}>
+                          {course.duration?.trim() || "—"}
+                        </td>
+                        <td className={`${BODY_CELL} tabular-nums`}>
+                          {formatFigure(course.bn)}
+                        </td>
+                        <td className={`${BODY_CELL} tabular-nums`}>
+                          {formatFigure(course.otherMaritimeOrg)}
+                        </td>
+                        <td className={`${BODY_CELL} tabular-nums`}>
+                          {formatFigure(course.overseas)}
+                        </td>
+                        <td className={`${BODY_CELL} tabular-nums`}>
+                          {formatFigure(course.totalTrainees)}
+                        </td>
+                      </tr>
+                    ))}
+                  </Fragment>
+                )
+              )}
 
               <tr className="bg-liteBlue/10 font-bold">
                 <td className={TOTAL_CELL} colSpan={2}>
                   Total
                 </td>
                 <td className={`${TOTAL_CELL} tabular-nums`}>
-                  {totals.batchConducted}
+                  {totals.coursesConducted}
                 </td>
                 <td className={TOTAL_CELL}>—</td>
                 <td className={`${TOTAL_CELL} tabular-nums`}>{totals.bn}</td>
@@ -108,7 +126,6 @@ const CourseStatisticsTable = () => {
                 <td className={`${TOTAL_CELL} tabular-nums`}>
                   {totals.totalTrainees}
                 </td>
-                <td className="border border-gray-300 px-3 py-3" />
               </tr>
             </tbody>
           </table>

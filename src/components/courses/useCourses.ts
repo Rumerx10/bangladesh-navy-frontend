@@ -12,7 +12,6 @@ export const COURSES_QUERY_KEY = ["courses"];
 export const COURSES_LIST_QUERY_KEY = ["courses-list"];
 
 export const EMPTY_COURSE_TOTALS: ICourseTotals = {
-  batchConducted: 0,
   bn: 0,
   otherMaritimeOrg: 0,
   overseas: 0,

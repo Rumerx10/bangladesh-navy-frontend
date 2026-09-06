@@ -12,22 +12,25 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/src/components/ui/dialog";
-import { ICourse } from "@/src/components/courses/types";
+import { ICourseStatistic } from "@/src/components/course-statistics/types";
 import {
-  COURSES_ENDPOINT,
-  COURSES_LIST_QUERY_KEY,
-  COURSES_QUERY_KEY,
-} from "@/src/components/courses/useCourses";
-import { ALUMNI_MEMBERS_TREE_QUERY_KEY } from "@/src/components/alumni/useAlumni";
-import { CourseFormValues, courseSchema } from "../Schema/courseSchema";
-import CourseForm from "./CourseForm";
+  COURSE_STATISTICS_ENDPOINT,
+  COURSE_STATISTICS_LIST_QUERY_KEY,
+  COURSE_STATISTICS_QUERY_KEY,
+} from "@/src/components/course-statistics/useCourseStatistics";
+import {
+  CourseStatisticFormValues,
+  courseStatisticSchema,
+} from "../Schema/courseStatisticSchema";
+import CourseStatisticForm from "./CourseStatisticForm";
 
 const toNumberOrNull = (value?: number) =>
   value === undefined || Number.isNaN(value) ? null : Number(value);
 
-const EMPTY_COURSE: CourseFormValues = {
-  name: "",
+const EMPTY_COURSE_STATISTIC: CourseStatisticFormValues = {
+  courseName: "",
   duration: "",
+  coursesConducted: undefined,
   bn: undefined,
   otherMaritimeOrg: undefined,
   overseas: undefined,
@@ -37,36 +40,37 @@ const EMPTY_COURSE: CourseFormValues = {
   status: "ACTIVE",
 };
 
-interface CreateUpdateCourseProps {
+interface CreateUpdateCourseStatisticProps {
   isOpen: boolean;
   onClose: () => void;
-  initialValues?: ICourse;
-  /** Serial suggested for a new course — one past the current last row. */
+  initialValues?: ICourseStatistic;
+  /** Serial suggested for a new row — one past the current last row. */
   nextSerial?: number;
 }
 
-const CreateUpdateCourse = ({
+const CreateUpdateCourseStatistic = ({
   isOpen,
   onClose,
   initialValues,
   nextSerial = 1,
-}: CreateUpdateCourseProps) => {
+}: CreateUpdateCourseStatisticProps) => {
   const isUpdate = !!initialValues;
 
-  const methods = useForm<CourseFormValues>({
-    resolver: yupResolver(courseSchema) as Resolver<CourseFormValues>,
-    defaultValues: EMPTY_COURSE,
+  const methods = useForm<CourseStatisticFormValues>({
+    resolver: yupResolver(courseStatisticSchema) as Resolver<CourseStatisticFormValues>,
+    defaultValues: EMPTY_COURSE_STATISTIC,
   });
 
   useEffect(() => {
     if (!isOpen) {
-      methods.reset(EMPTY_COURSE);
+      methods.reset(EMPTY_COURSE_STATISTIC);
       return;
     }
 
     methods.reset({
-      name: initialValues?.name || "",
+      courseName: initialValues?.courseName || "",
       duration: initialValues?.duration || "",
+      coursesConducted: initialValues?.coursesConducted ?? undefined,
       bn: initialValues?.bn ?? undefined,
       otherMaritimeOrg: initialValues?.otherMaritimeOrg ?? undefined,
       overseas: initialValues?.overseas ?? undefined,
@@ -77,12 +81,9 @@ const CreateUpdateCourse = ({
     });
   }, [isOpen, initialValues, nextSerial, methods]);
 
-  // A course rename or reorder changes the public statistics table, the course
-  // dropdown on the members tab and the alumni tree, so all three are dropped.
   const invalidateKeys = [
-    COURSES_QUERY_KEY,
-    COURSES_LIST_QUERY_KEY,
-    ALUMNI_MEMBERS_TREE_QUERY_KEY,
+    COURSE_STATISTICS_QUERY_KEY,
+    COURSE_STATISTICS_LIST_QUERY_KEY,
   ];
 
   const {
@@ -91,9 +92,9 @@ const CreateUpdateCourse = ({
     error,
     reset: resetCreateError,
   } = usePost(
-    COURSES_ENDPOINT,
+    COURSE_STATISTICS_ENDPOINT,
     () => {
-      toast.success("Course created successfully!");
+      toast.success("Course statistics row created successfully!");
       onClose();
     },
     invalidateKeys
@@ -105,7 +106,7 @@ const CreateUpdateCourse = ({
     error: updateError,
     reset: resetUpdateError,
   } = usePatch(() => {
-    toast.success("Course updated successfully!");
+    toast.success("Course statistics row updated successfully!");
     onClose();
   }, invalidateKeys);
 
@@ -122,11 +123,12 @@ const CreateUpdateCourse = ({
     onClose();
   };
 
-  const onSubmit = (values: CourseFormValues) => {
+  const onSubmit = (values: CourseStatisticFormValues) => {
     // Optional fields are sent as `null` on update so a cleared figure actually
     // clears; on create they are omitted and the API stores its own default.
     const optional = {
       duration: values.duration?.trim() || null,
+      coursesConducted: toNumberOrNull(values.coursesConducted),
       bn: toNumberOrNull(values.bn),
       otherMaritimeOrg: toNumberOrNull(values.otherMaritimeOrg),
       overseas: toNumberOrNull(values.overseas),
@@ -135,7 +137,7 @@ const CreateUpdateCourse = ({
     };
 
     const payload: Record<string, unknown> = {
-      name: values.name.trim(),
+      courseName: values.courseName.trim(),
       serial: Number(values.serial),
       status: values.status,
       ...(isUpdate
@@ -147,7 +149,7 @@ const CreateUpdateCourse = ({
 
     if (isUpdate && initialValues) {
       updateMutate({
-        url: `${COURSES_ENDPOINT}/${initialValues.id}`,
+        url: `${COURSE_STATISTICS_ENDPOINT}/${initialValues.id}`,
         data: payload,
       });
     } else {
@@ -165,12 +167,12 @@ const CreateUpdateCourse = ({
       <DialogContent className="flex max-h-[90vh] min-w-[70vw] flex-col bg-white">
         <DialogHeader className="shrink-0">
           <DialogTitle className="text-xl font-semibold text-secondary">
-            {isUpdate ? "Update" : "Create"} Course
+            {isUpdate ? "Update" : "Create"} Course Statistics Row
           </DialogTitle>
         </DialogHeader>
         <div className="scrollbar-modern mt-2 flex-1 overflow-y-auto pr-2">
           <FormProvider {...methods}>
-            <CourseForm
+            <CourseStatisticForm
               isEditMode={isUpdate}
               onSubmit={onSubmit}
               onCancel={handleClose}
@@ -184,4 +186,4 @@ const CreateUpdateCourse = ({
   );
 };
 
-export default CreateUpdateCourse;
+export default CreateUpdateCourseStatistic;

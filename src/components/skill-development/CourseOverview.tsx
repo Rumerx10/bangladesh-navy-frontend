@@ -1,4 +1,4 @@
-import CourseStatisticsTable from "@/src/components/courses/CourseStatisticsTable";
+import CourseStatisticsTable from "@/src/components/course-statistics/CourseStatisticsTable";
 
 const CourseOverview = () => {
   return (
@@ -73,7 +73,7 @@ const CourseOverview = () => {
           </div>
         </div>
 
-        {/* Summary Table — rows and totals come from `/courses/list` */}
+        {/* Summary Table — rows and totals come from `/course-statistics/list` */}
         <CourseStatisticsTable />
       </div>
     </section>

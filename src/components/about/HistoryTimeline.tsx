@@ -5,14 +5,18 @@ import { motion } from "framer-motion";
 import { useGet } from "@/src/hooks/useGet";
 import type { IHistoryContent } from "@/src/components/about/types";
 
+// Width/float/margin for each image come from the inline `style` the admin's
+// resizable image editor already writes per-image (see resizable-image.ts's
+// `wrap`/`align` handling) — forcing a blanket float-left here used to fight
+// that per-image choice (e.g. an "Inline" image got force-floated), which is
+// why the public page could drift from what the admin sees in the editor
+// preview. Only add cosmetic styling that has no inline equivalent.
 const narrativeStyles =
   "text-base md:text-lg text-[#3a4858] leading-[1.9] text-justify " +
   "[&_p]:mb-5 [&_p:last-child]:mb-0 " +
-  "[&_img]:float-left [&_img]:w-50 md:[&_img]:w-150 [&_img]:max-w-full " +
-  "[&_img]:h-auto [&_img]:shrink-0 [&_img]:mr-5 [&_img]:mb-4 " +
   "[&_img]:rounded-xl [&_img]:shadow-md [&_img]:object-cover";
 
-const HistoryTimeline = () => {
+const   HistoryTimeline = () => {
   const { data, isLoading } = useGet<IHistoryContent | null>("/history", [
     "history",
   ]);

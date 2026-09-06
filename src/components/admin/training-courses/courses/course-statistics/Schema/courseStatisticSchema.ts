@@ -14,11 +14,12 @@ const optionalCount = (label: string) =>
     .integer(`${label} must be a whole number`)
     .min(0, `${label} cannot be negative`);
 
-export const courseSchema = Yup.object({
-  name: Yup.string()
+export const courseStatisticSchema = Yup.object({
+  courseName: Yup.string()
     .required("Course name is required")
     .max(200, "Max 200 characters"),
   duration: Yup.string().max(50, "Max 50 characters").default(""),
+  coursesConducted: optionalCount("Courses conducted"),
   bn: optionalCount("BN"),
   otherMaritimeOrg: optionalCount("Other maritime org"),
   overseas: optionalCount("Overseas"),
@@ -34,4 +35,6 @@ export const courseSchema = Yup.object({
     .default("ACTIVE"),
 });
 
-export type CourseFormValues = Yup.InferType<typeof courseSchema>;
+export type CourseStatisticFormValues = Yup.InferType<
+  typeof courseStatisticSchema
+>;

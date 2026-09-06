@@ -9,11 +9,9 @@ import HistoryPreviewSkeleton from "./Skeleton/HistoryPreviewSkeleton";
 
 const HistoryManagement = () => {
   const [isEditMode, setIsEditMode] = useState(false);
-
   const { data, isLoading } = useGet<IHistoryManagement | null>("/history", [
     "history-management",
   ]);
-
   const historyData = data?.data;
 
   if (isLoading) {

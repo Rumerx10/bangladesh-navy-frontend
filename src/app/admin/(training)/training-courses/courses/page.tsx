@@ -7,11 +7,7 @@ export const metadata: Metadata = {
 };
 
 const page = () => {
-  return (
-    <div>
-      <CoursesManagement />
-    </div>
-  );
+  return <CoursesManagement />;
 };
 
 export default page;

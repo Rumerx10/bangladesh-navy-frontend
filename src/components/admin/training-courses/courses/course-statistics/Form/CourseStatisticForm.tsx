@@ -10,8 +10,8 @@ import ControlledInputField from "@/src/components/shared/FromController/Control
 import ControlledSelectField from "@/src/components/shared/FromController/ControlledSelectField";
 import { Button } from "@/src/components/ui/button";
 import { ErrorType } from "@/src/components/shared/types/common";
-import { COURSE_STATUS_OPTIONS } from "@/src/components/courses/types";
-import { CourseFormValues } from "../Schema/courseSchema";
+import { COURSE_STATISTIC_STATUS_OPTIONS } from "@/src/components/course-statistics/types";
+import { CourseStatisticFormValues } from "../Schema/courseStatisticSchema";
 
 const SectionHeader = ({
   label,
@@ -37,9 +37,9 @@ const SectionHeader = ({
   </div>
 );
 
-interface CourseFormProps {
+interface CourseStatisticFormProps {
   isEditMode?: boolean;
-  onSubmit: (data: CourseFormValues) => void;
+  onSubmit: (data: CourseStatisticFormValues) => void;
   onCancel: () => void;
   isPending?: boolean;
   error?: ErrorType;
@@ -50,14 +50,15 @@ const toCount = (value: unknown) => {
   return Number.isFinite(parsed) ? parsed : 0;
 };
 
-const CourseForm = ({
+const CourseStatisticForm = ({
   isEditMode = false,
   onSubmit,
   onCancel,
   isPending = false,
   error,
-}: CourseFormProps) => {
-  const { handleSubmit, watch, setValue } = useFormContext<CourseFormValues>();
+}: CourseStatisticFormProps) => {
+  const { handleSubmit, watch, setValue } =
+    useFormContext<CourseStatisticFormValues>();
 
   const bn = watch("bn");
   const otherMaritimeOrg = watch("otherMaritimeOrg");
@@ -83,7 +84,7 @@ const CourseForm = ({
           <div className="sm:col-span-2">
             <InputLabel label="Course Name" required />
             <ControlledInputField
-              name="name"
+              name="courseName"
               placeholder="e.g. Basic Hydrographic (Cat B)"
               className="bg-light shadow-none"
             />
@@ -106,6 +107,15 @@ const CourseForm = ({
             />
           </div>
           <div>
+            <InputLabel label="Courses Conducted" />
+            <ControlledInputField
+              name="coursesConducted"
+              type="number"
+              placeholder="e.g. 19"
+              className="bg-light shadow-none"
+            />
+          </div>
+          <div>
             <InputLabel label="Remarks" />
             <ControlledInputField
               name="remarks"
@@ -117,7 +127,7 @@ const CourseForm = ({
             <InputLabel label="Status" required />
             <ControlledSelectField
               name="status"
-              options={COURSE_STATUS_OPTIONS}
+              options={COURSE_STATISTIC_STATUS_OPTIONS}
               placeholder="Select status"
             />
           </div>
@@ -208,11 +218,11 @@ const CourseForm = ({
         </Button>
         <SubmitButton
           isLoading={isPending}
-          label={isEditMode ? "Update Course" : "Create Course"}
+          label={isEditMode ? "Update Row" : "Create Row"}
         />
       </div>
     </form>
   );
 };
 
-export default CourseForm;
+export default CourseStatisticForm;
