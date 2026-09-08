@@ -92,7 +92,7 @@ export const quickAccessItems: IQuickAccessItem[] = [
     title: "Electronic Charts",
     description: "ENC & ECDIS compatible digital charts",
     icon: "monitor",
-    href: "/product-service/electronic-charts",
+    href: "/product-service/electronic-navigational-charts",
   },
   {
     id: "qa-3",
@@ -113,7 +113,7 @@ export const quickAccessItems: IQuickAccessItem[] = [
     title: "Marine Weather",
     description: "Weather data & forecasting",
     icon: "cloud-sun",
-    href: "/product-service/marine-weather",
+    href: "/product-service/marine-weather-forecast",
   },
 ];
 

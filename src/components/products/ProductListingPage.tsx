@@ -105,20 +105,34 @@ const ProductListingPage = () => {
 
   const { data, isLoading } = useGet<IProduct[]>(
     "/product",
-    ["product-public", debouncedSearch, selectedCategory],
+    ["product-public", selectedCategory],
     {
       page: "1",
       limit: FETCH_LIMIT.toString(),
-      search: debouncedSearch,
       ...(selectedCategory !== "all" && { category: selectedCategory }),
     }
   );
 
+  // The /product endpoint ignores the `search` query param, so the whole
+  // fetched set is filtered client-side instead (see ProductsManagement.tsx).
+  const filtered = useMemo(() => {
+    const fetched = Array.isArray(data?.data) ? data.data : [];
+    const query = debouncedSearch.trim().toLowerCase();
+    if (!query) return fetched;
+    return fetched.filter(
+      (item) =>
+        item.nameEn?.toLowerCase().includes(query) ||
+        item.nameBn?.toLowerCase().includes(query) ||
+        item.chartCode?.toString().includes(query)
+    );
+  }, [data, debouncedSearch]);
+
   // A single category is already homogeneous, so only "All" needs interleaving.
   const ordered = useMemo(() => {
-    const fetched = Array.isArray(data?.data) ? data.data : [];
-    return selectedCategory === "all" ? interleaveByCategory(fetched) : fetched;
-  }, [data, selectedCategory]);
+    return selectedCategory === "all"
+      ? interleaveByCategory(filtered)
+      : filtered;
+  }, [filtered, selectedCategory]);
 
   const totalItems = ordered.length;
   const totalPages = Math.max(1, Math.ceil(totalItems / PAGE_SIZE));
