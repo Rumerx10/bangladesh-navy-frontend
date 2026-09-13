@@ -40,12 +40,12 @@ const orgData = {
     // Each inner array = one vertical column; items stacked top → bottom with arrows
     columns: [
       [
-        "DEPUTY CHIEFHYDROGRAPHER (PLAN & POLICY)",
-        "DEPUTY CHIEFHYDROGRAPHER (NATIONAL AFFAIR)",
+        "DEPUTY CHIEF HYDROGRAPHER (PLAN & POLICY)",
+        "DEPUTY CHIEF HYDROGRAPHER (NATIONAL AFFAIR)",
       ],
       [
-        "DEPUTY CHIEFHYDROGRAPHER (OPS & TRG)",
-        "DEPUTY CHIEFHYDROGRAPHER (INTERNATIONAL AFFAIR)",
+        "DEPUTY CHIEF HYDROGRAPHER (OPS & TRG)",
+        "DEPUTY CHIEF HYDROGRAPHER (INTERNATIONAL AFFAIR)",
       ],
     ],
   },
@@ -331,6 +331,40 @@ const Legend = () => {
 
 // ─── Mobile / tablet: stacked tree (no horizontal scroll needed) ─────────────
 
+/**
+ * Each row is an independent chain hanging off the branch, not a
+ * continuation of the row before it (e.g. CHART DEPOT is a sibling of
+ * ADMINISTRATION DEPT's chain, not a child of QUALITY CONTROL DEPT). A
+ * shared sidebar with a stub per row keeps that separation visible while
+ * still stacking everything in one column for narrow screens.
+ */
+const MobileLeftRows = ({ rows }: { rows: string[][] }) => {
+  return (
+    <div className="relative w-full pl-5">
+      <div
+        className="absolute left-0 top-3.5 bottom-3.5 w-px"
+        style={{ background: LINE }}
+      />
+      <div className="flex flex-col gap-4">
+        {rows.map((row, ri) => (
+          <div key={ri} className="relative flex flex-col gap-2">
+            <div
+              className="absolute h-px"
+              style={{ left: -20, top: 14, width: 20, background: LINE }}
+            />
+            {row.map((dept, di) => (
+              <Fragment key={di}>
+                {di > 0 && <VArrow height={14} />}
+                <DeptCard title={dept} delay={0.05 * ri + 0.03 * di} />
+              </Fragment>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const MobileOrgTree = ({
   root,
   leftBranch,
@@ -340,8 +374,6 @@ const MobileOrgTree = ({
   leftBranch: typeof orgData.leftBranch;
   rightBranch: typeof orgData.rightBranch;
 }) => {
-  const leftDepts = leftBranch.rows.flat();
-
   return (
     <div className="flex flex-col items-center">
       <RootCard title={root} />
@@ -351,14 +383,7 @@ const MobileOrgTree = ({
       <div className="w-full max-w-md flex flex-col items-center">
         <BranchCard title={leftBranch.title} delay={0.1} />
         <VArrow height={20} />
-        <div className="w-full flex flex-col gap-3">
-          {leftDepts.map((dept, i) => (
-            <Fragment key={dept}>
-              {i > 0 && <VArrow height={14} />}
-              <DeptCard title={dept} delay={0.05 * i} />
-            </Fragment>
-          ))}
-        </div>
+        <MobileLeftRows rows={leftBranch.rows} />
       </div>
 
       <div className="w-full max-w-md h-px bg-pBlue/10 my-8" />
