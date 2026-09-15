@@ -10,6 +10,29 @@ const toPx = (value?: string | number): string | undefined => {
     : String(value);
 };
 
+// Single source of truth for the layout half of an image's inline style —
+// shared by `renderHTML` (the HTML saved/serialized for public pages) and
+// the interactive node view (what the admin sees while editing) so the two
+// never drift apart again. Width/height are appended separately by callers.
+const getWrapStyle = (wrap?: string, align?: string): string => {
+  if (wrap === "inline") {
+    return " display: inline; vertical-align: middle; margin: 0 8px;";
+  }
+  if (wrap === "wrap") {
+    if (align === "right") {
+      return " float: right; margin: 0 0 6px 12px; clear: both;";
+    }
+    return " float: left; margin: 0 12px 6px 0; clear: both;";
+  }
+  if (wrap === "break") {
+    if (align === "right") {
+      return " display: block; margin: 12px 0 12px auto; float: none; clear: both;";
+    }
+    return " display: block; margin: 12px auto; float: none; clear: both;";
+  }
+  return "";
+};
+
 const ResizableImage = Image.extend({
   name: "resizableImage",
 
@@ -30,32 +53,10 @@ const ResizableImage = Image.extend({
           element.getAttribute("data-width") || element.style.width || "300px",
         renderHTML: (attributes: ResizableImageAttributes) => {
           const { width, height, wrap, align } = attributes;
-          let style = `width: ${width}; height: ${
-            height || "auto"
-          }; max-width: 100%;`;
-
-          if (wrap === "inline") {
-            style += " display: inline; vertical-align: middle; margin: 0 4px;";
-          } else if (wrap === "wrap") {
-            if (align === "left") {
-              style += " float: left; margin: 0 12px 6px 0; clear: both;";
-            } else if (align === "right") {
-              style += " float: right; margin: 0 0 6px 12px; clear: both;";
-            } else {
-              style += " float: left; margin: 0 12px 6px 0; clear: both;";
-            }
-          } else if (wrap === "break") {
-            if (align === "center") {
-              style +=
-                " display: block; margin: 12px auto; float: none; clear: both;";
-            } else if (align === "right") {
-              style +=
-                " display: block; margin: 12px 0 12px auto; float: none; clear: both;";
-            } else {
-              style +=
-                " display: block; margin: 12px auto; float: none; clear: both;";
-            }
-          }
+          const style =
+            `width: ${width}; height: ${
+              height || "auto"
+            }; max-width: 100%;` + getWrapStyle(wrap, align);
 
           return {
             "data-width": width,
@@ -171,8 +172,17 @@ const ResizableImage = Image.extend({
       img.className = "resizable-image";
 
       const applyAttrs = (n: typeof node) => {
-        dom.className = `image-resize-container image-wrap-${n.attrs.wrap}`;
-        dom.setAttribute("data-wrap", n.attrs.wrap);
+        const wrap = n.attrs.wrap;
+        const align = n.attrs.align || "left";
+
+        // Layout (float/display/margin) lives on the container only — the
+        // img inside is a plain block that just fills it. Setting the same
+        // margin on both used to double the gap between the image and the
+        // surrounding text (e.g. 20px container + 20px img = 40px).
+        dom.className = `image-resize-container image-wrap-${wrap} image-align-${align}`;
+        dom.setAttribute("data-wrap", wrap);
+        dom.setAttribute("data-align", align);
+        dom.style.cssText = getWrapStyle(wrap, align);
 
         img.src = n.attrs.src;
         img.alt = n.attrs.alt || "";
@@ -180,28 +190,9 @@ const ResizableImage = Image.extend({
         img.style.width = toPx(n.attrs.width) ?? "300px";
         img.style.height = (n.attrs.height && toPx(n.attrs.height)) || "auto";
         img.style.maxWidth = "100%";
-
-        // Apply wrapping styles
-        switch (n.attrs.wrap) {
-          case "wrap":
-            img.style.float = "left";
-            img.style.marginRight = "12px";
-            img.style.marginBottom = "6px";
-            img.style.display = "block";
-            img.style.verticalAlign = "";
-            img.style.margin = "0 12px 6px 0";
-            break;
-          case "break":
-            img.style.display = "block";
-            img.style.margin = "12px auto";
-            img.style.float = "none";
-            break;
-          default:
-            img.style.display = "inline";
-            img.style.verticalAlign = "middle";
-            img.style.margin = "0 20px";
-            img.style.float = "none";
-        }
+        img.style.margin = "0";
+        img.style.display = wrap === "inline" ? "inline" : "block";
+        img.style.verticalAlign = wrap === "inline" ? "middle" : "";
       };
 
       applyAttrs(node);

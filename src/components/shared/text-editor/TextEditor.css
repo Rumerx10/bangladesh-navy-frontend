@@ -172,43 +172,10 @@
   cursor: pointer;
 }
 
-/* 1. Inline - Image behaves like text */
-.image-resize-container[data-wrap="inline"] {
-  display: inline;
-  vertical-align: middle;
-  margin: 0 20px !important;
-}
-
-.image-resize-container[data-wrap="inline"] .resizable-image {
-  display: inline;
-  vertical-align: middle;
-  margin: 0 !important;
-}
-
-/* 2. Wrap - Text wraps around image */
-.image-resize-container[data-wrap="wrap"] {
-  float: left;
-  margin: 0 12px 6px 0 !important;
-  clear: both;
-}
-
-.image-resize-container[data-wrap="wrap"] .resizable-image {
-  display: block;
-}
-
-/* 3. Break - Image breaks text flow */
-.image-resize-container[data-wrap="break"] {
-  display: block;
-  text-align: center;
-  margin: 12px auto !important;
-  float: none !important;
-  clear: both;
-}
-
-.image-resize-container[data-wrap="break"] .resizable-image {
-  display: inline-block;
-  margin: 0 auto;
-}
+/* Float/display/margin for each wrap+align combination is set directly on
+   the container's inline style by the node view (see resizable-image.ts's
+   `getWrapStyle`) — that's the single source of truth, so it always matches
+   what gets saved. */
 
 /* Clear floats for proper text wrapping */
 .ProseMirror::after {
@@ -316,44 +283,43 @@
   margin: 0.5em 0;
 }
 
-/* Text Wrapping Modes for Preview */
+/* Text Wrapping Modes for Preview
+   These are a fallback only — every image saved by the editor already
+   carries the matching inline style (see resizable-image.ts's
+   `getWrapStyle`), which naturally wins over these non-!important rules.
+   Kept here (and mirrored in globals.css) purely for content saved before
+   that inline style existed. Values must stay in sync with `getWrapStyle`. */
 
 /* 1. Inline - Image behaves like text */
 .preview-content .image-wrap-inline {
   display: inline;
   vertical-align: middle;
-  margin: 0 20px !important;
-}
-
-.preview-content .image-wrap-inline .resizable-image {
-  display: inline;
-  vertical-align: middle;
-  margin: 0 !important;
+  margin: 0 8px;
 }
 
 /* 2. Wrap - Text wraps around image */
-.preview-content .image-wrap-wrap {
-  float: left;
-  margin: 0 12px 6px 0 !important;
+.preview-content .image-wrap-wrap.image-align-right {
+  float: right;
+  margin: 0 0 6px 12px;
   clear: both;
 }
 
-.preview-content .image-wrap-wrap .resizable-image {
-  display: block;
+.preview-content .image-wrap-wrap {
+  float: left;
+  margin: 0 12px 6px 0;
+  clear: both;
 }
 
 /* 3. Break - Image breaks text flow */
 .preview-content .image-wrap-break {
   display: block;
-  text-align: center;
-  margin: 12px auto !important;
-  float: none !important;
+  margin: 12px auto;
+  float: none;
   clear: both;
 }
 
-.preview-content .image-wrap-break .resizable-image {
-  display: inline-block;
-  margin: 0 auto;
+.preview-content .image-wrap-break.image-align-right {
+  margin: 12px 0 12px auto;
 }
 
 /* Clear floats for proper text wrapping in preview */

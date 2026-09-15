@@ -426,7 +426,7 @@ input[type="time"]::-moz-inner-spin-button {
 .image-wrap-inline {
   display: inline;
   vertical-align: middle;
-  margin: 0 20px;
+  margin: 0 8px;
 }
 
 .image-wrap-wrap.image-align-left {

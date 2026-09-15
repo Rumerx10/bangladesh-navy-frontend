@@ -25,9 +25,15 @@ export function htmlToPlainText(html?: string): string {
 }
 
 // For full article bodies: keep the admin's semantic formatting (bold,
-// italic, underline, lists, links) but drop inline `style`/`class` so the
-// article always inherits the page's own typography instead of whatever
-// color/font-size the editor happened to save.
+// italic, underline, lists, links, images, paragraph alignment) but drop
+// per-run color/font-size so the article always inherits the page's own
+// typography instead of whatever the editor happened to save — that's why
+// `span` (the tag TipTap's Color/FontSize marks wrap text in) is deliberately
+// left out of ALLOWED_TAGS: DOMPurify strips the tag and its style with it,
+// keeping only the text. `style`/`class`/`data-*` stay allowed because `img`
+// and `p` are the only tags that legitimately carry them here — `img` for
+// the wrap/align/size the admin chose (see resizable-image.ts and the public
+// `.image-wrap-*` rules in globals.css), `p` for text-align (incl. justify).
 export function sanitizeRichText(html?: string): string {
   if (!html) return "";
   if (typeof window === "undefined") return html;
@@ -44,7 +50,21 @@ export function sanitizeRichText(html?: string): string {
       "ol",
       "li",
       "a",
+      "img",
     ],
-    ALLOWED_ATTR: ["href", "target", "rel"],
+    ALLOWED_ATTR: [
+      "href",
+      "target",
+      "rel",
+      "src",
+      "alt",
+      "title",
+      "style",
+      "class",
+      "data-width",
+      "data-height",
+      "data-wrap",
+      "data-align",
+    ],
   });
 }

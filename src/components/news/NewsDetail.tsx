@@ -153,7 +153,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
               transition={{ duration: 0.4, delay: 0.2 }}
             >
               <div
-                className="leading-relaxed text-gray-800 text-lg font-medium [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-5 [&_ol]:pl-5 [&_li]:mb-1 [&_a]:text-liteBlue [&_a]:underline"
+                className="leading-relaxed text-gray-800 text-lg font-medium [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-5 [&_ol]:pl-5 [&_li]:mb-1 [&_a]:text-liteBlue [&_a]:underline [&_img]:rounded-lg [&_img]:shadow-sm after:content-[''] after:table after:clear-both"
                 dangerouslySetInnerHTML={{
                   __html: sanitizeRichText(news.contentEn),
                 }}
