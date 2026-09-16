@@ -1,20 +1,81 @@
-﻿"use client";
+"use client";
 
 import { searchTabs } from "@/src/data/homeData";
-import {
-  formatPrice,
-  getDiscountedPrice,
-  getProductSlug,
-  navyProducts,
-} from "@/src/data/navyProducts";
+import { chartIndexAreas, IChartArea } from "@/src/data/chartIndexAreas";
+import { encHotspotAreas, IEncCell } from "@/src/data/encIndexAreas";
+import { IPublication } from "@/src/components/admin/ContentManagement/publications/types";
+import { INotice } from "@/src/components/notices/types";
+import { ITidalStation } from "@/src/components/tide-tables/types";
+import { useGet } from "@/src/hooks/useGet";
+import { useDebounce } from "@/src/hooks/useDebounce";
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
 import { motion } from "framer-motion";
-import { Search, X } from "lucide-react";
+import {
+  Bell,
+  BookOpen,
+  Loader2,
+  Map as MapIcon,
+  MonitorSmartphone,
+  Search,
+  Waves,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 import SearchTabs from "./SearchTabs";
 import SectionTitle from "../../SectionTitle";
+
+type ResultCategory =
+  | "paper-chart"
+  | "enc-chart"
+  | "tide"
+  | "notice"
+  | "publication";
+
+interface SearchResult {
+  key: string;
+  category: ResultCategory;
+  title: string;
+  subtitle?: string;
+  href: string;
+  external?: boolean;
+}
+
+const CATEGORY_META: Record<
+  ResultCategory,
+  { label: string; icon: typeof MapIcon }
+> = {
+  "paper-chart": { label: "Paper Charts", icon: MapIcon },
+  "enc-chart": { label: "Electronic Charts", icon: MonitorSmartphone },
+  tide: { label: "Tide Tables", icon: Waves },
+  notice: { label: "Notices to Mariners", icon: Bell },
+  publication: { label: "Publications", icon: BookOpen },
+};
+
+/** Which result categories each search tab pulls suggestions from. */
+const TAB_CATEGORIES: Record<string, ResultCategory[]> = {
+  all: ["paper-chart", "enc-chart", "tide", "notice", "publication"],
+  charts: ["paper-chart", "enc-chart"],
+  tides: ["tide"],
+  notices: ["notice"],
+  publication: ["publication"],
+};
+
+/** Where the "Search" button / no-results CTA sends the user for each tab. */
+const TAB_FALLBACK_HREF: Record<string, string> = {
+  all: "/product-service",
+  charts: "/product-service",
+  tides: "/product-service/tide-tables",
+  notices: "/important-notice/notices",
+  publication: "/important-notice/publications",
+};
+
+const chartLabel = (area: IChartArea) =>
+  area.int ? `Chart ${area.number} (${area.int})` : `Chart ${area.number}`;
+
+const cellLabel = (cell: IEncCell) =>
+  cell.intNo ? `${cell.cellNo} (${cell.intNo})` : cell.cellNo;
 
 const MaritimeSearch = () => {
   const router = useRouter();
@@ -23,34 +84,186 @@ const MaritimeSearch = () => {
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const results = useMemo(() => {
-    if (!query.trim()) return [];
-    const q = query.toLowerCase();
-    return navyProducts
-      .filter(
-        (p) =>
-          p.nameEn.toLowerCase().includes(q) ||
-          p.nameBn.includes(q) ||
-          p.descriptionEn?.toLowerCase().includes(q)
-      )
-      .slice(0, 5);
-  }, [query]);
+  const q = query.trim().toLowerCase();
+  const debouncedQuery = useDebounce(query.trim(), 300);
+  const showDropdown = isFocused && q.length > 0;
 
-  const showDropdown = isFocused && query.trim().length > 0;
+  const categories = TAB_CATEGORIES[activeTab] ?? TAB_CATEGORIES.all;
+  const needs = (category: ResultCategory) => categories.includes(category);
+
+  // Paper charts & ENC cells are static catalogues — filtered client-side,
+  // no network round-trip needed.
+  const uniquePaperCharts = useMemo(() => {
+    const byNumber = new Map<string, IChartArea>();
+    for (const area of chartIndexAreas) {
+      if (!byNumber.has(area.number)) byNumber.set(area.number, area);
+    }
+    return [...byNumber.values()];
+  }, []);
+
+  const paperChartResults = useMemo<SearchResult[]>(() => {
+    if (!q || !needs("paper-chart")) return [];
+    return uniquePaperCharts
+      .filter(
+        (area) =>
+          area.number.toLowerCase().includes(q) ||
+          area.int?.toLowerCase().includes(q)
+      )
+      .map((area) => ({
+        key: `paper-chart-${area.number}`,
+        category: "paper-chart" as const,
+        title: chartLabel(area),
+        subtitle: "Paper Chart",
+        href: `/product-service/paper-charts/${area.number}`,
+      }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q, activeTab, uniquePaperCharts]);
+
+  const encChartResults = useMemo<SearchResult[]>(() => {
+    if (!q || !needs("enc-chart")) return [];
+    return encHotspotAreas
+      .filter(
+        (cell) =>
+          cell.cellNo.toLowerCase().includes(q) ||
+          cell.nationalNo.toLowerCase().includes(q) ||
+          cell.title.toLowerCase().includes(q) ||
+          cell.intNo?.toLowerCase().includes(q)
+      )
+      .map((cell) => ({
+        key: `enc-chart-${cell.cellNo}`,
+        category: "enc-chart" as const,
+        title: cell.title,
+        subtitle: cellLabel(cell),
+        href: `/product-service/electronic-navigational-charts/${cell.cellNo}`,
+      }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q, activeTab]);
+
+  const { data: tidalData, isLoading: tidesLoading } = useGet<
+    ITidalStation[]
+  >("/tidal-station/list", ["tidal-station-list"], undefined, {
+    enabled: showDropdown && needs("tide"),
+  });
+
+  const tideResults = useMemo<SearchResult[]>(() => {
+    if (!q || !needs("tide")) return [];
+    const stations = Array.isArray(tidalData?.data) ? tidalData.data : [];
+    return stations
+      .filter((station) => station.product?.id)
+      .filter(
+        (station) =>
+          station.product?.nameEn.toLowerCase().includes(q) ||
+          station.generalArea.toLowerCase().includes(q) ||
+          station.location.toLowerCase().includes(q)
+      )
+      .map((station) => ({
+        key: `tide-${station.id}`,
+        category: "tide" as const,
+        title: station.product?.nameEn ?? station.location,
+        subtitle: station.generalArea,
+        href: `/product-service/tide-tables/${station.product?.id}`,
+      }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q, activeTab, tidalData]);
+
+  const { data: noticeData, isLoading: noticesLoading } = useGet<INotice[]>(
+    "/notice-management/list",
+    ["notice-management-list"],
+    undefined,
+    { enabled: showDropdown && needs("notice") }
+  );
+
+  const noticeResults = useMemo<SearchResult[]>(() => {
+    if (!q || !needs("notice")) return [];
+    const notices = Array.isArray(noticeData?.data) ? noticeData.data : [];
+    return notices
+      .filter((notice) => notice.status === "ACTIVE")
+      .filter(
+        (notice) =>
+          notice.titleEn.toLowerCase().includes(q) ||
+          notice.titleBn?.toLowerCase().includes(q) ||
+          notice.noticeNumber.toLowerCase().includes(q)
+      )
+      .map((notice) => ({
+        key: `notice-${notice.id}`,
+        category: "notice" as const,
+        title: notice.titleEn,
+        subtitle: notice.noticeNumber,
+        href: notice.pdfUrl ?? "/important-notice/notices",
+        external: Boolean(notice.pdfUrl),
+      }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q, activeTab, noticeData]);
+
+  const { data: publicationData, isLoading: publicationsLoading } = useGet<
+    IPublication[]
+  >(
+    "/publication",
+    ["publication-search", debouncedQuery],
+    { search: debouncedQuery, limit: "5", status: "ACTIVE" },
+    { enabled: showDropdown && needs("publication") && debouncedQuery.length > 0 }
+  );
+
+  const publicationResults = useMemo<SearchResult[]>(() => {
+    if (!q || !needs("publication")) return [];
+    const publications = Array.isArray(publicationData?.data)
+      ? publicationData.data
+      : [];
+    return publications.map((publication) => ({
+      key: `publication-${publication.id}`,
+      category: "publication" as const,
+      title: publication.titleEn,
+      subtitle: publication.code,
+      href: "/how-to-collect",
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q, activeTab, publicationData]);
+
+  const resultsByCategory: Record<ResultCategory, SearchResult[]> = {
+    "paper-chart": paperChartResults,
+    "enc-chart": encChartResults,
+    tide: tideResults,
+    notice: noticeResults,
+    publication: publicationResults,
+  };
+
+  const maxPerCategory = activeTab === "all" ? 3 : 8;
+  const groups = categories
+    .map((category) => ({
+      category,
+      items: resultsByCategory[category].slice(0, maxPerCategory),
+    }))
+    .filter((group) => group.items.length > 0);
+
+  const totalResults = groups.reduce((sum, g) => sum + g.items.length, 0);
+
+  const isLoading =
+    (needs("tide") && tidesLoading) ||
+    (needs("notice") && noticesLoading) ||
+    (needs("publication") && publicationsLoading && debouncedQuery.length > 0);
+
+  const closeDropdown = () => {
+    setQuery("");
+    setIsFocused(false);
+  };
 
   const handleSearch = () => {
     if (query.trim()) {
-      router.push(
-        `/product-service?search=${encodeURIComponent(query.trim())}`
-      );
-      setQuery("");
-      setIsFocused(false);
+      const fallback = TAB_FALLBACK_HREF[activeTab] ?? "/product-service";
+      router.push(`${fallback}?search=${encodeURIComponent(query.trim())}`);
+      closeDropdown();
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
-      handleSearch();
+      const firstResult = groups[0]?.items[0];
+      if (firstResult && !firstResult.external) {
+        router.push(firstResult.href);
+        closeDropdown();
+      } else {
+        handleSearch();
+      }
     }
   };
 
@@ -87,7 +300,10 @@ const MaritimeSearch = () => {
           <SearchTabs
             tabs={searchTabs}
             activeTab={activeTab}
-            onTabChange={setActiveTab}
+            onTabChange={(tab) => {
+              setActiveTab(tab);
+              inputRef.current?.focus();
+            }}
           />
         </motion.div>
 
@@ -134,49 +350,75 @@ const MaritimeSearch = () => {
 
           {/* Search dropdown */}
           {showDropdown && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl border border-gray-200 shadow-2xl z-50 overflow-hidden text-left">
-              {results.length > 0 ? (
+            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl border border-gray-200 shadow-2xl z-50 overflow-hidden text-left max-h-104 overflow-y-auto">
+              {totalResults > 0 ? (
                 <>
-                  {results.map((product) => {
-                    const slug = getProductSlug(product);
-                    const discountedPrice = getDiscountedPrice(product);
+                  {groups.map((group) => {
+                    const meta = CATEGORY_META[group.category];
+                    const Icon = meta.icon;
                     return (
-                      <Link
-                        key={product.id}
-                        href={`/products/${slug}`}
-                        className="flex items-center gap-3.5 px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0"
-                        onClick={() => {
-                          setQuery("");
-                          setIsFocused(false);
-                        }}
-                      >
-                        {/* Thumbnail */}
-                        <div className="w-12 h-12 rounded-lg bg-linear-to-br from-pBlue to-liteBlue flex items-center justify-center shrink-0">
-                          <svg
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            className="text-white/40"
-                          >
-                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                            <polyline points="14 2 14 8 20 8" />
-                          </svg>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-gray-800 truncate">
-                            {product.nameEn}
+                      <div key={group.category}>
+                        {activeTab === "all" && (
+                          <p className="px-4 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
+                            {meta.label}
                           </p>
-                          <p className="text-xs text-gray-400 truncate">
-                            {product.category.nameEn} •{" "}
-                            {formatPrice(discountedPrice)}
-                          </p>
-                        </div>
-                      </Link>
+                        )}
+                        {group.items.map((item) =>
+                          item.external ? (
+                            <a
+                              key={item.key}
+                              href={item.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-3.5 px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0"
+                              onClick={closeDropdown}
+                            >
+                              <div className="w-10 h-10 rounded-lg bg-linear-to-br from-pBlue to-liteBlue flex items-center justify-center shrink-0">
+                                <Icon size={18} className="text-white/80" />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-semibold text-gray-800 truncate">
+                                  {item.title}
+                                </p>
+                                {item.subtitle && (
+                                  <p className="text-xs text-gray-400 truncate">
+                                    {item.subtitle}
+                                  </p>
+                                )}
+                              </div>
+                            </a>
+                          ) : (
+                            <Link
+                              key={item.key}
+                              href={item.href}
+                              className="flex items-center gap-3.5 px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0"
+                              onClick={closeDropdown}
+                            >
+                              <div className="w-10 h-10 rounded-lg bg-linear-to-br from-pBlue to-liteBlue flex items-center justify-center shrink-0">
+                                <Icon size={18} className="text-white/80" />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-semibold text-gray-800 truncate">
+                                  {item.title}
+                                </p>
+                                {item.subtitle && (
+                                  <p className="text-xs text-gray-400 truncate">
+                                    {item.subtitle}
+                                  </p>
+                                )}
+                              </div>
+                            </Link>
+                          )
+                        )}
+                      </div>
                     );
                   })}
+                  {isLoading && (
+                    <p className="flex items-center gap-2 px-4 py-2 text-xs text-gray-400">
+                      <Loader2 size={12} className="animate-spin" />
+                      Searching…
+                    </p>
+                  )}
                   <button
                     onClick={handleSearch}
                     className="w-full px-4 py-3 text-sm font-medium text-liteBlue bg-gray-50 hover:bg-gray-100 transition-colors text-center cursor-pointer"
@@ -184,6 +426,11 @@ const MaritimeSearch = () => {
                     View all results for &quot;{query}&quot;
                   </button>
                 </>
+              ) : isLoading ? (
+                <p className="flex items-center justify-center gap-2 px-4 py-6 text-sm text-gray-500">
+                  <Loader2 size={14} className="animate-spin" />
+                  Searching…
+                </p>
               ) : (
                 <div className="px-4 py-6 text-center">
                   <p className="text-sm text-gray-500">

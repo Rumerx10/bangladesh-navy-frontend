@@ -130,7 +130,7 @@ const ShipCard = ({ ship, index }: { ship: SurveyShipItem; index: number }) => {
                       {label}
                     </p>
                     <p className="text-base font-bold text-pBlue">
-                      {value || "—"}
+                      {value || "—"} {label === "Displacement" && "tons"}
                     </p>
                   </div>
                 ))}

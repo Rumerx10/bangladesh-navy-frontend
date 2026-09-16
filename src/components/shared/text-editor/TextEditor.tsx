@@ -74,6 +74,7 @@ const TextEditor = ({
       ListItem,
       TextAlign.configure({
         types: ["paragraph"],
+        alignments: ["left", "center", "right", "justify"],
       }),
       ResizableImage,
     ],
@@ -255,6 +256,20 @@ const TextEditor = ({
               <Image
                 src="/icons/right_align.svg"
                 alt="bold"
+                width={20}
+                height={20}
+              />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() =>
+                editor.chain().focus().setTextAlign("justify").run()
+              }
+              isActive={editor.isActive({ textAlign: "justify" })}
+              title="Justify"
+            >
+              <Image
+                src="/icons/justify_align.svg"
+                alt="justify"
                 width={20}
                 height={20}
               />

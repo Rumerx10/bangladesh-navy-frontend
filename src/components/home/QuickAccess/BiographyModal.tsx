@@ -4,6 +4,7 @@ import Image from "next/image";
 import { IBiography } from "../../types";
 import { motion } from "framer-motion";
 import { Quote, Ship, X } from "lucide-react";
+import { sanitizeRichText } from "@/src/utils/sanitize";
 
 interface BiographyModalProps {
   data: IBiography;
@@ -85,12 +86,14 @@ const BiographyModal = ({ data, closeModal }: BiographyModalProps) => {
         <div className="scrollbar-modern flex-1 overflow-y-auto px-4 lg:px-6 py-4 lg:py-6">
           <Quote size={40} className="text-pBlue/20 mb-4" />
           <div className="space-y-6">
-            <motion.p
-              className="text-base lg:text-lg text-gray-600 text-justify leading-relaxed font-light"
+            <motion.div
+              className="text-base lg:text-lg text-gray-600 text-justify leading-relaxed font-light [&_p]:mb-4 [&_p:last-child]:mb-0 [&_img]:rounded-lg [&_img]:shadow-sm after:content-[''] after:table after:clear-both"
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 }}
-              dangerouslySetInnerHTML={{ __html: data.messageEn }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeRichText(data.messageEn),
+              }}
             />
 
             {/* Bengali Message - commented out */}

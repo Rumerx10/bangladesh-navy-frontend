@@ -12,6 +12,7 @@ import { StatusType } from "@/src/components/shared/types/common";
 import { SquarePen, User } from "lucide-react";
 import Image from "next/image";
 import { ICareer } from "../types";
+import { sanitizeRichText } from "@/src/utils/sanitize";
 
 const ViewJobDetailsModal = ({
   isOpen,
@@ -83,8 +84,10 @@ const ViewJobDetailsModal = ({
 
         {data && (
           <div
-            className="my-6"
-            dangerouslySetInnerHTML={{ __html: data?.description }}
+            className="my-6 leading-relaxed text-gray-700 [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-5 [&_ol]:pl-5 [&_li]:mb-1 [&_a]:text-liteBlue [&_a]:underline [&_img]:rounded-lg [&_img]:shadow-sm after:content-[''] after:table after:clear-both"
+            dangerouslySetInnerHTML={{
+              __html: sanitizeRichText(data?.description),
+            }}
           />
         )}
         <Button className="w-40 lg:w-49.75 h-11 text-sm  md:text-base font-medium">
