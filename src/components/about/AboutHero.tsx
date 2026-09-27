@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 interface AboutHeroProps {
   title: string;
-  description: string;
+  description?: string;
 }
 
 const AboutHero = ({ title, description }: AboutHeroProps) => {

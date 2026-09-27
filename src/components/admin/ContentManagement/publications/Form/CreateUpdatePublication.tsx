@@ -85,13 +85,10 @@ const CreateUpdatePublication = ({
     isPending: isUpdating,
     error: updateError,
     reset: resetUpdateError,
-  } = usePatch(
-    () => {
-      toast.success("Publication updated successfully!");
-      onClose();
-    },
-    [["publication"], ["publication-public"]]
-  );
+  } = usePatch(() => {
+    toast.success("Publication updated successfully!");
+    onClose();
+  }, [["publication"], ["publication-public"]]);
 
   const handleClose = () => {
     resetCreateError();

@@ -1,12 +1,13 @@
 "use client";
-
-import logo from "@/public/logo.png";
-import { siteConfig } from "@/src/config/siteConfig";
-import { useGet } from "@/src/hooks/useGet";
-import { IImportantLink } from "@/src/components/admin/ContentManagement/home/important-links/types";
-import { Facebook, Mail, MapPin, Phone, Youtube } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import logo from "@/public/logo.png";
+import { useGet } from "@/src/hooks/useGet";
+import { FaYoutube } from "react-icons/fa6";
+import { GrFacebookOption } from "react-icons/gr";
+import { Mail, MapPin, Phone } from "lucide-react";
+import { siteConfig } from "@/src/config/siteConfig";
+import { IImportantLink } from "@/src/components/admin/ContentManagement/home/important-links/types";
 
 const productLinks = [
   { label: "Paper Charts", href: "/product-service?category=paper-charts" },
@@ -51,7 +52,7 @@ const Footer = () => {
   return (
     <footer className="bg-pBlue text-gray-300 pt-12 lg:pt-16">
       <div className="container px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8 lg:gap-10">
           {/* Logo & Info */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Link
@@ -67,10 +68,10 @@ const Footer = () => {
                 className="w-11 h-11"
               />
               <div>
-                <h2 className="text-sm font-bold text-white leading-tight">
+                <h2 className="text-[12px] font-semibold text-white leading-tight">
                   {siteConfig.name}
                 </h2>
-                <p className="text-[11px] text-gray-400 leading-tight">
+                <p className="text-[12px] font-semibold text-white leading-tight">
                   {siteConfig.description}
                 </p>
               </div>
@@ -78,7 +79,10 @@ const Footer = () => {
             <div className="space-y-2.5 text-sm">
               <div className="flex items-start gap-2.5 text-gray-400">
                 <MapPin size={16} className="mt-0.5 shrink-0 text-gray-500" />
-                <span>{siteConfig.address}</span>
+                <div>
+                  <p>BNHOC, Chittagong</p>
+                  <p>Bangladesh</p>
+                </div>
               </div>
               <div className="flex items-center gap-2.5 text-gray-400">
                 <Phone size={16} className="shrink-0 text-gray-500" />
@@ -196,35 +200,21 @@ const Footer = () => {
               Follow Us
             </h4>
             <div className="flex gap-2.5">
-              <a
-                href="#"
+              <Link
+                href="https://www.facebook.com/share/1EgqJvDoyi/?mibextid=wwXIfr"
+                target="_blank"
                 className="w-9 h-9 rounded-full bg-white/10 hover:bg-liteBlue flex items-center justify-center transition-colors"
                 aria-label="Facebook"
               >
-                <Facebook size={16} className="text-white" />
-              </a>
-              <a
-                href="#"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-liteBlue flex items-center justify-center transition-colors"
-                aria-label="Twitter"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="text-white"
-                >
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              </a>
-              <a
-                href="#"
+                <GrFacebookOption size={16} className="text-white" />
+              </Link>
+              <Link
+                href="https://youtube.com/@bangladesh.navy.official?si=qq6rqcDhLMo_CKZv"
                 className="w-9 h-9 rounded-full bg-white/10 hover:bg-liteBlue flex items-center justify-center transition-colors"
                 aria-label="YouTube"
               >
-                <Youtube size={16} className="text-white" />
-              </a>
+                <FaYoutube size={16} className="text-white" />
+              </Link>
             </div>
           </div>
         </div>

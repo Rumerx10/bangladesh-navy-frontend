@@ -90,7 +90,7 @@ const GalleryLightbox = ({
                   s.slideTo(activeIndex, 0);
                 }}
                 onRealIndexChange={(s) => onIndexChange(s.realIndex)}
-                className="w-full h-130 rounded-xl overflow-hidden"
+                className="w-full h-130 overflow-hidden"
               >
                 {images.map((image, index) => (
                   <SwiperSlide key={image.id}>

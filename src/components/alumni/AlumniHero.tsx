@@ -47,16 +47,10 @@ const AlumniHero = ({
             BN Hydrographic Institute
           </div>
           <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            Course <br />
             <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-cyan-300">
               Alumni
             </span>
           </h1>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Every officer trained at the Bangladesh Navy Hydrographic &amp;
-            Oceanographic Centre since 1997 — listed course by course, with
-            rank, personal number and parent organization.
-          </p>
 
           {/* Stat tiles */}
           <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">

@@ -80,7 +80,6 @@ export const chartIndexAreas: IChartArea[] = [
   { number: "3502", x: 1540, y: 1081, w: 200, h: 114 },
   { number: "3501", x: 1628, y: 1161, w: 180, h: 175 },
   { number: "7512", x: 1430, y: 1076, w: 383, h: 282 },
- 
 
   // ── Small-scale charts (extend past the frame; clipped to it) ────
   { number: "30002", x: 62, y: 188, w: 1881, h: 1170 },

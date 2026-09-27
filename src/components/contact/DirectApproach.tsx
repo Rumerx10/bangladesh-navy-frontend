@@ -23,7 +23,7 @@ const DirectApproach = () => {
   return (
     <div>
       <SectionTitle
-        title="Direct Contact Info"
+        title="Contact"
         desc="Reach us directly through any of the channels below, or find us on the map."
       />
 

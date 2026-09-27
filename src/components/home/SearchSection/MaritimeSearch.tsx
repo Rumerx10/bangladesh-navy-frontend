@@ -27,11 +27,7 @@ import SearchTabs from "./SearchTabs";
 import SectionTitle from "../../SectionTitle";
 
 type ResultCategory =
-  | "paper-chart"
-  | "enc-chart"
-  | "tide"
-  | "notice"
-  | "publication";
+  "paper-chart" | "enc-chart" | "tide" | "notice" | "publication";
 
 interface SearchResult {
   key: string;
@@ -139,11 +135,14 @@ const MaritimeSearch = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [q, activeTab]);
 
-  const { data: tidalData, isLoading: tidesLoading } = useGet<
-    ITidalStation[]
-  >("/tidal-station/list", ["tidal-station-list"], undefined, {
-    enabled: showDropdown && needs("tide"),
-  });
+  const { data: tidalData, isLoading: tidesLoading } = useGet<ITidalStation[]>(
+    "/tidal-station/list",
+    ["tidal-station-list"],
+    undefined,
+    {
+      enabled: showDropdown && needs("tide"),
+    }
+  );
 
   const tideResults = useMemo<SearchResult[]>(() => {
     if (!q || !needs("tide")) return [];
@@ -201,7 +200,10 @@ const MaritimeSearch = () => {
     "/publication",
     ["publication-search", debouncedQuery],
     { search: debouncedQuery, limit: "5", status: "ACTIVE" },
-    { enabled: showDropdown && needs("publication") && debouncedQuery.length > 0 }
+    {
+      enabled:
+        showDropdown && needs("publication") && debouncedQuery.length > 0,
+    }
   );
 
   const publicationResults = useMemo<SearchResult[]>(() => {

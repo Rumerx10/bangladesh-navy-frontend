@@ -14,6 +14,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import { Color, TextStyle } from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
+import { ImagePlus, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { FieldError } from "react-hook-form";
@@ -23,7 +24,7 @@ import "./TextEditor.css";
 import ToolbarButton from "./Toolbar";
 import ColorPickerDropdown from "./toolbar/ColorPickerDropdown";
 import FontSizeSelector from "./toolbar/FontSizeSelector";
-import getCurrentImageWrap from "./utils/getCurrentImageWrap";
+import ImageToolbar from "./toolbar/ImageToolbar";
 
 interface TextEditorProps {
   value?: string;
@@ -36,6 +37,8 @@ interface TextEditorProps {
   minHeight?: number | string;
   /** Height the editable area stops growing at (scrolls past it). */
   maxHeight?: number | string;
+  /** Where inserted images are uploaded to. */
+  uploadEndpoint?: string;
 }
 
 const TextEditor = ({
@@ -46,12 +49,17 @@ const TextEditor = ({
   height,
   minHeight = 128,
   maxHeight,
+  uploadEndpoint = "/history/upload-image",
 }: TextEditorProps) => {
   const { mutateAsync: uploadImage, isPending: isLoading } = usePost<{
     imageUrl: string;
-  }>("/history/upload-image");
+  }>(uploadEndpoint);
   const [currentFontSize, setCurrentFontSize] = useState("16");
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  // The contextual image toolbar is positioned against this element, so it has
+  // to be the nearest positioned ancestor of the editable area.
+  const editorShellRef = useRef<HTMLDivElement>(null);
   const editor = useEditor({
     extensions: [
       Placeholder.configure({
@@ -80,6 +88,14 @@ const TextEditor = ({
     ],
     content: value,
     immediatelyRender: false,
+    editorProps: {
+      attributes: {
+        // Shares the public pages' rich-text rules (see globals.css) so what
+        // the admin composes is laid out by exactly the same CSS that will
+        // render it on the site.
+        class: "rich-text",
+      },
+    },
     onCreate: ({ editor }) => {
       editor.chain().setColor("#5C5C5C").run();
     },
@@ -94,6 +110,8 @@ const TextEditor = ({
     const file = e.target.files?.[0];
     if (!file) return;
 
+    setUploadError(null);
+
     try {
       const formData = new FormData();
       formData.append("image", file);
@@ -107,16 +125,22 @@ const TextEditor = ({
           .focus()
           .setResizableImage({
             src: imageUrl,
-            alt: file.name,
-            title: file.name,
-            width: "300",
+            alt: "",
+            title: "",
+            // Floated at just under half the column by default: the layout
+            // admins reach for most often is a photo with the narrative
+            // running past it, and starting there saves them a round trip
+            // through the toolbar on every insert.
+            width: "45%",
             height: "auto",
+            wrap: "wrap",
+            align: "left",
           })
           .run();
       }
     } catch (err) {
       console.error("Upload failed", err);
-      alert("Image upload failed. Please try again.");
+      setUploadError("Image upload failed. Please try again.");
     } finally {
       if (e.target) e.target.value = "";
     }
@@ -138,10 +162,6 @@ const TextEditor = ({
       editor.chain().focus().setFontSize(`${size}px`).run();
       setCurrentFontSize(size);
     }
-  };
-
-  const setImageWrap = (wrap: "inline" | "wrap" | "break") => {
-    editor.chain().focus().setResizableImageWrap(wrap).run();
   };
 
   return (
@@ -191,30 +211,6 @@ const TextEditor = ({
                 width={20}
                 height={20}
               />
-            </ToolbarButton>
-          </div>
-          <div className="toolbar-group">
-            <span>Text Wrap:</span>
-            <ToolbarButton
-              onClick={() => setImageWrap("inline")}
-              isActive={getCurrentImageWrap(editor) === "inline"}
-              title="Inline - Image behaves like text"
-            >
-              Inline
-            </ToolbarButton>
-            <ToolbarButton
-              onClick={() => setImageWrap("wrap")}
-              isActive={getCurrentImageWrap(editor) === "wrap"}
-              title="Wrap - Text wraps around image"
-            >
-              Wrap
-            </ToolbarButton>
-            <ToolbarButton
-              onClick={() => setImageWrap("break")}
-              isActive={getCurrentImageWrap(editor) === "break"}
-              title="Break - Image breaks text flow"
-            >
-              Break
             </ToolbarButton>
           </div>
 
@@ -299,7 +295,9 @@ const TextEditor = ({
             </ToolbarButton>
           </div>
 
-          <div className="toolbar-group">
+          <span className="h-10 w-px bg-[#EAECF0]"></span>
+
+          <div className="py-2.5">
             <input
               type="file"
               accept="image/*"
@@ -311,22 +309,31 @@ const TextEditor = ({
               onClick={() => fileInputRef.current?.click()}
               isActive={false}
               disabled={isLoading}
-              title="Insert Image"
+              title="Insert image — select it afterwards to set wrapping, alignment and size"
             >
-              {isLoading ? "📤" : "🖼️"}
+              {isLoading ? (
+                <Loader2 className="w-5 h-5 animate-spin text-slate-500" />
+              ) : (
+                <ImagePlus className="w-5 h-5 text-slate-600" />
+              )}
             </ToolbarButton>
           </div>
         </div>
 
         {/* EDITOR */}
-        <div className="p-3 ">
+        <div className="p-3 relative" ref={editorShellRef}>
           <EditorContent
             editor={editor}
             className="overflow-y-auto"
             style={{ height, minHeight, maxHeight }}
           />
+          <ImageToolbar editor={editor} boundaryRef={editorShellRef} />
         </div>
       </div>
+
+      {uploadError && (
+        <div className="text-rose-500 text-xs mt-1 pl-2">{uploadError}</div>
+      )}
 
       {error && error && (
         <div className="text-rose-500 text-xs mt-1 pl-2">{error.message}</div>

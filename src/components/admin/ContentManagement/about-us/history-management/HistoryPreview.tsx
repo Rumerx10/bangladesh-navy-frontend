@@ -4,6 +4,8 @@ import Image from "next/image";
 import { IHistoryManagement } from "./types";
 import { Button } from "@/src/components/ui/button";
 import Paragraph from "@/src/components/shared/Paragraph";
+import { richTextNarrativeClass } from "@/src/components/shared/text-editor/richTextStyles";
+import { cn } from "@/src/lib/utils";
 import { Edit, ChevronRight } from "lucide-react";
 
 interface HistoryPreviewProps {
@@ -66,25 +68,35 @@ const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
           </div>
         </div> */}
 
+        {/* Rendered with the same `.rich-text` rules and typography the public
+            page uses, on a white sheet at a comparable reading measure — the
+            point of a preview is that the wrap and the size the admin chose
+            land here exactly as a visitor will see them. Image widths are
+            percentages of the text column, so the proportions survive the
+            narrower admin panel. */}
         <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
-          <Paragraph className="font-semibold text-pBlue uppercase mb-2">
+          <Paragraph className="font-semibold text-pBlue uppercase mb-3">
             English Content
           </Paragraph>
-          <div
-            className="preview-content text-sm leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: data.contentEn || "" }}
-          />
+          <div className="bg-white rounded-lg border border-gray-200 p-6 md:p-8">
+            <div
+              className={cn(richTextNarrativeClass, "text-sm md:text-base")}
+              dangerouslySetInnerHTML={{ __html: data.contentEn || "" }}
+            />
+          </div>
         </div>
 
         {data.contentBn && (
           <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
+            <Paragraph className="font-semibold text-pBlue uppercase mb-3">
               Bengali Content
             </Paragraph>
-            <div
-              className="preview-content text-sm leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: data.contentBn }}
-            />
+            <div className="bg-white rounded-lg border border-gray-200 p-6 md:p-8">
+              <div
+                className={cn(richTextNarrativeClass, "text-sm md:text-base")}
+                dangerouslySetInnerHTML={{ __html: data.contentBn }}
+              />
+            </div>
           </div>
         )}
 

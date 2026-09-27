@@ -62,7 +62,8 @@ const CreateUpdateAlumniMember = ({
     () =>
       mapToSelectOptions(
         batches,
-        (batch) => (batch.courseName ? `${batch.courseName} — ${batch.name}` : batch.name),
+        (batch) =>
+          batch.courseName ? `${batch.courseName} — ${batch.name}` : batch.name,
         "id"
       ),
     [batches]

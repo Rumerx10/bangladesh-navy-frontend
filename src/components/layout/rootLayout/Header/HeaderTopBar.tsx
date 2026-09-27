@@ -3,7 +3,6 @@ import Logo from "./Logo";
 import Link from "next/link";
 import MobileHeader from "./MobileHeader";
 import { usePathname } from "next/navigation";
-import { useAppSelector } from "@/src/lib/redux/hooks";
 import HeaderTopBarActions from "./HeaderTopBarActions";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { NavItem, NavigationItems, SubLink } from "@/src/data/navigationItems";
@@ -36,13 +35,7 @@ const subLinkActive = "text-liteBlue bg-liteBlue/5 font-medium";
 const subLinkIdle = "text-gray-700 hover:bg-gray-50 hover:text-liteBlue";
 
 const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
-  const cartItems = useAppSelector((state) => state.cart.items);
-  const { userInformation, loading: authLoading } = useAppSelector(
-    (state) => state.auth
-  );
   const pathname = usePathname();
-
-  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   // Click/tap-driven dropdown state — hover-only (`group-hover`) dropdowns
   // never open on touch devices, which is the norm at the narrower widths
@@ -335,11 +328,7 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
           </ul>
         </nav>
 
-        <HeaderTopBarActions
-          cartCount={cartCount}
-          userInformation={userInformation}
-          authLoading={authLoading}
-        />
+        <HeaderTopBarActions />
       </div>
 
       {/* Mobile Header */}

@@ -1,6 +1,9 @@
 // tiptap-extensions.d.ts
 import "@tiptap/core";
 
+type ImageWrap = "inline" | "wrap" | "break";
+type ImageAlign = "left" | "center" | "right";
+
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
     resizableImage: {
@@ -13,8 +16,8 @@ declare module "@tiptap/core" {
         title?: string;
         width?: string;
         height?: string;
-        wrap?: "inline" | "wrap" | "break";
-        align?: string;
+        wrap?: ImageWrap;
+        align?: ImageAlign;
       }) => ReturnType;
 
       /**
@@ -23,8 +26,8 @@ declare module "@tiptap/core" {
       updateResizableImage: (options: {
         width?: string;
         height?: string;
-        wrap?: "inline" | "wrap" | "break";
-        align?: string;
+        wrap?: ImageWrap;
+        align?: ImageAlign;
       }) => ReturnType;
 
       /**
@@ -33,16 +36,25 @@ declare module "@tiptap/core" {
       setResizableImageSize: (width: string, height?: string) => ReturnType;
 
       /**
+       * Set the image width (e.g. "45%"), resetting height to `auto` so the
+       * aspect ratio is preserved
+       */
+      setResizableImageWidth: (width: string) => ReturnType;
+
+      /**
        * Change resizable image wrapping mode
        */
-      setResizableImageWrap: (wrap: "inline" | "wrap" | "break") => ReturnType;
+      setResizableImageWrap: (wrap: ImageWrap) => ReturnType;
 
       /**
        * Change resizable image alignment
        */
-      setResizableImageAlign: (
-        align: "left" | "center" | "right"
-      ) => ReturnType;
+      setResizableImageAlign: (align: ImageAlign) => ReturnType;
+
+      /**
+       * Set the image's alternative text (also mirrored into `title`)
+       */
+      setResizableImageAlt: (alt: string) => ReturnType;
     };
   }
 }

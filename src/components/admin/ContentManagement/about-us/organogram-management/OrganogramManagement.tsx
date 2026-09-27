@@ -11,35 +11,16 @@ import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import OrganogramTree, { PARENT_COLOR_PALETTE } from "./OrganogramTree";
 import CreateUpdateOrganogram from "./Form/CreateUpdateOrganogram";
 import { IOrganogramNode, OrganogramTreeItem } from "./types";
-
-const buildTree = (nodes: IOrganogramNode[]): OrganogramTreeItem[] => {
-  const byId = new Map<string, OrganogramTreeItem>();
-  nodes.forEach((n) => byId.set(n.id, { ...n, children: [] }));
-
-  const roots: OrganogramTreeItem[] = [];
-  byId.forEach((node) => {
-    const parent = node.parentId ? byId.get(node.parentId) : undefined;
-    if (parent) {
-      parent.children.push(node);
-    } else {
-      roots.push(node);
-    }
-  });
-
-  const bySerial = (a: IOrganogramNode, b: IOrganogramNode) =>
-    a.serial - b.serial;
-  byId.forEach((node) => node.children.sort(bySerial));
-  roots.sort(bySerial);
-
-  return roots;
-};
-
-const countAll = (nodes: OrganogramTreeItem[]): number =>
-  nodes.reduce((sum, n) => sum + 1 + countAll(n.children), 0);
+import {
+  buildOrganogramTree,
+  countOrganogramNodes,
+} from "@/src/utils/organogram";
 
 const OrganogramManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<IOrganogramNode | undefined>();
+  const [selectedItem, setSelectedItem] = useState<
+    IOrganogramNode | undefined
+  >();
   const [defaultParentId, setDefaultParentId] = useState<string | null>(null);
   const [pendingDelete, setPendingDelete] = useState<OrganogramTreeItem | null>(
     null
@@ -55,15 +36,14 @@ const OrganogramManagement = () => {
     () => (Array.isArray(data?.data) ? data.data : []),
     [data]
   );
-  const tree = useMemo(() => buildTree(nodes), [nodes]);
+  // The admin sees inactive nodes too — switching one off should be visible
+  // and reversible here, even though the public chart hides it.
+  const tree = useMemo(() => buildOrganogramTree(nodes), [nodes]);
 
-  const { mutate: deleteMutate } = useDelete(
-    () => {
-      toast.success("Organogram node deleted successfully!");
-      setPendingDelete(null);
-    },
-    [["organogram-all"], ["organogram-list"]]
-  );
+  const { mutate: deleteMutate } = useDelete(() => {
+    toast.success("Organogram node deleted successfully!");
+    setPendingDelete(null);
+  }, [["organogram-all"], ["organogram-list"]]);
 
   const handleAddRoot = () => {
     setSelectedItem(undefined);
@@ -89,7 +69,9 @@ const OrganogramManagement = () => {
     setDefaultParentId(null);
   };
 
-  const childCount = pendingDelete ? countAll(pendingDelete.children) : 0;
+  const childCount = pendingDelete
+    ? countOrganogramNodes(pendingDelete.children)
+    : 0;
 
   return (
     <div className="space-y-6">
@@ -101,8 +83,8 @@ const OrganogramManagement = () => {
           <div>
             <p className="text-lg font-semibold text-pBlue">Organogram</p>
             <p className="text-sm text-secondary-gary">
-              Manage the organizational hierarchy shown on the public
-              Organogram page.
+              Manage the organizational hierarchy shown on the public Organogram
+              page.
             </p>
           </div>
         </div>

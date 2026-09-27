@@ -1,98 +1,18 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useMemo } from "react";
+import { Network } from "lucide-react";
 import SectionTitle from "@/src/components/SectionTitle";
+import { useGet } from "@/src/hooks/useGet";
+import {
+  buildOrganogramTree,
+  type IOrganogramNode,
+  type OrganogramTreeItem,
+} from "@/src/utils/organogram";
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
-// Each node is `title` (the distinguishing part, shown bold) + `role` (the post
-// or category, shown beneath). `kind` drives the tag colour.
-// Add, remove or rename nodes here — the chart lays itself out from this tree.
 
 type Kind = "command" | "deputy" | "dept";
-
-type OrgNode = {
-  title: string;
-  role: string;
-  kind: Kind;
-  children?: OrgNode[];
-};
-
-type Post = { title: string; role: string };
-
-/** Builds a straight vertical chain: each item's only child is the next one. */
-const chain = (posts: Post[], kind: Kind): OrgNode => {
-  const build = (i: number): OrgNode => ({
-    ...posts[i],
-    kind,
-    children: i < posts.length - 1 ? [build(i + 1)] : undefined,
-  });
-  return build(0);
-};
-
-const dept = (title: string, role = "Department"): Post => ({ title, role });
-
-const orgTree: OrgNode = {
-  title: "Chief Hydrographer",
-  role: "BNHOC",
-  kind: "command",
-  children: [
-    {
-      title: "CO BNHOC",
-      role: "Addl Chief Hydrographer",
-      kind: "command",
-      children: [
-        chain(
-          [
-            dept("Administration"),
-            dept("Oceanographic"),
-            dept("Cartographic"),
-            dept("Quality Control & Data Management"),
-          ],
-          "dept",
-        ),
-        chain(
-          [
-            dept("Chart Depot", "Depot"),
-            dept("Maritime Safety & Publication"),
-            dept("Instrument & Maintenance"),
-            dept("Meteorology"),
-          ],
-          "dept",
-        ),
-        chain(
-          [
-            dept("Tide Analysis"),
-            dept("Geological & Geophysical"),
-            dept("Logistic"),
-            dept("Research & Development"),
-          ],
-          "dept",
-        ),
-      ],
-    },
-    {
-      title: "Ops & Plan",
-      role: "Addl Chief Hydrographer",
-      kind: "command",
-      children: [
-        chain(
-          [
-            { title: "Plan & Policy", role: "Deputy Chief Hydrographer" },
-            { title: "National Affair", role: "Deputy Chief Hydrographer" },
-          ],
-          "deputy",
-        ),
-        chain(
-          [
-            { title: "Ops & Trg", role: "Deputy Chief Hydrographer" },
-            { title: "International Affair", role: "Deputy Chief Hydrographer" },
-          ],
-          "deputy",
-        ),
-      ],
-    },
-  ],
-};
 
 // ─── Style tokens ─────────────────────────────────────────────────────────────
 
@@ -100,16 +20,33 @@ const orgTree: OrgNode = {
 const LEVEL_COLORS = ["#0891b2", "#f97316", "#0d9488"];
 const levelColor = (depth: number) => LEVEL_COLORS[depth % LEVEL_COLORS.length];
 
-const KIND_STYLES: Record<Kind, { tag: string; label: string }> = {
-  command: { tag: "#003f71", label: "Command" },
-  deputy: { tag: "#0e7490", label: "Ops & Plan" },
-  dept: { tag: "#64748b", label: "BNHOC" },
+const KIND_COLORS: Record<Kind, string> = {
+  command: "#003f71",
+  deputy: "#0e7490",
+  dept: "#64748b",
+};
+
+
+const tierFor = (depth: number): { kind: Kind; role: string } => {
+  if (depth === 0) return { kind: "command", role: "BNHOC" };
+  if (depth === 1) return { kind: "command", role: "Addl Chief Hydrographer" };
+  return { kind: "dept", role: "Department" };
 };
 
 // ─── Card ─────────────────────────────────────────────────────────────────────
 
-const NodeCard = ({ node, depth }: { node: OrgNode; depth: number }) => {
-  const style = KIND_STYLES[node.kind];
+const NodeCard = ({
+  node,
+  depth,
+  parentTitle,
+}: {
+  node: OrganogramTreeItem;
+  depth: number;
+  /** Title of the node this one reports to; absent on a root. */
+  parentTitle?: string;
+}) => {
+  const { kind, role } = tierFor(depth);
+  const tagColor = KIND_COLORS[kind];
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
@@ -122,14 +59,21 @@ const NodeCard = ({ node, depth }: { node: OrgNode; depth: number }) => {
         {node.title}
       </span>
       <span className="mt-0.5 flex items-center gap-1.5 text-[11px] leading-snug text-slate-500">
-        <span className="truncate">{node.role}</span>
-        <span
-          className="h-1.5 w-1.5 shrink-0 rounded-full"
-          style={{ background: style.tag }}
-        />
-        <span className="truncate" style={{ color: style.tag }}>
-          {style.label}
-        </span>
+        {parentTitle && (
+          <>
+            <span
+              className="h-1.5 w-1.5 shrink-0 rounded-full"
+              style={{ background: tagColor }}
+            />
+            <span
+              className="truncate"
+              style={{ color: tagColor }}
+              title={parentTitle}
+            >
+              {parentTitle}
+            </span>
+          </>
+        )}
       </span>
     </motion.div>
   );
@@ -141,12 +85,6 @@ const BAND = 46;
 const RADIUS = 14;
 const STROKE = 2;
 
-/**
- * The band between a parent and its children: a stem down from the parent
- * centre, a crossbar with rounded elbows at both ends, and a stem down to
- * each child ending in a dot. Children are equal-width flex columns, so a
- * child's centre is always at (100 / n) * (i + 0.5) percent of the band.
- */
 const Connector = ({ n, color }: { n: number; color: string }) => {
   const centers = Array.from({ length: n }, (_, i) => (100 / n) * (i + 0.5));
   const first = centers[0];
@@ -246,15 +184,22 @@ const Connector = ({ n, color }: { n: number; color: string }) => {
 
 // ─── Desktop tree ─────────────────────────────────────────────────────────────
 
-type TreeProps = { node: OrgNode; depth: number };
+// `parentTitle` is handed down as the recursion descends rather than looked
+// up from `parentId` — every node already knows its own title at the moment
+// it renders its children, so no id→title map is needed.
+type TreeProps = {
+  node: OrganogramTreeItem;
+  depth: number;
+  parentTitle?: string;
+};
 
-const DesktopNode = ({ node, depth }: TreeProps) => {
-  const kids = node.children ?? [];
+const DesktopNode = ({ node, depth, parentTitle }: TreeProps) => {
+  const kids = node.children;
 
   return (
     <div className="flex w-full flex-col items-center">
       <div className="w-full max-w-55">
-        <NodeCard node={node} depth={depth} />
+        <NodeCard node={node} depth={depth} parentTitle={parentTitle} />
       </div>
 
       {kids.length > 0 && (
@@ -262,8 +207,12 @@ const DesktopNode = ({ node, depth }: TreeProps) => {
           <Connector n={kids.length} color={levelColor(depth)} />
           <div className="flex w-full items-start">
             {kids.map((child) => (
-              <div key={child.title} className="min-w-0 flex-1 px-2">
-                <DesktopNode node={child} depth={depth + 1} />
+              <div key={child.id} className="min-w-0 flex-1 px-2">
+                <DesktopNode
+                  node={child}
+                  depth={depth + 1}
+                  parentTitle={node.title}
+                />
               </div>
             ))}
           </div>
@@ -278,10 +227,11 @@ const DesktopNode = ({ node, depth }: TreeProps) => {
 const MobileNode = ({
   node,
   depth,
+  parentTitle,
   isLast = true,
   color,
 }: TreeProps & { isLast?: boolean; color?: string }) => {
-  const kids = node.children ?? [];
+  const kids = node.children;
   const railColor = levelColor(depth);
 
   return (
@@ -327,15 +277,16 @@ const MobileNode = ({
         </>
       )}
 
-      <NodeCard node={node} depth={depth} />
+      <NodeCard node={node} depth={depth} parentTitle={parentTitle} />
 
       {kids.length > 0 && (
         <div className="mt-4 flex flex-col gap-4 pl-5.5">
           {kids.map((child, i) => (
             <MobileNode
-              key={child.title}
+              key={child.id}
               node={child}
               depth={depth + 1}
+              parentTitle={node.title}
               isLast={i === kids.length - 1}
               color={railColor}
             />
@@ -360,7 +311,7 @@ const Legend = () => (
       <span key={kind} className="flex items-center gap-1.5">
         <span
           className="inline-block h-2 w-2 shrink-0 rounded-full"
-          style={{ background: KIND_STYLES[kind].tag }}
+          style={{ background: KIND_COLORS[kind] }}
         />
         {label}
       </span>
@@ -368,41 +319,97 @@ const Legend = () => (
   </div>
 );
 
+// ─── Placeholder states ───────────────────────────────────────────────────────
+
+const ChartSkeleton = () => (
+  <div className="animate-pulse space-y-6">
+    <div className="mx-auto h-14 w-56 rounded-xl bg-slate-200" />
+    <div className="flex justify-center gap-6">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <div key={i} className="h-14 w-44 rounded-xl bg-slate-200" />
+      ))}
+    </div>
+    <div className="flex justify-center gap-6">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <div key={i} className="h-14 w-44 rounded-xl bg-slate-200/70" />
+      ))}
+    </div>
+  </div>
+);
+
+const EmptyChart = () => (
+  <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
+    <Network className="h-10 w-10 text-slate-300" />
+    <p className="text-sm text-slate-500">
+      The organisational structure has not been published yet.
+    </p>
+  </div>
+);
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
-const Organization = () => (
-  <section className="bg-linear-to-b from-slate-50/60 to-white py-8 lg:py-20">
-    <div className="container px-4 sm:px-6 lg:px-8">
-      <SectionTitle
-        title="Organisation Tree"
-        desc="Organisational structure of Bangladesh Navy Hydrographic & Oceanographic Centre (BNHOC)"
-      />
+const Organization = () => {
+  // `limit` is deliberately high: the chart is meaningless with a partial
+  // hierarchy, and a paginated default would silently lop off branches.
+  const { data, isLoading } = useGet<IOrganogramNode[]>(
+    "/organogram",
+    ["organogram-public"],
+    { page: "1", limit: "1000" }
+  );
 
-      {/* Dotted canvas */}
-      <div
-        className="overflow-x-auto rounded-2xl border border-slate-200/80 bg-slate-50/50 p-5 lg:p-8"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, rgb(203 213 225 / 0.9) 1px, transparent 1px)",
-          backgroundSize: "22px 22px",
-        }}
-      >
-        {/* Stacked rail on small screens */}
-        <div className="lg:hidden">
-          <MobileNode node={orgTree} depth={0} />
+  const roots = useMemo(() => {
+    const nodes = Array.isArray(data?.data) ? data.data : [];
+    return buildOrganogramTree(nodes, { activeOnly: true });
+  }, [data]);
+
+  return (
+    <section className="bg-linear-to-b from-slate-50/60 to-white py-8 lg:py-20">
+      <div className="container px-4 sm:px-6 lg:px-8">
+        <SectionTitle
+          title="Organisation Tree"
+          desc="Organisational structure of Bangladesh Navy Hydrographic & Oceanographic Centre (BNHOC)"
+        />
+
+        {/* Dotted canvas */}
+        <div
+          className="overflow-x-auto rounded-2xl border border-slate-200/80 bg-slate-50/50 p-5 lg:p-8"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgb(203 213 225 / 0.9) 1px, transparent 1px)",
+            backgroundSize: "22px 22px",
+          }}
+        >
+          {isLoading ? (
+            <ChartSkeleton />
+          ) : roots.length === 0 ? (
+            <EmptyChart />
+          ) : (
+            <>
+              {/* Stacked rail on small screens */}
+              <div className="flex flex-col gap-8 lg:hidden">
+                {roots.map((root) => (
+                  <MobileNode key={root.id} node={root} depth={0} />
+                ))}
+              </div>
+
+              {/* Full top-down chart on large screens. The admin allows more
+                  than one root node, so each is drawn as its own chart. */}
+              <div className="hidden lg:block">
+                <div style={{ minWidth: 1200 }} className="mx-auto space-y-12">
+                  {roots.map((root) => (
+                    <DesktopNode key={root.id} node={root} depth={0} />
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
-        {/* Full top-down chart on large screens */}
-        <div className="hidden lg:block">
-          <div style={{ minWidth: 1200 }} className="mx-auto">
-            <DesktopNode node={orgTree} depth={0} />
-          </div>
-        </div>
+        {/* Hidden while there is no chart to explain. */}
+        {!isLoading && roots.length > 0 && <Legend />}
       </div>
-
-      <Legend />
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default Organization;

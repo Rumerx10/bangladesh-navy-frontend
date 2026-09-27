@@ -1,19 +1,9 @@
 "use client";
-import { ProfileDropdown } from "./ProfileDropdown";
 import { useDebounce } from "@/src/hooks/useDebounce";
-import { useAppDispatch } from "@/src/lib/redux/hooks";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Search, User, X } from "lucide-react";
+import { ArrowRight, Search, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { openLoginModal } from "@/src/lib/redux/features/auth/authSlice";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { IUserInformation } from "@/src/lib/redux/features/auth/authTypes";
-
-interface HeaderTopBarActionsProps {
-  cartCount: number;
-  userInformation: IUserInformation;
-  authLoading: boolean;
-}
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -44,14 +34,7 @@ const NAV_LINKS = [
   { label: "Marine Weather", href: "/product-service?category=marine-weather" },
 ];
 
-const HeaderTopBarActions = ({
-  userInformation,
-  authLoading,
-}: HeaderTopBarActionsProps) => {
-  const [mounted, setMounted] = useState(false);
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => setMounted(true), []);
-  const dispatch = useAppDispatch();
+const HeaderTopBarActions = () => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -212,24 +195,6 @@ const HeaderTopBarActions = ({
           </div>
         </AnimatePresence>
       </div>
-      <div className="hidden lg:block w-px h-7 bg-gray-200 mx-1" />
-      {/* Auth */}
-      {!mounted || authLoading ? (
-        <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200">
-          <div className="w-4 h-4 rounded-full bg-gray-200 animate-pulse" />
-          <div className="w-14 h-2.5 bg-gray-200 rounded animate-pulse" />
-        </div>
-      ) : userInformation?.firstName ? (
-        <ProfileDropdown />
-      ) : (
-        <button
-          onClick={() => dispatch(openLoginModal())}
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-liteBlue text-white text-sm font-medium hover:bg-liteBlue/90 transition-colors cursor-pointer"
-        >
-          <User size={16} />
-          <span className="whitespace-nowrap">Sign In</span>
-        </button>
-      )}
     </div>
   );
 };

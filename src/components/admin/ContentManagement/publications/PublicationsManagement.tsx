@@ -11,13 +11,10 @@ import CreateUpdatePublication from "./Form/CreateUpdatePublication";
 import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { GetPublicationColumns } from "./TableColumns/PublicationColumns";
 
-
 const PublicationsManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<IPublication | undefined>();
-  const [pendingDelete, setPendingDelete] = useState<IPublication | null>(
-    null
-  );
+  const [pendingDelete, setPendingDelete] = useState<IPublication | null>(null);
 
   const {
     setCurrentPage,

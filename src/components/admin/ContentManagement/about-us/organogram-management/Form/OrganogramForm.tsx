@@ -69,10 +69,9 @@ const OrganogramForm = ({
 }: OrganogramFormProps) => {
   const { handleSubmit } = useFormContext<OrganogramFormValues>();
 
-  const { data: listData } = useGet<IOrganogramListItem[]>(
-    "/organogram/list",
-    ["organogram-list"]
-  );
+  const { data: listData } = useGet<IOrganogramListItem[]>("/organogram/list", [
+    "organogram-list",
+  ]);
 
   const allNodes = Array.isArray(listData?.data) ? listData.data : [];
   const excludedIds = editingNodeId

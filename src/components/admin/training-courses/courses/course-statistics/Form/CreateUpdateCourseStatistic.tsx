@@ -57,7 +57,9 @@ const CreateUpdateCourseStatistic = ({
   const isUpdate = !!initialValues;
 
   const methods = useForm<CourseStatisticFormValues>({
-    resolver: yupResolver(courseStatisticSchema) as Resolver<CourseStatisticFormValues>,
+    resolver: yupResolver(
+      courseStatisticSchema
+    ) as Resolver<CourseStatisticFormValues>,
     defaultValues: EMPTY_COURSE_STATISTIC,
   });
 

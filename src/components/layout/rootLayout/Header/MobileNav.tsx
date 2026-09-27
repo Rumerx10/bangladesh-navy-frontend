@@ -1,19 +1,6 @@
 "use client";
 
-import { logoutUser } from "@/src/lib/redux/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "@/src/lib/redux/hooks";
-import {
-  ChevronDown,
-  ChevronRight,
-  Home,
-  LayoutGrid,
-  LogOut,
-  Search,
-  ShoppingCart,
-  User,
-  X,
-} from "lucide-react";
-import Image from "next/image";
+import { ChevronDown, ChevronRight, Search, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -58,11 +45,6 @@ interface MobileNavProps {
 const MobileNav = ({ open, setOpen }: MobileNavProps) => {
   const pathname = usePathname();
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  const cartItems = useAppSelector((state) => state.cart.items);
-  const { userInformation } = useAppSelector((state) => state.auth);
-  const isLoggedIn = !!userInformation?.firstName;
-  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [searchQuery, setSearchQuery] = useState("");
@@ -254,7 +236,7 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
       {/* Overlay */}
       {open && (
         <div
-          className="fixed inset-0 bg-black/50 z-60"
+          className="fixed inset-0 bg-black/50 z-60 backdrop-blur-sm"
           onClick={() => setOpen(false)}
         />
       )}
@@ -341,55 +323,6 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
         <nav className="flex-1 overflow-y-auto px-4 py-3 flex flex-col gap-0.5">
           {NavigationItems.map((item) => renderNavItem(item))}
         </nav>
-
-        {/* Sign In / User — bottom */}
-        <div className="shrink-0 p-4 border-t border-gray-100">
-          {isLoggedIn ? (
-            <div className="flex items-center gap-3">
-              {userInformation.profilePicture ? (
-                <Image
-                  src={userInformation.profilePicture}
-                  alt={userInformation.firstName}
-                  width={36}
-                  height={36}
-                  className="w-9 h-9 rounded-full object-cover ring-2 ring-liteBlue/20"
-                />
-              ) : (
-                <div className="w-9 h-9 rounded-full bg-liteBlue/10 flex items-center justify-center">
-                  <User size={16} className="text-liteBlue" />
-                </div>
-              )}
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-gray-800 truncate">
-                  {userInformation.firstName} {userInformation.lastName}
-                </p>
-                <p className="text-xs text-gray-500 truncate">
-                  {userInformation.email}
-                </p>
-              </div>
-              <button
-                onClick={() => {
-                  dispatch(logoutUser());
-                  setOpen(false);
-                }}
-                className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                aria-label="Logout"
-              >
-                <LogOut size={18} />
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={() => {
-                setOpen(false);
-                router.push("/auth/login");
-              }}
-              className="w-full bg-liteBlue text-white text-center rounded-md py-2.5 font-medium text-sm hover:bg-liteBlue/90 transition-colors"
-            >
-              Sign In / Register
-            </button>
-          )}
-        </div>
       </div>
     </>
   );

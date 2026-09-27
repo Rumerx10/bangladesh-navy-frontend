@@ -92,7 +92,9 @@ export const useAlumniTree = ({ includeInactive = false } = {}) => {
           .map((batch) => {
             const members = (
               Array.isArray(batch.members) ? batch.members : []
-            ).filter((member) => includeInactive || member.status !== "INACTIVE");
+            ).filter(
+              (member) => includeInactive || member.status !== "INACTIVE"
+            );
 
             return {
               ...batch,
@@ -136,4 +138,3 @@ export const nextMemberSerial = (
     ) + 1
   );
 };
-

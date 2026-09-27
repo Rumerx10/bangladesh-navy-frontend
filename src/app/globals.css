@@ -416,35 +416,107 @@ input[type="time"]::-moz-inner-spin-button {
 }
 
 /* ================================
-   Rich text images (public pages)
-   Backs up the inline `style` the admin's resizable image editor writes
-   per-image (see resizable-image.ts) so wrap/align still renders correctly
-   for any saved content that predates that inline style, and keeps every
-   public dangerouslySetInnerHTML render (history, biography, news, job
-   details, …) consistent with what the admin sees in the editor preview.
+   Rich text — the one place the admin editor's output is styled.
+
+   `.rich-text` is applied to the surfaces that render what the TipTap editor
+   produces: the editable area itself, the admin preview, and the history
+   page. Sharing one stylesheet is what makes "what the admin arranged" and
+   "what the visitor sees" the same layout instead of several that drift
+   apart. The image rules below are deliberately *not* scoped to `.rich-text`
+   so the surfaces still carrying their own typography (news, biography, job
+   details) lay images out identically.
 ================================= */
+.rich-text {
+  overflow-wrap: break-word;
+}
+
+/* A floated image is out of flow, so without this the container collapses to
+   the height of the text and whatever follows rides up beside the picture. */
+.rich-text::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* ---- Image layout ------------------------------------------------------
+
+   One number governs every edge where an image meets text: 16px, the same in
+   every wrap mode and on every surface.
+
+   Horizontally the margin *is* that gap. Vertically it is not: the line that
+   flows under an image carries half of its leading above the glyphs, so the
+   block margin is shortened by that half-leading (~0.5em at the 1.9 leading
+   this content is set in) to land on the same 16px optically.
+
+   `!important` throughout is deliberate. Every image the editor saves bakes
+   its layout into an inline style (resizable-image.ts's `getWrapStyle`), so
+   articles written before these numbers changed would otherwise keep their
+   old margins forever — this file, not the stored HTML, is the authority.
+   `getWrapStyle` must still emit the same values: it is what any consumer of
+   the exported HTML outside this app sees. The `.image-wrap-*` classes only
+   ever appear on editor output, so scoping them globally rather than to
+   `.rich-text` is safe and covers every surface that renders that HTML. */
 .image-wrap-inline {
-  display: inline;
+  display: inline-block;
   vertical-align: middle;
-  margin: 0 20px;
+  margin: 0 0.5rem !important;
 }
 
 .image-wrap-wrap.image-align-left {
   float: left;
-  margin: 0 12px 6px 0;
+  /* The 0.35rem top is not a gap — it nudges the picture down so its top edge
+     lines up with the first line's glyphs rather than that line's box. */
+  margin: 0.35rem 1rem calc(1rem - 0.5em) 0 !important;
 }
 
 .image-wrap-wrap.image-align-right {
   float: right;
-  margin: 0 0 6px 12px;
+  margin: 0.35rem 0 calc(1rem - 0.5em) 1rem !important;
 }
 
 .image-wrap-break {
   display: block;
   float: none;
-  margin: 12px auto;
+  clear: both;
+  margin: calc(1rem - 0.5em) auto calc(1rem - 0.5em) 0 !important;
+}
+
+.image-wrap-break.image-align-center {
+  margin: calc(1rem - 0.5em) auto !important;
 }
 
 .image-wrap-break.image-align-right {
-  margin: 12px 0 12px auto;
+  margin: calc(1rem - 0.5em) 0 calc(1rem - 0.5em) auto !important;
+}
+
+/* A full-width image sits between two paragraphs, and a paragraph's own
+   rhythm (20px) is larger than the 16px gap — adjacent margins collapse to
+   the bigger of the two, so without this the space above a band image would
+   be the paragraph's, not the image's. */
+p:has(+ .image-wrap-break) {
+  margin-bottom: 0 !important;
+}
+
+/* A float only reads as a magazine layout while there is still room for a
+   real column of text beside it — at phone widths a 45% float leaves three
+   words per line. Below that breakpoint every non-inline image becomes a
+   full-width band. The selectors carry both classes so they match the
+   specificity of the rules above and win on source order. */
+@media (max-width: 640px) {
+  .image-wrap-wrap:is(.image-align-left, .image-align-right),
+  .image-wrap-break:is(
+    .image-align-left,
+    .image-align-center,
+    .image-align-right
+  ) {
+    float: none !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: calc(1rem - 0.5em) 0 !important;
+  }
+
+  p:has(+ .image-wrap-wrap) {
+    margin-bottom: 0 !important;
+  }
 }
