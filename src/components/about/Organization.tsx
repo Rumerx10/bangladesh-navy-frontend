@@ -11,7 +11,6 @@ import {
   type OrganogramTreeItem,
 } from "@/src/utils/organogram";
 
-
 type Kind = "command" | "deputy" | "dept";
 
 // ─── Style tokens ─────────────────────────────────────────────────────────────
@@ -25,7 +24,6 @@ const KIND_COLORS: Record<Kind, string> = {
   deputy: "#0e7490",
   dept: "#64748b",
 };
-
 
 const tierFor = (depth: number): { kind: Kind; role: string } => {
   if (depth === 0) return { kind: "command", role: "BNHOC" };
@@ -53,12 +51,12 @@ const NodeCard = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.3, delay: Math.min(depth * 0.06, 0.3) }}
-      className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-left shadow-[0_1px_3px_rgba(15,23,42,0.08)] transition-shadow duration-200 hover:shadow-[0_6px_18px_rgba(15,23,42,0.12)]"
+      className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-left shadow-[0_1px_3px_rgba(15,23,42,0.08)] transition-shadow duration-200 hover:shadow-[0_6px_18px_rgba(15,23,42,0.12)]"
     >
-      <span className="block text-[13px] leading-snug font-semibold text-slate-900">
+      <span className="block text-[13px] leading-snug font-semibold text-foreground">
         {node.title}
       </span>
-      <span className="mt-0.5 flex items-center gap-1.5 text-[11px] leading-snug text-slate-500">
+      <span className="mt-0.5 flex items-center gap-1.5 text-[11px] leading-snug text-secondary-foreground">
         {parentTitle && (
           <>
             <span
@@ -300,7 +298,7 @@ const MobileNode = ({
 // ─── Legend ───────────────────────────────────────────────────────────────────
 
 const Legend = () => (
-  <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-slate-500">
+  <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-secondary-foreground">
     {(
       [
         ["command", "Chief / Addl Chief Hydrographer"],
@@ -323,15 +321,15 @@ const Legend = () => (
 
 const ChartSkeleton = () => (
   <div className="animate-pulse space-y-6">
-    <div className="mx-auto h-14 w-56 rounded-xl bg-slate-200" />
+    <div className="mx-auto h-14 w-56 rounded-xl bg-light-silver" />
     <div className="flex justify-center gap-6">
       {Array.from({ length: 3 }).map((_, i) => (
-        <div key={i} className="h-14 w-44 rounded-xl bg-slate-200" />
+        <div key={i} className="h-14 w-44 rounded-xl bg-light-silver" />
       ))}
     </div>
     <div className="flex justify-center gap-6">
       {Array.from({ length: 3 }).map((_, i) => (
-        <div key={i} className="h-14 w-44 rounded-xl bg-slate-200/70" />
+        <div key={i} className="h-14 w-44 rounded-xl bg-light-silver/70" />
       ))}
     </div>
   </div>
@@ -339,8 +337,8 @@ const ChartSkeleton = () => (
 
 const EmptyChart = () => (
   <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
-    <Network className="h-10 w-10 text-slate-300" />
-    <p className="text-sm text-slate-500">
+    <Network className="h-10 w-10 text-light-silver" />
+    <p className="text-sm text-secondary-foreground">
       The organisational structure has not been published yet.
     </p>
   </div>
@@ -363,7 +361,7 @@ const Organization = () => {
   }, [data]);
 
   return (
-    <section className="bg-linear-to-b from-slate-50/60 to-white py-8 lg:py-20">
+    <section className="bg-linear-to-b from-light/60 to-card py-8 lg:py-20">
       <div className="container px-4 sm:px-6 lg:px-8">
         <SectionTitle
           title="Organisation Tree"
@@ -372,7 +370,7 @@ const Organization = () => {
 
         {/* Dotted canvas */}
         <div
-          className="overflow-x-auto rounded-2xl border border-slate-200/80 bg-slate-50/50 p-5 lg:p-8"
+          className="overflow-x-auto rounded-2xl border border-border/80 bg-light/50 p-5 lg:p-8"
           style={{
             backgroundImage:
               "radial-gradient(circle, rgb(203 213 225 / 0.9) 1px, transparent 1px)",

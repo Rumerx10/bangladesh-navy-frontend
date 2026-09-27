@@ -23,10 +23,10 @@ const ReturnsClient = () => {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-xl lg:text-2xl font-bold text-gray-900">
+          <h1 className="text-xl lg:text-2xl font-bold text-foreground">
             My Returns
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-secondary-foreground mt-1">
             Track your returned orders
           </p>
         </div>
@@ -34,10 +34,10 @@ const ReturnsClient = () => {
           <div className="w-16 h-16 flex items-center justify-center rounded-full bg-orange-50 text-orange-400">
             <RotateCcw size={28} />
           </div>
-          <p className="text-sm font-medium text-gray-600">
+          <p className="text-sm font-medium text-secondary-foreground">
             No returned orders
           </p>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-muted-foreground">
             Your returned orders will appear here
           </p>
         </div>
@@ -48,26 +48,28 @@ const ReturnsClient = () => {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-xl lg:text-2xl font-bold text-gray-900">
+        <h1 className="text-xl lg:text-2xl font-bold text-foreground">
           My Returns
         </h1>
-        <p className="text-sm text-gray-500 mt-1">Track your returned orders</p>
+        <p className="text-sm text-secondary-foreground mt-1">
+          Track your returned orders
+        </p>
       </div>
 
       <div className="flex flex-col gap-4">
         {returnedOrders.map((order) => (
           <div
             key={order.id}
-            className="border border-gray-100 rounded-xl bg-white overflow-hidden hover:shadow-sm transition-shadow shadow-sm"
+            className="border border-border rounded-xl bg-card overflow-hidden hover:shadow-sm transition-shadow shadow-sm"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-4 sm:px-5 py-3 bg-gray-50/60 border-b border-gray-100">
+            <div className="flex items-center justify-between px-4 sm:px-5 py-3 bg-light/60 border-b border-border">
               <div className="flex items-center gap-1.5 text-sm">
-                <span className="font-semibold text-gray-900">
+                <span className="font-semibold text-foreground">
                   {order.orderNumber}
                 </span>
-                <span className="text-gray-400">·</span>
-                <span className="text-gray-500">
+                <span className="text-muted-foreground">·</span>
+                <span className="text-secondary-foreground">
                   {new Date(order.createdAt).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "short",
@@ -78,7 +80,7 @@ const ReturnsClient = () => {
               <span
                 className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border capitalize ${
                   statusColors[order.orderStatus] ||
-                  "bg-gray-50 text-gray-600 border-gray-200"
+                  "bg-light text-secondary-foreground border-border"
                 }`}
               >
                 {order.orderStatus}
@@ -90,7 +92,7 @@ const ReturnsClient = () => {
               <div className="flex flex-col gap-2.5">
                 {order.items.map((item, idx) => (
                   <div key={idx} className="flex items-center gap-3">
-                    <div className="relative w-11 sm:w-12 min-w-11 sm:min-w-12 h-11 sm:h-12 rounded-lg overflow-hidden bg-gray-100">
+                    <div className="relative w-11 sm:w-12 min-w-11 sm:min-w-12 h-11 sm:h-12 rounded-lg overflow-hidden bg-light-dark">
                       <Image
                         src={item.image}
                         alt={item.name}
@@ -100,10 +102,10 @@ const ReturnsClient = () => {
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs sm:text-sm font-medium text-gray-800 line-clamp-1">
+                      <p className="text-xs sm:text-sm font-medium text-foreground line-clamp-1">
                         {item.name}
                       </p>
-                      <p className="text-[11px] sm:text-xs text-gray-500">
+                      <p className="text-[11px] sm:text-xs text-secondary-foreground">
                         Qty: {item.quantity} · {siteConfig.currencySymbol}
                         {item.price.toLocaleString()}
                       </p>
@@ -114,8 +116,8 @@ const ReturnsClient = () => {
             </div>
 
             {/* Footer */}
-            <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-t border-gray-100">
-              <span className="text-sm font-bold text-gray-900">
+            <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-t border-border">
+              <span className="text-sm font-bold text-foreground">
                 Refund: {siteConfig.currencySymbol}
                 {order.total.toLocaleString()}
               </span>

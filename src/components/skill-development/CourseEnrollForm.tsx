@@ -99,21 +99,21 @@ const CourseEnrollForm = ({
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-2xl max-h-[90vh] mx-4 bg-white rounded-2xl shadow-2xl overflow-y-auto">
+      <div className="relative w-full max-w-2xl max-h-[90vh] mx-4 bg-card rounded-2xl shadow-2xl overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-white border-b border-gray-100">
+        <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-card border-b border-border">
           <div>
             <h2 className="text-lg font-bold text-pBlue">Course Application</h2>
-            <p className="text-xs text-gray-500 mt-0.5">
+            <p className="text-xs text-secondary-foreground mt-0.5">
               Fill in your details to apply for enrollment
             </p>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-light-dark transition-colors"
             aria-label="Close"
           >
-            <X size={18} className="text-gray-500" />
+            <X size={18} className="text-secondary-foreground" />
           </button>
         </div>
 
@@ -130,7 +130,7 @@ const CourseEnrollForm = ({
                   <ControlledInputField
                     name="name"
                     placeholder="Enter your full name"
-                    className="bg-white"
+                    className="bg-card"
                   />
                 </div>
                 <div>
@@ -139,7 +139,7 @@ const CourseEnrollForm = ({
                     name="contactNumber"
                     type="tel"
                     placeholder="Enter your phone number"
-                    className="bg-white"
+                    className="bg-card"
                   />
                 </div>
               </div>
@@ -150,7 +150,7 @@ const CourseEnrollForm = ({
                   name="email"
                   type="email"
                   placeholder="Enter your email"
-                  className="bg-white"
+                  className="bg-card"
                 />
               </div>
 
@@ -160,7 +160,7 @@ const CourseEnrollForm = ({
                   <ControlledInputField
                     name="organization"
                     placeholder="Your organization name"
-                    className="bg-white"
+                    className="bg-card"
                   />
                 </div>
                 <div>
@@ -168,7 +168,7 @@ const CourseEnrollForm = ({
                   <ControlledInputField
                     name="designation"
                     placeholder="Your current designation"
-                    className="bg-white"
+                    className="bg-card"
                   />
                 </div>
               </div>
@@ -179,7 +179,7 @@ const CourseEnrollForm = ({
                   name="selectedCourse"
                   options={courseOptions}
                   placeholder="Choose a course"
-                  className="bg-white"
+                  className="bg-card"
                 />
               </div>
 
@@ -188,7 +188,7 @@ const CourseEnrollForm = ({
                 <ControlledTextareaField
                   name="reason"
                   placeholder="Why do you want to enroll in this course?"
-                  className="bg-white min-h-24"
+                  className="bg-card min-h-24"
                 />
               </div>
 
@@ -197,7 +197,7 @@ const CourseEnrollForm = ({
                 <ControlledTextareaField
                   name="remarks"
                   placeholder="Any additional information (optional)"
-                  className="bg-white min-h-20"
+                  className="bg-card min-h-20"
                 />
               </div>
 
@@ -214,14 +214,14 @@ const CourseEnrollForm = ({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-5 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
+                  className="px-5 py-2.5 text-sm font-medium text-secondary-foreground hover:bg-light rounded-lg transition-colors"
                 >
                   Cancel
                 </button>
                 <Button
                   disabled={isPending}
                   type="submit"
-                  className="capitalize bg-liteBlue text-white rounded-lg px-8 py-2.5 h-10 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed hover:bg-pBlue transition-colors"
+                  className="capitalize bg-brand-blue text-white rounded-lg px-8 py-2.5 h-10 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed hover:bg-brand-navy transition-colors"
                 >
                   {isPending ? "Submitting..." : "Submit Application"}
                 </Button>

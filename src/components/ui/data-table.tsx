@@ -114,7 +114,7 @@ export function DataTable<T>({
         <div className="w-full overflow-x-auto">
           <div
             id="table-tab"
-            className="bg-white p-5 rounded-t-lg border border-light-dark"
+            className="bg-card p-5 rounded-t-lg border border-light-dark"
           >
             <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
               {tableTitle && (
@@ -145,12 +145,12 @@ export function DataTable<T>({
                 ) : (
                   showSearch && (
                     <div className="flex items-center border border-light-dark px-3 rounded-[6px] h-11 w-full max-w-60">
-                      <Search className="text-[#BDBDBD]" />
+                      <Search className="text-muted-foreground" />
                       <Input
                         placeholder={searchPlaceholder}
                         value={searchValue}
                         onChange={onSearchChange}
-                        className="border-none shadow-none focus-visible:ring-0 placeholder:text-[#BDBDBD] bg-transparent"
+                        className="border-none shadow-none focus-visible:ring-0 placeholder:text-muted-foreground bg-transparent"
                       />
                     </div>
                   )
@@ -160,12 +160,12 @@ export function DataTable<T>({
               <div className="flex items-center gap-3">
                 {tabs.length > 0 && showSearch && (
                   <div className="flex items-center border border-light-dark px-3 rounded-[6px] h-11 w-full max-w-60">
-                    <Search className="text-[#BDBDBD]" />
+                    <Search className="text-muted-foreground" />
                     <Input
                       placeholder={searchPlaceholder}
                       value={searchValue}
                       onChange={onSearchChange}
-                      className="border-none shadow-none focus-visible:ring-0 placeholder:text-[#BDBDBD] bg-transparent"
+                      className="border-none shadow-none focus-visible:ring-0 placeholder:text-muted-foreground bg-transparent"
                     />
                   </div>
                 )}
@@ -188,7 +188,7 @@ export function DataTable<T>({
               </TableRow>
             </TableHeader>
 
-            <TableBody className="border border-light-dark bg-white">
+            <TableBody className="border border-light-dark bg-card">
               {isLoading ? (
                 Array.from({ length: itemsPerPage }).map((_, rowIndex) => (
                   <TableRow className="h-18" key={`skeleton-${rowIndex}`}>
@@ -232,7 +232,7 @@ export function DataTable<T>({
             </TableBody>
           </Table>
         </div>
-        <div className="bg-white border border-t-0 border-light-dark  rounded-b-lg">
+        <div className="bg-card border border-t-0 border-light-dark  rounded-b-lg">
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

@@ -54,7 +54,7 @@ const StatsCards = () => {
           <motion.div
             key={config.key}
             variants={cardVariants}
-            className="group relative bg-white rounded-xl sm:rounded-2xl border border-gray-100 p-3 sm:p-4 xl:p-6 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden h-40"
+            className="group relative bg-card rounded-xl sm:rounded-2xl border border-border p-3 sm:p-4 xl:p-6 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden h-40"
           >
             <div
               className={`absolute -top-6 -right-6 sm:-top-8 sm:-right-8 w-16 h-16 sm:w-24 sm:h-24 rounded-full bg-linear-to-br ${config.gradient} opacity-10 group-hover:opacity-20 transition-opacity duration-300`}
@@ -66,10 +66,10 @@ const StatsCards = () => {
             </div>
 
             <div className="relative z-10 pr-12 sm:pr-14 lg:pr-16">
-              <p className="text-xs sm:text-sm font-medium text-gray-500 mb-0.5 sm:mb-2 truncate">
+              <p className="text-xs sm:text-sm font-medium text-secondary-foreground mb-0.5 sm:mb-2 truncate">
                 {config.label}
               </p>
-              <h3 className="text-lg sm:text-xl lg:text-[1.7rem] font-bold text-gray-900 tracking-tight mb-4">
+              <h3 className="text-lg sm:text-xl lg:text-[1.7rem] font-bold text-foreground tracking-tight mb-4">
                 {stat.value}
               </h3>
               <div className="flex items-center gap-1 mt-1.5 sm:mt-2.5 flex-wrap ">
@@ -87,7 +87,7 @@ const StatsCards = () => {
                   )}
                   {stat.change}
                 </span>
-                <span className="text-[10px] sm:text-xs text-gray-400 hidden sm:inline">
+                <span className="text-[10px] sm:text-xs text-muted-foreground hidden sm:inline">
                   vs last month
                 </span>
               </div>

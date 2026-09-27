@@ -29,15 +29,18 @@ const GallerySection = () => {
 
   if (isLoading) {
     return (
-      <section className="py-20 lg:py-28 bg-[#f8fafc]">
+      <section className="py-20 lg:py-28 bg-light">
         <div className="container px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 lg:mb-16">
             <SectionTitle title="Gallery" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 h-200 md:h-150 lg:h-175">
-            <div className="md:col-span-2 md:row-span-2 rounded-2xl bg-gray-200 animate-pulse" />
+            <div className="md:col-span-2 md:row-span-2 rounded-2xl bg-light-silver animate-pulse" />
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="rounded-2xl bg-gray-200 animate-pulse" />
+              <div
+                key={i}
+                className="rounded-2xl bg-light-silver animate-pulse"
+              />
             ))}
           </div>
         </div>
@@ -47,14 +50,16 @@ const GallerySection = () => {
 
   if (galleryImages.length === 0) {
     return (
-      <section className="py-20 lg:py-28 bg-[#f8fafc]">
+      <section className="py-20 lg:py-28 bg-light">
         <div className="container px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 lg:mb-16">
             <SectionTitle title="Gallery" />
           </div>
           <div className="text-center py-10">
-            <ImageOff size={48} className="mx-auto text-gray-300 mb-4" />
-            <p className="text-gray-500">No gallery images available.</p>
+            <ImageOff size={48} className="mx-auto text-light-silver mb-4" />
+            <p className="text-secondary-foreground">
+              No gallery images available.
+            </p>
           </div>
         </div>
       </section>
@@ -63,7 +68,7 @@ const GallerySection = () => {
 
   return (
     <>
-      <section className="py-20 lg:py-28 bg-[#f8fafc]">
+      <section className="py-20 lg:py-28 bg-light">
         <div className="container px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
           <div className="text-center mb-12 lg:mb-16">
@@ -130,7 +135,7 @@ const GallerySection = () => {
           <div className="mt-12 text-center">
             <MotionLink
               href="/about/gallery"
-              className="inline-block px-8 py-3 bg-pBlue text-white rounded-full font-semibold hover:bg-liteBlue transition-colors shadow-lg hover:shadow-xl cursor-pointer"
+              className="inline-block px-8 py-3 bg-brand-navy text-white rounded-full font-semibold hover:bg-brand-blue transition-colors shadow-lg hover:shadow-xl cursor-pointer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

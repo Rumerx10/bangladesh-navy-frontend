@@ -49,7 +49,7 @@ const NoticeForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
       {/* Notice details */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-8 bg-card">
         <SectionHeader label="Notice Details" />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
@@ -88,7 +88,7 @@ const NoticeForm = ({
       </div>
 
       {/* English content */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-8 bg-card">
         <SectionHeader label="English Content" />
         <div className="flex flex-col gap-y-6">
           <div>
@@ -111,7 +111,7 @@ const NoticeForm = ({
       </div>
 
       {/* Bengali content */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-8 bg-card">
         <SectionHeader label="Bengali Content" />
         <div className="flex flex-col gap-y-6">
           <div>
@@ -134,7 +134,7 @@ const NoticeForm = ({
       </div>
 
       {/* Attachment */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-8 bg-card">
         <SectionHeader label="Attachment" />
         <InputLabel label="Notice PDF" />
         <FileUploadController
@@ -142,7 +142,7 @@ const NoticeForm = ({
           label="Upload notice PDF"
           accept={["application/pdf"]}
         />
-        <Paragraph className="text-xs! text-gray-500 mt-3">
+        <Paragraph className="text-xs! text-secondary-foreground mt-3">
           Optional — when attached, a download button appears on the public
           notice card. Max 10MB.
         </Paragraph>
@@ -154,7 +154,7 @@ const NoticeForm = ({
         <Button
           type="button"
           onClick={onCancel}
-          className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer"
+          className="text-secondary-foreground bg-transparent hover:bg-light-dark duration-300 border hover:shadow cursor-pointer"
         >
           Cancel
         </Button>

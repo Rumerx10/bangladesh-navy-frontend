@@ -50,7 +50,7 @@ const Footer = () => {
   );
 
   return (
-    <footer className="bg-pBlue text-gray-300 pt-12 lg:pt-16">
+    <footer className="bg-brand-navy text-muted-foreground pt-12 lg:pt-16">
       <div className="container px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8 lg:gap-10">
           {/* Logo & Info */}
@@ -77,19 +77,28 @@ const Footer = () => {
               </div>
             </Link>
             <div className="space-y-2.5 text-sm">
-              <div className="flex items-start gap-2.5 text-gray-400">
-                <MapPin size={16} className="mt-0.5 shrink-0 text-gray-500" />
+              <div className="flex items-start gap-2.5 text-muted-foreground">
+                <MapPin
+                  size={16}
+                  className="mt-0.5 shrink-0 text-secondary-foreground"
+                />
                 <div>
                   <p>BNHOC, Chittagong</p>
                   <p>Bangladesh</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2.5 text-gray-400">
-                <Phone size={16} className="shrink-0 text-gray-500" />
+              <div className="flex items-center gap-2.5 text-muted-foreground">
+                <Phone
+                  size={16}
+                  className="shrink-0 text-secondary-foreground"
+                />
                 <span>{siteConfig.phone1}</span>
               </div>
-              <div className="flex items-center gap-2.5 text-gray-400">
-                <Mail size={16} className="shrink-0 text-gray-500" />
+              <div className="flex items-center gap-2.5 text-muted-foreground">
+                <Mail
+                  size={16}
+                  className="shrink-0 text-secondary-foreground"
+                />
                 <Link
                   href={`mailto:${siteConfig.email}`}
                   className="hover:text-white transition-colors"
@@ -110,7 +119,7 @@ const Footer = () => {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                    className="text-sm text-muted-foreground hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -129,7 +138,7 @@ const Footer = () => {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                    className="text-sm text-muted-foreground hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -148,7 +157,7 @@ const Footer = () => {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                    className="text-sm text-muted-foreground hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -168,7 +177,7 @@ const Footer = () => {
                     href={link.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                    className="text-sm text-muted-foreground hover:text-white transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -187,7 +196,7 @@ const Footer = () => {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                    className="text-sm text-muted-foreground hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -203,14 +212,14 @@ const Footer = () => {
               <Link
                 href="https://www.facebook.com/share/1EgqJvDoyi/?mibextid=wwXIfr"
                 target="_blank"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-liteBlue flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-blue flex items-center justify-center transition-colors"
                 aria-label="Facebook"
               >
                 <GrFacebookOption size={16} className="text-white" />
               </Link>
               <Link
                 href="https://youtube.com/@bangladesh.navy.official?si=qq6rqcDhLMo_CKZv"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-liteBlue flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-brand-blue flex items-center justify-center transition-colors"
                 aria-label="YouTube"
               >
                 <FaYoutube size={16} className="text-white" />
@@ -223,10 +232,10 @@ const Footer = () => {
       {/* Copyright Bar */}
       <div className="border-t border-white/10 mt-10">
         <div className="container px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between py-5 gap-3">
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-secondary-foreground">
             © {new Date().getFullYear()} Bangladesh Navy. All rights reserved.
           </span>
-          <div className="flex items-center gap-4 text-xs text-gray-500">
+          <div className="flex items-center gap-4 text-xs text-secondary-foreground">
             <Link href="#" className="hover:text-white transition-colors">
               Privacy Policy
             </Link>

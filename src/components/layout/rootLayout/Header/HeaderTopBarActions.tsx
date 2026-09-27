@@ -1,4 +1,5 @@
 "use client";
+import ThemeToggle from "@/src/components/theme/ThemeToggle";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Search, X } from "lucide-react";
@@ -114,6 +115,8 @@ const HeaderTopBarActions = () => {
 
   return (
     <div className="flex items-center gap-1 shrink-0">
+      <ThemeToggle className="text-secondary-foreground" />
+
       {/* Search with nav suggestions */}
       <div ref={searchAreaRef}>
         <AnimatePresence mode="wait">
@@ -138,33 +141,33 @@ const HeaderTopBarActions = () => {
                     }
                   }}
                   placeholder="Search products..."
-                  className="w-full h-full pl-4 pr-10 rounded-full border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:border-liteBlue focus:bg-white transition-all shadow-inner"
+                  className="w-full h-full pl-4 pr-10 rounded-full border border-border bg-light text-sm focus:outline-none focus:border-liteBlue focus:bg-card transition-all shadow-inner"
                 />
                 <button
                   onClick={() => {
                     setIsSearchOpen(false);
                     setSearchQuery("");
                   }}
-                  className="absolute right-3 text-gray-400 hover:text-red-500 transition-colors"
+                  className="absolute right-3 text-muted-foreground hover:text-red-500 transition-colors"
                 >
                   <X size={16} />
                 </button>
 
                 {/* Nav suggestions dropdown */}
                 {navSuggestions.length > 0 && (
-                  <div className="absolute top-full right-0 mt-1.5 w-64 bg-white rounded-xl shadow-xl border border-gray-100 z-100 overflow-hidden">
-                    <p className="px-3 pt-2.5 pb-1 text-[10px] font-semibold text-gray-400 uppercase tracking-widest">
+                  <div className="absolute top-full right-0 mt-1.5 w-64 bg-card rounded-xl shadow-xl border border-border z-100 overflow-hidden">
+                    <p className="px-3 pt-2.5 pb-1 text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
                       Quick Navigation
                     </p>
                     {navSuggestions.map((link) => (
                       <button
                         key={link.href}
                         onClick={() => handleNavSuggestionClick(link.href)}
-                        className="flex items-center gap-2.5 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-liteBlue text-left transition-colors"
+                        className="flex items-center gap-2.5 w-full px-3 py-2 text-sm text-foreground hover:bg-light hover:text-liteBlue text-left transition-colors"
                       >
                         <ArrowRight
                           size={13}
-                          className="text-gray-400 shrink-0"
+                          className="text-muted-foreground shrink-0"
                         />
                         {link.label}
                       </button>
@@ -172,7 +175,7 @@ const HeaderTopBarActions = () => {
                     {searchQuery.trim() && (
                       <button
                         onClick={handleSearchSubmit}
-                        className="flex items-center gap-2.5 w-full px-3 py-2.5 text-sm font-medium text-liteBlue hover:bg-liteBlue/5 border-t border-gray-100 transition-colors"
+                        className="flex items-center gap-2.5 w-full px-3 py-2.5 text-sm font-medium text-liteBlue hover:bg-liteBlue/5 border-t border-border transition-colors"
                       >
                         <Search size={13} className="shrink-0" />
                         Search &ldquo;{searchQuery}&rdquo;
@@ -186,7 +189,7 @@ const HeaderTopBarActions = () => {
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 onClick={() => setIsSearchOpen(true)}
-                className="flex items-center justify-center w-10 h-10 text-gray-600 hover:text-liteBlue hover:bg-gray-50 rounded-full transition-colors"
+                className="flex items-center justify-center w-10 h-10 text-secondary-foreground hover:text-liteBlue hover:bg-light rounded-full transition-colors"
                 aria-label="Open search"
               >
                 <Search size={20} />

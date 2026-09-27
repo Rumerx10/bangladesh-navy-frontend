@@ -44,7 +44,7 @@ const FormSectionHeader = ({
             {label}
           </Paragraph>
           {description && (
-            <Paragraph className="text-xs! text-gray-500">
+            <Paragraph className="text-xs! text-secondary-foreground">
               {description}
             </Paragraph>
           )}
@@ -55,7 +55,7 @@ const FormSectionHeader = ({
         <Button
           type="button"
           onClick={onCancel}
-          className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer"
+          className="text-secondary-foreground bg-transparent hover:bg-light-dark duration-300 border hover:shadow cursor-pointer"
         >
           Cancel
         </Button>

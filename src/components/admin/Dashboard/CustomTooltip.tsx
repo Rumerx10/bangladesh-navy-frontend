@@ -7,17 +7,19 @@ interface CustomTooltipProps {
 const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border border-gray-100 px-4 py-3 min-w-40">
-        <p className="text-xs font-medium text-gray-400 mb-1.5">{label}</p>
+      <div className="bg-card rounded-xl shadow-lg border border-border px-4 py-3 min-w-40">
+        <p className="text-xs font-medium text-muted-foreground mb-1.5">
+          {label}
+        </p>
         {payload.map((entry) => (
           <div
             key={entry.dataKey}
             className="flex items-center justify-between gap-4"
           >
-            <span className="text-sm text-gray-600 capitalize">
+            <span className="text-sm text-secondary-foreground capitalize">
               {entry.dataKey}
             </span>
-            <span className="text-sm font-semibold text-gray-900">
+            <span className="text-sm font-semibold text-foreground">
               {entry.dataKey === "revenue"
                 ? `৳${(entry.value / 1000).toFixed(0)}k`
                 : entry.value}

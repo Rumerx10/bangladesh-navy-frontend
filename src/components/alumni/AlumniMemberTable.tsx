@@ -6,7 +6,7 @@ import { IAlumniMember } from "./types";
 /** Colour the common remarks so a roster scans at a glance. */
 const remarkTone = (remarks?: string | null) => {
   const value = remarks?.trim().toLowerCase() ?? "";
-  if (!value) return "bg-gray-100 text-gray-500 ring-gray-500/20";
+  if (!value) return "bg-light-dark text-secondary-foreground ring-gray-500/20";
   if (value.includes("rtd") || value.includes("retire"))
     return "bg-amber-50 text-amber-700 ring-amber-600/20";
   if (value.includes("change")) return "bg-sky-50 text-sky-700 ring-sky-600/20";
@@ -31,7 +31,7 @@ const RemarkBadge = ({ remarks }: { remarks?: string | null }) => (
 const AlumniMemberTable = ({ members }: { members: IAlumniMember[] }) => {
   if (members.length === 0) {
     return (
-      <p className="rounded-lg border border-dashed border-gray-300 bg-gray-50 py-8 text-center text-sm text-gray-500">
+      <p className="rounded-lg border border-dashed border-input bg-light py-8 text-center text-sm text-secondary-foreground">
         No participants recorded for this course yet.
       </p>
     );
@@ -40,10 +40,10 @@ const AlumniMemberTable = ({ members }: { members: IAlumniMember[] }) => {
   return (
     <>
       {/* Desktop / tablet */}
-      <div className="hidden overflow-x-auto rounded-lg border border-gray-200 sm:block">
+      <div className="hidden overflow-x-auto rounded-lg border border-border sm:block">
         <table className="min-w-full border-collapse text-left">
           <thead>
-            <tr className="bg-gray-50 text-[11px] font-bold uppercase tracking-wide text-gray-500">
+            <tr className="bg-light text-[11px] font-bold uppercase tracking-wide text-secondary-foreground">
               <th scope="col" className="w-14 px-4 py-3">
                 Ser
               </th>
@@ -61,22 +61,22 @@ const AlumniMemberTable = ({ members }: { members: IAlumniMember[] }) => {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-border">
             {members.map((member, index) => (
               <tr
                 key={member.id}
-                className="bg-white transition-colors hover:bg-blue-50/40"
+                className="bg-card transition-colors hover:bg-blue-50/40"
               >
-                <td className="px-4 py-3 text-sm font-semibold text-gray-400 tabular-nums">
+                <td className="px-4 py-3 text-sm font-semibold text-muted-foreground tabular-nums">
                   {member.serial || index + 1}.
                 </td>
                 <td className="px-4 py-3 text-sm font-semibold text-pBlue tabular-nums">
                   {member.pNo || "—"}
                 </td>
-                <td className="px-4 py-3 text-sm font-medium text-gray-800">
+                <td className="px-4 py-3 text-sm font-medium text-foreground">
                   {member.rankAndName}
                 </td>
-                <td className="px-4 py-3 text-sm text-gray-600">
+                <td className="px-4 py-3 text-sm text-secondary-foreground">
                   {member.organization || "—"}
                 </td>
                 <td className="px-4 py-3">
@@ -93,22 +93,22 @@ const AlumniMemberTable = ({ members }: { members: IAlumniMember[] }) => {
         {members.map((member, index) => (
           <li
             key={member.id}
-            className="rounded-lg border border-gray-200 bg-white p-4"
+            className="rounded-lg border border-border bg-card p-4"
           >
             <div className="flex items-start justify-between gap-3">
-              <span className="text-xs font-bold text-gray-400 tabular-nums">
+              <span className="text-xs font-bold text-muted-foreground tabular-nums">
                 {member.serial || index + 1}.
               </span>
               <RemarkBadge remarks={member.remarks} />
             </div>
-            <p className="mt-1 text-sm font-medium leading-snug text-gray-800">
+            <p className="mt-1 text-sm font-medium leading-snug text-foreground">
               {member.rankAndName}
             </p>
             <div className="mt-2 flex flex-wrap items-center gap-2 text-[11px] font-semibold">
               <span className="rounded-md bg-blue-50 px-2 py-1 text-pBlue">
                 P. No {member.pNo || "—"}
               </span>
-              <span className="rounded-md bg-gray-100 px-2 py-1 text-gray-600">
+              <span className="rounded-md bg-light-dark px-2 py-1 text-secondary-foreground">
                 {member.organization || "—"}
               </span>
             </div>

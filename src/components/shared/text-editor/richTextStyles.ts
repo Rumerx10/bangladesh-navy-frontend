@@ -8,8 +8,10 @@
  *  slowly diverge. Image widths are percentages of the text column, so the
  *  same content reads correctly in a narrow admin panel and a wide article.
  */
+// The body colour is not here: `.rich-text` sets it from `--prose-ink` in
+// globals.css so it can follow the theme, which a baked-in hex could not.
 export const richTextNarrativeClass =
-  "rich-text text-[#3a4858] leading-[1.9] " +
+  "rich-text leading-[1.9] " +
   // Justified text beside a float is the classic magazine setting, but a
   // phone column is too narrow for it — the word spacing tears open.
   "text-left sm:text-justify hyphens-auto " +

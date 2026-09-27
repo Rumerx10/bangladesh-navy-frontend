@@ -114,7 +114,7 @@ const CreateUpdateNoticeManagement = ({
         if (!open) handleClose();
       }}
     >
-      <DialogContent className="bg-white min-w-[40vw] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="bg-card min-w-[40vw] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-secondary text-xl font-semibold">
             {isUpdate ? "Update" : "Create"} Notice

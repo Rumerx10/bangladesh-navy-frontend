@@ -45,7 +45,9 @@ const StatItem = ({ stat }: StatItemProps) => {
         {count}
         <span className="text-amber-400">{stat.suffix}</span>
       </div>
-      <p className="mt-1 text-sm text-gray-400 font-medium">{stat.label}</p>
+      <p className="mt-1 text-sm text-muted-foreground font-medium">
+        {stat.label}
+      </p>
     </div>
   );
 };

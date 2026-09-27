@@ -19,16 +19,16 @@ const BiographyCard = ({ data, openModal }: BiographyCardProps) => {
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: 0.2 }}
     >
-      <div className="rounded-md overflow-hidden bg-white shadow-md border border-gray-200">
+      <div className="rounded-md overflow-hidden bg-card shadow-md border border-border">
         {/* Navy header */}
-        <div className="bg-[#1B2A4A] px-4 py-3 text-center">
+        <div className="bg-brand-navy px-4 py-3 text-center">
           <span className="text-white font-bold text-sm tracking-wide">
             {data.designationEn || "Chairman"}
           </span>
         </div>
 
         {/* Portrait image */}
-        <div className="relative h-90 lg:h-76 overflow-hidden bg-gray-50">
+        <div className="relative h-90 lg:h-76 overflow-hidden bg-light">
           <Image
             src={data.imageUrl || "/CHIEF.jpeg"}
             alt={data.nameEn}
@@ -40,20 +40,20 @@ const BiographyCard = ({ data, openModal }: BiographyCardProps) => {
 
         {/* Name + button */}
         <div className="px-4 py-4 flex flex-col items-center text-center gap-1">
-          <h3 className="text-[#1B2A4A] font-bold text-sm sm:text-base leading-snug">
+          <h3 className="text-pBlue font-bold text-sm sm:text-base leading-snug">
             {data.nameEn}
           </h3>
-          <p className="text-gray-500 text-xs font-medium">
+          <p className="text-secondary-foreground text-xs font-medium">
             {data.designationEn}
           </p>
 
           <button
             onClick={openModal}
-            className="mt-4 cursor-pointer flex items-center gap-2.5 pl-6 pr-1.5 py-1.5 bg-[#1B2A4A] hover:bg-[#243660] text-white text-sm font-semibold rounded-full transition-colors duration-200"
+            className="mt-4 cursor-pointer flex items-center gap-2.5 pl-6 pr-1.5 py-1.5 bg-brand-navy hover:bg-brand-navy text-white text-sm font-semibold rounded-full transition-colors duration-200"
           >
             View Profile
             <span className="flex items-center justify-center w-7 h-7 rounded-full bg-amber-400">
-              <ArrowUpRight size={15} className="text-[#1B2A4A]" />
+              <ArrowUpRight size={15} className="text-pBlue" />
             </span>
           </button>
         </div>

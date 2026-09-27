@@ -29,7 +29,7 @@ const ProductDetailLayout = ({
   return (
     <div className="container px-4 sm:px-6 lg:px-8 py-6 lg:py-8 mt-28 lg:mt-26">
       {/* Breadcrumb */}
-      <nav className="text-sm text-gray-500 mb-6">
+      <nav className="text-sm text-secondary-foreground mb-6">
         <span className="hover:text-liteBlue cursor-pointer">Home</span>
         <span className="mx-2">›</span>
         <span className="hover:text-liteBlue cursor-pointer">

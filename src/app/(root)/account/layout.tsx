@@ -54,7 +54,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="container px-4 sm:px-6 lg:px-8">
       <div className="py-6 lg:py-8 pb-20 lg:pb-12">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
+        <div className="flex items-center gap-2 text-sm text-secondary-foreground mb-6">
           <Link
             href="/"
             className="hover:text-primary transition-colors no-underline"
@@ -62,15 +62,15 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
             Home
           </Link>
           <span>/</span>
-          <span className="text-gray-900 font-medium">My Account</span>
+          <span className="text-foreground font-medium">My Account</span>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
           {/* ═══════ SIDEBAR (Desktop) ═══════ */}
           <aside className="hidden lg:block w-64 shrink-0">
-            <div className="sticky top-32.5 bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm">
+            <div className="sticky top-32.5 bg-card rounded-xl border border-border overflow-hidden shadow-sm">
               {/* User Card */}
-              <div className="p-5 bg-linear-to-br from-primary/5 to-primary/10 border-b border-gray-100">
+              <div className="p-5 bg-linear-to-br from-primary/5 to-primary/10 border-b border-border">
                 <div className="flex items-center gap-3">
                   {userInformation?.profilePicture ? (
                     <Image
@@ -86,10 +86,10 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-gray-900 truncate">
+                    <p className="text-sm font-semibold text-foreground truncate">
                       {userInformation?.firstName} {userInformation?.lastName}
                     </p>
-                    <p className="text-xs text-gray-500 truncate">
+                    <p className="text-xs text-secondary-foreground truncate">
                       {userInformation?.email}
                     </p>
                   </div>
@@ -100,10 +100,8 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
               <nav className="p-3">
                 {visibleSidebarSections.map((section, idx) => (
                   <div key={section.title}>
-                    {idx > 0 && (
-                      <div className="my-2 border-t border-gray-100" />
-                    )}
-                    <p className="px-3 py-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+                    {idx > 0 && <div className="my-2 border-t border-border" />}
+                    <p className="px-3 py-2 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                       {section.title}
                     </p>
                     {section.items.map((item) => {
@@ -115,13 +113,15 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
                           className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all no-underline ${
                             isActive
                               ? "bg-primary/10 text-primary font-medium"
-                              : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                              : "text-secondary-foreground hover:bg-light hover:text-foreground"
                           }`}
                         >
                           <item.icon
                             size={16}
                             className={
-                              isActive ? "text-primary" : "text-gray-400"
+                              isActive
+                                ? "text-primary"
+                                : "text-muted-foreground"
                             }
                           />
                           {item.label}
@@ -147,7 +147,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
                       className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all no-underline border ${
                         isActive
                           ? "bg-primary text-white border-primary shadow-sm"
-                          : "bg-white text-gray-600 border-gray-200 hover:border-primary/30 hover:text-primary"
+                          : "bg-card text-secondary-foreground border-border hover:border-primary/30 hover:text-primary"
                       }`}
                     >
                       <item.icon size={14} />

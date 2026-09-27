@@ -32,8 +32,8 @@ const ControlledTextareaField: React.FC<ControlledTextareaFieldProps> = ({
                 `h-40 ${
                   error
                     ? "border border-rose-500"
-                    : "focus:ring-grayDark focus:border-[#D4D4D4]"
-                }  focus:outline-none bg-[#F8F8F8]`,
+                    : "focus:ring-grayDark focus:border-border"
+                }  focus:outline-none bg-light`,
                 className
               )}
             />

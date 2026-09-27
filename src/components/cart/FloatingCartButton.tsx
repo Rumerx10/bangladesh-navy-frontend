@@ -12,7 +12,7 @@ const FloatingCartButton = () => {
   return (
     <button
       onClick={toggleDrawer}
-      className="fixed right-5 bottom-10 z-40 w-12 h-12 rounded-md bg-liteBlue text-white shadow-xl hover:bg-[#004d8a] transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-110 hidden lg:flex"
+      className="fixed right-5 bottom-10 z-40 w-12 h-12 rounded-md bg-brand-blue text-white shadow-xl hover:bg-brand-blue transition-all duration-300 flex items-center justify-center cursor-pointer hover:scale-110 hidden lg:flex"
       aria-label="Open cart"
     >
       <ShoppingCart size={20} />

@@ -62,7 +62,7 @@ const NoticesToMariners = () => {
   }, [published, type, search]);
 
   return (
-    <div className="bg-white">
+    <div className="bg-card">
       <NoticesHero />
 
       <section className="py-10 lg:py-14">
@@ -72,14 +72,14 @@ const NoticesToMariners = () => {
             <NoticeTypeFilter value={type} onChange={setType} counts={counts} />
 
             <div className="relative w-full lg:max-w-xs">
-              <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+              <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <input
                 type="text"
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
                 placeholder="Search by title or notice number…"
                 aria-label="Search notices"
-                className="h-11 w-full rounded-lg border border-gray-200 bg-white pr-3 pl-9 text-sm text-gray-800 outline-none placeholder:text-gray-400 focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
+                className="h-11 w-full rounded-lg border border-border bg-card pr-3 pl-9 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
               />
             </div>
           </div>
@@ -95,12 +95,12 @@ const NoticesToMariners = () => {
                 ))}
               </div>
             ) : (
-              <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 py-16 text-center">
-                <FileSearch className="mx-auto h-8 w-8 text-gray-400" />
-                <p className="mt-3 text-sm font-medium text-gray-600">
+              <div className="rounded-xl border border-dashed border-input bg-light py-16 text-center">
+                <FileSearch className="mx-auto h-8 w-8 text-muted-foreground" />
+                <p className="mt-3 text-sm font-medium text-secondary-foreground">
                   No notices found
                 </p>
-                <p className="mt-1 text-xs text-gray-400">
+                <p className="mt-1 text-xs text-muted-foreground">
                   Try a different category or clear the search.
                 </p>
               </div>

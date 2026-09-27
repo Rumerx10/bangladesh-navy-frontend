@@ -28,10 +28,10 @@ const AlumniCourseGroupCard = ({
   return (
     <article
       className={cn(
-        "overflow-hidden rounded-xl border bg-white transition-shadow",
+        "overflow-hidden rounded-xl border bg-card transition-shadow",
         isOpen
           ? "border-pBlue/30 shadow-md"
-          : "border-gray-200 hover:border-pBlue/30 hover:shadow-sm"
+          : "border-border hover:border-pBlue/30 hover:shadow-sm"
       )}
     >
       <button
@@ -46,7 +46,7 @@ const AlumniCourseGroupCard = ({
           className={cn(
             "flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-lg font-bold tabular-nums transition-colors sm:h-14 sm:w-14 sm:text-xl",
             isOpen
-              ? "bg-linear-to-br from-pBlue to-blue-600 text-white"
+              ? "bg-linear-to-br from-brand-navy to-blue-600 text-white"
               : "bg-blue-50 text-pBlue"
           )}
         >
@@ -58,14 +58,14 @@ const AlumniCourseGroupCard = ({
             {group.name}
           </h3>
 
-          <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500">
+          <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-secondary-foreground">
             {group.duration && (
               <span className="inline-flex items-center gap-1.5">
                 <Clock3 className="h-3.5 w-3.5 shrink-0" />
                 {group.duration}
               </span>
             )}
-            <span className="inline-flex items-center gap-1.5 font-semibold text-gray-600">
+            <span className="inline-flex items-center gap-1.5 font-semibold text-secondary-foreground">
               <Users className="h-3.5 w-3.5 shrink-0" />
               {count} {count === 1 ? "participant" : "participants"}
             </span>
@@ -74,7 +74,7 @@ const AlumniCourseGroupCard = ({
 
         <ChevronDown
           className={cn(
-            "h-5 w-5 shrink-0 text-gray-400 transition-transform duration-300",
+            "h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-300",
             isOpen && "rotate-180 text-pBlue"
           )}
         />
@@ -89,13 +89,13 @@ const AlumniCourseGroupCard = ({
         )}
       >
         <div className="overflow-hidden">
-          <div className="space-y-4 border-t border-gray-100 p-4 sm:p-5">
+          <div className="space-y-4 border-t border-border p-4 sm:p-5">
             {group.batches.length > 0 ? (
               group.batches.map((batch) => (
                 <AlumniBatchCard key={batch.id} batch={batch} />
               ))
             ) : (
-              <p className="rounded-lg border border-dashed border-gray-300 bg-gray-50 py-8 text-center text-sm text-gray-500">
+              <p className="rounded-lg border border-dashed border-input bg-light py-8 text-center text-sm text-secondary-foreground">
                 No batches recorded for this course yet.
               </p>
             )}

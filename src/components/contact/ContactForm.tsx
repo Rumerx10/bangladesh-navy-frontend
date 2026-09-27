@@ -37,7 +37,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-card">
       <div className="mb-10">
         <SectionTitle
           title="Send us a Message"
@@ -53,7 +53,7 @@ const ContactForm = () => {
               <ControlledInputField
                 name="name"
                 placeholder="Enter your name"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
 
@@ -63,7 +63,7 @@ const ContactForm = () => {
                 type="email"
                 name="email"
                 placeholder="Enter your email"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
 
@@ -73,7 +73,7 @@ const ContactForm = () => {
                 type="tel"
                 name="phone"
                 placeholder="Enter your phone number"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
 
@@ -82,7 +82,7 @@ const ContactForm = () => {
               <ControlledTextareaField
                 name="message"
                 placeholder="Write your message here..."
-                className="bg-white min-h-30"
+                className="bg-card min-h-30"
               />
             </div>
 

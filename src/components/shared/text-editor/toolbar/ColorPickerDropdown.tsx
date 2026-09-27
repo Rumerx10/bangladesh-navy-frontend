@@ -45,7 +45,7 @@ const ColorPickerDropdown = ({ editor }: { editor: Editor }) => {
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute z-9999 p-3 bg-white border border-[#d8d8d8] rounded shadow-md w-20">
+        <div className="absolute z-9999 p-3 bg-card border border-border rounded shadow-md w-20">
           <div className="grid grid-cols-3 gap-1">
             {predefinedColors.map((color) => (
               <button

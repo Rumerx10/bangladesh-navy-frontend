@@ -20,7 +20,7 @@ const SectionTitle = ({
     >
       <h2 className="text-2xl font-bold text-pBlue lg:text-3xl">{title}</h2>
       <p
-        className={`max-w-3xl text-${position} mt-2 text-sm lg:text-base text-gray-500`}
+        className={`max-w-3xl text-${position} mt-2 text-sm lg:text-base text-secondary-foreground`}
       >
         {desc}
       </p>

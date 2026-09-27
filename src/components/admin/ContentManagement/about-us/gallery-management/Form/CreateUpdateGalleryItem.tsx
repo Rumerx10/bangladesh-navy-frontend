@@ -132,7 +132,7 @@ const CreateUpdateGalleryItem = ({
         if (!open) handleClose();
       }}
     >
-      <DialogContent className="bg-white min-w-[65vw] max-h-[90vh] flex flex-col">
+      <DialogContent className="bg-card min-w-[65vw] max-h-[90vh] flex flex-col">
         <DialogHeader className="shrink-0">
           <DialogTitle className="text-secondary text-xl font-semibold">
             {isUpdate ? "Update" : "Create"} Gallery Item

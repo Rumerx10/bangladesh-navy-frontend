@@ -153,13 +153,13 @@ const ProductForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
       {/* English Content */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-8 bg-card">
         <div className="flex items-center justify-between mb-6">
           <SectionHeader label="English Content" />
           <Button
             type="button"
             onClick={onCancel}
-            className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer -mt-6"
+            className="text-secondary-foreground bg-transparent hover:bg-light-dark duration-300 border hover:shadow cursor-pointer -mt-6"
           >
             Cancel
           </Button>
@@ -185,7 +185,7 @@ const ProductForm = ({
       </div>
 
       {/* Images */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-8 bg-card">
         <SectionHeader label="Product Images" />
         <InputLabel label="Images" required />
         <MultipleImageUploadController
@@ -196,7 +196,7 @@ const ProductForm = ({
       </div>
 
       {/* Category, Status, Chart Code */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-8 bg-card">
         <SectionHeader label="Details" />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
@@ -249,7 +249,7 @@ const ProductForm = ({
       </div>
 
       {/* Nautical Chart Details */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-8 bg-card">
         <SectionHeader label="Nautical Chart Details" />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="sm:col-span-2">
@@ -336,7 +336,7 @@ const ProductForm = ({
       </div>
 
       {/* Bengali Fields Section (optional, collapsed by default) */}
-      <div className="border border-light-silver rounded-lg bg-white">
+      <div className="border border-light-silver rounded-lg bg-card">
         <button
           type="button"
           onClick={() => setShowBnFields((prev) => !prev)}
@@ -350,14 +350,14 @@ const ProductForm = ({
               <Paragraph className="xl:text-lg font-medium text-pBlue">
                 Bengali Content
               </Paragraph>
-              <Paragraph className="text-xs! text-gray-500">
+              <Paragraph className="text-xs! text-secondary-foreground">
                 Optional — shown on the site when provided
               </Paragraph>
             </div>
           </div>
           <ChevronDown
             className={cn(
-              "w-5 h-5 text-gray-500 transition-transform duration-300",
+              "w-5 h-5 text-secondary-foreground transition-transform duration-300",
               showBnFields && "rotate-180"
             )}
           />
@@ -398,7 +398,7 @@ const ProductForm = ({
         <Button
           type="button"
           onClick={onCancel}
-          className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer"
+          className="text-secondary-foreground bg-transparent hover:bg-light-dark duration-300 border hover:shadow cursor-pointer"
         >
           Cancel
         </Button>

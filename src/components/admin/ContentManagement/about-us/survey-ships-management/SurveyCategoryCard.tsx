@@ -76,8 +76,8 @@ const SurveyCategoryCard = () => {
   const columns = GetSurveyCategoryColumns(handleEdit, setPendingDelete);
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-      <div className="flex items-center gap-3 px-6 py-5 border-b border-gray-100 bg-linear-to-r from-primary/5 via-primary/10 to-transparent">
+    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
+      <div className="flex items-center gap-3 px-6 py-5 border-b border-border bg-linear-to-r from-primary/5 via-primary/10 to-transparent">
         <div className="bg-primary/10 w-10 h-10 flex items-center justify-center rounded-xl border border-primary/20">
           <Tag className="w-5 h-5 text-primary" />
         </div>
@@ -85,7 +85,7 @@ const SurveyCategoryCard = () => {
           <Paragraph className="font-semibold text-lg! text-pBlue">
             Survey Categories
           </Paragraph>
-          <Paragraph className="text-sm! text-gray-500">
+          <Paragraph className="text-sm! text-secondary-foreground">
             Manage category options for survey ships
           </Paragraph>
         </div>

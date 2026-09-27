@@ -29,7 +29,7 @@ const AlumniHero = ({
   };
 
   return (
-    <section className="relative pt-44 pb-14 lg:pt-48 lg:pb-24 bg-pBlue overflow-hidden">
+    <section className="relative pt-44 pb-14 lg:pt-48 lg:pb-24 bg-brand-navy overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0">
         <div className="absolute top-0 right-0 w-125 h-125 bg-blue-500 rounded-full blur-[120px] -mr-64 -mt-64" />

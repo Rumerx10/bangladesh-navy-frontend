@@ -53,14 +53,14 @@ const ProductInfo = ({
           {formatPrice(discountedPrice)}
         </span>
         {hasDiscount && (
-          <span className="text-lg text-gray-400 line-through">
+          <span className="text-lg text-muted-foreground line-through">
             {formatPrice(product.price)}
           </span>
         )}
       </div>
       {/* Category */}
-      <div className="mt-6 pt-5 border-t border-gray-100">
-        <p className="text-sm text-gray-500">
+      <div className="mt-6 pt-5 border-t border-border">
+        <p className="text-sm text-secondary-foreground">
           Category:{" "}
           <span className="text-liteBlue font-medium">
             {product.category.nameEn}
@@ -69,7 +69,7 @@ const ProductInfo = ({
       </div>
       {/* Description */}
       {product.descriptionEn && (
-        <p className="mt-5 text-sm text-gray-600 leading-relaxed">
+        <p className="mt-5 text-sm text-secondary-foreground leading-relaxed">
           {parse(product.descriptionEn)}
         </p>
       )}

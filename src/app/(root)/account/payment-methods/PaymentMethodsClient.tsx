@@ -50,10 +50,10 @@ const PaymentMethodsClient = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl lg:text-2xl font-bold text-gray-900">
+          <h1 className="text-xl lg:text-2xl font-bold text-foreground">
             Payment Methods
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-secondary-foreground mt-1">
             Manage your saved payment methods
           </p>
         </div>
@@ -82,10 +82,10 @@ const PaymentMethodsClient = () => {
           return (
             <div
               key={card.id}
-              className={`relative bg-white rounded-xl border p-5 shadow-sm transition-all hover:shadow-md ${
+              className={`relative bg-card rounded-xl border p-5 shadow-sm transition-all hover:shadow-md ${
                 card.isDefault
                   ? "border-primary/30 ring-1 ring-primary/10"
-                  : "border-gray-100"
+                  : "border-border"
               }`}
             >
               {/* Card Visual */}
@@ -119,7 +119,7 @@ const PaymentMethodsClient = () => {
 
               {/* Default + Info */}
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-sm font-semibold text-gray-800 capitalize">
+                <span className="text-sm font-semibold text-foreground capitalize">
                   {card.brand} ending in {card.last4}
                 </span>
                 {card.isDefault && (
@@ -129,22 +129,22 @@ const PaymentMethodsClient = () => {
                   </span>
                 )}
               </div>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-secondary-foreground">
                 Expires {String(card.expMonth).padStart(2, "0")}/{card.expYear}
               </p>
 
               {/* Actions */}
-              <div className="flex items-center gap-2 mt-4 pt-3 border-t border-gray-100">
+              <div className="flex items-center gap-2 mt-4 pt-3 border-t border-border">
                 {!card.isDefault && (
                   <>
                     <button
                       onClick={() => setDefault(card.id)}
-                      className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-primary transition-colors cursor-pointer"
+                      className="flex items-center gap-1.5 text-xs font-medium text-secondary-foreground hover:text-primary transition-colors cursor-pointer"
                     >
                       <Star size={13} />
                       Set as Default
                     </button>
-                    <span className="text-gray-200">|</span>
+                    <span className="text-light-silver">|</span>
                   </>
                 )}
                 <button
@@ -163,18 +163,18 @@ const PaymentMethodsClient = () => {
       {/* Add Card Modal */}
       {showForm && (
         <div className="fixed inset-0 z-100  flex items-center justify-center bg-black/50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+          <div className="bg-card rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
             {/* Modal Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-border">
               <div className="flex items-center gap-2">
                 <CreditCard size={18} className="text-primary" />
-                <h2 className="text-lg font-semibold text-gray-900">
+                <h2 className="text-lg font-semibold text-foreground">
                   Add Payment Method
                 </h2>
               </div>
               <button
                 onClick={() => setShowForm(false)}
-                className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+                className="p-1.5 rounded-lg hover:bg-light-dark text-muted-foreground hover:text-secondary-foreground transition-colors cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -182,12 +182,15 @@ const PaymentMethodsClient = () => {
 
             {/* Stripe Elements Placeholder */}
             <div className="px-6 py-6 space-y-4">
-              <div className="p-4 border-2 border-dashed border-gray-200 rounded-xl bg-gray-50/50 text-center">
-                <CreditCard size={32} className="text-gray-300 mx-auto mb-3" />
-                <p className="text-sm font-medium text-gray-600">
+              <div className="p-4 border-2 border-dashed border-border rounded-xl bg-light/50 text-center">
+                <CreditCard
+                  size={32}
+                  className="text-light-silver mx-auto mb-3"
+                />
+                <p className="text-sm font-medium text-secondary-foreground">
                   Stripe Card Element
                 </p>
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   This area will be replaced with Stripe Elements for secure
                   card input
                 </p>
@@ -195,59 +198,59 @@ const PaymentMethodsClient = () => {
 
               {/* Mock form fields */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                <label className="block text-sm font-medium text-foreground mb-1.5">
                   Card Number
                 </label>
                 <input
                   type="text"
                   placeholder="4242 4242 4242 4242"
-                  className="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:border-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
+                  className="w-full h-11 px-4 rounded-lg border border-border bg-light text-sm focus:border-primary focus:bg-card focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                  <label className="block text-sm font-medium text-foreground mb-1.5">
                     Expiry Date
                   </label>
                   <input
                     type="text"
                     placeholder="MM/YY"
-                    className="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:border-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
+                    className="w-full h-11 px-4 rounded-lg border border-border bg-light text-sm focus:border-primary focus:bg-card focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                  <label className="block text-sm font-medium text-foreground mb-1.5">
                     CVC
                   </label>
                   <input
                     type="text"
                     placeholder="123"
-                    className="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:border-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
+                    className="w-full h-11 px-4 rounded-lg border border-border bg-light text-sm focus:border-primary focus:bg-card focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                <label className="block text-sm font-medium text-foreground mb-1.5">
                   Cardholder Name
                 </label>
                 <input
                   type="text"
                   placeholder="Name on card"
-                  className="w-full h-11 px-4 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:border-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
+                  className="w-full h-11 px-4 rounded-lg border border-border bg-light text-sm focus:border-primary focus:bg-card focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
                 />
               </div>
             </div>
 
             {/* Modal Footer */}
-            <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100 bg-gray-50/50 rounded-b-2xl">
-              <div className="flex items-center gap-1.5 text-xs text-gray-400">
+            <div className="flex items-center justify-between px-6 py-4 border-t border-border bg-light/50 rounded-b-2xl">
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                 <Shield size={14} />
                 Secured by Stripe
               </div>
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setShowForm(false)}
-                  className="px-5 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors cursor-pointer"
+                  className="px-5 py-2.5 rounded-lg text-sm font-medium text-secondary-foreground hover:bg-light-dark transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>

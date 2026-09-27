@@ -13,8 +13,8 @@ interface HeroPreviewProps {
 
 const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-      <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-8 py-6 border-b border-gray-100">
+    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
+      <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-8 py-6 border-b border-border">
         <div className="flex items-center gap-3">
           <div className="bg-primary/10 w-10 h-10 flex items-center justify-center rounded-xl border border-primary/20">
             <Image
@@ -29,7 +29,7 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
             <Paragraph className="font-semibold text-lg! text-pBlue">
               Hero Preview
             </Paragraph>
-            <Paragraph className="text-sm! text-gray-500">
+            <Paragraph className="text-sm! text-secondary-foreground">
               {data.titleEn || "No hero configured"}
             </Paragraph>
           </div>
@@ -46,32 +46,32 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
 
       <div className="p-8 pt-10 space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-            <Paragraph className="text-xs! text-gray-500 uppercase tracking-wider mb-1">
+          <div className="bg-light rounded-xl p-4 border border-border">
+            <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
               English Title
             </Paragraph>
             <Paragraph className="text-sm! font-medium text-secondary-dark">
               {data.titleEn || "—"}
             </Paragraph>
           </div>
-          <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-            <Paragraph className="text-xs! text-gray-500 uppercase tracking-wider mb-1">
+          <div className="bg-light rounded-xl p-4 border border-border">
+            <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
               Bengali Title
             </Paragraph>
             <Paragraph className="text-sm! font-medium text-secondary-dark">
               {data.titleBn || "—"}
             </Paragraph>
           </div>
-          <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-            <Paragraph className="text-xs! text-gray-500 uppercase tracking-wider mb-1">
+          <div className="bg-light rounded-xl p-4 border border-border">
+            <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
               English Subtitle
             </Paragraph>
             <Paragraph className="text-sm! font-medium text-secondary-dark">
               {data.subTitleEn || "—"}
             </Paragraph>
           </div>
-          <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-            <Paragraph className="text-xs! text-gray-500 uppercase tracking-wider mb-1">
+          <div className="bg-light rounded-xl p-4 border border-border">
+            <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
               Bengali Subtitle
             </Paragraph>
             <Paragraph className="text-sm! font-medium text-secondary-dark">
@@ -80,8 +80,8 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
           </div>
         </div>
 
-        <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-          <Paragraph className="text-xs! text-gray-500 uppercase tracking-wider mb-1">
+        <div className="bg-light rounded-xl p-4 border border-border">
+          <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
             English Description
           </Paragraph>
           <Paragraph className="text-sm! text-secondary-dark">
@@ -89,8 +89,8 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
           </Paragraph>
         </div>
 
-        <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-          <Paragraph className="text-xs! text-gray-500 uppercase tracking-wider mb-1">
+        <div className="bg-light rounded-xl p-4 border border-border">
+          <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
             Bengali Description
           </Paragraph>
           <Paragraph className="text-sm! text-secondary-dark">
@@ -98,15 +98,15 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
           </Paragraph>
         </div>
 
-        <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-          <Paragraph className="text-xs! text-gray-500 uppercase tracking-wider mb-2">
+        <div className="bg-light rounded-xl p-4 border border-border">
+          <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-2">
             Images
           </Paragraph>
           <div className="flex gap-3 flex-wrap">
             {data.imageUrls?.map((url, index) => (
               <div
                 key={index}
-                className="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200"
+                className="relative w-24 h-24 rounded-lg overflow-hidden border border-border"
               >
                 <Image
                   src={url}
@@ -120,12 +120,12 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs text-gray-500">Status:</span>
+          <span className="text-xs text-secondary-foreground">Status:</span>
           <span
             className={`text-xs px-2 py-0.5 rounded-full font-medium ${
               data.status === "ACTIVE"
                 ? "bg-green-100 text-green-700"
-                : "bg-gray-200 text-gray-500"
+                : "bg-light-silver text-secondary-foreground"
             }`}
           >
             {data.status}

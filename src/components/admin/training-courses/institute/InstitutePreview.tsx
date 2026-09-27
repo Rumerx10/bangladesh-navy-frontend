@@ -18,9 +18,9 @@ const InstitutePreview = ({
   onEdit,
 }: InstitutePreviewProps) => {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
       {/* Header */}
-      <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-6 sm:px-8 py-6 border-b border-gray-100">
+      <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-6 sm:px-8 py-6 border-b border-border">
         <div className="flex items-center gap-3">
           <div className="bg-primary/10 w-10 h-10 flex items-center justify-center rounded-xl border border-primary/20">
             <Image
@@ -35,7 +35,7 @@ const InstitutePreview = ({
             <Paragraph className="font-semibold text-lg! text-pBlue">
               BN Hydrographic Institute
             </Paragraph>
-            <Paragraph className="text-sm! text-gray-500">
+            <Paragraph className="text-sm! text-secondary-foreground">
               Content shown on the public institute page
             </Paragraph>
           </div>
@@ -63,13 +63,13 @@ const InstitutePreview = ({
 
         {/* Basic */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+          <div className="bg-light rounded-xl p-5 border border-border">
             <Paragraph className="font-semibold text-pBlue uppercase mb-2">
               Title
             </Paragraph>
             <Paragraph className="text-base">{data.title}</Paragraph>
           </div>
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+          <div className="bg-light rounded-xl p-5 border border-border">
             <Paragraph className="font-semibold text-pBlue uppercase mb-2">
               Sub Title
             </Paragraph>
@@ -78,7 +78,7 @@ const InstitutePreview = ({
         </div>
 
         {/* About */}
-        <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+        <div className="bg-light rounded-xl p-5 border border-border">
           <div className="flex items-center gap-2 mb-3">
             <BookOpen className="w-4 h-4 text-pBlue" />
             <Paragraph className="font-semibold text-pBlue uppercase">
@@ -89,7 +89,7 @@ const InstitutePreview = ({
             {data.aboutParagraphs.map((text, index) => (
               <Paragraph
                 key={index}
-                className="text-sm leading-relaxed text-gray-600 text-justify"
+                className="text-sm leading-relaxed text-secondary-foreground text-justify"
               >
                 {text}
               </Paragraph>
@@ -99,7 +99,7 @@ const InstitutePreview = ({
 
         {/* Vision & Mission */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+          <div className="bg-light rounded-xl p-5 border border-border">
             <div className="flex items-center gap-2 mb-3">
               <Eye className="w-4 h-4 text-pBlue" />
               <Paragraph className="font-semibold text-pBlue uppercase">
@@ -109,12 +109,12 @@ const InstitutePreview = ({
             <Paragraph className="font-medium text-pBlue mb-2">
               {data.visionTitle}
             </Paragraph>
-            <Paragraph className="text-sm leading-relaxed text-gray-600">
+            <Paragraph className="text-sm leading-relaxed text-secondary-foreground">
               {data.visionDescription}
             </Paragraph>
           </div>
 
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+          <div className="bg-light rounded-xl p-5 border border-border">
             <div className="flex items-center gap-2 mb-3">
               <Target className="w-4 h-4 text-pBlue" />
               <Paragraph className="font-semibold text-pBlue uppercase">
@@ -128,9 +128,9 @@ const InstitutePreview = ({
               {data.missionPoints.map((point, index) => (
                 <li
                   key={index}
-                  className="flex items-start gap-2 text-sm leading-relaxed text-gray-600"
+                  className="flex items-start gap-2 text-sm leading-relaxed text-secondary-foreground"
                 >
-                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-liteBlue shrink-0" />
+                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-brand-blue shrink-0" />
                   {point}
                 </li>
               ))}
@@ -139,7 +139,7 @@ const InstitutePreview = ({
         </div>
 
         {/* Training overview */}
-        <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+        <div className="bg-light rounded-xl p-5 border border-border">
           <Paragraph className="font-semibold text-pBlue uppercase mb-3">
             {data.trainingOverviewTitle}
           </Paragraph>
@@ -147,7 +147,7 @@ const InstitutePreview = ({
             {data.trainingOverviewParagraphs.map((text, index) => (
               <Paragraph
                 key={index}
-                className="text-sm leading-relaxed text-gray-600 text-justify"
+                className="text-sm leading-relaxed text-secondary-foreground text-justify"
               >
                 {text}
               </Paragraph>

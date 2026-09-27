@@ -154,7 +154,7 @@ const CoursesCard = ({ onViewBatches }: CoursesCardProps) => {
         createTitle="Add Course"
       />
 
-      <Paragraph className="mt-3 text-xs! text-gray-500">
+      <Paragraph className="mt-3 text-xs! text-secondary-foreground">
         These rows are the public Course Statistics table on
         /training-courses/courses, and the courses alumni members are grouped
         under.

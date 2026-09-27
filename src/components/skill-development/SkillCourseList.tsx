@@ -23,7 +23,7 @@ const SkillCourseList = () => {
       : courses.filter((c) => c.category === activeCategory);
 
   return (
-    <section id="courses" className="py-20 lg:py-32 bg-white">
+    <section id="courses" className="py-20 lg:py-32 bg-card">
       <div className="container px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
@@ -31,12 +31,12 @@ const SkillCourseList = () => {
             <h2 className="text-3xl font-bold text-pBlue mb-3">
               Available Courses
             </h2>
-            <p className="text-gray-500 max-w-xl">
+            <p className="text-secondary-foreground max-w-xl">
               Choose from our selection of professional maritime certifications
               designed for naval personnel and maritime professionals.
             </p>
           </div>
-          <span className="text-sm text-gray-400">
+          <span className="text-sm text-muted-foreground">
             Showing{" "}
             <span className="font-bold text-pBlue">{filtered.length}</span> of{" "}
             {courses.length} courses
@@ -51,8 +51,8 @@ const SkillCourseList = () => {
               onClick={() => setActiveCategory(cat)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                 activeCategory === cat
-                  ? "bg-liteBlue text-white shadow-sm"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-liteBlue"
+                  ? "bg-brand-blue text-white shadow-sm"
+                  : "bg-light-dark text-secondary-foreground hover:bg-light-silver hover:text-liteBlue"
               }`}
             >
               {cat}
@@ -68,7 +68,7 @@ const SkillCourseList = () => {
         </div>
 
         {filtered.length === 0 && (
-          <p className="text-center text-gray-400 py-20">
+          <p className="text-center text-muted-foreground py-20">
             No courses found in this category.
           </p>
         )}

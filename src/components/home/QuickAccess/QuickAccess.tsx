@@ -33,7 +33,7 @@ const QuickAccess = () => {
 
   return (
     <>
-      <section className="relative py-8 lg:py-20 bg-gray-50 overflow-hidden">
+      <section className="relative py-8 lg:py-20 bg-light overflow-hidden">
         {/* Watermarks */}
         <div className="absolute -right-10 top-1/2 -translate-y-1/2 text-pBlue">
           <NavyWatermark
@@ -66,7 +66,7 @@ const QuickAccess = () => {
                 <h2 className="text-3xl lg:text-5xl font-bold text-pBlue">
                   Quick Access
                 </h2>
-                <p className="mt-2 text-sm lg:text-base text-gray-500">
+                <p className="mt-2 text-sm lg:text-base text-secondary-foreground">
                   Access our most popular products and services with a single
                   click
                 </p>

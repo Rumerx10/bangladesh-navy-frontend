@@ -62,7 +62,7 @@ export const GetCourseColumns = (
           className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
             status === "ACTIVE"
               ? "bg-green-100 text-green-800"
-              : "bg-gray-100 text-gray-600"
+              : "bg-light-dark text-secondary-foreground"
           }`}
         >
           {status || "—"}
@@ -76,7 +76,7 @@ export const GetCourseColumns = (
     cell: (_value, row) => (
       <div className="flex items-center gap-2">
         <Button
-          className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-[#E6E6E6] bg-light hover:bg-light"
+          className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-border bg-light hover:bg-light"
           size="sm"
           onClick={() => onViewBatches?.(row)}
           aria-label={`View batches for ${row.name}`}
@@ -85,7 +85,7 @@ export const GetCourseColumns = (
           <Layers className="h-4 w-4 text-secondary-foreground" />
         </Button>
         <Button
-          className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-[#E6E6E6] bg-light hover:bg-light"
+          className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-border bg-light hover:bg-light"
           size="sm"
           onClick={() => onEdit?.(row)}
           aria-label={`Edit ${row.name}`}

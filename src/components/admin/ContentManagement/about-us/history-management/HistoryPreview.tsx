@@ -15,9 +15,9 @@ interface HistoryPreviewProps {
 
 const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
       {/* Header */}
-      <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-8 py-6 border-b border-gray-100">
+      <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-8 py-6 border-b border-border">
         <div className="flex items-center gap-3">
           <div className="bg-primary/10 w-10 h-10 flex items-center justify-center rounded-xl border border-primary/20">
             <Image
@@ -32,7 +32,7 @@ const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
             <Paragraph className="font-semibold text-lg! text-pBlue">
               History Section Preview
             </Paragraph>
-            <Paragraph className="text-sm! text-gray-500">
+            <Paragraph className="text-sm! text-secondary-foreground">
               Current history content
             </Paragraph>
           </div>
@@ -51,18 +51,18 @@ const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
       <div className="p-8 pt-10 space-y-6">
         {/* Commented out — Image is not part of the current /history API. */}
         {/* {data.image && (
-          <div className="relative w-full h-56 rounded-xl overflow-hidden border border-gray-200">
+          <div className="relative w-full h-56 rounded-xl overflow-hidden border border-border">
             <Image src={getImageSrc(data.image)} alt={data.title} fill className="object-cover" />
           </div>
         )} */}
 
         {/* Commented out — Title/Sub Title are not part of the current /history API. */}
         {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+          <div className="bg-light rounded-xl p-5 border border-border">
             <Paragraph className="font-semibold text-pBlue uppercase mb-2">Title</Paragraph>
             <Paragraph className="text-base">{data.title}</Paragraph>
           </div>
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+          <div className="bg-light rounded-xl p-5 border border-border">
             <Paragraph className="font-semibold text-pBlue uppercase mb-2">Sub Title</Paragraph>
             <Paragraph className="text-base">{data.subTitle}</Paragraph>
           </div>
@@ -74,11 +74,11 @@ const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
             land here exactly as a visitor will see them. Image widths are
             percentages of the text column, so the proportions survive the
             narrower admin panel. */}
-        <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+        <div className="bg-light rounded-xl p-5 border border-border">
           <Paragraph className="font-semibold text-pBlue uppercase mb-3">
             English Content
           </Paragraph>
-          <div className="bg-white rounded-lg border border-gray-200 p-6 md:p-8">
+          <div className="bg-card rounded-lg border border-border p-6 md:p-8">
             <div
               className={cn(richTextNarrativeClass, "text-sm md:text-base")}
               dangerouslySetInnerHTML={{ __html: data.contentEn || "" }}
@@ -87,11 +87,11 @@ const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
         </div>
 
         {data.contentBn && (
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+          <div className="bg-light rounded-xl p-5 border border-border">
             <Paragraph className="font-semibold text-pBlue uppercase mb-3">
               Bengali Content
             </Paragraph>
-            <div className="bg-white rounded-lg border border-gray-200 p-6 md:p-8">
+            <div className="bg-card rounded-lg border border-border p-6 md:p-8">
               <div
                 className={cn(richTextNarrativeClass, "text-sm md:text-base")}
                 dangerouslySetInnerHTML={{ __html: data.contentBn }}
@@ -111,7 +111,7 @@ const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {data.keyMilestones.map((milestone, index) => (
-                <div key={index} className="bg-gray-50 rounded-xl p-5 border border-gray-100 flex gap-4">
+                <div key={index} className="bg-light rounded-xl p-5 border border-border flex gap-4">
                   <div className="bg-primary/10 text-primary border border-primary/20 rounded-lg px-3 py-1 text-sm font-semibold h-fit shrink-0">
                     {milestone.year}
                   </div>
@@ -133,10 +133,10 @@ const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
             </div>
             <div className="space-y-4">
               {data.timelineItems.map((item, index) => (
-                <div key={item.id || index} className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                <div key={item.id || index} className="bg-light rounded-xl p-5 border border-border">
                   <div className="flex items-start gap-4">
                     {item.icon && (
-                      <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-gray-200 bg-white shrink-0">
+                      <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-border bg-card shrink-0">
                         <Image src={getIconSrc(item.icon, index)} alt={item.title} fill className="object-contain" />
                       </div>
                     )}
@@ -160,7 +160,7 @@ const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
                       )}
                       {item.note && (
                         <div className="border-l-2 border-primary/40 pl-3">
-                          <Paragraph className="text-sm italic text-gray-600">{item.note}</Paragraph>
+                          <Paragraph className="text-sm italic text-secondary-foreground">{item.note}</Paragraph>
                         </div>
                       )}
                     </div>

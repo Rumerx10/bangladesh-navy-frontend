@@ -118,7 +118,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             ? "fill-yellow-400 text-yellow-400"
             : rating >= i + 0.5
               ? "fill-yellow-400/50 text-yellow-400"
-              : "fill-gray-200 text-gray-200"
+              : "fill-light-silver text-light-silver"
         }
       />
     ));
@@ -210,7 +210,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
         <div className="lg:col-span-4">
           <div className="flex flex-col gap-3">
             {/* Main image */}
-            <div className="group relative w-full aspect-square rounded-xl overflow-hidden bg-gray-100 border border-border">
+            <div className="group relative w-full aspect-square rounded-xl overflow-hidden bg-light-dark border border-border">
               <Image
                 src={product.images[selectedImage]?.url ?? ""}
                 alt={product.images[selectedImage]?.alt ?? product.name}
@@ -226,7 +226,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                 {product.images.map((img, idx) => (
                   <button
                     key={img.id}
-                    className={`relative w-18 h-18 rounded-lg overflow-hidden cursor-pointer border-2 shrink-0 bg-gray-100 transition-all hover:opacity-80 ${idx === selectedImage ? "border-primary" : "border-transparent"}`}
+                    className={`relative w-18 h-18 rounded-lg overflow-hidden cursor-pointer border-2 shrink-0 bg-light-dark transition-all hover:opacity-80 ${idx === selectedImage ? "border-primary" : "border-transparent"}`}
                     onClick={() => setSelectedImage(idx)}
                     aria-label={`View image ${idx + 1}`}
                   >
@@ -257,7 +257,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                   {product.images.map((img, idx) => (
                     <button
                       key={img.id}
-                      className={`relative w-18 h-18 rounded-lg overflow-hidden cursor-pointer border-2 shrink-0 bg-gray-100 transition-all hover:opacity-80 ${idx === selectedImage ? "border-primary" : "border-transparent"}`}
+                      className={`relative w-18 h-18 rounded-lg overflow-hidden cursor-pointer border-2 shrink-0 bg-light-dark transition-all hover:opacity-80 ${idx === selectedImage ? "border-primary" : "border-transparent"}`}
                       onClick={() => setSelectedImage(idx)}
                       aria-label={`View image ${idx + 1}`}
                     >
@@ -583,7 +583,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                       href={`/products/${rp.slug}`}
                       className="flex gap-3 p-3 rounded-lg border border-border hover:shadow-md hover:-translate-y-0.5 transition-all no-underline"
                     >
-                      <div className="relative w-[4.5rem] h-[4.5rem] rounded-md overflow-hidden shrink-0 bg-gray-100">
+                      <div className="relative w-[4.5rem] h-[4.5rem] rounded-md overflow-hidden shrink-0 bg-light-dark">
                         <Image
                           src={rpImg?.url ?? ""}
                           alt={rp.name}
@@ -601,7 +601,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                             ৳{rp.price.toLocaleString()}
                           </span>
                           {rp.compareAtPrice && (
-                            <span className="text-[11px] text-gray-400 line-through">
+                            <span className="text-[11px] text-muted-foreground line-through">
                               ৳{rp.compareAtPrice.toLocaleString()}
                             </span>
                           )}
@@ -915,7 +915,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                         className={
                           reviewForm.rating >= i + 1
                             ? "fill-yellow-400 text-yellow-400"
-                            : "fill-gray-200 text-gray-200"
+                            : "fill-light-silver text-light-silver"
                         }
                       />
                     </button>

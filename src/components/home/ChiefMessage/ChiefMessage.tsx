@@ -55,7 +55,7 @@ const ChiefMessage = () => {
   console.log(truncatedContent);
   return (
     <>
-      <section className="relative py-20 lg:py-32 bg-white overflow-hidden">
+      <section className="relative py-20 lg:py-32 bg-card overflow-hidden">
         {/* Dynamic Watermarks for visual depth */}
         <div className="absolute -right-24 top-20 text-pBlue opacity-10">
           <NavyWatermark
@@ -99,7 +99,7 @@ const ChiefMessage = () => {
                   />
 
                   {/* Bottom Overlay Info */}
-                  {/* <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-pBlue via-pBlue/80 to-transparent p-6 text-white">
+                  {/* <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-brand-navy via-brand-navy/80 to-transparent p-6 text-white">
                     <h3 className="text-xl font-bold leading-tight">
                       {chiefMessage.name}
                     </h3>
@@ -110,23 +110,23 @@ const ChiefMessage = () => {
                 </div>
 
                 {/* Floating BN Badge or Emblem decoration */}
-                <div className="absolute -top-6 -right-6 w-20 h-20 bg-pBlue rounded-full flex items-center justify-center border-4 border-white shadow-xl z-10">
+                <div className="absolute -top-6 -right-6 w-20 h-20 bg-brand-navy rounded-full flex items-center justify-center border-4 border-white shadow-xl z-10">
                   <Ship className="text-white w-10 h-10" />
                 </div>
               </div>
 
               {/* Quick Highlights beneath photo */}
               {/* <div className="grid grid-cols-2 gap-4 mt-10">
-                <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 flex flex-col items-center text-center">
-                  <span className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">
+                <div className="p-4 bg-light rounded-xl border border-border flex flex-col items-center text-center">
+                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">
                     Award
                   </span>
                   <span className="text-xs font-bold text-pBlue">
                     NGP, Shuddachar Award
                   </span>
                 </div>
-                <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 flex flex-col items-center text-center">
-                  <span className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">
+                <div className="p-4 bg-light rounded-xl border border-border flex flex-col items-center text-center">
+                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">
                     Education
                   </span>
                   <span className="text-xs font-bold text-pBlue">
@@ -147,7 +147,7 @@ const ChiefMessage = () => {
               {/* Section Header */}
               <div className="mb-10">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-1 bg-liteBlue" />
+                  <div className="w-12 h-1 bg-brand-blue" />
                   <span className="text-sm font-bold text-liteBlue uppercase tracking-widest">
                     Official Biography
                   </span>
@@ -170,7 +170,7 @@ const ChiefMessage = () => {
                 {truncatedContent.map((para, i) => (
                   <motion.p
                     key={i}
-                    className="text-base lg:text-lg text-gray-600 leading-relaxed font-light"
+                    className="text-base lg:text-lg text-secondary-foreground leading-relaxed font-light"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -193,7 +193,7 @@ const ChiefMessage = () => {
                   <button
                     id="chief-message-read-more"
                     onClick={openModal}
-                    className="group inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-pBlue to-liteBlue text-white text-sm font-semibold uppercase tracking-wider rounded-lg shadow-lg hover:shadow-xl hover:shadow-pBlue/20 transition-all duration-300 hover:-translate-y-0.5"
+                    className="group inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-brand-navy to-brand-blue text-white text-sm font-semibold uppercase tracking-wider rounded-lg shadow-lg hover:shadow-xl hover:shadow-pBlue/20 transition-all duration-300 hover:-translate-y-0.5"
                   >
                     Read Full Biography
                     <ChevronRight
@@ -222,7 +222,7 @@ const ChiefMessage = () => {
           >
             {/* Backdrop */}
             <motion.div
-              className="absolute inset-0 bg-pBlue/60 backdrop-blur-md"
+              className="absolute inset-0 bg-brand-navy/60 backdrop-blur-md"
               onClick={closeModal}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -231,14 +231,14 @@ const ChiefMessage = () => {
 
             {/* Modal Content */}
             <motion.div
-              className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+              className="relative w-full max-w-4xl max-h-[90vh] bg-card rounded-2xl shadow-2xl overflow-hidden flex flex-col"
               initial={{ opacity: 0, scale: 0.9, y: 40 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 40 }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             >
               {/* Modal Header */}
-              <div className="relative bg-linear-to-r from-pBlue to-liteBlue px-6 sm:px-10 py-6 sm:py-8 shrink-0">
+              <div className="relative bg-linear-to-r from-brand-navy to-brand-blue px-6 sm:px-10 py-6 sm:py-8 shrink-0">
                 {/* Decorative watermark in header */}
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-10">
                   <Ship size={80} className="text-white" />
@@ -288,7 +288,7 @@ const ChiefMessage = () => {
                   {chiefMessage.content.map((para, i) => (
                     <motion.p
                       key={i}
-                      className="text-base lg:text-lg text-gray-600 leading-relaxed font-light"
+                      className="text-base lg:text-lg text-secondary-foreground leading-relaxed font-light"
                       initial={{ opacity: 0, y: 15 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
@@ -299,7 +299,7 @@ const ChiefMessage = () => {
                 </div>
 
                 {/* Modal Signature */}
-                <div className="mt-10 pt-8 border-t border-gray-100 flex items-center justify-between">
+                <div className="mt-10 pt-8 border-t border-border flex items-center justify-between">
                   <div>
                     <p className="text-lg font-bold text-pBlue">
                       {chiefMessage.name}

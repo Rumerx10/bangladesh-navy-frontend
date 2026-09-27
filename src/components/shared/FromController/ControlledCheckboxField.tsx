@@ -46,7 +46,7 @@ const ControlledCheckboxField: React.FC<ControlledInputFieldProps> = ({
                     }
                   />
                   <Label
-                    className="text-[#666666] cursor-pointer"
+                    className="text-secondary-foreground cursor-pointer"
                     htmlFor={`${name}-${value}`}
                   >
                     {label}

@@ -6,13 +6,13 @@ import { cn } from "@/src/lib/utils";
 import { OrganogramTreeItem } from "./types";
 
 const ROOT_STYLE = {
-  bg: "bg-pBlue",
+  bg: "bg-brand-navy",
   text: "text-white",
   border: "border-transparent",
 };
 
 const BRANCH_STYLE = {
-  bg: "bg-liteBlue",
+  bg: "bg-brand-blue",
   text: "text-white",
   border: "border-transparent",
 };
@@ -160,7 +160,7 @@ const OrganogramNodeCard = ({
       </div>
 
       {hasChildren && expanded && (
-        <div className="ml-6 border-l-2 border-dashed border-gray-200 pl-4 flex flex-col gap-2">
+        <div className="ml-6 border-l-2 border-dashed border-border pl-4 flex flex-col gap-2">
           {node.children.map((child) => (
             <OrganogramNodeCard
               key={child.id}

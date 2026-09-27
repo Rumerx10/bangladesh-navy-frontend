@@ -146,7 +146,7 @@ const ProductListingPage = () => {
         <h1 className="text-2xl lg:text-3xl font-bold text-pBlue">
           Products &amp; Services
         </h1>
-        <p className="mt-2 text-sm text-gray-500">
+        <p className="mt-2 text-sm text-secondary-foreground">
           Hydrographic charts, publications and maritime services by Bangladesh
           Navy
         </p>
@@ -159,15 +159,15 @@ const ProductListingPage = () => {
           value={search}
           onChange={handleSearch}
           placeholder="Search products..."
-          className="flex-1 h-10 px-4 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+          className="flex-1 h-10 px-4 rounded-lg border border-border bg-card text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
         />
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => handleCategoryChange("all")}
             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors cursor-pointer ${
               selectedCategory === "all"
-                ? "bg-pBlue text-white"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                ? "bg-brand-navy text-white"
+                : "bg-light-dark text-secondary-foreground hover:bg-light-silver"
             }`}
           >
             All
@@ -178,8 +178,8 @@ const ProductListingPage = () => {
               onClick={() => handleCategoryChange(cat.value)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors cursor-pointer ${
                 selectedCategory === cat.value
-                  ? "bg-pBlue text-white"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  ? "bg-brand-navy text-white"
+                  : "bg-light-dark text-secondary-foreground hover:bg-light-silver"
               }`}
             >
               {cat.label}
@@ -190,10 +190,12 @@ const ProductListingPage = () => {
 
       {/* Result count */}
       {!isLoading && products.length > 0 && (
-        <p className="mb-4 text-sm text-gray-500">
+        <p className="mb-4 text-sm text-secondary-foreground">
           Showing{" "}
-          <span className="font-semibold text-gray-700">{products.length}</span>{" "}
-          of <span className="font-semibold text-gray-700">{totalItems}</span>{" "}
+          <span className="font-semibold text-foreground">
+            {products.length}
+          </span>{" "}
+          of <span className="font-semibold text-foreground">{totalItems}</span>{" "}
           {totalItems === 1 ? "product" : "products"}
         </p>
       )}
@@ -204,12 +206,12 @@ const ProductListingPage = () => {
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
-              className="rounded-xl border border-gray-100 bg-white overflow-hidden animate-pulse"
+              className="rounded-xl border border-border bg-card overflow-hidden animate-pulse"
             >
-              <div className="aspect-4/3 bg-gray-200" />
+              <div className="aspect-4/3 bg-light-silver" />
               <div className="p-4 space-y-2">
-                <div className="h-4 bg-gray-200 rounded w-3/4" />
-                <div className="h-3 bg-gray-100 rounded w-1/2" />
+                <div className="h-4 bg-light-silver rounded w-3/4" />
+                <div className="h-3 bg-light-dark rounded w-1/2" />
               </div>
             </div>
           ))}
@@ -220,13 +222,13 @@ const ProductListingPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col items-center justify-center py-24 text-center"
         >
-          <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-            <LayoutGrid size={24} className="text-gray-400" />
+          <div className="w-16 h-16 rounded-full bg-light-dark flex items-center justify-center mb-4">
+            <LayoutGrid size={24} className="text-muted-foreground" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-800">
+          <h3 className="text-lg font-semibold text-foreground">
             No products found
           </h3>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-secondary-foreground mt-1">
             Try adjusting your search or filter
           </p>
         </motion.div>
@@ -247,9 +249,9 @@ const ProductListingPage = () => {
               >
                 <Link
                   href={`/products/${product.id}`}
-                  className="group flex flex-col rounded-xl border border-gray-100 shadow bg-white overflow-hidden hover:shadow-lg hover:border-liteBlue/15 transition-all duration-300"
+                  className="group flex flex-col rounded-xl border border-border shadow bg-card overflow-hidden hover:shadow-lg hover:border-liteBlue/15 transition-all duration-300"
                 >
-                  <div className="relative aspect-4/3 bg-linear-to-br from-pBlue to-liteBlue overflow-hidden">
+                  <div className="relative aspect-4/3 bg-linear-to-br from-brand-navy to-brand-blue overflow-hidden">
                     {product.images?.[0] ? (
                       <Image
                         src={product.images[0]}
@@ -273,7 +275,7 @@ const ProductListingPage = () => {
                       {product.nameEn}
                     </h3>
                     {product.chartCode && (
-                      <p className="text-xs text-gray-400 font-mono">
+                      <p className="text-xs text-muted-foreground font-mono">
                         Chart #{product.chartCode}
                       </p>
                     )}
@@ -288,7 +290,7 @@ const ProductListingPage = () => {
       {/* The API groups products by category, so without these controls the
           first page reads as if only one category exists. */}
       {!isLoading && totalPages > 1 && (
-        <div className="mt-8 rounded-xl border border-gray-100 bg-white">
+        <div className="mt-8 rounded-xl border border-border bg-card">
           <Pagination
             currentPage={page}
             totalPages={totalPages}

@@ -92,7 +92,7 @@ const OrderDetailClient = ({ params }: { params: Promise<{ id: string }> }) => {
                     key={idx}
                     className="flex items-center gap-3 px-4 sm:px-5 py-3"
                   >
-                    <div className="relative w-11 sm:w-12 min-w-11 sm:min-w-12 h-11 sm:h-12 rounded-md overflow-hidden bg-gray-100">
+                    <div className="relative w-11 sm:w-12 min-w-11 sm:min-w-12 h-11 sm:h-12 rounded-md overflow-hidden bg-light-dark">
                       <Image
                         src={item.image}
                         alt={item.name}
@@ -216,7 +216,7 @@ const OrderDetailClient = ({ params }: { params: Promise<{ id: string }> }) => {
                       })}
                     </p>
                     {order.paymentStatus === "REFUNDED" && (
-                      <div className="flex items-center gap-2 bg-white/80 rounded-lg px-3 py-2 border border-red-200 mt-1">
+                      <div className="flex items-center gap-2 bg-card/80 rounded-lg px-3 py-2 border border-red-200 mt-1">
                         <span className="text-sm">💰</span>
                         <p className="text-xs text-red-700 font-medium">
                           Refund of ৳{order.total.toLocaleString()} has been
@@ -357,7 +357,7 @@ const OrderDetailClient = ({ params }: { params: Promise<{ id: string }> }) => {
                               isDone
                                 ? "bg-primary border-primary"
                                 : isActive
-                                  ? "bg-white border-primary shadow-md"
+                                  ? "bg-card border-primary shadow-md"
                                   : "bg-muted border-border"
                             }`}
                           />

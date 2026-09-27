@@ -31,7 +31,7 @@ const SurveyShips = () => {
           {Array.from({ length: 2 }).map((_, i) => (
             <div
               key={i}
-              className="rounded-2xl border border-gray-100 bg-white h-64 animate-pulse"
+              className="rounded-2xl border border-border bg-card h-64 animate-pulse"
             />
           ))}
         </div>

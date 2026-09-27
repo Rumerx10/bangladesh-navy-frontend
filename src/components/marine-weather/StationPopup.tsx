@@ -10,9 +10,9 @@ const TABS = ["Data", "Info"] as const;
 type Tab = (typeof TABS)[number];
 
 const InfoRow = ({ label, value }: { label: string; value: string }) => (
-  <div className="flex justify-between gap-3 border-b border-gray-100 py-1.5 last:border-b-0">
-    <span className="text-gray-500">{label}</span>
-    <span className="text-right font-medium text-gray-800">{value}</span>
+  <div className="flex justify-between gap-3 border-b border-border py-1.5 last:border-b-0">
+    <span className="text-secondary-foreground">{label}</span>
+    <span className="text-right font-medium text-foreground">{value}</span>
   </div>
 );
 
@@ -30,11 +30,11 @@ const StationPopup = ({ station }: { station: IPlottedExternalStation }) => {
 
   return (
     <div className="w-75 text-[13px]">
-      <h3 className="pr-6 text-sm font-semibold text-gray-900">
+      <h3 className="pr-6 text-sm font-semibold text-foreground">
         [{station.id}] {station.name}
       </h3>
 
-      <div className="mt-2 flex gap-4 border-b border-gray-200">
+      <div className="mt-2 flex gap-4 border-b border-border">
         {TABS.map((item) => (
           <button
             key={item}
@@ -43,7 +43,7 @@ const StationPopup = ({ station }: { station: IPlottedExternalStation }) => {
             className={`-mb-px border-b-2 px-1 pb-1.5 text-xs font-medium transition-colors ${
               tab === item
                 ? "border-liteBlue text-liteBlue"
-                : "border-transparent text-gray-500 hover:text-gray-700"
+                : "border-transparent text-secondary-foreground hover:text-foreground"
             }`}
           >
             {item}
@@ -53,28 +53,30 @@ const StationPopup = ({ station }: { station: IPlottedExternalStation }) => {
 
       {tab === "Data" ? (
         <div className="mt-3">
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-secondary-foreground">
             Latest Data:{" "}
-            <span className="font-semibold text-gray-800">
+            <span className="font-semibold text-foreground">
               {latestDate || "—"}
             </span>
           </p>
 
           {isLoading ? (
-            <p className="mt-3 text-xs text-gray-400">Loading measurements…</p>
+            <p className="mt-3 text-xs text-muted-foreground">
+              Loading measurements…
+            </p>
           ) : isError ? (
-            <p className="mt-3 text-xs text-gray-400">
+            <p className="mt-3 text-xs text-muted-foreground">
               Measurements unavailable.
             </p>
           ) : measures.length === 0 ? (
-            <p className="mt-3 text-xs text-gray-400">
+            <p className="mt-3 text-xs text-muted-foreground">
               No measurements reported for this station.
             </p>
           ) : (
             <div className="mt-2 max-h-56 overflow-y-auto">
               <table className="w-full border-collapse text-left text-xs">
                 <thead className="sticky top-0">
-                  <tr className="bg-liteBlue text-white">
+                  <tr className="bg-brand-blue text-white">
                     <th className="px-2 py-1.5 font-semibold">Measure</th>
                     <th className="px-2 py-1.5 font-semibold">Value</th>
                     <th className="px-2 py-1.5 font-semibold">Date</th>
@@ -85,7 +87,7 @@ const StationPopup = ({ station }: { station: IPlottedExternalStation }) => {
                   {measures.map((measure, index) => (
                     <tr
                       key={`${measure.measure}-${index}`}
-                      className="border-b border-gray-100 last:border-b-0"
+                      className="border-b border-border last:border-b-0"
                     >
                       <td className="px-2 py-1.5">
                         <span className="mr-1.5 inline-block size-2 rounded-full bg-green-500 align-middle" />
@@ -95,7 +97,7 @@ const StationPopup = ({ station }: { station: IPlottedExternalStation }) => {
                         {measure.value}
                         {measure.unit ? ` ${measure.unit}` : ""}
                       </td>
-                      <td className="px-2 py-1.5 whitespace-nowrap text-gray-600">
+                      <td className="px-2 py-1.5 whitespace-nowrap text-secondary-foreground">
                         {measure.date || "—"}
                       </td>
                       <td className="px-2 py-1.5">

@@ -13,11 +13,11 @@ const NewsCard = ({ item, hideImage = false }: NewsCardProps) => {
   return (
     <Link
       href={`/about/news/${item.id}`}
-      className="group flex flex-col h-full rounded-2xl bg-white border border-gray-100 overflow-hidden hover:shadow-xl hover:border-liteBlue/15 transition-all duration-300"
+      className="group flex flex-col h-full rounded-2xl bg-card border border-border overflow-hidden hover:shadow-xl hover:border-liteBlue/15 transition-all duration-300"
     >
       {/* Image */}
       {!hideImage && (
-        <div className="relative aspect-video overflow-hidden bg-linear-to-br from-pBlue to-liteBlue">
+        <div className="relative aspect-video overflow-hidden bg-linear-to-br from-brand-navy to-brand-blue">
           <Image
             src={item.imageUrl}
             alt={item.titleEn}
@@ -27,7 +27,7 @@ const NewsCard = ({ item, hideImage = false }: NewsCardProps) => {
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
           {/* Category badge */}
-          <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-liteBlue/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
+          <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-brand-blue/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
             <Tag size={10} />
             {item.newsCategory?.nameEn || "News"}
           </span>
@@ -52,7 +52,7 @@ const NewsCard = ({ item, hideImage = false }: NewsCardProps) => {
           {item.titleEn}
         </h3>
 
-        <p className="line-clamp-2 text-sm! text-gray-500 leading-relaxed mb-4 flex-1">
+        <p className="line-clamp-2 text-sm! text-secondary-foreground leading-relaxed mb-4 flex-1">
           {htmlToPlainText(item.contentEn)}
         </p>
 

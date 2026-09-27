@@ -34,8 +34,8 @@ const ProfileForm = ({
       {/* Personal Information Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
         {/* First Name & Last Name */}
-        <div className="bg-white rounded-xl border border-light-silver p-6 shadow-sm">
-          <h3 className="text-base font-semibold text-gray-900 mb-5">
+        <div className="bg-card rounded-xl border border-light-silver p-6 shadow-sm">
+          <h3 className="text-base font-semibold text-foreground mb-5">
             Personal Information
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -61,17 +61,17 @@ const ProfileForm = ({
             <div className="relative">
               <Mail
                 size={16}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
               />
               <input
                 type="email"
                 value={userEmail || ""}
                 disabled
-                className="w-full h-11 pl-10 pr-4 rounded-lg border border-gray-200 bg-gray-100 text-sm text-gray-600 focus:outline-none disabled:cursor-not-allowed"
+                className="w-full h-11 pl-10 pr-4 rounded-lg border border-border bg-light-dark text-sm text-secondary-foreground focus:outline-none disabled:cursor-not-allowed"
                 placeholder="Email address"
               />
             </div>
-            <p className="text-xs text-gray-500 mt-1 pl-2">
+            <p className="text-xs text-secondary-foreground mt-1 pl-2">
               Email cannot be changed
             </p>
           </div>

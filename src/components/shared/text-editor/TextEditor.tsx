@@ -177,9 +177,9 @@ const TextEditor = ({
             currentFontSize={currentFontSize}
             setFontSize={setFontSize}
           />
-          <span className="h-10 w-px bg-[#EAECF0]"></span>
+          <span className="h-10 w-px bg-light-dark"></span>
           <ColorPickerDropdown editor={editor} />
-          <span className="h-10 w-px bg-[#EAECF0]"></span>
+          <span className="h-10 w-px bg-light-dark"></span>
           <div className="py-2.5">
             <ToolbarButton
               onClick={() => editor.chain().focus().toggleBold().run()}
@@ -214,7 +214,7 @@ const TextEditor = ({
             </ToolbarButton>
           </div>
 
-          <span className="h-10 w-px bg-[#EAECF0]"></span>
+          <span className="h-10 w-px bg-light-dark"></span>
 
           <div>
             <ToolbarButton
@@ -271,7 +271,7 @@ const TextEditor = ({
               />
             </ToolbarButton>
           </div>
-          <span className="h-10 w-px bg-[#EAECF0]"></span>
+          <span className="h-10 w-px bg-light-dark"></span>
 
           <div>
             <ToolbarButton
@@ -295,7 +295,7 @@ const TextEditor = ({
             </ToolbarButton>
           </div>
 
-          <span className="h-10 w-px bg-[#EAECF0]"></span>
+          <span className="h-10 w-px bg-light-dark"></span>
 
           <div className="py-2.5">
             <input
@@ -312,9 +312,9 @@ const TextEditor = ({
               title="Insert image — select it afterwards to set wrapping, alignment and size"
             >
               {isLoading ? (
-                <Loader2 className="w-5 h-5 animate-spin text-slate-500" />
+                <Loader2 className="w-5 h-5 animate-spin text-secondary-foreground" />
               ) : (
-                <ImagePlus className="w-5 h-5 text-slate-600" />
+                <ImagePlus className="w-5 h-5 text-secondary-foreground" />
               )}
             </ToolbarButton>
           </div>

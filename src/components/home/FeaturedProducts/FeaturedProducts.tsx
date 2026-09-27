@@ -108,7 +108,7 @@ const FeaturedProducts = () => {
         {canScrollLeft && (
           <button
             onClick={() => scroll("left")}
-            className="absolute top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-11 h-11 rounded-full bg-white shadow-xl border border-gray-200 text-foreground hover:bg-gray-50 transition-all cursor-pointer"
+            className="absolute top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-11 h-11 rounded-full bg-card shadow-xl border border-border text-foreground hover:bg-light transition-all cursor-pointer"
             style={{ left: `${Math.max(leftPad - 20, 8)}px` }}
             aria-label="Scroll left"
           >
@@ -120,7 +120,7 @@ const FeaturedProducts = () => {
         {canScrollRight && (
           <button
             onClick={() => scroll("right")}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-11 h-11 rounded-full bg-white shadow-xl border border-gray-200 text-foreground hover:bg-gray-50 transition-all cursor-pointer"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-11 h-11 rounded-full bg-card shadow-xl border border-border text-foreground hover:bg-light transition-all cursor-pointer"
             aria-label="Scroll right"
           >
             <ChevronRight size={22} />

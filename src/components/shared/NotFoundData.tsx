@@ -2,7 +2,7 @@ import NotFound from "@/public/no-data-found.png";
 import Image from "next/image";
 const NotFoundData = () => {
   return (
-    <div className="col-span-full text-center text-secondary-foreground border h-60 flex flex-col items-center justify-center rounded-lg gap-2 bg-gray-50">
+    <div className="col-span-full text-center text-secondary-foreground border h-60 flex flex-col items-center justify-center rounded-lg gap-2 bg-light">
       <Image
         src={NotFound}
         alt="not found data"

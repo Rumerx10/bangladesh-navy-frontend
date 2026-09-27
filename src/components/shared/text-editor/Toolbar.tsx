@@ -16,7 +16,7 @@ const ToolbarButton: React.FC<ToolbarButtonProps> = ({
       disabled={disabled}
       className={cn(
         "p-2 rounded-md transition-colors cursor-pointer",
-        isActive && "bg-white border border-light-silver"
+        isActive && "bg-card border border-light-silver"
       )}
     >
       {children}

@@ -75,7 +75,7 @@ const OrganogramManagement = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-light-silver rounded-lg p-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-card border border-light-silver rounded-lg p-5">
         <div className="flex items-center gap-3">
           <div className="bg-primary/10 w-10 h-10 flex items-center justify-center rounded-md border border-primary/20">
             <Network className="w-5 h-5 text-primary" />
@@ -96,7 +96,7 @@ const OrganogramManagement = () => {
         </Button>
       </div>
 
-      <div className="bg-white border border-light-silver rounded-lg p-6">
+      <div className="bg-card border border-light-silver rounded-lg p-6">
         {isLoading ? (
           <div className="flex flex-col gap-3">
             {Array.from({ length: 4 }).map((_, i) => (
@@ -105,7 +105,7 @@ const OrganogramManagement = () => {
           </div>
         ) : tree.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
-            <Network className="h-10 w-10 text-gray-300" />
+            <Network className="h-10 w-10 text-light-silver" />
             <p className="text-sm text-secondary-gary">
               No organogram nodes yet. Start by adding a root node.
             </p>
@@ -120,13 +120,13 @@ const OrganogramManagement = () => {
         )}
       </div>
 
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-gray-400 tracking-wide uppercase">
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-muted-foreground tracking-wide uppercase">
         <span className="flex items-center gap-1.5">
-          <span className="inline-block w-3 h-3 rounded-sm bg-pBlue" />
+          <span className="inline-block w-3 h-3 rounded-sm bg-brand-navy" />
           Root
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="inline-block w-3 h-3 rounded-sm bg-liteBlue" />
+          <span className="inline-block w-3 h-3 rounded-sm bg-brand-blue" />
           Branch
         </span>
         <span className="flex items-center gap-1.5">

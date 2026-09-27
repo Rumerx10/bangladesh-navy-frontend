@@ -270,7 +270,7 @@ const MaritimeSearch = () => {
   };
 
   return (
-    <section className="relative py-16 lg:py-25 bg-white overflow-hidden">
+    <section className="relative py-16 lg:py-25 bg-card overflow-hidden">
       {/* Watermark */}
       <div className="absolute -right-20 -top-10 text-pBlue">
         <NavyWatermark
@@ -327,7 +327,7 @@ const MaritimeSearch = () => {
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setTimeout(() => setIsFocused(false), 200)}
                 onKeyDown={handleKeyDown}
-                className="w-full px-4 h-11 rounded-lg border border-gray-200 text-sm bg-gray-50 focus:outline-none focus:border-liteBlue focus:ring-2 focus:ring-liteBlue/10 transition-all"
+                className="w-full px-4 h-11 rounded-lg border border-border text-sm bg-light focus:outline-none focus:border-liteBlue focus:ring-2 focus:ring-liteBlue/10 transition-all"
               />
               {query && (
                 <button
@@ -335,7 +335,7 @@ const MaritimeSearch = () => {
                     setQuery("");
                     inputRef.current?.focus();
                   }}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-secondary-foreground cursor-pointer"
                 >
                   <X size={16} />
                 </button>
@@ -343,7 +343,7 @@ const MaritimeSearch = () => {
             </div>
             <button
               onClick={handleSearch}
-              className="inline-flex items-center justify-center gap-2 px-6 h-11 py-4 rounded-lg bg-liteBlue text-white font-medium text-base hover:bg-[#004d8a] transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-6 h-11 py-4 rounded-lg bg-brand-blue text-white font-medium text-base hover:bg-brand-blue transition-colors cursor-pointer"
             >
               <Search size={18} />
               <span className="hidden sm:inline">Search</span>
@@ -352,7 +352,7 @@ const MaritimeSearch = () => {
 
           {/* Search dropdown */}
           {showDropdown && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl border border-gray-200 shadow-2xl z-50 overflow-hidden text-left max-h-104 overflow-y-auto">
+            <div className="absolute top-full left-0 right-0 mt-2 bg-card rounded-xl border border-border shadow-2xl z-50 overflow-hidden text-left max-h-104 overflow-y-auto">
               {totalResults > 0 ? (
                 <>
                   {groups.map((group) => {
@@ -361,7 +361,7 @@ const MaritimeSearch = () => {
                     return (
                       <div key={group.category}>
                         {activeTab === "all" && (
-                          <p className="px-4 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
+                          <p className="px-4 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                             {meta.label}
                           </p>
                         )}
@@ -372,18 +372,18 @@ const MaritimeSearch = () => {
                               href={item.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center gap-3.5 px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0"
+                              className="flex items-center gap-3.5 px-4 py-3 hover:bg-light transition-colors border-b border-border last:border-b-0"
                               onClick={closeDropdown}
                             >
-                              <div className="w-10 h-10 rounded-lg bg-linear-to-br from-pBlue to-liteBlue flex items-center justify-center shrink-0">
+                              <div className="w-10 h-10 rounded-lg bg-linear-to-br from-brand-navy to-brand-blue flex items-center justify-center shrink-0">
                                 <Icon size={18} className="text-white/80" />
                               </div>
                               <div className="flex-1 min-w-0">
-                                <p className="text-sm font-semibold text-gray-800 truncate">
+                                <p className="text-sm font-semibold text-foreground truncate">
                                   {item.title}
                                 </p>
                                 {item.subtitle && (
-                                  <p className="text-xs text-gray-400 truncate">
+                                  <p className="text-xs text-muted-foreground truncate">
                                     {item.subtitle}
                                   </p>
                                 )}
@@ -393,18 +393,18 @@ const MaritimeSearch = () => {
                             <Link
                               key={item.key}
                               href={item.href}
-                              className="flex items-center gap-3.5 px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-b-0"
+                              className="flex items-center gap-3.5 px-4 py-3 hover:bg-light transition-colors border-b border-border last:border-b-0"
                               onClick={closeDropdown}
                             >
-                              <div className="w-10 h-10 rounded-lg bg-linear-to-br from-pBlue to-liteBlue flex items-center justify-center shrink-0">
+                              <div className="w-10 h-10 rounded-lg bg-linear-to-br from-brand-navy to-brand-blue flex items-center justify-center shrink-0">
                                 <Icon size={18} className="text-white/80" />
                               </div>
                               <div className="flex-1 min-w-0">
-                                <p className="text-sm font-semibold text-gray-800 truncate">
+                                <p className="text-sm font-semibold text-foreground truncate">
                                   {item.title}
                                 </p>
                                 {item.subtitle && (
-                                  <p className="text-xs text-gray-400 truncate">
+                                  <p className="text-xs text-muted-foreground truncate">
                                     {item.subtitle}
                                   </p>
                                 )}
@@ -416,26 +416,26 @@ const MaritimeSearch = () => {
                     );
                   })}
                   {isLoading && (
-                    <p className="flex items-center gap-2 px-4 py-2 text-xs text-gray-400">
+                    <p className="flex items-center gap-2 px-4 py-2 text-xs text-muted-foreground">
                       <Loader2 size={12} className="animate-spin" />
                       Searching…
                     </p>
                   )}
                   <button
                     onClick={handleSearch}
-                    className="w-full px-4 py-3 text-sm font-medium text-liteBlue bg-gray-50 hover:bg-gray-100 transition-colors text-center cursor-pointer"
+                    className="w-full px-4 py-3 text-sm font-medium text-liteBlue bg-light hover:bg-light-dark transition-colors text-center cursor-pointer"
                   >
                     View all results for &quot;{query}&quot;
                   </button>
                 </>
               ) : isLoading ? (
-                <p className="flex items-center justify-center gap-2 px-4 py-6 text-sm text-gray-500">
+                <p className="flex items-center justify-center gap-2 px-4 py-6 text-sm text-secondary-foreground">
                   <Loader2 size={14} className="animate-spin" />
                   Searching…
                 </p>
               ) : (
                 <div className="px-4 py-6 text-center">
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-secondary-foreground">
                     No results found for &quot;{query}&quot;
                   </p>
                   <button

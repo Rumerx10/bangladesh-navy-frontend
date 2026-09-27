@@ -70,10 +70,10 @@ const ControlledSelectField: React.FC<ControlledSelectFieldProps> = ({
                 <SelectTrigger
                   disabled={disabled}
                   className={cn(
-                    `flex h-10.5 w-full rounded-md border border-input bg-white px-3 py-1 text-base shadow-none transition-colors file:border-0 focus:outline-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 md:text-sm ${
+                    `flex h-10.5 w-full rounded-md border border-input bg-card px-3 py-1 text-base shadow-none transition-colors file:border-0 focus:outline-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 md:text-sm ${
                       error
                         ? "border border-rose-500"
-                        : "focus:ring-grayDark focus:border-[#D9E3E7]"
+                        : "focus:ring-grayDark focus:border-border"
                     }`,
                     className
                   )}

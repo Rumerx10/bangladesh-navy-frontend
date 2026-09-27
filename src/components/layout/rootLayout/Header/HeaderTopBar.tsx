@@ -28,11 +28,11 @@ const othersItems = NavigationItems.filter((item) =>
 const triggerBase =
   "inline-flex items-center gap-1 px-2.5 py-2 text-sm font-medium rounded-md transition-colors cursor-pointer whitespace-nowrap";
 const triggerActive = "text-liteBlue bg-liteBlue/5";
-const triggerIdle = "text-gray-700 hover:text-liteBlue hover:bg-gray-50";
+const triggerIdle = "text-foreground hover:text-liteBlue hover:bg-light";
 
 const subLinkBase = "block rounded-md px-3 py-2.5 text-sm transition-colors";
 const subLinkActive = "text-liteBlue bg-liteBlue/5 font-medium";
-const subLinkIdle = "text-gray-700 hover:bg-gray-50 hover:text-liteBlue";
+const subLinkIdle = "text-foreground hover:bg-light hover:text-liteBlue";
 
 const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
   const pathname = usePathname();
@@ -104,11 +104,11 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
               {sub.label}
               <ChevronRight
                 size={14}
-                className={`ml-2 text-gray-400 shrink-0 transition-transform duration-200 ${isSubOpen ? "rotate-90" : ""}`}
+                className={`ml-2 text-muted-foreground shrink-0 transition-transform duration-200 ${isSubOpen ? "rotate-90" : ""}`}
               />
             </button>
             <div
-              className={`absolute left-full top-0 z-50 ml-1 min-w-48 rounded-xl border border-gray-200 bg-white p-2 shadow-xl ${isSubOpen ? "block" : "hidden"}`}
+              className={`absolute left-full top-0 z-50 ml-1 min-w-48 rounded-xl border border-border bg-card p-2 shadow-xl ${isSubOpen ? "block" : "hidden"}`}
             >
               <div className="flex flex-col gap-0.5">
                 {sub.subLinks.map((nested) => (
@@ -195,7 +195,7 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
         )}
 
         <div
-          className={`absolute left-1/2 top-full z-50 -translate-x-1/2 rounded-xl border border-gray-200 bg-white shadow-xl ${isOpen ? "block" : "hidden"}`}
+          className={`absolute left-1/2 top-full z-50 -translate-x-1/2 rounded-xl border border-border bg-card shadow-xl ${isOpen ? "block" : "hidden"}`}
         >
           <div className="flex flex-col gap-0.5 p-2 min-w-52 whitespace-nowrap">
             {renderSubLinks(item.subLinks)}
@@ -206,7 +206,7 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
   }
 
   return (
-    <div className="bg-white border-b border-gray-100 lg:px-4">
+    <div className="bg-card border-b border-border lg:px-4">
       {/* Desktop Navigation */}
       <div className="hidden lg:flex container items-center justify-between gap-4 h-24 px-4 sm:px-0">
         <Logo />
@@ -232,7 +232,7 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
               </button>
 
               <div
-                className={`absolute left-1/2 top-full z-50 -translate-x-1/2 rounded-xl border border-gray-200 bg-white shadow-xl ${openMenu === "More" ? "block" : "hidden"}`}
+                className={`absolute left-1/2 top-full z-50 -translate-x-1/2 rounded-xl border border-border bg-card shadow-xl ${openMenu === "More" ? "block" : "hidden"}`}
               >
                 <div className="flex flex-col p-3 gap-1">
                   {othersItems.map((section, i) => (
@@ -240,7 +240,7 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
                       key={section.label}
                       className={`min-w-44 px-2 ${
                         i < othersItems.length - 1
-                          ? "border-b border-gray-100 pb-2"
+                          ? "border-b border-border pb-2"
                           : ""
                       }`}
                     >
@@ -253,7 +253,7 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
                           {section.label}
                         </Link>
                       ) : (
-                        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-1">
+                        <p className="text-xs font-semibold text-secondary-foreground uppercase tracking-wider mb-2 px-1">
                           {section.label}
                         </p>
                       )}
@@ -277,11 +277,11 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
                                   {sub.label}
                                   <ChevronRight
                                     size={13}
-                                    className={`ml-1 text-gray-400 shrink-0 transition-transform duration-200 ${isSubOpen ? "rotate-90" : ""}`}
+                                    className={`ml-1 text-muted-foreground shrink-0 transition-transform duration-200 ${isSubOpen ? "rotate-90" : ""}`}
                                   />
                                 </button>
                                 <div
-                                  className={`absolute left-full top-0 z-50 ml-1 min-w-44 rounded-xl border border-gray-200 bg-white p-2 shadow-xl ${isSubOpen ? "block" : "hidden"}`}
+                                  className={`absolute left-full top-0 z-50 ml-1 min-w-44 rounded-xl border border-border bg-card p-2 shadow-xl ${isSubOpen ? "block" : "hidden"}`}
                                 >
                                   <div className="flex flex-col gap-0.5">
                                     {sub.subLinks.map((nested) => (

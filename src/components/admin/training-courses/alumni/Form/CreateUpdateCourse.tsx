@@ -162,7 +162,7 @@ const CreateUpdateCourse = ({
         if (!open) handleClose();
       }}
     >
-      <DialogContent className="flex max-h-[90vh] min-w-[70vw] flex-col bg-white">
+      <DialogContent className="flex max-h-[90vh] min-w-[70vw] flex-col bg-card">
         <DialogHeader className="shrink-0">
           <DialogTitle className="text-xl font-semibold text-secondary">
             {isUpdate ? "Update" : "Create"} Course

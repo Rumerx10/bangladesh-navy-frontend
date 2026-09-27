@@ -28,12 +28,12 @@ const SurveyShipDetail = ({ ship }: SurveyShipDetailProps) => {
               priority
             />
           ) : (
-            <div className="w-full h-full bg-linear-to-br from-pBlue to-liteBlue flex items-center justify-center">
+            <div className="w-full h-full bg-linear-to-br from-brand-navy to-brand-blue flex items-center justify-center">
               <Anchor size={80} className="text-white/10" />
             </div>
           )}
           {/* Overlay gradient */}
-          <div className="absolute inset-0 bg-linear-to-t from-pBlue/80 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-brand-navy/80 via-transparent to-transparent" />
           {/* Ship name overlay */}
           <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
             <div className="flex items-end justify-between gap-4">
@@ -51,7 +51,7 @@ const SurveyShipDetail = ({ ship }: SurveyShipDetailProps) => {
                     ? "bg-green-500/20 text-green-300 border border-green-400/30"
                     : ship.status === "under-maintenance"
                       ? "bg-amber-500/20 text-amber-300 border border-amber-400/30"
-                      : "bg-gray-500/20 text-gray-300 border border-gray-400/30"
+                      : "bg-gray-500/20 text-gray-300 border border-input/30"
                 }`}
               >
                 {ship.status === "active"
@@ -66,13 +66,13 @@ const SurveyShipDetail = ({ ship }: SurveyShipDetailProps) => {
 
         {/* ── Quick Summary ── */}
         <motion.div
-          className="rounded-xl bg-[#f7f9fc] border border-[#e8edf3] p-5 mb-8 flex items-start gap-3"
+          className="rounded-xl bg-light border border-border p-5 mb-8 flex items-start gap-3"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
         >
           <Info size={18} className="text-liteBlue mt-0.5 shrink-0" />
-          <p className="text-sm text-gray-600 leading-relaxed">
+          <p className="text-sm text-secondary-foreground leading-relaxed">
             {ship.description}
           </p>
         </motion.div>
@@ -91,9 +91,9 @@ const SurveyShipDetail = ({ ship }: SurveyShipDetailProps) => {
             {Object.entries(ship.specifications).map(([key, value]) => (
               <div
                 key={key}
-                className="rounded-xl border border-gray-100 bg-white p-4 text-center hover:shadow-md hover:border-liteBlue/15 transition-all duration-300 flex flex-col items-center justify-center"
+                className="rounded-xl border border-border bg-card p-4 text-center hover:shadow-md hover:border-liteBlue/15 transition-all duration-300 flex flex-col items-center justify-center"
               >
-                <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold mb-1.5">
+                <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold mb-1.5">
                   {key}
                 </p>
                 <p className="text-sm lg:text-base text-pBlue font-bold">
@@ -115,7 +115,10 @@ const SurveyShipDetail = ({ ship }: SurveyShipDetailProps) => {
           </h2>
           <div className="space-y-4">
             {ship.details.map((paragraph, i) => (
-              <p key={i} className="text-sm text-gray-600 leading-[1.8]">
+              <p
+                key={i}
+                className="text-sm text-secondary-foreground leading-[1.8]"
+              >
                 {paragraph}
               </p>
             ))}

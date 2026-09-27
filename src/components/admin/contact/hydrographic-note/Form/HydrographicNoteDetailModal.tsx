@@ -16,8 +16,8 @@ interface HydrographicNoteDetailModalProps {
 
 const DetailRow = ({ label, value }: { label: string; value?: string }) => {
   return (
-    <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
-      <p className="text-xs text-gray-500 uppercase tracking-wider mb-0.5">
+    <div className="bg-light rounded-lg p-3 border border-border">
+      <p className="text-xs text-secondary-foreground uppercase tracking-wider mb-0.5">
         {label}
       </p>
       <p className="text-sm font-medium text-secondary-dark">{value || "—"}</p>
@@ -47,7 +47,7 @@ const HydrographicNoteDetailModal = ({
         if (!open) onClose();
       }}
     >
-      <DialogContent className="bg-white min-w-[60vw] max-h-[90vh] flex flex-col">
+      <DialogContent className="bg-card min-w-[60vw] max-h-[90vh] flex flex-col">
         <DialogHeader className="shrink-0">
           <DialogTitle className="text-secondary text-xl font-semibold">
             Hydrographic Note Details
@@ -125,8 +125,8 @@ const HydrographicNoteDetailModal = ({
               />
 
               <SectionLabel title="Observation Details" />
-              <div className="col-span-2 bg-gray-50 rounded-lg p-3 border border-gray-100">
-                <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
+              <div className="col-span-2 bg-light rounded-lg p-3 border border-border">
+                <p className="text-xs text-secondary-foreground uppercase tracking-wider mb-1">
                   Details of Observation
                 </p>
                 <p className="text-sm text-secondary-dark whitespace-pre-wrap">

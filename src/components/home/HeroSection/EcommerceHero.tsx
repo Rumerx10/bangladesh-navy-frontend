@@ -7,7 +7,7 @@ import TrustBar from "./TrustBar";
 
 const EcommerceHero = () => {
   return (
-    <section className="bg-gray-50 py-4 lg:py-5">
+    <section className="bg-light py-4 lg:py-5">
       <div className="container">
         {/* Main hero area: sidebar + banner */}
         <div className="flex gap-4 lg:gap-5 items-stretch">

@@ -4,18 +4,36 @@
 /* Dark mode variant */
 @custom-variant dark (&:is(.dark *));
 
+/* Brand navy as a *fill* — the header band, the footer, a hero scrim, a solid
+   primary button. These stay fixed in both themes on purpose: a navy surface
+   is already dark, so flipping it would make the site less recognisable
+   without making anything more readable. Use these anywhere the navy is the
+   background. The ink counterparts below (`pBlue`/`liteBlue`) do flip. */
 @theme {
-  --color-pBlue: #001836;
-  --color-liteBlue: #003f71;
+  --color-brand-navy: #001836;
+  --color-brand-blue: #003f71;
 }
 
 @theme inline {
+  /* Brand navy as *ink* — headings set in near-black navy, links in the
+     lighter blue. Ink has to invert with the theme or a heading painted
+     #001836 simply vanishes against a dark ground, so unlike the fills above
+     these resolve through a variable that `.dark` overrides. */
+  --color-pBlue: var(--brand-ink);
+  --color-liteBlue: var(--brand-ink-accent);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
+  /* Surface ramp. In light mode these step *down* from a white background
+     into progressively greyer sections; in dark mode the ramp reverses and
+     steps *up* out of a near-black background. Same semantic ("a surface
+     slightly separated from the page"), opposite direction — which is why
+     `.dark` must redeclare them rather than inherit. */
   --color-light: var(--light);
   --color-light-dark: var(--light-dark);
   --color-light-silver: var(--light-silver);
+  --color-light-blue: var(--light-blue);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
 
@@ -58,9 +76,15 @@
   font-family: var(--font-poppins);
   --radius: 0.625rem;
 
+  color-scheme: light;
+
+  --brand-ink: #001836;
+  --brand-ink-accent: #003f71;
+
   --light: #f7f7f7;
   --light-dark: #eeeeee;
   --light-silver: #e0e0e0;
+  --light-blue: #eff3f4;
 
   --background: #ffffff;
   --foreground: oklch(0.18 0 0);
@@ -74,7 +98,7 @@
   --secondary-gray: #545454;
   --secondary-foreground: #5c5c5c;
 
-  --light-blue: "#EFF3F4", --accent: oklch(0.96 0.04 205);
+  --accent: oklch(0.96 0.04 205);
   --accent-foreground: #05185a;
 
   --muted: oklch(0.96 0 0);
@@ -91,43 +115,80 @@
   --popover-foreground: oklch(0.18 0 0);
 
   --destructive: oklch(0.577 0.245 27.325);
+
+  /* Long-form body ink. Deliberately softer than `--foreground`: full-strength
+     black over several hundred words of justified text is fatiguing, and the
+     faint blue cast ties the copy to the navy brand. Consumed by `.rich-text`
+     below rather than exposed as a utility — it has exactly one job. */
+  --prose-ink: #3a4858;
 }
 
 /* =========================
    DARK THEME
 ========================= */
+/* Every value here is an override of its `:root` counterpart — a token absent
+   from this block keeps its light value, which is the bug that made the old
+   version of this file unusable: `--light*` were redeclared with their light
+   greys, so every section painted `bg-light` stayed white in dark mode.
+   Anything added to `:root` needs a considered answer here too.
+
+   The hue (~250) is carried through the greys on purpose: a perfectly neutral
+   grey next to the navy brand reads as dirty, a faint blue cast reads as
+   deliberate. */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
+  color-scheme: dark;
 
-  --light: #f7f7f7;
-  --light-dark: #eeeeee;
-  --light-silver: #e0e0e0;
+  /* Ink, inverted: near-white navy for headings, a brighter blue for links
+     that still reads as "the brand blue" at low lightness. */
+  --brand-ink: oklch(0.93 0.025 250);
+  --brand-ink-accent: oklch(0.76 0.1 245);
 
-  --primary: #003f71;
-  --primary-light: #001836;
-  --primary-foreground: oklch(0.18 0 0);
+  --background: oklch(0.16 0.012 250);
+  --foreground: oklch(0.96 0.004 250);
 
-  --secondary: #1b3478;
-  --secondary-dark: #0f0e40;
-  --secondary-foreground: #5c5c5c;
-  --secondary-gray: #545454;
+  /* The ramp reverses: each step is *lighter* than the page, not darker. */
+  --light: oklch(0.21 0.013 250);
+  --light-dark: oklch(0.25 0.013 250);
+  --light-silver: oklch(0.3 0.014 250);
+  --light-blue: oklch(0.24 0.02 240);
 
-  --light-blue: "#EFF3F4", --accent: oklch(0.25 0.05 205);
-  --accent-foreground: oklch(0.985 0 0);
+  /* `primary` carries both roles — 196 fills and ~130 inks — so it has to
+     land where white-on-primary and primary-on-background are both legible.
+     Lightening it and flipping its foreground to near-black is what makes
+     that possible; a navy primary would be invisible as ink on this ground. */
+  --primary: oklch(0.7 0.12 250);
+  --primary-light: oklch(0.9 0.03 250);
+  --primary-foreground: oklch(0.17 0.01 250);
 
-  --muted: oklch(0.25 0 0);
-  --muted-foreground: oklch(0.7 0 0);
+  --secondary: oklch(0.68 0.11 262);
+  --secondary-dark: oklch(0.86 0.04 270);
+  --secondary-gray: oklch(0.72 0 0);
+  --secondary-foreground: oklch(0.76 0.01 260);
 
-  --border: rgba(255, 255, 255, 0.12);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.7 0.14 205);
+  --accent: oklch(0.28 0.04 240);
+  --accent-foreground: oklch(0.95 0.01 250);
 
-  --card: oklch(0.2 0 0);
-  --card-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.26 0.012 250);
+  --muted-foreground: oklch(0.72 0.01 250);
 
-  --popover: oklch(0.2 0 0);
-  --popover-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 14%);
+  --input: oklch(1 0 0 / 18%);
+  --ring: oklch(0.65 0.12 245);
+
+  --card: oklch(0.21 0.013 250);
+  --card-foreground: oklch(0.96 0.004 250);
+
+  --popover: oklch(0.23 0.013 250);
+  --popover-foreground: oklch(0.96 0.004 250);
+
+  /* Pure-saturation red burns on a dark ground; pull lightness up and chroma
+     back so a destructive button reads as urgent rather than as glare. */
+  --destructive: oklch(0.68 0.19 25);
+
+  /* Held just under `--foreground` for the same reason it sits just above
+     black in light mode — maximum contrast is the wrong target for body copy
+     at length, in either direction. */
+  --prose-ink: oklch(0.87 0.012 250);
 }
 
 /* =========================
@@ -151,10 +212,10 @@
     @apply w-1;
   }
   .scrollbar-modern::-webkit-scrollbar-track {
-    @apply bg-white rounded-full;
+    @apply bg-background rounded-full;
   }
   .scrollbar-modern::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-gray-300 transition-colors duration-200;
+    @apply bg-light-silver rounded-full transition-colors duration-200;
   }
 }
 
@@ -303,7 +364,7 @@ input[type="time"]::-moz-inner-spin-button {
   height: 18px;
   border-radius: 50%;
   background: var(--primary);
-  border: 3px solid white;
+  border: 3px solid var(--background);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   pointer-events: all;
@@ -316,7 +377,7 @@ input[type="time"]::-moz-inner-spin-button {
   height: 18px;
   border-radius: 50%;
   background: var(--primary);
-  border: 3px solid white;
+  border: 3px solid var(--background);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   pointer-events: all;
@@ -428,6 +489,7 @@ input[type="time"]::-moz-inner-spin-button {
 ================================= */
 .rich-text {
   overflow-wrap: break-word;
+  color: var(--prose-ink);
 }
 
 /* A floated image is out of flow, so without this the container collapses to

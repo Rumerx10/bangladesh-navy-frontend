@@ -54,7 +54,7 @@ const ParagraphListField = ({
             items.map((item, index) => (
               <div key={index} className="flex items-start gap-2">
                 <div className="flex-1">
-                  <Paragraph className="text-xs! text-gray-400 mb-1">
+                  <Paragraph className="text-xs! text-muted-foreground mb-1">
                     {itemLabel} {index + 1}
                   </Paragraph>
                   <Textarea
@@ -82,8 +82,8 @@ const ParagraphListField = ({
               </div>
             ))
           ) : (
-            <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 py-8 text-center">
-              <Paragraph className="text-sm! text-gray-500">
+            <div className="rounded-lg border border-dashed border-input bg-light py-8 text-center">
+              <Paragraph className="text-sm! text-secondary-foreground">
                 {emptyMessage}
               </Paragraph>
             </div>

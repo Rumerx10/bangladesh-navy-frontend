@@ -16,12 +16,12 @@ export const GetCategoryColumns = (
       cell: (value) => {
         const icon = value as string | undefined;
         return icon ? (
-          <div className="w-9 h-9 border border-[#E6E6E6] flex items-center justify-center rounded-lg bg-light">
+          <div className="w-9 h-9 border border-border flex items-center justify-center rounded-lg bg-light">
             <Image src={icon} alt="icon" width={24} height={24} />
           </div>
         ) : (
-          <div className="w-9 h-9 border border-[#E6E6E6] flex items-center justify-center rounded-lg bg-light">
-            <UserRound className="h-4 w-4 text-gray-400" />
+          <div className="w-9 h-9 border border-border flex items-center justify-center rounded-lg bg-light">
+            <UserRound className="h-4 w-4 text-muted-foreground" />
           </div>
         );
       },
@@ -80,7 +80,7 @@ export const GetCategoryColumns = (
         return (
           <div className="flex items-center gap-2 w-full">
             <Button
-              className="w-9! min-h-9 border border-[#E6E6E6] flex items-center justify-center rounded-lg bg-light hover:bg-light"
+              className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
               size="sm"
               onClick={() => onEdit?.(row)}
             >

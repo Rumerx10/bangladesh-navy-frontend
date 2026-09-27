@@ -67,7 +67,7 @@ const KeyMilestonesField = ({ name, disabled }: KeyMilestonesFieldProps) => {
               {milestones.map((milestone, index) => (
                 <div
                   key={index}
-                  className="flex flex-col sm:flex-row items-start gap-3 p-4 border border-gray-200 rounded-lg bg-gray-50"
+                  className="flex flex-col sm:flex-row items-start gap-3 p-4 border border-border rounded-lg bg-light"
                 >
                   <div className="w-full sm:w-28 shrink-0">
                     <Input
@@ -102,7 +102,7 @@ const KeyMilestonesField = ({ name, disabled }: KeyMilestonesFieldProps) => {
                         "text-xs mt-1 text-right",
                         getWordCount(milestone.description) > 100
                           ? "text-rose-500"
-                          : "text-gray-400"
+                          : "text-muted-foreground"
                       )}
                     >
                       {getWordCount(milestone.description)} / 100 words

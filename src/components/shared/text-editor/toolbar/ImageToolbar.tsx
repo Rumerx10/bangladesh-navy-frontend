@@ -80,10 +80,11 @@ const PillButton = ({
     onClick={onClick}
     className={cn(
       "flex items-center justify-center gap-1 h-7 px-2 rounded-md text-xs font-medium",
-      "text-slate-600 transition-colors cursor-pointer",
-      "hover:bg-slate-100 hover:text-slate-900",
+      "text-secondary-foreground transition-colors cursor-pointer",
+      "hover:bg-light-dark hover:text-foreground",
       "disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent",
-      isActive && "bg-slate-900 text-white hover:bg-slate-900 hover:text-white",
+      isActive &&
+        "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
       className
     )}
   >
@@ -91,7 +92,7 @@ const PillButton = ({
   </button>
 );
 
-const Divider = () => <span className="h-5 w-px bg-slate-200 shrink-0" />;
+const Divider = () => <span className="h-5 w-px bg-light-silver shrink-0" />;
 
 /** Contextual toolbar that appears over an image the moment it is selected.
  *  Everything that only makes sense for an image lives here instead of in the
@@ -135,7 +136,7 @@ const ImageToolbar = ({ editor, boundaryRef }: ImageToolbarProps) => {
     <div
       role="toolbar"
       aria-label="Image options"
-      className="absolute z-30 flex flex-wrap items-center gap-1 rounded-lg border border-slate-200 bg-white px-1.5 py-1 shadow-lg shadow-slate-900/10"
+      className="absolute z-30 flex flex-wrap items-center gap-1 rounded-lg border border-border bg-card px-1.5 py-1 shadow-lg shadow-slate-900/10"
       style={{
         top: placeAbove ? top - TOOLBAR_HEIGHT : top + 8,
         left: clampedLeft,
@@ -144,7 +145,7 @@ const ImageToolbar = ({ editor, boundaryRef }: ImageToolbarProps) => {
     >
       {isEditingAlt ? (
         <>
-          <Type className="w-3.5 h-3.5 text-slate-400 ml-1 shrink-0" />
+          <Type className="w-3.5 h-3.5 text-muted-foreground ml-1 shrink-0" />
           <input
             ref={altInputRef}
             value={altDraft}
@@ -160,7 +161,7 @@ const ImageToolbar = ({ editor, boundaryRef }: ImageToolbarProps) => {
               }
             }}
             placeholder="Describe this image for screen readers"
-            className="h-7 w-56 rounded-md border border-slate-200 px-2 text-xs outline-none focus:border-slate-400"
+            className="h-7 w-56 rounded-md border border-border px-2 text-xs outline-none focus:border-ring"
           />
           <PillButton onClick={commitAlt} title="Save alt text">
             <Check className="w-3.5 h-3.5" />

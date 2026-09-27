@@ -53,13 +53,13 @@ const ProductDetailByChart = ({ chartId }: ProductDetailByChartProps) => {
     return (
       <div className="container px-4 sm:px-6 lg:px-8 py-6 lg:py-8 mt-28 lg:mt-26">
         <div className="animate-pulse space-y-6">
-          <div className="h-4 bg-gray-200 rounded w-64" />
+          <div className="h-4 bg-light-silver rounded w-64" />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="aspect-square rounded-2xl bg-gray-200" />
+            <div className="aspect-square rounded-2xl bg-light-silver" />
             <div className="space-y-4">
-              <div className="h-8 bg-gray-200 rounded w-3/4" />
-              <div className="h-4 bg-gray-200 rounded w-1/2" />
-              <div className="h-24 bg-gray-200 rounded" />
+              <div className="h-8 bg-light-silver rounded w-3/4" />
+              <div className="h-4 bg-light-silver rounded w-1/2" />
+              <div className="h-24 bg-light-silver rounded" />
             </div>
           </div>
         </div>

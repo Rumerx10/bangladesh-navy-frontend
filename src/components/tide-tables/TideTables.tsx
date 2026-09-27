@@ -23,24 +23,24 @@ const TideTables = () => {
       <div className="pointer-events-none absolute top-4 left-4 z-10 max-w-xs rounded-xl bg-white/95 px-4 py-3 shadow-lg ring-1 ring-black/5 sm:top-6 sm:left-6">
         <h1 className="text-lg font-bold text-pBlue lg:text-xl">Tide Tables</h1>
         {isLoading ? (
-          <p className="mt-1 text-xs text-gray-500 lg:text-sm">
+          <p className="mt-1 text-xs text-secondary-foreground lg:text-sm">
             Loading tidal stations…
           </p>
         ) : stations.length > 0 ? (
           <>
-            <p className="mt-1 text-xs text-gray-500 lg:text-sm">
+            <p className="mt-1 text-xs text-secondary-foreground lg:text-sm">
               <span className="font-semibold text-pBlue">
                 {stations.length}
               </span>{" "}
               tidal {stations.length === 1 ? "station" : "stations"} across
               Bangladesh
             </p>
-            <p className="mt-1 text-[11px] text-gray-400">
+            <p className="mt-1 text-[11px] text-muted-foreground">
               Click a marker for station details
             </p>
           </>
         ) : (
-          <p className="mt-1 text-xs text-gray-500 lg:text-sm">
+          <p className="mt-1 text-xs text-secondary-foreground lg:text-sm">
             Tidal observation stations across Bangladesh
           </p>
         )}

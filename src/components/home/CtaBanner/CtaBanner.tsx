@@ -101,7 +101,7 @@ const CtaBanner = () => {
 
                   {/* Title */}
                   <h2
-                    className={`text-xl sm:text-2xl lg:text-[1.75rem] font-bold leading-snug mb-4 sm:mb-5 drop-shadow-md ${banner.dark ? "text-white" : "text-gray-900"}`}
+                    className={`text-xl sm:text-2xl lg:text-[1.75rem] font-bold leading-snug mb-4 sm:mb-5 drop-shadow-md ${banner.dark ? "text-white" : "text-foreground"}`}
                   >
                     {banner.title}
                   </h2>
@@ -109,13 +109,13 @@ const CtaBanner = () => {
                   {/* Price */}
                   <div className="flex items-baseline gap-2 sm:gap-3 mb-5 sm:mb-7">
                     <span
-                      className={`text-lg sm:text-xl lg:text-2xl font-bold ${banner.dark ? "text-white" : "text-gray-900"}`}
+                      className={`text-lg sm:text-xl lg:text-2xl font-bold ${banner.dark ? "text-white" : "text-foreground"}`}
                     >
                       {banner.price}
                     </span>
                     {banner.comparePrice && (
                       <span
-                        className={`text-sm sm:text-base line-through ${banner.dark ? "text-white/50" : "text-gray-400"}`}
+                        className={`text-sm sm:text-base line-through ${banner.dark ? "text-white/50" : "text-muted-foreground"}`}
                       >
                         {banner.comparePrice}
                       </span>
@@ -140,7 +140,7 @@ const CtaBanner = () => {
                       className={`inline-flex items-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3 border-2 text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors no-underline ${
                         banner.dark
                           ? "border-white/70 text-white hover:bg-white/10"
-                          : "border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white"
+                          : "border-foreground text-foreground hover:bg-foreground hover:text-background"
                       }`}
                     >
                       View Collections

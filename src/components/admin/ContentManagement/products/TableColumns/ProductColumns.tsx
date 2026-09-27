@@ -19,11 +19,11 @@ export function GetProductColumns(
       cell: (_, row) => {
         const src = row.images?.[0];
         return src ? (
-          <div className="relative w-16 h-12 rounded overflow-hidden bg-gray-100">
+          <div className="relative w-16 h-12 rounded overflow-hidden bg-light-dark">
             <Image src={src} alt="product" fill className="object-cover" />
           </div>
         ) : (
-          <div className="w-16 h-12 rounded bg-gray-100 flex items-center justify-center text-xs text-gray-400">
+          <div className="w-16 h-12 rounded bg-light-dark flex items-center justify-center text-xs text-muted-foreground">
             No img
           </div>
         );
@@ -42,7 +42,7 @@ export function GetProductColumns(
       header: "Category",
       accessorKey: "category",
       cell: (_, row) => (
-        <span className="text-sm text-gray-600">
+        <span className="text-sm text-secondary-foreground">
           {row.category ? PRODUCT_CATEGORY_LABELS[row.category] : "—"}
         </span>
       ),
@@ -51,7 +51,7 @@ export function GetProductColumns(
       header: "Chart Code",
       accessorKey: "chartCode",
       cell: (_, row) => (
-        <span className="font-mono text-sm text-gray-700">
+        <span className="font-mono text-sm text-foreground">
           {row.category === "TIDAL" ? "—" : (row.chartCode ?? "—")}
         </span>
       ),
@@ -60,7 +60,7 @@ export function GetProductColumns(
       header: "Price",
       accessorKey: "price",
       cell: (_, row) => (
-        <span className="text-sm text-gray-700">
+        <span className="text-sm text-foreground">
           {row.price != null ? `${siteConfig.currencySymbol}${row.price}` : "—"}
         </span>
       ),
@@ -69,7 +69,7 @@ export function GetProductColumns(
       header: "Edition Date",
       accessorKey: "editionDate",
       cell: (_, row) => (
-        <span className="text-sm text-gray-700">
+        <span className="text-sm text-foreground">
           {row.editionDate
             ? new Date(row.editionDate).toLocaleDateString("en-GB", {
                 day: "2-digit",
@@ -94,7 +94,7 @@ export function GetProductColumns(
         <div className="flex items-center gap-1">
           <button
             onClick={() => onEdit(row)}
-            className="p-2 rounded-md hover:bg-gray-100 text-gray-500 hover:text-pBlue transition-colors cursor-pointer"
+            className="p-2 rounded-md hover:bg-light-dark text-secondary-foreground hover:text-pBlue transition-colors cursor-pointer"
             title="Edit"
             aria-label={`Edit ${row.nameEn}`}
           >
@@ -102,7 +102,7 @@ export function GetProductColumns(
           </button>
           <button
             onClick={() => onDelete?.(row)}
-            className="p-2 rounded-md hover:bg-red-50 text-gray-500 hover:text-red-500 transition-colors cursor-pointer"
+            className="p-2 rounded-md hover:bg-red-50 text-secondary-foreground hover:text-red-500 transition-colors cursor-pointer"
             title="Delete"
             aria-label={`Delete ${row.nameEn}`}
           >

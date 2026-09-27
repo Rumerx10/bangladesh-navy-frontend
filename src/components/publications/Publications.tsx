@@ -40,7 +40,7 @@ const Publications = () => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-card">
       <PublicationsHero />
 
       <section className="py-10 lg:py-14">
@@ -48,14 +48,14 @@ const Publications = () => {
           {/* Search */}
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-end">
             <div className="relative w-full lg:max-w-xs">
-              <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+              <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <input
                 type="text"
                 value={search}
                 onChange={handleSearch}
                 placeholder="Search by title or publication code…"
                 aria-label="Search publications"
-                className="h-11 w-full rounded-lg border border-gray-200 bg-white pr-3 pl-9 text-sm text-gray-800 outline-none placeholder:text-gray-400 focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
+                className="h-11 w-full rounded-lg border border-border bg-card pr-3 pl-9 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
               />
             </div>
           </div>
@@ -74,12 +74,12 @@ const Publications = () => {
                 ))}
               </div>
             ) : (
-              <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 py-16 text-center">
-                <FileSearch className="mx-auto h-8 w-8 text-gray-400" />
-                <p className="mt-3 text-sm font-medium text-gray-600">
+              <div className="rounded-xl border border-dashed border-input bg-light py-16 text-center">
+                <FileSearch className="mx-auto h-8 w-8 text-muted-foreground" />
+                <p className="mt-3 text-sm font-medium text-secondary-foreground">
                   No publications found
                 </p>
-                <p className="mt-1 text-xs text-gray-400">
+                <p className="mt-1 text-xs text-muted-foreground">
                   Try a different search term.
                 </p>
               </div>
@@ -87,7 +87,7 @@ const Publications = () => {
           </div>
 
           {!isLoading && totalPages > 1 && (
-            <div className="mt-6 rounded-xl border border-gray-200">
+            <div className="mt-6 rounded-xl border border-border">
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}

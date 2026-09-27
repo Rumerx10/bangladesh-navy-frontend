@@ -63,7 +63,7 @@ const SectionHeader = ({
             {label}
           </Paragraph>
           {description && (
-            <Paragraph className="text-xs! text-gray-500">
+            <Paragraph className="text-xs! text-secondary-foreground">
               {description}
             </Paragraph>
           )}
@@ -73,7 +73,7 @@ const SectionHeader = ({
         <Button
           type="button"
           onClick={onCancel}
-          className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer"
+          className="text-secondary-foreground bg-transparent hover:bg-light-dark duration-300 border hover:shadow cursor-pointer"
         >
           Cancel
         </Button>
@@ -88,7 +88,7 @@ const SectionHeader = ({
 const ImageHint = () => (
   <div className="flex items-start gap-2 mb-3 rounded-md border border-blue-100 bg-blue-50/60 px-3 py-2">
     <ImageIcon className="w-4 h-4 text-blue-500 mt-0.5 shrink-0" />
-    <Paragraph className="text-xs! text-slate-600">
+    <Paragraph className="text-xs! text-secondary-foreground">
       Insert a picture with the image button, then{" "}
       <span className="font-medium">click the image</span> to choose how the
       text wraps around it (Inline / Wrap / Break), which side it sits on, and
@@ -116,7 +116,7 @@ const HistoryManagementForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
       {/* Basic Information */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-8 bg-card">
         <SectionHeader label="History Content" onCancel={onCancel} showCancel />
 
         {/* Commented out — Image/Title/Sub Title are not part of the current /history API. */}
@@ -169,7 +169,7 @@ const HistoryManagementForm = ({
       </div>
 
       {/* Bengali Content Section (optional, collapsed by default) */}
-      <div className="border border-light-silver rounded-lg bg-white">
+      <div className="border border-light-silver rounded-lg bg-card">
         <button
           type="button"
           onClick={() => setShowBnContent((prev) => !prev)}
@@ -189,14 +189,14 @@ const HistoryManagementForm = ({
               <Paragraph className="xl:text-lg font-medium text-pBlue">
                 Bengali Content
               </Paragraph>
-              <Paragraph className="text-xs! text-gray-500">
+              <Paragraph className="text-xs! text-secondary-foreground">
                 Optional — shown on the site when provided
               </Paragraph>
             </div>
           </div>
           <ChevronDown
             className={cn(
-              "w-5 h-5 text-gray-500 transition-transform duration-300",
+              "w-5 h-5 text-secondary-foreground transition-transform duration-300",
               showBnContent && "rotate-180"
             )}
           />
@@ -230,7 +230,7 @@ const HistoryManagementForm = ({
       </div>
 
       {/* Commented out — Timeline is not part of the current /history API. */}
-      {/* <div className="border border-light-silver rounded-lg p-8 bg-white">
+      {/* <div className="border border-light-silver rounded-lg p-8 bg-card">
         <SectionHeader label="Timeline" />
         <div className="mt-6">
           <TimelineItemsField name="timelineItems" />
@@ -238,7 +238,7 @@ const HistoryManagementForm = ({
       </div> */}
 
       {/* Commented out — Key Milestones is not part of the current /history API. */}
-      {/* <div className="border border-light-silver rounded-lg p-8 bg-white">
+      {/* <div className="border border-light-silver rounded-lg p-8 bg-card">
         <SectionHeader label="Key Milestones" />
         <div className="mt-6">
           <KeyMilestonesField name="keyMilestones" />
@@ -251,7 +251,7 @@ const HistoryManagementForm = ({
         <Button
           type="button"
           onClick={onCancel}
-          className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer"
+          className="text-secondary-foreground bg-transparent hover:bg-light-dark duration-300 border hover:shadow cursor-pointer"
         >
           Cancel
         </Button>

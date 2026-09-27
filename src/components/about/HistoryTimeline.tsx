@@ -33,12 +33,12 @@ const HistoryTimeline = () => {
       <div className="animate-pulse">
         {/* Mirrors the editor's default insert: a float taking just under half
             the column, with the narrative running past it. */}
-        <div className="sm:float-left sm:mr-4 mb-4 w-full sm:w-[45%] aspect-16/10 bg-gray-200" />
+        <div className="sm:float-left sm:mr-4 mb-4 w-full sm:w-[45%] aspect-16/10 bg-light-silver" />
         <div className="space-y-3">
           {Array.from({ length: 10 }).map((_, i) => (
             <div
               key={i}
-              className="h-4 bg-gray-200 rounded"
+              className="h-4 bg-light-silver rounded"
               style={{ width: i % 3 === 2 ? "70%" : "100%" }}
             />
           ))}

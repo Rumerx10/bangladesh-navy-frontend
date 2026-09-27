@@ -124,7 +124,7 @@ const CreateUpdatePartner = ({
         if (!open) handleClose();
       }}
     >
-      <DialogContent className="bg-white sm:max-w-lg max-h-[90vh] flex flex-col">
+      <DialogContent className="bg-card sm:max-w-lg max-h-[90vh] flex flex-col">
         <DialogHeader className="shrink-0">
           <DialogTitle className="text-secondary text-xl font-semibold">
             {isUpdate ? "Update" : "Create"} Partner

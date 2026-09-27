@@ -13,7 +13,7 @@ export function GetPartnerColumns(
       header: "Logo",
       accessorKey: "image",
       cell: (_, row) => (
-        <div className="relative w-16 h-12 rounded overflow-hidden bg-gray-100">
+        <div className="relative w-16 h-12 rounded overflow-hidden bg-light-dark">
           <Image
             src={row.image}
             alt="partner"
@@ -37,7 +37,7 @@ export function GetPartnerColumns(
             {row.link}
           </a>
         ) : (
-          <span className="text-sm text-gray-400">—</span>
+          <span className="text-sm text-muted-foreground">—</span>
         ),
     },
     {
@@ -48,7 +48,7 @@ export function GetPartnerColumns(
           className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
             row.status === "ACTIVE"
               ? "bg-green-100 text-green-700"
-              : "bg-gray-100 text-gray-500"
+              : "bg-light-dark text-secondary-foreground"
           }`}
         >
           {row.status}
@@ -61,7 +61,7 @@ export function GetPartnerColumns(
       cell: (_, row) => (
         <button
           onClick={() => onEdit(row)}
-          className="p-2 rounded-md hover:bg-gray-100 text-gray-500 hover:text-pBlue transition-colors cursor-pointer"
+          className="p-2 rounded-md hover:bg-light-dark text-secondary-foreground hover:text-pBlue transition-colors cursor-pointer"
           title="Edit"
         >
           <Pencil className="w-4 h-4" />

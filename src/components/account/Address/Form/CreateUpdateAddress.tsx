@@ -145,7 +145,7 @@ const CreateUpdateAddress = ({
         if (!open) handleClose();
       }}
     >
-      <DialogContent className="bg-white min-w-[50vw] overflow-y-auto max-h-[90vh]">
+      <DialogContent className="bg-card min-w-[50vw] overflow-y-auto max-h-[90vh]">
         <DialogHeader>
           <DialogTitle className="text-secondary text-xl font-semibold">
             {isUpdate ? "Update" : "Create"} Address

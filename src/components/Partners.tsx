@@ -32,7 +32,7 @@ const Partners = () => {
               {Array.from({ length: 6 }).map((_, index) => (
                 <div
                   key={index}
-                  className="h-16 w-32 rounded-lg bg-gray-100 animate-pulse"
+                  className="h-16 w-32 rounded-lg bg-light-dark animate-pulse"
                 />
               ))}
             </div>

@@ -90,7 +90,7 @@ const PublicationForm = ({
         <Button
           type="button"
           onClick={onCancel}
-          className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer"
+          className="text-secondary-foreground bg-transparent hover:bg-light-dark duration-300 border hover:shadow cursor-pointer"
         >
           Cancel
         </Button>

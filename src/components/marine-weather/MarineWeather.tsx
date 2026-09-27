@@ -27,24 +27,24 @@ const MarineWeather = () => {
           Marine Weather
         </h1>
         {isLoading ? (
-          <p className="mt-1 text-xs text-gray-500 lg:text-sm">
+          <p className="mt-1 text-xs text-secondary-foreground lg:text-sm">
             Loading weather stations…
           </p>
         ) : stations.length > 0 ? (
           <>
-            <p className="mt-1 text-xs text-gray-500 lg:text-sm">
+            <p className="mt-1 text-xs text-secondary-foreground lg:text-sm">
               <span className="font-semibold text-pBlue">
                 {stations.length}
               </span>{" "}
               weather {stations.length === 1 ? "station" : "stations"} across
               Bangladesh
             </p>
-            <p className="mt-1 text-[11px] text-gray-400">
+            <p className="mt-1 text-[11px] text-muted-foreground">
               Click a marker for station data
             </p>
           </>
         ) : (
-          <p className="mt-1 text-xs text-gray-500 lg:text-sm">
+          <p className="mt-1 text-xs text-secondary-foreground lg:text-sm">
             Marine weather stations across Bangladesh
           </p>
         )}

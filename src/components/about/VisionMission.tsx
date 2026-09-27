@@ -17,7 +17,7 @@ const VisionMission = () => {
           {visionMissionItems.map((item, i) => (
             <motion.div
               key={item.id}
-              className="rounded-2xl border border-gray-100 bg-white p-6 lg:p-8 shadow-sm hover:shadow-md transition-shadow"
+              className="rounded-2xl border border-border bg-card p-6 lg:p-8 shadow-sm hover:shadow-md transition-shadow"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -29,7 +29,7 @@ const VisionMission = () => {
               <h2 className="text-2xl lg:text-3xl font-bold text-pBlue mb-4">
                 {item.title}
               </h2>
-              <p className="text-lg lg:text-xl text-gray-700 leading-relaxed mb-4">
+              <p className="text-lg lg:text-xl text-foreground leading-relaxed mb-4">
                 {item.description}
               </p>
               {item.points && (
@@ -37,7 +37,7 @@ const VisionMission = () => {
                   {item.points.map((point, j) => (
                     <li
                       key={j}
-                      className="flex items-start gap-2.5 text-sm text-gray-600"
+                      className="flex items-start gap-2.5 text-sm text-secondary-foreground"
                     >
                       <Check
                         size={16}

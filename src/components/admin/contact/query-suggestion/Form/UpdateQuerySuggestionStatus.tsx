@@ -79,7 +79,7 @@ const UpdateQuerySuggestionStatus = ({
         if (!open) handleClose();
       }}
     >
-      <DialogContent className="bg-white min-w-[40vw] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="bg-card min-w-[40vw] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-secondary text-xl font-semibold">
             Query / Suggestion Details
@@ -87,10 +87,10 @@ const UpdateQuerySuggestionStatus = ({
         </DialogHeader>
 
         {initialValues && (
-          <div className="space-y-3 bg-gray-50 rounded-lg p-4 border border-gray-100">
+          <div className="space-y-3 bg-light rounded-lg p-4 border border-border">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <p className="text-xs text-gray-500 uppercase tracking-wider">
+                <p className="text-xs text-secondary-foreground uppercase tracking-wider">
                   Name
                 </p>
                 <p className="text-sm font-medium text-secondary-dark">
@@ -98,7 +98,7 @@ const UpdateQuerySuggestionStatus = ({
                 </p>
               </div>
               <div>
-                <p className="text-xs text-gray-500 uppercase tracking-wider">
+                <p className="text-xs text-secondary-foreground uppercase tracking-wider">
                   Email
                 </p>
                 <p className="text-sm font-medium text-secondary-dark">
@@ -106,7 +106,7 @@ const UpdateQuerySuggestionStatus = ({
                 </p>
               </div>
               <div>
-                <p className="text-xs text-gray-500 uppercase tracking-wider">
+                <p className="text-xs text-secondary-foreground uppercase tracking-wider">
                   Phone
                 </p>
                 <p className="text-sm font-medium text-secondary-dark">
@@ -114,7 +114,7 @@ const UpdateQuerySuggestionStatus = ({
                 </p>
               </div>
               <div>
-                <p className="text-xs text-gray-500 uppercase tracking-wider">
+                <p className="text-xs text-secondary-foreground uppercase tracking-wider">
                   Submitted
                 </p>
                 <p className="text-sm font-medium text-secondary-dark">
@@ -123,10 +123,10 @@ const UpdateQuerySuggestionStatus = ({
               </div>
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
+              <p className="text-xs text-secondary-foreground uppercase tracking-wider mb-1">
                 Message
               </p>
-              <p className="text-sm text-secondary-dark bg-white rounded p-3 border border-gray-100">
+              <p className="text-sm text-secondary-dark bg-card rounded p-3 border border-border">
                 {initialValues.message}
               </p>
             </div>

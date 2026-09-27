@@ -14,7 +14,7 @@ const CategoryFilter = ({
   onToggle,
 }: CategoryFilterProps) => {
   return (
-    <div className="border border-gray-100 rounded-xl p-4">
+    <div className="border border-border rounded-xl p-4">
       <h3 className="text-sm font-semibold text-pBlue mb-3">Category</h3>
       <div className="space-y-2.5">
         {categories.map((cat) => (
@@ -26,13 +26,13 @@ const CategoryFilter = ({
               type="checkbox"
               checked={selectedIds.includes(cat.id)}
               onChange={() => onToggle(cat.id)}
-              className="w-4 h-4 rounded border-gray-300 text-liteBlue focus:ring-liteBlue/20 cursor-pointer accent-liteBlue"
+              className="w-4 h-4 rounded border-input text-liteBlue focus:ring-liteBlue/20 cursor-pointer accent-liteBlue"
             />
-            <span className="text-sm text-gray-700 group-hover:text-liteBlue transition-colors flex-1">
+            <span className="text-sm text-foreground group-hover:text-liteBlue transition-colors flex-1">
               {cat.nameEn}
             </span>
             {cat.productCount !== undefined && (
-              <span className="text-xs text-gray-400">
+              <span className="text-xs text-muted-foreground">
                 ({cat.productCount})
               </span>
             )}

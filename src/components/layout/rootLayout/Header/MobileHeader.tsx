@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu } from "lucide-react";
 import logo from "@/public/logo.png";
+import ThemeToggle from "@/src/components/theme/ThemeToggle";
 import { siteConfig } from "@/src/config/siteConfig";
 
 interface MobileHeaderProps {
@@ -28,19 +29,23 @@ const MobileHeader = ({ menuOpen, setMenuOpen }: MobileHeaderProps) => {
               <span className="text-sm font-bold text-pBlue leading-tight block">
                 {siteConfig.name}
               </span>
-              <span className="text-[9px] text-gray-500 leading-tight block">
+              <span className="text-[9px] text-secondary-foreground leading-tight block">
                 {siteConfig.description}
               </span>
             </div>
           </Link>
-          {/* Hamburger */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="flex items-center justify-center text-gray-700 hover:text-liteBlue transition-colors"
-            aria-label="Open menu"
-          >
-            <Menu />
-          </button>
+          <div className="flex items-center gap-1">
+            <ThemeToggle className="text-secondary-foreground" />
+
+            {/* Hamburger */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="flex items-center justify-center text-foreground hover:text-liteBlue transition-colors"
+              aria-label="Open menu"
+            >
+              <Menu />
+            </button>
+          </div>
         </div>
       </div>
     </div>

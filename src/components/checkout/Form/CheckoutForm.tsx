@@ -297,7 +297,7 @@ const CheckoutForm = ({
                     {bankAccountDetails.map((detail) => (
                       <div
                         key={detail.label}
-                        className="rounded-lg border border-amber-200 bg-white/80 p-3"
+                        className="rounded-lg border border-amber-200 bg-card/80 p-3"
                       >
                         <p className="text-[11px] font-semibold uppercase tracking-wide text-amber-700">
                           {detail.label}
@@ -343,7 +343,7 @@ const CheckoutForm = ({
                     key={`${item.productId}-${item.variantId ?? ""}`}
                     className="flex items-center gap-3"
                   >
-                    <div className="relative w-12 sm:w-14 min-w-12 sm:min-w-14 h-12 sm:h-14 rounded-md overflow-hidden bg-gray-100">
+                    <div className="relative w-12 sm:w-14 min-w-12 sm:min-w-14 h-12 sm:h-14 rounded-md overflow-hidden bg-light-dark">
                       <CheckoutItemImage src={item.image} alt={item.name} />
                     </div>
                     <div className="flex-1 min-w-0">

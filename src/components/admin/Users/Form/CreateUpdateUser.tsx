@@ -80,7 +80,7 @@ const CreateUpdateUser = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-white sm:max-w-140">
+      <DialogContent className="bg-card sm:max-w-140">
         <DialogHeader>
           <DialogTitle className="text-secondary text-xl font-semibold">
             Update User

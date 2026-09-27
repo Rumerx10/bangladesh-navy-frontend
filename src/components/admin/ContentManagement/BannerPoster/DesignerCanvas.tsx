@@ -331,7 +331,7 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
   return (
     <div className="flex flex-col h-[calc(100vh-140px)]">
       {/* Toolbar */}
-      <div className="flex items-center justify-between bg-white rounded-xl p-3 shadow-sm border border-gray-100 mb-4 shrink-0">
+      <div className="flex items-center justify-between bg-card rounded-xl p-3 shadow-sm border border-border mb-4 shrink-0">
         <div className="flex items-center gap-3">
           <Button
             variant="outline"
@@ -342,9 +342,9 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
             <ArrowLeft className="h-4 w-4" />
             Templates
           </Button>
-          <div className="h-6 w-px bg-gray-200" />
-          <h2 className="text-sm font-bold text-gray-800">{template.name}</h2>
-          <span className="text-xs text-gray-400">
+          <div className="h-6 w-px bg-light-silver" />
+          <h2 className="text-sm font-bold text-foreground">{template.name}</h2>
+          <span className="text-xs text-muted-foreground">
             {template.canvasWidth}×{template.canvasHeight}
           </span>
         </div>
@@ -368,7 +368,7 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
             <RotateCcw className="h-3.5 w-3.5" />
             Reset
           </Button>
-          <div className="h-6 w-px bg-gray-200" />
+          <div className="h-6 w-px bg-light-silver" />
           <Button
             size="sm"
             onClick={handleExport}
@@ -395,7 +395,7 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
         {/* Canvas */}
         <div
           ref={containerRef}
-          className="flex-1 flex items-center justify-center bg-gray-100 rounded-xl overflow-auto p-6"
+          className="flex-1 flex items-center justify-center bg-light-dark rounded-xl overflow-auto p-6"
           onMouseDown={(e) => {
             if (
               e.target === e.currentTarget ||
@@ -476,7 +476,7 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                     )}
                   </div>
                 ) : (
-                  <label className="w-full h-full flex flex-col items-center justify-center bg-black/5 border-2 border-dashed border-gray-300/50 cursor-pointer hover:bg-black/10 hover:border-primary/30 transition-all">
+                  <label className="w-full h-full flex flex-col items-center justify-center bg-black/5 border-2 border-dashed border-input/50 cursor-pointer hover:bg-black/10 hover:border-primary/30 transition-all">
                     <ImagePlus
                       className="text-gray-400/60"
                       style={{
@@ -576,19 +576,19 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
           }`}
         >
           {isPanelOpen ? (
-            <div className="bg-white rounded-xl border border-gray-200 shadow-xl overflow-hidden h-full flex flex-col">
+            <div className="bg-card rounded-xl border border-border shadow-xl overflow-hidden h-full flex flex-col">
               {/* Panel Header */}
-              <div className="flex items-center justify-between p-3 border-b border-gray-100 shrink-0">
-                <h4 className="text-sm font-bold text-gray-800 flex items-center gap-2">
+              <div className="flex items-center justify-between p-3 border-b border-border shrink-0">
+                <h4 className="text-sm font-bold text-foreground flex items-center gap-2">
                   <Layers className="h-4 w-4 text-primary" />
                   Controls
                 </h4>
                 <button
                   onClick={() => setIsPanelOpen(false)}
-                  className="p-1 hover:bg-gray-100 rounded transition-colors cursor-pointer"
+                  className="p-1 hover:bg-light-dark rounded transition-colors cursor-pointer"
                   title="Collapse panel"
                 >
-                  <PanelRightClose className="h-4 w-4 text-gray-500" />
+                  <PanelRightClose className="h-4 w-4 text-secondary-foreground" />
                 </button>
               </div>
 
@@ -610,23 +610,23 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                   <div className="p-3 space-y-4">
                     <div className="flex items-center gap-2">
                       <ImagePlus className="h-4 w-4 text-primary" />
-                      <h4 className="text-sm font-bold text-gray-800">
+                      <h4 className="text-sm font-bold text-foreground">
                         Image Controls
                       </h4>
                     </div>
 
                     {/* Zoom */}
                     <div>
-                      <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                      <label className="text-xs font-semibold text-secondary-foreground uppercase tracking-wide">
                         Zoom:{" "}
                         {Math.round((imageScales[selectedZoneId] || 1) * 100)}%
                       </label>
                       <div className="flex items-center gap-2 mt-1.5">
                         <button
                           onClick={() => handleZoom(selectedZoneId, -0.1)}
-                          className="p-1.5 bg-gray-100 rounded-lg hover:bg-gray-200 cursor-pointer transition-colors"
+                          className="p-1.5 bg-light-dark rounded-lg hover:bg-light-silver cursor-pointer transition-colors"
                         >
-                          <ZoomOut className="h-3.5 w-3.5 text-gray-600" />
+                          <ZoomOut className="h-3.5 w-3.5 text-secondary-foreground" />
                         </button>
                         <input
                           type="range"
@@ -641,20 +641,20 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                               [selectedZoneId]: parseInt(e.target.value) / 100,
                             }))
                           }
-                          className="flex-1 h-1.5 appearance-none bg-gray-200 rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
+                          className="flex-1 h-1.5 appearance-none bg-light-silver rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
                         />
                         <button
                           onClick={() => handleZoom(selectedZoneId, 0.1)}
-                          className="p-1.5 bg-gray-100 rounded-lg hover:bg-gray-200 cursor-pointer transition-colors"
+                          className="p-1.5 bg-light-dark rounded-lg hover:bg-light-silver cursor-pointer transition-colors"
                         >
-                          <ZoomIn className="h-3.5 w-3.5 text-gray-600" />
+                          <ZoomIn className="h-3.5 w-3.5 text-secondary-foreground" />
                         </button>
                       </div>
                     </div>
 
                     {/* Fit Mode */}
                     <div>
-                      <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                      <label className="text-xs font-semibold text-secondary-foreground uppercase tracking-wide">
                         Fit Mode
                       </label>
                       <div className="flex gap-1 mt-1.5">
@@ -671,7 +671,7 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                               (imageFitModes[selectedZoneId] || "cover") ===
                               mode
                                 ? "bg-secondary text-white"
-                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                : "bg-light-dark text-secondary-foreground hover:bg-light-silver"
                             }`}
                           >
                             {mode}
@@ -683,7 +683,7 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                     {/* Center */}
                     <button
                       onClick={() => handleCenterImage(selectedZoneId)}
-                      className="w-full flex items-center justify-center gap-2 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors cursor-pointer"
+                      className="w-full flex items-center justify-center gap-2 py-2 bg-light-dark text-foreground rounded-lg text-sm font-medium hover:bg-light-silver transition-colors cursor-pointer"
                     >
                       <Maximize className="h-4 w-4" />
                       Center Image
@@ -691,7 +691,7 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
 
                     {/* BG Removal Toggle */}
                     <div>
-                      <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                      <label className="text-xs font-semibold text-secondary-foreground uppercase tracking-wide">
                         Background
                       </label>
                       <button
@@ -699,7 +699,7 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                         disabled={processingZones[selectedZoneId]}
                         className={`w-full mt-1.5 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
                           processingZones[selectedZoneId]
-                            ? "bg-gray-100 text-gray-400 cursor-wait"
+                            ? "bg-light-dark text-muted-foreground cursor-wait"
                             : bgRemovedZones[selectedZoneId]
                               ? "bg-green-50 text-green-600 hover:bg-green-100"
                               : "bg-purple-50 text-purple-600 hover:bg-purple-100"
@@ -707,7 +707,7 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                       >
                         {processingZones[selectedZoneId] ? (
                           <>
-                            <span className="animate-spin h-4 w-4 border-2 border-gray-300 border-t-gray-600 rounded-full" />
+                            <span className="animate-spin h-4 w-4 border-2 border-input border-t-gray-600 rounded-full" />
                             Removing...
                           </>
                         ) : bgRemovedZones[selectedZoneId] ? (
@@ -733,7 +733,7 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                     {/* Deselect */}
                     <button
                       onClick={() => setSelectedZoneId(null)}
-                      className="text-xs text-gray-400 hover:text-gray-600 cursor-pointer w-full text-center mt-1"
+                      className="text-xs text-muted-foreground hover:text-secondary-foreground cursor-pointer w-full text-center mt-1"
                     >
                       Done
                     </button>
@@ -741,7 +741,7 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                 ) : (
                   /* Show elements list when nothing selected */
                   <div className="p-3 space-y-3">
-                    <div className="flex items-center gap-2 text-xs text-gray-400 px-1">
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground px-1">
                       <MousePointerClick className="h-3.5 w-3.5" />
                       Click a text or image on canvas to edit
                     </div>
@@ -753,17 +753,17 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                             setSelectedTextId(el.id);
                             setSelectedZoneId(null);
                           }}
-                          className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-left hover:bg-gray-50 transition-colors cursor-pointer border border-transparent hover:border-gray-200"
+                          className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-left hover:bg-light transition-colors cursor-pointer border border-transparent hover:border-border"
                         >
                           <div
-                            className="w-3 h-3 rounded-sm shrink-0 border border-gray-200"
+                            className="w-3 h-3 rounded-sm shrink-0 border border-border"
                             style={{ backgroundColor: el.color }}
                           />
                           <div className="min-w-0 flex-1">
-                            <p className="text-xs font-medium text-gray-700 truncate">
+                            <p className="text-xs font-medium text-foreground truncate">
                               {el.content.split("\n")[0]}
                             </p>
-                            <p className="text-[10px] text-gray-400">
+                            <p className="text-[10px] text-muted-foreground">
                               {el.fontSize}px • {el.fontWeight}w
                               {el.rotation !== 0 ? ` • ${el.rotation}°` : ""}
                             </p>
@@ -774,7 +774,7 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                     {/* Image zones list */}
                     {template.imageZones.some((z) => imageUploads[z.id]) && (
                       <>
-                        <div className="h-px bg-gray-100 my-1" />
+                        <div className="h-px bg-light-dark my-1" />
                         <div className="space-y-1">
                           {template.imageZones
                             .filter((z) => imageUploads[z.id])
@@ -785,9 +785,9 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                                   setSelectedZoneId(zone.id);
                                   setSelectedTextId(null);
                                 }}
-                                className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-left hover:bg-gray-50 transition-colors cursor-pointer border border-transparent hover:border-gray-200"
+                                className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-left hover:bg-light transition-colors cursor-pointer border border-transparent hover:border-border"
                               >
-                                <div className="w-6 h-6 rounded overflow-hidden shrink-0 border border-gray-200">
+                                <div className="w-6 h-6 rounded overflow-hidden shrink-0 border border-border">
                                   <img
                                     src={imageUploads[zone.id]}
                                     alt=""
@@ -795,10 +795,10 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                                   />
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                  <p className="text-xs font-medium text-gray-700">
+                                  <p className="text-xs font-medium text-foreground">
                                     {zone.placeholder}
                                   </p>
-                                  <p className="text-[10px] text-gray-400">
+                                  <p className="text-[10px] text-muted-foreground">
                                     {Math.round(
                                       (imageScales[zone.id] || 1) * 100
                                     )}
@@ -815,21 +815,21 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                     )}
 
                     {/* Brand Overlay Controls */}
-                    <div className="h-px bg-gray-100 my-1" />
+                    <div className="h-px bg-light-dark my-1" />
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <h4 className="text-xs font-bold text-gray-700 flex items-center gap-1.5">
+                        <h4 className="text-xs font-bold text-foreground flex items-center gap-1.5">
                           <Tag className="h-3.5 w-3.5 text-primary" />
                           Brand Overlay
                         </h4>
                         <button
                           onClick={() => setBrandActive(!brandActive)}
                           className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors cursor-pointer ${
-                            brandActive ? "bg-green-500" : "bg-gray-300"
+                            brandActive ? "bg-green-500" : "bg-light-silver"
                           }`}
                         >
                           <span
-                            className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform shadow-sm ${
+                            className={`inline-block h-3.5 w-3.5 transform rounded-full bg-card transition-transform shadow-sm ${
                               brandActive
                                 ? "translate-x-4.5"
                                 : "translate-x-0.5"
@@ -842,21 +842,21 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                         <div className="space-y-3">
                           {/* Brand Text */}
                           <div>
-                            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                            <label className="text-xs font-semibold text-secondary-foreground uppercase tracking-wide">
                               Brand Name
                             </label>
                             <input
                               type="text"
                               value={brandText}
                               onChange={(e) => setBrandText(e.target.value)}
-                              className="w-full mt-1 px-3 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
+                              className="w-full mt-1 px-3 py-2 text-sm border border-border rounded-lg bg-light focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
                               placeholder="Enter brand name"
                             />
                           </div>
 
                           {/* Font Size */}
                           <div>
-                            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                            <label className="text-xs font-semibold text-secondary-foreground uppercase tracking-wide">
                               Size: {brandFontSize}px
                             </label>
                             <input
@@ -867,13 +867,13 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                               onChange={(e) =>
                                 setBrandFontSize(parseInt(e.target.value))
                               }
-                              className="w-full mt-1 h-1.5 appearance-none bg-gray-200 rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
+                              className="w-full mt-1 h-1.5 appearance-none bg-light-silver rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
                             />
                           </div>
 
                           {/* Color */}
                           <div>
-                            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                            <label className="text-xs font-semibold text-secondary-foreground uppercase tracking-wide">
                               Color
                             </label>
                             <div className="flex items-center gap-2 mt-1">
@@ -881,20 +881,20 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                                 type="color"
                                 value={brandColor}
                                 onChange={(e) => setBrandColor(e.target.value)}
-                                className="w-8 h-8 rounded-lg border border-gray-200 cursor-pointer appearance-none p-0"
+                                className="w-8 h-8 rounded-lg border border-border cursor-pointer appearance-none p-0"
                               />
                               <input
                                 type="text"
                                 value={brandColor}
                                 onChange={(e) => setBrandColor(e.target.value)}
-                                className="flex-1 px-3 py-1.5 text-xs font-mono border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary/30"
+                                className="flex-1 px-3 py-1.5 text-xs font-mono border border-border rounded-lg bg-light focus:outline-none focus:ring-2 focus:ring-primary/30"
                               />
                             </div>
                           </div>
 
                           {/* Opacity */}
                           <div>
-                            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                            <label className="text-xs font-semibold text-secondary-foreground uppercase tracking-wide">
                               Opacity: {Math.round(brandOpacity * 100)}%
                             </label>
                             <input
@@ -905,11 +905,11 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                               onChange={(e) =>
                                 setBrandOpacity(parseInt(e.target.value) / 100)
                               }
-                              className="w-full mt-1 h-1.5 appearance-none bg-gray-200 rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
+                              className="w-full mt-1 h-1.5 appearance-none bg-light-silver rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
                             />
                           </div>
 
-                          <p className="text-[10px] text-gray-400 text-center">
+                          <p className="text-[10px] text-muted-foreground text-center">
                             Drag the brand text on the canvas to reposition
                           </p>
                         </div>
@@ -921,13 +921,13 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
             </div>
           ) : (
             /* Collapsed state - thin strip with expand button */
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm h-full flex flex-col items-center py-3">
+            <div className="bg-card rounded-xl border border-border shadow-sm h-full flex flex-col items-center py-3">
               <button
                 onClick={() => setIsPanelOpen(true)}
-                className="p-1.5 hover:bg-gray-100 rounded transition-colors cursor-pointer"
+                className="p-1.5 hover:bg-light-dark rounded transition-colors cursor-pointer"
                 title="Expand panel"
               >
-                <PanelRightOpen className="h-4 w-4 text-gray-500" />
+                <PanelRightOpen className="h-4 w-4 text-secondary-foreground" />
               </button>
             </div>
           )}

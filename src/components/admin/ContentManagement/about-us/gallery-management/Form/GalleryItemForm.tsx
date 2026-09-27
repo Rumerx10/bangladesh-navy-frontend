@@ -48,7 +48,7 @@ const GalleryItemForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
       {/* English Content */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-8 bg-card">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
@@ -61,7 +61,7 @@ const GalleryItemForm = ({
           <Button
             type="button"
             onClick={onCancel}
-            className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer"
+            className="text-secondary-foreground bg-transparent hover:bg-light-dark duration-300 border hover:shadow cursor-pointer"
           >
             Cancel
           </Button>
@@ -78,7 +78,7 @@ const GalleryItemForm = ({
       </div>
 
       {/* Bengali Content */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-8 bg-card">
         <div className="flex items-center gap-3 mb-6">
           <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
             <FileText className="w-4 h-4 text-primary" />
@@ -97,7 +97,7 @@ const GalleryItemForm = ({
       </div>
 
       {/* Image, Category & Position */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-8 bg-card">
         <div className="flex items-center gap-3 mb-6">
           <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
             <Image
@@ -150,7 +150,7 @@ const GalleryItemForm = ({
         <Button
           type="button"
           onClick={onCancel}
-          className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer"
+          className="text-secondary-foreground bg-transparent hover:bg-light-dark duration-300 border hover:shadow cursor-pointer"
         >
           Cancel
         </Button>
