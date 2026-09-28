@@ -371,11 +371,11 @@ const Organization = () => {
         {/* Dotted canvas */}
         <div
           className="overflow-x-auto rounded-2xl border border-border/80 bg-light/50 p-5 lg:p-8"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle, rgb(203 213 225 / 0.9) 1px, transparent 1px)",
-            backgroundSize: "22px 22px",
-          }}
+          // style={{
+          //   backgroundImage:
+          //     "radial-gradient(circle, rgb(203 213 225 / 0.9) 1px, transparent 1px)",
+          //   backgroundSize: "22px 22px",
+          // }}
         >
           {isLoading ? (
             <ChartSkeleton />
