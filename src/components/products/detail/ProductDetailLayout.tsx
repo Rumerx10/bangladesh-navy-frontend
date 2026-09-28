@@ -27,7 +27,7 @@ const ProductDetailLayout = ({
   // available." panel. Paper charts and ENCs keep both.
   const isTidal = chartDetails?.category === "TIDAL";
   return (
-    <div className="container px-4 sm:px-6 lg:px-8 py-6 lg:py-8 mt-28 lg:mt-26">
+    <div className="container px-4 sm:px-6 lg:px-8 py-6 lg:py-8 mt-24 lg:mt-20">
       {/* Breadcrumb */}
       <nav className="text-sm text-secondary-foreground mb-6">
         <span className="hover:text-liteBlue cursor-pointer">Home</span>

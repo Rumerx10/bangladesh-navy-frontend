@@ -75,11 +75,9 @@ const GallerySection = () => {
             <SectionTitle title="Gallery" />
           </div>
 
-          {/* Gallery Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 h-200 md:h-150 lg:h-175">
-            {/* Main Large Image */}
+          <div className="grid grid-cols-1 md:grid-cols-4 h-200 md:h-150 lg:h-175">
             <motion.div
-              className="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+              className="md:col-span-2 md:row-span-2 relative group overflow-hidden shadow-lg cursor-pointer"
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -106,7 +104,7 @@ const GallerySection = () => {
             {galleryImages.slice(1).map((image, index) => (
               <motion.div
                 key={image.id}
-                className="relative group overflow-hidden rounded-2xl shadow-md cursor-pointer"
+                className="relative group overflow-hidden shadow-md cursor-pointer"
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}

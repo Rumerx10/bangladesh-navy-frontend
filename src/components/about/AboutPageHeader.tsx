@@ -13,7 +13,7 @@ const AboutPageHeader = ({
   breadcrumbs,
 }: AboutPageHeaderProps) => {
   return (
-    <div className="bg-card border-b border-border py-6 lg:py-8 mt-28 lg:mt-26">
+    <div className="bg-card border-b border-border py-6 lg:py-8 mt-24 lg:mt-20">
       <div className="container px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-sm text-secondary-foreground mb-3">

@@ -22,6 +22,16 @@
   --color-pBlue: var(--brand-ink);
   --color-liteBlue: var(--brand-ink-accent);
 
+  /* Ink for the navbar band. The band is a strong dark gradient in *both*
+     themes, so its ink is fixed white rather than theme-derived — the same
+     reasoning as `brand-navy` above. */
+  --color-nav-strip: var(--nav-strip);
+  --color-nav-ink: var(--nav-ink);
+  --color-nav-ink-muted: var(--nav-ink-muted);
+  --color-nav-wash: var(--nav-wash);
+  --color-nav-wash-strong: var(--nav-wash-strong);
+  --color-nav-hairline: var(--nav-hairline);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
@@ -81,6 +91,35 @@
   --brand-ink: #001836;
   --brand-ink-accent: #003f71;
 
+  /* The navbar and footer band — "Signal Blue". Declared here and overridden
+     in `.dark` below: the band is brand identity, but at full strength it
+     out-glares a dark page, so the dark theme gets a dimmed cut of the same
+     gradient rather than a different colour.
+
+     The same gradient backs the nav dropdowns, so it has to stay dark enough
+     across its whole length to carry white ink — which is what `--nav-ink`
+     assumes. Raising the bright stop past ~0.55 lightness breaks that. */
+  --nav-gradient: linear-gradient(
+    110deg,
+    oklch(0.24 0.13 245) 0%,
+    oklch(0.5 0.17 230) 100%
+  );
+  /* Solid companion to the band, for the strips stacked with it — the notice
+     marquee under the navbar. It has to dim alongside `--nav-gradient` in
+     dark mode, or the strip ends up brighter than the masthead above it. */
+  --nav-strip: #003f71;
+
+  --nav-ink: #ffffff;
+  --nav-ink-muted: rgb(255 255 255 / 0.72);
+
+  /* Hover and selected states for anything sitting on that band. Deliberately
+     translucent white rather than a fixed colour: the wash then derives from
+     whatever part of the gradient is behind it, so it stays correct at both
+     the dark and the bright end instead of banding against one of them. */
+  --nav-wash: rgb(255 255 255 / 0.1);
+  --nav-wash-strong: rgb(255 255 255 / 0.18);
+  --nav-hairline: rgb(255 255 255 / 0.15);
+
   --light: #f7f7f7;
   --light-dark: #eeeeee;
   --light-silver: #e0e0e0;
@@ -135,60 +174,112 @@
    The hue (~250) is carried through the greys on purpose: a perfectly neutral
    grey next to the navy brand reads as dirty, a faint blue cast reads as
    deliberate. */
+/* The whole dark palette is derived from five seed numbers, so a variant is
+   five values rather than a copy of this block. Working in oklch is what makes
+   that possible: lightness is perceptually even, so "one step lighter" is the
+   same visual step at every hue, and a palette stays legible when you rotate
+   its hue. Doing this in hex would need every shade hand-picked per variant.
+
+     --dk-l  lightness of the page itself; every surface steps up from it
+     --dk-c  chroma of the greys — how much the hue tints the neutrals
+     --dk-h  hue of the greys
+     --ac-h  hue of the accent (primary, links, focus ring)
+     --ac-c  chroma of the accent — how saturated the brand colour reads
+
+   The seeds below are Sapphire Reef, chosen from the 30-gradient preview. */
 .dark {
   color-scheme: dark;
 
-  /* Ink, inverted: near-white navy for headings, a brighter blue for links
-     that still reads as "the brand blue" at low lightness. */
-  --brand-ink: oklch(0.93 0.025 250);
-  --brand-ink-accent: oklch(0.76 0.1 245);
+  --dk-l: 0.15;
+  --dk-c: 0.038;
+  --dk-h: 235;
+  --dk-h2: 205;
+  --dk-ang: 160deg;
+  --ac-h: 230;
+  --ac-c: 0.15;
 
-  --background: oklch(0.16 0.012 250);
-  --foreground: oklch(0.96 0.004 250);
+  --background: oklch(var(--dk-l) var(--dk-c) var(--dk-h));
+
+  /* The page wash. Kept deliberately narrow — 0.035 of lightness and a small
+     hue drift — because this sits behind every page: a gradient with real
+     contrast in it reads as a banner, not as a background, and fights the
+     cards stacked on top of it. */
+  --page-gradient: linear-gradient(
+    var(--dk-ang),
+    oklch(var(--dk-l) var(--dk-c) var(--dk-h)) 0%,
+    oklch(calc(var(--dk-l) + 0.035) calc(var(--dk-c) * 1.6) var(--dk-h2)) 100%
+  );
 
   /* The ramp reverses: each step is *lighter* than the page, not darker. */
-  --light: oklch(0.21 0.013 250);
-  --light-dark: oklch(0.25 0.013 250);
-  --light-silver: oklch(0.3 0.014 250);
-  --light-blue: oklch(0.24 0.02 240);
+  --light: oklch(calc(var(--dk-l) + 0.05) var(--dk-c) var(--dk-h));
+  --light-dark: oklch(calc(var(--dk-l) + 0.09) var(--dk-c) var(--dk-h));
+  --light-silver: oklch(calc(var(--dk-l) + 0.14) var(--dk-c) var(--dk-h));
+  --light-blue: oklch(
+    calc(var(--dk-l) + 0.08) calc(var(--dk-c) + 0.01) var(--ac-h)
+  );
+  --card: oklch(calc(var(--dk-l) + 0.05) var(--dk-c) var(--dk-h));
+  --popover: oklch(calc(var(--dk-l) + 0.07) var(--dk-c) var(--dk-h));
+  --muted: oklch(calc(var(--dk-l) + 0.1) var(--dk-c) var(--dk-h));
+  --accent: oklch(calc(var(--dk-l) + 0.12) calc(var(--ac-c) / 3) var(--ac-h));
+
+  --foreground: oklch(0.96 0.004 var(--dk-h));
+  --card-foreground: oklch(0.96 0.004 var(--dk-h));
+  --popover-foreground: oklch(0.96 0.004 var(--dk-h));
+  --accent-foreground: oklch(0.95 0.01 var(--dk-h));
+  --muted-foreground: oklch(0.72 0.01 var(--dk-h));
+  --secondary-foreground: oklch(0.76 0.01 var(--dk-h));
+  --secondary-gray: oklch(0.72 0 0);
+
+  /* Ink, inverted: near-white for headings, a brighter accent for links that
+     still reads as "the brand colour" at low lightness. */
+  --brand-ink: oklch(0.93 0.025 var(--ac-h));
+  --brand-ink-accent: oklch(0.76 calc(var(--ac-c) * 0.85) var(--ac-h));
 
   /* `primary` carries both roles — 196 fills and ~130 inks — so it has to
-     land where white-on-primary and primary-on-background are both legible.
-     Lightening it and flipping its foreground to near-black is what makes
-     that possible; a navy primary would be invisible as ink on this ground. */
-  --primary: oklch(0.7 0.12 250);
-  --primary-light: oklch(0.9 0.03 250);
-  --primary-foreground: oklch(0.17 0.01 250);
+     land where foreground-on-primary and primary-on-background are both
+     legible. Lightening it and flipping its foreground to near-black is what
+     makes that possible; a dark primary would be invisible as ink here. */
+  --primary: oklch(0.7 var(--ac-c) var(--ac-h));
+  --primary-light: oklch(0.9 0.03 var(--ac-h));
+  --primary-foreground: oklch(calc(var(--dk-l) + 0.01) 0.01 var(--dk-h));
 
-  --secondary: oklch(0.68 0.11 262);
-  --secondary-dark: oklch(0.86 0.04 270);
-  --secondary-gray: oklch(0.72 0 0);
-  --secondary-foreground: oklch(0.76 0.01 260);
-
-  --accent: oklch(0.28 0.04 240);
-  --accent-foreground: oklch(0.95 0.01 250);
-
-  --muted: oklch(0.26 0.012 250);
-  --muted-foreground: oklch(0.72 0.01 250);
+  --secondary: oklch(0.68 calc(var(--ac-c) * 0.9) calc(var(--ac-h) + 12));
+  --secondary-dark: oklch(0.86 0.04 calc(var(--ac-h) + 20));
 
   --border: oklch(1 0 0 / 14%);
   --input: oklch(1 0 0 / 18%);
-  --ring: oklch(0.65 0.12 245);
-
-  --card: oklch(0.21 0.013 250);
-  --card-foreground: oklch(0.96 0.004 250);
-
-  --popover: oklch(0.23 0.013 250);
-  --popover-foreground: oklch(0.96 0.004 250);
+  --ring: oklch(0.65 var(--ac-c) var(--ac-h));
 
   /* Pure-saturation red burns on a dark ground; pull lightness up and chroma
-     back so a destructive button reads as urgent rather than as glare. */
+     back so a destructive button reads as urgent rather than as glare. Fixed
+     across variants — a warning that changed hue with the theme would stop
+     reading as a warning. */
   --destructive: oklch(0.68 0.19 25);
 
   /* Held just under `--foreground` for the same reason it sits just above
      black in light mode — maximum contrast is the wrong target for body copy
      at length, in either direction. */
-  --prose-ink: oklch(0.87 0.012 250);
+  --prose-ink: oklch(0.87 0.012 var(--dk-h));
+
+  /* Signal Blue after dark. Same two hues and the same sweep direction as the
+     light band, pulled down in lightness and chroma so it reads as the same
+     colour dimmed rather than as a different one.
+
+     The endpoints are picked against the page, not in isolation: the dark
+     ground is `oklch(0.15 …)`, so starting the band at 0.17 keeps the
+     masthead a hair above the page instead of cutting a hole in it, and
+     ending at 0.32 leaves enough travel for the gradient to still read as a
+     gradient. The light band's 0.50 bright stop was the problem — against a
+     0.15 page it glares instead of anchoring. */
+  --nav-gradient: linear-gradient(
+    110deg,
+    oklch(0.17 0.1 245) 0%,
+    oklch(0.32 0.13 230) 100%
+  );
+
+  /* Sits just above the band's bright stop so the marquee still separates
+     from the masthead, without climbing back to the light theme's brightness. */
+  --nav-strip: oklch(0.26 0.11 238);
 }
 
 /* =========================
@@ -201,6 +292,15 @@
 
   body {
     @apply bg-background text-foreground antialiased;
+  }
+
+  /* `background-color` stays as the solid fallback underneath; the gradient
+     is painted as an image on top of it. `fixed` keeps the wash anchored to
+     the viewport instead of stretching over the full scroll height, where a
+     subtle gradient would smear into an invisible flat tone on a long page. */
+  .dark body {
+    background-image: var(--page-gradient);
+    background-attachment: fixed;
   }
 }
 

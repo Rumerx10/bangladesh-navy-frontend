@@ -9,7 +9,7 @@ interface AboutHeroProps {
 
 const AboutHero = ({ title, description }: AboutHeroProps) => {
   return (
-    <section className="relative mt-32 pt-32 pb-20 lg:pt-48 lg:pb-32 bg-brand-navy overflow-hidden">
+    <section className="relative mt-24 pt-24 pb-20 lg:pt-48 lg:pb-32 bg-brand-navy overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0">
         <div className="absolute top-0 right-0 w-125 h-125 bg-blue-500 rounded-full blur-[120px] -mr-64 -mt-64" />

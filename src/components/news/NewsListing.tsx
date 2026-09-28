@@ -16,7 +16,7 @@ const NewsListingPage = () => {
   const newsItems = Array.isArray(data?.data) ? data.data : [];
 
   return (
-    <div className="mt-28 lg:mt-26">
+    <div className="mt-24 lg:mt-20">
       {/* Page Header */}
       <section className="relative bg-linear-to-b from-brand-navy to-[#003052] py-14 lg:py-20 overflow-hidden">
         <div className="absolute -right-20 -top-10 text-white">

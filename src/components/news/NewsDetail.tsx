@@ -33,7 +33,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
 
   if (newsLoading) {
     return (
-      <div className="mt-28 lg:mt-26">
+      <div className="mt-24 lg:mt-20">
         <div className="h-85 lg:h-105 bg-light-silver animate-pulse" />
         <div className="max-w-3xl mx-auto px-4 py-10 space-y-4">
           <div className="h-6 w-32 bg-light-silver animate-pulse rounded" />
@@ -47,7 +47,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
 
   if (!news) {
     return (
-      <div className="mt-28 lg:mt-26 text-center py-20">
+      <div className="mt-24 lg:mt-20 text-center py-20">
         <p className="text-secondary-foreground text-lg">News not found.</p>
         <Link
           href="/about/news"
@@ -60,7 +60,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
   }
 
   return (
-    <div className="mt-28 lg:mt-26">
+    <div className="mt-24 lg:mt-20">
       {/* Hero Image */}
       <section className="relative h-85 lg:h-105 overflow-hidden bg-brand-navy">
         <Image

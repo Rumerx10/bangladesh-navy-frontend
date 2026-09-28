@@ -115,7 +115,7 @@ const HeaderTopBarActions = () => {
 
   return (
     <div className="flex items-center gap-1 shrink-0">
-      <ThemeToggle className="text-secondary-foreground" />
+      <ThemeToggle className="text-nav-ink" />
 
       {/* Search with nav suggestions */}
       <div ref={searchAreaRef}>
@@ -155,19 +155,19 @@ const HeaderTopBarActions = () => {
 
                 {/* Nav suggestions dropdown */}
                 {navSuggestions.length > 0 && (
-                  <div className="absolute top-full right-0 mt-1.5 w-64 bg-card rounded-xl shadow-xl border border-border z-100 overflow-hidden">
-                    <p className="px-3 pt-2.5 pb-1 text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
+                  <div className="absolute top-full right-0 mt-1.5 w-64 bg-(image:--nav-gradient) rounded-xl shadow-2xl border border-nav-hairline z-100 overflow-hidden">
+                    <p className="px-3 pt-2.5 pb-1 text-[10px] font-semibold text-nav-ink-muted uppercase tracking-widest">
                       Quick Navigation
                     </p>
                     {navSuggestions.map((link) => (
                       <button
                         key={link.href}
                         onClick={() => handleNavSuggestionClick(link.href)}
-                        className="flex items-center gap-2.5 w-full px-3 py-2 text-sm text-foreground hover:bg-light hover:text-liteBlue text-left transition-colors"
+                        className="flex items-center gap-2.5 w-full px-3 py-2 text-sm text-nav-ink-muted hover:bg-nav-wash hover:text-nav-ink text-left transition-colors"
                       >
                         <ArrowRight
                           size={13}
-                          className="text-muted-foreground shrink-0"
+                          className="text-nav-ink-muted shrink-0"
                         />
                         {link.label}
                       </button>
@@ -175,7 +175,7 @@ const HeaderTopBarActions = () => {
                     {searchQuery.trim() && (
                       <button
                         onClick={handleSearchSubmit}
-                        className="flex items-center gap-2.5 w-full px-3 py-2.5 text-sm font-medium text-liteBlue hover:bg-liteBlue/5 border-t border-border transition-colors"
+                        className="flex items-center gap-2.5 w-full px-3 py-2.5 text-sm font-medium text-nav-ink hover:bg-nav-wash border-t border-nav-hairline transition-colors"
                       >
                         <Search size={13} className="shrink-0" />
                         Search &ldquo;{searchQuery}&rdquo;
@@ -189,7 +189,7 @@ const HeaderTopBarActions = () => {
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 onClick={() => setIsSearchOpen(true)}
-                className="flex items-center justify-center w-10 h-10 text-secondary-foreground hover:text-liteBlue hover:bg-light rounded-full transition-colors"
+                className="flex items-center justify-center w-10 h-10 text-nav-ink hover:bg-white/10 rounded-full transition-colors"
                 aria-label="Open search"
               >
                 <Search size={20} />
