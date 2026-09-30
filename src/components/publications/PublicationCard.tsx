@@ -24,9 +24,9 @@ const PublicationCard = ({ publication }: { publication: IPublication }) => {
   return (
     <Link
       href="/how-to-collect"
-      className="group flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-md"
+      className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-shadow hover:shadow-md"
     >
-      <div className="relative aspect-4/3 w-full overflow-hidden bg-gray-100">
+      <div className="relative aspect-4/3 w-full overflow-hidden bg-light-dark">
         <Image
           src={publication.imageUrl}
           alt={publication.titleEn}
@@ -38,7 +38,7 @@ const PublicationCard = ({ publication }: { publication: IPublication }) => {
 
       <div className="flex flex-1 flex-col p-5">
         {publication.code && (
-          <span className="w-fit rounded-md bg-gray-100 px-2 py-1 text-[11px] font-semibold text-gray-600">
+          <span className="w-fit rounded-md bg-light-dark px-2 py-1 text-[11px] font-semibold text-secondary-foreground">
             {publication.code}
           </span>
         )}
@@ -47,7 +47,7 @@ const PublicationCard = ({ publication }: { publication: IPublication }) => {
           {publication.titleEn}
         </h3>
 
-        <span className="mt-3 inline-flex items-center gap-1.5 text-xs text-gray-500">
+        <span className="mt-3 inline-flex items-center gap-1.5 text-xs text-secondary-foreground">
           <CalendarDays className="h-3.5 w-3.5 shrink-0" />
           {formatPublicationDate(publication.date)}
         </span>

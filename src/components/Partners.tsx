@@ -23,7 +23,7 @@ const Partners = () => {
     <div className="container px-4 mx-auto py-8 md:py-12 lg:py-16">
       <div className="flex flex-col gap-8 lg:gap-12">
         <div className="space-y-4">
-          <SectionTitle title="Our Trusted Partners" />
+          <SectionTitle title="Maritime Stakeholders" />
         </div>
 
         <div className="py-16 lg:py-0">
@@ -32,7 +32,7 @@ const Partners = () => {
               {Array.from({ length: 6 }).map((_, index) => (
                 <div
                   key={index}
-                  className="h-16 w-32 rounded-lg bg-gray-100 animate-pulse"
+                  className="h-16 w-32 rounded-lg bg-light-dark animate-pulse"
                 />
               ))}
             </div>

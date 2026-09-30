@@ -114,7 +114,7 @@ const CreateUpdateImportantLink = ({
         if (!open) handleClose();
       }}
     >
-      <DialogContent className="bg-white sm:max-w-lg">
+      <DialogContent className="bg-card sm:max-w-lg">
         <DialogHeader>
           <DialogTitle className="text-secondary text-xl font-semibold">
             {isUpdate ? "Update" : "Create"} Important Link

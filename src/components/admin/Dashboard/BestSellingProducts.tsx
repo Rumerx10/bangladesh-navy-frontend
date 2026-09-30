@@ -16,17 +16,17 @@ const BestSellingProducts = () => {
   if (isLoading || !products) return <BestSellingProductsSkeleton />;
 
   return (
-    <Card className="border-gray-100 shadow-sm rounded-2xl py-4 sm:py-5 h-full">
+    <Card className="border-border shadow-sm rounded-2xl py-4 sm:py-5 h-full">
       <CardHeader className="pb-2 px-4 sm:px-6">
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-linear-to-br from-[#d97706] to-[#fbbf24] flex items-center justify-center shrink-0">
             <Award className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </div>
           <div>
-            <CardTitle className="text-sm sm:text-base lg:text-lg font-semibold text-gray-900">
+            <CardTitle className="text-sm sm:text-base lg:text-lg font-semibold text-foreground">
               Best Selling Products
             </CardTitle>
-            <p className="text-[11px] sm:text-xs text-gray-400 mt-0.5">
+            <p className="text-[11px] sm:text-xs text-muted-foreground mt-0.5">
               Top 5 products this month
             </p>
           </div>
@@ -50,16 +50,16 @@ const BestSellingProducts = () => {
               {/* Info */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-0.5 sm:mb-1">
-                  <p className="text-xs sm:text-sm font-medium text-gray-800 truncate pr-2">
+                  <p className="text-xs sm:text-sm font-medium text-foreground truncate pr-2">
                     {product.name}
                   </p>
-                  <span className="text-xs sm:text-sm font-semibold text-gray-900 shrink-0">
+                  <span className="text-xs sm:text-sm font-semibold text-foreground shrink-0">
                     {product.revenue}
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   {/* Progress bar */}
-                  <div className="flex-1 h-1 sm:h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                  <div className="flex-1 h-1 sm:h-1.5 bg-light-dark rounded-full overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all duration-500"
                       style={{
@@ -68,7 +68,7 @@ const BestSellingProducts = () => {
                       }}
                     />
                   </div>
-                  <span className="text-[10px] sm:text-[11px] text-gray-400 shrink-0 w-12 sm:w-16 text-right">
+                  <span className="text-[10px] sm:text-[11px] text-muted-foreground shrink-0 w-12 sm:w-16 text-right">
                     {product.sold} sold
                   </span>
                 </div>

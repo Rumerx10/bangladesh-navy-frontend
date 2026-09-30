@@ -71,7 +71,7 @@ const HeroBanner = () => {
 
   return (
     <div
-      className="relative w-full rounded-lg bg-gray-100 group overflow-hidden"
+      className="relative w-full rounded-lg bg-light-dark group overflow-hidden"
       style={{ perspective: "1200px" }}
     >
       {/* Slides */}
@@ -111,14 +111,14 @@ const HeroBanner = () => {
       {/* Arrow navigation */}
       <button
         onClick={prev}
-        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-white/80 hover:bg-white shadow-md flex items-center justify-center text-gray-700 opacity-0 group-hover:opacity-100 transition-opacity"
+        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-card/80 hover:bg-card shadow-md flex items-center justify-center text-foreground opacity-0 group-hover:opacity-100 transition-opacity"
         aria-label="Previous slide"
       >
         <ChevronLeft size={18} />
       </button>
       <button
         onClick={next}
-        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-white/80 hover:bg-white shadow-md flex items-center justify-center text-gray-700 opacity-0 group-hover:opacity-100 transition-opacity"
+        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-card/80 hover:bg-card shadow-md flex items-center justify-center text-foreground opacity-0 group-hover:opacity-100 transition-opacity"
         aria-label="Next slide"
       >
         <ChevronRight size={18} />
@@ -135,7 +135,7 @@ const HeroBanner = () => {
             }}
             className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
               index === current
-                ? "bg-white w-6"
+                ? "bg-card w-6"
                 : "bg-white/50 hover:bg-white/80"
             }`}
             aria-label={`Go to slide ${index + 1}`}

@@ -1,19 +1,6 @@
 "use client";
 
-import { logoutUser } from "@/src/lib/redux/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "@/src/lib/redux/hooks";
-import {
-  ChevronDown,
-  ChevronRight,
-  Home,
-  LayoutGrid,
-  LogOut,
-  Search,
-  ShoppingCart,
-  User,
-  X,
-} from "lucide-react";
-import Image from "next/image";
+import { ChevronDown, ChevronRight, Search, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -58,11 +45,6 @@ interface MobileNavProps {
 const MobileNav = ({ open, setOpen }: MobileNavProps) => {
   const pathname = usePathname();
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  const cartItems = useAppSelector((state) => state.cart.items);
-  const { userInformation } = useAppSelector((state) => state.auth);
-  const isLoggedIn = !!userInformation?.firstName;
-  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [searchQuery, setSearchQuery] = useState("");
@@ -152,7 +134,7 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
         <div key={sub.label}>
           <button
             onClick={() => toggleItem(sub.label)}
-            className="flex items-center justify-between w-full py-2 px-3 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md"
+            className="flex items-center justify-between w-full py-2 px-3 text-sm font-medium text-foreground hover:bg-light rounded-md"
           >
             {sub.label}
             {isExpanded ? (
@@ -171,7 +153,7 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
                   className={`py-2 px-3 text-sm rounded-md block ${
                     pathname === nested.link
                       ? "text-liteBlue bg-liteBlue/5 font-medium"
-                      : "text-gray-600 hover:text-liteBlue hover:bg-gray-50"
+                      : "text-secondary-foreground hover:text-liteBlue hover:bg-light"
                   }`}
                 >
                   {nested.label}
@@ -190,7 +172,7 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
         className={`py-2 px-3 text-sm rounded-md block ${
           pathname === sub.link
             ? "text-liteBlue bg-liteBlue/5 font-medium"
-            : "text-gray-600 hover:text-liteBlue hover:bg-gray-50"
+            : "text-secondary-foreground hover:text-liteBlue hover:bg-light"
         }`}
       >
         {sub.label}
@@ -215,7 +197,7 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
           className={`py-2.5 px-3 rounded-md text-sm font-medium block ${
             isActive
               ? "text-liteBlue bg-liteBlue/5"
-              : "text-gray-700 hover:bg-gray-50"
+              : "text-foreground hover:bg-light"
           }`}
         >
           {item.label}
@@ -229,8 +211,8 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
           onClick={() => toggleItem(item.label)}
           className={`flex items-center justify-between w-full py-2.5 px-3 rounded-md text-sm font-medium ${
             isActive
-              ? "text-liteBlue hover:bg-gray-50"
-              : "text-gray-700 hover:bg-gray-50"
+              ? "text-liteBlue hover:bg-light"
+              : "text-foreground hover:bg-light"
           }`}
         >
           {item.label}
@@ -254,7 +236,7 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
       {/* Overlay */}
       {open && (
         <div
-          className="fixed inset-0 bg-black/50 z-60"
+          className="fixed inset-0 bg-black/50 z-60 backdrop-blur-sm"
           onClick={() => setOpen(false)}
         />
       )}
@@ -263,24 +245,24 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
       {open && (
         <button
           onClick={() => setOpen(false)}
-          className="fixed z-80 top-3 bg-white/90 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center shadow-lg border border-gray-200"
+          className="fixed z-80 top-3 bg-card/90 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center shadow-lg border border-border"
           style={{ right: "calc(min(320px, 85vw) + 8px)" }}
           aria-label="Close menu"
         >
-          <X size={18} className="text-gray-600" />
+          <X size={18} className="text-secondary-foreground" />
         </button>
       )}
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 z-70 h-screen w-80 max-w-[85vw] bg-white transform transition-transform duration-300 flex flex-col ${
+        className={`fixed top-0 right-0 z-70 h-screen w-80 max-w-[85vw] bg-card transform transition-transform duration-300 flex flex-col ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Search — top */}
         <div
           ref={searchRef}
-          className="shrink-0 px-4 pt-4 pb-3 border-b border-gray-100 relative"
+          className="shrink-0 px-4 pt-4 pb-3 border-b border-border relative"
         >
           <form onSubmit={handleSearchSubmit}>
             <div className="relative flex items-center">
@@ -293,7 +275,7 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
                 }}
                 onFocus={() => setShowSuggestions(true)}
                 placeholder="Search pages & products..."
-                className="w-full h-10 pl-4 pr-20 rounded-full border border-gray-200 bg-gray-50 text-sm focus:border-liteBlue focus:bg-white focus:outline-none transition-colors"
+                className="w-full h-10 pl-4 pr-20 rounded-full border border-border bg-light text-sm focus:border-liteBlue focus:bg-card focus:outline-none transition-colors"
               />
               {searchQuery && (
                 <button
@@ -302,14 +284,14 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
                     setSearchQuery("");
                     setShowSuggestions(false);
                   }}
-                  className="absolute right-10 top-1/2 -translate-y-1/2 text-gray-400 p-1"
+                  className="absolute right-10 top-1/2 -translate-y-1/2 text-muted-foreground p-1"
                 >
                   <X size={14} />
                 </button>
               )}
               <button
                 type="submit"
-                className="absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full bg-liteBlue text-white hover:bg-liteBlue/90 transition-colors"
+                className="absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full bg-brand-blue text-white hover:bg-brand-blue/90 transition-colors"
                 aria-label="Search"
               >
                 <Search size={14} />
@@ -319,7 +301,7 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
 
           {/* Search suggestions */}
           {showSuggestions && navSuggestions.length > 0 && (
-            <div className="absolute left-4 right-4 top-[calc(100%-4px)] bg-white rounded-b-xl shadow-lg border border-t-0 border-gray-100 z-10 overflow-hidden">
+            <div className="absolute left-4 right-4 top-[calc(100%-4px)] bg-card rounded-b-xl shadow-lg border border-t-0 border-border z-10 overflow-hidden">
               {navSuggestions.map((link) => (
                 <button
                   key={link.href}
@@ -327,9 +309,12 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
                     setShowSuggestions(false);
                     handleNavClick(link.href);
                   }}
-                  className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-liteBlue text-left transition-colors"
+                  className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm text-foreground hover:bg-light hover:text-liteBlue text-left transition-colors"
                 >
-                  <Search size={13} className="text-gray-400 shrink-0" />
+                  <Search
+                    size={13}
+                    className="text-muted-foreground shrink-0"
+                  />
                   {link.label}
                 </button>
               ))}
@@ -341,55 +326,6 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
         <nav className="flex-1 overflow-y-auto px-4 py-3 flex flex-col gap-0.5">
           {NavigationItems.map((item) => renderNavItem(item))}
         </nav>
-
-        {/* Sign In / User — bottom */}
-        <div className="shrink-0 p-4 border-t border-gray-100">
-          {isLoggedIn ? (
-            <div className="flex items-center gap-3">
-              {userInformation.profilePicture ? (
-                <Image
-                  src={userInformation.profilePicture}
-                  alt={userInformation.firstName}
-                  width={36}
-                  height={36}
-                  className="w-9 h-9 rounded-full object-cover ring-2 ring-liteBlue/20"
-                />
-              ) : (
-                <div className="w-9 h-9 rounded-full bg-liteBlue/10 flex items-center justify-center">
-                  <User size={16} className="text-liteBlue" />
-                </div>
-              )}
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-gray-800 truncate">
-                  {userInformation.firstName} {userInformation.lastName}
-                </p>
-                <p className="text-xs text-gray-500 truncate">
-                  {userInformation.email}
-                </p>
-              </div>
-              <button
-                onClick={() => {
-                  dispatch(logoutUser());
-                  setOpen(false);
-                }}
-                className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                aria-label="Logout"
-              >
-                <LogOut size={18} />
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={() => {
-                setOpen(false);
-                router.push("/auth/login");
-              }}
-              className="w-full bg-liteBlue text-white text-center rounded-md py-2.5 font-medium text-sm hover:bg-liteBlue/90 transition-colors"
-            >
-              Sign In / Register
-            </button>
-          )}
-        </div>
       </div>
     </>
   );

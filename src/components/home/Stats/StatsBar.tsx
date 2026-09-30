@@ -6,7 +6,7 @@ import StatItem from "./StatItem";
 
 const StatsBar = () => {
   return (
-    <section className="relative bg-pBlue py-10 lg:py-56 overflow-hidden">
+    <section className="relative bg-brand-navy py-10 lg:py-56 overflow-hidden">
       {/* Watermark */}
       <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 text-white">
         <NavyWatermark

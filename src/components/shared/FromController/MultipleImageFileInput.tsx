@@ -95,7 +95,7 @@ export const MultipleImageUploadController = ({
               {/* Upload box */}
               <div
                 className={cn(
-                  "w-full lg:w-44.25 h-39.25 border border-dashed border-light-silver bg-[#F7F7F7] rounded-lg hover:border-dashboard-primary shrink-0",
+                  "w-full lg:w-44.25 h-39.25 border border-dashed border-light-silver bg-light rounded-lg hover:border-dashboard-primary shrink-0",
                   className
                 )}
               >
@@ -113,7 +113,7 @@ export const MultipleImageUploadController = ({
                         className="flex flex-col items-center gap-2"
                       >
                         <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xs text-muted-foreground">
                           Uploading...
                         </span>
                       </motion.div>
@@ -132,7 +132,7 @@ export const MultipleImageUploadController = ({
                           alt="plus"
                           className="w-4.5 mb-1"
                         />
-                        <span className="text-xs text-[#A6A6A6] text-center px-2">
+                        <span className="text-xs text-muted-foreground text-center px-2">
                           {label || "Upload images"}
                         </span>
                       </motion.div>

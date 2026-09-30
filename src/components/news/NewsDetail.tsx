@@ -33,13 +33,13 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
 
   if (newsLoading) {
     return (
-      <div className="mt-28 lg:mt-26">
-        <div className="h-85 lg:h-105 bg-gray-200 animate-pulse" />
+      <div className="mt-24 lg:mt-20">
+        <div className="h-85 lg:h-105 bg-light-silver animate-pulse" />
         <div className="max-w-3xl mx-auto px-4 py-10 space-y-4">
-          <div className="h-6 w-32 bg-gray-200 animate-pulse rounded" />
-          <div className="h-10 w-full bg-gray-200 animate-pulse rounded" />
-          <div className="h-4 w-full bg-gray-200 animate-pulse rounded" />
-          <div className="h-4 w-3/4 bg-gray-200 animate-pulse rounded" />
+          <div className="h-6 w-32 bg-light-silver animate-pulse rounded" />
+          <div className="h-10 w-full bg-light-silver animate-pulse rounded" />
+          <div className="h-4 w-full bg-light-silver animate-pulse rounded" />
+          <div className="h-4 w-3/4 bg-light-silver animate-pulse rounded" />
         </div>
       </div>
     );
@@ -47,8 +47,8 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
 
   if (!news) {
     return (
-      <div className="mt-28 lg:mt-26 text-center py-20">
-        <p className="text-gray-500 text-lg">News not found.</p>
+      <div className="mt-24 lg:mt-20 text-center py-20">
+        <p className="text-secondary-foreground text-lg">News not found.</p>
         <Link
           href="/about/news"
           className="text-liteBlue hover:underline mt-4 inline-block"
@@ -60,9 +60,9 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
   }
 
   return (
-    <div className="mt-28 lg:mt-26">
+    <div className="mt-24 lg:mt-20">
       {/* Hero Image */}
-      <section className="relative h-85 lg:h-105 overflow-hidden bg-pBlue">
+      <section className="relative h-85 lg:h-105 overflow-hidden bg-brand-navy">
         <Image
           src={news.imageUrl}
           alt={news.titleEn}
@@ -71,7 +71,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-pBlue via-pBlue/60 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-brand-navy via-brand-navy/60 to-transparent" />
 
         {/* Breadcrumb on hero */}
         <div className="absolute bottom-0 left-0 right-0">
@@ -100,7 +100,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
       </section>
 
       {/* Content */}
-      <section className="relative py-10 lg:py-14 bg-white overflow-hidden">
+      <section className="relative py-10 lg:py-14 bg-card overflow-hidden">
         <div className="absolute -right-20 top-20 text-pBlue">
           <NavyWatermark
             variant="lighthouse"
@@ -137,7 +137,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
 
             {/* Bengali Title - commented out */}
             {/* <motion.h2
-              className="text-xl lg:text-2xl font-semibold text-gray-500 mb-6"
+              className="text-xl lg:text-2xl font-semibold text-secondary-foreground mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.15 }}
@@ -153,23 +153,23 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
               transition={{ duration: 0.4, delay: 0.2 }}
             >
               <div
-                className="leading-relaxed text-gray-800 text-lg font-medium [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-5 [&_ol]:pl-5 [&_li]:mb-1 [&_a]:text-liteBlue [&_a]:underline [&_img]:rounded-lg [&_img]:shadow-sm after:content-[''] after:table after:clear-both"
+                className="leading-relaxed text-foreground text-lg font-medium [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-5 [&_ol]:pl-5 [&_li]:mb-1 [&_a]:text-liteBlue [&_a]:underline [&_img]:rounded-lg [&_img]:shadow-sm after:content-[''] after:table after:clear-both"
                 dangerouslySetInnerHTML={{
                   __html: sanitizeRichText(news.contentEn),
                 }}
               />
               {/* Bengali Content - commented out */}
               {/* <div
-                className="text-base leading-relaxed text-gray-600 [&_p]:mb-4 [&_p:last-child]:mb-0"
+                className="text-base leading-relaxed text-secondary-foreground [&_p]:mb-4 [&_p:last-child]:mb-0"
                 dangerouslySetInnerHTML={{ __html: sanitizeRichText(news.contentBn) }}
               /> */}
             </motion.article>
 
             {/* Share & Back */}
-            <div className="flex items-center justify-between mt-10 pt-8 border-t border-gray-100">
+            <div className="flex items-center justify-between mt-10 pt-8 border-t border-border">
               <Link
                 href="/about/news"
-                className="inline-flex items-center gap-2 text-sm font-medium text-liteBlue hover:text-[#004d8a] transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-medium text-liteBlue hover:text-liteBlue transition-colors"
               >
                 <ArrowLeft size={16} />
                 Back to All News
@@ -185,7 +185,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
                     navigator.clipboard.writeText(window.location.href);
                   }
                 }}
-                className="inline-flex items-center gap-2 px-4 h-11 py-4 rounded-lg border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 h-11 py-4 rounded-lg border border-border text-sm font-medium text-secondary-foreground hover:bg-light transition-colors cursor-pointer"
               >
                 <Share2 size={16} />
                 Share
@@ -197,7 +197,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
 
       {/* Related News */}
       {relatedNews.length > 0 && (
-        <section className="py-12 lg:py-16 bg-gray-50">
+        <section className="py-12 lg:py-16 bg-light">
           <div className="container px-4 sm:px-6 lg:px-8">
             <h2 className="text-xl lg:text-2xl font-bold text-pBlue mb-8">
               Related News

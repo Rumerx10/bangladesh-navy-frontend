@@ -42,7 +42,7 @@ const CareerForm = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-8 bg-card">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">

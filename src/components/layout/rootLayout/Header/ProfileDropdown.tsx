@@ -52,7 +52,7 @@ export const ProfileDropdown = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
-          className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-50 transition-colors focus:outline-none cursor-pointer"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-light transition-colors focus:outline-none cursor-pointer"
           aria-label="Open profile menu"
         >
           {userInformation.profilePicture ? (
@@ -69,10 +69,10 @@ export const ProfileDropdown = () => {
             </div>
           )}
           <div className="hidden xl:flex flex-col items-start">
-            <span className="text-xs font-semibold text-gray-800 leading-tight">
+            <span className="text-xs font-semibold text-foreground leading-tight">
               {userInformation.firstName}
             </span>
-            <span className="text-[10px] text-gray-400 leading-tight">
+            <span className="text-[10px] text-muted-foreground leading-tight">
               My Account
             </span>
           </div>
@@ -82,10 +82,10 @@ export const ProfileDropdown = () => {
       <DropdownMenuContent
         align="end"
         sideOffset={8}
-        className="z-9999 w-64 shadow-xl rounded-xl bg-white border border-gray-100 p-0 overflow-hidden"
+        className="z-9999 w-64 shadow-xl rounded-xl bg-card border border-border p-0 overflow-hidden"
       >
         {/* User info header */}
-        <DropdownMenuLabel className="px-4 py-3 bg-gray-50/80">
+        <DropdownMenuLabel className="px-4 py-3 bg-light/80">
           <div className="flex items-center gap-3">
             {userInformation.profilePicture ? (
               <Image
@@ -101,10 +101,10 @@ export const ProfileDropdown = () => {
               </div>
             )}
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-gray-900 truncate">
+              <p className="text-sm font-semibold text-foreground truncate">
                 {userInformation.firstName} {userInformation.lastName}
               </p>
-              <p className="text-xs text-gray-500 truncate">
+              <p className="text-xs text-secondary-foreground truncate">
                 {userInformation.email}
               </p>
             </div>
@@ -119,7 +119,7 @@ export const ProfileDropdown = () => {
             <DropdownMenuItem
               key={item.href}
               onClick={() => router.push(item.href)}
-              className="flex items-center gap-3 px-4 py-2.5 cursor-pointer text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors"
+              className="flex items-center gap-3 px-4 py-2.5 cursor-pointer text-secondary-foreground hover:text-primary hover:bg-primary/5 transition-colors"
             >
               <item.icon size={16} className="shrink-0" />
               <span className="text-sm">{item.label}</span>

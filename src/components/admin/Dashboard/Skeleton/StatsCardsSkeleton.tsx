@@ -6,7 +6,7 @@ const StatsCardsSkeleton = () => {
       {Array.from({ length: 4 }).map((_, i) => (
         <div
           key={i}
-          className="relative bg-white rounded-xl sm:rounded-2xl border border-gray-100 p-3 sm:p-4 xl:p-6 overflow-hidden"
+          className="relative bg-card rounded-xl sm:rounded-2xl border border-border p-3 sm:p-4 xl:p-6 overflow-hidden"
         >
           {/* Icon placeholder */}
           <Skeleton className="absolute top-3 right-3 sm:top-4 sm:right-4 lg:top-5 lg:right-5 w-9 h-9 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-lg sm:rounded-xl" />

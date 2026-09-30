@@ -82,7 +82,7 @@ const OrdersClient = () => {
                 <div className="flex flex-col gap-2.5">
                   {order.items.slice(0, 3).map((item, idx) => (
                     <div key={idx} className="flex items-center gap-3">
-                      <div className="relative w-11 sm:w-12 min-w-11 sm:min-w-12 h-11 sm:h-12 rounded-md overflow-hidden bg-gray-100">
+                      <div className="relative w-11 sm:w-12 min-w-11 sm:min-w-12 h-11 sm:h-12 rounded-md overflow-hidden bg-light-dark">
                         <Image
                           src={item.image}
                           alt={item.name}

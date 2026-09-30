@@ -23,7 +23,7 @@ const CourseDetails = ({ course }: CourseDetailsProps) => {
   const [enrollOpen, setEnrollOpen] = useState(false);
 
   return (
-    <div className="bg-white">
+    <div className="bg-card">
       {/* Dynamic Header/Banner for Course */}
       <section className="relative h-100 lg:h-125 flex items-end">
         <Image
@@ -33,7 +33,7 @@ const CourseDetails = ({ course }: CourseDetailsProps) => {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-linear-to-t from-pBlue via-pBlue/60 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-brand-navy via-brand-navy/60 to-transparent" />
         <div className="relative container px-4 sm:px-6 lg:px-8 pb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -78,10 +78,10 @@ const CourseDetails = ({ course }: CourseDetailsProps) => {
                   <BookOpen className="text-blue-600" />
                   Course Overview
                 </h2>
-                <p className="text-gray-600 leading-relaxed text-lg italic border-l-4 border-blue-500 pl-6 mb-8">
+                <p className="text-secondary-foreground leading-relaxed text-lg italic border-l-4 border-blue-500 pl-6 mb-8">
                   {course.shortDescription}
                 </p>
-                <div className="prose prose-blue max-w-none text-gray-600">
+                <div className="prose prose-blue max-w-none text-secondary-foreground">
                   <p>{course.longDescription}</p>
                 </div>
               </div>
@@ -104,7 +104,7 @@ const CourseDetails = ({ course }: CourseDetailsProps) => {
                         className="text-blue-600 mt-0.5 shrink-0"
                         size={18}
                       />
-                      <span className="text-sm text-gray-700 font-medium">
+                      <span className="text-sm text-foreground font-medium">
                         {outcome}
                       </span>
                     </motion.div>
@@ -126,22 +126,22 @@ const CourseDetails = ({ course }: CourseDetailsProps) => {
                       viewport={{ once: true }}
                     >
                       <div className="flex flex-col items-center">
-                        <div className="w-10 h-10 rounded-full bg-pBlue text-white flex items-center justify-center font-bold text-sm z-10">
+                        <div className="w-10 h-10 rounded-full bg-brand-navy text-white flex items-center justify-center font-bold text-sm z-10">
                           {step.week}
                         </div>
                         {index !== course.coursePlan.length - 1 && (
-                          <div className="w-0.5 h-full bg-gray-100 group-hover:bg-blue-200 transition-colors" />
+                          <div className="w-0.5 h-full bg-light-dark group-hover:bg-blue-200 transition-colors" />
                         )}
                       </div>
                       <div className="flex-1 pb-10">
-                        <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100 group-hover:border-blue-200 group-hover:shadow-md transition-all">
+                        <div className="bg-light rounded-2xl p-6 border border-border group-hover:border-blue-200 group-hover:shadow-md transition-all">
                           <h4 className="font-bold text-pBlue mb-2 flex items-center justify-between">
                             Week {step.week}: {step.title}
                             <span className="text-[10px] uppercase text-blue-500 font-bold bg-blue-50 px-2 py-1 rounded">
                               Module {index + 1}
                             </span>
                           </h4>
-                          <p className="text-sm text-gray-500 leading-relaxed">
+                          <p className="text-sm text-secondary-foreground leading-relaxed">
                             {step.description}
                           </p>
                         </div>
@@ -155,7 +155,7 @@ const CourseDetails = ({ course }: CourseDetailsProps) => {
             {/* Right Sidebar - Enrollment/Quick Info */}
             <div className="lg:w-96">
               <div className="sticky top-32 space-y-6">
-                <div className="bg-pBlue rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden">
+                <div className="bg-brand-navy rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden">
                   {/* Decorative circles */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16" />
 
@@ -188,24 +188,24 @@ const CourseDetails = ({ course }: CourseDetailsProps) => {
                   </p>
                 </div>
 
-                <div className="bg-gray-50 rounded-3xl p-8 border border-gray-100">
+                <div className="bg-light rounded-3xl p-8 border border-border">
                   <h4 className="font-bold text-pBlue mb-4">Requirements</h4>
                   <ul className="space-y-3">
-                    <li className="flex items-start gap-2 text-xs text-gray-500">
+                    <li className="flex items-start gap-2 text-xs text-secondary-foreground">
                       <ChevronRight
                         size={14}
                         className="text-blue-500 mt-0.5"
                       />
                       Naval Executive Branch or Maritime Professional
                     </li>
-                    <li className="flex items-start gap-2 text-xs text-gray-500">
+                    <li className="flex items-start gap-2 text-xs text-secondary-foreground">
                       <ChevronRight
                         size={14}
                         className="text-blue-500 mt-0.5"
                       />
                       Basic Mathematics & Physics Knowledge
                     </li>
-                    <li className="flex items-start gap-2 text-xs text-gray-500">
+                    <li className="flex items-start gap-2 text-xs text-secondary-foreground">
                       <ChevronRight
                         size={14}
                         className="text-blue-500 mt-0.5"

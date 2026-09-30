@@ -103,20 +103,20 @@ const OrderCard = ({ order }: { order: IOrder }) => {
   const status = statusConfig[order.orderStatus];
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 group">
+    <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 group">
       {/* ── Header ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-4 sm:px-5 py-3 bg-gray-50/60 border-b border-gray-100">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-4 sm:px-5 py-3 bg-light/60 border-b border-border">
         <div className="flex items-center gap-2 text-sm min-w-0">
           <Package
             size={15}
-            className="text-gray-400 shrink-0 hidden sm:block"
+            className="text-muted-foreground shrink-0 hidden sm:block"
           />
-          <span className="font-semibold text-gray-900 truncate">
+          <span className="font-semibold text-foreground truncate">
             {order.orderNumber}
           </span>
-          <span className="text-gray-300 hidden xs:inline">·</span>
-          <span className="text-gray-500 flex items-center gap-1 text-xs sm:text-sm shrink-0">
-            <Calendar size={12} className="text-gray-400 sm:hidden" />
+          <span className="text-light-silver hidden xs:inline">·</span>
+          <span className="text-secondary-foreground flex items-center gap-1 text-xs sm:text-sm shrink-0">
+            <Calendar size={12} className="text-muted-foreground sm:hidden" />
             {new Date(order.createdAt).toLocaleDateString("en-US", {
               year: "numeric",
               month: "short",
@@ -137,7 +137,7 @@ const OrderCard = ({ order }: { order: IOrder }) => {
         <div className="flex flex-col gap-3">
           {order.items.slice(0, 3).map((item, idx) => (
             <div key={idx} className="flex items-center gap-3 sm:gap-4">
-              <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden bg-gray-100 shrink-0 border border-gray-100">
+              <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden bg-light-dark shrink-0 border border-border">
                 <Image
                   src={item.image}
                   alt={item.name}
@@ -147,28 +147,28 @@ const OrderCard = ({ order }: { order: IOrder }) => {
                 />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-800 line-clamp-1 group-hover:text-primary transition-colors">
+                <p className="text-sm font-medium text-foreground line-clamp-1 group-hover:text-primary transition-colors">
                   {item.name}
                 </p>
                 <div className="flex items-center gap-3 mt-0.5">
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-secondary-foreground">
                     Qty: {item.quantity}
                   </span>
-                  <span className="text-xs font-semibold text-gray-700">
+                  <span className="text-xs font-semibold text-foreground">
                     {siteConfig.currencySymbol}
                     {item.price.toLocaleString()}
                   </span>
                 </div>
               </div>
               {/* Per-item subtotal — desktop only */}
-              <span className="hidden md:block text-sm font-semibold text-gray-800 shrink-0">
+              <span className="hidden md:block text-sm font-semibold text-foreground shrink-0">
                 {siteConfig.currencySymbol}
                 {(item.price * item.quantity).toLocaleString()}
               </span>
             </div>
           ))}
           {order.items.length > 3 && (
-            <p className="text-xs text-gray-400 pl-15">
+            <p className="text-xs text-muted-foreground pl-15">
               +{order.items.length - 3} more item(s)
             </p>
           )}
@@ -176,15 +176,15 @@ const OrderCard = ({ order }: { order: IOrder }) => {
       </div>
 
       {/* ── Footer ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-4 sm:px-5 py-3 border-t border-gray-100 bg-gray-50/30">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-4 sm:px-5 py-3 border-t border-border bg-light/30">
         <div className="flex items-center gap-4">
-          <span className="text-sm font-bold text-gray-900">
+          <span className="text-sm font-bold text-foreground">
             Total: {siteConfig.currencySymbol}
             {order.total.toLocaleString()}
           </span>
           {order.trackingNumber && (
-            <span className="hidden sm:flex items-center gap-1 text-xs text-gray-500">
-              <Truck size={12} className="text-gray-400" />
+            <span className="hidden sm:flex items-center gap-1 text-xs text-secondary-foreground">
+              <Truck size={12} className="text-muted-foreground" />
               {order.trackingNumber}
             </span>
           )}
@@ -193,7 +193,7 @@ const OrderCard = ({ order }: { order: IOrder }) => {
           {order.estimatedDelivery &&
             order.orderStatus !== OrderStatus.DELIVERED &&
             order.orderStatus !== OrderStatus.CANCELLED && (
-              <span className="text-[11px] text-gray-400 hidden sm:block">
+              <span className="text-[11px] text-muted-foreground hidden sm:block">
                 Est.{" "}
                 {new Date(order.estimatedDelivery).toLocaleDateString("en-US", {
                   month: "short",
@@ -246,14 +246,14 @@ const AccountOrdersClient = () => {
       {/* ── Header ── */}
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2">
         <div>
-          <h1 className="text-xl lg:text-2xl font-bold text-gray-900">
+          <h1 className="text-xl lg:text-2xl font-bold text-foreground">
             My Orders
           </h1>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <p className="text-sm text-secondary-foreground mt-0.5">
             Track and manage your orders
           </p>
         </div>
-        <p className="text-xs text-gray-400">
+        <p className="text-xs text-muted-foreground">
           {filteredOrders.length} order{filteredOrders.length !== 1 ? "s" : ""}
         </p>
       </div>
@@ -262,19 +262,19 @@ const AccountOrdersClient = () => {
       <div className="relative">
         <Search
           size={16}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
         />
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search by order number or product name..."
-          className="w-full h-10 sm:h-11 pl-10 pr-10 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:border-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
+          className="w-full h-10 sm:h-11 pl-10 pr-10 rounded-lg border border-border bg-light text-sm focus:border-primary focus:bg-card focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
         />
         {searchQuery && (
           <button
             onClick={() => setSearchQuery("")}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-0.5 cursor-pointer"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-secondary-foreground p-0.5 cursor-pointer"
           >
             <X size={14} />
           </button>
@@ -290,7 +290,7 @@ const AccountOrdersClient = () => {
             className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all border cursor-pointer ${
               activeTab === tab.value
                 ? "bg-primary text-white border-primary shadow-sm"
-                : "bg-white text-gray-600 border-gray-200 hover:border-primary/30 hover:text-primary"
+                : "bg-card text-secondary-foreground border-border hover:border-primary/30 hover:text-primary"
             }`}
           >
             {tab.label}
@@ -299,7 +299,7 @@ const AccountOrdersClient = () => {
                 className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
                   activeTab === tab.value
                     ? "bg-white/20 text-white"
-                    : "bg-gray-100 text-gray-500"
+                    : "bg-light-dark text-secondary-foreground"
                 }`}
               >
                 {tab.count}
@@ -317,12 +317,14 @@ const AccountOrdersClient = () => {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-12 sm:py-16 text-center gap-3 bg-white rounded-xl border border-gray-100">
-          <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gray-100 text-gray-400">
+        <div className="flex flex-col items-center justify-center py-12 sm:py-16 text-center gap-3 bg-card rounded-xl border border-border">
+          <div className="w-16 h-16 flex items-center justify-center rounded-full bg-light-dark text-muted-foreground">
             <Package size={28} />
           </div>
-          <p className="text-sm font-medium text-gray-600">No orders found</p>
-          <p className="text-xs text-gray-400 max-w-50">
+          <p className="text-sm font-medium text-secondary-foreground">
+            No orders found
+          </p>
+          <p className="text-xs text-muted-foreground max-w-50">
             {searchQuery
               ? `No results for "${searchQuery}". Try a different search.`
               : "Your orders will appear here once you place an order."}

@@ -19,9 +19,9 @@ const CoursesPreview = ({
   onEdit,
 }: CoursesPreviewProps) => {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
       {/* Header */}
-      <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-6 sm:px-8 py-6 border-b border-gray-100">
+      <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-6 sm:px-8 py-6 border-b border-border">
         <div className="flex items-center gap-3">
           <div className="bg-primary/10 w-10 h-10 flex items-center justify-center rounded-xl border border-primary/20">
             <Image
@@ -36,7 +36,7 @@ const CoursesPreview = ({
             <Paragraph className="font-semibold text-lg! text-pBlue">
               Courses Preview
             </Paragraph>
-            <Paragraph className="text-sm! text-gray-500">
+            <Paragraph className="text-sm! text-secondary-foreground">
               Content shown on the public courses page
             </Paragraph>
           </div>
@@ -56,7 +56,7 @@ const CoursesPreview = ({
         {/* <Paragraph className="font-semibold text-pBlue uppercase">
           Course Statistics
         </Paragraph>
-        <Paragraph className="text-sm! text-gray-500 -mt-3">
+        <Paragraph className="text-sm! text-secondary-foreground -mt-3">
           Rows shown in the public Course Statistics table, backed by its own
           /course-statistics API — independent of Courses, Batches and Alumni
           Members.
@@ -71,4 +71,3 @@ const CoursesPreview = ({
 };
 
 export default CoursesPreview;
-  

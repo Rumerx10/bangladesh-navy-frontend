@@ -19,7 +19,8 @@ interface ViewUserInfoModalProps {
   user?: IUser;
 }
 
-const labelClass = "text-xs uppercase tracking-wide text-gray-500 mb-1";
+const labelClass =
+  "text-xs uppercase tracking-wide text-secondary-foreground mb-1";
 const valueClass = "text-sm font-medium text-secondary break-words";
 
 const ViewUserInfoModal = ({
@@ -39,7 +40,7 @@ const ViewUserInfoModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-white sm:max-w-140">
+      <DialogContent className="bg-card sm:max-w-140">
         <DialogHeader>
           <DialogTitle className="text-secondary text-xl font-semibold">
             User Information
@@ -47,7 +48,7 @@ const ViewUserInfoModal = ({
         </DialogHeader>
 
         <div className="space-y-6">
-          <div className="relative overflow-hidden rounded-xl border border-light-dark bg-linear-to-br from-primary/5 via-white to-white p-5">
+          <div className="relative overflow-hidden rounded-xl border border-light-dark bg-linear-to-br from-primary/5 via-card to-card p-5">
             <div className="flex items-center gap-4">
               {user?.profilePicture ? (
                 <Image
@@ -58,7 +59,7 @@ const ViewUserInfoModal = ({
                   className="w-16 h-16 rounded-full object-cover ring-2 ring-primary/20"
                 />
               ) : (
-                <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-base font-semibold text-gray-600 ring-2 ring-gray-300/60">
+                <div className="w-16 h-16 rounded-full bg-light-silver flex items-center justify-center text-base font-semibold text-secondary-foreground ring-2 ring-gray-300/60">
                   {(user?.firstName?.[0] || "U").toUpperCase()}
                 </div>
               )}

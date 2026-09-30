@@ -22,7 +22,7 @@ const TimelineCard = ({ item }: TimelineCardProps) => {
       <div
         className={`w-full md:w-1/2 ${isRight ? "md:order-2 md:pl-12" : "md:pr-12 md:text-right"}`}
       >
-        <div className="bg-white rounded-xl border border-gray-100 p-5 lg:p-6 shadow-sm hover:shadow-md transition-shadow">
+        <div className="bg-card rounded-xl border border-border p-5 lg:p-6 shadow-sm hover:shadow-md transition-shadow">
           <div
             className={`flex items-center gap-3 mb-3 ${!isRight ? "md:justify-end" : ""}`}
           >
@@ -34,14 +34,14 @@ const TimelineCard = ({ item }: TimelineCardProps) => {
             </span>
           </div>
           <h3 className="text-base font-bold text-pBlue">{item.title}</h3>
-          <p className="mt-2 text-sm text-gray-500 leading-relaxed">
+          <p className="mt-2 text-sm text-secondary-foreground leading-relaxed">
             {item.description}
           </p>
         </div>
       </div>
 
       {/* Center dot */}
-      <div className="absolute left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-liteBlue border-[3px] border-white shadow-md z-10 hidden md:block" />
+      <div className="absolute left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-brand-blue border-[3px] border-white shadow-md z-10 hidden md:block" />
 
       {/* Empty half */}
       <div className={`hidden md:block w-1/2 ${isRight ? "md:order-1" : ""}`} />

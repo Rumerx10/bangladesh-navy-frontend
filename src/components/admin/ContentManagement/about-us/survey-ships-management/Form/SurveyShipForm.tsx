@@ -58,7 +58,7 @@ const SurveyShipForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
       {/* English Content */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-8 bg-card">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
@@ -71,7 +71,7 @@ const SurveyShipForm = ({
           <Button
             type="button"
             onClick={onCancel}
-            className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer"
+            className="text-secondary-foreground bg-transparent hover:bg-light-dark duration-300 border hover:shadow cursor-pointer"
           >
             Cancel
           </Button>
@@ -98,7 +98,7 @@ const SurveyShipForm = ({
       </div>
 
       {/* Image, Category & Status */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-8 bg-card">
         <div className="flex items-center gap-3 mb-6">
           <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
             <Image
@@ -150,7 +150,7 @@ const SurveyShipForm = ({
               placeholder="e.g. 1"
               className="bg-light shadow-none"
             />
-            <Paragraph className="mt-1 text-xs! text-gray-500">
+            <Paragraph className="mt-1 text-xs! text-secondary-foreground">
               Optional — orders the ship on the public page, lowest first. Leave
               empty to let the API decide.
             </Paragraph>
@@ -159,7 +159,7 @@ const SurveyShipForm = ({
       </div>
 
       {/* Basic Information */}
-      <div className="border border-light-silver rounded-lg p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-8 bg-card">
         <div className="flex items-center gap-3 mb-6">
           <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
             <FileText className="w-4 h-4 text-primary" />
@@ -215,7 +215,7 @@ const SurveyShipForm = ({
       </div>
 
       {/* Bengali Fields Section (optional, collapsed by default) */}
-      <div className="border border-light-silver rounded-lg bg-white">
+      <div className="border border-light-silver rounded-lg bg-card">
         <button
           type="button"
           onClick={() => setShowBnFields((prev) => !prev)}
@@ -229,14 +229,14 @@ const SurveyShipForm = ({
               <Paragraph className="xl:text-lg font-medium text-pBlue">
                 Bengali Content
               </Paragraph>
-              <Paragraph className="text-xs! text-gray-500">
+              <Paragraph className="text-xs! text-secondary-foreground">
                 Optional — shown on the site when provided
               </Paragraph>
             </div>
           </div>
           <ChevronDown
             className={cn(
-              "w-5 h-5 text-gray-500 transition-transform duration-300",
+              "w-5 h-5 text-secondary-foreground transition-transform duration-300",
               showBnFields && "rotate-180"
             )}
           />
@@ -276,7 +276,7 @@ const SurveyShipForm = ({
         <Button
           type="button"
           onClick={onCancel}
-          className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer"
+          className="text-secondary-foreground bg-transparent hover:bg-light-dark duration-300 border hover:shadow cursor-pointer"
         >
           Cancel
         </Button>

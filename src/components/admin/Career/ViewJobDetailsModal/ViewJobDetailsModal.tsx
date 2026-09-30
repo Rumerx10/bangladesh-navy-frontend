@@ -25,7 +25,7 @@ const ViewJobDetailsModal = ({
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-white min-w-[60vw] overflow-y-auto">
+      <DialogContent className="bg-card min-w-[60vw] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-secondary text-2xl font-semibold">
             Job Details
@@ -43,7 +43,7 @@ const ViewJobDetailsModal = ({
                 className="w-full h-full object-cover "
               />
             ) : (
-              <User className="w-full h-full p-5 text-gray-400" />
+              <User className="w-full h-full p-5 text-muted-foreground" />
             )}
           </div>
           <div>
@@ -56,26 +56,26 @@ const ViewJobDetailsModal = ({
               />
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 gap-y-3 mt-6">
-              <Paragraph className="text-[#8A8A8A] font-medium">
+              <Paragraph className="text-secondary-foreground font-medium">
                 Job Location:{" "}
                 <span className="font-normal">{data?.location}</span>
               </Paragraph>
-              <Paragraph className="text-[#8A8A8A] font-medium">
+              <Paragraph className="text-secondary-foreground font-medium">
                 Employment Status:{" "}
                 <span className="font-normal">{data?.location}</span>
               </Paragraph>
-              <Paragraph className="text-[#8A8A8A] font-medium">
+              <Paragraph className="text-secondary-foreground font-medium">
                 Experience:{" "}
                 <span className="font-normal">{data?.experience}</span>
               </Paragraph>
-              <Paragraph className="text-[#8A8A8A] font-medium">
+              <Paragraph className="text-secondary-foreground font-medium">
                 Vacancy: <span className="font-normal">{data?.vacancy}</span>
               </Paragraph>
-              <Paragraph className="text-[#8A8A8A] font-medium">
+              <Paragraph className="text-secondary-foreground font-medium">
                 Salary Range:{" "}
                 <span className="font-normal">{data?.salaryRange}</span>
               </Paragraph>
-              <Paragraph className="text-[#8A8A8A] font-medium">
+              <Paragraph className="text-secondary-foreground font-medium">
                 Deadline: <span className="font-normal">{data?.deadline}</span>
               </Paragraph>
             </div>
@@ -84,7 +84,7 @@ const ViewJobDetailsModal = ({
 
         {data && (
           <div
-            className="my-6 leading-relaxed text-gray-700 [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-5 [&_ol]:pl-5 [&_li]:mb-1 [&_a]:text-liteBlue [&_a]:underline [&_img]:rounded-lg [&_img]:shadow-sm after:content-[''] after:table after:clear-both"
+            className="my-6 leading-relaxed text-foreground [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:pl-5 [&_ol]:pl-5 [&_li]:mb-1 [&_a]:text-liteBlue [&_a]:underline [&_img]:rounded-lg [&_img]:shadow-sm after:content-[''] after:table after:clear-both"
             dangerouslySetInnerHTML={{
               __html: sanitizeRichText(data?.description),
             }}

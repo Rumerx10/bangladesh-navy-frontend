@@ -30,7 +30,7 @@ const ShipCard = ({ ship, index }: { ship: SurveyShipItem; index: number }) => {
 
   return (
     <motion.div
-      className="rounded-2xl border border-gray-100 bg-white overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+      className="rounded-2xl border border-border bg-card overflow-hidden shadow-sm hover:shadow-md transition-shadow"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -57,7 +57,7 @@ const ShipCard = ({ ship, index }: { ship: SurveyShipItem; index: number }) => {
               className={`absolute top-3 right-3 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-md ${
                 ship.status === "ACTIVE"
                   ? "bg-green-500 text-white border border-green-400/30"
-                  : "bg-gray-500/20 text-gray-300 border border-gray-400/30"
+                  : "bg-gray-500/20 text-gray-300 border border-input/30"
               }`}
             >
               {ship.status === "ACTIVE" ? "● Active" : "● Inactive"}
@@ -85,7 +85,7 @@ const ShipCard = ({ ship, index }: { ship: SurveyShipItem; index: number }) => {
           {/* Description */}
           <div className="space-y-1">
             <p
-              className={`text-sm text-gray-500 leading-relaxed text-justify ${
+              className={`text-sm text-secondary-foreground leading-relaxed text-justify ${
                 expanded ? "" : "line-clamp-4"
               }`}
             >
@@ -111,8 +111,8 @@ const ShipCard = ({ ship, index }: { ship: SurveyShipItem; index: number }) => {
           {/* Two cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-stretch">
             {/* Vessel Specifications */}
-            <div className="flex flex-col rounded-xl overflow-hidden border border-liteBlue/12 bg-[#f7f9fc]">
-              <div className="flex items-center gap-2 px-4 py-2.5 bg-liteBlue">
+            <div className="flex flex-col rounded-xl overflow-hidden border border-liteBlue/12 bg-light">
+              <div className="flex items-center gap-2 px-4 py-2.5 bg-brand-blue">
                 <Ship size={13} className="text-white/70 shrink-0" />
                 <span className="text-base font-medium text-white uppercase tracking-widest">
                   Basic Information
@@ -126,7 +126,7 @@ const ShipCard = ({ ship, index }: { ship: SurveyShipItem; index: number }) => {
                   { label: "Displacement", value: ship.crew },
                 ].map(({ label, value }) => (
                   <div key={label}>
-                    <p className="text-xs font-medium uppercase tracking-wider text-gray-400 mb-0.5">
+                    <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-0.5">
                       {label}
                     </p>
                     <p className="text-base font-bold text-pBlue">
@@ -138,8 +138,8 @@ const ShipCard = ({ ship, index }: { ship: SurveyShipItem; index: number }) => {
             </div>
 
             {/* Survey Equipment */}
-            <div className="flex flex-col rounded-xl overflow-hidden border border-cyan-200/50 bg-[#f0f8ff]/60">
-              <div className="flex items-center gap-2 px-4 py-2.5 bg-pBlue">
+            <div className="flex flex-col rounded-xl overflow-hidden border border-cyan-200/50 bg-light/60">
+              <div className="flex items-center gap-2 px-4 py-2.5 bg-brand-navy">
                 <Radar size={13} className="text-cyan-400/80 shrink-0" />
                 <span className="text-base font-medium text-white uppercase tracking-widest">
                   Survey Capabilities
@@ -149,14 +149,14 @@ const ShipCard = ({ ship, index }: { ship: SurveyShipItem; index: number }) => {
                 {visibleEquipment.length > 0 ? (
                   visibleEquipment.map((eq) => (
                     <div key={eq} className="flex items-start gap-2.5">
-                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-liteBlue shrink-0" />
+                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-brand-blue shrink-0" />
                       <span className="text-base text-pBlue font-medium leading-snug">
                         {eq}
                       </span>
                     </div>
                   ))
                 ) : (
-                  <p className="text-sm text-gray-400">—</p>
+                  <p className="text-sm text-muted-foreground">—</p>
                 )}
                 {hiddenEquipmentCount > 0 && (
                   <button

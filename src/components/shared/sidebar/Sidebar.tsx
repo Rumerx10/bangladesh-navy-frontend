@@ -31,7 +31,7 @@ const Sidebar = ({ className, isOpen, setIsOpen }: SidebarProps) => {
 
       <aside
         className={cn(
-          "fixed top-0 left-0 h-screen w-70 bg-white border-r border-skeleton flex flex-col px-4 sm:px-5 transition-transform duration-300 ease-in-out z-50",
+          "fixed top-0 left-0 h-screen w-70 bg-card border-r border-border flex flex-col px-4 sm:px-5 transition-transform duration-300 ease-in-out z-50",
           {
             "-translate-x-full": !isOpen,
             "translate-x-0": isOpen,

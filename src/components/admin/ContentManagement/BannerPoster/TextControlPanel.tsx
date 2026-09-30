@@ -28,13 +28,13 @@ const TextControlPanel = ({
     <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h4 className="text-sm font-bold text-gray-800 flex items-center gap-2">
+        <h4 className="text-sm font-bold text-foreground flex items-center gap-2">
           <Type className="h-4 w-4 text-primary" />
           Text Properties
         </h4>
         <button
           onClick={onClose}
-          className="text-xs text-gray-400 hover:text-gray-600 cursor-pointer"
+          className="text-xs text-muted-foreground hover:text-secondary-foreground cursor-pointer"
         >
           Done
         </button>
@@ -42,20 +42,20 @@ const TextControlPanel = ({
 
       {/* Content */}
       <div>
-        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+        <label className="text-xs font-semibold text-secondary-foreground uppercase tracking-wide">
           Content
         </label>
         <textarea
           value={element.content}
           onChange={(e) => onUpdate({ content: e.target.value })}
           rows={2}
-          className="w-full mt-1 px-3 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary resize-none"
+          className="w-full mt-1 px-3 py-2 text-sm border border-border rounded-lg bg-light focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary resize-none"
         />
       </div>
 
       {/* Font Size */}
       <div>
-        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+        <label className="text-xs font-semibold text-secondary-foreground uppercase tracking-wide">
           Font Size: {element.fontSize}px
         </label>
         <div className="flex items-center gap-2 mt-1">
@@ -65,14 +65,14 @@ const TextControlPanel = ({
             max={120}
             value={element.fontSize}
             onChange={(e) => onUpdate({ fontSize: parseInt(e.target.value) })}
-            className="flex-1 h-1.5 appearance-none bg-gray-200 rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
+            className="flex-1 h-1.5 appearance-none bg-light-silver rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
           />
           <div className="flex flex-col">
             <button
               onClick={() => onUpdate({ fontSize: element.fontSize + 1 })}
-              className="p-0.5 hover:bg-gray-100 rounded cursor-pointer"
+              className="p-0.5 hover:bg-light-dark rounded cursor-pointer"
             >
-              <ChevronUp className="h-3 w-3 text-gray-500" />
+              <ChevronUp className="h-3 w-3 text-secondary-foreground" />
             </button>
             <button
               onClick={() =>
@@ -80,9 +80,9 @@ const TextControlPanel = ({
                   fontSize: Math.max(8, element.fontSize - 1),
                 })
               }
-              className="p-0.5 hover:bg-gray-100 rounded cursor-pointer"
+              className="p-0.5 hover:bg-light-dark rounded cursor-pointer"
             >
-              <ChevronDown className="h-3 w-3 text-gray-500" />
+              <ChevronDown className="h-3 w-3 text-secondary-foreground" />
             </button>
           </div>
         </div>
@@ -90,7 +90,7 @@ const TextControlPanel = ({
 
       {/* Color */}
       <div>
-        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+        <label className="text-xs font-semibold text-secondary-foreground uppercase tracking-wide">
           Color
         </label>
         <div className="flex items-center gap-2 mt-1">
@@ -99,14 +99,14 @@ const TextControlPanel = ({
               type="color"
               value={element.color}
               onChange={(e) => onUpdate({ color: e.target.value })}
-              className="w-8 h-8 rounded-lg border border-gray-200 cursor-pointer appearance-none p-0"
+              className="w-8 h-8 rounded-lg border border-border cursor-pointer appearance-none p-0"
             />
           </div>
           <input
             type="text"
             value={element.color}
             onChange={(e) => onUpdate({ color: e.target.value })}
-            className="flex-1 px-3 py-1.5 text-xs font-mono border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary/30"
+            className="flex-1 px-3 py-1.5 text-xs font-mono border border-border rounded-lg bg-light focus:outline-none focus:ring-2 focus:ring-primary/30"
           />
         </div>
         {/* Quick colors */}
@@ -135,7 +135,7 @@ const TextControlPanel = ({
               className={`w-5 h-5 rounded-full border cursor-pointer hover:scale-125 transition-transform ${
                 element.color.toUpperCase() === c
                   ? "border-primary ring-2 ring-primary/30 scale-110"
-                  : "border-gray-300"
+                  : "border-input"
               }`}
               style={{ backgroundColor: c }}
             />
@@ -145,7 +145,7 @@ const TextControlPanel = ({
 
       {/* Font Weight */}
       <div>
-        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+        <label className="text-xs font-semibold text-secondary-foreground uppercase tracking-wide">
           Weight: {element.fontWeight}
         </label>
         <div className="flex gap-1 mt-1">
@@ -156,7 +156,7 @@ const TextControlPanel = ({
               className={`flex-1 py-1.5 text-[10px] rounded cursor-pointer transition-colors ${
                 element.fontWeight === w
                   ? "bg-secondary text-white"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  : "bg-light-dark text-secondary-foreground hover:bg-light-silver"
               }`}
             >
               {w}
@@ -167,7 +167,7 @@ const TextControlPanel = ({
 
       {/* Rotation */}
       <div>
-        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide flex items-center gap-1">
+        <label className="text-xs font-semibold text-secondary-foreground uppercase tracking-wide flex items-center gap-1">
           <RotateCw className="h-3 w-3" />
           Rotation: {element.rotation}°
         </label>
@@ -177,13 +177,13 @@ const TextControlPanel = ({
           max={180}
           value={element.rotation}
           onChange={(e) => onUpdate({ rotation: parseInt(e.target.value) })}
-          className="w-full mt-1 h-1.5 appearance-none bg-gray-200 rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
+          className="w-full mt-1 h-1.5 appearance-none bg-light-silver rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
         />
       </div>
 
       {/* Opacity */}
       <div>
-        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide flex items-center gap-1">
+        <label className="text-xs font-semibold text-secondary-foreground uppercase tracking-wide flex items-center gap-1">
           Opacity: {Math.round((element.opacity ?? 1) * 100)}%
         </label>
         <input
@@ -194,13 +194,13 @@ const TextControlPanel = ({
           onChange={(e) =>
             onUpdate({ opacity: parseInt(e.target.value) / 100 })
           }
-          className="w-full mt-1 h-1.5 appearance-none bg-gray-200 rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
+          className="w-full mt-1 h-1.5 appearance-none bg-light-silver rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
         />
       </div>
 
       {/* Text Transform */}
       <div>
-        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+        <label className="text-xs font-semibold text-secondary-foreground uppercase tracking-wide">
           Transform
         </label>
         <div className="flex gap-1 mt-1">
@@ -218,7 +218,7 @@ const TextControlPanel = ({
               className={`flex-1 py-1.5 text-xs rounded cursor-pointer transition-colors ${
                 (element.textTransform || "none") === t.value
                   ? "bg-secondary text-white"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  : "bg-light-dark text-secondary-foreground hover:bg-light-silver"
               }`}
             >
               {t.label}
@@ -229,7 +229,7 @@ const TextControlPanel = ({
 
       {/* Letter Spacing */}
       <div>
-        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+        <label className="text-xs font-semibold text-secondary-foreground uppercase tracking-wide">
           Letter Spacing: {element.letterSpacing || 0}px
         </label>
         <input
@@ -240,7 +240,7 @@ const TextControlPanel = ({
           onChange={(e) =>
             onUpdate({ letterSpacing: parseInt(e.target.value) })
           }
-          className="w-full mt-1 h-1.5 appearance-none bg-gray-200 rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
+          className="w-full mt-1 h-1.5 appearance-none bg-light-silver rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer"
         />
       </div>
 

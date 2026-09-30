@@ -30,11 +30,11 @@ const LoginForm = ({
 
       {/* Divider */}
       {/* <div className="flex items-center gap-3 my-6">
-        <span className="flex-1 h-px bg-gray-200" />
-        <span className="text-xs text-gray-400 font-medium uppercase tracking-wider">
+        <span className="flex-1 h-px bg-light-silver" />
+        <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">
           or continue with email
         </span>
-        <span className="flex-1 h-px bg-gray-200" />
+        <span className="flex-1 h-px bg-light-silver" />
       </div> */}
 
       <div className="mb-6">
@@ -58,7 +58,7 @@ const LoginForm = ({
           <Button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute inset-y-0 right-1 flex items-center text-black bg-transparent hover:bg-transparent shadow-none"
+            className="absolute inset-y-0 right-1 flex items-center text-foreground bg-transparent hover:bg-transparent shadow-none"
           >
             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </Button>
@@ -83,7 +83,7 @@ const LoginForm = ({
         {isPending ? "Loading..." : "Sign in"}
       </Button>
 
-      {/* <p className="mt-4 text-left text-sm text-[#BDBDBD]">
+      {/* <p className="mt-4 text-left text-sm text-muted-foreground">
         Don&apos;t have an account?{" "}
         <Link
           href="/auth/signup"

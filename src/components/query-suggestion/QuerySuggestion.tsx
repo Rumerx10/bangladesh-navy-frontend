@@ -3,7 +3,7 @@ import QueryHero from "./QueryHero";
 
 const QuerySuggestion = () => {
   return (
-    <div className="bg-white">
+    <div className="bg-card">
       <QueryHero />
       <section className="pb-16 lg:pb-24 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-50 rounded-full blur-[100px] -mr-48 -mt-48 opacity-50" />

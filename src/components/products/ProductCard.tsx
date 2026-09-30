@@ -48,10 +48,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <Link
       href={`/products/${slug}`}
-      className="group flex flex-col rounded-xl border border-gray-100 shadow bg-white overflow-hidden hover:shadow-lg hover:border-liteBlue/15 transition-all duration-300"
+      className="group flex flex-col rounded-xl border border-border shadow bg-card overflow-hidden hover:shadow-lg hover:border-liteBlue/15 transition-all duration-300"
     >
       {/* Image */}
-      <div className="relative aspect-4/3 bg-linear-to-br from-pBlue to-liteBlue flex items-center justify-center overflow-hidden">
+      <div className="relative aspect-4/3 bg-linear-to-br from-brand-navy to-brand-blue flex items-center justify-center overflow-hidden">
         {/* Decorative grid pattern */}
         {isTiff ? (
           <TiffPreview src={imageUrl} className="w-full h-full object-cover" />
@@ -115,7 +115,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               {formatPrice(discountedPrice)}
             </span>
             {hasDiscount && (
-              <span className="text-xs text-gray-400 line-through">
+              <span className="text-xs text-muted-foreground line-through">
                 {formatPrice(product.price)}
               </span>
             )}
@@ -123,7 +123,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
           <button
             onClick={handleAddToCart}
-            className="flex items-center justify-center w-9 h-9 rounded-lg bg-liteBlue text-white hover:bg-[#004d8a] transition-colors cursor-pointer"
+            className="flex items-center justify-center w-9 h-9 rounded-lg bg-brand-blue text-white hover:bg-brand-blue transition-colors cursor-pointer"
             aria-label="Add to cart"
           >
             <ShoppingCart size={16} />

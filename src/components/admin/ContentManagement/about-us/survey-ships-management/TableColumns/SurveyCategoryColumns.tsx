@@ -35,7 +35,7 @@ export const GetSurveyCategoryColumns = (
           className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
             status === "ACTIVE"
               ? "bg-green-100 text-green-800"
-              : "bg-gray-100 text-gray-600"
+              : "bg-light-dark text-secondary-foreground"
           }`}
         >
           {status || "—"}
@@ -49,7 +49,7 @@ export const GetSurveyCategoryColumns = (
     cell: (_value, row) => (
       <div className="flex items-center gap-2">
         <Button
-          className="w-9! min-h-9 border border-[#E6E6E6] flex items-center justify-center rounded-lg bg-light hover:bg-light"
+          className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
           size="sm"
           onClick={() => onEdit?.(row)}
           aria-label={`Edit ${row.nameEn}`}

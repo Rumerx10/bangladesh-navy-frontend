@@ -28,7 +28,7 @@ const RevenueChart = () => {
   const { points, totalMonths, growthPercent } = revenue;
 
   return (
-    <Card className="border-gray-100 shadow-sm rounded-2xl py-4 sm:py-5">
+    <Card className="border-border shadow-sm rounded-2xl py-4 sm:py-5">
       <CardHeader className="pb-2 px-4 sm:px-6">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-2 sm:gap-3">
@@ -36,10 +36,10 @@ const RevenueChart = () => {
               <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
             <div>
-              <CardTitle className="text-sm sm:text-base lg:text-lg font-semibold text-gray-900">
+              <CardTitle className="text-sm sm:text-base lg:text-lg font-semibold text-foreground">
                 Revenue Overview
               </CardTitle>
-              <p className="text-[11px] sm:text-xs text-gray-400 mt-0.5">
+              <p className="text-[11px] sm:text-xs text-muted-foreground mt-0.5">
                 Monthly revenue for the last {totalMonths} months
               </p>
             </div>
@@ -69,17 +69,17 @@ const RevenueChart = () => {
               </defs>
               <CartesianGrid
                 strokeDasharray="3 3"
-                stroke="#f1f5f9"
+                stroke="var(--border)"
                 vertical={false}
               />
               <XAxis
                 dataKey="month"
-                tick={{ fontSize: 12, fill: "#94a3b8" }}
+                tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
                 axisLine={false}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fontSize: 12, fill: "#94a3b8" }}
+                tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(v: number) => `${(v / 1000).toFixed(0)}k`}
@@ -95,7 +95,7 @@ const RevenueChart = () => {
                 activeDot={{
                   r: 5,
                   fill: "#009dab",
-                  stroke: "#fff",
+                  stroke: "var(--card)",
                   strokeWidth: 2,
                 }}
               />
@@ -109,7 +109,7 @@ const RevenueChart = () => {
                 activeDot={{
                   r: 4,
                   fill: "#4f46e5",
-                  stroke: "#fff",
+                  stroke: "var(--card)",
                   strokeWidth: 2,
                 }}
               />
@@ -119,11 +119,11 @@ const RevenueChart = () => {
         <div className="flex items-center justify-center gap-6 mt-4">
           <div className="flex items-center gap-2">
             <span className="w-3 h-3 rounded-full bg-[#009dab]" />
-            <span className="text-xs text-gray-500">Revenue</span>
+            <span className="text-xs text-secondary-foreground">Revenue</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="w-3 h-3 rounded-full bg-[#4f46e5]" />
-            <span className="text-xs text-gray-500">Orders</span>
+            <span className="text-xs text-secondary-foreground">Orders</span>
           </div>
         </div>
       </CardContent>

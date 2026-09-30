@@ -112,7 +112,7 @@ const CreateUpdateSurveyCategory = ({
         if (!open) handleClose();
       }}
     >
-      <DialogContent className="bg-white min-w-[40vw] max-h-[90vh] overflow-y-auto scrollbar-modern">
+      <DialogContent className="bg-card min-w-[40vw] max-h-[90vh] overflow-y-auto scrollbar-modern">
         <DialogHeader>
           <DialogTitle className="text-secondary text-xl font-semibold">
             {isUpdate ? "Update" : "Create"} Survey Category

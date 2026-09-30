@@ -6,14 +6,14 @@ import { formatFigure, useCourseStatisticsList } from "./useCourseStatistics";
 
 const HEAD_CELL =
   "border border-liteBlue/40 px-3 py-3 text-center font-semibold";
-const BODY_CELL = "border border-gray-200 px-3 py-3 text-center";
-const TOTAL_CELL = "border border-gray-300 px-3 py-3 text-center";
+const BODY_CELL = "border border-border px-3 py-3 text-center";
+const TOTAL_CELL = "border border-input px-3 py-3 text-center";
 const COLUMN_COUNT = 7;
 
 const StatisticsSkeleton = () => (
   <div className="space-y-2 p-4">
     {Array.from({ length: 6 }).map((_, index) => (
-      <div key={index} className="h-10 animate-pulse rounded bg-gray-100" />
+      <div key={index} className="h-10 animate-pulse rounded bg-light-dark" />
     ))}
   </div>
 );
@@ -32,23 +32,23 @@ const CourseStatisticsTable = () => {
     <div>
       <h3 className="text-lg font-bold text-pBlue mb-4">Course Statistics</h3>
 
-      <div className="overflow-x-auto rounded-xl border border-gray-200">
+      <div className="overflow-x-auto rounded-xl border border-border">
         {isLoading ? (
           <StatisticsSkeleton />
         ) : !hasRows ? (
           <div className="py-14 text-center">
-            <BarChart3 className="mx-auto h-8 w-8 text-gray-400" />
-            <p className="mt-3 text-sm font-medium text-gray-600">
+            <BarChart3 className="mx-auto h-8 w-8 text-muted-foreground" />
+            <p className="mt-3 text-sm font-medium text-secondary-foreground">
               Course statistics are not available yet
             </p>
-            <p className="mt-1 text-xs text-gray-400">
+            <p className="mt-1 text-xs text-muted-foreground">
               Please check back later.
             </p>
           </div>
         ) : (
           <table className="w-full text-sm border-collapse">
             <thead>
-              <tr className="bg-liteBlue text-white">
+              <tr className="bg-brand-blue text-white">
                 <th className={HEAD_CELL}>Ser</th>
                 <th className="border border-liteBlue/40 px-3 py-3 text-left font-semibold">
                   Course
@@ -61,14 +61,14 @@ const CourseStatisticsTable = () => {
                 <th className={HEAD_CELL}>Total Trainees</th>
               </tr>
             </thead>
-            <tbody className="text-gray-700">
+            <tbody className="text-foreground">
               {groups.map((group) =>
                 group.rows.length === 0 ? null : (
                   <Fragment key={`${group.remarks}-${group.rows[0].id}`}>
                     <tr className="bg-liteBlue/10">
                       <td
                         colSpan={COLUMN_COUNT + 1}
-                        className="border border-gray-200 px-3 py-2 text-left text-xs font-bold uppercase tracking-wide text-pBlue"
+                        className="border border-border px-3 py-2 text-left text-xs font-bold uppercase tracking-wide text-pBlue"
                       >
                         {group.remarks?.trim() || "General"}
                       </td>
@@ -76,12 +76,12 @@ const CourseStatisticsTable = () => {
                     {group.rows.map((course, index) => (
                       <tr
                         key={course.id}
-                        className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                        className={index % 2 === 0 ? "bg-card" : "bg-light"}
                       >
                         <td className={`${BODY_CELL} tabular-nums`}>
                           {course.serial ?? "—"}
                         </td>
-                        <td className="border border-gray-200 px-3 py-3">
+                        <td className="border border-border px-3 py-3">
                           {course.courseName}
                         </td>
                         <td className={`${BODY_CELL} tabular-nums`}>

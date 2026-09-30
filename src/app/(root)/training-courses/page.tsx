@@ -14,7 +14,7 @@ const SkillDevelopmentPage = () => {
       <SkillBanner />
 
       {/* About */}
-      <section className="py-8 lg:py-20 bg-white">
+      <section className="py-8 lg:py-20 bg-card">
         <div className="container px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-12 h-12 rounded-xl bg-liteBlue/10 text-liteBlue flex items-center justify-center shrink-0">
@@ -25,7 +25,7 @@ const SkillDevelopmentPage = () => {
             </h2>
           </div>
 
-          <div className="text-gray-600 leading-relaxed space-y-4 text-justify">
+          <div className="text-secondary-foreground leading-relaxed space-y-4 text-justify">
             <p>
               BN Hydrographic Institute, formerly known as BN Hydrographic
               School, was established on 04 May 1983 at BNS ISSA KHAN with the
@@ -53,12 +53,12 @@ const SkillDevelopmentPage = () => {
             {/* Vision */}
             <div className="rounded-2xl border border-liteBlue/20 bg-liteBlue/5 p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-liteBlue text-white flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-lg bg-brand-blue text-white flex items-center justify-center shrink-0">
                   <Eye size={20} />
                 </div>
                 <h3 className="text-lg font-bold text-pBlue">Vision</h3>
               </div>
-              <p className="text-sm text-gray-600 leading-relaxed text-justify">
+              <p className="text-sm text-secondary-foreground leading-relaxed text-justify">
                 To become a centre of excellence in hydrographic education,
                 training and research, upholding internationally recognized
                 standards and contributing to safe navigation and sustainable
@@ -69,12 +69,12 @@ const SkillDevelopmentPage = () => {
             {/* Mission */}
             <div className="rounded-2xl border border-liteBlue/20 bg-liteBlue/5 p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-liteBlue text-white flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-lg bg-brand-blue text-white flex items-center justify-center shrink-0">
                   <Target size={20} />
                 </div>
                 <h3 className="text-lg font-bold text-pBlue">Mission</h3>
               </div>
-              <ul className="text-sm text-gray-600 leading-relaxed space-y-2">
+              <ul className="text-sm text-secondary-foreground leading-relaxed space-y-2">
                 {[
                   "Deliver high-quality training in hydrography and related disciplines.",
                   "Develop competent professionals using modern technologies and methodologies.",
@@ -82,7 +82,7 @@ const SkillDevelopmentPage = () => {
                   "Enhance the operational and technical capabilities of the Bangladesh Navy and the wider maritime sector.",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-liteBlue shrink-0 text-justify" />
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-brand-blue shrink-0 text-justify" />
                     {item}
                   </li>
                 ))}
@@ -91,11 +91,11 @@ const SkillDevelopmentPage = () => {
           </div>
 
           {/* Training Overview */}
-          <div className="mt-10 rounded-2xl border border-gray-200 bg-gray-50 p-6">
+          <div className="mt-10 rounded-2xl border border-border bg-light p-6">
             <h3 className="text-lg font-bold text-pBlue mb-3">
               Training Overview
             </h3>
-            <div className="text-sm text-gray-600 leading-relaxed space-y-3 text-justify">
+            <div className="text-sm text-secondary-foreground leading-relaxed space-y-3 text-justify">
               <p>
                 All training is aligned with international standards,
                 particularly those set by the IBSC, ensuring high-quality

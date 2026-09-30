@@ -139,7 +139,7 @@ const HowToCollect = () => {
   return (
     <main>
       {/* Hero Banner */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-pBlue overflow-hidden">
+      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-brand-navy overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-125 h-125 bg-blue-500 rounded-full blur-[120px] -mr-64 -mt-64" />
           <div className="absolute bottom-0 left-0 w-100 h-100 bg-cyan-500 rounded-full blur-[100px] -ml-48 -mb-48" />
@@ -171,7 +171,7 @@ const HowToCollect = () => {
       </section>
 
       {/* Collection Flow */}
-      <section className="py-8 lg:py-20 bg-white">
+      <section className="py-8 lg:py-20 bg-card">
         <div className="container px-4 sm:px-6 lg:px-8">
           <SectionTitle
             title="Collection Process"
@@ -204,7 +204,7 @@ const HowToCollect = () => {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, margin: "-60px" }}
                       transition={{ duration: 0.5 }}
-                      className={`rounded-2xl border border-gray-200 bg-white p-5 lg:p-6 shadow-sm hover:shadow-lg hover:border-liteBlue/30 transition-all duration-300 lg:w-[calc(50%-4rem)] ${
+                      className={`rounded-2xl border border-border bg-card p-5 lg:p-6 shadow-sm hover:shadow-lg hover:border-liteBlue/30 transition-all duration-300 lg:w-[calc(50%-4rem)] ${
                         isRight ? "ml-16 lg:ml-auto" : "ml-16 lg:ml-0"
                       }`}
                     >
@@ -226,7 +226,7 @@ const HowToCollect = () => {
                         </div>
                       </div>
 
-                      <p className="mt-3 text-sm text-gray-500 leading-relaxed">
+                      <p className="mt-3 text-sm text-secondary-foreground leading-relaxed">
                         {step.description}
                       </p>
 
@@ -239,7 +239,7 @@ const HowToCollect = () => {
                               key={detail.label}
                               className="flex items-start justify-between gap-3 text-sm"
                             >
-                              <span className="shrink-0 font-medium text-gray-700">
+                              <span className="shrink-0 font-medium text-foreground">
                                 {detail.label}
                               </span>
                               {detail.href ? (
@@ -250,7 +250,7 @@ const HowToCollect = () => {
                                   {detail.value}
                                 </a>
                               ) : (
-                                <span className="text-right text-gray-600">
+                                <span className="text-right text-secondary-foreground">
                                   {detail.value}
                                 </span>
                               )}
@@ -272,7 +272,7 @@ const HowToCollect = () => {
       </section>
 
       {/* Help Banner */}
-      <section className="py-14 bg-liteBlue">
+      <section className="py-14 bg-brand-blue">
         <div className="container px-4 sm:px-6 lg:px-8 text-center">
           <h3 className="text-xl lg:text-2xl font-bold text-white mb-3">
             Need Assistance with Your Collection?

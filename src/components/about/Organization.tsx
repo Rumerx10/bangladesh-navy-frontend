@@ -1,238 +1,169 @@
 "use client";
-
-import { Fragment } from "react";
+import { useMemo } from "react";
 import { motion } from "framer-motion";
+import { Network } from "lucide-react";
+import { useGet } from "@/src/hooks/useGet";
 import SectionTitle from "@/src/components/SectionTitle";
+import type { IOrganogramTreeNode } from "@/src/utils/organogram";
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
-// Edit here to add / remove / rename nodes.
-
-const orgData = {
-  root: "CHIEF HYDROGRAPHER",
-
-  leftBranch: {
-    title: "ADDL CHIEF HYDROGRAPHER / CO BNHOC",
-    // Each inner array = one horizontal row; items are connected left → right with arrows
-    rows: [
-      [
-        "ADMINISTRATION DEPT",
-        "OCEANOGRAPHIC DEPT",
-        "CARTOGRAPHIC DEPT",
-        "QUALITY CONTROL & DATA MANAGEMENT DEPT",
-      ],
-      [
-        "CHART DEPOT",
-        "MERITIME SAFETY & PUBLICATION DEPT",
-        "INSTRUMENT & MAINTENANCE DEPT",
-        "METEOROLOGY DEPT",
-      ],
-      [
-        "TIDE ANALYSIS DEPT",
-        "GEOLOGICAL & GEOPHYSICAL DEPT",
-        "LOGISTIC DEPT",
-        "RESEARCH & DEVELOPMENT DEPT",
-      ],
-    ],
-  },
-
-  rightBranch: {
-    title: "ADDL CHIEF HYDROGRAPHER (OPS & PLAN)",
-    // Each inner array = one vertical column; items stacked top → bottom with arrows
-    columns: [
-      [
-        "DEPUTY CHIEF HYDROGRAPHER (PLAN & POLICY)",
-        "DEPUTY CHIEF HYDROGRAPHER (NATIONAL AFFAIR)",
-      ],
-      [
-        "DEPUTY CHIEF HYDROGRAPHER (OPS & TRG)",
-        "DEPUTY CHIEF HYDROGRAPHER (INTERNATIONAL AFFAIR)",
-      ],
-    ],
-  },
-};
+type Kind = "command" | "deputy" | "dept";
 
 // ─── Style tokens ─────────────────────────────────────────────────────────────
 
-const NAVY = "#003f71";
-const LINE = `${NAVY}55`;
+/** Connector colour cycles by depth, so each generation reads as its own band. */
+const LEVEL_COLORS = ["#0891b2", "#f97316", "#0d9488"];
+const levelColor = (depth: number) => LEVEL_COLORS[depth % LEVEL_COLORS.length];
 
-// ─── Cards ────────────────────────────────────────────────────────────────────
-
-const RootCard = ({ title }: { title: string }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: -8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45 }}
-      className="bg-pBlue text-white font-bold text-sm tracking-widest uppercase px-8 py-3 rounded-2xl shadow-2xl border border-white/10 text-center"
-    >
-      {title}
-    </motion.div>
-  );
+const KIND_COLORS: Record<Kind, string> = {
+  command: "#003f71",
+  deputy: "#0e7490",
+  dept: "#64748b",
 };
 
-const BranchCard = ({
-  title,
-  delay = 0,
+/** The top two generations wear the command colour; everything below is a dept. */
+const tierFor = (depth: number): Kind => (depth <= 1 ? "command" : "dept");
+
+// ─── Card ─────────────────────────────────────────────────────────────────────
+
+const NodeCard = ({
+  node,
+  depth,
+  parentTitle,
 }: {
-  title: string;
-  delay?: number;
+  node: IOrganogramTreeNode;
+  depth: number;
+  /** Title of the node this one reports to; absent on a root. */
+  parentTitle?: string;
 }) => {
+  const tagColor = KIND_COLORS[tierFor(depth)];
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay }}
-      className="bg-pBlue text-white font-bold text-sm tracking-wider uppercase px-4 py-3 rounded-xl shadow-lg border border-white/10 text-center w-full"
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.3, delay: Math.min(depth * 0.06, 0.3) }}
+      className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-left shadow-[0_1px_3px_rgba(15,23,42,0.08)] transition-shadow duration-200 hover:shadow-[0_6px_18px_rgba(15,23,42,0.12)]"
     >
-      {title}
+      <span className="block text-[13px] leading-snug font-semibold text-foreground">
+        {node.title}
+      </span>
+      <span className="mt-0.5 flex items-center gap-1.5 text-[11px] leading-snug text-secondary-foreground">
+        {parentTitle && (
+          <>
+            <span
+              className="h-1.5 w-1.5 shrink-0 rounded-full"
+              style={{ background: tagColor }}
+            />
+            <span
+              className="truncate"
+              style={{ color: tagColor }}
+              title={parentTitle}
+            >
+              {parentTitle}
+            </span>
+          </>
+        )}
+      </span>
     </motion.div>
   );
 };
 
-const DeptCard = ({ title, delay = 0 }: { title: string; delay?: number }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.28, delay }}
-      className="bg-white text-pBlue text-sm font-medium p-2 rounded-lg border border-pBlue/20 shadow-sm hover:shadow-md hover:border-pBlue/40 hover:-translate-y-0.5 transition-all duration-200 text-center leading-snug tracking-wide cursor-default uppercase w-full"
-    >
-      {title}
-    </motion.div>
-  );
-};
+// ─── Connector (desktop) ──────────────────────────────────────────────────────
 
-const DeputyCard = ({
-  title,
-  delay = 0,
-}: {
-  title: string;
-  delay?: number;
-}) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.28, delay }}
-      className="bg-[#eef4fa] text-pBlue text-sm font-medium p-2 rounded-lg border border-pBlue/25 shadow-sm text-center leading-snug tracking-wide uppercase w-full"
-    >
-      {title}
-    </motion.div>
-  );
-};
+const BAND = 46;
+const RADIUS = 14;
+const STROKE = 2;
 
-// ─── Connectors ───────────────────────────────────────────────────────────────
+const Connector = ({ n, color }: { n: number; color: string }) => {
+  const centers = Array.from({ length: n }, (_, i) => (100 / n) * (i + 0.5));
+  const first = centers[0];
+  const last = centers[n - 1];
+  const mid = BAND / 2;
+  const half = STROKE / 2;
 
-/** Horizontal right-pointing arrow: ──► */
-const HArrow = () => {
   return (
-    <div className="flex items-center shrink-0" style={{ width: 20 }}>
-      <div className="flex-1 h-px" style={{ background: LINE }} />
-      <svg
-        width="6"
-        height="8"
-        viewBox="0 0 6 8"
-        fill="none"
-        className="shrink-0"
-      >
-        <path d="M0 0 L6 4 L0 8 Z" fill={NAVY} fillOpacity="0.5" />
-      </svg>
-    </div>
-  );
-};
-
-/** Vertical downward arrow: a line + arrowhead */
-const VArrow = ({ height = 18 }: { height?: number }) => {
-  return (
-    <div className="flex flex-col items-center mx-auto" style={{ height }}>
-      <div className="w-px flex-1" style={{ background: LINE }} />
-      <svg width="8" height="5" viewBox="0 0 8 5" fill="none">
-        <path d="M0 0 L4 5 L8 0 Z" fill={NAVY} fillOpacity="0.5" />
-      </svg>
-    </div>
-  );
-};
-
-/**
- * Splits one parent into N equal-width children.
- *   vertical stem from parent
- *   horizontal crossbar
- *   N vertical stems down to children
- */
-const ForkDown = ({ n }: { n: number }) => {
-  const pcts = Array.from({ length: n }, (_, i) => (100 / n) * (i + 0.5));
-  const lo = pcts[0];
-  const hi = pcts[pcts.length - 1];
-  return (
-    <div className="relative w-full" style={{ height: 32 }}>
+    <div className="relative w-full" style={{ height: BAND }} aria-hidden>
+      {/* stem leaving the parent */}
       <div
-        className="absolute top-0 h-1/2 w-px"
-        style={{ left: "50%", transform: "translateX(-50%)", background: LINE }}
-      />
-      {n > 1 && (
-        <div
-          className="absolute h-px"
-          style={{
-            top: "50%",
-            left: `${lo}%`,
-            right: `${100 - hi}%`,
-            background: LINE,
-          }}
-        />
-      )}
-      {pcts.map((p, i) => (
-        <div
-          key={i}
-          className="absolute top-1/2 bottom-0 w-px"
-          style={{
-            left: `${p}%`,
-            transform: "translateX(-50%)",
-            background: LINE,
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-
-/**
- * Root → two asymmetric branches.
- * leftPct / rightPct = horizontal % positions of the stems (relative to full container width).
- */
-const RootFork = ({
-  leftPct,
-  rightPct,
-}: {
-  leftPct: number;
-  rightPct: number;
-}) => {
-  return (
-    <div className="relative w-full" style={{ height: 36 }}>
-      <div
-        className="absolute top-0 h-1/2 w-px"
-        style={{ left: "50%", transform: "translateX(-50%)", background: LINE }}
-      />
-      <div
-        className="absolute h-px"
+        className="absolute top-0"
         style={{
-          top: "50%",
-          left: `${leftPct}%`,
-          right: `${100 - rightPct}%`,
-          background: LINE,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: STROKE,
+          height: n > 1 ? mid : BAND - 4,
+          background: color,
         }}
       />
-      {[leftPct, rightPct].map((p, i) => (
-        <div
-          key={i}
-          className="absolute top-1/2 bottom-0 w-px"
+
+      {n > 1 && (
+        <>
+          {/* rounded elbow at the left end of the crossbar */}
+          <div
+            className="absolute"
+            style={{
+              left: `calc(${first}% - ${half}px)`,
+              top: mid,
+              width: RADIUS,
+              height: RADIUS,
+              borderLeft: `${STROKE}px solid ${color}`,
+              borderTop: `${STROKE}px solid ${color}`,
+              borderTopLeftRadius: RADIUS,
+            }}
+          />
+          {/* rounded elbow at the right end */}
+          <div
+            className="absolute"
+            style={{
+              right: `calc(${100 - last}% - ${half}px)`,
+              top: mid,
+              width: RADIUS,
+              height: RADIUS,
+              borderRight: `${STROKE}px solid ${color}`,
+              borderTop: `${STROKE}px solid ${color}`,
+              borderTopRightRadius: RADIUS,
+            }}
+          />
+          {/* crossbar between the two elbows */}
+          <div
+            className="absolute"
+            style={{
+              left: `calc(${first}% + ${RADIUS - half}px)`,
+              right: `calc(${100 - last}% + ${RADIUS - half}px)`,
+              top: mid,
+              height: STROKE,
+              background: color,
+            }}
+          />
+          {/* stems down to each child */}
+          {centers.map((c, i) => {
+            const isEdge = i === 0 || i === n - 1;
+            return (
+              <div
+                key={c}
+                className="absolute"
+                style={{
+                  left: `calc(${c}% - ${half}px)`,
+                  top: isEdge ? mid + RADIUS : mid,
+                  bottom: 4,
+                  width: STROKE,
+                  background: color,
+                }}
+              />
+            );
+          })}
+        </>
+      )}
+
+      {/* junction dot where each stem meets the child card */}
+      {centers.map((c) => (
+        <span
+          key={`dot-${c}`}
+          className="absolute bottom-0 rounded-full"
           style={{
-            left: `${p}%`,
-            transform: "translateX(-50%)",
-            background: LINE,
+            left: `calc(${c}% - 4px)`,
+            width: 8,
+            height: 8,
+            background: color,
           }}
         />
       ))}
@@ -240,530 +171,228 @@ const RootFork = ({
   );
 };
 
-/**
- * Connector from the center of the branch header down, then left to a left-edge sidebar.
- * Looks like: ┐ (mirrored L)
- */
-const DropLeftConnector = () => {
-  return (
-    <div className="relative w-full" style={{ height: 28 }}>
-      {/* vertical drop from center */}
-      <div
-        className="absolute top-0 h-1/2 w-px"
-        style={{ left: "50%", transform: "translateX(-50%)", background: LINE }}
-      />
-      {/* horizontal: center → left edge */}
-      <div
-        className="absolute h-px"
-        style={{ top: "50%", left: 0, right: "50%", background: LINE }}
-      />
-      {/* short vertical at left edge → connects to sidebar */}
-      <div
-        className="absolute top-1/2 bottom-0 w-px"
-        style={{ left: 0, background: LINE }}
-      />
-    </div>
-  );
+// ─── Desktop tree ─────────────────────────────────────────────────────────────
+
+type TreeProps = {
+  node: IOrganogramTreeNode;
+  depth: number;
+  parentTitle?: string;
 };
 
-// ─── Left branch row tree ─────────────────────────────────────────────────────
+const DesktopNode = ({ node, depth, parentTitle }: TreeProps) => {
+  const kids = node.children;
 
-const LeftRows = ({ rows }: { rows: string[][] }) => {
   return (
-    <div className="relative w-full">
-      {/* Vertical sidebar spanning all rows */}
-      <div
-        className="absolute left-0 top-0 bottom-0 w-px"
-        style={{ background: LINE }}
-      />
-      <div className="flex flex-col gap-3 pl-5">
-        {rows.map((row, ri) => (
-          <div key={ri} className="relative flex items-center">
-            {/* Horizontal branch from sidebar to first item */}
-            <div
-              className="absolute h-px"
-              style={{ left: -20, top: "50%", width: 20, background: LINE }}
-            />
-            {row.map((dept, di) => (
-              <Fragment key={di}>
-                <div className="flex-1 min-w-0">
-                  <DeptCard title={dept} delay={0.15 + ri * 0.08 + di * 0.04} />
-                </div>
-                {di < row.length - 1 && <HArrow />}
-              </Fragment>
+    <div className="flex w-full flex-col items-center">
+      <div className="w-full max-w-55">
+        <NodeCard node={node} depth={depth} parentTitle={parentTitle} />
+      </div>
+
+      {kids.length > 0 && (
+        <>
+          <Connector n={kids.length} color={levelColor(depth)} />
+          <div className="flex w-full items-start">
+            {kids.map((child) => (
+              <div key={child.id} className="min-w-0 flex-1 px-2">
+                <DesktopNode
+                  node={child}
+                  depth={depth + 1}
+                  parentTitle={node.title}
+                />
+              </div>
             ))}
           </div>
-        ))}
-      </div>
+        </>
+      )}
     </div>
   );
 };
+
+// ─── Mobile tree (indented rail, no horizontal scrolling) ─────────────────────
+
+const MobileNode = ({
+  node,
+  depth,
+  parentTitle,
+  isLast = true,
+  color,
+}: TreeProps & { isLast?: boolean; color?: string }) => {
+  const kids = node.children;
+  const railColor = levelColor(depth);
+
+  return (
+    <div className="relative">
+      {/* elbow from the parent rail into this card */}
+      {color && (
+        <>
+          <div
+            className="absolute"
+            style={{
+              left: -22,
+              top: 0,
+              width: RADIUS,
+              height: 26,
+              borderLeft: `${STROKE}px solid ${color}`,
+              borderBottom: `${STROKE}px solid ${color}`,
+              borderBottomLeftRadius: RADIUS,
+            }}
+          />
+          <div
+            className="absolute"
+            style={{
+              left: -22 + RADIUS,
+              top: 26 - STROKE,
+              width: 22 - RADIUS,
+              height: STROKE,
+              background: color,
+            }}
+          />
+          {/* rail continues past this child unless it is the last one */}
+          {!isLast && (
+            <div
+              className="absolute"
+              style={{
+                left: -22,
+                top: 26,
+                bottom: -16,
+                width: STROKE,
+                background: color,
+              }}
+            />
+          )}
+        </>
+      )}
+
+      <NodeCard node={node} depth={depth} parentTitle={parentTitle} />
+
+      {kids.length > 0 && (
+        <div className="mt-4 flex flex-col gap-4 pl-5.5">
+          {kids.map((child, i) => (
+            <MobileNode
+              key={child.id}
+              node={child}
+              depth={depth + 1}
+              parentTitle={node.title}
+              isLast={i === kids.length - 1}
+              color={railColor}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ─── Legend ───────────────────────────────────────────────────────────────────
+
+const Legend = () => (
+  <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-secondary-foreground">
+    {(
+      [
+        ["command", "Chief / Addl Chief Hydrographer"],
+        ["deputy", "Deputy Chief Hydrographer"],
+        ["dept", "Department"],
+      ] as const
+    ).map(([kind, label]) => (
+      <span key={kind} className="flex items-center gap-1.5">
+        <span
+          className="inline-block h-2 w-2 shrink-0 rounded-full"
+          style={{ background: KIND_COLORS[kind] }}
+        />
+        {label}
+      </span>
+    ))}
+  </div>
+);
+
+// ─── Placeholder states ───────────────────────────────────────────────────────
+
+const ChartSkeleton = () => (
+  <div className="animate-pulse space-y-6">
+    <div className="mx-auto h-14 w-56 rounded-xl bg-light-silver" />
+    <div className="flex justify-center gap-6">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <div key={i} className="h-14 w-44 rounded-xl bg-light-silver" />
+      ))}
+    </div>
+    <div className="flex justify-center gap-6">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <div key={i} className="h-14 w-44 rounded-xl bg-light-silver/70" />
+      ))}
+    </div>
+  </div>
+);
+
+const EmptyChart = () => (
+  <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
+    <Network className="h-10 w-10 text-light-silver" />
+    <p className="text-sm text-secondary-foreground">
+      The organisational structure has not been published yet.
+    </p>
+  </div>
+);
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
-const Legend = () => {
-  return (
-    <div className="mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[10px] text-gray-400 tracking-widest uppercase">
-      {[
-        { color: "#001836", label: "Chief Hydrographer" },
-        { color: "#003f71", label: "Addl Chief Hydrographer" },
-        {
-          color: "#eef4fa",
-          label: "Deputy Chief Hydrographer",
-          border: "#003f71",
-        },
-        { color: "#ffffff", label: "Department", border: "#003f71" },
-      ].map((item) => (
-        <span key={item.label} className="flex items-center gap-1.5">
-          <span
-            className="inline-block w-3 h-3 rounded-sm border shrink-0"
-            style={{
-              background: item.color,
-              borderColor: item.border ?? item.color,
-            }}
-          />
-          {item.label}
-        </span>
-      ))}
-    </div>
-  );
-};
-
-// ─── Mobile / tablet: stacked tree (no horizontal scroll needed) ─────────────
-
-/**
- * Each row is an independent chain hanging off the branch, not a
- * continuation of the row before it (e.g. CHART DEPOT is a sibling of
- * ADMINISTRATION DEPT's chain, not a child of QUALITY CONTROL DEPT). A
- * shared sidebar with a stub per row keeps that separation visible while
- * still stacking everything in one column for narrow screens.
- */
-const MobileLeftRows = ({ rows }: { rows: string[][] }) => {
-  return (
-    <div className="relative w-full pl-5">
-      <div
-        className="absolute left-0 top-3.5 bottom-3.5 w-px"
-        style={{ background: LINE }}
-      />
-      <div className="flex flex-col gap-4">
-        {rows.map((row, ri) => (
-          <div key={ri} className="relative flex flex-col gap-2">
-            <div
-              className="absolute h-px"
-              style={{ left: -20, top: 14, width: 20, background: LINE }}
-            />
-            {row.map((dept, di) => (
-              <Fragment key={di}>
-                {di > 0 && <VArrow height={14} />}
-                <DeptCard title={dept} delay={0.05 * ri + 0.03 * di} />
-              </Fragment>
-            ))}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const MobileOrgTree = ({
-  root,
-  leftBranch,
-  rightBranch,
-}: {
-  root: string;
-  leftBranch: typeof orgData.leftBranch;
-  rightBranch: typeof orgData.rightBranch;
-}) => {
-  return (
-    <div className="flex flex-col items-center">
-      <RootCard title={root} />
-      <VArrow height={24} />
-
-      {/* Left branch */}
-      <div className="w-full max-w-md flex flex-col items-center">
-        <BranchCard title={leftBranch.title} delay={0.1} />
-        <VArrow height={20} />
-        <MobileLeftRows rows={leftBranch.rows} />
-      </div>
-
-      <div className="w-full max-w-md h-px bg-pBlue/10 my-8" />
-
-      {/* Right branch */}
-      <div className="w-full max-w-md flex flex-col items-center">
-        <BranchCard title={rightBranch.title} delay={0.15} />
-        <VArrow height={20} />
-        <div className="w-full flex flex-col gap-5">
-          {rightBranch.columns.map((col, ci) => (
-            <div key={ci} className="w-full flex flex-col items-center gap-3">
-              {col.map((item, ii) => (
-                <Fragment key={ii}>
-                  {ii > 0 && <VArrow height={14} />}
-                  <DeputyCard
-                    title={item}
-                    delay={0.1 * ci + 0.05 * ii}
-                  />
-                </Fragment>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ─── Desktop: horizontal tree ─────────────────────────────────────────────────
-
-const DesktopOrgTree = ({
-  root,
-  leftBranch,
-  rightBranch,
-}: {
-  root: string;
-  leftBranch: typeof orgData.leftBranch;
-  rightBranch: typeof orgData.rightBranch;
-}) => {
-  // Fork stem positions relative to the 860 px-wide container.
-  // Left box  ≈ 60 % wide → center at ~30 %
-  // Right box ≈ 35 % wide, starting at ~63 % → center at ~63 + 17 = ~80 %
-  const LEFT_PCT = 30;
-  const RIGHT_PCT = 80;
-
-  return (
-    <div className="overflow-x-auto -mx-4 px-4 pb-6">
-      <div style={{ minWidth: 860 }} className="flex flex-col items-center">
-        {/* ROOT */}
-        <RootCard title={root} />
-
-        {/* Root → 2 branch stems */}
-        <RootFork leftPct={LEFT_PCT} rightPct={RIGHT_PCT} />
-
-        {/* BRANCH ROW */}
-        <div className="w-full flex items-start gap-4">
-          {/* ── LEFT BRANCH (wider) ── */}
-          <div style={{ flex: "0 0 60%" }} className="min-w-0">
-            <BranchCard title={leftBranch.title} delay={0.1} />
-            {/* ┐-shaped connector to left sidebar */}
-            <DropLeftConnector />
-            {/* 3 rows with → arrows */}
-            <LeftRows rows={leftBranch.rows} />
-          </div>
-
-          {/* Vertical divider */}
-          <div className="self-stretch w-px shrink-0 bg-pBlue/10 mt-1" />
-
-          {/* ── RIGHT BRANCH (narrower) ── */}
-          <div
-            style={{ flex: "0 0 35%" }}
-            className="min-w-0 flex flex-col items-center"
-          >
-            <BranchCard title={rightBranch.title} delay={0.15} />
-            {/* Branch → 2 column stems */}
-            <ForkDown n={rightBranch.columns.length} />
-            <div className="w-full flex items-start gap-3">
-              {rightBranch.columns.map((col, ci) => (
-                <div
-                  key={ci}
-                  className="flex-1 flex flex-col items-center min-w-0"
-                >
-                  {col.map((item, ii) => (
-                    <Fragment key={ii}>
-                      {ii > 0 && <VArrow height={18} />}
-                      <DeputyCard
-                        title={item}
-                        delay={0.22 + ci * 0.1 + ii * 0.08}
-                      />
-                    </Fragment>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const Organization = () => {
-  const { root, leftBranch, rightBranch } = orgData;
+  const { data, isLoading } = useGet<IOrganogramTreeNode[]>(
+    "/organogram/tree",
+    ["organogram-public"]
+  );
+
+  const roots = useMemo(
+    () => (Array.isArray(data?.data) ? data.data : []),
+    [data]
+  );
 
   return (
-    <section className="py-8 lg:py-20 bg-linear-to-b from-slate-50/60 to-white">
+    <section className="bg-linear-to-b from-light/60 to-card py-8 lg:py-20">
       <div className="container px-4 sm:px-6 lg:px-8">
         <SectionTitle
           title="Organisation Tree"
           desc="Organisational structure of Bangladesh Navy Hydrographic & Oceanographic Centre (BNHOC)"
         />
 
-        {/* Stacked layout on small/medium screens, no horizontal scrolling required */}
-        <div className="lg:hidden">
-          <MobileOrgTree
-            root={root}
-            leftBranch={leftBranch}
-            rightBranch={rightBranch}
-          />
+        {/* Dotted canvas */}
+        <div
+          className="overflow-x-auto rounded-2xl border border-border/80 bg-light/50 p-5 lg:p-8"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, var(--dot-grid) 1px, transparent 1px)",
+            backgroundSize: "22px 22px",
+          }}
+        >
+          {isLoading ? (
+            <ChartSkeleton />
+          ) : roots.length === 0 ? (
+            <EmptyChart />
+          ) : (
+            <>
+              {/* Stacked rail on small screens */}
+              <div className="flex flex-col gap-8 lg:hidden">
+                {roots.map((root) => (
+                  <MobileNode key={root.id} node={root} depth={0} />
+                ))}
+              </div>
+
+              {/* Full top-down chart on large screens. The admin allows more
+                  than one root node, so each is drawn as its own chart. */}
+              <div className="hidden lg:block">
+                <div style={{ minWidth: 1200 }} className="mx-auto space-y-12">
+                  {roots.map((root) => (
+                    <DesktopNode key={root.id} node={root} depth={0} />
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
-        {/* Full horizontal tree on large screens (falls back to scroll below its own min-width) */}
-        <div className="hidden lg:block">
-          <DesktopOrgTree
-            root={root}
-            leftBranch={leftBranch}
-            rightBranch={rightBranch}
-          />
-        </div>
-
-        <Legend />
+        {/* Hidden while there is no chart to explain. */}
+        {!isLoading && roots.length > 0 && <Legend />}
       </div>
     </section>
   );
 };
 
 export default Organization;
-
-// "use client";
-
-// import { motion } from "framer-motion";
-// import SectionTitle from "@/src/components/SectionTitle";
-// import { organogramData, type IOrgNode } from "@/src/data/organizationData";
-
-// // ─── Primitives ───────────────────────────────────────────────────────────────
-
-// const LINE = "#003f71";
-
-// function VLine({ height = 24 }: { height?: number }) {
-//   return (
-//     <div
-//       className="w-px shrink-0"
-//       style={{ height, background: `${LINE}35` }}
-//     />
-//   );
-// }
-
-// /** Draws a downward fork: one stem in, N stems out with a horizontal crossbar. */
-// function ForkConnector({ n, fromPct = 50 }: { n: number; fromPct?: number }) {
-//   const childPcts = Array.from({ length: n }, (_, i) => (100 / n) * (i + 0.5));
-//   const lo = childPcts[0];
-//   const hi = childPcts[childPcts.length - 1];
-
-//   return (
-//     <div className="relative w-full" style={{ height: 32 }}>
-//       {/* stem from parent */}
-//       <div
-//         className="absolute top-0 w-px"
-//         style={{
-//           left: `${fromPct}%`,
-//           transform: "translateX(-50%)",
-//           height: "50%",
-//           background: `${LINE}35`,
-//         }}
-//       />
-//       {/* horizontal crossbar */}
-//       <div
-//         className="absolute h-px"
-//         style={{
-//           top: "50%",
-//           left: `${lo}%`,
-//           right: `${100 - hi}%`,
-//           background: `${LINE}35`,
-//         }}
-//       />
-//       {/* stems to each child */}
-//       {childPcts.map((pct, i) => (
-//         <div
-//           key={i}
-//           className="absolute w-px"
-//           style={{
-//             left: `${pct}%`,
-//             transform: "translateX(-50%)",
-//             top: "50%",
-//             bottom: 0,
-//             background: `${LINE}35`,
-//           }}
-//         />
-//       ))}
-//     </div>
-//   );
-// }
-
-// // ─── Card Variants ────────────────────────────────────────────────────────────
-
-// type CardVariant = "root" | "branch" | "dept" | "deputy";
-
-// const CARD_CLS: Record<CardVariant, string> = {
-//   root: "bg-pBlue text-white text-sm font-bold px-8 py-3 rounded-2xl shadow-2xl tracking-widest border border-white/10",
-//   branch:
-//     "bg-pBlue text-white font-bold px-4 py-3 rounded-xl shadow-lg tracking-wider w-full text-center border border-white/10",
-//   dept: "bg-white text-pBlue text-sm font-medium px-2.5 py-2 rounded-lg border border-pBlue/20 shadow-sm hover:shadow-md hover:border-pBlue/40 hover:-translate-y-0.5 transition-all duration-200 w-full text-center leading-snug tracking-wide cursor-default",
-//   deputy:
-//     "bg-[#eef4fa] text-pBlue text-sm font-medium px-2.5 py-2 rounded-lg border border-pBlue/25 shadow-sm w-full text-center leading-snug tracking-wide",
-// };
-
-// function OrgCard({
-//   title,
-//   variant = "dept",
-//   delay = 0,
-// }: {
-//   title: string;
-//   variant?: CardVariant;
-//   delay?: number;
-// }) {
-//   return (
-//     <motion.div
-//       initial={{ opacity: 0, y: 8 }}
-//       whileInView={{ opacity: 1, y: 0 }}
-//       viewport={{ once: true }}
-//       transition={{ duration: 0.35, delay }}
-//       className={`uppercase ${CARD_CLS[variant]}`}
-//     >
-//       {title}
-//     </motion.div>
-//   );
-// }
-
-// // ─── Department Column ────────────────────────────────────────────────────────
-
-// function DeptColumn({
-//   items,
-//   delayBase,
-// }: {
-//   items: IOrgNode[];
-//   delayBase: number;
-// }) {
-//   return (
-//     <div className="flex flex-col items-center flex-1 min-w-0 gap-0">
-//       {items.map((item, i) => (
-//         <div key={item.id} className="flex flex-col items-center w-full">
-//           {i > 0 && (
-//             <div className="flex justify-center w-full">
-//               <VLine height={10} />
-//             </div>
-//           )}
-//           <OrgCard
-//             title={item.title}
-//             variant="dept"
-//             delay={delayBase + i * 0.04}
-//           />
-//         </div>
-//       ))}
-//     </div>
-//   );
-// }
-
-// // ─── Main ─────────────────────────────────────────────────────────────────────
-
-// export default function Organization() {
-//   const { root, leftBranch, rightBranch } = organogramData;
-//   const leftChildCount = 1 + leftBranch.chains.length; // side column + 3 chains
-
-//   return (
-//     <section className="py-8 lg:py-20 bg-linear-to-b from-slate-50/60 to-white">
-//       <div className="container px-4 sm:px-6 lg:px-8">
-//         <SectionTitle
-//           title="Organisation Tree"
-//           desc="Organisational structure of Bangladesh Navy Hydrographic & Oceanographic Centre (BNHOC)"
-//         />
-
-//         {/* Scrollable wrapper for small screens */}
-//         <div className="overflow-x-auto -mx-4 px-4 pb-6">
-//           <div style={{ minWidth: 860 }} className="flex flex-col items-center">
-//             {/* ROOT */}
-//             <OrgCard title={root} variant="root" />
-
-//             {/* Root → 2 branches */}
-//             <ForkConnector n={2} />
-
-//             {/* BRANCHES ROW */}
-//             <div className="w-full flex items-start gap-6">
-//               {/* ── LEFT BRANCH ── */}
-//               <div className="flex-1 flex flex-col items-center min-w-0">
-//                 <OrgCard
-//                   title={leftBranch.title}
-//                   variant="branch"
-//                   delay={0.1}
-//                 />
-
-//                 {/* Left branch → 4 children */}
-//                 <ForkConnector n={leftChildCount} />
-
-//                 <div className="w-full flex items-start gap-2">
-//                   {/* Side nodes column */}
-//                   <DeptColumn items={leftBranch.sideNodes} delayBase={0.2} />
-
-//                   {/* 3 dept chains */}
-//                   {leftBranch.chains.map((chain, ci) => (
-//                     <DeptColumn
-//                       key={ci}
-//                       items={chain}
-//                       delayBase={0.25 + ci * 0.08}
-//                     />
-//                   ))}
-//                 </div>
-//               </div>
-
-//               {/* Vertical separator */}
-//               <div className="self-stretch w-px shrink-0 bg-liteBlue/10 mt-2" />
-
-//               {/* ── RIGHT BRANCH ── */}
-//               <div className="flex-1 flex flex-col items-center min-w-0">
-//                 <OrgCard
-//                   title={rightBranch.title}
-//                   variant="branch"
-//                   delay={0.1}
-//                 />
-
-//                 {/* Right branch → 2 deputies */}
-//                 <ForkConnector n={2} />
-
-//                 <div className="w-full flex items-start gap-2">
-//                   {rightBranch.deputies.map((deputy, di) => (
-//                     <div
-//                       key={deputy.id}
-//                       className="flex-1 flex flex-col items-center min-w-0"
-//                     >
-//                       <OrgCard
-//                         title={deputy.title}
-//                         variant="deputy"
-//                         delay={0.3 + di * 0.08}
-//                       />
-//                       <div className="flex justify-center w-full">
-//                         <VLine height={14} />
-//                       </div>
-//                       <OrgCard
-//                         title={deputy.sub.title}
-//                         variant="dept"
-//                         delay={0.42 + di * 0.08}
-//                       />
-//                     </div>
-//                   ))}
-//                 </div>
-//               </div>
-//             </div>
-
-//             {/* Legend */}
-//             <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-[10px] text-gray-400 tracking-widest uppercase">
-//               {[
-//                 { color: "#001836", label: "Chief" },
-//                 { color: "#003f71", label: "Additional Chief" },
-//                 { color: "#eef4fa", label: "Deputy", border: "#003f71" },
-//                 { color: "#fff", label: "Department", border: "#003f71" },
-//               ].map((item) => (
-//                 <span key={item.label} className="flex items-center gap-1.5">
-//                   <span
-//                     className="inline-block w-3 h-3 rounded-sm border"
-//                     style={{
-//                       background: item.color,
-//                       borderColor: item.border ?? item.color,
-//                     }}
-//                   />
-//                   {item.label}
-//                 </span>
-//               ))}
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }

@@ -11,10 +11,7 @@ export const metadata: Metadata = {
 const VisionMissionPage = () => {
   return (
     <>
-      <AboutHero
-        title="Vision & Mission"
-        description="Our guiding principles and strategic direction"
-      />
+      <AboutHero title="Vision & Mission" />
       <VisionMission />
     </>
   );

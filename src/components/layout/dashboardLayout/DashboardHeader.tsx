@@ -2,6 +2,7 @@
 
 import { useAppSelector } from "@/src/lib/redux/hooks";
 import { Menu, User } from "lucide-react";
+import ThemeToggle from "../../theme/ThemeToggle";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import UserSkeleton from "./Skeleton/UserSkeleton";
 
@@ -13,12 +14,12 @@ const DashboardHeader = ({ toggleSidebar }: { toggleSidebar?: () => void }) => {
 
   return (
     <div
-      className={`h-18 bg-white  flex items-center px-3 md:px-6 border-b border-skeleton gap-3 md:gap-5 justify-between`}
+      className={`h-18 bg-card  flex items-center px-3 md:px-6 border-b border-border gap-3 md:gap-5 justify-between`}
     >
       <div className="flex items-center gap-4">
         {toggleSidebar && (
           <button
-            className="lg:hidden p-1 md:p-2 rounded-md hover:bg-gray-100"
+            className="lg:hidden p-1 md:p-2 rounded-md hover:bg-light-dark"
             onClick={toggleSidebar}
           >
             <Menu className="w-5 h-5 md:w-6 md:h-6 text-primary" />
@@ -27,6 +28,7 @@ const DashboardHeader = ({ toggleSidebar }: { toggleSidebar?: () => void }) => {
       </div>
 
       <div className="flex items-center gap-2 md:gap-4 ml-auto">
+        <ThemeToggle className="text-secondary-foreground" />
         {loading ? (
           <UserSkeleton />
         ) : (
@@ -49,7 +51,7 @@ const DashboardHeader = ({ toggleSidebar }: { toggleSidebar?: () => void }) => {
               <h2 className="text-primary font-semibold font-inter text-sm md:text-base truncate">
                 Hello, {firstName}
               </h2>
-              <p className="text-[#8C8C8C] text-xs md:text-sm font-inter font-normal truncate">
+              <p className="text-muted-foreground text-xs md:text-sm font-inter font-normal truncate">
                 {role}
               </p>
             </div>

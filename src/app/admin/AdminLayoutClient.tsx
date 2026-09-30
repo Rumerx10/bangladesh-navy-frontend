@@ -11,7 +11,7 @@ const AdminLayoutClient = ({ children }: { children: ReactNode }) => {
     <div className="flex w-full h-screen overflow-hidden">
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
       <div className="flex-1 lg:ml-0 min-w-0 w-full flex flex-col overflow-hidden">
-        <div className="w-full sticky top-0 z-30 bg-white">
+        <div className="w-full sticky top-0 z-30 bg-card">
           <DashboardHeader toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
         </div>
         <div className="p-3 sm:p-4 lg:p-6 w-full overflow-y-auto h-[calc(100vh-75px)] scrollbar-hide bg-light">

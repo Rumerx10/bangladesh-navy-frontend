@@ -29,17 +29,17 @@ const weeklyRevenue = [
 
 const WeeklyRevenueChart = () => {
   return (
-    <Card className="border-gray-100 shadow-sm rounded-2xl py-4 sm:py-5">
+    <Card className="border-border shadow-sm rounded-2xl py-4 sm:py-5">
       <CardHeader className="pb-2 px-4 sm:px-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-linear-to-br from-[#009dab] to-[#00c9db] flex items-center justify-center shrink-0">
             <TrendingUp className="w-5 h-5 text-white" />
           </div>
           <div>
-            <CardTitle className="text-base lg:text-lg font-semibold text-gray-900">
+            <CardTitle className="text-base lg:text-lg font-semibold text-foreground">
               Weekly Revenue
             </CardTitle>
-            <p className="text-xs text-gray-400 mt-0.5">
+            <p className="text-xs text-muted-foreground mt-0.5">
               Revenue performance over the last 7 days
             </p>
           </div>
@@ -67,22 +67,31 @@ const WeeklyRevenueChart = () => {
               </defs>
               <CartesianGrid
                 strokeDasharray="3 3"
-                stroke="#f1f5f9"
+                stroke="var(--border)"
                 vertical={false}
               />
               <XAxis
                 dataKey="day"
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 12, fill: "#94a3b8" }}
+                tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
               />
               <YAxis
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 12, fill: "#94a3b8" }}
+                tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
                 tickFormatter={(v: number) => `${Math.round(v / 1000)}k`}
               />
               <Tooltip
+                cursor={{ fill: "var(--muted)" }}
+                contentStyle={{
+                  background: "var(--popover)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "0.75rem",
+                  color: "var(--popover-foreground)",
+                }}
+                labelStyle={{ color: "var(--muted-foreground)" }}
+                itemStyle={{ color: "var(--popover-foreground)" }}
                 formatter={(value) => {
                   const amount = Number(value ?? 0);
                   return [`৳${amount.toLocaleString()}`, "Revenue"];
@@ -98,7 +107,7 @@ const WeeklyRevenueChart = () => {
                 activeDot={{
                   r: 5,
                   fill: "#009dab",
-                  stroke: "#fff",
+                  stroke: "var(--card)",
                   strokeWidth: 2,
                 }}
               />

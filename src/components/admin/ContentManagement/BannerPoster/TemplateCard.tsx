@@ -135,9 +135,9 @@ const TemplateCard = ({ template, onSelect }: TemplateCardProps) => {
       className="group cursor-pointer"
       onClick={() => onSelect(template)}
     >
-      <div className="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+      <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
         {/* Preview */}
-        <div className="flex items-center justify-center p-4 bg-gray-50">
+        <div className="flex items-center justify-center p-4 bg-light">
           <div
             className="relative overflow-hidden rounded-lg shadow-md"
             style={{
@@ -152,7 +152,7 @@ const TemplateCard = ({ template, onSelect }: TemplateCardProps) => {
             {template.imageZones.map((zone) => (
               <div
                 key={zone.id}
-                className="absolute bg-black/10 border border-dashed border-gray-400/30 flex items-center justify-center"
+                className="absolute bg-black/10 border border-dashed border-input/30 flex items-center justify-center"
                 style={{
                   left: `${zone.x}%`,
                   top: `${zone.y}%`,
@@ -178,7 +178,7 @@ const TemplateCard = ({ template, onSelect }: TemplateCardProps) => {
 
             {/* Hover overlay */}
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white rounded-full p-2.5 shadow-lg">
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-card rounded-full p-2.5 shadow-lg">
                 <Eye className="h-5 w-5 text-secondary" />
               </div>
             </div>
@@ -186,13 +186,13 @@ const TemplateCard = ({ template, onSelect }: TemplateCardProps) => {
         </div>
 
         {/* Info */}
-        <div className="p-3 border-t border-gray-50">
+        <div className="p-3 border-t border-border">
           <div className="flex items-center justify-between">
             <div>
-              <h4 className="text-sm font-bold text-gray-800">
+              <h4 className="text-sm font-bold text-foreground">
                 {template.name}
               </h4>
-              <p className="text-[11px] text-gray-400 mt-0.5 capitalize">
+              <p className="text-[11px] text-muted-foreground mt-0.5 capitalize">
                 {template.category} • {template.canvasWidth}×
                 {template.canvasHeight}
               </p>

@@ -78,7 +78,7 @@ export const GetNoticesColumns = (
           download
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-md border border-[#E6E6E6] bg-light px-2.5 py-1.5 text-xs font-medium text-secondary-foreground hover:bg-gray-100"
+          className="inline-flex items-center gap-1.5 rounded-md border border-border bg-light px-2.5 py-1.5 text-xs font-medium text-secondary-foreground hover:bg-light-dark"
         >
           <Download className="h-3.5 w-3.5" />
           Download
@@ -99,7 +99,7 @@ export const GetNoticesColumns = (
             "rounded-full px-2.5 py-1 text-[11px] font-semibold",
             status === "ACTIVE"
               ? "bg-emerald-50 text-emerald-700"
-              : "bg-gray-100 text-gray-500"
+              : "bg-light-dark text-secondary-foreground"
           )}
         >
           {status === "ACTIVE" ? "Active" : "Inactive"}
@@ -113,7 +113,7 @@ export const GetNoticesColumns = (
     cell: (_value, row) => (
       <div className="flex items-center gap-2">
         <Button
-          className="w-9! min-h-9 border border-[#E6E6E6] flex items-center justify-center rounded-lg bg-light hover:bg-light"
+          className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
           size="sm"
           onClick={() => onEdit?.(row)}
           aria-label={`Edit ${row.noticeNumber}`}
@@ -121,7 +121,7 @@ export const GetNoticesColumns = (
           <Pencil className="h-4 w-4 text-secondary-foreground" />
         </Button>
         <Button
-          className="w-9! min-h-9 border border-[#E6E6E6] flex items-center justify-center rounded-lg bg-light hover:bg-red-50"
+          className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-red-50"
           size="sm"
           onClick={() => onDelete?.(row)}
           aria-label={`Delete ${row.noticeNumber}`}

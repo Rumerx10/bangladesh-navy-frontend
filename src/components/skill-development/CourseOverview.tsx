@@ -2,14 +2,14 @@ import CourseStatisticsTable from "@/src/components/course-statistics/CourseStat
 
 const CourseOverview = () => {
   return (
-    <section className="bg-white py-8 lg:py-20">
+    <section className="bg-card py-8 lg:py-20">
       <div className="container px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-12">
         {/* Intro */}
         <div>
           <h2 className="text-2xl lg:text-3xl font-bold text-pBlue mb-4">
             Courses
           </h2>
-          <p className="text-gray-600 leading-relaxed text-[15px] mb-6">
+          <p className="text-secondary-foreground leading-relaxed text-[15px] mb-6">
             BN Hydrographic Institute offers professional courses in
             hydrography, oceanography and related marine sciences, designed to
             meet national requirements while maintaining international
@@ -19,7 +19,7 @@ const CourseOverview = () => {
             <p className="text-sm font-semibold text-liteBlue mb-3">
               Course Sequence
             </p>
-            <ol className="list-decimal list-inside space-y-1 text-sm text-gray-700">
+            <ol className="list-decimal list-inside space-y-1 text-sm text-foreground">
               <li>Long Hydrographic Cat-A Course</li>
               <li>Basic Hydrographic Cat-B Course</li>
               <li>Other Courses</li>
@@ -34,7 +34,7 @@ const CourseOverview = () => {
             <h3 className="text-lg font-bold text-pBlue mb-2">
               1. Long Hydrographic (Cat A) Course
             </h3>
-            <p className="text-sm text-gray-600 leading-relaxed">
+            <p className="text-sm text-secondary-foreground leading-relaxed">
               The institute received approval in 2025 to conduct the prestigious
               Category A course, an honor held by only a limited number of
               institutions across Asia. The Institute is being affiliated under
@@ -48,7 +48,7 @@ const CourseOverview = () => {
             <h3 className="text-lg font-bold text-pBlue mb-2">
               2. Basic Hydrographic (Cat B) Course
             </h3>
-            <p className="text-sm text-gray-600 leading-relaxed">
+            <p className="text-sm text-secondary-foreground leading-relaxed">
               In 2005, the institute achieved a significant milestone by
               obtaining international accreditation from the International Board
               on Standards of Competence for Hydrographic Surveyors and Nautical
@@ -63,7 +63,7 @@ const CourseOverview = () => {
             <h3 className="text-lg font-bold text-pBlue mb-2">
               3. Other Courses
             </h3>
-            <p className="text-sm text-gray-600 leading-relaxed">
+            <p className="text-sm text-secondary-foreground leading-relaxed">
               The institute also conducts professional training for Survey
               Recorders, short courses, workshops and refresher programmes on
               modern hydrographic technologies and software. These programmes

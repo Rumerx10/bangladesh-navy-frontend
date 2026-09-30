@@ -3,7 +3,6 @@ import Logo from "./Logo";
 import Link from "next/link";
 import MobileHeader from "./MobileHeader";
 import { usePathname } from "next/navigation";
-import { useAppSelector } from "@/src/lib/redux/hooks";
 import HeaderTopBarActions from "./HeaderTopBarActions";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { NavItem, NavigationItems, SubLink } from "@/src/data/navigationItems";
@@ -27,22 +26,33 @@ const othersItems = NavigationItems.filter((item) =>
 );
 
 const triggerBase =
-  "inline-flex items-center gap-1 px-2.5 py-2 text-sm font-medium rounded-md transition-colors cursor-pointer whitespace-nowrap";
-const triggerActive = "text-liteBlue bg-liteBlue/5";
-const triggerIdle = "text-gray-700 hover:text-liteBlue hover:bg-gray-50";
+  "inline-flex items-center gap-1 px-2.5 py-2 text-sm font-medium rounded-sm transition-colors cursor-pointer whitespace-nowrap";
+// Nav triggers sit on the gradient band, so they are painted in nav ink and
+// their hover/active states are white washes rather than surface tokens —
+// `bg-light` over a strong gradient would punch an opaque hole in it.
+const triggerActive = "text-nav-ink bg-nav-wash-strong";
+const triggerIdle = "text-nav-ink-muted hover:text-nav-ink hover:bg-nav-wash";
 
+// Dropdown panels carry the same Signal Blue as the bar they hang from, so
+// their rows are painted in nav ink. Hover and selected states are translucent
+// white washes rather than fixed colours: the wash derives from whatever part
+// of the gradient sits behind it, which keeps it reading the same at the dark
+// end of the sweep and at the bright end. A solid surface token here would
+// punch an opaque rectangle through the gradient.
 const subLinkBase = "block rounded-md px-3 py-2.5 text-sm transition-colors";
-const subLinkActive = "text-liteBlue bg-liteBlue/5 font-medium";
-const subLinkIdle = "text-gray-700 hover:bg-gray-50 hover:text-liteBlue";
+const subLinkActive = "text-nav-ink bg-nav-wash-strong font-medium";
+const subLinkIdle = "text-nav-ink-muted hover:bg-nav-wash hover:text-nav-ink";
+
+// One panel treatment, shared by the four dropdown surfaces below. `--nav-panel`
+// is the band's gradient dimmed and given alpha stops — same blue, without the
+// glare the bar's brighter cut produced once it was stretched over a panel this
+// size. The blur is what makes the transparency read as frosted glass rather
+// than as a washed-out fill, so the two belong together.
+const panelSurface =
+  "bg-(image:--nav-panel) backdrop-blur-2xl border border-nav-hairline shadow-2xl";
 
 const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
-  const cartItems = useAppSelector((state) => state.cart.items);
-  const { userInformation, loading: authLoading } = useAppSelector(
-    (state) => state.auth
-  );
   const pathname = usePathname();
-
-  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   // Click/tap-driven dropdown state — hover-only (`group-hover`) dropdowns
   // never open on touch devices, which is the norm at the narrower widths
@@ -111,11 +121,11 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
               {sub.label}
               <ChevronRight
                 size={14}
-                className={`ml-2 text-gray-400 shrink-0 transition-transform duration-200 ${isSubOpen ? "rotate-90" : ""}`}
+                className={`ml-2 text-nav-ink-muted shrink-0 transition-transform duration-200 ${isSubOpen ? "rotate-90" : ""}`}
               />
             </button>
             <div
-              className={`absolute left-full top-0 z-50 ml-1 min-w-48 rounded-xl border border-gray-200 bg-white p-2 shadow-xl ${isSubOpen ? "block" : "hidden"}`}
+              className={`absolute left-full top-0 z-50 ml-1 min-w-48 rounded-md p-2 ${panelSurface} ${isSubOpen ? "block" : "hidden"}`}
             >
               <div className="flex flex-col gap-0.5">
                 {sub.subLinks.map((nested) => (
@@ -201,10 +211,16 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
           </button>
         )}
 
+        {/* No `overflow-hidden` here: the nested-submenu branch in
+            renderSubLinks opens at `left-full`, entirely outside this box, so a
+            clip would erase it the moment a nav item gains a third level. The
+            blur now lives on the panel itself via `panelSurface` — the inner
+            wrapper that used to carry it sat *on top of* an opaque background,
+            so it had nothing to sample and blurred nothing. */}
         <div
-          className={`absolute left-1/2 top-full z-50 -translate-x-1/2 rounded-xl border border-gray-200 bg-white shadow-xl ${isOpen ? "block" : "hidden"}`}
+          className={`mt-2 absolute left-1/2 top-full z-50 -translate-x-1/2 rounded-md ${panelSurface} ${isOpen ? "block" : "hidden"}`}
         >
-          <div className="flex flex-col gap-0.5 p-2 min-w-52 whitespace-nowrap">
+          <div className="flex flex-col gap-0.5 p-1.5 min-w-52 whitespace-nowrap">
             {renderSubLinks(item.subLinks)}
           </div>
         </div>
@@ -213,7 +229,7 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
   }
 
   return (
-    <div className="bg-white border-b border-gray-100 lg:px-4">
+    <div className="bg-(image:--nav-gradient) border-b border-nav-hairline lg:px-4">
       {/* Desktop Navigation */}
       <div className="hidden lg:flex container items-center justify-between gap-4 h-24 px-4 sm:px-0">
         <Logo />
@@ -239,7 +255,7 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
               </button>
 
               <div
-                className={`absolute left-1/2 top-full z-50 -translate-x-1/2 rounded-xl border border-gray-200 bg-white shadow-xl ${openMenu === "More" ? "block" : "hidden"}`}
+                className={`absolute left-1/2 top-full z-50 -translate-x-1/2 rounded-xl ${panelSurface} ${openMenu === "More" ? "block" : "hidden"}`}
               >
                 <div className="flex flex-col p-3 gap-1">
                   {othersItems.map((section, i) => (
@@ -247,7 +263,7 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
                       key={section.label}
                       className={`min-w-44 px-2 ${
                         i < othersItems.length - 1
-                          ? "border-b border-gray-100 pb-2"
+                          ? "border-b border-nav-hairline pb-2"
                           : ""
                       }`}
                     >
@@ -255,12 +271,12 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
                         <Link
                           href={section.link}
                           onClick={closeMenus}
-                          className="whitespace-nowrap block text-xs font-semibold text-pBlue uppercase tracking-wider mb-2 px-1 hover:text-liteBlue transition-colors"
+                          className="whitespace-nowrap block text-xs font-semibold text-nav-ink uppercase tracking-wider mb-2 px-1 hover:text-nav-ink-muted transition-colors"
                         >
                           {section.label}
                         </Link>
                       ) : (
-                        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-1">
+                        <p className="text-xs font-semibold text-nav-ink-muted uppercase tracking-wider mb-2 px-1">
                           {section.label}
                         </p>
                       )}
@@ -284,11 +300,11 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
                                   {sub.label}
                                   <ChevronRight
                                     size={13}
-                                    className={`ml-1 text-gray-400 shrink-0 transition-transform duration-200 ${isSubOpen ? "rotate-90" : ""}`}
+                                    className={`ml-1 text-nav-ink-muted shrink-0 transition-transform duration-200 ${isSubOpen ? "rotate-90" : ""}`}
                                   />
                                 </button>
                                 <div
-                                  className={`absolute left-full top-0 z-50 ml-1 min-w-44 rounded-xl border border-gray-200 bg-white p-2 shadow-xl ${isSubOpen ? "block" : "hidden"}`}
+                                  className={`absolute left-full top-0 z-50 ml-1 min-w-44 rounded-xl p-2 ${panelSurface} ${isSubOpen ? "block" : "hidden"}`}
                                 >
                                   <div className="flex flex-col gap-0.5">
                                     {sub.subLinks.map((nested) => (
@@ -335,11 +351,7 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
           </ul>
         </nav>
 
-        <HeaderTopBarActions
-          cartCount={cartCount}
-          userInformation={userInformation}
-          authLoading={authLoading}
-        />
+        <HeaderTopBarActions />
       </div>
 
       {/* Mobile Header */}

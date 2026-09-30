@@ -103,7 +103,7 @@ const HydrographicNoteForm = () => {
             <span className="text-md font-medium"> Download File </span>
           </Link>
         </div>
-        <p className="mt-2 text-sm leading-relaxed text-gray-500 lg:text-base">
+        <p className="mt-2 text-sm leading-relaxed text-secondary-foreground lg:text-base">
           Fill out this form to report navigational hazards, depth anomalies, or
           other hydrographic observations.
         </p>
@@ -112,7 +112,7 @@ const HydrographicNoteForm = () => {
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm"
+          className="overflow-hidden rounded-xl border border-border bg-card shadow-sm"
         >
           {/* ── SENDER INFORMATION ── */}
           <div className="p-6 pb-0">
@@ -125,7 +125,7 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 type="date"
                 name="date"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
             <div>
@@ -133,7 +133,7 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="refNumber"
                 placeholder="Enter reference number"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
 
@@ -142,7 +142,7 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="nameOfShip"
                 placeholder="Enter name of ship or sender"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
 
@@ -151,7 +151,7 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="imoNumber"
                 placeholder="Enter IMO number"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
             <div>
@@ -159,7 +159,7 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="address"
                 placeholder="Enter address"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
 
@@ -169,7 +169,7 @@ const HydrographicNoteForm = () => {
                 type="email"
                 name="email"
                 placeholder="Enter email"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -179,7 +179,7 @@ const HydrographicNoteForm = () => {
                   type="tel"
                   name="tel"
                   placeholder="Telephone"
-                  className="bg-white"
+                  className="bg-card"
                 />
               </div>
               <div>
@@ -187,13 +187,13 @@ const HydrographicNoteForm = () => {
                 <ControlledInputField
                   name="fax"
                   placeholder="Fax number"
-                  className="bg-white"
+                  className="bg-card"
                 />
               </div>
             </div>
           </div>
 
-          <div className="border-t border-gray-100" />
+          <div className="border-t border-border" />
 
           {/* ── LOCALITY & SUBJECT ── */}
           <div className="p-6 pb-0">
@@ -206,7 +206,7 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="generalLocality"
                 placeholder="Enter general locality"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
             <div>
@@ -214,12 +214,12 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="subject"
                 placeholder="Enter subject"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
           </div>
 
-          <div className="border-t border-gray-100" />
+          <div className="border-t border-border" />
 
           {/* ── POSITION ── */}
           <div className="p-6 pb-0">
@@ -232,7 +232,7 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="latitude"
                 placeholder="e.g. 22° 20′ N"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
             <div>
@@ -240,7 +240,7 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="longitude"
                 placeholder="e.g. 91° 48′ E"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
 
@@ -249,7 +249,7 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="gps"
                 placeholder="GPS details"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -258,7 +258,7 @@ const HydrographicNoteForm = () => {
                 <ControlledInputField
                   name="datum"
                   placeholder="Datum"
-                  className="bg-white"
+                  className="bg-card"
                 />
               </div>
               <div>
@@ -266,13 +266,13 @@ const HydrographicNoteForm = () => {
                 <ControlledInputField
                   name="accuracy"
                   placeholder="Accuracy"
-                  className="bg-white"
+                  className="bg-card"
                 />
               </div>
             </div>
           </div>
 
-          <div className="border-t border-gray-100" />
+          <div className="border-t border-border" />
 
           {/* ── BN CHARTS ── */}
           <div className="p-6 pb-0">
@@ -285,7 +285,7 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="bnChartsAffected"
                 placeholder="Enter BN charts affected"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
             <div>
@@ -293,7 +293,7 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="edition"
                 placeholder="Enter edition"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
 
@@ -302,7 +302,7 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="latestNoticesToMariners"
                 placeholder="Enter latest notices to mariners"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
 
@@ -311,7 +311,7 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="replacementCopyOfChartNo"
                 placeholder="Enter chart number"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
             <div>
@@ -324,7 +324,7 @@ const HydrographicNoteForm = () => {
             </div>
           </div>
 
-          <div className="border-t border-gray-100" />
+          <div className="border-t border-border" />
 
           {/* ── ENCs & ECDIS ── */}
           <div className="p-6 pb-0">
@@ -337,7 +337,7 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="encsAffected"
                 placeholder="Enter ENCs affected"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
             <div>
@@ -345,7 +345,7 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="latestUpdateApplied"
                 placeholder="Enter week number"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
 
@@ -354,12 +354,12 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="modelAndAgeOfECDIS"
                 placeholder="Enter ECDIS model and age"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
           </div>
 
-          <div className="border-t border-gray-100" />
+          <div className="border-t border-border" />
 
           {/* ── PUBLICATIONS ── */}
           <div className="p-6 pb-0">
@@ -372,7 +372,7 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="publicationsAffected"
                 placeholder="Enter publications affected"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
             <div>
@@ -380,12 +380,12 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="dateOfLatestSupplement"
                 placeholder="Enter date and details"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
           </div>
 
-          <div className="border-t border-gray-100" />
+          <div className="border-t border-border" />
 
           {/* ── OBSERVATION DETAILS ── */}
           <div className="p-6 pb-0">
@@ -398,7 +398,7 @@ const HydrographicNoteForm = () => {
               <ControlledTextareaField
                 name="detailsOfObservation"
                 placeholder="Describe the hydrographic observation in detail..."
-                className="bg-white"
+                className="bg-card"
               />
             </div>
             <div>
@@ -406,13 +406,13 @@ const HydrographicNoteForm = () => {
               <ControlledInputField
                 name="nameOfObserver"
                 placeholder="Enter name of observer or reporter"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
           </div>
 
           {/* ── FOOTER ── */}
-          <div className="flex items-center justify-end border-t border-gray-100 bg-gray-50 px-6 py-5">
+          <div className="flex items-center justify-end border-t border-border bg-light px-6 py-5">
             {error && (
               <p className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                 {error.message || "Failed to submit. Please try again."}

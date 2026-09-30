@@ -13,8 +13,8 @@ interface ContactPreviewProps {
 
 const ContactPreview = ({ data, onEdit }: ContactPreviewProps) => {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-      <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-8 py-6 border-b border-gray-100">
+    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
+      <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-8 py-6 border-b border-border">
         <div className="flex items-center gap-3">
           <div className="bg-primary/10 w-10 h-10 flex items-center justify-center rounded-xl border border-primary/20">
             <Image
@@ -29,7 +29,7 @@ const ContactPreview = ({ data, onEdit }: ContactPreviewProps) => {
             <Paragraph className="font-semibold text-lg! text-pBlue">
               Contact Info Preview
             </Paragraph>
-            <Paragraph className="text-sm! text-gray-500">
+            <Paragraph className="text-sm! text-secondary-foreground">
               Site-wide phone, email & office hour
             </Paragraph>
           </div>
@@ -45,8 +45,8 @@ const ContactPreview = ({ data, onEdit }: ContactPreviewProps) => {
       </div>
 
       <div className="p-8 pt-10 space-y-4">
-        <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-          <Paragraph className="text-xs! text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+        <div className="bg-light rounded-xl p-4 border border-border">
+          <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
             <Phone className="w-3.5 h-3.5" />
             Phone Numbers
           </Paragraph>
@@ -55,19 +55,19 @@ const ContactPreview = ({ data, onEdit }: ContactPreviewProps) => {
               {data.phones.map((phone, index) => (
                 <span
                   key={index}
-                  className="text-sm! font-medium text-secondary-dark bg-white border border-gray-200 rounded-full px-3 py-1"
+                  className="text-sm! font-medium text-secondary-dark bg-card border border-border rounded-full px-3 py-1"
                 >
                   {phone}
                 </span>
               ))}
             </div>
           ) : (
-            <Paragraph className="text-sm! text-gray-400">—</Paragraph>
+            <Paragraph className="text-sm! text-muted-foreground">—</Paragraph>
           )}
         </div>
 
-        <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-          <Paragraph className="text-xs! text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+        <div className="bg-light rounded-xl p-4 border border-border">
+          <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
             <Mail className="w-3.5 h-3.5" />
             Email Addresses
           </Paragraph>
@@ -76,19 +76,19 @@ const ContactPreview = ({ data, onEdit }: ContactPreviewProps) => {
               {data.emails.map((email, index) => (
                 <span
                   key={index}
-                  className="text-sm! font-medium text-secondary-dark bg-white border border-gray-200 rounded-full px-3 py-1"
+                  className="text-sm! font-medium text-secondary-dark bg-card border border-border rounded-full px-3 py-1"
                 >
                   {email}
                 </span>
               ))}
             </div>
           ) : (
-            <Paragraph className="text-sm! text-gray-400">—</Paragraph>
+            <Paragraph className="text-sm! text-muted-foreground">—</Paragraph>
           )}
         </div>
 
-        <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-          <Paragraph className="text-xs! text-gray-500 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+        <div className="bg-light rounded-xl p-4 border border-border">
+          <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1 flex items-center gap-1.5">
             <Clock className="w-3.5 h-3.5" />
             Office Hour
           </Paragraph>

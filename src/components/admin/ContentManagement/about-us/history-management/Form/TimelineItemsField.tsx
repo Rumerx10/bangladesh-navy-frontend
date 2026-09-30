@@ -88,12 +88,12 @@ const TimelineItemsField = ({ name, disabled }: TimelineItemsFieldProps) => {
             return (
               <div
                 key={item.id || index}
-                className="border border-gray-200 rounded-xl overflow-hidden"
+                className="border border-border rounded-xl overflow-hidden"
               >
                 {/* Card header */}
-                <div className="flex items-center gap-3 px-4 py-3 bg-gray-50 border-b border-gray-200">
+                <div className="flex items-center gap-3 px-4 py-3 bg-light border-b border-border">
                   {iconPreview && (
-                    <div className="relative w-7 h-7 rounded overflow-hidden border border-gray-200 shrink-0">
+                    <div className="relative w-7 h-7 rounded overflow-hidden border border-border shrink-0">
                       <Image
                         src={iconPreview}
                         alt={item.title || `Timeline ${index + 1}`}
@@ -112,7 +112,7 @@ const TimelineItemsField = ({ name, disabled }: TimelineItemsFieldProps) => {
                       {item.period || `Timeline Item ${index + 1}`}
                     </span>
                     {item.title && (
-                      <span className="text-xs text-gray-500 ml-2 truncate">
+                      <span className="text-xs text-secondary-foreground ml-2 truncate">
                         — {item.title}
                       </span>
                     )}
@@ -129,7 +129,7 @@ const TimelineItemsField = ({ name, disabled }: TimelineItemsFieldProps) => {
                 </div>
 
                 {/* Card body — always visible */}
-                <div className="p-4 sm:p-5 space-y-5 bg-white">
+                <div className="p-4 sm:p-5 space-y-5 bg-card">
                   {/* Period + Title */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -170,7 +170,7 @@ const TimelineItemsField = ({ name, disabled }: TimelineItemsFieldProps) => {
                     <label
                       htmlFor={`${name}-${index}-icon`}
                       className={cn(
-                        "relative w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden border border-dashed border-gray-300 bg-[#F7F7F7] flex items-center justify-center cursor-pointer hover:border-primary transition-colors",
+                        "relative w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden border border-dashed border-input bg-light flex items-center justify-center cursor-pointer hover:border-primary transition-colors",
                         disabled && "opacity-60 pointer-events-none"
                       )}
                     >
@@ -194,7 +194,7 @@ const TimelineItemsField = ({ name, disabled }: TimelineItemsFieldProps) => {
                             height={18}
                             className="w-4.5 mb-1 opacity-40"
                           />
-                          <span className="text-xs text-[#A6A6A6] text-center px-2">
+                          <span className="text-xs text-muted-foreground text-center px-2">
                             Upload icon
                           </span>
                         </div>

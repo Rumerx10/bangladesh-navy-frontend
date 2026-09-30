@@ -22,7 +22,7 @@ const BiographyModal = ({ data, closeModal }: BiographyModalProps) => {
     >
       {/* Backdrop */}
       <motion.div
-        className="absolute inset-0 bg-pBlue/60 backdrop-blur-md"
+        className="absolute inset-0 bg-brand-navy/60 backdrop-blur-md"
         onClick={closeModal}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -31,14 +31,14 @@ const BiographyModal = ({ data, closeModal }: BiographyModalProps) => {
 
       {/* Modal */}
       <motion.div
-        className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+        className="relative w-full max-w-4xl max-h-[90vh] bg-card rounded-2xl shadow-2xl overflow-hidden flex flex-col"
         initial={{ opacity: 0, scale: 0.9, y: 40 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 40 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
         {/* Modal Header */}
-        <div className="relative bg-linear-to-r from-pBlue to-liteBlue px-6 sm:px-10 py-6 sm:py-8 shrink-0">
+        <div className="relative bg-linear-to-r from-brand-navy to-brand-blue px-6 sm:px-10 py-6 sm:py-8 shrink-0">
           <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-10">
             <Ship size={80} className="text-white" />
           </div>
@@ -87,7 +87,7 @@ const BiographyModal = ({ data, closeModal }: BiographyModalProps) => {
           <Quote size={40} className="text-pBlue/20 mb-4" />
           <div className="space-y-6">
             <motion.div
-              className="text-base lg:text-lg text-gray-600 text-justify leading-relaxed font-light [&_p]:mb-4 [&_p:last-child]:mb-0 [&_img]:rounded-lg [&_img]:shadow-sm after:content-[''] after:table after:clear-both"
+              className="text-base lg:text-lg text-secondary-foreground text-justify leading-relaxed font-light [&_p]:mb-4 [&_p:last-child]:mb-0 [&_img]:rounded-lg [&_img]:shadow-sm after:content-[''] after:table after:clear-both"
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 }}
@@ -98,7 +98,7 @@ const BiographyModal = ({ data, closeModal }: BiographyModalProps) => {
 
             {/* Bengali Message - commented out */}
             {/* <motion.p
-              className="text-base lg:text-lg text-gray-600 text-justify leading-relaxed font-light"
+              className="text-base lg:text-lg text-secondary-foreground text-justify leading-relaxed font-light"
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
@@ -106,7 +106,7 @@ const BiographyModal = ({ data, closeModal }: BiographyModalProps) => {
               {data.messageBn}
             </motion.p> */}
           </div>
-          <div className="mt-10 pt-8 border-t border-gray-100 flex items-center justify-between">
+          <div className="mt-10 pt-8 border-t border-border flex items-center justify-between">
             <div>
               <p className="text-lg font-bold text-pBlue">{data.nameEn}</p>
               <p className="text-sm text-liteBlue font-medium tracking-wide uppercase mt-1">

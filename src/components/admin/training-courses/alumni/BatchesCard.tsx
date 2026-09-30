@@ -66,7 +66,12 @@ const BatchesCard = ({
     error,
   } = useGet<IBatch[]>(
     BATCHES_ENDPOINT,
-    [...BATCHES_QUERY_KEY, currentPage.toString(), itemsPerPage.toString(), debouncedSearch],
+    [
+      ...BATCHES_QUERY_KEY,
+      currentPage.toString(),
+      itemsPerPage.toString(),
+      debouncedSearch,
+    ],
     courseId
       ? undefined
       : {
@@ -115,7 +120,11 @@ const BatchesCard = ({
   const { mutate: deleteMutate } = useDelete(() => {
     toast.success("Batch deleted successfully!");
     setPendingDelete(null);
-  }, [BATCHES_QUERY_KEY, BATCHES_LIST_QUERY_KEY, ALUMNI_MEMBERS_TREE_QUERY_KEY]);
+  }, [
+    BATCHES_QUERY_KEY,
+    BATCHES_LIST_QUERY_KEY,
+    ALUMNI_MEMBERS_TREE_QUERY_KEY,
+  ]);
 
   const handleEdit = (item: IBatch) => {
     setSelectedItem(item);
@@ -133,7 +142,8 @@ const BatchesCard = ({
   const nextSerial = useMemo(
     () =>
       courseId
-        ? filtered.reduce((max, batch) => Math.max(max, batch.serial ?? 0), 0) + 1
+        ? filtered.reduce((max, batch) => Math.max(max, batch.serial ?? 0), 0) +
+          1
         : 1,
     [courseId, filtered]
   );

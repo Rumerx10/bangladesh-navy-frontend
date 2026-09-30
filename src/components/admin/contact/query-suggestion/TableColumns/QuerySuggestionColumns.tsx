@@ -66,7 +66,7 @@ const GetQuerySuggestionColumns = (
       cell: (_value, row) => (
         <div className="flex items-center gap-2 w-full">
           <Button
-            className="w-9! min-h-9 border border-[#E6E6E6] flex items-center justify-center rounded-lg bg-light hover:bg-light"
+            className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
             size="sm"
             onClick={() => onView?.(row)}
           >

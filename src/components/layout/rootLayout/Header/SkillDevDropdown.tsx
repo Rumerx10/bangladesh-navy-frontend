@@ -20,7 +20,7 @@ const SkillDevDropdown = () => {
         className={`inline-flex items-center gap-1.5 px-3 py-2 text-base font-medium rounded-md transition-colors cursor-pointer ${
           isActive
             ? "text-liteBlue bg-liteBlue/5"
-            : "text-gray-700 hover:text-liteBlue hover:bg-gray-50"
+            : "text-foreground hover:text-liteBlue hover:bg-light"
         }`}
       >
         Training and Courses
@@ -30,7 +30,7 @@ const SkillDevDropdown = () => {
         />
       </button>
 
-      <div className="absolute left-1/2 top-full z-50 hidden -translate-x-1/2 rounded-xl border border-gray-200 bg-white shadow-xl group-hover:block">
+      <div className="absolute left-1/2 top-full z-50 hidden -translate-x-1/2 rounded-xl border border-border bg-card shadow-xl group-hover:block">
         <div className="flex flex-col gap-0.5 p-2 min-w-56">
           {links.map((item) => (
             <Link
@@ -39,7 +39,7 @@ const SkillDevDropdown = () => {
               className={`rounded-md px-3 py-2.5 text-sm transition-colors ${
                 pathname === item.href
                   ? "text-liteBlue bg-liteBlue/5 font-medium"
-                  : "text-gray-700 hover:bg-gray-50 hover:text-liteBlue"
+                  : "text-foreground hover:bg-light hover:text-liteBlue"
               }`}
             >
               {item.label}

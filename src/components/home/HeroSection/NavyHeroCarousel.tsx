@@ -28,7 +28,7 @@ const NavyHeroCarousel = () => {
   console.log("Image Url ::: ", imageUrl);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-white">
+    <div className="relative w-full h-screen overflow-hidden bg-card">
       {/* Background image */}
       <Image
         src={imageUrl || "/heroImages/heroImg1.jpg"}
@@ -79,7 +79,7 @@ const NavyHeroCarousel = () => {
           {/* <div className="flex flex-col sm:flex-row gap-4 mt-10">
             <Link
               href="/about"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-amber-400 hover:bg-amber-300 text-gray-900 text-sm font-semibold tracking-wider uppercase transition-colors duration-200"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-amber-400 hover:bg-amber-300 text-foreground text-sm font-semibold tracking-wider uppercase transition-colors duration-200"
             >
               Explore Our Fleet
               <svg

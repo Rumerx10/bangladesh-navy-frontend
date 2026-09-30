@@ -47,12 +47,12 @@ const QueryForm = () => {
   };
 
   return (
-    <div className="rounded-3xl border border-gray-100 bg-[#f8fafc] p-6 lg:p-10">
+    <div className="rounded-3xl border border-border bg-light p-6 lg:p-10">
       <div className="mb-10">
         <h2 className="text-2xl lg:text-3xl font-bold text-pBlue mb-4">
           Query or Suggestion
         </h2>
-        <p className="max-w-2xl text-gray-500 text-sm lg:text-base leading-relaxed">
+        <p className="max-w-2xl text-secondary-foreground text-sm lg:text-base leading-relaxed">
           Have a query or suggestion about our services or resources? Fill out
           the form below and our team will review and respond accordingly.
         </p>
@@ -65,7 +65,7 @@ const QueryForm = () => {
               <ControlledInputField
                 name="name"
                 placeholder="Enter your name"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
 
@@ -75,7 +75,7 @@ const QueryForm = () => {
                 type="email"
                 name="email"
                 placeholder="Enter your email"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
 
@@ -85,7 +85,7 @@ const QueryForm = () => {
                 type="tel"
                 name="phone"
                 placeholder="Enter your phone number"
-                className="bg-white"
+                className="bg-card"
               />
             </div>
 
@@ -94,7 +94,7 @@ const QueryForm = () => {
               <ControlledTextareaField
                 name="message"
                 placeholder="Write your query or suggestion here..."
-                className="bg-white min-h-40"
+                className="bg-card min-h-40"
               />
             </div>
 

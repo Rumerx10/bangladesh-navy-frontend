@@ -22,7 +22,7 @@ const SidebarChildLink = ({
         "flex items-center mt-1 h-10 px-3 rounded-sm text-sm transition-colors",
         isActive
           ? "text-primary font-medium bg-[#EAF6FB]"
-          : "text-[#6B7280] hover:text-primary hover:bg-[#EAF6FB]"
+          : "text-secondary-foreground hover:text-primary hover:bg-[#EAF6FB]"
       )}
     >
       <span className="truncate">{label}</span>

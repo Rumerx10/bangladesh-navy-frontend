@@ -95,14 +95,14 @@ export const GetCareerColumns = (
         return (
           <div className="flex items-center gap-3">
             <Button
-              className="w-9 max-h-9 bg-light hover:bg-light/90 text-secondary-foreground border border-[#E6E6E6] cursor-pointer"
+              className="w-9 max-h-9 bg-light hover:bg-light/90 text-secondary-foreground border border-border cursor-pointer"
               size="sm"
               onClick={() => onView?.(career)}
             >
               <Eye />
             </Button>
             <Button
-              className="w-9 max-h-9 bg-light hover:bg-light/90 text-secondary-foreground border border-[#E6E6E6]"
+              className="w-9 max-h-9 bg-light hover:bg-light/90 text-secondary-foreground border border-border"
               size="sm"
               onClick={() => router.push(`/admin/update-career/${career.id}`)}
             >

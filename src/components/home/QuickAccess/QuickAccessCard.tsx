@@ -27,22 +27,22 @@ const QuickAccessCard = ({ item }: QuickAccessCardProps) => {
   return (
     <Link
       href={item.href}
-      className="shadow group flex items-center gap-4 p-5 rounded-xl bg-white border border-gray-100 hover:border-liteBlue/20 hover:shadow-lg transition-all duration-300"
+      className="shadow group flex items-center gap-4 p-5 rounded-xl bg-card border border-border hover:border-liteBlue/20 hover:shadow-lg transition-all duration-300"
     >
-      <div className="w-12 h-12 rounded-xl bg-liteBlue/8 text-liteBlue flex items-center justify-center shrink-0 group-hover:bg-liteBlue group-hover:text-white transition-colors duration-300">
+      <div className="w-12 h-12 rounded-xl bg-liteBlue/8 text-liteBlue flex items-center justify-center shrink-0 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300">
         {iconMap[item.icon] ?? <Map size={22} />}
       </div>
       <div className="flex-1 min-w-0">
         <h3 className="text-sm font-semibold text-pBlue group-hover:text-liteBlue transition-colors">
           {item.title}
         </h3>
-        <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">
+        <p className="text-xs text-secondary-foreground mt-0.5 line-clamp-1">
           {item.description}
         </p>
       </div>
       <ArrowRight
         size={18}
-        className="text-gray-300 group-hover:text-liteBlue group-hover:translate-x-1 transition-all duration-300 shrink-0"
+        className="text-light-silver group-hover:text-liteBlue group-hover:translate-x-1 transition-all duration-300 shrink-0"
       />
     </Link>
   );

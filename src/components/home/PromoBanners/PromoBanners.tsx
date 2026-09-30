@@ -77,7 +77,7 @@ const PromoBanners = () => {
                 {banner.subtitle && (
                   <p className="text-sm opacity-90 mb-3">{banner.subtitle}</p>
                 )}
-                <span className="inline-flex items-center gap-1.5 w-fit px-4 py-2 rounded-md bg-white text-gray-900 text-xs font-semibold hover:bg-primary hover:text-white hover:-translate-y-0.5 transition-all">
+                <span className="inline-flex items-center gap-1.5 w-fit px-4 py-2 rounded-md bg-card text-foreground text-xs font-semibold hover:bg-primary hover:text-white hover:-translate-y-0.5 transition-all">
                   {banner.btnText} <ArrowRight size={14} />
                 </span>
               </div>

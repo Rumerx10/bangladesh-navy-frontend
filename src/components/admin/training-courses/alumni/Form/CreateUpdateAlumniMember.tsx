@@ -62,7 +62,8 @@ const CreateUpdateAlumniMember = ({
     () =>
       mapToSelectOptions(
         batches,
-        (batch) => (batch.courseName ? `${batch.courseName} — ${batch.name}` : batch.name),
+        (batch) =>
+          batch.courseName ? `${batch.courseName} — ${batch.name}` : batch.name,
         "id"
       ),
     [batches]
@@ -184,7 +185,7 @@ const CreateUpdateAlumniMember = ({
         if (!open) handleClose();
       }}
     >
-      <DialogContent className="scrollbar-modern max-h-[90vh] min-w-[50vw] overflow-y-auto bg-white">
+      <DialogContent className="scrollbar-modern max-h-[90vh] min-w-[50vw] overflow-y-auto bg-card">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold text-secondary">
             {isUpdate ? "Update" : "Add"} Alumni Member

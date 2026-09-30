@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
 
 const BestSellingProductsSkeleton = () => {
   return (
-    <Card className="border-gray-100 shadow-sm rounded-2xl py-4 sm:py-5 h-full">
+    <Card className="border-border shadow-sm rounded-2xl py-4 sm:py-5 h-full">
       <CardHeader className="pb-2 px-4 sm:px-6">
         <div className="flex items-center gap-2 sm:gap-3">
           <Skeleton className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl shrink-0" />

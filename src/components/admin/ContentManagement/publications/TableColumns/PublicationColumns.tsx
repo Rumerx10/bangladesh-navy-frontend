@@ -25,7 +25,7 @@ export function GetPublicationColumns(
       header: "Image",
       accessorKey: "imageUrl",
       cell: (_, row) => (
-        <div className="relative w-16 h-12 rounded overflow-hidden bg-gray-100">
+        <div className="relative w-16 h-12 rounded overflow-hidden bg-light-dark">
           <Image
             src={row.imageUrl}
             alt={row.titleEn}
@@ -39,7 +39,7 @@ export function GetPublicationColumns(
       header: "Title",
       accessorKey: "titleEn",
       cell: (_, row) => (
-        <span className="line-clamp-2 max-w-70 font-medium text-gray-800">
+        <span className="line-clamp-2 max-w-70 font-medium text-foreground">
           {row.titleEn}
         </span>
       ),
@@ -48,7 +48,7 @@ export function GetPublicationColumns(
       header: "Code",
       accessorKey: "code",
       cell: (_, row) => (
-        <span className="font-mono text-sm text-gray-700">
+        <span className="font-mono text-sm text-foreground">
           {row.code || "—"}
         </span>
       ),
@@ -57,7 +57,9 @@ export function GetPublicationColumns(
       header: "Date",
       accessorKey: "date",
       cell: (_, row) => (
-        <span className="text-sm text-gray-600">{formatDate(row.date)}</span>
+        <span className="text-sm text-secondary-foreground">
+          {formatDate(row.date)}
+        </span>
       ),
     },
     {
@@ -67,7 +69,7 @@ export function GetPublicationColumns(
         <span
           className={`rounded-full px-2 py-1 text-xs font-medium ${
             row.status === "INACTIVE"
-              ? "bg-gray-100 text-gray-500"
+              ? "bg-light-dark text-secondary-foreground"
               : "bg-green-100 text-green-700"
           }`}
         >
@@ -82,14 +84,14 @@ export function GetPublicationColumns(
         <div className="flex gap-1">
           <button
             onClick={() => onEdit(row)}
-            className="p-2 rounded-md hover:bg-gray-100 text-gray-500 hover:text-pBlue transition-colors cursor-pointer"
+            className="p-2 rounded-md hover:bg-light-dark text-secondary-foreground hover:text-pBlue transition-colors cursor-pointer"
             title="Edit"
           >
             <Pencil className="w-4 h-4" />
           </button>
           <button
             onClick={() => onDelete(row)}
-            className="p-2 rounded-md hover:bg-gray-100 text-gray-500 hover:text-red-600 transition-colors cursor-pointer"
+            className="p-2 rounded-md hover:bg-light-dark text-secondary-foreground hover:text-red-600 transition-colors cursor-pointer"
             title="Delete"
           >
             <Trash2 className="w-4 h-4" />

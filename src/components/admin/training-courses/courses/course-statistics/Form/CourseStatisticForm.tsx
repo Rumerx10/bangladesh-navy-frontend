@@ -31,7 +31,9 @@ const SectionHeader = ({
         {label}
       </Paragraph>
       {description && (
-        <Paragraph className="text-xs! text-gray-500">{description}</Paragraph>
+        <Paragraph className="text-xs! text-secondary-foreground">
+          {description}
+        </Paragraph>
       )}
     </div>
   </div>
@@ -73,7 +75,7 @@ const CourseStatisticForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
       {/* Course details */}
-      <div className="rounded-lg border border-light-silver bg-white p-6">
+      <div className="rounded-lg border border-light-silver bg-card p-6">
         <SectionHeader
           icon={CalendarRange}
           label="Course Details"
@@ -135,7 +137,7 @@ const CourseStatisticForm = ({
       </div>
 
       {/* Trainee statistics */}
-      <div className="rounded-lg border border-light-silver bg-white p-6">
+      <div className="rounded-lg border border-light-silver bg-card p-6">
         <SectionHeader
           icon={BarChart3}
           label="Trainee Statistics"
@@ -200,7 +202,7 @@ const CourseStatisticForm = ({
           </div>
         )}
 
-        <Paragraph className="mt-4 text-xs! text-gray-500">
+        <Paragraph className="mt-4 text-xs! text-secondary-foreground">
           Leave a figure empty where none is available — the public table prints
           an em dash (—) for it. The totals row is calculated by the API.
         </Paragraph>
@@ -212,7 +214,7 @@ const CourseStatisticForm = ({
         <Button
           type="button"
           onClick={onCancel}
-          className="cursor-pointer border bg-transparent text-secondary-foreground duration-300 hover:bg-gray-100 hover:shadow"
+          className="cursor-pointer border bg-transparent text-secondary-foreground duration-300 hover:bg-light-dark hover:shadow"
         >
           Cancel
         </Button>

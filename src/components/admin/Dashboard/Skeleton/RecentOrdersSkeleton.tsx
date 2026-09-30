@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
 
 const RecentOrdersSkeleton = () => {
   return (
-    <Card className="border-gray-100 shadow-sm rounded-2xl py-4 sm:py-5 h-full">
+    <Card className="border-border shadow-sm rounded-2xl py-4 sm:py-5 h-full">
       <CardHeader className="pb-2 px-4 sm:px-6">
         <div className="flex items-center gap-3">
           <Skeleton className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl shrink-0" />
@@ -19,7 +19,7 @@ const RecentOrdersSkeleton = () => {
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
-              className="flex items-center justify-between p-3 rounded-xl bg-gray-50/70 border border-gray-100"
+              className="flex items-center justify-between p-3 rounded-xl bg-light/70 border border-border"
             >
               <div className="flex-1 space-y-1.5">
                 <div className="flex items-center gap-2">
@@ -37,7 +37,7 @@ const RecentOrdersSkeleton = () => {
         {/* Desktop/tablet skeleton */}
         <div className="hidden sm:block">
           {/* Header row */}
-          <div className="flex items-center gap-4 py-3 border-b border-gray-100">
+          <div className="flex items-center gap-4 py-3 border-b border-border">
             <Skeleton className="h-3 w-16 rounded" />
             <Skeleton className="h-3 w-20 rounded" />
             <Skeleton className="h-3 w-20 rounded hidden md:block" />
@@ -49,7 +49,7 @@ const RecentOrdersSkeleton = () => {
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
-              className="flex items-center gap-4 py-3.5 border-b border-gray-50"
+              className="flex items-center gap-4 py-3.5 border-b border-border"
             >
               <Skeleton className="h-4 w-20 rounded" />
               <Skeleton className="h-4 w-24 rounded" />

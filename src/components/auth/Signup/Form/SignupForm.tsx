@@ -28,11 +28,11 @@ const SignupForm = ({
 
       {/* Divider */}
       {/* <div className="flex items-center gap-3 my-6">
-        <span className="flex-1 h-px bg-gray-200" />
-        <span className="text-xs text-gray-400 font-medium uppercase tracking-wider">
+        <span className="flex-1 h-px bg-light-silver" />
+        <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">
           or sign up with email
         </span>
-        <span className="flex-1 h-px bg-gray-200" />
+        <span className="flex-1 h-px bg-light-silver" />
       </div> */}
 
       <div className="mb-6 grid grid-cols-1 lg:grid-cols-2 gap-3">
@@ -73,7 +73,7 @@ const SignupForm = ({
           <Button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute inset-y-1 right-1 flex items-center text-black bg-transparent hover:bg-transparent shadow-none"
+            className="absolute inset-y-1 right-1 flex items-center text-foreground bg-transparent hover:bg-transparent shadow-none"
           >
             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </Button>
@@ -91,7 +91,7 @@ const SignupForm = ({
           <Button
             type="button"
             onClick={() => setShowRePassword(!showRePassword)}
-            className="absolute inset-y-1 right-1 flex items-center text-black bg-transparent hover:bg-transparent shadow-none"
+            className="absolute inset-y-1 right-1 flex items-center text-foreground bg-transparent hover:bg-transparent shadow-none"
           >
             {showRePassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </Button>
@@ -110,7 +110,7 @@ const SignupForm = ({
         {isPending ? "Loading..." : "Sign up"}
       </Button>
 
-      <p className="mt-4 text-left text-sm text-[#BDBDBD]">
+      <p className="mt-4 text-left text-sm text-muted-foreground">
         Already have an account?{" "}
         <Link
           href="/auth/login"

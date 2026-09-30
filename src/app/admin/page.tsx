@@ -74,7 +74,7 @@ const AdminDashboardPage = () => {
   return (
     <div className="space-y-8 lg:space-y-10">
       {/* Hero */}
-      <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-pBlue via-secondary to-liteBlue px-6 py-10 text-white shadow-lg sm:px-10 sm:py-12">
+      <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-brand-navy via-secondary to-brand-blue px-6 py-10 text-white shadow-lg sm:px-10 sm:py-12">
         <Compass
           className="pointer-events-none absolute -top-8 -right-8 h-52 w-52 text-white/10"
           strokeWidth={1}
@@ -107,7 +107,7 @@ const AdminDashboardPage = () => {
             <Link
               key={href}
               href={href}
-              className="group relative flex flex-col gap-3 rounded-xl border border-light-silver bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg"
+              className="group relative flex flex-col gap-3 rounded-xl border border-light-silver bg-card p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg"
             >
               <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary group-hover:text-white">
                 <Icon className="h-5 w-5" />
@@ -116,7 +116,7 @@ const AdminDashboardPage = () => {
                 <h3 className="font-semibold text-secondary-dark">{title}</h3>
                 <p className="mt-1 text-sm text-secondary-gray">{desc}</p>
               </div>
-              <ArrowRight className="absolute top-5 right-5 h-4 w-4 text-gray-300 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-primary" />
+              <ArrowRight className="absolute top-5 right-5 h-4 w-4 text-light-silver transition-transform duration-200 group-hover:translate-x-1 group-hover:text-primary" />
             </Link>
           ))}
         </div>

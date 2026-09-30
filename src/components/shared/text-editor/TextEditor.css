@@ -2,9 +2,9 @@
   /* max-width: 800px; */
 
   margin: 20px auto;
-  border: 1px solid #e1e5e9;
+  border: 1px solid var(--border);
   border-radius: 8px;
-  background: white;
+  background: var(--card);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -14,8 +14,8 @@
   flex-wrap: wrap;
   gap: 8px;
   padding: 12px;
-  border-bottom: 1px solid #e1e5e9;
-  background: #f8f9fa;
+  border-bottom: 1px solid var(--border);
+  background: var(--light);
   align-items: center;
 }
 
@@ -24,7 +24,7 @@
   gap: 4px;
   align-items: center;
   padding: 4px 8px;
-  border-right: 1px solid #e1e5e9;
+  border-right: 1px solid var(--border);
 }
 
 .toolbar-group:last-child {
@@ -33,7 +33,7 @@
 
 .toolbar-group span {
   font-size: 12px;
-  color: #666;
+  color: var(--muted-foreground);
   margin-right: 4px;
   white-space: nowrap;
 }
@@ -43,9 +43,9 @@
   align-items: center;
   justify-content: center;
   padding: 6px 12px;
-  border: 1px solid #d1d5db;
-  background: white;
-  color: #374151;
+  border: 1px solid var(--input);
+  background: var(--card);
+  color: var(--foreground);
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
@@ -54,14 +54,14 @@
 }
 
 .toolbar-button:hover {
-  background: #f3f4f6;
-  border-color: #9ca3af;
+  background: var(--light-dark);
+  border-color: var(--muted-foreground);
 }
 
 .toolbar-button.is-active {
-  background: #000;
-  color: #fff;
-  border-color: #000;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
 }
 
 .toolbar-button:disabled {
@@ -115,67 +115,115 @@
   margin: 0.5em 0;
 }
 
-/* Image Resize Container */
+/* Image Resize Container (editor only).
+   Float/display/margin for each wrap+align combination — plus the percentage
+   width — are written straight onto this element's inline style by the node
+   view (see resizable-image.ts's `getWrapStyle`), which is the single source
+   of truth shared with the saved HTML. Everything below is chrome that only
+   exists while editing: selection ring, corner handles, size readout. */
 .image-resize-container {
   position: relative;
-  display: inline-block;
-  margin: 0.5em 0;
-  border: 2px solid transparent;
-  border-radius: 4px;
-  transition: border-color 0.2s ease;
+  max-width: 100%;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: outline-color 0.15s ease;
   line-height: 0;
 }
 
-.image-resize-container.selected {
-  border-color: #3b82f6;
-}
-
 .image-resize-container:hover {
-  border-color: #3b82f6;
+  outline-color: var(--ring);
 }
 
-.image-resize-container:hover .resize-handle,
-.image-resize-container.selected .resize-handle {
-  opacity: 1 !important;
+.image-resize-container.is-selected,
+.image-resize-container.is-resizing {
+  outline-color: var(--primary);
 }
 
-/* Resize Handle */
-.resize-handle {
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 12px;
-  height: 12px;
-  background: #3b82f6;
-  border: 1px solid white;
-  border-radius: 2px;
-  cursor: se-resize;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 8px;
-  color: white;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  z-index: 10;
+.image-resize-container.is-resizing {
+  user-select: none;
 }
 
-.resize-handle:hover {
-  background: #2563eb;
-}
-
-/* Resizable Image */
-.resizable-image {
-  max-width: 100%;
-  height: auto;
+/* The width lives on the container so the percentage resolves against the
+   text column; the image just fills it. */
+.image-resize-container > .resizable-image {
   display: block;
+  width: 100%;
+  height: auto;
   cursor: pointer;
 }
 
-/* Float/display/margin for each wrap+align combination is set directly on
-   the container's inline style by the node view (see resizable-image.ts's
-   `getWrapStyle`) — that's the single source of truth, so it always matches
-   what gets saved. */
+/* Resize handles — one per corner so an image floated to either side can be
+   dragged from the edge that faces the text. */
+.resize-handle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--primary);
+  border: 2px solid var(--card);
+  border-radius: 9999px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.35);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 10;
+}
+
+.image-resize-container:hover .resize-handle,
+.image-resize-container.is-selected .resize-handle,
+.image-resize-container.is-resizing .resize-handle {
+  opacity: 1;
+}
+
+.resize-handle:hover {
+  background: var(--ring);
+}
+
+.resize-handle--nw {
+  top: -7px;
+  left: -7px;
+  cursor: nwse-resize;
+}
+
+.resize-handle--ne {
+  top: -7px;
+  right: -7px;
+  cursor: nesw-resize;
+}
+
+.resize-handle--sw {
+  bottom: -7px;
+  left: -7px;
+  cursor: nesw-resize;
+}
+
+.resize-handle--se {
+  bottom: -7px;
+  right: -7px;
+  cursor: nwse-resize;
+}
+
+/* Live width readout — shows the share of the text column the image takes,
+   which is the number that actually carries over to the public page. */
+.rt-size-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  padding: 1px 8px;
+  border-radius: 9999px;
+  background: var(--foreground);
+  color: var(--background);
+  font-size: 11px;
+  line-height: 18px;
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+  z-index: 11;
+}
+
+.image-resize-container.is-selected .rt-size-badge,
+.image-resize-container.is-resizing .rt-size-badge {
+  opacity: 1;
+}
 
 /* Clear floats for proper text wrapping */
 .ProseMirror::after {
@@ -187,20 +235,20 @@
 /* Content Preview */
 .content-preview {
   padding: 20px;
-  border-top: 1px solid #e1e5e9;
-  background: #f8f9fa;
+  border-top: 1px solid var(--border);
+  background: var(--light);
 }
 
 .content-preview h3 {
   margin: 0 0 10px 0;
   font-size: 14px;
-  color: #666;
+  color: var(--muted-foreground);
 }
 
 .content-preview pre {
-  background: white;
+  background: var(--card);
   padding: 12px;
-  border: 1px solid #e1e5e9;
+  border: 1px solid var(--border);
   border-radius: 4px;
   font-size: 12px;
   white-space: pre-wrap;
@@ -228,21 +276,21 @@
 /* Content Preview with proper styling */
 .content-preview {
   padding: 20px;
-  border-top: 1px solid #e1e5e9;
-  background: #f8f9fa;
+  border-top: 1px solid var(--border);
+  background: var(--light);
 }
 
 .content-preview h3 {
   margin: 0 0 10px 0;
   font-size: 14px;
-  color: #666;
+  color: var(--muted-foreground);
 }
 
 /* Preview content that applies the same styles as editor */
 .preview-content {
-  background: white;
+  background: var(--card);
   padding: 20px;
-  border: 1px solid #e1e5e9;
+  border: 1px solid var(--border);
   border-radius: 4px;
   margin-bottom: 12px;
   min-height: 100px;
@@ -283,44 +331,10 @@
   margin: 0.5em 0;
 }
 
-/* Text Wrapping Modes for Preview
-   These are a fallback only — every image saved by the editor already
-   carries the matching inline style (see resizable-image.ts's
-   `getWrapStyle`), which naturally wins over these non-!important rules.
-   Kept here (and mirrored in globals.css) purely for content saved before
-   that inline style existed. Values must stay in sync with `getWrapStyle`. */
-
-/* 1. Inline - Image behaves like text */
-.preview-content .image-wrap-inline {
-  display: inline;
-  vertical-align: middle;
-  margin: 0 8px;
-}
-
-/* 2. Wrap - Text wraps around image */
-.preview-content .image-wrap-wrap.image-align-right {
-  float: right;
-  margin: 0 0 6px 12px;
-  clear: both;
-}
-
-.preview-content .image-wrap-wrap {
-  float: left;
-  margin: 0 12px 6px 0;
-  clear: both;
-}
-
-/* 3. Break - Image breaks text flow */
-.preview-content .image-wrap-break {
-  display: block;
-  margin: 12px auto;
-  float: none;
-  clear: both;
-}
-
-.preview-content .image-wrap-break.image-align-right {
-  margin: 12px 0 12px auto;
-}
+/* Image wrap/align fallbacks used to be duplicated here. They now live once,
+   in globals.css under the `.rich-text` section, which every surface that
+   renders editor output shares — the editable area, the admin preview and the
+   public page — so the three can't drift apart. */
 
 /* Clear floats for proper text wrapping in preview */
 .preview-content::after {
@@ -331,9 +345,9 @@
 
 /* Rest of your existing CSS remains the same */
 .preview-content pre {
-  background: white;
+  background: var(--card);
   padding: 12px;
-  border: 1px solid #e1e5e9;
+  border: 1px solid var(--border);
   border-radius: 4px;
   font-size: 12px;
   white-space: pre-wrap;
@@ -360,10 +374,10 @@
 /* Font Size Dropdown */
 .font-size-select {
   padding: 6px 8px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--input);
   border-radius: 4px;
-  background: white;
-  color: #374151;
+  background: var(--card);
+  color: var(--foreground);
   font-size: 14px;
   cursor: pointer;
   min-width: 80px;
@@ -371,8 +385,8 @@
 
 .font-size-select:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 35%, transparent);
 }
 
 /* Font size preview in dropdown */
@@ -386,13 +400,13 @@
 }
 
 .ProseMirror blockquote.custom-blockquote {
-  border-left: 3px solid #3b82f6;
+  border-left: 3px solid var(--primary);
   margin: 1.5em 0;
   padding: 0.5em 1em;
-  background: #f8fafc;
+  background: var(--light);
   border-radius: 0 4px 4px 0;
   font-style: italic;
-  color: #475569;
+  color: var(--secondary-foreground);
 }
 
 .ProseMirror blockquote.custom-blockquote p {
@@ -403,13 +417,13 @@
 }
 /* Preview blockquote styling */
 .preview-content blockquote {
-  border-left: 3px solid #3b82f6;
+  border-left: 3px solid var(--primary);
   margin: 1.5em 0;
   padding: 0.5em 1em;
-  background: #f8fafc;
+  background: var(--light);
   border-radius: 0 4px 4px 0;
   font-style: italic;
-  color: #475569;
+  color: var(--secondary-foreground);
 }
 
 .preview-content blockquote p {
@@ -448,7 +462,7 @@
 .color-swatch {
   width: 24px;
   height: 24px;
-  border: 2px solid #e5e7eb;
+  border: 2px solid var(--border);
   border-radius: 4px;
   cursor: pointer;
   margin: 0 2px;
@@ -456,7 +470,7 @@
 }
 
 .color-swatch:hover {
-  border-color: #3b82f6;
+  border-color: var(--primary);
   transform: scale(1.1);
 }
 
@@ -479,7 +493,7 @@
 }
 .ProseMirror p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
-  color: #9ca3af;
+  color: var(--muted-foreground);
   float: left;
   pointer-events: none;
   height: 0;

@@ -27,7 +27,7 @@ export const GetUserColumns = (
         const name = `${user.firstName || ""} ${user.lastName || ""}`.trim();
 
         return profilePicture ? (
-          <div className="w-10 h-10 border border-[#E6E6E6] flex items-center justify-center rounded-full bg-light overflow-hidden">
+          <div className="w-10 h-10 border border-border flex items-center justify-center rounded-full bg-light overflow-hidden">
             <Image
               src={profilePicture}
               alt={name || "User"}
@@ -37,7 +37,7 @@ export const GetUserColumns = (
             />
           </div>
         ) : (
-          <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-xs font-semibold text-gray-500">
+          <div className="w-10 h-10 rounded-full bg-light-dark flex items-center justify-center text-xs font-semibold text-secondary-foreground">
             {(user.firstName?.[0] || "U").toUpperCase()}
           </div>
         );
@@ -109,7 +109,7 @@ export const GetUserColumns = (
             <DropdownMenuTrigger asChild>
               <button
                 type="button"
-                className="w-9 h-9 border border-[#E6E6E6] flex items-center justify-center rounded-lg bg-light hover:bg-light cursor-pointer"
+                className="w-9 h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light cursor-pointer"
                 aria-label="User actions"
               >
                 <EllipsisVertical className="h-4 w-4 text-secondary-foreground" />

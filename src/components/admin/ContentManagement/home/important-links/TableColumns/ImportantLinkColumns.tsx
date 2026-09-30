@@ -39,7 +39,7 @@ export function GetImportantLinkColumns(
           className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
             row.status === "ACTIVE"
               ? "bg-green-100 text-green-700"
-              : "bg-gray-100 text-gray-500"
+              : "bg-light-dark text-secondary-foreground"
           }`}
         >
           {row.status}
@@ -52,7 +52,7 @@ export function GetImportantLinkColumns(
       cell: (_, row) => (
         <button
           onClick={() => onEdit(row)}
-          className="p-2 rounded-md hover:bg-gray-100 text-gray-500 hover:text-pBlue transition-colors cursor-pointer"
+          className="p-2 rounded-md hover:bg-light-dark text-secondary-foreground hover:text-pBlue transition-colors cursor-pointer"
           title="Edit"
         >
           <Pencil className="w-4 h-4" />

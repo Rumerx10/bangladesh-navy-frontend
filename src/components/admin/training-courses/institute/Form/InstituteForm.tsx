@@ -33,7 +33,7 @@ const InstituteForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
       {/* Basic Information */}
-      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-card">
         <FormSectionHeader
           label="Basic Information"
           description="Heading shown at the top of the institute page"
@@ -65,7 +65,7 @@ const InstituteForm = ({
       </div>
 
       {/* About */}
-      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-card">
         <FormSectionHeader
           label="About the Institute"
           description="Each entry renders as its own paragraph"
@@ -80,7 +80,7 @@ const InstituteForm = ({
       </div>
 
       {/* Vision */}
-      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-card">
         <FormSectionHeader label="Vision" />
         <div className="flex flex-col gap-y-6 mt-6">
           <div>
@@ -107,7 +107,7 @@ const InstituteForm = ({
       </div>
 
       {/* Mission */}
-      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-card">
         <FormSectionHeader
           label="Mission"
           description="Each point renders as a bullet in the mission card"
@@ -137,7 +137,7 @@ const InstituteForm = ({
       </div>
 
       {/* Training Overview */}
-      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-card">
         <FormSectionHeader
           label="Training Overview"
           description="Closing block on the institute page"
@@ -172,7 +172,7 @@ const InstituteForm = ({
         <Button
           type="button"
           onClick={onCancel}
-          className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer"
+          className="text-secondary-foreground bg-transparent hover:bg-light-dark duration-300 border hover:shadow cursor-pointer"
         >
           Cancel
         </Button>

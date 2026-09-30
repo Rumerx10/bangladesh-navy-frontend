@@ -4,6 +4,8 @@ import "./globals.css";
 
 import LoginModal from "../components/auth/LoginModal/LoginModal";
 import ToastProvider from "../components/shared/Toast/ToastProvider";
+import { ThemeProvider } from "../components/theme/ThemeProvider";
+import ThemeScript from "../components/theme/ThemeScript";
 import { siteConfig } from "../config/siteConfig";
 import GoogleAuthClientProvider from "../lib/google-auth/GoogleAuthClientProvider";
 import QueryProvider from "../lib/react-query/QueryProvider";
@@ -26,17 +28,22 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en" className={poppins.variable} suppressHydrationWarning>
       <body className="antialiased" suppressHydrationWarning>
-        <StoreProvider>
-          <QueryProvider>
-            <GoogleAuthClientProvider>
-              <ToastProvider>
-                <UserFetcher />
-                <main>{children}</main>
-                <LoginModal />
-              </ToastProvider>
-            </GoogleAuthClientProvider>
-          </QueryProvider>
-        </StoreProvider>
+        {/* Must stay the first child — it runs before anything below it is
+            painted, which is what prevents the white flash on reload. */}
+        <ThemeScript />
+        <ThemeProvider>
+          <StoreProvider>
+            <QueryProvider>
+              <GoogleAuthClientProvider>
+                <ToastProvider>
+                  <UserFetcher />
+                  <main>{children}</main>
+                  <LoginModal />
+                </ToastProvider>
+              </GoogleAuthClientProvider>
+            </QueryProvider>
+          </StoreProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

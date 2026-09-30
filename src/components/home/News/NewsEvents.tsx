@@ -20,7 +20,7 @@ const NewsEvents = () => {
   return (
     <>
       {/* ─── News & Events Section ─── */}
-      <section className="relative py-8 lg:py-20 bg-white overflow-hidden">
+      <section className="relative py-8 lg:py-20 bg-card overflow-hidden">
         {/* Watermark */}
         <div className="absolute -right-16 top-20 text-pBlue">
           <NavyWatermark
@@ -49,20 +49,22 @@ const NewsEvents = () => {
               {[...Array(3)].map((_, i) => (
                 <div
                   key={i}
-                  className="rounded-2xl bg-white border border-gray-100 overflow-hidden"
+                  className="rounded-2xl bg-card border border-border overflow-hidden"
                 >
                   <div className="p-5 lg:p-6 space-y-3">
-                    <div className="h-4 w-20 bg-gray-200 animate-pulse rounded" />
-                    <div className="h-5 w-full bg-gray-200 animate-pulse rounded" />
-                    <div className="h-4 w-3/4 bg-gray-200 animate-pulse rounded" />
+                    <div className="h-4 w-20 bg-light-silver animate-pulse rounded" />
+                    <div className="h-5 w-full bg-light-silver animate-pulse rounded" />
+                    <div className="h-4 w-3/4 bg-light-silver animate-pulse rounded" />
                   </div>
                 </div>
               ))}
             </div>
           ) : latestNews.length === 0 ? (
             <div className="text-center py-10">
-              <Newspaper size={48} className="mx-auto text-gray-300 mb-4" />
-              <p className="text-gray-500">No news or events available.</p>
+              <Newspaper size={48} className="mx-auto text-light-silver mb-4" />
+              <p className="text-secondary-foreground">
+                No news or events available.
+              </p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -91,7 +93,7 @@ const NewsEvents = () => {
             >
               <Link
                 href="/about/news"
-                className="inline-flex items-center justify-center gap-2 px-8 h-11 py-4 rounded-lg bg-liteBlue text-white font-medium text-base hover:bg-[#004d8a] transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-8 h-11 py-4 rounded-lg bg-brand-blue text-white font-medium text-base hover:bg-brand-blue transition-colors"
               >
                 View All News <ArrowRight size={18} />
               </Link>

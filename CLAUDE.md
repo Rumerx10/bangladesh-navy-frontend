@@ -14,6 +14,8 @@ yarn spotless     # lint --fix + format (combined)
 
 No tests are configured (`test` script is a no-op). Husky + lint-staged runs ESLint --fix + Prettier automatically on every commit.
 
+**Do not run `yarn build` or `yarn dev` unless explicitly asked.** They are slow and the user usually has the dev server running already. Make the change, say that verification is pending, and wait to be asked. `yarn lint` is cheap and fine to run unprompted.
+
 CI (GitHub Actions): PRs to `main` run `yarn spotless` + `yarn build` and deploy a Vercel preview ([.github/workflows/preview.yml](.github/workflows/preview.yml)); pushes to `main` run the release pipeline ([.github/workflows/release.yml](.github/workflows/release.yml)). A change must build cleanly to pass CI.
 
 ## Environment variables

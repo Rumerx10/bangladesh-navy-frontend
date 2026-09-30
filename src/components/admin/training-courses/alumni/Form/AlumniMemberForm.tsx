@@ -122,7 +122,7 @@ const AlumniMemberForm = ({
         <Button
           type="button"
           onClick={onCancel}
-          className="cursor-pointer border bg-transparent text-secondary-foreground shadow-none hover:bg-gray-100"
+          className="cursor-pointer border bg-transparent text-secondary-foreground shadow-none hover:bg-light-dark"
         >
           Cancel
         </Button>

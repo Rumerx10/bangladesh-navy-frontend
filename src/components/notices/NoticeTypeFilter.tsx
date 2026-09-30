@@ -44,8 +44,8 @@ const NoticeTypeFilter = ({
                 ? "px-3 py-1.5 text-xs"
                 : "px-4 py-2 text-xs lg:text-sm",
               isActive
-                ? "border-pBlue bg-pBlue text-white shadow-sm"
-                : "border-gray-200 bg-white text-gray-600 hover:border-pBlue/40 hover:text-pBlue"
+                ? "border-pBlue bg-brand-navy text-white shadow-sm"
+                : "border-border bg-card text-secondary-foreground hover:border-pBlue/40 hover:text-pBlue"
             )}
           >
             {option.label}
@@ -53,7 +53,9 @@ const NoticeTypeFilter = ({
               <span
                 className={cn(
                   "ml-1.5 rounded-full px-1.5 py-0.5 text-[10px] font-semibold",
-                  isActive ? "bg-white/20" : "bg-gray-100 text-gray-500"
+                  isActive
+                    ? "bg-white/20"
+                    : "bg-light-dark text-secondary-foreground"
                 )}
               >
                 {counts[option.value] ?? 0}

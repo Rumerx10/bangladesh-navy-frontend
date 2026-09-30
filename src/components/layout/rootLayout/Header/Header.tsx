@@ -4,7 +4,7 @@ import MarqueeNotice from "@/src/components/home/MarqueeNotice";
 import { useEffect, useState } from "react";
 import HeaderTopBar from "./HeaderTopBar";
 import MobileNav from "./MobileNav";
-import TopInfoBar from "./TopInfoBar";
+// import TopInfoBar from "./TopInfoBar";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -26,7 +26,7 @@ const Header = () => {
           scrolled ? "shadow-md" : ""
         }`}
       >
-        <TopInfoBar />
+        {/* <TopInfoBar /> */}
         <HeaderTopBar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <MarqueeNotice />
       </div>

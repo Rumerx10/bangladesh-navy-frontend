@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "@/src/components/ui/card";
 
 const RevenueChartSkeleton = () => {
   return (
-    <Card className="border-gray-100 shadow-sm rounded-2xl py-4 sm:py-5">
+    <Card className="border-border shadow-sm rounded-2xl py-4 sm:py-5">
       <CardHeader className="pb-2 px-4 sm:px-6">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-2 sm:gap-3">

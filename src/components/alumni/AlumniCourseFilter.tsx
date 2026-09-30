@@ -47,8 +47,8 @@ const AlumniCourseFilter = ({
             className={cn(
               "inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors",
               isActive
-                ? "border-pBlue bg-pBlue text-white"
-                : "border-gray-200 bg-white text-gray-600 hover:border-pBlue/40 hover:text-pBlue"
+                ? "border-pBlue bg-brand-navy text-white"
+                : "border-border bg-card text-secondary-foreground hover:border-pBlue/40 hover:text-pBlue"
             )}
           >
             {option.label}
@@ -57,7 +57,7 @@ const AlumniCourseFilter = ({
                 "rounded-full px-1.5 py-0.5 text-[11px] font-bold tabular-nums",
                 isActive
                   ? "bg-white/20 text-white"
-                  : "bg-gray-100 text-gray-500"
+                  : "bg-light-dark text-secondary-foreground"
               )}
             >
               {count}

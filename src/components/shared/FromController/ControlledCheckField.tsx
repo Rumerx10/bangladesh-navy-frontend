@@ -30,7 +30,7 @@ export const ControlledCheckField = ({
             />
             <Label
               htmlFor={name}
-              className={`text-[#666666] ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+              className={`text-secondary-foreground ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
             >
               {label}
             </Label>

@@ -1,19 +1,10 @@
 "use client";
-import { ProfileDropdown } from "./ProfileDropdown";
+import ThemeToggle from "@/src/components/theme/ThemeToggle";
 import { useDebounce } from "@/src/hooks/useDebounce";
-import { useAppDispatch } from "@/src/lib/redux/hooks";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Search, User, X } from "lucide-react";
+import { ArrowRight, Search, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { openLoginModal } from "@/src/lib/redux/features/auth/authSlice";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { IUserInformation } from "@/src/lib/redux/features/auth/authTypes";
-
-interface HeaderTopBarActionsProps {
-  cartCount: number;
-  userInformation: IUserInformation;
-  authLoading: boolean;
-}
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -44,14 +35,7 @@ const NAV_LINKS = [
   { label: "Marine Weather", href: "/product-service?category=marine-weather" },
 ];
 
-const HeaderTopBarActions = ({
-  userInformation,
-  authLoading,
-}: HeaderTopBarActionsProps) => {
-  const [mounted, setMounted] = useState(false);
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => setMounted(true), []);
-  const dispatch = useAppDispatch();
+const HeaderTopBarActions = () => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -131,6 +115,8 @@ const HeaderTopBarActions = ({
 
   return (
     <div className="flex items-center gap-1 shrink-0">
+      <ThemeToggle className="text-nav-ink" />
+
       {/* Search with nav suggestions */}
       <div ref={searchAreaRef}>
         <AnimatePresence mode="wait">
@@ -155,33 +141,33 @@ const HeaderTopBarActions = ({
                     }
                   }}
                   placeholder="Search products..."
-                  className="w-full h-full pl-4 pr-10 rounded-full border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:border-liteBlue focus:bg-white transition-all shadow-inner"
+                  className="w-full h-full pl-4 pr-10 rounded-full border border-border bg-light text-sm focus:outline-none focus:border-liteBlue focus:bg-card transition-all shadow-inner"
                 />
                 <button
                   onClick={() => {
                     setIsSearchOpen(false);
                     setSearchQuery("");
                   }}
-                  className="absolute right-3 text-gray-400 hover:text-red-500 transition-colors"
+                  className="absolute right-3 text-muted-foreground hover:text-red-500 transition-colors"
                 >
                   <X size={16} />
                 </button>
 
                 {/* Nav suggestions dropdown */}
                 {navSuggestions.length > 0 && (
-                  <div className="absolute top-full right-0 mt-1.5 w-64 bg-white rounded-xl shadow-xl border border-gray-100 z-100 overflow-hidden">
-                    <p className="px-3 pt-2.5 pb-1 text-[10px] font-semibold text-gray-400 uppercase tracking-widest">
+                  <div className="absolute top-full right-0 mt-1.5 w-64 bg-(image:--nav-gradient) rounded-xl shadow-2xl border border-nav-hairline z-100 overflow-hidden">
+                    <p className="px-3 pt-2.5 pb-1 text-[10px] font-semibold text-nav-ink-muted uppercase tracking-widest">
                       Quick Navigation
                     </p>
                     {navSuggestions.map((link) => (
                       <button
                         key={link.href}
                         onClick={() => handleNavSuggestionClick(link.href)}
-                        className="flex items-center gap-2.5 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-liteBlue text-left transition-colors"
+                        className="flex items-center gap-2.5 w-full px-3 py-2 text-sm text-nav-ink-muted hover:bg-nav-wash hover:text-nav-ink text-left transition-colors"
                       >
                         <ArrowRight
                           size={13}
-                          className="text-gray-400 shrink-0"
+                          className="text-nav-ink-muted shrink-0"
                         />
                         {link.label}
                       </button>
@@ -189,7 +175,7 @@ const HeaderTopBarActions = ({
                     {searchQuery.trim() && (
                       <button
                         onClick={handleSearchSubmit}
-                        className="flex items-center gap-2.5 w-full px-3 py-2.5 text-sm font-medium text-liteBlue hover:bg-liteBlue/5 border-t border-gray-100 transition-colors"
+                        className="flex items-center gap-2.5 w-full px-3 py-2.5 text-sm font-medium text-nav-ink hover:bg-nav-wash border-t border-nav-hairline transition-colors"
                       >
                         <Search size={13} className="shrink-0" />
                         Search &ldquo;{searchQuery}&rdquo;
@@ -203,7 +189,7 @@ const HeaderTopBarActions = ({
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 onClick={() => setIsSearchOpen(true)}
-                className="flex items-center justify-center w-10 h-10 text-gray-600 hover:text-liteBlue hover:bg-gray-50 rounded-full transition-colors"
+                className="flex items-center justify-center w-10 h-10 text-nav-ink hover:bg-white/10 rounded-full transition-colors"
                 aria-label="Open search"
               >
                 <Search size={20} />
@@ -212,24 +198,6 @@ const HeaderTopBarActions = ({
           </div>
         </AnimatePresence>
       </div>
-      <div className="hidden lg:block w-px h-7 bg-gray-200 mx-1" />
-      {/* Auth */}
-      {!mounted || authLoading ? (
-        <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200">
-          <div className="w-4 h-4 rounded-full bg-gray-200 animate-pulse" />
-          <div className="w-14 h-2.5 bg-gray-200 rounded animate-pulse" />
-        </div>
-      ) : userInformation?.firstName ? (
-        <ProfileDropdown />
-      ) : (
-        <button
-          onClick={() => dispatch(openLoginModal())}
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-liteBlue text-white text-sm font-medium hover:bg-liteBlue/90 transition-colors cursor-pointer"
-        >
-          <User size={16} />
-          <span className="whitespace-nowrap">Sign In</span>
-        </button>
-      )}
     </div>
   );
 };

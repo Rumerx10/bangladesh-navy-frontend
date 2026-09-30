@@ -87,10 +87,10 @@ const MyProfile = () => {
     <div className="space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-xl lg:text-2xl font-bold text-gray-900">
+        <h1 className="text-xl lg:text-2xl font-bold text-foreground">
           My Profile
         </h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <p className="text-sm text-secondary-foreground mt-1">
           Manage your personal information
         </p>
       </div>

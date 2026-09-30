@@ -22,7 +22,7 @@ const ProfilePictureSection = ({
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-xl border border-light-silver p-6 shadow-sm">
+      <div className="bg-card rounded-xl border border-light-silver p-6 shadow-sm">
         <div className="flex flex-col sm:flex-row items-center gap-6">
           <div className="relative group">
             {currentPreview ? (
@@ -46,10 +46,10 @@ const ProfilePictureSection = ({
             </label>
           </div>
           <div className="flex-1">
-            <h3 className="font-semibold text-gray-900 text-lg">
+            <h3 className="font-semibold text-foreground text-lg">
               {firstName} {lastName}
             </h3>
-            <p className="text-sm text-gray-500 mb-4">{email}</p>
+            <p className="text-sm text-secondary-foreground mb-4">{email}</p>
 
             <Controller
               name="profilePicture"

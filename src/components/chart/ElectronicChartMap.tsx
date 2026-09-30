@@ -101,11 +101,11 @@ const ElectronicChartMap = () => {
     // mt-33 (132px) clears the fixed header on both breakpoints: mobile
     // 32+56+44 = 132; desktop 172 minus the <header>'s own lg:pb-10 flow
     // height (40px) = 132.
-    <section className="mt-33 flex h-[calc(100vh-8.25rem)] lg:h-[calc(100vh-10.75rem)] w-full flex-col bg-white">
+    <section className="mt-33 flex h-[calc(100vh-8.25rem)] lg:h-[calc(100vh-10.75rem)] w-full flex-col bg-card">
       {/* Toolbar: ENC cell / chart number search */}
-      <div className="relative z-20 flex items-center justify-between gap-4 border-b border-slate-100 bg-white px-4 py-2.5 shadow-sm">
+      <div className="relative z-20 flex items-center justify-between gap-4 border-b border-border bg-card px-4 py-2.5 shadow-sm">
         <div className="relative w-64 sm:w-80">
-          <SearchIcon className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+          <SearchIcon className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input
             type="text"
             value={query}
@@ -121,14 +121,14 @@ const ElectronicChartMap = () => {
             }}
             placeholder="Search cell or chart number…"
             aria-label="Search ENC cell by cell or chart number"
-            className="h-10 w-full rounded-lg border border-slate-200 bg-white pr-9 pl-9 text-sm text-gray-800 outline-none placeholder:text-gray-400 focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
+            className="h-10 w-full rounded-lg border border-border bg-card pr-9 pl-9 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
           />
           {query && (
             <button
               type="button"
               onClick={clearSearch}
               aria-label="Clear search"
-              className="absolute top-1/2 right-2 -translate-y-1/2 rounded p-1 text-gray-400 transition-colors hover:text-pBlue"
+              className="absolute top-1/2 right-2 -translate-y-1/2 rounded p-1 text-muted-foreground transition-colors hover:text-pBlue"
             >
               <XIcon className="h-4 w-4" />
             </button>
@@ -136,7 +136,7 @@ const ElectronicChartMap = () => {
 
           {dropdownOpen && query.trim() && (
             <ul
-              className="absolute top-11 right-0 left-0 z-30 max-h-64 overflow-auto rounded-lg border border-slate-100 bg-white py-1 shadow-xl"
+              className="absolute top-11 right-0 left-0 z-30 max-h-64 overflow-auto rounded-lg border border-border bg-card py-1 shadow-xl"
               onMouseDown={(e) => e.preventDefault()}
             >
               {results.length > 0 ? (
@@ -145,22 +145,22 @@ const ElectronicChartMap = () => {
                     <button
                       type="button"
                       onClick={() => selectResult(area)}
-                      className="flex w-full items-baseline gap-2 px-3 py-2 text-left transition-colors hover:bg-slate-50"
+                      className="flex w-full items-baseline gap-2 px-3 py-2 text-left transition-colors hover:bg-light"
                     >
                       <span className="text-sm font-bold text-pBlue">
                         {area.cellNo}
                       </span>
-                      <span className="text-xs text-gray-400">
+                      <span className="text-xs text-muted-foreground">
                         {area.nationalNo}
                       </span>
-                      <span className="min-w-0 flex-1 truncate text-xs text-gray-500">
+                      <span className="min-w-0 flex-1 truncate text-xs text-secondary-foreground">
                         {area.title}
                       </span>
                     </button>
                   </li>
                 ))
               ) : (
-                <li className="px-3 py-2 text-sm text-gray-400">
+                <li className="px-3 py-2 text-sm text-muted-foreground">
                   No cell matches “{query.trim()}”
                 </li>
               )}
@@ -168,7 +168,7 @@ const ElectronicChartMap = () => {
           )}
         </div>
 
-        <p className="hidden text-xs text-gray-400 md:block">
+        <p className="hidden text-xs text-muted-foreground md:block">
           Hover a rectangle to identify an ENC cell — click it to view details
         </p>
       </div>
@@ -179,7 +179,7 @@ const ElectronicChartMap = () => {
       >
         {imgMissing && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <p className="max-w-md rounded-lg border border-dashed border-gray-300 bg-gray-50 p-6 text-center text-sm text-gray-500">
+            <p className="max-w-md rounded-lg border border-dashed border-input bg-light p-6 text-center text-sm text-secondary-foreground">
               ENC catalogue image not found. Place the image at
               <span className="mx-1 font-mono text-pBlue">
                 public/chart/enc-index.jpg
@@ -256,7 +256,7 @@ const ElectronicChartMap = () => {
         {/* Cursor-following identifier */}
         {hovered && (
           <div
-            className="pointer-events-none fixed z-40 rounded-md bg-pBlue px-3 py-1.5 text-xs font-semibold text-white shadow-lg"
+            className="pointer-events-none fixed z-40 rounded-md bg-brand-navy px-3 py-1.5 text-xs font-semibold text-white shadow-lg"
             style={{ left: cursor.x + 14, top: cursor.y + 14 }}
           >
             {cellLabel(hovered)}
@@ -278,11 +278,11 @@ export default ElectronicChartMap;
 const SpecTile = ({ label, value }: { label: string; value?: string }) => {
   if (!value) return null;
   return (
-    <div className="rounded-lg border border-slate-100 bg-slate-50 px-3 py-2">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-gray-400">
+    <div className="rounded-lg border border-border bg-light px-3 py-2">
+      <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
         {label}
       </p>
-      <p className="mt-0.5 text-sm font-semibold wrap-break-word text-gray-800">
+      <p className="mt-0.5 text-sm font-semibold wrap-break-word text-foreground">
         {value}
       </p>
     </div>
@@ -319,7 +319,7 @@ const EncInfoDialog = ({
           <div className="space-y-4">
             {/* Chart preview */}
             {image && (
-              <div className="relative h-56 w-full overflow-hidden rounded-xl border border-slate-200 bg-linear-to-br from-slate-50 to-slate-100">
+              <div className="relative h-56 w-full overflow-hidden rounded-xl border border-border bg-linear-to-br from-light to-light-dark">
                 <Image
                   src={image}
                   alt={product.nameEn}
@@ -332,7 +332,7 @@ const EncInfoDialog = ({
 
             {/* Cell identity */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-md bg-pBlue px-2.5 py-1 text-sm font-bold text-white">
+              <span className="rounded-md bg-brand-navy px-2.5 py-1 text-sm font-bold text-white">
                 {selected.cellNo}
               </span>
               {selected.intNo && (
@@ -340,7 +340,7 @@ const EncInfoDialog = ({
                   {selected.intNo}
                 </span>
               )}
-              <span className="text-xs font-medium text-gray-400">
+              <span className="text-xs font-medium text-muted-foreground">
                 National No. {selected.nationalNo}
               </span>
             </div>
@@ -350,7 +350,7 @@ const EncInfoDialog = ({
               <h3 className="text-lg leading-snug font-bold text-pBlue">
                 {product.nameEn}
               </h3>
-              <p className="mt-0.5 text-sm text-gray-500">
+              <p className="mt-0.5 text-sm text-secondary-foreground">
                 {product.geographicLocation ??
                   "Electronic Navigational Chart (ENC) · Bay of Bengal"}
               </p>
@@ -364,10 +364,10 @@ const EncInfoDialog = ({
             </div>
 
             {/* CTA */}
-            <div className="border-t border-gray-100 pt-4">
+            <div className="border-t border-border pt-4">
               <Link
                 href={`/product-service/electronic-navigational-charts/${selected.cellNo}`}
-                className="block w-full rounded-lg bg-pBlue py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-pBlue/90"
+                className="block w-full rounded-lg bg-brand-navy py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-brand-navy/90"
               >
                 View Details
               </Link>
@@ -376,15 +376,15 @@ const EncInfoDialog = ({
         ) : (
           selected && (
             <div className="space-y-4">
-              <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 py-8 text-center">
-                <p className="text-[11px] font-medium uppercase tracking-wider text-gray-400">
+              <div className="rounded-xl border border-dashed border-border bg-light py-8 text-center">
+                <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                   Cell Number
                 </p>
                 <p className="mt-1 text-4xl font-extrabold tracking-wide text-pBlue">
                   {selected.cellNo}
                 </p>
                 {selected.intNo && (
-                  <p className="mt-1 text-sm font-semibold text-gray-600">
+                  <p className="mt-1 text-sm font-semibold text-secondary-foreground">
                     {selected.intNo}
                   </p>
                 )}

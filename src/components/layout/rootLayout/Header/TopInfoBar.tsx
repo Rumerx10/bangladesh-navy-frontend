@@ -3,7 +3,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 
 const TopInfoBar = () => {
   return (
-    <div className="bg-pBlue text-white text-xs">
+    <div className="bg-brand-navy text-white text-xs">
       <div className="container flex items-center justify-between h-8 px-4 sm:px-0">
         <span className="font-medium tracking-wide">Welcome to BNHOC</span>
         <div className="hidden sm:flex items-center gap-4">
@@ -21,7 +21,7 @@ const TopInfoBar = () => {
             <Mail size={12} />
             <span>{siteConfig.email}</span>
           </a>
-          <span className="flex items-center gap-1.5 text-gray-400">
+          <span className="flex items-center gap-1.5 text-muted-foreground">
             <MapPin size={12} />
             <span>{siteConfig.address}</span>
           </span>

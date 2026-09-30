@@ -75,7 +75,7 @@ const AlumniDirectory = () => {
   const allOpen = visible.length > 0 && openIds.length >= visible.length;
 
   return (
-    <div className="bg-white">
+    <div className="bg-card">
       <AlumniHero
         totalCourses={groups.length}
         totalAlumni={totalAlumni}
@@ -95,14 +95,14 @@ const AlumniDirectory = () => {
 
             <div className="flex items-center gap-2">
               <div className="relative w-full lg:w-72">
-                <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <input
                   type="text"
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
                   placeholder="Search by name, P. No or course…"
                   aria-label="Search alumni"
-                  className="h-11 w-full rounded-lg border border-gray-200 bg-white pr-3 pl-9 text-sm text-gray-800 outline-none placeholder:text-gray-400 focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
+                  className="h-11 w-full rounded-lg border border-border bg-card pr-3 pl-9 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
                 />
               </div>
 
@@ -112,7 +112,7 @@ const AlumniDirectory = () => {
                   setOpenIds(allOpen ? [] : visible.map((group) => group.id))
                 }
                 disabled={visible.length === 0}
-                className="hidden h-11 shrink-0 cursor-pointer items-center gap-2 rounded-lg border border-gray-200 px-4 text-sm font-semibold text-gray-600 transition-colors hover:border-pBlue/40 hover:text-pBlue disabled:cursor-not-allowed disabled:opacity-50 lg:inline-flex"
+                className="hidden h-11 shrink-0 cursor-pointer items-center gap-2 rounded-lg border border-border px-4 text-sm font-semibold text-secondary-foreground transition-colors hover:border-pBlue/40 hover:text-pBlue disabled:cursor-not-allowed disabled:opacity-50 lg:inline-flex"
               >
                 {allOpen ? (
                   <ChevronsDownUp className="h-4 w-4" />
@@ -126,9 +126,9 @@ const AlumniDirectory = () => {
 
           {/* Result count */}
           {!isLoading && visible.length > 0 && (
-            <p className="mt-6 text-sm text-gray-500">
+            <p className="mt-6 text-sm text-secondary-foreground">
               Showing{" "}
-              <span className="font-semibold text-gray-700">
+              <span className="font-semibold text-foreground">
                 {visible.length}
               </span>{" "}
               {visible.length === 1 ? "course" : "courses"}
@@ -136,7 +136,7 @@ const AlumniDirectory = () => {
                 <>
                   {" "}
                   matching{" "}
-                  <span className="font-semibold text-gray-700">
+                  <span className="font-semibold text-foreground">
                     “{search.trim()}”
                   </span>
                 </>
@@ -160,12 +160,12 @@ const AlumniDirectory = () => {
                 ))}
               </div>
             ) : (
-              <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 py-16 text-center">
-                <UsersRound className="mx-auto h-8 w-8 text-gray-400" />
-                <p className="mt-3 text-sm font-medium text-gray-600">
+              <div className="rounded-xl border border-dashed border-input bg-light py-16 text-center">
+                <UsersRound className="mx-auto h-8 w-8 text-muted-foreground" />
+                <p className="mt-3 text-sm font-medium text-secondary-foreground">
                   No alumni found
                 </p>
-                <p className="mt-1 text-xs text-gray-400">
+                <p className="mt-1 text-xs text-muted-foreground">
                   Try a different course or clear the search.
                 </p>
               </div>

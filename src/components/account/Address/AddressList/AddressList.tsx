@@ -88,10 +88,10 @@ const AddressList = () => {
     <div className="space-y-6 bg-light p-5 rounded-xl">
       <div className="flex items-center justify-between bg-primary/10 p-3 rounded-xl">
         <div>
-          <h1 className="text-xl lg:text-2xl font-bold text-gray-900">
+          <h1 className="text-xl lg:text-2xl font-bold text-foreground">
             Address Book
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-secondary-foreground mt-1">
             Manage your delivery addresses
           </p>
         </div>
@@ -107,7 +107,7 @@ const AddressList = () => {
       {isLoading ? (
         <AddressListSkeleton />
       ) : addresses.length === 0 ? (
-        <div className="bg-white rounded-xl border border-dashed border-gray-200 p-6 text-sm text-gray-500 text-center min-h-68 flex items-center justify-center">
+        <div className="bg-card rounded-xl border border-dashed border-border p-6 text-sm text-secondary-foreground text-center min-h-68 flex items-center justify-center">
           No addresses found. Add your first address.
         </div>
       ) : (
@@ -117,14 +117,14 @@ const AddressList = () => {
             return (
               <div
                 key={itemId}
-                className={`relative bg-white rounded-xl border p-5 shadow-sm transition-all hover:shadow-md ${
+                className={`relative bg-card rounded-xl border p-5 shadow-sm transition-all hover:shadow-md ${
                   addr.isDefault
                     ? "border-primary/30 ring-1 ring-primary/10"
-                    : "border-gray-100"
+                    : "border-border"
                 }`}
               >
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 bg-gray-100 px-2.5 py-1 rounded-md">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-secondary-foreground bg-light-dark px-2.5 py-1 rounded-md">
                     {addr.addressType}
                   </span>
                   {addr.isDefault && (
@@ -136,18 +136,24 @@ const AddressList = () => {
                 </div>
 
                 <div className="space-y-1.5">
-                  <div className="flex items-center gap-2 text-sm font-semibold text-gray-900">
-                    <User size={14} className="text-gray-400 shrink-0" />
+                  <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                    <User
+                      size={14}
+                      className="text-muted-foreground shrink-0"
+                    />
                     {addr.fullName}
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Phone size={14} className="text-gray-400 shrink-0" />
+                  <div className="flex items-center gap-2 text-sm text-secondary-foreground">
+                    <Phone
+                      size={14}
+                      className="text-muted-foreground shrink-0"
+                    />
                     {addr.phone}
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-gray-600">
+                  <div className="flex items-start gap-2 text-sm text-secondary-foreground">
                     <MapPin
                       size={14}
-                      className="text-gray-400 shrink-0 mt-0.5"
+                      className="text-muted-foreground shrink-0 mt-0.5"
                     />
                     <span>
                       {addr.addressLine1}
@@ -159,17 +165,17 @@ const AddressList = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 mt-4 pt-3 border-t border-gray-100">
+                <div className="flex items-center gap-2 mt-4 pt-3 border-t border-border">
                   <button
                     onClick={() => handleEdit(addr)}
-                    className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-primary transition-colors cursor-pointer"
+                    className="flex items-center gap-1.5 text-xs font-medium text-secondary-foreground hover:text-primary transition-colors cursor-pointer"
                   >
                     <Edit3 size={13} />
                     Edit
                   </button>
                   {!addr.isDefault && (
                     <>
-                      <span className="text-gray-200">|</span>
+                      <span className="text-light-silver">|</span>
                       <button
                         onClick={() => handleSetDefault(addr)}
                         className="flex items-center gap-1.5 text-xs font-medium text-emerald-500 hover:text-emerald-700 transition-colors cursor-pointer"
@@ -179,7 +185,7 @@ const AddressList = () => {
                       </button>
                     </>
                   )}
-                  <span className="text-gray-200">|</span>
+                  <span className="text-light-silver">|</span>
                   <button
                     onClick={() => handleDelete(addr)}
                     className="flex items-center gap-1.5 text-xs font-medium text-red-400 hover:text-red-600 transition-colors cursor-pointer"

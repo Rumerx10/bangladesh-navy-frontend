@@ -33,7 +33,7 @@ const CoursesForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
       {/* Introduction */}
-      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-card">
         <FormSectionHeader
           label="Introduction"
           description="Opening block of the public courses page"
@@ -75,7 +75,7 @@ const CoursesForm = ({
       </div>
 
       {/* Course descriptions */}
-      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-card">
         <FormSectionHeader
           label="Course Descriptions"
           description="Rendered in order, numbered on the public page"
@@ -91,7 +91,7 @@ const CoursesForm = ({
         <Button
           type="button"
           onClick={onCancel}
-          className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer"
+          className="text-secondary-foreground bg-transparent hover:bg-light-dark duration-300 border hover:shadow cursor-pointer"
         >
           Cancel
         </Button>

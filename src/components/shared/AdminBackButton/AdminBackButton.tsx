@@ -24,7 +24,7 @@ const AdminBackButton = ({
       {/* <Button
         type="button"
         onClick={() => router.push(routeURL)}
-        className="bg-white hover:bg-white w-13 min-h-13 border border-light-silver flex items-center justify-center p-3"
+        className="bg-card hover:bg-card w-13 min-h-13 border border-light-silver flex items-center justify-center p-3"
       >
         <Image
           src="/icons/left_arrow.svg"

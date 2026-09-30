@@ -34,7 +34,7 @@ const DeleteConfirmDialog = ({
 }: DeleteConfirmDialogProps) => {
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
-      <AlertDialogContent className="bg-white">
+      <AlertDialogContent className="bg-card">
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription>{description}</AlertDialogDescription>

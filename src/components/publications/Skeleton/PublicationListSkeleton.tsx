@@ -5,15 +5,15 @@ const PublicationListSkeleton = ({ count = 8 }: { count?: number }) => {
       {Array.from({ length: count }).map((_, index) => (
         <div
           key={index}
-          className="animate-pulse overflow-hidden rounded-xl border border-gray-200 bg-white"
+          className="animate-pulse overflow-hidden rounded-xl border border-border bg-card"
         >
-          <div className="aspect-4/3 w-full bg-gray-200" />
+          <div className="aspect-4/3 w-full bg-light-silver" />
           <div className="p-5">
-            <div className="h-5 w-20 rounded-md bg-gray-100" />
-            <div className="mt-3 h-5 w-full rounded bg-gray-200" />
-            <div className="mt-2 h-5 w-2/3 rounded bg-gray-200" />
-            <div className="mt-3 h-4 w-24 rounded bg-gray-100" />
-            <div className="mt-6 h-4 w-28 rounded bg-gray-100" />
+            <div className="h-5 w-20 rounded-md bg-light-dark" />
+            <div className="mt-3 h-5 w-full rounded bg-light-silver" />
+            <div className="mt-2 h-5 w-2/3 rounded bg-light-silver" />
+            <div className="mt-3 h-4 w-24 rounded bg-light-dark" />
+            <div className="mt-6 h-4 w-28 rounded bg-light-dark" />
           </div>
         </div>
       ))}

@@ -35,10 +35,10 @@ const CourseSectionField = () => {
           {fields.map((field, index) => (
             <div
               key={field.id}
-              className="rounded-lg border border-light-silver bg-gray-50/60 p-4"
+              className="rounded-lg border border-light-silver bg-light/60 p-4"
             >
               <div className="mb-3 flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wide text-gray-400 tabular-nums">
+                <span className="text-xs font-bold uppercase tracking-wide text-muted-foreground tabular-nums">
                   Course {index + 1}
                 </span>
                 <Button
@@ -62,7 +62,7 @@ const CourseSectionField = () => {
                       {...input}
                       value={input.value ?? ""}
                       placeholder="e.g. Long Hydrographic (Cat A) Course"
-                      className="bg-white shadow-none"
+                      className="bg-card shadow-none"
                       error={fieldState.error?.message}
                       showErrorMessage={!!fieldState.error}
                     />
@@ -77,7 +77,7 @@ const CourseSectionField = () => {
                         {...input}
                         value={input.value ?? ""}
                         placeholder="Describe this course..."
-                        className="bg-white shadow-none resize-none h-28"
+                        className="bg-card shadow-none resize-none h-28"
                       />
                       {fieldState.error && (
                         <p className="mt-1 pl-1 text-xs text-rose-500">
@@ -92,9 +92,9 @@ const CourseSectionField = () => {
           ))}
         </div>
       ) : (
-        <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 py-10 text-center">
-          <BookOpen className="mx-auto h-7 w-7 text-gray-400" />
-          <Paragraph className="mt-2 text-sm! text-gray-500">
+        <div className="rounded-lg border border-dashed border-input bg-light py-10 text-center">
+          <BookOpen className="mx-auto h-7 w-7 text-muted-foreground" />
+          <Paragraph className="mt-2 text-sm! text-secondary-foreground">
             No course descriptions added yet.
           </Paragraph>
         </div>

@@ -22,8 +22,8 @@ const ProductGrid = ({
   return (
     <div className="min-h-150">
       {/* Toolbar */}
-      {/* <div className="flex items-center justify-between mb-5 pb-4 border-b border-gray-100">
-        <div className="flex items-center gap-2 text-sm text-gray-500">
+      {/* <div className="flex items-center justify-between mb-5 pb-4 border-b border-border">
+        <div className="flex items-center gap-2 text-sm text-secondary-foreground">
           <span>
             Showing <strong className="text-pBlue">{products.length}</strong>{" "}
             of {totalCount} products
@@ -62,13 +62,13 @@ const ProductGrid = ({
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col items-center justify-center py-16 text-center"
         >
-          <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-            <LayoutGrid size={24} className="text-gray-400" />
+          <div className="w-16 h-16 rounded-full bg-light-dark flex items-center justify-center mb-4">
+            <LayoutGrid size={24} className="text-muted-foreground" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-800">
+          <h3 className="text-lg font-semibold text-foreground">
             No products found
           </h3>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-secondary-foreground mt-1">
             Try adjusting your filters
           </p>
         </motion.div>

@@ -27,7 +27,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       className="group relative flex flex-col h-95 rounded-lg overflow-hidden bg-card hover:shadow-[0_4px_20px_rgba(0,0,0,0.08)] transition-shadow"
     >
       {/* Image — takes remaining space */}
-      <div className="relative w-full flex-1 min-h-0 overflow-hidden bg-gray-100 rounded-t-lg">
+      <div className="relative w-full flex-1 min-h-0 overflow-hidden bg-light-dark rounded-t-lg">
         {primaryImage && (
           <Image
             src={primaryImage.url}
@@ -87,7 +87,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               {product.price.toLocaleString()}
             </span>
             {hasDiscount && (
-              <span className="text-[11px] text-gray-400 line-through">
+              <span className="text-[11px] text-muted-foreground line-through">
                 ৳{product.compareAtPrice!.toLocaleString()}
               </span>
             )}

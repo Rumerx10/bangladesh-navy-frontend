@@ -29,17 +29,17 @@ const dailySales = [
 
 const DailySalesChart = () => {
   return (
-    <Card className="border-gray-100 shadow-sm rounded-2xl py-4 sm:py-5">
+    <Card className="border-border shadow-sm rounded-2xl py-4 sm:py-5">
       <CardHeader className="pb-2 px-4 sm:px-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-linear-to-br from-[#4f46e5] to-[#818cf8] flex items-center justify-center shrink-0">
             <BarChart3 className="w-5 h-5 text-white" />
           </div>
           <div>
-            <CardTitle className="text-base lg:text-lg font-semibold text-gray-900">
+            <CardTitle className="text-base lg:text-lg font-semibold text-foreground">
               Daily Sales Trend
             </CardTitle>
-            <p className="text-xs text-gray-400 mt-0.5">
+            <p className="text-xs text-muted-foreground mt-0.5">
               Order volume trend throughout today
             </p>
           </div>
@@ -55,21 +55,30 @@ const DailySalesChart = () => {
             >
               <CartesianGrid
                 strokeDasharray="3 3"
-                stroke="#f1f5f9"
+                stroke="var(--border)"
                 vertical={false}
               />
               <XAxis
                 dataKey="hour"
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 12, fill: "#94a3b8" }}
+                tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
               />
               <YAxis
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 12, fill: "#94a3b8" }}
+                tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
               />
               <Tooltip
+                cursor={{ fill: "var(--muted)" }}
+                contentStyle={{
+                  background: "var(--popover)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "0.75rem",
+                  color: "var(--popover-foreground)",
+                }}
+                labelStyle={{ color: "var(--muted-foreground)" }}
+                itemStyle={{ color: "var(--popover-foreground)" }}
                 formatter={(value) => {
                   const orders = Number(value ?? 0);
                   return [orders, "Orders"];

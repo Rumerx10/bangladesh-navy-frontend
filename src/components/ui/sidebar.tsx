@@ -123,7 +123,7 @@ export const MobileSidebar = ({
       >
         <div className="flex justify-end z-20 w-full">
           <IoMenu
-            className="text-neutral-800 dark:text-neutral-200"
+            className="text-foreground dark:text-neutral-200"
             onClick={() => setOpen(!open)}
           />
         </div>
@@ -143,7 +143,7 @@ export const MobileSidebar = ({
               )}
             >
               <div
-                className="absolute right-10 top-10 z-50 text-neutral-800 dark:text-neutral-200"
+                className="absolute right-10 top-10 z-50 text-foreground dark:text-neutral-200"
                 onClick={() => setOpen(!open)}
               >
                 <RxCross2 />

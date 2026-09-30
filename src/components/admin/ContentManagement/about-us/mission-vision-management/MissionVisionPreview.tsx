@@ -13,9 +13,9 @@ interface MissionVisionPreviewProps {
 
 const MissionVisionPreview = ({ data, onEdit }: MissionVisionPreviewProps) => {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
       {/* Header */}
-      <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-6 sm:px-8 py-6 border-b border-gray-100">
+      <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-6 sm:px-8 py-6 border-b border-border">
         <div className="flex items-center gap-3">
           <div className="bg-primary/10 w-10 h-10 flex items-center justify-center rounded-xl border border-primary/20">
             <Image
@@ -30,7 +30,7 @@ const MissionVisionPreview = ({ data, onEdit }: MissionVisionPreviewProps) => {
             <Paragraph className="font-semibold text-lg! text-pBlue">
               Mission &amp; Vision Preview
             </Paragraph>
-            <Paragraph className="text-sm! text-gray-500">
+            <Paragraph className="text-sm! text-secondary-foreground">
               Current mission &amp; vision content
             </Paragraph>
           </div>
@@ -49,13 +49,13 @@ const MissionVisionPreview = ({ data, onEdit }: MissionVisionPreviewProps) => {
       <div className="p-6 sm:p-8 pt-10 space-y-8">
         {/* Basic */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+          <div className="bg-light rounded-xl p-5 border border-border">
             <Paragraph className="font-semibold text-pBlue uppercase mb-2">
               Title
             </Paragraph>
             <Paragraph className="text-base">{data.title}</Paragraph>
           </div>
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+          <div className="bg-light rounded-xl p-5 border border-border">
             <Paragraph className="font-semibold text-pBlue uppercase mb-2">
               Sub Title
             </Paragraph>
@@ -65,7 +65,7 @@ const MissionVisionPreview = ({ data, onEdit }: MissionVisionPreviewProps) => {
 
         {/* Vision & Mission */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+          <div className="bg-light rounded-xl p-5 border border-border">
             <div className="flex items-center gap-2 mb-3">
               <Eye className="w-4 h-4 text-pBlue" />
               <Paragraph className="font-semibold text-pBlue uppercase">
@@ -75,11 +75,11 @@ const MissionVisionPreview = ({ data, onEdit }: MissionVisionPreviewProps) => {
             <Paragraph className="font-medium text-pBlue mb-2">
               {data.vision.title}
             </Paragraph>
-            <Paragraph className="text-sm leading-relaxed text-gray-600">
+            <Paragraph className="text-sm leading-relaxed text-secondary-foreground">
               {data.vision.description}
             </Paragraph>
           </div>
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+          <div className="bg-light rounded-xl p-5 border border-border">
             <div className="flex items-center gap-2 mb-3">
               <Target className="w-4 h-4 text-pBlue" />
               <Paragraph className="font-semibold text-pBlue uppercase">
@@ -89,7 +89,7 @@ const MissionVisionPreview = ({ data, onEdit }: MissionVisionPreviewProps) => {
             <Paragraph className="font-medium text-pBlue mb-2">
               {data.mission.title}
             </Paragraph>
-            <Paragraph className="text-sm leading-relaxed text-gray-600">
+            <Paragraph className="text-sm leading-relaxed text-secondary-foreground">
               {data.mission.description}
             </Paragraph>
           </div>

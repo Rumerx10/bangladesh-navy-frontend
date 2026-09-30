@@ -116,22 +116,24 @@ const ImageUploadModal = ({
           initial={{ scale: 0.95, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.95, opacity: 0, y: 20 }}
-          className="bg-white rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden"
+          className="bg-card rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-5 border-b border-gray-100">
+          <div className="flex items-center justify-between p-5 border-b border-border">
             <div>
-              <h2 className="text-lg font-bold text-gray-900">Upload Images</h2>
-              <p className="text-sm text-gray-500 mt-0.5">
+              <h2 className="text-lg font-bold text-foreground">
+                Upload Images
+              </h2>
+              <p className="text-sm text-secondary-foreground mt-0.5">
                 Drag & drop or browse files
               </p>
             </div>
             <button
               onClick={handleClose}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
+              className="p-2 hover:bg-light-dark rounded-full transition-colors cursor-pointer"
             >
-              <X className="h-5 w-5 text-gray-500" />
+              <X className="h-5 w-5 text-secondary-foreground" />
             </button>
           </div>
 
@@ -146,7 +148,7 @@ const ImageUploadModal = ({
               className={`relative border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-300 ${
                 dragActive
                   ? "border-primary bg-primary/5 scale-[1.02]"
-                  : "border-gray-200 hover:border-primary/50 hover:bg-gray-50"
+                  : "border-border hover:border-primary/50 hover:bg-light"
               }`}
             >
               <input
@@ -160,21 +162,21 @@ const ImageUploadModal = ({
               <div className="flex flex-col items-center gap-3">
                 <div
                   className={`w-14 h-14 rounded-full flex items-center justify-center transition-colors ${
-                    dragActive ? "bg-primary/10" : "bg-gray-100"
+                    dragActive ? "bg-primary/10" : "bg-light-dark"
                   }`}
                 >
                   <ImagePlus
                     className={`h-7 w-7 ${
-                      dragActive ? "text-primary" : "text-gray-400"
+                      dragActive ? "text-primary" : "text-muted-foreground"
                     }`}
                   />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-700">
+                  <p className="text-sm font-semibold text-foreground">
                     Drop images here or{" "}
                     <span className="text-primary">browse</span>
                   </p>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-muted-foreground mt-1">
                     PNG, JPG, WEBP up to 10MB
                   </p>
                 </div>
@@ -184,13 +186,13 @@ const ImageUploadModal = ({
             {/* Preview Files */}
             {files.length > 0 && (
               <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-gray-700">
+                <h4 className="text-sm font-semibold text-foreground">
                   Selected Files ({files.length})
                 </h4>
                 {files.map((f, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100"
+                    className="flex items-center gap-3 p-3 bg-light rounded-xl border border-border"
                   >
                     <img
                       src={f.preview}
@@ -198,10 +200,10 @@ const ImageUploadModal = ({
                       className="w-14 h-14 rounded-lg object-cover"
                     />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-800 truncate">
+                      <p className="text-sm font-medium text-foreground truncate">
                         {f.file.name}
                       </p>
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xs text-muted-foreground">
                         {(f.file.size / 1024).toFixed(0)} KB
                       </p>
                     </div>
@@ -214,7 +216,7 @@ const ImageUploadModal = ({
                           e.target.value as "product" | "category"
                         )
                       }
-                      className="text-xs px-2 py-1.5 rounded-md border border-gray-200 bg-white text-gray-600 focus:outline-none focus:ring-2 focus:ring-primary/30"
+                      className="text-xs px-2 py-1.5 rounded-md border border-border bg-card text-secondary-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
                     >
                       <option value="product">Product</option>
                       <option value="category">Category</option>
@@ -224,7 +226,7 @@ const ImageUploadModal = ({
                       onClick={() => removeFile(index)}
                       className="p-1.5 hover:bg-red-50 rounded-full transition-colors cursor-pointer"
                     >
-                      <X className="h-4 w-4 text-gray-400 hover:text-red-500" />
+                      <X className="h-4 w-4 text-muted-foreground hover:text-red-500" />
                     </button>
                   </div>
                 ))}
@@ -234,7 +236,7 @@ const ImageUploadModal = ({
 
           {/* Footer */}
           {files.length > 0 && (
-            <div className="flex items-center justify-end gap-3 p-5 border-t border-gray-100 bg-gray-50/50">
+            <div className="flex items-center justify-end gap-3 p-5 border-t border-border bg-light/50">
               <Button variant="outline" onClick={handleClose} className="px-6">
                 Cancel
               </Button>

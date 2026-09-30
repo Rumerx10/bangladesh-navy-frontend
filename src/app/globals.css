@@ -4,18 +4,46 @@
 /* Dark mode variant */
 @custom-variant dark (&:is(.dark *));
 
+/* Brand navy as a *fill* — the header band, the footer, a hero scrim, a solid
+   primary button. These stay fixed in both themes on purpose: a navy surface
+   is already dark, so flipping it would make the site less recognisable
+   without making anything more readable. Use these anywhere the navy is the
+   background. The ink counterparts below (`pBlue`/`liteBlue`) do flip. */
 @theme {
-  --color-pBlue: #001836;
-  --color-liteBlue: #003f71;
+  --color-brand-navy: #001836;
+  --color-brand-blue: #003f71;
 }
 
 @theme inline {
+  /* Brand navy as *ink* — headings set in near-black navy, links in the
+     lighter blue. Ink has to invert with the theme or a heading painted
+     #001836 simply vanishes against a dark ground, so unlike the fills above
+     these resolve through a variable that `.dark` overrides. */
+  --color-pBlue: var(--brand-ink);
+  --color-liteBlue: var(--brand-ink-accent);
+
+  /* Ink for the navbar band. The band is a strong dark gradient in *both*
+     themes, so its ink is fixed white rather than theme-derived — the same
+     reasoning as `brand-navy` above. */
+  --color-nav-strip: var(--nav-strip);
+  --color-nav-ink: var(--nav-ink);
+  --color-nav-ink-muted: var(--nav-ink-muted);
+  --color-nav-wash: var(--nav-wash);
+  --color-nav-wash-strong: var(--nav-wash-strong);
+  --color-nav-hairline: var(--nav-hairline);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
+  /* Surface ramp. In light mode these step *down* from a white background
+     into progressively greyer sections; in dark mode the ramp reverses and
+     steps *up* out of a near-black background. Same semantic ("a surface
+     slightly separated from the page"), opposite direction — which is why
+     `.dark` must redeclare them rather than inherit. */
   --color-light: var(--light);
   --color-light-dark: var(--light-dark);
   --color-light-silver: var(--light-silver);
+  --color-light-blue: var(--light-blue);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
 
@@ -58,9 +86,61 @@
   font-family: var(--font-poppins);
   --radius: 0.625rem;
 
+  color-scheme: light;
+
+  --brand-ink: #001836;
+  --brand-ink-accent: #003f71;
+
+  /* The navbar and footer band — "Signal Blue". Declared here and overridden
+     in `.dark` below: the band is brand identity, but at full strength it
+     out-glares a dark page, so the dark theme gets a dimmed cut of the same
+     gradient rather than a different colour.
+
+     The same gradient backs the nav dropdowns, so it has to stay dark enough
+     across its whole length to carry white ink — which is what `--nav-ink`
+     assumes. Raising the bright stop past ~0.55 lightness breaks that. */
+  --nav-gradient: linear-gradient(
+    110deg,
+    oklch(0.24 0.13 245) 0%,
+    oklch(0.5 0.17 230) 100%
+  );
+
+  /* Dropdown panels. Same blue, dimmed: the band's stops are tuned for a 96px
+     strip, and spread over a panel that 0.50 bright stop turns into glare. The
+     bright end comes down to 0.30 and the fill carries alpha so the page tints
+     through under `backdrop-blur`.
+
+     The alpha lives in the gradient stops rather than in a Tailwind `opacity`
+     utility on purpose — `opacity` fades the element's white ink along with its
+     fill. 0.88 is about as sheer as this can go: the panel overlays light page
+     content, and a lower alpha lifts the fill until white-on-blue rows lose
+     their contrast. */
+  --nav-panel: linear-gradient(
+    110deg,
+    oklch(0.17 0.11 245 / 0.88) 0%,
+    oklch(0.3 0.13 232 / 0.88) 100%
+  );
+
+  /* Solid companion to the band, for the strips stacked with it — the notice
+     marquee under the navbar. It has to dim alongside `--nav-gradient` in
+     dark mode, or the strip ends up brighter than the masthead above it. */
+  --nav-strip: #003f71;
+
+  --nav-ink: #ffffff;
+  --nav-ink-muted: rgb(255 255 255 / 0.72);
+
+  /* Hover and selected states for anything sitting on that band. Deliberately
+     translucent white rather than a fixed colour: the wash then derives from
+     whatever part of the gradient is behind it, so it stays correct at both
+     the dark and the bright end instead of banding against one of them. */
+  --nav-wash: rgb(255 255 255 / 0.1);
+  --nav-wash-strong: rgb(255 255 255 / 0.18);
+  --nav-hairline: rgb(255 255 255 / 0.15);
+
   --light: #f7f7f7;
   --light-dark: #eeeeee;
   --light-silver: #e0e0e0;
+  --light-blue: #eff3f4;
 
   --background: #ffffff;
   --foreground: oklch(0.18 0 0);
@@ -74,7 +154,7 @@
   --secondary-gray: #545454;
   --secondary-foreground: #5c5c5c;
 
-  --light-blue: "#EFF3F4", --accent: oklch(0.96 0.04 205);
+  --accent: oklch(0.96 0.04 205);
   --accent-foreground: #05185a;
 
   --muted: oklch(0.96 0 0);
@@ -91,43 +171,150 @@
   --popover-foreground: oklch(0.18 0 0);
 
   --destructive: oklch(0.577 0.245 27.325);
+
+  /* Dotted graph-paper canvas behind the organogram. It reads as texture only
+     while it sits *darker* than the surface under it, so it inverts direction
+     with the theme rather than keeping one colour. */
+  --dot-grid: rgb(203 213 225 / 0.9);
+
+  /* Long-form body ink. Deliberately softer than `--foreground`: full-strength
+     black over several hundred words of justified text is fatiguing, and the
+     faint blue cast ties the copy to the navy brand. Consumed by `.rich-text`
+     below rather than exposed as a utility — it has exactly one job. */
+  --prose-ink: #3a4858;
 }
 
 /* =========================
    DARK THEME
 ========================= */
+/* Every value here is an override of its `:root` counterpart — a token absent
+   from this block keeps its light value, which is the bug that made the old
+   version of this file unusable: `--light*` were redeclared with their light
+   greys, so every section painted `bg-light` stayed white in dark mode.
+   Anything added to `:root` needs a considered answer here too.
+
+   The hue (~250) is carried through the greys on purpose: a perfectly neutral
+   grey next to the navy brand reads as dirty, a faint blue cast reads as
+   deliberate. */
+/* The whole dark palette is derived from five seed numbers, so a variant is
+   five values rather than a copy of this block. Working in oklch is what makes
+   that possible: lightness is perceptually even, so "one step lighter" is the
+   same visual step at every hue, and a palette stays legible when you rotate
+   its hue. Doing this in hex would need every shade hand-picked per variant.
+
+     --dk-l  lightness of the page itself; every surface steps up from it
+     --dk-c  chroma of the greys — how much the hue tints the neutrals
+     --dk-h  hue of the greys
+     --ac-h  hue of the accent (primary, links, focus ring)
+     --ac-c  chroma of the accent — how saturated the brand colour reads
+
+   The seeds below are Sapphire Reef, chosen from the 30-gradient preview. */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
+  color-scheme: dark;
 
-  --light: #f7f7f7;
-  --light-dark: #eeeeee;
-  --light-silver: #e0e0e0;
+  --dk-l: 0.15;
+  --dk-c: 0.038;
+  --dk-h: 235;
+  --dk-h2: 205;
+  --dk-ang: 160deg;
+  --ac-h: 230;
+  --ac-c: 0.15;
 
-  --primary: #003f71;
-  --primary-light: #001836;
-  --primary-foreground: oklch(0.18 0 0);
+  --background: oklch(var(--dk-l) var(--dk-c) var(--dk-h));
 
-  --secondary: #1b3478;
-  --secondary-dark: #0f0e40;
-  --secondary-foreground: #5c5c5c;
-  --secondary-gray: #545454;
+  /* The page wash. Kept deliberately narrow — 0.035 of lightness and a small
+     hue drift — because this sits behind every page: a gradient with real
+     contrast in it reads as a banner, not as a background, and fights the
+     cards stacked on top of it. */
+  --page-gradient: linear-gradient(
+    var(--dk-ang),
+    oklch(var(--dk-l) var(--dk-c) var(--dk-h)) 0%,
+    oklch(calc(var(--dk-l) + 0.035) calc(var(--dk-c) * 1.6) var(--dk-h2)) 100%
+  );
 
-  --light-blue: "#EFF3F4", --accent: oklch(0.25 0.05 205);
-  --accent-foreground: oklch(0.985 0 0);
+  /* The ramp reverses: each step is *lighter* than the page, not darker. */
+  --light: oklch(calc(var(--dk-l) + 0.05) var(--dk-c) var(--dk-h));
+  --light-dark: oklch(calc(var(--dk-l) + 0.09) var(--dk-c) var(--dk-h));
+  --light-silver: oklch(calc(var(--dk-l) + 0.14) var(--dk-c) var(--dk-h));
+  --light-blue: oklch(
+    calc(var(--dk-l) + 0.08) calc(var(--dk-c) + 0.01) var(--ac-h)
+  );
+  --card: oklch(calc(var(--dk-l) + 0.05) var(--dk-c) var(--dk-h));
+  --popover: oklch(calc(var(--dk-l) + 0.07) var(--dk-c) var(--dk-h));
+  --muted: oklch(calc(var(--dk-l) + 0.1) var(--dk-c) var(--dk-h));
+  --accent: oklch(calc(var(--dk-l) + 0.12) calc(var(--ac-c) / 3) var(--ac-h));
 
-  --muted: oklch(0.25 0 0);
-  --muted-foreground: oklch(0.7 0 0);
+  --foreground: oklch(0.96 0.004 var(--dk-h));
+  --card-foreground: oklch(0.96 0.004 var(--dk-h));
+  --popover-foreground: oklch(0.96 0.004 var(--dk-h));
+  --accent-foreground: oklch(0.95 0.01 var(--dk-h));
+  --muted-foreground: oklch(0.72 0.01 var(--dk-h));
+  --secondary-foreground: oklch(0.76 0.01 var(--dk-h));
+  --secondary-gray: oklch(0.72 0 0);
 
-  --border: rgba(255, 255, 255, 0.12);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.7 0.14 205);
+  /* Ink, inverted: near-white for headings, a brighter accent for links that
+     still reads as "the brand colour" at low lightness. */
+  --brand-ink: oklch(0.93 0.025 var(--ac-h));
+  --brand-ink-accent: oklch(0.76 calc(var(--ac-c) * 0.85) var(--ac-h));
 
-  --card: oklch(0.2 0 0);
-  --card-foreground: oklch(0.985 0 0);
+  /* `primary` carries both roles — 196 fills and ~130 inks — so it has to
+     land where foreground-on-primary and primary-on-background are both
+     legible. Lightening it and flipping its foreground to near-black is what
+     makes that possible; a dark primary would be invisible as ink here. */
+  --primary: oklch(0.7 var(--ac-c) var(--ac-h));
+  --primary-light: oklch(0.9 0.03 var(--ac-h));
+  --primary-foreground: oklch(calc(var(--dk-l) + 0.01) 0.01 var(--dk-h));
 
-  --popover: oklch(0.2 0 0);
-  --popover-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.68 calc(var(--ac-c) * 0.9) calc(var(--ac-h) + 12));
+  --secondary-dark: oklch(0.86 0.04 calc(var(--ac-h) + 20));
+
+  --border: oklch(1 0 0 / 14%);
+  --input: oklch(1 0 0 / 18%);
+  --ring: oklch(0.65 var(--ac-c) var(--ac-h));
+
+  /* Pure-saturation red burns on a dark ground; pull lightness up and chroma
+     back so a destructive button reads as urgent rather than as glare. Fixed
+     across variants — a warning that changed hue with the theme would stop
+     reading as a warning. */
+  --destructive: oklch(0.68 0.19 25);
+
+  /* Held just under `--foreground` for the same reason it sits just above
+     black in light mode — maximum contrast is the wrong target for body copy
+     at length, in either direction. */
+  --prose-ink: oklch(0.87 0.012 var(--dk-h));
+
+  /* Signal Blue after dark. Same two hues and the same sweep direction as the
+     light band, pulled down in lightness and chroma so it reads as the same
+     colour dimmed rather than as a different one.
+
+     The endpoints are picked against the page, not in isolation: the dark
+     ground is `oklch(0.15 …)`, so starting the band at 0.17 keeps the
+     masthead a hair above the page instead of cutting a hole in it, and
+     ending at 0.32 leaves enough travel for the gradient to still read as a
+     gradient. The light band's 0.50 bright stop was the problem — against a
+     0.15 page it glares instead of anchoring. */
+  --nav-gradient: linear-gradient(
+    110deg,
+    oklch(0.17 0.1 245) 0%,
+    oklch(0.32 0.13 230) 100%
+  );
+
+  /* The dark band is already dim, so the panel only needs to sit a touch under
+     it to separate — and it can afford more transparency than the light theme,
+     because the page behind it is dark and cannot wash the fill out. */
+  --nav-panel: linear-gradient(
+    110deg,
+    oklch(0.15 0.09 245 / 0.82) 0%,
+    oklch(0.26 0.12 232 / 0.82) 100%
+  );
+
+  /* Sits just above the band's bright stop so the marquee still separates
+     from the masthead, without climbing back to the light theme's brightness. */
+  --nav-strip: oklch(0.26 0.11 238);
+
+  /* Near-black, well under the canvas it sits on, so the grid stays a texture
+     you read past. Light dots here would turn the chart into a starfield. */
+  --dot-grid: oklch(0.12 0.02 235 / 0.9);
 }
 
 /* =========================
@@ -141,6 +328,15 @@
   body {
     @apply bg-background text-foreground antialiased;
   }
+
+  /* `background-color` stays as the solid fallback underneath; the gradient
+     is painted as an image on top of it. `fixed` keeps the wash anchored to
+     the viewport instead of stretching over the full scroll height, where a
+     subtle gradient would smear into an invisible flat tone on a long page. */
+  .dark body {
+    background-image: var(--page-gradient);
+    background-attachment: fixed;
+  }
 }
 
 @layer components {
@@ -151,10 +347,10 @@
     @apply w-1;
   }
   .scrollbar-modern::-webkit-scrollbar-track {
-    @apply bg-white rounded-full;
+    @apply bg-background rounded-full;
   }
   .scrollbar-modern::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-gray-300 transition-colors duration-200;
+    @apply bg-light-silver rounded-full transition-colors duration-200;
   }
 }
 
@@ -177,12 +373,28 @@
 /* =========================
    ANIMATION
 ========================= */
+/* Ticker pair. Two identical copies of the track chase each other: one slides
+   out its own width to the left while the other comes in from the right, so the
+   loop point lands where the outgoing copy left off instead of snapping back to
+   the start. Each copy needs `max-content` — the translate is a percentage of
+   the copy's own box, so it has to be tied to the content, not the container —
+   and `min-width: 100%` so the two stay adjacent when there is too little
+   content to fill the strip. */
 @keyframes marquee {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marquee-follow {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
 
@@ -199,10 +411,16 @@ button {
   cursor: pointer;
 }
 
-.animate-marquee {
+.animate-marquee,
+.animate-marquee-follow {
   display: flex;
   width: max-content;
-  animation: marquee 15s linear infinite;
+  min-width: 100%;
+  animation: marquee var(--marquee-duration, 15s) linear infinite;
+}
+
+.animate-marquee-follow {
+  animation-name: marquee-follow;
 }
 
 .animate-marquee-reverse {
@@ -303,7 +521,7 @@ input[type="time"]::-moz-inner-spin-button {
   height: 18px;
   border-radius: 50%;
   background: var(--primary);
-  border: 3px solid white;
+  border: 3px solid var(--background);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   pointer-events: all;
@@ -316,7 +534,7 @@ input[type="time"]::-moz-inner-spin-button {
   height: 18px;
   border-radius: 50%;
   background: var(--primary);
-  border: 3px solid white;
+  border: 3px solid var(--background);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   pointer-events: all;
@@ -416,35 +634,108 @@ input[type="time"]::-moz-inner-spin-button {
 }
 
 /* ================================
-   Rich text images (public pages)
-   Backs up the inline `style` the admin's resizable image editor writes
-   per-image (see resizable-image.ts) so wrap/align still renders correctly
-   for any saved content that predates that inline style, and keeps every
-   public dangerouslySetInnerHTML render (history, biography, news, job
-   details, …) consistent with what the admin sees in the editor preview.
+   Rich text — the one place the admin editor's output is styled.
+
+   `.rich-text` is applied to the surfaces that render what the TipTap editor
+   produces: the editable area itself, the admin preview, and the history
+   page. Sharing one stylesheet is what makes "what the admin arranged" and
+   "what the visitor sees" the same layout instead of several that drift
+   apart. The image rules below are deliberately *not* scoped to `.rich-text`
+   so the surfaces still carrying their own typography (news, biography, job
+   details) lay images out identically.
 ================================= */
+.rich-text {
+  overflow-wrap: break-word;
+  color: var(--prose-ink);
+}
+
+/* A floated image is out of flow, so without this the container collapses to
+   the height of the text and whatever follows rides up beside the picture. */
+.rich-text::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* ---- Image layout ------------------------------------------------------
+
+   One number governs every edge where an image meets text: 16px, the same in
+   every wrap mode and on every surface.
+
+   Horizontally the margin *is* that gap. Vertically it is not: the line that
+   flows under an image carries half of its leading above the glyphs, so the
+   block margin is shortened by that half-leading (~0.5em at the 1.9 leading
+   this content is set in) to land on the same 16px optically.
+
+   `!important` throughout is deliberate. Every image the editor saves bakes
+   its layout into an inline style (resizable-image.ts's `getWrapStyle`), so
+   articles written before these numbers changed would otherwise keep their
+   old margins forever — this file, not the stored HTML, is the authority.
+   `getWrapStyle` must still emit the same values: it is what any consumer of
+   the exported HTML outside this app sees. The `.image-wrap-*` classes only
+   ever appear on editor output, so scoping them globally rather than to
+   `.rich-text` is safe and covers every surface that renders that HTML. */
 .image-wrap-inline {
-  display: inline;
+  display: inline-block;
   vertical-align: middle;
-  margin: 0 20px;
+  margin: 0 0.5rem !important;
 }
 
 .image-wrap-wrap.image-align-left {
   float: left;
-  margin: 0 12px 6px 0;
+  /* The 0.35rem top is not a gap — it nudges the picture down so its top edge
+     lines up with the first line's glyphs rather than that line's box. */
+  margin: 0.35rem 1rem calc(1rem - 0.5em) 0 !important;
 }
 
 .image-wrap-wrap.image-align-right {
   float: right;
-  margin: 0 0 6px 12px;
+  margin: 0.35rem 0 calc(1rem - 0.5em) 1rem !important;
 }
 
 .image-wrap-break {
   display: block;
   float: none;
-  margin: 12px auto;
+  clear: both;
+  margin: calc(1rem - 0.5em) auto calc(1rem - 0.5em) 0 !important;
+}
+
+.image-wrap-break.image-align-center {
+  margin: calc(1rem - 0.5em) auto !important;
 }
 
 .image-wrap-break.image-align-right {
-  margin: 12px 0 12px auto;
+  margin: calc(1rem - 0.5em) 0 calc(1rem - 0.5em) auto !important;
+}
+
+/* A full-width image sits between two paragraphs, and a paragraph's own
+   rhythm (20px) is larger than the 16px gap — adjacent margins collapse to
+   the bigger of the two, so without this the space above a band image would
+   be the paragraph's, not the image's. */
+p:has(+ .image-wrap-break) {
+  margin-bottom: 0 !important;
+}
+
+/* A float only reads as a magazine layout while there is still room for a
+   real column of text beside it — at phone widths a 45% float leaves three
+   words per line. Below that breakpoint every non-inline image becomes a
+   full-width band. The selectors carry both classes so they match the
+   specificity of the rules above and win on source order. */
+@media (max-width: 640px) {
+  .image-wrap-wrap:is(.image-align-left, .image-align-right),
+  .image-wrap-break:is(
+    .image-align-left,
+    .image-align-center,
+    .image-align-right
+  ) {
+    float: none !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: calc(1rem - 0.5em) 0 !important;
+  }
+
+  p:has(+ .image-wrap-wrap) {
+    margin-bottom: 0 !important;
+  }
 }

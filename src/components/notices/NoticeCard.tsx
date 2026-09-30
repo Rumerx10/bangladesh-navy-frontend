@@ -24,7 +24,7 @@ const downloadName = (notice: INotice) =>
  */
 const NoticeCard = ({ notice }: { notice: INotice }) => {
   return (
-    <article className="group flex h-full flex-col rounded-xl border border-gray-200 bg-white p-5 transition-shadow hover:shadow-md">
+    <article className="group flex h-full flex-col rounded-xl border border-border bg-card p-5 transition-shadow hover:shadow-md">
       <div className="flex flex-wrap items-center gap-2">
         <span
           className={cn(
@@ -34,12 +34,12 @@ const NoticeCard = ({ notice }: { notice: INotice }) => {
         >
           {NOTICE_TYPE_LABELS[notice.type]}
         </span>
-        <span className="rounded-md bg-gray-100 px-2 py-1 text-[11px] font-semibold text-gray-600">
+        <span className="rounded-md bg-light-dark px-2 py-1 text-[11px] font-semibold text-secondary-foreground">
           {notice.noticeNumber}
         </span>
       </div>
 
-      <span className="mt-3 inline-flex items-center gap-1.5 text-xs text-gray-500">
+      <span className="mt-3 inline-flex items-center gap-1.5 text-xs text-secondary-foreground">
         <CalendarDays className="h-3.5 w-3.5 shrink-0" />
         {formatNoticeDate(notice.publishedAt)}
       </span>
@@ -48,13 +48,13 @@ const NoticeCard = ({ notice }: { notice: INotice }) => {
         {notice.titleEn}
       </h3>
       {notice.titleBn && (
-        <p className="mt-1 line-clamp-2 text-sm text-gray-500">
+        <p className="mt-1 line-clamp-2 text-sm text-secondary-foreground">
           {notice.titleBn}
         </p>
       )}
 
       {notice.descriptionEn && (
-        <p className="mt-3 line-clamp-4 text-sm leading-relaxed text-gray-600">
+        <p className="mt-3 line-clamp-4 text-sm leading-relaxed text-secondary-foreground">
           {notice.descriptionEn}
         </p>
       )}
@@ -73,7 +73,7 @@ const NoticeCard = ({ notice }: { notice: INotice }) => {
             Download PDF
           </a>
         ) : (
-          <p className="py-2.5 text-center text-xs text-gray-400">
+          <p className="py-2.5 text-center text-xs text-muted-foreground">
             No attachment
           </p>
         )}

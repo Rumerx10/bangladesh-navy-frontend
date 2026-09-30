@@ -16,9 +16,9 @@ const NewsListingPage = () => {
   const newsItems = Array.isArray(data?.data) ? data.data : [];
 
   return (
-    <div className="mt-28 lg:mt-26">
+    <div className="mt-24 lg:mt-20">
       {/* Page Header */}
-      <section className="relative bg-linear-to-b from-pBlue to-[#003052] py-14 lg:py-20 overflow-hidden">
+      <section className="relative bg-linear-to-b from-brand-navy to-[#003052] py-14 lg:py-20 overflow-hidden">
         <div className="absolute -right-20 -top-10 text-white">
           <NavyWatermark
             variant="anchor"
@@ -49,7 +49,7 @@ const NewsListingPage = () => {
           </motion.div>
 
           {/* Breadcrumb */}
-          <nav className="flex items-center justify-center gap-1.5 mt-6 text-sm text-gray-400">
+          <nav className="flex items-center justify-center gap-1.5 mt-6 text-sm text-muted-foreground">
             <Link
               href="/"
               className="flex items-center gap-1 hover:text-white transition-colors"
@@ -63,28 +63,30 @@ const NewsListingPage = () => {
       </section>
 
       {/* News Grid */}
-      <section className="py-12 lg:py-16 bg-gray-50">
+      <section className="py-12 lg:py-16 bg-light">
         <div className="container px-4 sm:px-6 lg:px-8">
           {isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(6)].map((_, i) => (
                 <div
                   key={i}
-                  className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100"
+                  className="bg-card rounded-xl overflow-hidden shadow-sm border border-border"
                 >
-                  <div className="h-48 bg-gray-200 animate-pulse" />
+                  <div className="h-48 bg-light-silver animate-pulse" />
                   <div className="p-5 space-y-3">
-                    <div className="h-4 w-20 bg-gray-200 animate-pulse rounded" />
-                    <div className="h-5 w-full bg-gray-200 animate-pulse rounded" />
-                    <div className="h-4 w-3/4 bg-gray-200 animate-pulse rounded" />
+                    <div className="h-4 w-20 bg-light-silver animate-pulse rounded" />
+                    <div className="h-5 w-full bg-light-silver animate-pulse rounded" />
+                    <div className="h-4 w-3/4 bg-light-silver animate-pulse rounded" />
                   </div>
                 </div>
               ))}
             </div>
           ) : newsItems.length === 0 ? (
             <div className="text-center py-20">
-              <Newspaper size={48} className="mx-auto text-gray-300 mb-4" />
-              <p className="text-gray-500 text-lg">No news or events found.</p>
+              <Newspaper size={48} className="mx-auto text-light-silver mb-4" />
+              <p className="text-secondary-foreground text-lg">
+                No news or events found.
+              </p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

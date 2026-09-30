@@ -100,12 +100,12 @@ const ChartIndexMap = () => {
     // mt-33 (132px) clears the fixed header on both breakpoints: mobile
     // 32+56+44 = 132; desktop 172 minus the <header>'s own lg:pb-10 flow
     // height (40px) = 132.
-    <section className="my-33 flex h-[calc(100vh-8.25rem)] lg:h-[calc(100vh-10.75rem)] w-full flex-col bg-white">
+    <section className="my-33 flex h-[calc(100vh-8.25rem)] lg:h-[calc(100vh-10.75rem)] w-full flex-col bg-card">
       {/* Toolbar: chart number search */}
-      <div className=" border-b shadow-sm relative z-20 bg-white px-4 py-2.5">
+      <div className=" border-b shadow-sm relative z-20 bg-card px-4 py-2.5">
         <div className="container px-4 mx-auto flex items-center justify-between gap-4">
           <div className="relative w-64 sm:w-80">
-            <SearchIcon className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <SearchIcon className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
               type="text"
               inputMode="numeric"
@@ -122,14 +122,14 @@ const ChartIndexMap = () => {
               }}
               placeholder="Search chart number…"
               aria-label="Search chart by number"
-              className="h-10 w-full rounded-lg border border-slate-200 bg-white pr-9 pl-9 text-sm text-gray-800 outline-none placeholder:text-gray-400 focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
+              className="h-10 w-full rounded-lg border border-border bg-card pr-9 pl-9 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
             />
             {query && (
               <button
                 type="button"
                 onClick={clearSearch}
                 aria-label="Clear search"
-                className="absolute top-1/2 right-2 -translate-y-1/2 rounded p-1 text-gray-400 transition-colors hover:text-pBlue"
+                className="absolute top-1/2 right-2 -translate-y-1/2 rounded p-1 text-muted-foreground transition-colors hover:text-pBlue"
               >
                 <XIcon className="h-4 w-4" />
               </button>
@@ -137,7 +137,7 @@ const ChartIndexMap = () => {
 
             {dropdownOpen && query.trim() && (
               <ul
-                className="absolute top-11 right-0 left-0 z-30 max-h-64 overflow-auto rounded-lg border border-slate-100 bg-white py-1 shadow-xl"
+                className="absolute top-11 right-0 left-0 z-30 max-h-64 overflow-auto rounded-lg border border-border bg-card py-1 shadow-xl"
                 onMouseDown={(e) => e.preventDefault()}
               >
                 {results.length > 0 ? (
@@ -146,13 +146,13 @@ const ChartIndexMap = () => {
                       <button
                         type="button"
                         onClick={() => selectResult(area)}
-                        className="flex w-full items-baseline gap-2 px-3 py-2 text-left transition-colors hover:bg-slate-50"
+                        className="flex w-full items-baseline gap-2 px-3 py-2 text-left transition-colors hover:bg-light"
                       >
                         <span className="text-sm font-bold text-pBlue">
                           {area.number}
                         </span>
                         {area.int && (
-                          <span className="text-xs text-gray-400">
+                          <span className="text-xs text-muted-foreground">
                             ({area.int})
                           </span>
                         )}
@@ -160,7 +160,7 @@ const ChartIndexMap = () => {
                     </li>
                   ))
                 ) : (
-                  <li className="px-3 py-2 text-sm text-gray-400">
+                  <li className="px-3 py-2 text-sm text-muted-foreground">
                     No chart matches “{query.trim()}”
                   </li>
                 )}
@@ -168,7 +168,7 @@ const ChartIndexMap = () => {
             )}
           </div>
 
-          <p className="hidden text-xs text-gray-400 md:block border py-2 rounded-full px-5">
+          <p className="hidden text-xs text-muted-foreground md:block border py-2 rounded-full px-5">
             Hover a rectangle to identify a chart — click it to view details
           </p>
         </div>
@@ -180,7 +180,7 @@ const ChartIndexMap = () => {
       >
         {imgMissing && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <p className="max-w-md rounded-lg border border-dashed border-gray-300 bg-gray-50 p-6 text-center text-sm text-gray-500">
+            <p className="max-w-md rounded-lg border border-dashed border-input bg-light p-6 text-center text-sm text-secondary-foreground">
               Chart index image not found. Place the image at
               <span className="mx-1 font-mono text-pBlue">
                 public/chart/chart-index.jpg
@@ -257,7 +257,7 @@ const ChartIndexMap = () => {
         {/* Cursor-following identifier */}
         {hovered && (
           <div
-            className="pointer-events-none fixed z-40 rounded-md bg-pBlue px-3 py-1.5 text-xs font-semibold text-white shadow-lg"
+            className="pointer-events-none fixed z-40 rounded-md bg-brand-navy px-3 py-1.5 text-xs font-semibold text-white shadow-lg"
             style={{ left: cursor.x + 14, top: cursor.y + 14 }}
           >
             Chart {chartLabel(hovered)}

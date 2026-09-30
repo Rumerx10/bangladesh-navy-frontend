@@ -32,7 +32,7 @@ export const GetApplicantColumns = (
 
         return (
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 border border-[#E6E6E6] flex items-center justify-center rounded-lg bg-light">
+            <div className="w-9 h-9 border border-border flex items-center justify-center rounded-lg bg-light">
               <Image src="/icons/PDF.svg" alt="pdf" width={20} height={20} />
             </div>
             <span className="text-sm font-normal">{applicant.name}</span>
@@ -49,7 +49,7 @@ export const GetApplicantColumns = (
 
         return (
           <Button
-            className="w-11! min-h-9 border border-[#E6E6E6] flex items-center justify-center rounded-lg bg-light hover:bg-light"
+            className="w-11! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
             size="sm"
             onClick={() =>
               onDownload?.(applicant.id, `${applicant.name}-resume`)

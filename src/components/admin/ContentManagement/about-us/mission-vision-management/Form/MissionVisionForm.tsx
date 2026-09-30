@@ -56,7 +56,7 @@ const SectionHeader = ({
         <Button
           type="button"
           onClick={onCancel}
-          className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer"
+          className="text-secondary-foreground bg-transparent hover:bg-light-dark duration-300 border hover:shadow cursor-pointer"
         >
           Cancel
         </Button>
@@ -77,7 +77,7 @@ const MissionVisionForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
       {/* Basic Information */}
-      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-card">
         <SectionHeader
           label="Basic Information"
           onCancel={onCancel}
@@ -108,7 +108,7 @@ const MissionVisionForm = ({
       </div>
 
       {/* Vision */}
-      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-card">
         <SectionHeader label="Vision" />
         <div className="flex flex-col gap-y-6 mt-6">
           <div>
@@ -135,7 +135,7 @@ const MissionVisionForm = ({
       </div>
 
       {/* Mission */}
-      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-white">
+      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-card">
         <SectionHeader label="Mission" />
         <div className="flex flex-col gap-y-6 mt-6">
           <div>
@@ -167,7 +167,7 @@ const MissionVisionForm = ({
         <Button
           type="button"
           onClick={onCancel}
-          className="text-secondary-foreground bg-transparent hover:bg-gray-100 duration-300 border hover:shadow cursor-pointer"
+          className="text-secondary-foreground bg-transparent hover:bg-light-dark duration-300 border hover:shadow cursor-pointer"
         >
           Cancel
         </Button>

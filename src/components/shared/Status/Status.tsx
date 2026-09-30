@@ -11,7 +11,7 @@ const StatusBadge = ({ status, className }: StatusBadgeProps) => {
     [StatusType.PENDING]: "text-[#F79009] bg-[#FFFAEB]",
     [StatusType.CANCELLED]: "text-[#F04438] bg-[#FEF3F2]",
     [StatusType.INACTIVE]: "text-[#F04438] bg-[#FEF3F2]",
-    [StatusType.IN_PROGRESS]: "text-[#3F3E66] bg-[#E7E7EC]",
+    [StatusType.IN_PROGRESS]: "text-secondary-dark bg-light-dark",
   };
 
   return (

@@ -66,13 +66,13 @@ const GalleryGrid = () => {
 
   if (isLoading) {
     return (
-      <section className="py-8 lg:py-20 bg-white">
+      <section className="py-8 lg:py-20 bg-card">
         <div className="container px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
             {Array.from({ length: 8 }).map((_, i) => (
               <div
                 key={i}
-                className="aspect-4/5 rounded-2xl bg-gray-100 animate-pulse"
+                className="aspect-4/5 rounded-2xl bg-light-dark animate-pulse"
               />
             ))}
           </div>
@@ -84,7 +84,7 @@ const GalleryGrid = () => {
   return (
     <>
       <motion.section
-        className="py-8 lg:py-20 bg-white"
+        className="py-8 lg:py-20 bg-card"
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.15 }}
@@ -99,8 +99,8 @@ const GalleryGrid = () => {
                 onClick={() => setActiveCategory(cat)}
                 className={`px-6 h-11 rounded-full font-bold text-sm transition-all cursor-pointer inline-flex items-center justify-center tracking-wider uppercase ${
                   activeCategory === cat
-                    ? "bg-liteBlue text-white shadow-lg shadow-blue-900/20"
-                    : "bg-gray-50 text-gray-500 hover:bg-gray-100"
+                    ? "bg-brand-blue text-white shadow-lg shadow-blue-900/20"
+                    : "bg-light text-secondary-foreground hover:bg-light-dark"
                 }`}
               >
                 {cat}
@@ -129,7 +129,7 @@ const GalleryGrid = () => {
                       : { y: -10, scale: 1.02, rotate: -0.3 }
                   }
                   onClick={() => setLightboxIndex(i)}
-                  className="group relative aspect-4/5 rounded-2xl overflow-hidden bg-gray-100 cursor-pointer shadow-sm hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500"
+                  className="group relative aspect-4/5 rounded-2xl overflow-hidden bg-light-dark cursor-pointer shadow-sm hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500"
                 >
                   {!shouldReduceMotion ? (
                     <motion.div
@@ -155,7 +155,7 @@ const GalleryGrid = () => {
                   />
 
                   {/* Overlay */}
-                  <div className="absolute inset-0 bg-linear-to-t from-pBlue/90 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-linear-to-t from-brand-navy/90 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
 
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <motion.div
