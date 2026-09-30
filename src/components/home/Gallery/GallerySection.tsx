@@ -34,8 +34,8 @@ const GallerySection = () => {
           <div className="text-center mb-12 lg:mb-16">
             <SectionTitle title="Gallery" />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 h-200 md:h-150 lg:h-175">
-            <div className="md:col-span-2 md:row-span-2 rounded-2xl bg-light-silver animate-pulse" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 h-200 md:h-150 lg:h-175">
+            <div className="col-span-2 md:row-span-2 rounded-2xl bg-light-silver animate-pulse" />
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
@@ -75,9 +75,9 @@ const GallerySection = () => {
             <SectionTitle title="Gallery" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 h-200 md:h-150 lg:h-175">
+          <div className="grid grid-cols-2 md:grid-cols-4 h-200 md:h-150 lg:h-175">
             <motion.div
-              className="md:col-span-2 md:row-span-2 relative group overflow-hidden shadow-lg cursor-pointer"
+              className="col-span-2 md:row-span-2 relative group overflow-hidden shadow-lg cursor-pointer"
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}

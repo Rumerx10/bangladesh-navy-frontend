@@ -7,9 +7,9 @@ import {
   useReducedMotion,
   Variants,
 } from "framer-motion";
-import { Search } from "lucide-react";
-import { useState } from "react";
 import Image from "next/image";
+import { useState } from "react";
+import { BiExpandAlt } from "react-icons/bi";
 import GalleryLightbox from "@/src/components/shared/GalleryLightbox";
 import { IGalleryItem } from "@/src/components/home/Gallery/types";
 
@@ -110,7 +110,7 @@ const GalleryGrid = () => {
 
           {/* Gallery Grid */}
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 lg:gap-5"
             variants={gridVariants}
           >
             <AnimatePresence mode="popLayout" initial={false}>
@@ -129,7 +129,7 @@ const GalleryGrid = () => {
                       : { y: -10, scale: 1.02, rotate: -0.3 }
                   }
                   onClick={() => setLightboxIndex(i)}
-                  className="group relative aspect-4/5 rounded-2xl overflow-hidden bg-light-dark cursor-pointer shadow-sm hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500"
+                  className="group relative aspect-4/5 rounded-md overflow-hidden bg-light-dark cursor-pointer shadow-sm hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500"
                 >
                   {!shouldReduceMotion ? (
                     <motion.div
@@ -171,7 +171,7 @@ const GalleryGrid = () => {
                         shouldReduceMotion ? undefined : { scale: 1.1 }
                       }
                     >
-                      <Search size={20} />
+                      <BiExpandAlt size={20} />
                     </motion.div>
                   </div>
 
