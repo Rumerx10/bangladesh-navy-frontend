@@ -104,6 +104,23 @@
     oklch(0.24 0.13 245) 0%,
     oklch(0.5 0.17 230) 100%
   );
+
+  /* Dropdown panels. Same blue, dimmed: the band's stops are tuned for a 96px
+     strip, and spread over a panel that 0.50 bright stop turns into glare. The
+     bright end comes down to 0.30 and the fill carries alpha so the page tints
+     through under `backdrop-blur`.
+
+     The alpha lives in the gradient stops rather than in a Tailwind `opacity`
+     utility on purpose — `opacity` fades the element's white ink along with its
+     fill. 0.88 is about as sheer as this can go: the panel overlays light page
+     content, and a lower alpha lifts the fill until white-on-blue rows lose
+     their contrast. */
+  --nav-panel: linear-gradient(
+    110deg,
+    oklch(0.17 0.11 245 / 0.88) 0%,
+    oklch(0.3 0.13 232 / 0.88) 100%
+  );
+
   /* Solid companion to the band, for the strips stacked with it — the notice
      marquee under the navbar. It has to dim alongside `--nav-gradient` in
      dark mode, or the strip ends up brighter than the masthead above it. */
@@ -282,6 +299,15 @@
     oklch(0.32 0.13 230) 100%
   );
 
+  /* The dark band is already dim, so the panel only needs to sit a touch under
+     it to separate — and it can afford more transparency than the light theme,
+     because the page behind it is dark and cannot wash the fill out. */
+  --nav-panel: linear-gradient(
+    110deg,
+    oklch(0.15 0.09 245 / 0.82) 0%,
+    oklch(0.26 0.12 232 / 0.82) 100%
+  );
+
   /* Sits just above the band's bright stop so the marquee still separates
      from the masthead, without climbing back to the light theme's brightness. */
   --nav-strip: oklch(0.26 0.11 238);
@@ -347,12 +373,28 @@
 /* =========================
    ANIMATION
 ========================= */
+/* Ticker pair. Two identical copies of the track chase each other: one slides
+   out its own width to the left while the other comes in from the right, so the
+   loop point lands where the outgoing copy left off instead of snapping back to
+   the start. Each copy needs `max-content` — the translate is a percentage of
+   the copy's own box, so it has to be tied to the content, not the container —
+   and `min-width: 100%` so the two stay adjacent when there is too little
+   content to fill the strip. */
 @keyframes marquee {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marquee-follow {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
 
@@ -369,10 +411,16 @@ button {
   cursor: pointer;
 }
 
-.animate-marquee {
+.animate-marquee,
+.animate-marquee-follow {
   display: flex;
   width: max-content;
-  animation: marquee 15s linear infinite;
+  min-width: 100%;
+  animation: marquee var(--marquee-duration, 15s) linear infinite;
+}
+
+.animate-marquee-follow {
+  animation-name: marquee-follow;
 }
 
 .animate-marquee-reverse {

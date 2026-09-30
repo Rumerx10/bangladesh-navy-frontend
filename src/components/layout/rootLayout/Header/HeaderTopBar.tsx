@@ -33,19 +33,23 @@ const triggerBase =
 const triggerActive = "text-nav-ink bg-nav-wash-strong";
 const triggerIdle = "text-nav-ink-muted hover:text-nav-ink hover:bg-nav-wash";
 
-// Dropdown panels carry the same Signal Blue band as the bar they hang from,
-// so their rows are painted in nav ink. Hover and selected states are
-// translucent white washes rather than fixed colours: the wash derives from
-// whatever part of the gradient sits behind it, which keeps it reading the
-// same at the dark end of the sweep and at the bright end. A solid surface
-// token here would punch an opaque rectangle through the gradient.
+// Dropdown panels carry the same Signal Blue as the bar they hang from, so
+// their rows are painted in nav ink. Hover and selected states are translucent
+// white washes rather than fixed colours: the wash derives from whatever part
+// of the gradient sits behind it, which keeps it reading the same at the dark
+// end of the sweep and at the bright end. A solid surface token here would
+// punch an opaque rectangle through the gradient.
 const subLinkBase = "block rounded-md px-3 py-2.5 text-sm transition-colors";
 const subLinkActive = "text-nav-ink bg-nav-wash-strong font-medium";
 const subLinkIdle = "text-nav-ink-muted hover:bg-nav-wash hover:text-nav-ink";
 
-// One panel treatment, shared by the four dropdown surfaces below.
+// One panel treatment, shared by the four dropdown surfaces below. `--nav-panel`
+// is the band's gradient dimmed and given alpha stops — same blue, without the
+// glare the bar's brighter cut produced once it was stretched over a panel this
+// size. The blur is what makes the transparency read as frosted glass rather
+// than as a washed-out fill, so the two belong together.
 const panelSurface =
-  "bg-(image:--nav-gradient) border border-nav-hairline shadow-2xl";
+  "bg-(image:--nav-panel) backdrop-blur-2xl border border-nav-hairline shadow-2xl";
 
 const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
   const pathname = usePathname();
@@ -121,7 +125,7 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
               />
             </button>
             <div
-              className={`absolute left-full top-0 z-50 ml-1 min-w-48 rounded-xl p-2 ${panelSurface} ${isSubOpen ? "block" : "hidden"}`}
+              className={`absolute left-full top-0 z-50 ml-1 min-w-48 rounded-md p-2 ${panelSurface} ${isSubOpen ? "block" : "hidden"}`}
             >
               <div className="flex flex-col gap-0.5">
                 {sub.subLinks.map((nested) => (
@@ -207,13 +211,17 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
           </button>
         )}
 
+        {/* No `overflow-hidden` here: the nested-submenu branch in
+            renderSubLinks opens at `left-full`, entirely outside this box, so a
+            clip would erase it the moment a nav item gains a third level. The
+            blur now lives on the panel itself via `panelSurface` — the inner
+            wrapper that used to carry it sat *on top of* an opaque background,
+            so it had nothing to sample and blurred nothing. */}
         <div
-          className={`mt-2 absolute overflow-hidden border-0 left-1/2 top-full z-50 -translate-x-1/2 rounded-xl ${panelSurface} ${isOpen ? "block" : "hidden"}`}
+          className={`mt-2 absolute left-1/2 top-full z-50 -translate-x-1/2 rounded-md ${panelSurface} ${isOpen ? "block" : "hidden"}`}
         >
-          <div className="backdrop-blur-2xl">
-            <div className="flex flex-col gap-0.5 p-2 min-w-52 whitespace-nowrap">
-              {renderSubLinks(item.subLinks)}
-            </div>
+          <div className="flex flex-col gap-0.5 p-1.5 min-w-52 whitespace-nowrap">
+            {renderSubLinks(item.subLinks)}
           </div>
         </div>
       </li>
