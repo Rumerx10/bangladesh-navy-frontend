@@ -12,8 +12,16 @@ const HeaderTopBarSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
   const debouncedQuery = useDebounce(searchQuery, 400);
-  const searchRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  // One ref per bar. Both bars are always mounted — they are shown and hidden
+  // with `hidden lg:block` / `lg:hidden`, not conditionally rendered — so a
+  // single shared ref object ended up holding whichever element React attached
+  // last (the mobile one). That left the desktop dropdown permanently "outside"
+  // its own container: mousedown closed it before the click could land, and
+  // picking a product did nothing.
+  const desktopRef = useRef<HTMLDivElement>(null);
+  const mobileRef = useRef<HTMLDivElement>(null);
+  const desktopInputRef = useRef<HTMLInputElement>(null);
+  const mobileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   const isSearching = searchQuery.length >= 2 && searchQuery !== debouncedQuery;
@@ -32,13 +40,18 @@ const HeaderTopBarSearch = () => {
   }, [debouncedQuery]);
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
-        setShowResults(false);
-      }
+    const handlePointerDown = (e: PointerEvent) => {
+      const target = e.target as Node;
+      const inside =
+        desktopRef.current?.contains(target) ||
+        mobileRef.current?.contains(target);
+      if (!inside) setShowResults(false);
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    // `pointerdown` rather than `mousedown`: on touch, the compatibility mouse
+    // events arrive late and after the keyboard has already dismissed, which
+    // made the close fire at an unpredictable point relative to the tap.
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
   }, []);
 
   const handleSearch = (e: React.FormEvent) => {
@@ -55,10 +68,11 @@ const HeaderTopBarSearch = () => {
     router.push(`/products/${slug}`);
   };
 
-  const clearSearch = () => {
+  /** Takes the bar's own input ref so focus returns to the visible bar. */
+  const clearSearch = (ref: React.RefObject<HTMLInputElement | null>) => {
     setSearchQuery("");
     setShowResults(false);
-    inputRef.current?.focus();
+    ref.current?.focus();
   };
 
   const onViewAllResults = () => {
@@ -70,13 +84,13 @@ const HeaderTopBarSearch = () => {
     <>
       {/* Desktop Search Bar */}
       <div
-        ref={searchRef}
+        ref={desktopRef}
         className="hidden lg:block flex-1 max-w-2xl relative"
       >
         <form onSubmit={handleSearch} className="flex w-full">
           <div className="relative flex w-full">
             <input
-              ref={inputRef}
+              ref={desktopInputRef}
               type="text"
               value={searchQuery}
               onChange={(e) => {
@@ -92,7 +106,7 @@ const HeaderTopBarSearch = () => {
             {searchQuery && (
               <button
                 type="button"
-                onClick={clearSearch}
+                onClick={() => clearSearch(desktopInputRef)}
                 className="absolute right-22 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-secondary-foreground p-1"
               >
                 <X size={16} />
@@ -120,7 +134,10 @@ const HeaderTopBarSearch = () => {
         </form>
 
         {showResults && searchQuery.length >= 2 && (
-          <div className="absolute top-full left-0 right-0 mt-1 bg-card rounded-xl shadow-2xl border border-border z-100 max-h-120 overflow-y-auto">
+          <div
+            onMouseDown={(e) => e.preventDefault()}
+            className="scrollbar-modern absolute top-full left-0 right-0 mt-1 bg-card rounded-xl shadow-2xl border border-border z-100 max-h-120 overflow-y-auto"
+          >
             {isSearching ? (
               <div className="flex items-center justify-center py-8 gap-2 text-sm text-secondary-foreground">
                 <Loader2 size={18} className="animate-spin" />
@@ -193,11 +210,11 @@ const HeaderTopBarSearch = () => {
 
       {/* Mobile Search Bar */}
       <div className="lg:hidden w-full">
-        <div className="px-4 pb-3 relative" ref={searchRef}>
+        <div className="px-4 pb-3 relative" ref={mobileRef}>
           <form onSubmit={handleSearch}>
             <div className="relative flex w-full">
               <input
-                ref={inputRef}
+                ref={mobileInputRef}
                 type="text"
                 value={searchQuery}
                 onChange={(e) => {
@@ -213,7 +230,7 @@ const HeaderTopBarSearch = () => {
               {searchQuery && (
                 <button
                   type="button"
-                  onClick={clearSearch}
+                  onClick={() => clearSearch(mobileInputRef)}
                   className="absolute right-12 top-1/2 -translate-y-1/2 text-muted-foreground p-1"
                 >
                   <X size={14} />
@@ -230,7 +247,10 @@ const HeaderTopBarSearch = () => {
           </form>
 
           {showResults && searchQuery.length >= 2 && (
-            <div className="absolute left-4 right-4 top-full mt-1 bg-card rounded-xl shadow-2xl border border-border z-100 max-h-[60vh] overflow-y-auto">
+            <div
+              onMouseDown={(e) => e.preventDefault()}
+              className="scrollbar-modern absolute left-4 right-4 top-full mt-1 bg-card rounded-xl shadow-2xl border border-border z-100 max-h-[60vh] overflow-y-auto"
+            >
               {isSearching ? (
                 <div className="flex items-center justify-center py-6 gap-2 text-sm text-secondary-foreground">
                   <Loader2 size={16} className="animate-spin" />

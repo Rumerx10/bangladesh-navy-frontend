@@ -16,38 +16,41 @@ export interface IOrganogramListItem {
   serial: number;
 }
 
-export interface OrganogramTreeItem extends IOrganogramNode {
-  children: OrganogramTreeItem[];
+/**
+ * Shape of `GET /organogram/tree` — the only organogram read that is open to
+ * anonymous visitors, and already nested by the backend. It omits `parentId`
+ * and `status`: the server has resolved the parent links itself, and the
+ * public projection is expected to have dropped switched-off nodes before it
+ * ever reaches us. Sorting is likewise the server's, so no client pass is run.
+ */
+export interface IOrganogramTreeNode {
+  id: string;
+  title: string;
+  serial: number;
+  children: IOrganogramTreeNode[];
 }
 
-interface BuildOptions {
-  /** Public pages pass `true` so nodes switched off in the admin disappear,
-   *  along with everything hanging beneath them. */
-  activeOnly?: boolean;
+export interface OrganogramTreeItem extends IOrganogramNode {
+  children: OrganogramTreeItem[];
 }
 
 const bySerial = (a: IOrganogramNode, b: IOrganogramNode) =>
   a.serial - b.serial;
 
 /**
- * Turns the flat `/organogram` rows into the nested shape both the admin
- * editor and the public chart render from.
+ * Turns the flat `/organogram` rows into the nested shape the admin editor
+ * renders from, inactive nodes included — switching one off there should stay
+ * visible and reversible.
  *
- * Lives here rather than beside either consumer because the public page used
- * to draw a hardcoded copy of the hierarchy: deleting a branch in the admin
- * changed nothing on the site. One builder, fed by the API, is what keeps the
- * two honest.
+ * The public chart does not come through here: its `/organogram/tree` read is
+ * nested server-side (see `IOrganogramTreeNode`). This builder exists for the
+ * admin's flat collection read alone.
  */
 export const buildOrganogramTree = (
-  nodes: IOrganogramNode[],
-  { activeOnly = false }: BuildOptions = {}
+  nodes: IOrganogramNode[]
 ): OrganogramTreeItem[] => {
-  const source = activeOnly
-    ? nodes.filter((node) => node.status === "ACTIVE")
-    : nodes;
-
   const byId = new Map<string, OrganogramTreeItem>();
-  source.forEach((node) => byId.set(node.id, { ...node, children: [] }));
+  nodes.forEach((node) => byId.set(node.id, { ...node, children: [] }));
 
   const roots: OrganogramTreeItem[] = [];
 
@@ -63,12 +66,10 @@ export const buildOrganogramTree = (
       return;
     }
 
-    // The parent isn't in the set. For the admin that means broken data worth
-    // surfacing, so the node is promoted to a root and stays visible. On the
-    // public page it means the parent was switched off — and a department
-    // floating free of the branch it reports to reads as an error, so the
-    // whole subtree is dropped instead.
-    if (!activeOnly) roots.push(node);
+    // Parent id pointing at a row that isn't in the set means broken data, and
+    // silently dropping the node would hide it from the only screen that can
+    // repair it. Promote it to a root so it stays reachable.
+    roots.push(node);
   });
 
   byId.forEach((node) => node.children.sort(bySerial));

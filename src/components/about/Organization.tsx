@@ -1,15 +1,10 @@
 "use client";
-
-import { motion } from "framer-motion";
 import { useMemo } from "react";
+import { motion } from "framer-motion";
 import { Network } from "lucide-react";
-import SectionTitle from "@/src/components/SectionTitle";
 import { useGet } from "@/src/hooks/useGet";
-import {
-  buildOrganogramTree,
-  type IOrganogramNode,
-  type OrganogramTreeItem,
-} from "@/src/utils/organogram";
+import SectionTitle from "@/src/components/SectionTitle";
+import type { IOrganogramTreeNode } from "@/src/utils/organogram";
 
 type Kind = "command" | "deputy" | "dept";
 
@@ -25,11 +20,8 @@ const KIND_COLORS: Record<Kind, string> = {
   dept: "#64748b",
 };
 
-const tierFor = (depth: number): { kind: Kind; role: string } => {
-  if (depth === 0) return { kind: "command", role: "BNHOC" };
-  if (depth === 1) return { kind: "command", role: "Addl Chief Hydrographer" };
-  return { kind: "dept", role: "Department" };
-};
+/** The top two generations wear the command colour; everything below is a dept. */
+const tierFor = (depth: number): Kind => (depth <= 1 ? "command" : "dept");
 
 // ─── Card ─────────────────────────────────────────────────────────────────────
 
@@ -38,13 +30,12 @@ const NodeCard = ({
   depth,
   parentTitle,
 }: {
-  node: OrganogramTreeItem;
+  node: IOrganogramTreeNode;
   depth: number;
   /** Title of the node this one reports to; absent on a root. */
   parentTitle?: string;
 }) => {
-  const { kind, role } = tierFor(depth);
-  const tagColor = KIND_COLORS[kind];
+  const tagColor = KIND_COLORS[tierFor(depth)];
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
@@ -182,11 +173,8 @@ const Connector = ({ n, color }: { n: number; color: string }) => {
 
 // ─── Desktop tree ─────────────────────────────────────────────────────────────
 
-// `parentTitle` is handed down as the recursion descends rather than looked
-// up from `parentId` — every node already knows its own title at the moment
-// it renders its children, so no id→title map is needed.
 type TreeProps = {
-  node: OrganogramTreeItem;
+  node: IOrganogramTreeNode;
   depth: number;
   parentTitle?: string;
 };
@@ -347,18 +335,15 @@ const EmptyChart = () => (
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 const Organization = () => {
-  // `limit` is deliberately high: the chart is meaningless with a partial
-  // hierarchy, and a paginated default would silently lop off branches.
-  const { data, isLoading } = useGet<IOrganogramNode[]>(
-    "/organogram",
-    ["organogram-public"],
-    { page: "1", limit: "1000" }
+  const { data, isLoading } = useGet<IOrganogramTreeNode[]>(
+    "/organogram/tree",
+    ["organogram-public"]
   );
 
-  const roots = useMemo(() => {
-    const nodes = Array.isArray(data?.data) ? data.data : [];
-    return buildOrganogramTree(nodes, { activeOnly: true });
-  }, [data]);
+  const roots = useMemo(
+    () => (Array.isArray(data?.data) ? data.data : []),
+    [data]
+  );
 
   return (
     <section className="bg-linear-to-b from-light/60 to-card py-8 lg:py-20">
@@ -371,11 +356,11 @@ const Organization = () => {
         {/* Dotted canvas */}
         <div
           className="overflow-x-auto rounded-2xl border border-border/80 bg-light/50 p-5 lg:p-8"
-          // style={{
-          //   backgroundImage:
-          //     "radial-gradient(circle, rgb(203 213 225 / 0.9) 1px, transparent 1px)",
-          //   backgroundSize: "22px 22px",
-          // }}
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, var(--dot-grid) 1px, transparent 1px)",
+            backgroundSize: "22px 22px",
+          }}
         >
           {isLoading ? (
             <ChartSkeleton />

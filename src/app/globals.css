@@ -155,6 +155,11 @@
 
   --destructive: oklch(0.577 0.245 27.325);
 
+  /* Dotted graph-paper canvas behind the organogram. It reads as texture only
+     while it sits *darker* than the surface under it, so it inverts direction
+     with the theme rather than keeping one colour. */
+  --dot-grid: rgb(203 213 225 / 0.9);
+
   /* Long-form body ink. Deliberately softer than `--foreground`: full-strength
      black over several hundred words of justified text is fatiguing, and the
      faint blue cast ties the copy to the navy brand. Consumed by `.rich-text`
@@ -280,6 +285,10 @@
   /* Sits just above the band's bright stop so the marquee still separates
      from the masthead, without climbing back to the light theme's brightness. */
   --nav-strip: oklch(0.26 0.11 238);
+
+  /* Near-black, well under the canvas it sits on, so the grid stays a texture
+     you read past. Light dots here would turn the chart into a starfield. */
+  --dot-grid: oklch(0.12 0.02 235 / 0.9);
 }
 
 /* =========================

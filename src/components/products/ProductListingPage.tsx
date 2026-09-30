@@ -159,7 +159,13 @@ const ProductListingPage = () => {
           value={search}
           onChange={handleSearch}
           placeholder="Search products..."
-          className="flex-1 h-10 px-4 rounded-lg border border-border bg-card text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+          // `flex-1` is held back to `sm:` on purpose. The row above is
+          // `flex-col` on mobile, so there the main axis is vertical and
+          // `flex-1` (`flex: 1 1 0%`) aims its `flex-basis: 0%` at the
+          // *height*, overriding `h-10` and collapsing the field to its
+          // content minimum. Only from `sm:` up, where the container turns
+          // `flex-row`, does `flex-1` mean "take the leftover width".
+          className="h-10 w-full sm:w-auto sm:flex-1 px-4 rounded-lg border border-border bg-card text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
         />
         <div className="flex flex-wrap gap-2">
           <button

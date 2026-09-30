@@ -71,7 +71,12 @@ instance.interceptors.response.use(
     if (error?.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      const errorMessage = error?.response?.data?.message;
+      // Coerced to a string: a 401 with an empty body used to throw a
+      // TypeError here, which surfaced as an unhandled rejection rather than
+      // as the API error it actually was.
+      const errorMessage: string = String(error?.response?.data?.message ?? "");
+      const hasSession = Boolean(getCookies(authKey));
+
       if (errorMessage.includes("jwt expired")) {
         try {
           const response = await getNewAccessToken();
@@ -86,12 +91,6 @@ instance.interceptors.response.use(
         }
       }
 
-      // Case: Refresh token expired or missing
-      if (errorMessage.includes("jwt expired")) {
-        logout();
-        return Promise.reject("Session expired. Please login again.");
-      }
-
       // Case: Invalid password
       if (errorMessage.includes("Password is incorrect")) {
         const errorObj = {
@@ -102,7 +101,15 @@ instance.interceptors.response.use(
         return Promise.reject(errorObj);
       }
 
-      logout();
+      // Only end a session that actually exists. `logout()` redirects to "/",
+      // so firing it unconditionally meant any 401 from a *public* page's
+      // read threw the visitor back to the home page — which is exactly what
+      // happened on /about/organogram, whose `/organogram` fetch 401s for an
+      // anonymous visitor. With no session there is nothing to log out of;
+      // let the error fall through so the page can render its empty state.
+      if (hasSession) {
+        logout();
+      }
     }
 
     // Handle 403

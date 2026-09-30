@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import SearchTabs from "./SearchTabs";
 import SectionTitle from "../../SectionTitle";
 
@@ -79,10 +79,28 @@ const MaritimeSearch = () => {
   const [query, setQuery] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
 
   const q = query.trim().toLowerCase();
   const debouncedQuery = useDebounce(query.trim(), 300);
   const showDropdown = isFocused && q.length > 0;
+
+  // Closing is driven by a pointerdown outside this wrapper rather than by the
+  // input's own `blur`. Blur was the reason a tap on a suggestion did nothing
+  // on a phone: dismissing the on-screen keyboard blurs the input, and the
+  // dropdown was being torn down on a timer before the tap's `click` ever
+  // reached the <Link>. An explicit outside check has no such race — the list
+  // stays mounted until the pointer genuinely lands somewhere else.
+  useEffect(() => {
+    if (!showDropdown) return;
+    const onPointerDown = (event: PointerEvent) => {
+      if (!wrapRef.current?.contains(event.target as Node)) {
+        setIsFocused(false);
+      }
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [showDropdown]);
 
   const categories = TAB_CATEGORIES[activeTab] ?? TAB_CATEGORIES.all;
   const needs = (category: ResultCategory) => categories.includes(category);
@@ -258,6 +276,10 @@ const MaritimeSearch = () => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Escape") {
+      setIsFocused(false);
+      return;
+    }
     if (e.key === "Enter") {
       const firstResult = groups[0]?.items[0];
       if (firstResult && !firstResult.external) {
@@ -270,23 +292,31 @@ const MaritimeSearch = () => {
   };
 
   return (
-    <section className="relative py-16 lg:py-25 bg-card overflow-hidden">
-      {/* Watermark */}
-      <div className="absolute -right-20 -top-10 text-pBlue">
-        <NavyWatermark
-          variant="compass"
-          size={350}
-          opacity={0.03}
-          animate="rotate"
-        />
-      </div>
-      <div className="absolute -left-16 -bottom-16 text-pBlue">
-        <NavyWatermark
-          variant="anchor"
-          size={250}
-          opacity={0.025}
-          animate="drift"
-        />
+    <section className="relative py-16 lg:py-25 bg-card">
+      {/* Watermarks. The clip belongs on this layer, not on the <section>:
+          both marks bleed past the edges deliberately and would otherwise
+          widen the page, but an `overflow-hidden` on the section also cuts off
+          the search dropdown below, which is absolutely positioned and has to
+          escape the section's bottom edge to be readable. `pointer-events-none`
+          because this layer spans the full section and would otherwise
+          swallow clicks meant for the input and tabs. */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -right-20 -top-10 text-pBlue">
+          <NavyWatermark
+            variant="compass"
+            size={350}
+            opacity={0.03}
+            animate="rotate"
+          />
+        </div>
+        <div className="absolute -left-16 -bottom-16 text-pBlue">
+          <NavyWatermark
+            variant="anchor"
+            size={250}
+            opacity={0.025}
+            animate="drift"
+          />
+        </div>
       </div>
       <div className="relative container px-4 sm:px-6 lg:px-8 text-center">
         <SectionTitle
@@ -310,6 +340,7 @@ const MaritimeSearch = () => {
         </motion.div>
 
         <motion.div
+          ref={wrapRef}
           className="mt-5 max-w-2xl mx-auto relative"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -325,7 +356,6 @@ const MaritimeSearch = () => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onFocus={() => setIsFocused(true)}
-                onBlur={() => setTimeout(() => setIsFocused(false), 200)}
                 onKeyDown={handleKeyDown}
                 className="w-full px-4 h-11 rounded-lg border border-border text-sm bg-light focus:outline-none focus:border-liteBlue focus:ring-2 focus:ring-liteBlue/10 transition-all"
               />
@@ -352,7 +382,17 @@ const MaritimeSearch = () => {
 
           {/* Search dropdown */}
           {showDropdown && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-card rounded-xl border border-border shadow-2xl z-50 overflow-hidden text-left max-h-104 overflow-y-auto">
+            <div
+              // Keeps focus (and the on-screen keyboard) on the input while a
+              // result is tapped. Without it the browser treats the first tap
+              // as "dismiss the keyboard" — iOS Safari swallows it outright,
+              // and elsewhere the viewport resize shifts the row out from
+              // under the finger, so the tap lands on nothing. Preventing the
+              // default here does not stop the `click`, so the <Link> still
+              // navigates; it only stops the focus change.
+              onMouseDown={(e) => e.preventDefault()}
+              className="scrollbar-modern absolute top-full left-0 right-0 z-50 mt-2 max-h-104 overflow-x-hidden overflow-y-auto rounded-xl border border-border bg-card text-left shadow-2xl"
+            >
               {totalResults > 0 ? (
                 <>
                   {groups.map((group) => {

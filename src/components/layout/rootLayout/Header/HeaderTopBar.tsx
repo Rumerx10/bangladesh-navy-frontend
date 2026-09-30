@@ -26,7 +26,7 @@ const othersItems = NavigationItems.filter((item) =>
 );
 
 const triggerBase =
-  "inline-flex items-center gap-1 px-2.5 py-2 text-sm font-medium rounded-md transition-colors cursor-pointer whitespace-nowrap";
+  "inline-flex items-center gap-1 px-2.5 py-2 text-sm font-medium rounded-sm transition-colors cursor-pointer whitespace-nowrap";
 // Nav triggers sit on the gradient band, so they are painted in nav ink and
 // their hover/active states are white washes rather than surface tokens —
 // `bg-light` over a strong gradient would punch an opaque hole in it.
@@ -210,11 +210,11 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
         <div
           className={`mt-2 absolute overflow-hidden border-0 left-1/2 top-full z-50 -translate-x-1/2 rounded-xl ${panelSurface} ${isOpen ? "block" : "hidden"}`}
         >
-         <div className="backdrop-blur-2xl">
-           <div className="flex flex-col gap-0.5 p-2 min-w-52 whitespace-nowrap">
-            {renderSubLinks(item.subLinks)}
+          <div className="backdrop-blur-2xl">
+            <div className="flex flex-col gap-0.5 p-2 min-w-52 whitespace-nowrap">
+              {renderSubLinks(item.subLinks)}
+            </div>
           </div>
-         </div>
         </div>
       </li>
     );
