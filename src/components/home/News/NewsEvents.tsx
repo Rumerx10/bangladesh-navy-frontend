@@ -45,12 +45,13 @@ const NewsEvents = () => {
 
           {/* News Cards Grid */}
           {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="flex flex-wrap justify-center gap-6">
               {[...Array(3)].map((_, i) => (
                 <div
                   key={i}
-                  className="rounded-2xl bg-card border border-border overflow-hidden"
+                  className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] rounded-2xl bg-card border border-border overflow-hidden"
                 >
+                  <div className="aspect-video bg-light-silver animate-pulse" />
                   <div className="p-5 lg:p-6 space-y-3">
                     <div className="h-4 w-20 bg-light-silver animate-pulse rounded" />
                     <div className="h-5 w-full bg-light-silver animate-pulse rounded" />
@@ -67,16 +68,17 @@ const NewsEvents = () => {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="flex flex-wrap justify-center gap-6">
               {latestNews.map((item, i) => (
                 <motion.div
                   key={item.id}
+                  className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.1 }}
                 >
-                  <NewsCard item={item} hideImage={true} />
+                  <NewsCard item={item} />
                 </motion.div>
               ))}
             </div>
