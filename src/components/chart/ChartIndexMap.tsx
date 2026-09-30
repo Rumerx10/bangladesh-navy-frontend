@@ -100,11 +100,11 @@ const ChartIndexMap = () => {
     // mt-33 (132px) clears the fixed header on both breakpoints: mobile
     // 32+56+44 = 132; desktop 172 minus the <header>'s own lg:pb-10 flow
     // height (40px) = 132.
-    <section className="my-33 flex h-[calc(100vh-8.25rem)] lg:h-[calc(100vh-10.75rem)] w-full flex-col bg-card">
+    <section className="my-25 flex h-[calc(100vh-8.25rem)] lg:h-[calc(100vh-10.75rem)] w-full flex-col bg-card">
       {/* Toolbar: chart number search */}
-      <div className=" border-b shadow-sm relative z-20 bg-card px-4 py-2.5">
+      <div className=" relative z-20 bg-card px-4 py-2.5">
         <div className="container px-4 mx-auto flex items-center justify-between gap-4">
-          <div className="relative w-64 sm:w-80">
+          <div className="relative w-full sm:w-80">
             <SearchIcon className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
               type="text"
@@ -122,7 +122,7 @@ const ChartIndexMap = () => {
               }}
               placeholder="Search paper charts…"
               aria-label="Search chart by number"
-              className="h-10 w-full rounded-lg border border-border bg-card pr-9 pl-9 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
+              className="h-10 w-full rounded-full border border-border bg-card pr-9 pl-9 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
             />
             {query && (
               <button
