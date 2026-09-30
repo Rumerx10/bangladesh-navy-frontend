@@ -2,10 +2,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useGet } from "@/src/hooks/useGet";
-import { LayersIcon } from "lucide-react";
+import { SearchIcon, XIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import ChartHoverTag from "./ChartHoverTag";
-import ChartMapToolbar from "./ChartMapToolbar";
 import {
   Dialog,
   DialogContent,
@@ -26,13 +24,6 @@ const IMAGE_SRC = "/chart/enc-index.jpg";
 /** Outline every hotspot to calibrate coordinates against the printed rectangles. */
 const DEBUG_OUTLINES = false;
 
-/** Hover/selection wash, keyed to the purple coverage boxes printed on the map. */
-const HOVER_FILL = "rgba(147, 51, 234, 0.18)";
-const HOVER_STROKE = "#7e22ce";
-/** A searched cell gets the brand blue instead, so it reads as distinct from hover. */
-const SEARCH_FILL = "rgba(0, 63, 113, 0.28)";
-const SEARCH_STROKE = "#003f71";
-
 const cellLabel = (area: IEncCell) =>
   area.intNo ? `${area.cellNo} (${area.intNo})` : area.cellNo;
 
@@ -46,6 +37,7 @@ const ElectronicChartMap = () => {
   const [imgMissing, setImgMissing] = useState(false);
   const [query, setQuery] = useState("");
   const [searchedCell, setSearchedCell] = useState<string | null>(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   // Product for the currently selected cell, fetched on demand (by ENC cell
   // number) rather than pulling the entire product catalogue up front.
@@ -90,11 +82,13 @@ const ElectronicChartMap = () => {
   const selectResult = (area: IEncCell) => {
     setSearchedCell(area.cellNo);
     setQuery(area.cellNo);
+    setDropdownOpen(false);
   };
 
   const clearSearch = () => {
     setQuery("");
     setSearchedCell(null);
+    setDropdownOpen(false);
   };
 
   useEffect(() => {
@@ -107,35 +101,79 @@ const ElectronicChartMap = () => {
     // mt-33 (132px) clears the fixed header on both breakpoints: mobile
     // 32+56+44 = 132; desktop 172 minus the <header>'s own lg:pb-10 flow
     // height (40px) = 132.
-    <section className="my-25 flex h-[calc(100vh-8.25rem)] w-full flex-col bg-card lg:h-[calc(100vh-10.75rem)]">
-      <ChartMapToolbar
-        title="ENC Cell Catalogue"
-        subtitle="Khulna to Cox’s Bazar coverage"
-        icon={<LayersIcon className="size-5" />}
-        entity="ENC cell"
-        query={query}
-        onQueryChange={setQuery}
-        onClear={clearSearch}
-        placeholder="Search cell, chart no. or title…"
-        results={results}
-        getKey={(area) => area.cellNo}
-        onSelect={selectResult}
-        pinnedLabel={searchedCell ?? undefined}
-        total={allCells.length}
-        renderResult={(area) => (
-          <>
-            <span className="font-mono text-sm font-bold text-pBlue">
-              {area.cellNo}
-            </span>
-            <span className="shrink-0 rounded bg-light-dark px-1.5 py-0.5 font-mono text-[10px] font-semibold text-secondary-foreground">
-              {area.nationalNo}
-            </span>
-            <span className="min-w-0 flex-1 truncate text-xs text-secondary-foreground">
-              {area.title}
-            </span>
-          </>
-        )}
-      />
+    <section className="mt-25 flex h-[calc(100vh-8.25rem)] lg:h-[calc(100vh-10.75rem)] w-full flex-col bg-card">
+      {/* Toolbar: ENC cell / chart number search */}
+      <div className="relative z-20 flex items-center justify-between gap-4 px-4 py-2.5">
+        <div className="container px-4 mx-auto flex items-center justify-between gap-4">
+          <div className="relative w-full sm:w-80">
+          <SearchIcon className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setDropdownOpen(true);
+            }}
+            onFocus={() => query.trim() && setDropdownOpen(true)}
+            onBlur={() => setDropdownOpen(false)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && results[0]) selectResult(results[0]);
+              if (e.key === "Escape") clearSearch();
+            }}
+            placeholder="Search ENC charts..."
+            aria-label="Search ENC cell by cell or chart number"
+            className="h-10 w-full rounded-full border border-border bg-card pr-9 pl-9 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
+          />
+          {query && (
+            <button
+              type="button"
+              onClick={clearSearch}
+              aria-label="Clear search"
+              className="absolute top-1/2 right-2 -translate-y-1/2 rounded p-1 text-muted-foreground transition-colors hover:text-pBlue"
+            >
+              <XIcon className="h-4 w-4" />
+            </button>
+          )}
+
+          {dropdownOpen && query.trim() && (
+            <ul
+              className="absolute top-11 right-0 left-0 z-30 max-h-64 overflow-auto rounded-lg border border-border bg-card py-1 shadow-xl"
+              onMouseDown={(e) => e.preventDefault()}
+            >
+              {results.length > 0 ? (
+                results.map((area) => (
+                  <li key={area.cellNo}>
+                    <button
+                      type="button"
+                      onClick={() => selectResult(area)}
+                      className="flex w-full items-baseline gap-2 px-3 py-2 text-left transition-colors hover:bg-light"
+                    >
+                      <span className="text-sm font-bold text-pBlue">
+                        {area.cellNo}
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        {area.nationalNo}
+                      </span>
+                      <span className="min-w-0 flex-1 truncate text-xs text-secondary-foreground">
+                        {area.title}
+                      </span>
+                    </button>
+                  </li>
+                ))
+              ) : (
+                <li className="px-3 py-2 text-sm text-muted-foreground">
+                  No cell matches “{query.trim()}”
+                </li>
+              )}
+            </ul>
+          )}
+        </div>
+
+        <p className="hidden h-10 lg:flex items-center justify-center text-xs text-muted-foreground md:block border py-2 rounded-full px-5">
+          Hover a rectangle to identify an ENC cell — click it to view details
+        </p>
+        </div>
+      </div>
 
       <div
         className="relative min-h-0 w-full flex-1 select-none"
@@ -184,17 +222,13 @@ const ElectronicChartMap = () => {
                 y={area.y}
                 width={area.w}
                 height={area.h}
-                fill={
-                  searched ? SEARCH_FILL : active ? HOVER_FILL : "transparent"
-                }
+                fill={active ? "rgba(147, 51, 234, 0.22)" : "transparent"}
                 stroke={
-                  searched
-                    ? SEARCH_STROKE
-                    : active
-                      ? HOVER_STROKE
-                      : DEBUG_OUTLINES
-                        ? "rgba(220, 38, 38, 0.6)"
-                        : "none"
+                  active
+                    ? "#7e22ce"
+                    : DEBUG_OUTLINES
+                      ? "rgba(220, 38, 38, 0.6)"
+                      : "none"
                 }
                 strokeWidth={searched ? 3.5 : 2.5}
                 vectorEffect="non-scaling-stroke"
@@ -202,7 +236,7 @@ const ElectronicChartMap = () => {
                 role="button"
                 tabIndex={0}
                 aria-label={`ENC cell ${cellLabel(area)}`}
-                className={`cursor-pointer outline-none transition-[fill,stroke] duration-150 focus-visible:stroke-pBlue ${
+                className={`cursor-pointer outline-none focus-visible:stroke-pBlue ${
                   searched ? "animate-pulse" : ""
                 }`}
                 onMouseEnter={() => setHovered(area)}
@@ -223,13 +257,12 @@ const ElectronicChartMap = () => {
 
         {/* Cursor-following identifier */}
         {hovered && (
-          <ChartHoverTag
-            x={cursor.x}
-            y={cursor.y}
-            eyebrow={hovered.intNo ? `ENC Cell · ${hovered.intNo}` : "ENC Cell"}
-            label={hovered.cellNo}
-            sublabel={hovered.title}
-          />
+          <div
+            className="pointer-events-none fixed z-40 rounded-md bg-brand-navy px-3 py-1.5 text-xs font-semibold text-white shadow-lg"
+            style={{ left: cursor.x + 14, top: cursor.y + 14 }}
+          >
+            {cellLabel(hovered)}
+          </div>
         )}
       </div>
 
