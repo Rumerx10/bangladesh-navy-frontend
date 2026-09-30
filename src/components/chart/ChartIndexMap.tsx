@@ -120,7 +120,7 @@ const ChartIndexMap = () => {
                 if (e.key === "Enter" && results[0]) selectResult(results[0]);
                 if (e.key === "Escape") clearSearch();
               }}
-              placeholder="Search chart number…"
+              placeholder="Search paper charts…"
               aria-label="Search chart by number"
               className="h-10 w-full rounded-lg border border-border bg-card pr-9 pl-9 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
             />

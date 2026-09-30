@@ -119,7 +119,7 @@ const ElectronicChartMap = () => {
               if (e.key === "Enter" && results[0]) selectResult(results[0]);
               if (e.key === "Escape") clearSearch();
             }}
-            placeholder="Search cell or chart number…"
+            placeholder="Search ENC charts..."
             aria-label="Search ENC cell by cell or chart number"
             className="h-10 w-full rounded-lg border border-border bg-card pr-9 pl-9 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
           />
@@ -171,6 +171,7 @@ const ElectronicChartMap = () => {
         <p className="hidden text-xs text-muted-foreground md:block">
           Hover a rectangle to identify an ENC cell — click it to view details
         </p>
+        </div>
       </div>
 
       <div

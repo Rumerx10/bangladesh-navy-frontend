@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const CoursesPage = () => {
   return (
-    <main className="pt-33">
+    <main className="pt-25">
       <CourseOverview />
       {/* <SkillCourseList /> */}
     </main>

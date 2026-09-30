@@ -19,7 +19,7 @@ const MarineWeather = () => {
   const stations = data?.data ?? [];
 
   return (
-    <section className="relative mt-33">
+    <section className="relative mt-25">
       <WeatherStationMap stations={stations} />
 
       <div className="pointer-events-none absolute top-4 left-4 z-10 max-w-xs rounded-xl bg-white/95 px-4 py-3 shadow-lg ring-1 ring-black/5 sm:top-6 sm:left-6">
