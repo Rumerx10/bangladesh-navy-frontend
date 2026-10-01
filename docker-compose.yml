@@ -22,7 +22,7 @@ services:
         ENV_FILE: .env.sqa
     container_name: bd-navy-hydrography-frontend-sqa
     ports:
-      - "3002:3000"
+      - "15004:3000"
     environment:
       - NODE_ENV=production
       - PORT=3000
