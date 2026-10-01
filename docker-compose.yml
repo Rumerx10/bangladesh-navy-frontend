@@ -13,3 +13,20 @@ services:
     env_file:
       - .env
     restart: unless-stopped
+
+  bd-navy-frontend-sqa:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ENV_FILE: .env.sqa
+    container_name: bd-navy-hydrography-frontend-sqa
+    ports:
+      - "15004:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+
+    env_file:
+      - .env.sqa
+    restart: unless-stopped
