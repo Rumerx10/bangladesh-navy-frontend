@@ -32,7 +32,6 @@ const NAV_LINKS = [
     href: "/product-service?category=electronic-charts",
   },
   { label: "Tide Tables", href: "/product-service?category=tide-tables" },
-  { label: "Marine Weather", href: "/product-service?category=marine-weather" },
 ];
 
 const HeaderTopBarActions = () => {

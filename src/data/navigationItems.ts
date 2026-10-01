@@ -44,14 +44,6 @@ export const navyCategories: INavyCategory[] = [
     description: "Annual tide prediction tables",
     productCount: 12,
   },
-  {
-    id: "cat-6",
-    nameBn: "সামুদ্রিক আবহাওয়া",
-    nameEn: "Marine Weather Forecast",
-    slug: "marine-weather-forecast",
-    description: "Weather data & forecasting services",
-    productCount: 8,
-  },
 ];
 
 export const NavigationItems: NavItem[] = [
