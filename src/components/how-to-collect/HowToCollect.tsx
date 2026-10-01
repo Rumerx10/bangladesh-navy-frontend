@@ -1,118 +1,54 @@
 "use client";
 
 import SectionTitle from "@/src/components/SectionTitle";
+import { useGet } from "@/src/hooks/useGet";
+import { getStepIcon } from "@/src/data/howToCollectIcons";
+import { IHowToCollectStep } from "@/src/components/admin/ContentManagement/how-to-collect/types";
 import { motion } from "framer-motion";
 import {
   Globe,
-  Landmark,
-  LayoutGrid,
   Mail,
-  MousePointerClick,
   PackageCheck,
   PhoneCall,
   ShieldCheck,
-  ShoppingCart,
-  Truck,
+  Workflow,
   type LucideIcon,
 } from "lucide-react";
+import HowToCollectStepsSkeleton from "./Skeleton/HowToCollectStepsSkeleton";
 
-const themes = {
-  teal: {
+const themes = [
+  {
     node: "bg-teal-500 shadow-teal-500/30",
     tile: "bg-teal-50 text-teal-600",
     phase: "text-teal-600",
     box: "bg-teal-50/60 border-teal-100",
   },
-  blue: {
+  {
     node: "bg-blue-600 shadow-blue-600/30",
     tile: "bg-blue-50 text-blue-600",
     phase: "text-blue-600",
     box: "bg-blue-50/60 border-blue-100",
   },
-  emerald: {
+  {
     node: "bg-emerald-500 shadow-emerald-500/30",
     tile: "bg-emerald-50 text-emerald-600",
     phase: "text-emerald-600",
     box: "bg-emerald-50/60 border-emerald-100",
   },
-} as const;
+] as const;
 
-type CollectStep = {
-  icon: LucideIcon;
-  theme: keyof typeof themes;
-  phase: string;
-  title: string;
-  description: string;
-  details?: { label: string; value: string; href?: string }[];
+/** Extra-field values that are plainly an email, phone or URL become links —
+ * the same affordance the previous hard-coded contact rows had. */
+const detailHref = (value: string) => {
+  const trimmed = value.trim();
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return `mailto:${trimmed}`;
+  if (/^https?:\/\/\S+$/i.test(trimmed)) return trimmed;
+  const digits = trimmed.match(/\d/g)?.length ?? 0;
+  if (/^\+?[\d\s()-]+$/.test(trimmed) && digits >= 7) {
+    return `tel:${trimmed.replace(/[\s()-]/g, "")}`;
+  }
+  return undefined;
 };
-
-const collectSteps: CollectStep[] = [
-  {
-    icon: LayoutGrid,
-    theme: "teal",
-    phase: "Browse",
-    title: "Select Desired Chart from Catalogue",
-    description:
-      "Browse the BNHOC catalogue of nautical charts and publications to find the one you need.",
-  },
-  {
-    icon: MousePointerClick,
-    theme: "teal",
-    phase: "Browse",
-    title: "Click on Your Desired Chart",
-    description:
-      "Open the chart to view its details — edition, scale, coverage and price.",
-  },
-  {
-    icon: ShoppingCart,
-    theme: "teal",
-    phase: "Order",
-    title: "Go to the 'Collect' Option",
-    description:
-      "Use the Collect option on the chart page to place your order.",
-  },
-  {
-    icon: Landmark,
-    theme: "blue",
-    phase: "Payment",
-    title: "Payment System Details",
-    description:
-      "Transfer the exact amount to the designated BNHOC bank account.",
-    details: [
-      { label: "Bank", value: "Sonali Bank Limited" },
-      { label: "Branch", value: "Agrabad Branch, Chattogram" },
-      {
-        label: "Account Name",
-        value: "Bangladesh Navy Hydrographic & Oceanographic Center",
-      },
-      { label: "Account No", value: "Contact BNHOC for account details" },
-    ],
-  },
-  {
-    icon: PhoneCall,
-    theme: "blue",
-    phase: "Payment",
-    title: "Confirm Transaction",
-    description:
-      "After the transfer, call or email us with your transaction (TXN) number to confirm the payment.",
-    details: [
-      { label: "Phone", value: "+880 1769 722446", href: "tel:+8801769722446" },
-      {
-        label: "Email",
-        value: "bnhoc@navy.mil.bd",
-        href: "mailto:bnhoc@navy.mil.bd",
-      },
-    ],
-  },
-  {
-    icon: Truck,
-    theme: "emerald",
-    phase: "Delivery",
-    title: "Receive Your Chart",
-    description:
-      "Once your payment is confirmed, we will dispatch the chart to your address.",
-  },
-];
 
 const FlowPill = ({
   icon: Icon,
@@ -136,6 +72,15 @@ const FlowPill = ({
 );
 
 const HowToCollect = () => {
+  // `/list` already returns only ACTIVE steps, ordered by serial ascending.
+  const { data, isLoading } = useGet<IHowToCollectStep[]>(
+    "/how-to-collect/list",
+    ["how-to-collect-list"]
+  );
+
+  const steps = Array.isArray(data?.data) ? data.data : [];
+  const hasSteps = steps.length > 0;
+
   return (
     <main>
       {/* Hero Banner */}
@@ -162,9 +107,18 @@ const HowToCollect = () => {
               </span>
             </h1>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
-              Follow our simple six-step process to collect BNHOC nautical
-              charts and publications — from browsing the catalogue to delivery
-              at your address.
+              {hasSteps ? (
+                <>
+                  Follow our simple {steps.length}-step process to collect BNHOC
+                  nautical charts and publications — from browsing the catalogue
+                  to delivery at your address.
+                </>
+              ) : (
+                <>
+                  Collect BNHOC nautical charts and publications — from browsing
+                  the catalogue to delivery at your address.
+                </>
+              )}
             </p>
           </motion.div>
         </div>
@@ -175,98 +129,127 @@ const HowToCollect = () => {
         <div className="container px-4 sm:px-6 lg:px-8">
           <SectionTitle
             title="Collection Process"
-            desc="From catalogue to your doorstep in six simple steps."
+            desc="From catalogue to your doorstep, step by step."
           />
 
           <div className="relative max-w-5xl mx-auto">
-            {/* Connecting line */}
-            <div className="absolute left-6 lg:left-1/2 top-4 bottom-4 w-0.5 -translate-x-1/2 bg-linear-to-b from-emerald-400 via-blue-400 to-emerald-400" />
+            {isLoading ? (
+              <HowToCollectStepsSkeleton />
+            ) : hasSteps ? (
+              <>
+                {/* Connecting line */}
+                <div className="absolute left-6 lg:left-1/2 top-4 bottom-4 w-0.5 -translate-x-1/2 bg-linear-to-b from-emerald-400 via-blue-400 to-emerald-400" />
 
-            <FlowPill icon={Globe} label="Start — Visit the Website" />
+                <FlowPill icon={Globe} label="Start — Visit the Website" />
 
-            <ol className="mt-10 space-y-10 lg:mt-14 lg:space-y-14">
-              {collectSteps.map((step, i) => {
-                const Icon = step.icon;
-                const theme = themes[step.theme];
-                const isRight = i % 2 === 1;
-                return (
-                  <li key={step.title} className="relative">
-                    {/* Numbered node on the line */}
-                    <div
-                      className={`absolute top-0 left-6 lg:left-1/2 -translate-x-1/2 z-10 flex h-12 w-12 items-center justify-center rounded-full text-white text-lg font-bold ring-4 ring-white shadow-lg ${theme.node}`}
-                    >
-                      {i + 1}
-                    </div>
-
-                    {/* Step card */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 24 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-60px" }}
-                      transition={{ duration: 0.5 }}
-                      className={`rounded-2xl border border-border bg-card p-5 lg:p-6 shadow-sm hover:shadow-lg hover:border-liteBlue/30 transition-all duration-300 lg:w-[calc(50%-4rem)] ${
-                        isRight ? "ml-16 lg:ml-auto" : "ml-16 lg:ml-0"
-                      }`}
-                    >
-                      <div className="flex items-start gap-4">
+                <ol className="mt-10 space-y-10 lg:mt-14 lg:space-y-14">
+                  {steps.map((step, i) => {
+                    const Icon = getStepIcon(step.icon);
+                    const theme = themes[i % themes.length];
+                    const isRight = i % 2 === 1;
+                    const extraFields = step.extraFields ?? [];
+                    return (
+                      <li key={step.id} className="relative">
+                        {/* Numbered node on the line */}
                         <div
-                          className={`shrink-0 flex h-12 w-12 lg:h-14 lg:w-14 items-center justify-center rounded-xl ${theme.tile}`}
+                          className={`absolute top-0 left-6 lg:left-1/2 -translate-x-1/2 z-10 flex h-12 w-12 items-center justify-center rounded-full text-white text-lg font-bold ring-4 ring-white shadow-lg ${theme.node}`}
                         >
-                          <Icon size={24} />
+                          {i + 1}
                         </div>
-                        <div className="min-w-0">
-                          <span
-                            className={`text-[11px] font-bold uppercase tracking-widest ${theme.phase}`}
-                          >
-                            Step {i + 1} · {step.phase}
-                          </span>
-                          <h3 className="mt-1 text-base lg:text-lg font-semibold text-pBlue leading-snug">
-                            {step.title}
-                          </h3>
-                        </div>
-                      </div>
 
-                      <p className="mt-3 text-sm text-secondary-foreground leading-relaxed">
-                        {step.description}
-                      </p>
-
-                      {step.details && (
-                        <div
-                          className={`mt-4 rounded-xl border p-4 space-y-2 ${theme.box}`}
+                        {/* Step card */}
+                        <motion.div
+                          initial={{ opacity: 0, y: 24 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, margin: "-60px" }}
+                          transition={{ duration: 0.5 }}
+                          className={`rounded-2xl border border-border bg-card p-5 lg:p-6 shadow-sm hover:shadow-lg hover:border-liteBlue/30 transition-all duration-300 lg:w-[calc(50%-4rem)] ${
+                            isRight ? "ml-16 lg:ml-auto" : "ml-16 lg:ml-0"
+                          }`}
                         >
-                          {step.details.map((detail) => (
+                          <div className="flex items-start gap-4">
                             <div
-                              key={detail.label}
-                              className="flex items-start justify-between gap-3 text-sm"
+                              className={`shrink-0 flex h-12 w-12 lg:h-14 lg:w-14 items-center justify-center rounded-xl ${theme.tile}`}
                             >
-                              <span className="shrink-0 font-medium text-foreground">
-                                {detail.label}
-                              </span>
-                              {detail.href ? (
-                                <a
-                                  href={detail.href}
-                                  className={`text-right font-semibold hover:underline ${theme.phase}`}
-                                >
-                                  {detail.value}
-                                </a>
-                              ) : (
-                                <span className="text-right text-secondary-foreground">
-                                  {detail.value}
-                                </span>
-                              )}
+                              <Icon size={24} />
                             </div>
-                          ))}
-                        </div>
-                      )}
-                    </motion.div>
-                  </li>
-                );
-              })}
-            </ol>
+                            <div className="min-w-0">
+                              <span
+                                className={`text-[11px] font-bold uppercase tracking-widest ${theme.phase}`}
+                              >
+                                {step.stepName}
+                              </span>
+                              <h3 className="mt-1 text-base lg:text-lg font-semibold text-pBlue leading-snug">
+                                {step.title}
+                              </h3>
+                            </div>
+                          </div>
 
-            <div className="mt-10 lg:mt-14">
-              <FlowPill icon={PackageCheck} label="Chart Delivered" />
-            </div>
+                          <p className="mt-3 text-sm text-secondary-foreground leading-relaxed whitespace-pre-line">
+                            {step.description}
+                          </p>
+
+                          {extraFields.length > 0 && (
+                            <div
+                              className={`mt-4 rounded-xl border p-4 space-y-2 ${theme.box}`}
+                            >
+                              {extraFields.map((detail, index) => {
+                                const href = detailHref(detail.value);
+                                return (
+                                  <div
+                                    key={`${detail.key}-${index}`}
+                                    className="flex items-start justify-between gap-3 text-sm"
+                                  >
+                                    <span className="shrink-0 font-medium text-foreground">
+                                      {detail.key}
+                                    </span>
+                                    {href ? (
+                                      <a
+                                        href={href}
+                                        target={
+                                          href.startsWith("http")
+                                            ? "_blank"
+                                            : undefined
+                                        }
+                                        rel={
+                                          href.startsWith("http")
+                                            ? "noopener noreferrer"
+                                            : undefined
+                                        }
+                                        className={`text-right font-semibold hover:underline ${theme.phase}`}
+                                      >
+                                        {detail.value}
+                                      </a>
+                                    ) : (
+                                      <span className="text-right text-secondary-foreground">
+                                        {detail.value}
+                                      </span>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </motion.div>
+                      </li>
+                    );
+                  })}
+                </ol>
+
+                <div className="mt-10 lg:mt-14">
+                  <FlowPill icon={PackageCheck} label="Chart Delivered" />
+                </div>
+              </>
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-input bg-light py-20 text-center">
+                <Workflow className="h-10 w-10 text-light-silver" />
+                <p className="max-w-sm text-sm text-secondary-foreground">
+                  The collection process will be published here shortly. In the
+                  meantime, please reach out to us using the contact details
+                  below.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </section>

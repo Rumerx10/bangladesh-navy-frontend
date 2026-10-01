@@ -108,13 +108,6 @@ export const quickAccessItems: IQuickAccessItem[] = [
     icon: "alert-triangle",
     href: "/important-notice/notices",
   },
-  {
-    id: "qa-6",
-    title: "Marine Weather",
-    description: "Weather data & forecasting",
-    icon: "cloud-sun",
-    href: "/product-service/marine-weather-forecast",
-  },
 ];
 
 export const statsItems: IStatItem[] = [

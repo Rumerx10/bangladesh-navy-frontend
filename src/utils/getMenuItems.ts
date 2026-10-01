@@ -113,6 +113,7 @@ const getMenuItems = (): MenuItem[] => {
       children: [
         { label: "All Products", href: "/admin/products" },
         { label: "Tidal Stations", href: "/admin/products/tidal-stations" },
+        { label: "How to Collect", href: "/admin/how-to-collect" },
       ],
     },
     // {

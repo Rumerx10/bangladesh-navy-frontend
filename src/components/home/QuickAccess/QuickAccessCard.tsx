@@ -1,13 +1,5 @@
 import { IQuickAccessItem } from "@/src/components/types";
-import {
-  Info,
-  ArrowRight,
-  BookOpen,
-  CloudSun,
-  Map,
-  Monitor,
-  Waves,
-} from "lucide-react";
+import { Info, ArrowRight, BookOpen, Map, Monitor, Waves } from "lucide-react";
 import Link from "next/link";
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -16,7 +8,6 @@ const iconMap: Record<string, React.ReactNode> = {
   waves: <Waves size={22} />,
   "alert-triangle": <Info size={22} />,
   "book-open": <BookOpen size={22} />,
-  "cloud-sun": <CloudSun size={22} />,
 };
 
 interface QuickAccessCardProps {
