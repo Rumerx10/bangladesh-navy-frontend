@@ -301,7 +301,7 @@ const MaritimeSearch = () => {
           because this layer spans the full section and would otherwise
           swallow clicks meant for the input and tabs. */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -right-20 -top-10 text-pBlue">
+        <div className="absolute -right-20 top-10 lg:-top-10 text-pBlue">
           <NavyWatermark
             variant="compass"
             size={350}
