@@ -10,6 +10,7 @@ yarn-error.log*
 # the NEXT_PUBLIC_* values into the bundle. Keep it free of server-side secrets.
 .env.*
 !.env.example
+!.env.sqa
 README.md
 CLAUDE.md
 LICENSE

@@ -28,6 +28,10 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Which env file to bake NEXT_PUBLIC_* values from (e.g. .env.sqa)
+ARG ENV_FILE=.env
+RUN if [ "$ENV_FILE" != ".env" ]; then cp "$ENV_FILE" .env; fi
+
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # Next.js Build Cache ব্যবহার করে বিল্ড টাইম বহুগুণ কমানো
