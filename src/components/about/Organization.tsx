@@ -20,8 +20,20 @@ const KIND_COLORS: Record<Kind, string> = {
   dept: "#64748b",
 };
 
-/** The top two generations wear the command colour; everything below is a dept. */
 const tierFor = (depth: number): Kind => (depth <= 1 ? "command" : "dept");
+
+const COLUMN_MIN = 120;
+
+const CHART_MIN = 1200;
+
+const narrowestShare = (node: IOrganogramTreeNode, share = 1): number =>
+  node.children.length === 0
+    ? share
+    : Math.min(
+        ...node.children.map((child) =>
+          narrowestShare(child, share / node.children.length)
+        )
+      );
 
 // ─── Card ─────────────────────────────────────────────────────────────────────
 
@@ -44,25 +56,8 @@ const NodeCard = ({
       transition={{ duration: 0.3, delay: Math.min(depth * 0.06, 0.3) }}
       className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-left shadow-[0_1px_3px_rgba(15,23,42,0.08)] transition-shadow duration-200 hover:shadow-[0_6px_18px_rgba(15,23,42,0.12)]"
     >
-      <span className="block text-[13px] leading-snug font-semibold text-foreground">
+      <span className="block hyphens-dash text-[13px] leading-snug font-semibold text-center wrap-break-word text-foreground">
         {node.title}
-      </span>
-      <span className="mt-0.5 flex items-center gap-1.5 text-[11px] leading-snug text-secondary-foreground">
-        {parentTitle && (
-          <>
-            <span
-              className="h-1.5 w-1.5 shrink-0 rounded-full"
-              style={{ background: tagColor }}
-            />
-            <span
-              className="truncate"
-              style={{ color: tagColor }}
-              title={parentTitle}
-            >
-              {parentTitle}
-            </span>
-          </>
-        )}
       </span>
     </motion.div>
   );
@@ -345,6 +340,19 @@ const Organization = () => {
     [data]
   );
 
+  /* Each root is drawn as its own chart inside one shared scroll container, so
+     the widest of them sets the width. Anything past the canvas is reachable
+     through the existing `overflow-x-auto` — a chart that scrolls is readable,
+     a chart crushed to fit is not. */
+  const chartMinWidth = useMemo(
+    () =>
+      Math.max(
+        CHART_MIN,
+        ...roots.map((root) => Math.ceil(COLUMN_MIN / narrowestShare(root)))
+      ),
+    [roots]
+  );
+
   return (
     <section className="bg-linear-to-b from-light/60 to-card py-8 lg:py-20">
       <div className="container px-4 sm:px-6 lg:px-8">
@@ -378,7 +386,10 @@ const Organization = () => {
               {/* Full top-down chart on large screens. The admin allows more
                   than one root node, so each is drawn as its own chart. */}
               <div className="hidden lg:block">
-                <div style={{ minWidth: 1200 }} className="mx-auto space-y-12">
+                <div
+                  style={{ minWidth: chartMinWidth }}
+                  className="mx-auto space-y-12"
+                >
                   {roots.map((root) => (
                     <DesktopNode key={root.id} node={root} depth={0} />
                   ))}

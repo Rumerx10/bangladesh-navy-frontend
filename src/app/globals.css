@@ -371,6 +371,28 @@
 }
 
 /* =========================
+   TYPOGRAPHY
+========================= */
+/* Hyphenation that always breaks on an ASCII "-".
+
+   `hyphens: auto` on its own leaves the glyph to the browser, which reaches for
+   the locale's own hyphen — U+2010 in most builds, visually lighter and
+   narrower than the "-" the rest of the UI uses. Pinning it keeps a wrapped
+   label reading the same across engines.
+
+   The limits are what stop the break being ugly: only words of 8+ characters
+   split at all, and a break must leave 4 characters behind and carry 3 on, so
+   it can never strand a single letter on a line of its own. Engines without
+   `hyphenate-limit-chars` ignore it and still hyphenate, just less fussily. */
+@utility hyphens-dash {
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  -webkit-hyphenate-character: "-";
+  hyphenate-character: "-";
+  hyphenate-limit-chars: 8 4 3;
+}
+
+/* =========================
    ANIMATION
 ========================= */
 /* Ticker pair. Two identical copies of the track chase each other: one slides
