@@ -25,8 +25,6 @@ const NavyHeroCarousel = () => {
   const heroData = data?.data;
   const imageUrl = heroData?.imageUrls?.[0] || "/heroImages/heroImg1.jpg";
 
-  console.log("Image Url ::: ", imageUrl);
-
   return (
     <div className="relative w-full h-screen overflow-hidden bg-card">
       {/* Background image */}
@@ -44,65 +42,9 @@ const NavyHeroCarousel = () => {
       {/* Content */}
       <div className="absolute top-33 lg:top-0 inset-0 flex items-center">
         <div className="container mx-auto px-6 md:px-12 lg:px-20 max-w-6xl">
-          {/* Badge */}
-          {/* <div className="flex items-center gap-3 mb-3 lg:mb-6">
-            <span className="h-px w-10 bg-amber-400" />
-            <span className="text-amber-400 text-xs font-semibold tracking-[0.25em] uppercase">
-              {heroData?.subTitleEn || "Excellence in Maritime Service"}
-            </span>
-          </div> */}
-
-          {/* Title */}
-          <h1 className="text-white font-bold leading-tight tracking-tight mb-4">
-            <span className="block text-2xl text-center 2xl:text-start md:text-5xl 2xl:text-7xl max-w-7xl">
-              {heroData?.titleEn ||
-                "Ensuring Safe & Efficient Marine Activities for Sustainable Bangladesh"}
-            </span>
-            {/* <span className="block text-2xl md:text-6xl lg:text-7xl text-amber-400 mt-1">
-              {heroData?.titleBn || "Activities for Sustainable Bangladesh"}
-            </span> */}
+          <h1 className="text-center mb-4 hero-headline w-full text-2xl leading-[1.16] md:text-5xl 2xl:text-7xl">
+            {heroData?.titleEn || "Ensuring Safe & Efficient Marine Activities for Sustainable Bangladesh"}
           </h1>
-
-          {/* Divider */}
-          {/* <div className="flex items-center gap-3 my-6">
-            <span className="h-0.5 w-12 bg-amber-400" />
-            <span className="h-0.5 w-4 bg-amber-400/40" />
-          </div> */}
-
-          {/* Description */}
-          {/* <p className="text-white/80 text-base md:text-lg leading-relaxed max-w-xl font-light">
-            {heroData?.descriptionEn ||
-              "Bangladesh Navy stands as the premier maritime defense force, protecting our sovereign waters and advancing naval excellence across the Indo-Pacific region."}
-          </p> */}
-
-          {/* CTAs */}
-          {/* <div className="flex flex-col sm:flex-row gap-4 mt-10">
-            <Link
-              href="/about"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-amber-400 hover:bg-amber-300 text-foreground text-sm font-semibold tracking-wider uppercase transition-colors duration-200"
-            >
-              Explore Our Fleet
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </Link>
-            <Link
-              href="/skill-development"
-              className="inline-flex backdrop-blur-sm items-center justify-center gap-2 px-8 py-4 border border-white/40 hover:border-white text-white text-sm font-semibold tracking-wider uppercase transition-colors duration-200"
-            >
-              Join the Navy
-            </Link>
-          </div> */}
         </div>
       </div>
     </div>

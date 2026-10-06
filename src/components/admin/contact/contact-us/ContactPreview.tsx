@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { Edit, Mail, Phone, Clock } from "lucide-react";
+import { Edit, Mail, Phone } from "lucide-react";
+import { MdLocationPin } from "react-icons/md";
 import { Button } from "@/src/components/ui/button";
 import Paragraph from "@/src/components/shared/Paragraph";
 import { IContactInfo } from "./types";
@@ -89,8 +90,8 @@ const ContactPreview = ({ data, onEdit }: ContactPreviewProps) => {
 
         <div className="bg-light rounded-xl p-4 border border-border">
           <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1 flex items-center gap-1.5">
-            <Clock className="w-3.5 h-3.5" />
-            Office Hour
+            <MdLocationPin className="w-3.5 h-3.5" />
+            Office Address
           </Paragraph>
           <Paragraph className="text-sm! font-medium text-secondary-dark">
             {data.office_hour || "—"}

@@ -66,7 +66,7 @@ export const STEP_ICON_OPTIONS: IStepIconOption[] = [
   { value: "truck", label: "Delivery", Icon: Truck },
   { value: "ship", label: "Ship", Icon: Ship },
   { value: "anchor", label: "Anchor", Icon: Anchor },
-  { value: "clock", label: "Office Hours", Icon: Clock },
+  { value: "clock", label: "Office Address", Icon: Clock },
   { value: "calendar-days", label: "Schedule", Icon: CalendarDays },
   { value: "download", label: "Download", Icon: Download },
   { value: "printer", label: "Print", Icon: Printer },

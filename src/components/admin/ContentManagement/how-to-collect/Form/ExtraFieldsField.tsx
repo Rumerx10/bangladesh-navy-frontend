@@ -44,7 +44,7 @@ const ExtraFieldsField = () => {
                     <Input
                       {...input}
                       value={input.value ?? ""}
-                      placeholder="Label — e.g. Office Hours"
+                      placeholder="Label — e.g. Office Address"
                       className="bg-card shadow-none"
                       error={fieldState.error?.message}
                       showErrorMessage={!!fieldState.error}

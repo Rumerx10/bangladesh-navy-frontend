@@ -39,7 +39,7 @@ const triggerIdle = "text-nav-ink-muted hover:text-nav-ink hover:bg-nav-wash";
 // of the gradient sits behind it, which keeps it reading the same at the dark
 // end of the sweep and at the bright end. A solid surface token here would
 // punch an opaque rectangle through the gradient.
-const subLinkBase = "block rounded-md px-3 py-2.5 text-sm transition-colors";
+const subLinkBase = "whitespace-nowrap block rounded-md px-3 py-2.5 text-sm transition-colors";
 const subLinkActive = "text-nav-ink bg-nav-wash-strong font-medium";
 const subLinkIdle = "text-nav-ink-muted hover:bg-nav-wash hover:text-nav-ink";
 
@@ -263,7 +263,7 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
                       key={section.label}
                       className={`min-w-44 px-2 ${
                         i < othersItems.length - 1
-                          ? "border-b border-nav-hairline pb-2"
+                          ? "border-b mb-3 border-nav-hairline pb-2"
                           : ""
                       }`}
                     >

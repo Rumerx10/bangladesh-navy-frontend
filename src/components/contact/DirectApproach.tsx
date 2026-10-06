@@ -1,7 +1,8 @@
 "use client";
 
 import { useGet } from "@/src/hooks/useGet";
-import { Clock, Mail, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
+import { MdLocationPin } from "react-icons/md";
 import SectionTitle from "../SectionTitle";
 import { IContactInfo } from "./types";
 
@@ -86,13 +87,13 @@ const DirectApproach = () => {
           )}
         </div>
 
-        {/* Office Hours */}
+        {/* Office Address */}
         <div className="rounded-2xl border border-border bg-light p-6 h-full">
           <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0 mb-4">
-            <Clock className="w-5 h-5 text-liteBlue" />
+            <MdLocationPin className="w-5 h-5 text-liteBlue" />
           </div>
           <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold mb-2">
-            Office Hours
+            Office Address
           </p>
           {isLoading ? (
             <div className="h-5 w-44 bg-light-silver rounded animate-pulse" />

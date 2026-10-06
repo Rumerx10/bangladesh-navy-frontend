@@ -16,24 +16,30 @@ import {
 } from "lucide-react";
 import HowToCollectStepsSkeleton from "./Skeleton/HowToCollectStepsSkeleton";
 
+/* The accent tints are per-step brand colour, not semantic tokens, so each one
+   needs an explicit dark cut: the light `-50` fills sit on a white card, and on
+   the near-black dark card they invert into pale panels that swallow
+   `text-foreground`. Dark mode tints with alpha off the `-400` step instead so
+   the fill composites over whatever surface is behind it, and lifts the ink to
+   `-300` — `-600` is too dark to read against the dark card. */
 const themes = [
   {
     node: "bg-teal-500 shadow-teal-500/30",
-    tile: "bg-teal-50 text-teal-600",
-    phase: "text-teal-600",
-    box: "bg-teal-50/60 border-teal-100",
+    tile: "bg-teal-50 text-teal-600 dark:bg-teal-400/15 dark:text-teal-300",
+    phase: "text-teal-600 dark:text-teal-300",
+    box: "bg-teal-50/60 border-teal-100 dark:bg-teal-400/10 dark:border-teal-400/20",
   },
   {
     node: "bg-blue-600 shadow-blue-600/30",
-    tile: "bg-blue-50 text-blue-600",
-    phase: "text-blue-600",
-    box: "bg-blue-50/60 border-blue-100",
+    tile: "bg-blue-50 text-blue-600 dark:bg-blue-400/15 dark:text-blue-300",
+    phase: "text-blue-600 dark:text-blue-300",
+    box: "bg-blue-50/60 border-blue-100 dark:bg-blue-400/10 dark:border-blue-400/20",
   },
   {
     node: "bg-emerald-500 shadow-emerald-500/30",
-    tile: "bg-emerald-50 text-emerald-600",
-    phase: "text-emerald-600",
-    box: "bg-emerald-50/60 border-emerald-100",
+    tile: "bg-emerald-50 text-emerald-600 dark:bg-emerald-400/15 dark:text-emerald-300",
+    phase: "text-emerald-600 dark:text-emerald-300",
+    box: "bg-emerald-50/60 border-emerald-100 dark:bg-emerald-400/10 dark:border-emerald-400/20",
   },
 ] as const;
 
