@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Poppins, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 
 import LoginModal from "../components/auth/LoginModal/LoginModal";
@@ -19,6 +19,16 @@ const poppins = Poppins({
   display: "swap",
 });
 
+/* Display face for the hero headline only — Poppins still carries the rest of
+   the site. Bold alone: nothing else on the page is set in it, so shipping the
+   other weights would be dead bytes. */
+const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  weight: ["700"],
+  variable: "--font-source-serif",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: siteConfig.name,
   description: siteConfig.description,
@@ -26,7 +36,11 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="en" className={poppins.variable} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${poppins.variable} ${sourceSerif.variable}`}
+      suppressHydrationWarning
+    >
       <body className="antialiased" suppressHydrationWarning>
         {/* Must stay the first child — it runs before anything below it is
             painted, which is what prevents the white flash on reload. */}

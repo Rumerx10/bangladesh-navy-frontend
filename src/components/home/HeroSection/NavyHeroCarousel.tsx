@@ -25,8 +25,6 @@ const NavyHeroCarousel = () => {
   const heroData = data?.data;
   const imageUrl = heroData?.imageUrls?.[0] || "/heroImages/heroImg1.jpg";
 
-  console.log("Image Url ::: ", imageUrl);
-
   return (
     <div className="relative w-full h-screen overflow-hidden bg-card">
       {/* Background image */}
@@ -44,12 +42,8 @@ const NavyHeroCarousel = () => {
       {/* Content */}
       <div className="absolute top-33 lg:top-0 inset-0 flex items-center">
         <div className="container mx-auto px-6 md:px-12 lg:px-20 max-w-6xl">
-          {/* Title */}
-          <h1 className="text-white text-center font-bold leading-tight tracking-tight mb-4">
-            <span className="w-full text-2xl md:text-5xl 2xl:text-7xl max-w-7xl">
-              {heroData?.titleEn ||
-                "Ensuring Safe & Efficient Marine Activities for Sustainable Bangladesh"}
-            </span>
+          <h1 className="text-center mb-4 hero-headline w-full text-2xl leading-[1.16] md:text-5xl 2xl:text-7xl">
+            {heroData?.titleEn || "Ensuring Safe & Efficient Marine Activities for Sustainable Bangladesh"}
           </h1>
         </div>
       </div>
