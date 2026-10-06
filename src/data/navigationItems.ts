@@ -75,15 +75,6 @@ export const NavigationItems: NavItem[] = [
     ],
   },
   {
-    label: "Training and Courses",
-    link: "/skill-development",
-    subLinks: [
-      { label: "Alumni", link: "/training-courses/alumni" },
-      { label: "Courses", link: "/training-courses/courses" },
-      { label: "BN Hydrographic Institute", link: "/training-courses" },
-    ],
-  },
-  {
     label: "Important Notice",
     link: "/important-notice",
     subLinks: [
@@ -101,6 +92,16 @@ export const NavigationItems: NavItem[] = [
       },
     ],
   },
+  {
+    label: "Training and Courses",
+    link: "/skill-development",
+    subLinks: [
+      { label: "BN Hydrographic Institute", link: "/training-courses" },
+      { label: "Courses", link: "/training-courses/courses" },
+      { label: "Alumni", link: "/training-courses/alumni" },
+    ],
+  },
+  
   {
     label: "Contact",
     link: "/contact-us",
