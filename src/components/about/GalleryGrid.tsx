@@ -1,6 +1,5 @@
 "use client";
 
-import { useGet } from "@/src/hooks/useGet";
 import {
   motion,
   AnimatePresence,
@@ -11,7 +10,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { BiExpandAlt } from "react-icons/bi";
 import GalleryLightbox from "@/src/components/shared/GalleryLightbox";
-import { IGalleryItem } from "@/src/components/home/Gallery/types";
+import { useGalleryList } from "@/src/components/home/Gallery/useGalleryList";
 
 const gridVariants: Variants = {
   hidden: {},
@@ -46,13 +45,8 @@ const GalleryGrid = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  const { data, isLoading } = useGet<IGalleryItem[]>("/gallery/list", [
-    "gallery-list",
-  ]);
-
-  const galleryItems: IGalleryItem[] = Array.isArray(data?.data)
-    ? data.data
-    : [];
+  // Ordered by `position` ascending — filtering by category preserves it.
+  const { galleryItems, isLoading } = useGalleryList();
 
   const allCategories = [
     "All",

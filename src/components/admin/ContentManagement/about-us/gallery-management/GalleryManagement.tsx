@@ -63,6 +63,11 @@ const GalleryManagement = () => {
           }),
       search: debouncedSearch,
       ...(sortBy && { status: sortBy }),
+      // `/gallery` defaults to descending `position`, which paginates the table
+      // backwards (30–21, then 20–11). The order has to come from the API
+      // rather than a client-side sort: sorting a single page would only
+      // reorder within it and leave the pages themselves reversed.
+      sortOrder: "asc",
     }
   );
 

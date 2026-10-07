@@ -1,17 +1,25 @@
 "use client";
 
 import Image from "next/image";
+import { ChevronRight, Edit, Eye, Target } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import Paragraph from "@/src/components/shared/Paragraph";
-import { Edit, ChevronRight, Eye, Target } from "lucide-react";
-import { IMissionVisionManagement } from "./types";
+import { IMissionVision } from "@/src/components/mission-vision/types";
 
 interface MissionVisionPreviewProps {
-  data: IMissionVisionManagement;
+  data: IMissionVision;
+  isUsingDefaults?: boolean;
   onEdit: () => void;
 }
 
-const MissionVisionPreview = ({ data, onEdit }: MissionVisionPreviewProps) => {
+/** Bangla blocks only appear once a translation has actually been entered. */
+const hasText = (value?: string | null) => !!value?.trim();
+
+const MissionVisionPreview = ({
+  data,
+  isUsingDefaults = false,
+  onEdit,
+}: MissionVisionPreviewProps) => {
   return (
     <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
       {/* Header */}
@@ -31,7 +39,7 @@ const MissionVisionPreview = ({ data, onEdit }: MissionVisionPreviewProps) => {
               Mission &amp; Vision Preview
             </Paragraph>
             <Paragraph className="text-sm! text-secondary-foreground">
-              Current mission &amp; vision content
+              Content shown on the public vision &amp; mission page
             </Paragraph>
           </div>
         </div>
@@ -47,38 +55,45 @@ const MissionVisionPreview = ({ data, onEdit }: MissionVisionPreviewProps) => {
       </div>
 
       <div className="p-6 sm:p-8 pt-10 space-y-8">
-        {/* Basic */}
+        {isUsingDefaults && (
+          <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
+            <Paragraph className="text-sm! text-amber-800">
+              Nothing has been saved yet — this is the fallback copy the public
+              page falls back to. Edit and save to store it.
+            </Paragraph>
+          </div>
+        )}
+
+        {/* Section heading */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-light rounded-xl p-5 border border-border">
             <Paragraph className="font-semibold text-pBlue uppercase mb-2">
               Title
             </Paragraph>
-            <Paragraph className="text-base">{data.title}</Paragraph>
+            <Paragraph className="text-base">{data.titleEn}</Paragraph>
+            {hasText(data.titleBn) && (
+              <Paragraph className="mt-2 text-sm! text-secondary-foreground">
+                {data.titleBn}
+              </Paragraph>
+            )}
           </div>
           <div className="bg-light rounded-xl p-5 border border-border">
             <Paragraph className="font-semibold text-pBlue uppercase mb-2">
               Sub Title
             </Paragraph>
-            <Paragraph className="text-base">{data.subTitle}</Paragraph>
+            <Paragraph className="text-base">
+              {data.subTitleEn?.trim() || "—"}
+            </Paragraph>
+            {hasText(data.subTitleBn) && (
+              <Paragraph className="mt-2 text-sm! text-secondary-foreground">
+                {data.subTitleBn}
+              </Paragraph>
+            )}
           </div>
         </div>
 
-        {/* Vision & Mission */}
+        {/* Mission & Vision */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-light rounded-xl p-5 border border-border">
-            <div className="flex items-center gap-2 mb-3">
-              <Eye className="w-4 h-4 text-pBlue" />
-              <Paragraph className="font-semibold text-pBlue uppercase">
-                Vision
-              </Paragraph>
-            </div>
-            <Paragraph className="font-medium text-pBlue mb-2">
-              {data.vision.title}
-            </Paragraph>
-            <Paragraph className="text-sm leading-relaxed text-secondary-foreground">
-              {data.vision.description}
-            </Paragraph>
-          </div>
           <div className="bg-light rounded-xl p-5 border border-border">
             <div className="flex items-center gap-2 mb-3">
               <Target className="w-4 h-4 text-pBlue" />
@@ -87,11 +102,58 @@ const MissionVisionPreview = ({ data, onEdit }: MissionVisionPreviewProps) => {
               </Paragraph>
             </div>
             <Paragraph className="font-medium text-pBlue mb-2">
-              {data.mission.title}
+              {data.missionTitleEn}
             </Paragraph>
-            <Paragraph className="text-sm leading-relaxed text-secondary-foreground">
-              {data.mission.description}
+            <Paragraph className="text-sm leading-relaxed text-secondary-foreground text-justify">
+              {data.missionDescriptionEn}
             </Paragraph>
+
+            {(hasText(data.missionTitleBn) ||
+              hasText(data.missionDescriptionBn)) && (
+              <div className="mt-3 border-t border-dashed border-border pt-3">
+                {hasText(data.missionTitleBn) && (
+                  <Paragraph className="font-medium text-pBlue mb-1">
+                    {data.missionTitleBn}
+                  </Paragraph>
+                )}
+                {hasText(data.missionDescriptionBn) && (
+                  <Paragraph className="text-sm leading-relaxed text-secondary-foreground text-justify">
+                    {data.missionDescriptionBn}
+                  </Paragraph>
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className="bg-light rounded-xl p-5 border border-border">
+            <div className="flex items-center gap-2 mb-3">
+              <Eye className="w-4 h-4 text-pBlue" />
+              <Paragraph className="font-semibold text-pBlue uppercase">
+                Vision
+              </Paragraph>
+            </div>
+            <Paragraph className="font-medium text-pBlue mb-2">
+              {data.visionTitleEn}
+            </Paragraph>
+            <Paragraph className="text-sm leading-relaxed text-secondary-foreground text-justify">
+              {data.visionDescriptionEn}
+            </Paragraph>
+
+            {(hasText(data.visionTitleBn) ||
+              hasText(data.visionDescriptionBn)) && (
+              <div className="mt-3 border-t border-dashed border-border pt-3">
+                {hasText(data.visionTitleBn) && (
+                  <Paragraph className="font-medium text-pBlue mb-1">
+                    {data.visionTitleBn}
+                  </Paragraph>
+                )}
+                {hasText(data.visionDescriptionBn) && (
+                  <Paragraph className="text-sm leading-relaxed text-secondary-foreground text-justify">
+                    {data.visionDescriptionBn}
+                  </Paragraph>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

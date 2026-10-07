@@ -85,6 +85,10 @@ const getMenuItems = (): MenuItem[] => {
           href: "/admin/training-courses",
         },
         { label: "Courses", href: "/admin/training-courses/courses" },
+        {
+          label: "Course Content",
+          href: "/admin/training-courses/course-content",
+        },
         { label: "Alumni", href: "/admin/training-courses/alumni" },
       ],
     },
