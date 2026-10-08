@@ -1,11 +1,15 @@
 "use client";
 
+import { useState } from "react";
+import { ChevronDown, FileText } from "lucide-react";
+import { cn } from "@/src/lib/utils";
 import { useFormContext } from "react-hook-form";
 import { Button } from "@/src/components/ui/button";
 import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
 import ControlledTextareaField from "@/src/components/shared/FromController/ControlledTextareaField";
-import MultipleStringField from "@/src/components/shared/FromController/MultipleStringField";
+import StringListField from "@/src/components/shared/FromController/StringListField";
+import InputLabel from "@/src/components/shared/InputLabel";
 import Paragraph from "@/src/components/shared/Paragraph";
 import SubmitButton from "@/src/components/shared/SubmitButton";
 import { ErrorType } from "@/src/components/shared/types/common";
@@ -28,6 +32,7 @@ const InstituteForm = ({
   isPending = false,
   onCancel,
 }: InstituteFormProps) => {
+  const [showBnFields, setShowBnFields] = useState(false);
   const { handleSubmit } = useFormContext<InstituteSchemaForm>();
 
   return (
@@ -42,22 +47,18 @@ const InstituteForm = ({
         />
         <div className="flex flex-col gap-y-6 mt-6">
           <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Title
-            </Paragraph>
+            <InputLabel label="Title (English)" required />
             <ControlledInputField
-              name="title"
+              name="titleEn"
               placeholder="About BN Hydrographic Institute"
               className="bg-light shadow-none"
             />
           </div>
           <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Sub Title
-            </Paragraph>
+            <InputLabel label="Sub Title (English)" />
             <ControlledInputField
-              name="subTitle"
-              placeholder="Established 1983 at BNS Issa Khan"
+              name="subTitleEn"
+              placeholder="Established 04 May 1983 at BNS Issa Khan"
               className="bg-light shadow-none"
             />
           </div>
@@ -71,8 +72,9 @@ const InstituteForm = ({
           description="Each entry renders as its own paragraph"
         />
         <div className="mt-6">
+          <InputLabel label="Paragraphs (English)" required />
           <ParagraphListField
-            name="aboutParagraphs"
+            name="aboutParagraphsEn"
             placeholder="Describe the institute..."
             emptyMessage="No about paragraphs added yet."
           />
@@ -84,23 +86,19 @@ const InstituteForm = ({
         <FormSectionHeader label="Vision" />
         <div className="flex flex-col gap-y-6 mt-6">
           <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Title
-            </Paragraph>
+            <InputLabel label="Vision Title (English)" required />
             <ControlledInputField
-              name="visionTitle"
+              name="visionTitleEn"
               placeholder="Vision"
               className="bg-light shadow-none"
             />
           </div>
           <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Description
-            </Paragraph>
+            <InputLabel label="Vision Description (English)" required />
             <ControlledTextareaField
-              name="visionDescription"
+              name="visionDescriptionEn"
               placeholder="Describe the vision..."
-              className="bg-light shadow-none"
+              className="bg-light shadow-none min-h-28"
             />
           </div>
         </div>
@@ -114,23 +112,20 @@ const InstituteForm = ({
         />
         <div className="flex flex-col gap-y-6 mt-6">
           <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Title
-            </Paragraph>
+            <InputLabel label="Mission Title (English)" required />
             <ControlledInputField
-              name="missionTitle"
+              name="missionTitleEn"
               placeholder="Mission"
               className="bg-light shadow-none"
             />
           </div>
           <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Mission Points
-            </Paragraph>
-            <MultipleStringField
-              name="missionPoints"
+            <InputLabel label="Mission Points (English)" required />
+            <StringListField
+              name="missionPointsEn"
               itemLabel="Point"
               placeholder="Deliver high-quality training in hydrography..."
+              emptyMessage="No mission points added yet."
             />
           </div>
         </div>
@@ -144,24 +139,134 @@ const InstituteForm = ({
         />
         <div className="flex flex-col gap-y-6 mt-6">
           <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Title
-            </Paragraph>
+            <InputLabel label="Title (English)" required />
             <ControlledInputField
-              name="trainingOverviewTitle"
+              name="trainingOverviewTitleEn"
               placeholder="Training Overview"
               className="bg-light shadow-none"
             />
           </div>
           <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Paragraphs
-            </Paragraph>
+            <InputLabel label="Paragraphs (English)" required />
             <ParagraphListField
-              name="trainingOverviewParagraphs"
+              name="trainingOverviewParagraphsEn"
               placeholder="Describe how training is delivered and how to apply..."
               emptyMessage="No training overview paragraphs added yet."
             />
+          </div>
+        </div>
+      </div>
+
+      {/* Bangla Content (optional, collapsed by default) */}
+      <div className="border border-light-silver rounded-lg bg-card">
+        <button
+          type="button"
+          onClick={() => setShowBnFields((prev) => !prev)}
+          className="w-full flex items-center justify-between gap-3 p-6 sm:p-8 cursor-pointer"
+        >
+          <div className="flex items-center gap-3">
+            <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
+              <FileText className="w-4 h-4 text-primary" />
+            </div>
+            <div className="text-left">
+              <Paragraph className="xl:text-lg font-medium text-pBlue">
+                Bangla Content
+              </Paragraph>
+              <Paragraph className="text-xs! text-secondary-foreground">
+                Optional — stored alongside the English copy
+              </Paragraph>
+            </div>
+          </div>
+          <ChevronDown
+            className={cn(
+              "w-5 h-5 text-secondary-foreground transition-transform duration-300",
+              showBnFields && "rotate-180"
+            )}
+          />
+        </button>
+
+        <div
+          className={cn(
+            "grid transition-all duration-300 ease-in-out",
+            showBnFields ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+          )}
+        >
+          <div className="overflow-hidden">
+            <div className="flex flex-col gap-y-6 px-6 sm:px-8 pb-8">
+              <div>
+                <InputLabel label="Title (Bangla)" />
+                <ControlledInputField
+                  name="titleBn"
+                  placeholder="বিএন হাইড্রোগ্রাফিক ইনস্টিটিউট সম্পর্কে"
+                  className="bg-light shadow-none"
+                />
+              </div>
+              <div>
+                <InputLabel label="Sub Title (Bangla)" />
+                <ControlledInputField
+                  name="subTitleBn"
+                  placeholder="০৪ মে ১৯৮৩ সালে বানৌজা ঈসা খানে প্রতিষ্ঠিত"
+                  className="bg-light shadow-none"
+                />
+              </div>
+              <div>
+                <InputLabel label="About Paragraphs (Bangla)" />
+                <ParagraphListField
+                  name="aboutParagraphsBn"
+                  placeholder="ইনস্টিটিউট সম্পর্কে বাংলায় লিখুন"
+                  emptyMessage="No Bangla about paragraphs added yet."
+                />
+              </div>
+              <div>
+                <InputLabel label="Vision Title (Bangla)" />
+                <ControlledInputField
+                  name="visionTitleBn"
+                  placeholder="রূপকল্প"
+                  className="bg-light shadow-none"
+                />
+              </div>
+              <div>
+                <InputLabel label="Vision Description (Bangla)" />
+                <ControlledTextareaField
+                  name="visionDescriptionBn"
+                  placeholder="রূপকল্পের বিবরণ বাংলায় লিখুন"
+                  className="bg-light shadow-none min-h-28"
+                />
+              </div>
+              <div>
+                <InputLabel label="Mission Title (Bangla)" />
+                <ControlledInputField
+                  name="missionTitleBn"
+                  placeholder="অভিলক্ষ্য"
+                  className="bg-light shadow-none"
+                />
+              </div>
+              <div>
+                <InputLabel label="Mission Points (Bangla)" />
+                <StringListField
+                  name="missionPointsBn"
+                  itemLabel="Point"
+                  placeholder="হাইড্রোগ্রাফি ও সংশ্লিষ্ট বিষয়ে উচ্চমানের প্রশিক্ষণ প্রদান।"
+                  emptyMessage="No Bangla mission points added yet."
+                />
+              </div>
+              <div>
+                <InputLabel label="Training Overview Title (Bangla)" />
+                <ControlledInputField
+                  name="trainingOverviewTitleBn"
+                  placeholder="প্রশিক্ষণ সংক্ষিপ্ত বিবরণ"
+                  className="bg-light shadow-none"
+                />
+              </div>
+              <div>
+                <InputLabel label="Training Overview Paragraphs (Bangla)" />
+                <ParagraphListField
+                  name="trainingOverviewParagraphsBn"
+                  placeholder="প্রশিক্ষণ সম্পর্কে বাংলায় লিখুন"
+                  emptyMessage="No Bangla training overview paragraphs added yet."
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -178,7 +283,7 @@ const InstituteForm = ({
         </Button>
         <SubmitButton
           isLoading={isPending}
-          label={isEditMode ? "Update Changes" : "Save Content"}
+          label={isEditMode ? "Update Content" : "Save Content"}
         />
       </div>
     </form>

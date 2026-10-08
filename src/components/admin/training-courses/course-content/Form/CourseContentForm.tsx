@@ -11,11 +11,11 @@ import SubmitButton from "@/src/components/shared/SubmitButton";
 import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
 import ControlledTextareaField from "@/src/components/shared/FromController/ControlledTextareaField";
+import StringListField from "@/src/components/shared/FromController/StringListField";
 import { ErrorType } from "@/src/components/shared/types/common";
 import FormSectionHeader from "../../FormSectionHeader";
 import { CourseContentFormValues } from "../Schema/courseContentSchema";
 import CourseSectionField from "./CourseSectionField";
-import CourseSequenceField from "./CourseSequenceField";
 
 interface CourseContentFormProps {
   isEditMode?: boolean;
@@ -68,9 +68,12 @@ const CourseContentForm = ({
               Rendered as the numbered list in the “Course Sequence” card — the
               order here is the order visitors see.
             </Paragraph>
-            <CourseSequenceField
+            <StringListField
               name="courseSequenceEn"
+              itemLabel="Course"
+              numbered
               placeholder="e.g. Long Hydrographic Cat-A Course"
+              emptyMessage="No courses added yet."
             />
           </div>
         </div>
@@ -130,8 +133,10 @@ const CourseContentForm = ({
               </div>
               <div>
                 <InputLabel label="Course Sequence (Bangla)" />
-                <CourseSequenceField
+                <StringListField
                   name="courseSequenceBn"
+                  itemLabel="Course"
+                  numbered
                   placeholder="দীর্ঘ হাইড্রোগ্রাফিক ক্যাট-এ কোর্স"
                   emptyMessage="No Bangla courses added yet."
                 />
