@@ -1,4 +1,4 @@
-const CoursesPreviewSkeleton = () => {
+const CourseContentPreviewSkeleton = () => {
   return (
     <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden animate-pulse">
       <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-8 py-6 border-b border-border">
@@ -13,6 +13,7 @@ const CoursesPreviewSkeleton = () => {
       </div>
 
       <div className="p-8 pt-10 space-y-8">
+        {/* Title & Introduction */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {[1, 2].map((i) => (
             <div
@@ -27,6 +28,15 @@ const CoursesPreviewSkeleton = () => {
           ))}
         </div>
 
+        {/* Course Sequence */}
+        <div className="rounded-xl border border-border bg-light p-5 space-y-2">
+          <div className="bg-light-silver h-4 w-40 rounded" />
+          <div className="bg-light-silver h-4 w-64 rounded" />
+          <div className="bg-light-silver h-4 w-56 rounded" />
+          <div className="bg-light-silver h-4 w-44 rounded" />
+        </div>
+
+        {/* Course Descriptions */}
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
             <div key={i} className="border-l-4 border-border pl-5 space-y-2">
@@ -36,15 +46,9 @@ const CoursesPreviewSkeleton = () => {
             </div>
           ))}
         </div>
-
-        <div className="rounded-xl border border-border bg-light p-5 space-y-2">
-          <div className="bg-light-silver h-4 w-40 rounded" />
-          <div className="bg-light-silver h-4 w-full rounded" />
-          <div className="bg-light-silver h-4 w-48 rounded" />
-        </div>
       </div>
     </div>
   );
 };
 
-export default CoursesPreviewSkeleton;
+export default CourseContentPreviewSkeleton;

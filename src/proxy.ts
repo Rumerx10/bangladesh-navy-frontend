@@ -27,7 +27,22 @@ export default function proxy(request: NextRequest) {
   const accessToken = request.cookies.get("accessToken")?.value;
   const decoded = accessToken ? decodeJwtPayload(accessToken) : null;
   const role = (decoded?.role as string) ?? undefined;
-  const isLoggedIn = Boolean(accessToken);
+
+  // The cookie outlives the JWT inside it — the cookie is kept for a day while
+  // the token expires in an hour — so presence alone is not a session. Treating
+  // it as one locked people out: an expired token still redirected /auth/login
+  // to /admin, where every API call 401'd, leaving no way back to the sign-in
+  // form.
+  const expiresAt =
+    typeof decoded?.exp === "number" ? decoded.exp * 1000 : undefined;
+  const isExpired = expiresAt !== undefined && expiresAt <= Date.now();
+
+  // An expired access token still counts while a refreshToken survives: the
+  // axios interceptor trades it for a fresh one on the first API call. The
+  // refresh cookie is the shorter-lived of the two (2 days against the refresh
+  // token's 7), so if it is present it is still good.
+  const canRefresh = Boolean(request.cookies.get("refreshToken")?.value);
+  const isLoggedIn = Boolean(accessToken) && (!isExpired || canRefresh);
   const isAdmin = isAdminRole(role);
 
   // Admin panel: only ADMIN / SUPER_ADMIN may enter.

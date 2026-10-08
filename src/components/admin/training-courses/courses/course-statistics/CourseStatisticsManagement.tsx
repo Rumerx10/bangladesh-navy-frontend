@@ -21,11 +21,11 @@ import CreateUpdateCourseStatistic from "./Form/CreateUpdateCourseStatistic";
 import { GetCourseStatisticColumns } from "./TableColumns/CourseStatisticColumns";
 
 /**
- * The row set is the public statistics table — a handful of rows — so the
- * whole set is fetched once and searched/paged in the browser. Only `page`
- * and `limit` go to the API: it rejects any query key its DTO does not
- * declare, so sending `search` there would empty the table the moment
- * someone types.
+ * The row set is the public statistics table — a handful of rows — so the whole
+ * set is fetched once with `page`/`limit` and then searched and paged in the
+ * browser, which keeps the rows in one serial-ordered list no matter what is
+ * typed. (`/course-statistics` also accepts `search`, `status` and `sortOrder`
+ * if this ever outgrows a single fetch.)
  *
  * Independent of the Courses / Batches / Alumni Members directory — this
  * hits its own `/course-statistics` endpoints and has no relation to them.

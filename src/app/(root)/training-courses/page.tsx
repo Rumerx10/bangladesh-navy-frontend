@@ -1,6 +1,6 @@
-import { BookOpen, Eye, Target } from "lucide-react";
 import { Metadata } from "next";
 import SkillBanner from "@/src/components/skill-development/SkillBanner";
+import AboutInstitute from "@/src/components/skill-development/AboutInstitute";
 
 export const metadata: Metadata = {
   title: "BN Hydrographic Institute | Bangladesh Navy",
@@ -12,107 +12,8 @@ const SkillDevelopmentPage = () => {
   return (
     <main>
       <SkillBanner />
-
-      {/* About */}
-      <section className="py-8 lg:py-20 bg-card">
-        <div className="container px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-12 h-12 rounded-xl bg-liteBlue/10 text-liteBlue flex items-center justify-center shrink-0">
-              <BookOpen size={24} />
-            </div>
-            <h2 className="text-2xl lg:text-3xl font-bold text-pBlue">
-              About BN Hydrographic Institute
-            </h2>
-          </div>
-
-          <div className="text-secondary-foreground leading-relaxed space-y-4 text-justify">
-            <p>
-              BN Hydrographic Institute, formerly known as BN Hydrographic
-              School, was established on 04 May 1983 at BNS ISSA KHAN with the
-              objective of developing skilled hydrographic professionals.
-              Initially offering Survey Recorder courses, the institute has
-              progressively evolved into a specialized centre for hydrography,
-              oceanography and nautical charting. As a dedicated training and
-              research institution, the institute promotes professional
-              excellence through high-quality instruction, practical training
-              and continuous technical capacity development.
-            </p>
-            <p>
-              The institute provides professional training to personnel from
-              Bangladesh, maritime organizations and international participants.
-              Training is conducted using advanced survey technologies,
-              including multibeam and single beam echo sounders, side scan
-              sonar, GPS/DGPS, Sub Bottom Profiler and other modern hydrographic
-              systems, ensuring precise data collection, processing and
-              analysis.
-            </p>
-          </div>
-
-          {/* Vision & Mission */}
-          <div className="grid sm:grid-cols-2 gap-6 mt-12">
-            {/* Vision */}
-            <div className="rounded-2xl border border-liteBlue/20 bg-liteBlue/5 p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-brand-blue text-white flex items-center justify-center shrink-0">
-                  <Eye size={20} />
-                </div>
-                <h3 className="text-lg font-bold text-pBlue">Vision</h3>
-              </div>
-              <p className="text-sm text-secondary-foreground leading-relaxed text-justify">
-                To become a centre of excellence in hydrographic education,
-                training and research, upholding internationally recognized
-                standards and contributing to safe navigation and sustainable
-                maritime development.
-              </p>
-            </div>
-
-            {/* Mission */}
-            <div className="rounded-2xl border border-liteBlue/20 bg-liteBlue/5 p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-brand-blue text-white flex items-center justify-center shrink-0">
-                  <Target size={20} />
-                </div>
-                <h3 className="text-lg font-bold text-pBlue">Mission</h3>
-              </div>
-              <ul className="text-sm text-secondary-foreground leading-relaxed space-y-2">
-                {[
-                  "Deliver high-quality training in hydrography and related disciplines.",
-                  "Develop competent professionals using modern technologies and methodologies.",
-                  "Support accurate hydrographic surveying and nautical chart production.",
-                  "Enhance the operational and technical capabilities of the Bangladesh Navy and the wider maritime sector.",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-2">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-brand-blue shrink-0 text-justify" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Training Overview */}
-          <div className="mt-10 rounded-2xl border border-border bg-light p-6">
-            <h3 className="text-lg font-bold text-pBlue mb-3">
-              Training Overview
-            </h3>
-            <div className="text-sm text-secondary-foreground leading-relaxed space-y-3 text-justify">
-              <p>
-                All training is aligned with international standards,
-                particularly those set by the IBSC, ensuring high-quality
-                outcomes and preparing trainees to support safe navigation,
-                accurate charting and sustainable maritime development.
-              </p>
-              <p>
-                To avail training facilities at the institute for national
-                participants, applications are coordinated through the
-                Directorate of Naval Training at Naval Headquarters. Overseas
-                participants are required to apply through the Armed Forces
-                Division, Dhaka Cantonment.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* About, vision, mission and training overview — all from `/about-institute` */}
+      <AboutInstitute />
     </main>
   );
 };

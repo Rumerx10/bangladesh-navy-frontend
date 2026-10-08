@@ -4,19 +4,26 @@ import Image from "next/image";
 import { BookOpen, ChevronRight, Edit, Eye, Target } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import Paragraph from "@/src/components/shared/Paragraph";
-import { IInstituteManagement } from "./types";
+import { IAboutInstitute } from "@/src/components/about-institute/types";
 
 interface InstitutePreviewProps {
-  data: IInstituteManagement;
+  data: IAboutInstitute;
   isUsingDefaults?: boolean;
   onEdit: () => void;
 }
+
+/** Bangla blocks only appear once a translation has actually been entered. */
+const hasText = (value?: string | null) => !!value?.trim();
 
 const InstitutePreview = ({
   data,
   isUsingDefaults = false,
   onEdit,
 }: InstitutePreviewProps) => {
+  const aboutParagraphsBn = data.aboutParagraphsBn ?? [];
+  const missionPointsBn = data.missionPointsBn ?? [];
+  const trainingOverviewParagraphsBn = data.trainingOverviewParagraphsBn ?? [];
+
   return (
     <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
       {/* Header */}
@@ -55,8 +62,8 @@ const InstitutePreview = ({
         {isUsingDefaults && (
           <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
             <Paragraph className="text-sm! text-amber-800">
-              Nothing has been saved yet — this is the default copy currently
-              hardcoded on the public page. Edit and save to store it.
+              Nothing has been saved yet — this is the fallback copy the public
+              page falls back to. Edit and save to store it.
             </Paragraph>
           </div>
         )}
@@ -67,13 +74,25 @@ const InstitutePreview = ({
             <Paragraph className="font-semibold text-pBlue uppercase mb-2">
               Title
             </Paragraph>
-            <Paragraph className="text-base">{data.title}</Paragraph>
+            <Paragraph className="text-base">{data.titleEn}</Paragraph>
+            {hasText(data.titleBn) && (
+              <Paragraph className="mt-2 text-sm! text-secondary-foreground">
+                {data.titleBn}
+              </Paragraph>
+            )}
           </div>
           <div className="bg-light rounded-xl p-5 border border-border">
             <Paragraph className="font-semibold text-pBlue uppercase mb-2">
               Sub Title
             </Paragraph>
-            <Paragraph className="text-base">{data.subTitle}</Paragraph>
+            <Paragraph className="text-base">
+              {data.subTitleEn?.trim() || "—"}
+            </Paragraph>
+            {hasText(data.subTitleBn) && (
+              <Paragraph className="mt-2 text-sm! text-secondary-foreground">
+                {data.subTitleBn}
+              </Paragraph>
+            )}
           </div>
         </div>
 
@@ -86,7 +105,7 @@ const InstitutePreview = ({
             </Paragraph>
           </div>
           <div className="space-y-3">
-            {data.aboutParagraphs.map((text, index) => (
+            {data.aboutParagraphsEn.map((text, index) => (
               <Paragraph
                 key={index}
                 className="text-sm leading-relaxed text-secondary-foreground text-justify"
@@ -95,6 +114,18 @@ const InstitutePreview = ({
               </Paragraph>
             ))}
           </div>
+          {aboutParagraphsBn.length > 0 && (
+            <div className="mt-3 space-y-3 border-t border-dashed border-border pt-3">
+              {aboutParagraphsBn.map((text, index) => (
+                <Paragraph
+                  key={index}
+                  className="text-sm leading-relaxed text-secondary-foreground text-justify"
+                >
+                  {text}
+                </Paragraph>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Vision & Mission */}
@@ -107,11 +138,26 @@ const InstitutePreview = ({
               </Paragraph>
             </div>
             <Paragraph className="font-medium text-pBlue mb-2">
-              {data.visionTitle}
+              {data.visionTitleEn}
             </Paragraph>
-            <Paragraph className="text-sm leading-relaxed text-secondary-foreground">
-              {data.visionDescription}
+            <Paragraph className="text-sm leading-relaxed text-secondary-foreground text-justify">
+              {data.visionDescriptionEn}
             </Paragraph>
+            {(hasText(data.visionTitleBn) ||
+              hasText(data.visionDescriptionBn)) && (
+              <div className="mt-3 border-t border-dashed border-border pt-3">
+                {hasText(data.visionTitleBn) && (
+                  <Paragraph className="font-medium text-pBlue mb-1">
+                    {data.visionTitleBn}
+                  </Paragraph>
+                )}
+                {hasText(data.visionDescriptionBn) && (
+                  <Paragraph className="text-sm leading-relaxed text-secondary-foreground text-justify">
+                    {data.visionDescriptionBn}
+                  </Paragraph>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="bg-light rounded-xl p-5 border border-border">
@@ -122,10 +168,10 @@ const InstitutePreview = ({
               </Paragraph>
             </div>
             <Paragraph className="font-medium text-pBlue mb-2">
-              {data.missionTitle}
+              {data.missionTitleEn}
             </Paragraph>
             <ul className="space-y-2">
-              {data.missionPoints.map((point, index) => (
+              {data.missionPointsEn.map((point, index) => (
                 <li
                   key={index}
                   className="flex items-start gap-2 text-sm leading-relaxed text-secondary-foreground"
@@ -135,16 +181,36 @@ const InstitutePreview = ({
                 </li>
               ))}
             </ul>
+            {(hasText(data.missionTitleBn) || missionPointsBn.length > 0) && (
+              <div className="mt-3 border-t border-dashed border-border pt-3">
+                {hasText(data.missionTitleBn) && (
+                  <Paragraph className="font-medium text-pBlue mb-1">
+                    {data.missionTitleBn}
+                  </Paragraph>
+                )}
+                <ul className="space-y-2">
+                  {missionPointsBn.map((point, index) => (
+                    <li
+                      key={index}
+                      className="flex items-start gap-2 text-sm leading-relaxed text-secondary-foreground"
+                    >
+                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-brand-blue shrink-0" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Training overview */}
         <div className="bg-light rounded-xl p-5 border border-border">
           <Paragraph className="font-semibold text-pBlue uppercase mb-3">
-            {data.trainingOverviewTitle}
+            {data.trainingOverviewTitleEn}
           </Paragraph>
           <div className="space-y-3">
-            {data.trainingOverviewParagraphs.map((text, index) => (
+            {data.trainingOverviewParagraphsEn.map((text, index) => (
               <Paragraph
                 key={index}
                 className="text-sm leading-relaxed text-secondary-foreground text-justify"
@@ -153,6 +219,26 @@ const InstitutePreview = ({
               </Paragraph>
             ))}
           </div>
+          {(hasText(data.trainingOverviewTitleBn) ||
+            trainingOverviewParagraphsBn.length > 0) && (
+            <div className="mt-3 border-t border-dashed border-border pt-3">
+              {hasText(data.trainingOverviewTitleBn) && (
+                <Paragraph className="font-medium text-pBlue mb-2">
+                  {data.trainingOverviewTitleBn}
+                </Paragraph>
+              )}
+              <div className="space-y-3">
+                {trainingOverviewParagraphsBn.map((text, index) => (
+                  <Paragraph
+                    key={index}
+                    className="text-sm leading-relaxed text-secondary-foreground text-justify"
+                  >
+                    {text}
+                  </Paragraph>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

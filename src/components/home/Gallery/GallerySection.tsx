@@ -6,23 +6,18 @@ import Link from "next/link";
 import { Maximize2, ImageOff } from "lucide-react";
 import SectionTitle from "../../SectionTitle";
 import { useState } from "react";
-import { useGet } from "@/src/hooks/useGet";
 import GalleryLightbox from "@/src/components/shared/GalleryLightbox";
-import { IGalleryItem } from "./types";
+import { useGalleryList } from "./useGalleryList";
 
 const MotionLink = motion.create(Link);
 
 const GallerySection = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const { data, isLoading } = useGet<IGalleryItem[]>("/gallery/list", [
-    "gallery-list",
-  ]);
+  const { galleryItems, isLoading } = useGalleryList();
 
-  const galleryImages = (Array.isArray(data?.data) ? data.data : []).slice(
-    0,
-    5
-  );
+  // The five lowest positions — the hook has already ordered them ascending.
+  const galleryImages = galleryItems.slice(0, 5);
 
   const openLightbox = (index: number) => setLightboxIndex(index);
   const closeLightbox = () => setLightboxIndex(null);

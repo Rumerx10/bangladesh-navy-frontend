@@ -2,12 +2,14 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { ChevronDown, FileText } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { useFormContext } from "react-hook-form";
 import { Button } from "@/src/components/ui/button";
 import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
 import ControlledTextareaField from "@/src/components/shared/FromController/ControlledTextareaField";
+import InputLabel from "@/src/components/shared/InputLabel";
 import Paragraph from "@/src/components/shared/Paragraph";
 import SubmitButton from "@/src/components/shared/SubmitButton";
 import { ErrorType } from "@/src/components/shared/types/common";
@@ -23,16 +25,18 @@ interface MissionVisionFormProps {
 
 const SectionHeader = ({
   label,
+  description,
   onCancel,
   showCancel = false,
 }: {
   label: string;
+  description?: string;
   onCancel?: () => void;
   showCancel?: boolean;
 }) => {
   const [iconLoaded, setIconLoaded] = useState(false);
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between gap-4">
       <div className="flex items-center gap-3">
         <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
           <Image
@@ -48,9 +52,16 @@ const SectionHeader = ({
             onError={() => setIconLoaded(true)}
           />
         </div>
-        <Paragraph className="xl:text-lg font-medium text-pBlue">
-          {label}
-        </Paragraph>
+        <div>
+          <Paragraph className="xl:text-lg font-medium text-pBlue">
+            {label}
+          </Paragraph>
+          {description && (
+            <Paragraph className="text-xs! text-secondary-foreground">
+              {description}
+            </Paragraph>
+          )}
+        </div>
       </div>
       {showCancel && (
         <Button
@@ -72,62 +83,33 @@ const MissionVisionForm = ({
   isPending = false,
   onCancel,
 }: MissionVisionFormProps) => {
+  const [showBnFields, setShowBnFields] = useState(false);
   const { handleSubmit } = useFormContext<MissionVisionSchemaForm>();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
-      {/* Basic Information */}
+      {/* Section heading */}
       <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-card">
         <SectionHeader
-          label="Basic Information"
+          label="Section Heading"
+          description="Shown above the mission and vision cards"
           onCancel={onCancel}
           showCancel
         />
         <div className="flex flex-col gap-y-6 mt-6">
           <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Title
-            </Paragraph>
+            <InputLabel label="Title (English)" required />
             <ControlledInputField
-              name="title"
-              placeholder="Mission & Vision"
+              name="titleEn"
+              placeholder="Vision & Mission"
               className="bg-light shadow-none"
             />
           </div>
           <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Sub Title
-            </Paragraph>
+            <InputLabel label="Sub Title (English)" />
             <ControlledInputField
-              name="subTitle"
-              placeholder="Our guiding principles"
-              className="bg-light shadow-none"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Vision */}
-      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-card">
-        <SectionHeader label="Vision" />
-        <div className="flex flex-col gap-y-6 mt-6">
-          <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Title
-            </Paragraph>
-            <ControlledInputField
-              name="vision.title"
-              placeholder="Our Vision"
-              className="bg-light shadow-none"
-            />
-          </div>
-          <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Description
-            </Paragraph>
-            <ControlledTextareaField
-              name="vision.description"
-              placeholder="Describe the vision..."
+              name="subTitleEn"
+              placeholder="Our guiding principles and strategic direction."
               className="bg-light shadow-none"
             />
           </div>
@@ -139,24 +121,132 @@ const MissionVisionForm = ({
         <SectionHeader label="Mission" />
         <div className="flex flex-col gap-y-6 mt-6">
           <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Title
-            </Paragraph>
+            <InputLabel label="Mission Title (English)" required />
             <ControlledInputField
-              name="mission.title"
+              name="missionTitleEn"
               placeholder="Our Mission"
               className="bg-light shadow-none"
             />
           </div>
           <div>
-            <Paragraph className="font-semibold text-pBlue uppercase mb-2">
-              Description
-            </Paragraph>
+            <InputLabel label="Mission Description (English)" required />
             <ControlledTextareaField
-              name="mission.description"
+              name="missionDescriptionEn"
               placeholder="Describe the mission..."
+              className="bg-light shadow-none min-h-28"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Vision */}
+      <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-card">
+        <SectionHeader label="Vision" />
+        <div className="flex flex-col gap-y-6 mt-6">
+          <div>
+            <InputLabel label="Vision Title (English)" required />
+            <ControlledInputField
+              name="visionTitleEn"
+              placeholder="Our Vision"
               className="bg-light shadow-none"
             />
+          </div>
+          <div>
+            <InputLabel label="Vision Description (English)" required />
+            <ControlledTextareaField
+              name="visionDescriptionEn"
+              placeholder="Describe the vision..."
+              className="bg-light shadow-none min-h-28"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Bangla Content (optional, collapsed by default) */}
+      <div className="border border-light-silver rounded-lg bg-card">
+        <button
+          type="button"
+          onClick={() => setShowBnFields((prev) => !prev)}
+          className="w-full flex items-center justify-between gap-3 p-6 sm:p-8 cursor-pointer"
+        >
+          <div className="flex items-center gap-3">
+            <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
+              <FileText className="w-4 h-4 text-primary" />
+            </div>
+            <div className="text-left">
+              <Paragraph className="xl:text-lg font-medium text-pBlue">
+                Bangla Content
+              </Paragraph>
+              <Paragraph className="text-xs! text-secondary-foreground">
+                Optional — stored alongside the English copy
+              </Paragraph>
+            </div>
+          </div>
+          <ChevronDown
+            className={cn(
+              "w-5 h-5 text-secondary-foreground transition-transform duration-300",
+              showBnFields && "rotate-180"
+            )}
+          />
+        </button>
+
+        <div
+          className={cn(
+            "grid transition-all duration-300 ease-in-out",
+            showBnFields ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+          )}
+        >
+          <div className="overflow-hidden">
+            <div className="flex flex-col gap-y-6 px-6 sm:px-8 pb-8">
+              <div>
+                <InputLabel label="Title (Bangla)" />
+                <ControlledInputField
+                  name="titleBn"
+                  placeholder="লক্ষ্য ও উদ্দেশ্য"
+                  className="bg-light shadow-none"
+                />
+              </div>
+              <div>
+                <InputLabel label="Sub Title (Bangla)" />
+                <ControlledInputField
+                  name="subTitleBn"
+                  placeholder="আমাদের সেবার মূলনীতি"
+                  className="bg-light shadow-none"
+                />
+              </div>
+              <div>
+                <InputLabel label="Mission Title (Bangla)" />
+                <ControlledInputField
+                  name="missionTitleBn"
+                  placeholder="আমাদের লক্ষ্য"
+                  className="bg-light shadow-none"
+                />
+              </div>
+              <div>
+                <InputLabel label="Mission Description (Bangla)" />
+                <ControlledTextareaField
+                  name="missionDescriptionBn"
+                  placeholder="লক্ষ্যের বিবরণ বাংলায় লিখুন"
+                  className="bg-light shadow-none min-h-28"
+                />
+              </div>
+              <div>
+                <InputLabel label="Vision Title (Bangla)" />
+                <ControlledInputField
+                  name="visionTitleBn"
+                  placeholder="আমাদের উদ্দেশ্য"
+                  className="bg-light shadow-none"
+                />
+              </div>
+              <div>
+                <InputLabel label="Vision Description (Bangla)" />
+                <ControlledTextareaField
+                  name="visionDescriptionBn"
+                  placeholder="উদ্দেশ্যের বিবরণ বাংলায় লিখুন"
+                  className="bg-light shadow-none min-h-28"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -173,7 +263,7 @@ const MissionVisionForm = ({
         </Button>
         <SubmitButton
           isLoading={isPending}
-          label={isEditMode ? "Updating Changes" : "Update Changes"}
+          label={isEditMode ? "Update Content" : "Save Content"}
         />
       </div>
     </form>

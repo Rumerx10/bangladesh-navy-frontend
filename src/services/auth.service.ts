@@ -32,13 +32,33 @@ export const removeUserInfo = (key: string) => {
 };
 
 export async function logout() {
-  // Remove all auth cookies (httpOnly + regular) via server action
-  await removeAuthCookies();
+  // Remove all auth cookies (httpOnly + regular) via server action. Wrapped
+  // because every caller is client-side: if the action rejects, the local
+  // cleanup below still has to run or the browser keeps a dead session.
+  try {
+    await removeAuthCookies();
+  } catch (error) {
+    console.error("Failed to clear auth cookies", error);
+  }
 
-  // Remove user-specific information from localStorage
-  removeUserInfo("accessToken");
+  if (typeof window !== "undefined") {
+    // `accessToken` / `refreshToken` are written here by js-cookie, so clear
+    // them here as well rather than relying on the server action's Set-Cookie.
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
 
-  // Redirect to the home page
+    // Remove user-specific information from localStorage
+    removeUserInfo("accessToken");
+
+    // `redirect()` only works while rendering on the server. All three call
+    // sites are in the browser (the axios interceptor and the auth slice),
+    // where it throws NEXT_REDIRECT and never navigates — which is why a
+    // forced logout used to leave the user stranded on a dead page. A hard
+    // navigation also drops any stale Redux / react-query state.
+    window.location.href = "/";
+    return;
+  }
+
   redirect("/");
 }
 
