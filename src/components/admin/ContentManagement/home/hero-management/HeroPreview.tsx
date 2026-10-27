@@ -54,6 +54,7 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
               {data.titleEn || "—"}
             </Paragraph>
           </div>
+          {/* Bangla content hidden
           <div className="bg-light rounded-xl p-4 border border-border">
             <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
               Bengali Title
@@ -62,6 +63,7 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
               {data.titleBn || "—"}
             </Paragraph>
           </div>
+          */}
           <div className="bg-light rounded-xl p-4 border border-border">
             <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
               English Subtitle
@@ -70,6 +72,7 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
               {data.subTitleEn || "—"}
             </Paragraph>
           </div>
+          {/* Bangla content hidden
           <div className="bg-light rounded-xl p-4 border border-border">
             <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
               Bengali Subtitle
@@ -78,6 +81,7 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
               {data.subTitleBn || "—"}
             </Paragraph>
           </div>
+          */}
         </div>
 
         <div className="bg-light rounded-xl p-4 border border-border">
@@ -89,6 +93,7 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
           </Paragraph>
         </div>
 
+        {/* Bangla content hidden
         <div className="bg-light rounded-xl p-4 border border-border">
           <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
             Bengali Description
@@ -97,6 +102,7 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
             {data.descriptionBn || "—"}
           </Paragraph>
         </div>
+        */}
 
         <div className="bg-light rounded-xl p-4 border border-border">
           <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-2">

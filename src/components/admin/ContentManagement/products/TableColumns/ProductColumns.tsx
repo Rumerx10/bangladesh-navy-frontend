@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { siteConfig } from "@/src/config/siteConfig";
 import { IProduct, PRODUCT_CATEGORY_LABELS } from "../types";
@@ -10,7 +10,8 @@ import { StatusType } from "@/src/components/shared/types/common";
 
 export function GetProductColumns(
   onEdit: (item: IProduct) => void,
-  onDelete?: (item: IProduct) => void
+  onDelete?: (item: IProduct) => void,
+  onView?: (item: IProduct) => void
 ): ColumnDef<IProduct>[] {
   return [
     {
@@ -92,6 +93,14 @@ export function GetProductColumns(
       accessorKey: "id",
       cell: (_, row) => (
         <div className="flex items-center gap-1">
+          <button
+            onClick={() => onView?.(row)}
+            className="p-2 rounded-md hover:bg-light-dark text-secondary-foreground hover:text-pBlue transition-colors cursor-pointer"
+            title="View"
+            aria-label={`View ${row.nameEn}`}
+          >
+            <Eye className="w-4 h-4" />
+          </button>
           <button
             onClick={() => onEdit(row)}
             className="p-2 rounded-md hover:bg-light-dark text-secondary-foreground hover:text-pBlue transition-colors cursor-pointer"

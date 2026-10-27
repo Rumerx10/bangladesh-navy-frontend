@@ -20,10 +20,8 @@ export const surveyShipSchema = Yup.object({
   beam: Yup.string().required("Beam is required"),
   draft: Yup.string().required("Draft is required"),
   crew: Yup.string().required("Displacement is required"),
-  surveyEquipment: Yup.array()
-    .of(Yup.string().required())
-    .min(1, "At least one survey equipment item is required")
-    .required("Survey equipment is required"),
+  // Free text, and optional — blank rows are dropped on submit.
+  surveyEquipment: Yup.array().of(Yup.string().defined()).default([]),
   // Optional: `<input type="number">` returns "" when cleared, which Yup would
   // otherwise cast to NaN — treat it as "no position set" instead.
   position: Yup.number()

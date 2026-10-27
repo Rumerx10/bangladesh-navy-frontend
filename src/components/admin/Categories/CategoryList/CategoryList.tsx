@@ -9,10 +9,13 @@ import { DataTable } from "@/src/components/ui/data-table";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { ICategory } from "../types";
 import { GetCategoryColumns } from "../TableColumns/CategoryColumns";
+import { getCategoryViewSections } from "../TableColumns/CategoryViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 import CreateUpdateCategory from "../Form/CreateUpdateCategory";
 
 const CategoryList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<ICategory | null>(null);
   const [selectedItem, setSelectedItem] = useState<ICategory | undefined>();
   const {
     setCurrentPage,
@@ -62,7 +65,7 @@ const CategoryList = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetCategoryColumns(handleEdit);
+  const columns = GetCategoryColumns(handleEdit, setViewItem);
 
   return (
     <div>
@@ -85,6 +88,12 @@ const CategoryList = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
+      />
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="Category Details"
+        sections={viewItem ? getCategoryViewSections(viewItem) : []}
       />
     </div>
   );

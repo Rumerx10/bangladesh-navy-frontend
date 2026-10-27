@@ -6,7 +6,7 @@ import { IGalleryItem } from "./types";
 
 /** Single source of truth for the public gallery endpoint and cache key. */
 export const GALLERY_LIST_ENDPOINT = "/gallery/list";
-export const GALLERY_LIST_QUERY_KEY = ["gallery-list"];
+export const GALLERY_LIST_QUERY_KEY = ["gallery-category-list"];
 
 /** Display order — lowest `position` first. */
 export const byPosition = <T extends { position?: number | null }>(

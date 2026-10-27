@@ -1,12 +1,13 @@
 import Image from "next/image";
-import { Pencil, ImageOff, Trash2 } from "lucide-react";
+import { Eye, Pencil, ImageOff, Trash2 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { INewsEvent } from "../types";
 
 export const GetNewsEventsColumns = (
   onEdit?: (item: INewsEvent) => void,
-  onDelete?: (item: INewsEvent) => void
+  onDelete?: (item: INewsEvent) => void,
+  onView?: (item: INewsEvent) => void
 ): ColumnDef<INewsEvent>[] => [
   {
     header: "Image",
@@ -33,15 +34,15 @@ export const GetNewsEventsColumns = (
       </span>
     ),
   },
-  {
-    header: "Title (Bengali)",
-    accessorKey: "titleBn",
-    cell: (value) => (
-      <span className="text-sm text-secondary-gary line-clamp-2 max-w-60">
-        {(value as string) || "—"}
-      </span>
-    ),
-  },
+  // {
+  // header: "Title (Bengali)",
+  // accessorKey: "titleBn",
+  // cell: (value) => (
+  // <span className="text-sm text-secondary-gary line-clamp-2 max-w-60">
+  // {(value as string) || "—"}
+  // </span>
+  // ),
+  // },
   {
     header: "Category",
     accessorKey: "newsCategory",
@@ -59,6 +60,14 @@ export const GetNewsEventsColumns = (
     accessorKey: "id",
     cell: (_value, row) => (
       <div className="flex items-center gap-2">
+        <Button
+          className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
+          size="sm"
+          onClick={() => onView?.(row)}
+          aria-label={`View ${row.titleEn}`}
+        >
+          <Eye className="h-4 w-4 text-secondary-foreground" />
+        </Button>
         <Button
           className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
           size="sm"

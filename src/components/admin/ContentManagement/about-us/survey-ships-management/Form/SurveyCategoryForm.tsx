@@ -41,6 +41,7 @@ const SurveyCategoryForm = ({
         />
       </div>
 
+      {/* Bangla content hidden
       <div>
         <InputLabel label="Category Name (Bengali)" />
         <ControlledInputField
@@ -49,6 +50,7 @@ const SurveyCategoryForm = ({
           placeholder="Enter category name in Bengali"
         />
       </div>
+      */}
 
       <div>
         <InputLabel label="Status" required />

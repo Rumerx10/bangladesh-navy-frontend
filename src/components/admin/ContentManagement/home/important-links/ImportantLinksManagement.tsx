@@ -7,10 +7,13 @@ import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { DataTable } from "@/src/components/ui/data-table";
 import { IImportantLink } from "./types";
 import { GetImportantLinkColumns } from "./TableColumns/ImportantLinkColumns";
+import { getImportantLinkViewSections } from "./TableColumns/ImportantLinkViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 import CreateUpdateImportantLink from "./Form/CreateUpdateImportantLink";
 
 const ImportantLinksManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<IImportantLink | null>(null);
   const [selectedItem, setSelectedItem] = useState<
     IImportantLink | undefined
   >();
@@ -59,7 +62,7 @@ const ImportantLinksManagement = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetImportantLinkColumns(handleEdit);
+  const columns = GetImportantLinkColumns(handleEdit, setViewItem);
 
   return (
     <>
@@ -85,6 +88,12 @@ const ImportantLinksManagement = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
+      />
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="Important Link Details"
+        sections={viewItem ? getImportantLinkViewSections(viewItem) : []}
       />
     </>
   );

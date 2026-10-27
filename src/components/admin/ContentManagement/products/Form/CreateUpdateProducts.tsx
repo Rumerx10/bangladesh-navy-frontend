@@ -105,8 +105,14 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
     const formData = new FormData();
     formData.append("nameEn", values.nameEn);
     formData.append("nameBn", values.nameBn || "");
-    formData.append("descriptionEn", values.descriptionEn || "");
-    formData.append("descriptionBn", values.descriptionBn || "");
+
+    // descriptionEn / descriptionBn are non-nullable strings on the entity.
+    // Sending them unconditionally (even as "") ensures erasing the field
+    // in the UI actually erases it in the DB. `?? ""` also normalizes
+    // undefined → "" so the field is never silently omitted.
+    formData.append("descriptionEn", values.descriptionEn ?? "");
+    formData.append("descriptionBn", values.descriptionBn ?? "");
+
     if (values.category) {
       formData.append("category", values.category);
     }

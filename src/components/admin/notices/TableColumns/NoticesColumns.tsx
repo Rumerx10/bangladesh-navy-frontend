@@ -1,4 +1,4 @@
-import { Download, Pencil, Trash2 } from "lucide-react";
+import { Download, Eye, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { cn } from "@/src/lib/utils";
@@ -21,7 +21,8 @@ const formatDate = (value?: string | null) => {
 
 export const GetNoticesColumns = (
   onEdit?: (item: INotice) => void,
-  onDelete?: (item: INotice) => void
+  onDelete?: (item: INotice) => void,
+  onView?: (item: INotice) => void
 ): ColumnDef<INotice>[] => [
   {
     header: "Notice No.",
@@ -112,6 +113,14 @@ export const GetNoticesColumns = (
     accessorKey: "id",
     cell: (_value, row) => (
       <div className="flex items-center gap-2">
+        <Button
+          className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
+          size="sm"
+          onClick={() => onView?.(row)}
+          aria-label={`View ${row.noticeNumber}`}
+        >
+          <Eye className="h-4 w-4 text-secondary-foreground" />
+        </Button>
         <Button
           className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
           size="sm"

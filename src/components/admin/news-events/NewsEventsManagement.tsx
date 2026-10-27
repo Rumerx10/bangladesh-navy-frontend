@@ -11,10 +11,13 @@ import { DataTable } from "@/src/components/ui/data-table";
 import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { INewsEvent } from "./types";
 import { GetNewsEventsColumns } from "./TableColumns/NewsEventsColumns";
+import { getNewsEventsViewSections } from "./TableColumns/NewsEventsViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 import CreateUpdateNewsEvents from "./Form/CreateUpdateNewsEvents";
 
 const NewsEventsManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<INewsEvent | null>(null);
   const [selectedItem, setSelectedItem] = useState<INewsEvent | undefined>();
   const [pendingDelete, setPendingDelete] = useState<INewsEvent | null>(null);
 
@@ -103,7 +106,11 @@ const NewsEventsManagement = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetNewsEventsColumns(handleEdit, setPendingDelete);
+  const columns = GetNewsEventsColumns(
+    handleEdit,
+    setPendingDelete,
+    setViewItem
+  );
 
   return (
     <div>
@@ -129,6 +136,13 @@ const NewsEventsManagement = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
+      />
+
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="News & Event Details"
+        sections={viewItem ? getNewsEventsViewSections(viewItem) : []}
       />
 
       <DeleteConfirmDialog

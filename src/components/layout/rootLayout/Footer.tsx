@@ -226,18 +226,10 @@ const Footer = () => {
 
       {/* Copyright Bar */}
       <div className="border-t border-nav-hairline mt-10">
-        <div className="container px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between py-5 gap-3">
+        <div className="container px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center py-5 gap-3">
           <span className="text-xs text-nav-ink-muted">
             © {new Date().getFullYear()} Bangladesh Navy. All rights reserved.
           </span>
-          <div className="flex items-center gap-4 text-xs text-nav-ink-muted">
-            <Link href="#" className="hover:text-nav-ink transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="#" className="hover:text-nav-ink transition-colors">
-              Terms of Service
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

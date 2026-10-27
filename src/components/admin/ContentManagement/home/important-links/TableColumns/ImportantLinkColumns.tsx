@@ -1,11 +1,12 @@
 "use client";
 
-import { Pencil } from "lucide-react";
+import { Eye, Pencil } from "lucide-react";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { IImportantLink } from "../types";
 
 export function GetImportantLinkColumns(
-  onEdit: (item: IImportantLink) => void
+  onEdit: (item: IImportantLink) => void,
+  onView?: (item: IImportantLink) => void
 ): ColumnDef<IImportantLink>[] {
   return [
     {
@@ -50,13 +51,22 @@ export function GetImportantLinkColumns(
       header: "Action",
       accessorKey: "id",
       cell: (_, row) => (
-        <button
-          onClick={() => onEdit(row)}
-          className="p-2 rounded-md hover:bg-light-dark text-secondary-foreground hover:text-pBlue transition-colors cursor-pointer"
-          title="Edit"
-        >
-          <Pencil className="w-4 h-4" />
-        </button>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => onView?.(row)}
+            className="p-2 rounded-md hover:bg-light-dark text-secondary-foreground hover:text-pBlue transition-colors cursor-pointer"
+            title="View"
+          >
+            <Eye className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => onEdit(row)}
+            className="p-2 rounded-md hover:bg-light-dark text-secondary-foreground hover:text-pBlue transition-colors cursor-pointer"
+            title="Edit"
+          >
+            <Pencil className="w-4 h-4" />
+          </button>
+        </div>
       ),
     },
   ];

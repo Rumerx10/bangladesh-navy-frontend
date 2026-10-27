@@ -3,6 +3,7 @@
 import { Button } from "@/src/components/ui/button";
 import { AnimatePresence, motion } from "framer-motion";
 import { Eye, FolderOpen, Search, Trash2, Upload, X } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 import ImageUploadModal from "./ImageUploadModal";
 
@@ -221,10 +222,13 @@ const MediaGallery = () => {
               >
                 {/* Image */}
                 <div className="aspect-square relative overflow-hidden bg-light">
-                  <img
+                  <Image
                     src={item.url}
                     alt={item.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                    unoptimized
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
 
                   {/* Overlay */}
@@ -299,9 +303,11 @@ const MediaGallery = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative">
-                <img
+                <Image
                   src={previewItem.url}
                   alt={previewItem.name}
+                  width={1200}
+                  height={800}
                   className="w-full max-h-[60vh] object-contain bg-light"
                 />
                 <button

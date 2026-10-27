@@ -143,9 +143,12 @@ const CreateUpdateSurveyShip = ({
     formData.append("beam", values.beam);
     formData.append("draft", values.draft);
     formData.append("crew", values.crew);
-    values.surveyEquipment.forEach((item) => {
-      formData.append("surveyEquipment", item);
-    });
+    (values.surveyEquipment ?? [])
+      .map((item) => item.trim())
+      .filter(Boolean)
+      .forEach((item) => {
+        formData.append("surveyEquipment", item);
+      });
 
     // Optional — omitted entirely when left blank, so the API keeps its own
     // ordering rather than receiving an empty value it would reject.

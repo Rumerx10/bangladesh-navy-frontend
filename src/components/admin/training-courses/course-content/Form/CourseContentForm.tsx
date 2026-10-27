@@ -1,9 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDown, FileText } from "lucide-react";
 import { useFormContext } from "react-hook-form";
-import { cn } from "@/src/lib/utils";
 import { Button } from "@/src/components/ui/button";
 import InputLabel from "@/src/components/shared/InputLabel";
 import Paragraph from "@/src/components/shared/Paragraph";
@@ -32,7 +29,7 @@ const CourseContentForm = ({
   isPending = false,
   onCancel,
 }: CourseContentFormProps) => {
-  const [showBnFields, setShowBnFields] = useState(false);
+  // const [showBnFields, setShowBnFields] = useState(false);
   const { handleSubmit } = useFormContext<CourseContentFormValues>();
 
   return (
@@ -79,7 +76,8 @@ const CourseContentForm = ({
         </div>
       </div>
 
-      {/* Bangla Content (optional, collapsed by default) */}
+      {/* Bangla content hidden
+      {/* Bangla Content (optional, collapsed by default) *\/}
       <div className="border border-light-silver rounded-lg bg-card">
         <button
           type="button"
@@ -145,6 +143,7 @@ const CourseContentForm = ({
           </div>
         </div>
       </div>
+      */}
 
       {/* Course Descriptions */}
       <div className="border border-light-silver rounded-lg p-6 sm:p-8 bg-card">

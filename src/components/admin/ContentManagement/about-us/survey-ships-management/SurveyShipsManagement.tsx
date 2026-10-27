@@ -13,6 +13,8 @@ import { DataTable } from "@/src/components/ui/data-table";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import CreateUpdateSurveyShip from "./Form/CreateUpdateSurveyShip";
 import { GetSurveyShipColumns } from "./TableColumns/SurveyShipColumns";
+import { getSurveyShipViewSections } from "./TableColumns/SurveyShipViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 
 type ActiveTab = "ships" | "categories";
@@ -24,6 +26,7 @@ const TABS: { key: ActiveTab; label: string; icon: React.ElementType }[] = [
 
 const SurveyShipsManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<ISurveyShip | null>(null);
   const [activeTab, setActiveTab] = useState<ActiveTab>("ships");
   const [selectedItem, setSelectedItem] = useState<ISurveyShip | undefined>();
   const [pendingDelete, setPendingDelete] = useState<ISurveyShip | null>(null);
@@ -113,7 +116,11 @@ const SurveyShipsManagement = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetSurveyShipColumns(handleEdit, setPendingDelete);
+  const columns = GetSurveyShipColumns(
+    handleEdit,
+    setPendingDelete,
+    setViewItem
+  );
 
   return (
     <div className="space-y-6">
@@ -164,6 +171,13 @@ const SurveyShipsManagement = () => {
             isOpen={isModalOpen}
             onClose={handleModalClose}
             initialValues={selectedItem}
+          />
+
+          <ViewDetailsModal
+            isOpen={viewItem !== null}
+            onClose={() => setViewItem(null)}
+            title="Survey Ship Details"
+            sections={viewItem ? getSurveyShipViewSections(viewItem) : []}
           />
 
           <DeleteConfirmDialog

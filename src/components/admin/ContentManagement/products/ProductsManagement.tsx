@@ -11,10 +11,13 @@ import { DataTable } from "@/src/components/ui/data-table";
 import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { GetProductColumns } from "./TableColumns/ProductColumns";
+import { getProductViewSections } from "./TableColumns/ProductViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 
 const ProductsManagement = () => {
   const router = useRouter();
   const [pendingDelete, setPendingDelete] = useState<IProduct | null>(null);
+  const [viewItem, setViewItem] = useState<IProduct | null>(null);
 
   const {
     setCurrentPage,
@@ -98,7 +101,7 @@ const ProductsManagement = () => {
     router.push(`/admin/products/${item.id}/edit`);
   };
 
-  const columns = GetProductColumns(handleEdit, setPendingDelete);
+  const columns = GetProductColumns(handleEdit, setPendingDelete, setViewItem);
 
   return (
     <div className="space-y-6">
@@ -119,6 +122,13 @@ const ProductsManagement = () => {
         IsCreate
         routeURL="/admin/products/create"
         createTitle="Add Product"
+      />
+
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="Product Details"
+        sections={viewItem ? getProductViewSections(viewItem) : []}
       />
 
       <DeleteConfirmDialog

@@ -50,13 +50,19 @@ const GalleryGrid = () => {
 
   const allCategories = [
     "All",
-    ...Array.from(new Set(galleryItems.map((g) => g.galleryCategory.nameEn))),
+    ...Array.from(
+      new Set(
+        galleryItems.map((g) => g.galleryCategory?.nameEn).filter(Boolean)
+      )
+    ),
   ];
 
   const filteredItems =
     activeCategory === "All"
       ? galleryItems
-      : galleryItems.filter((g) => g.galleryCategory.nameEn === activeCategory);
+      : galleryItems.filter(
+          (g) => g.galleryCategory?.nameEn === activeCategory
+        );
 
   if (isLoading) {
     return (
@@ -175,7 +181,7 @@ const GalleryGrid = () => {
                     animate={shouldReduceMotion ? undefined : { y: 0 }}
                   >
                     <span className="inline-block px-2 py-0.5 rounded-md bg-blue-500 text-white text-[10px] font-bold uppercase tracking-wider mb-2">
-                      {item.galleryCategory.nameEn}
+                      {item.galleryCategory?.nameEn}
                     </span>
                     <h4 className="text-white text-base lg:text-lg font-bold leading-tight line-clamp-2">
                       {item.titleEn}

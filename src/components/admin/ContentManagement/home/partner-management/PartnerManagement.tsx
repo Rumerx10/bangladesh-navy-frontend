@@ -7,10 +7,13 @@ import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { DataTable } from "@/src/components/ui/data-table";
 import { IPartner } from "./types";
 import { GetPartnerColumns } from "./TableColumns/PartnerColumns";
+import { getPartnerViewSections } from "./TableColumns/PartnerViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 import CreateUpdatePartner from "./Form/CreateUpdatePartner";
 
 const PartnerManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<IPartner | null>(null);
   const [selectedItem, setSelectedItem] = useState<IPartner | undefined>();
 
   const {
@@ -57,7 +60,7 @@ const PartnerManagement = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetPartnerColumns(handleEdit);
+  const columns = GetPartnerColumns(handleEdit, setViewItem);
 
   return (
     <>
@@ -83,6 +86,12 @@ const PartnerManagement = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
+      />
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="Partner Details"
+        sections={viewItem ? getPartnerViewSections(viewItem) : []}
       />
     </>
   );

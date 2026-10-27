@@ -1,9 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
-import { ChevronDown, FileText } from "lucide-react";
-import { cn } from "@/src/lib/utils";
+import { FileText } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import { useGet } from "@/src/hooks/useGet";
 import { mapToSelectOptions } from "@/src/utils/mapToSelectOptions";
@@ -14,7 +12,7 @@ import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
 import ControlledSelectField from "@/src/components/shared/FromController/ControlledSelectField";
 import ControlledTextareaField from "@/src/components/shared/FromController/ControlledTextareaField";
-import MultipleStringField from "@/src/components/shared/FromController/MultipleStringField";
+import StringListField from "@/src/components/shared/FromController/StringListField";
 import { FileUploadController } from "@/src/components/shared/FromController/FileUploadController";
 import { Button } from "@/src/components/ui/button";
 import { ErrorType } from "@/src/components/shared/types/common";
@@ -41,7 +39,7 @@ const SurveyShipForm = ({
   isPending = false,
   error,
 }: SurveyShipFormProps) => {
-  const [showBnFields, setShowBnFields] = useState(false);
+  // const [showBnFields, setShowBnFields] = useState(false);
   const { handleSubmit } = useFormContext<SurveyShipFormValues>();
 
   const { data: categoryData } = useGet<ISurveyCategory[]>(
@@ -174,6 +172,7 @@ const SurveyShipForm = ({
             <InputLabel label="Length" required />
             <ControlledInputField
               name="length"
+              type="number"
               placeholder="e.g. 60 m"
               className="bg-light shadow-none"
             />
@@ -182,6 +181,7 @@ const SurveyShipForm = ({
             <InputLabel label="Beam" required />
             <ControlledInputField
               name="beam"
+              type="number"
               placeholder="e.g. 10 m"
               className="bg-light shadow-none"
             />
@@ -190,6 +190,7 @@ const SurveyShipForm = ({
             <InputLabel label="Draft" required />
             <ControlledInputField
               name="draft"
+              type="number"
               placeholder="e.g. 3 m"
               className="bg-light shadow-none"
             />
@@ -198,6 +199,7 @@ const SurveyShipForm = ({
             <InputLabel label="Displacement" required />
             <ControlledInputField
               name="crew"
+              type="number"
               placeholder="e.g. 45 Tons"
               className="bg-light shadow-none"
             />
@@ -205,16 +207,18 @@ const SurveyShipForm = ({
         </div>
 
         <div className="mt-6">
-          <InputLabel label="Capabilities" required />
-          <MultipleStringField
+          <InputLabel label="Capabilities" />
+          <StringListField
             name="surveyEquipment"
-            itemLabel="Equipment"
+            itemLabel="Capability"
             placeholder="e.g. Multibeam echo sounder"
+            emptyMessage="No capabilities added yet."
           />
         </div>
       </div>
 
-      {/* Bengali Fields Section (optional, collapsed by default) */}
+      {/* Bangla content hidden
+      {/* Bengali Fields Section (optional, collapsed by default) *\/}
       <div className="border border-light-silver rounded-lg bg-card">
         <button
           type="button"
@@ -270,6 +274,7 @@ const SurveyShipForm = ({
           </div>
         </div>
       </div>
+      */}
       <ErrorMessage error={error} />
 
       <div className="flex items-center justify-end gap-4">

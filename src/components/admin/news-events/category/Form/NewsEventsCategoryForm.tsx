@@ -35,6 +35,7 @@ const NewsEventsCategoryForm = ({
         />
       </div>
 
+      {/* Bangla content hidden
       <div>
         <InputLabel label="Category Name (Bengali)" />
         <ControlledInputField
@@ -43,6 +44,7 @@ const NewsEventsCategoryForm = ({
           placeholder="Enter category name in Bengali"
         />
       </div>
+      */}
 
       <ErrorMessage error={error} />
 

@@ -3,12 +3,15 @@ import { useGet } from "@/src/hooks/useGet";
 import { usePagination } from "@/src/hooks/usePagination";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import { useAppSelector } from "@/src/lib/redux/hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CareersTable from "../CareersTable";
 import { GetApplicantColumns } from "../TableColumns/ApplicantColumns";
+import { getApplicantViewSections } from "../TableColumns/ApplicantViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 import { IApplicant } from "../types";
 
 const ApplicantList = () => {
+  const [viewItem, setViewItem] = useState<IApplicant | null>(null);
   const {
     setCurrentPage,
     itemsPerPage,
@@ -46,7 +49,7 @@ const ApplicantList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  const columns = GetApplicantColumns();
+  const columns = GetApplicantColumns(undefined, setViewItem);
   return (
     <div>
       <CareersTable
@@ -60,6 +63,12 @@ const ApplicantList = () => {
         setItemsPerPage={setItemsPerPage}
         search={search}
         handleSearchChange={handleSearchChange}
+      />
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="Applicant Details"
+        sections={viewItem ? getApplicantViewSections(viewItem) : []}
       />
     </div>
   );

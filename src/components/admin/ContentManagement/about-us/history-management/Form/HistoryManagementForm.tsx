@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { ChevronDown, Image as ImageIcon } from "lucide-react";
+import { Image as ImageIcon } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { useFormContext } from "react-hook-form";
 import { Button } from "@/src/components/ui/button";
@@ -111,7 +111,7 @@ const HistoryManagementForm = ({
     setValue,
     formState: { errors },
   } = useFormContext<HistoryManagementSchemaForm>();
-  const [showBnContent, setShowBnContent] = useState(false);
+  // const [showBnContent, setShowBnContent] = useState(false);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
@@ -168,7 +168,8 @@ const HistoryManagementForm = ({
         </div>
       </div>
 
-      {/* Bengali Content Section (optional, collapsed by default) */}
+      {/* Bangla content hidden
+      {/* Bengali Content Section (optional, collapsed by default) *\/}
       <div className="border border-light-silver rounded-lg bg-card">
         <button
           type="button"
@@ -228,6 +229,7 @@ const HistoryManagementForm = ({
           </div>
         </div>
       </div>
+      */}
 
       {/* Commented out — Timeline is not part of the current /history API. */}
       {/* <div className="border border-light-silver rounded-lg p-8 bg-card">

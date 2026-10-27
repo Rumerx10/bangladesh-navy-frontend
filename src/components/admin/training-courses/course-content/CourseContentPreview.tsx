@@ -8,19 +8,17 @@ import { ICourseInfo } from "@/src/components/course-info/types";
 
 interface CourseContentPreviewProps {
   data: ICourseInfo;
-  isUsingDefaults?: boolean;
   onEdit: () => void;
 }
 
 /** Bangla blocks only appear once a translation has actually been entered. */
-const hasText = (value?: string | null) => !!value?.trim();
+// const hasText = (value?: string | null) => !!value?.trim();
 
 const CourseContentPreview = ({
   data,
-  isUsingDefaults = false,
   onEdit,
 }: CourseContentPreviewProps) => {
-  const sequenceBn = data.courseSequenceBn ?? [];
+  // const sequenceBn = data.courseSequenceBn ?? [];
 
   return (
     <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
@@ -57,14 +55,6 @@ const CourseContentPreview = ({
       </div>
 
       <div className="p-6 sm:p-8 pt-10 space-y-8">
-        {isUsingDefaults && (
-          <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
-            <Paragraph className="text-sm! text-amber-800">
-              Nothing has been saved yet — this is the fallback copy the public
-              page falls back to. Edit and save to store it.
-            </Paragraph>
-          </div>
-        )}
 
         {/* Title & Introduction */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -73,11 +63,13 @@ const CourseContentPreview = ({
               Title
             </Paragraph>
             <Paragraph className="text-base">{data.titleEn}</Paragraph>
+            {/* Bangla content hidden
             {hasText(data.titleBn) && (
               <Paragraph className="mt-2 text-sm! text-secondary-foreground">
                 {data.titleBn}
               </Paragraph>
             )}
+            */}
           </div>
           <div className="bg-light rounded-xl p-5 border border-border">
             <Paragraph className="font-semibold text-pBlue uppercase mb-2">
@@ -86,11 +78,13 @@ const CourseContentPreview = ({
             <Paragraph className="text-sm leading-relaxed text-secondary-foreground text-justify">
               {data.introductionEn}
             </Paragraph>
+            {/* Bangla content hidden
             {hasText(data.introductionBn) && (
               <Paragraph className="mt-3 text-sm leading-relaxed text-secondary-foreground text-justify">
                 {data.introductionBn}
               </Paragraph>
             )}
+            */}
           </div>
         </div>
 
@@ -108,6 +102,7 @@ const CourseContentPreview = ({
                 <li key={index}>{item}</li>
               ))}
             </ol>
+            {/* Bangla content hidden
             {sequenceBn.length > 0 && (
               <ol className="list-decimal list-inside space-y-1 text-sm text-secondary-foreground">
                 {sequenceBn.map((item, index) => (
@@ -115,6 +110,7 @@ const CourseContentPreview = ({
                 ))}
               </ol>
             )}
+            */}
           </div>
         </div>
 
@@ -144,6 +140,7 @@ const CourseContentPreview = ({
                     {section.descriptionEn}
                   </Paragraph>
 
+                  {/* Bangla content hidden
                   {(hasText(section.titleBn) ||
                     hasText(section.descriptionBn)) && (
                     <div className="mt-3 border-t border-dashed border-border pt-3">
@@ -159,6 +156,7 @@ const CourseContentPreview = ({
                       )}
                     </div>
                   )}
+                  */}
                 </div>
               ))}
             </div>

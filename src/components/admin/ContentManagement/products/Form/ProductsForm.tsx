@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { ChevronDown, FileText } from "lucide-react";
-import { cn } from "@/src/lib/utils";
+import { useEffect, useMemo } from "react";
+import { FileText } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import { useGet } from "@/src/hooks/useGet";
 import { Button } from "@/src/components/ui/button";
@@ -67,7 +66,7 @@ const ProductForm = ({
     setValue,
     formState: { dirtyFields },
   } = useFormContext<ProductFormValues>();
-  const [showBnFields, setShowBnFields] = useState(false);
+  // const [showBnFields, setShowBnFields] = useState(false);
 
   const category = watch("category");
 
@@ -335,7 +334,8 @@ const ProductForm = ({
         </div>
       </div>
 
-      {/* Bengali Fields Section (optional, collapsed by default) */}
+      {/* Bangla content hidden
+      {/* Bengali Fields Section (optional, collapsed by default) *\/}
       <div className="border border-light-silver rounded-lg bg-card">
         <button
           type="button"
@@ -391,6 +391,7 @@ const ProductForm = ({
           </div>
         </div>
       </div>
+      */}
 
       <ErrorMessage error={error} />
 

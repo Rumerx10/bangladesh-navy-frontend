@@ -43,6 +43,7 @@ const BiographyPreview = ({ data, onEdit }: BiographyPreviewProps) => {
               {data.nameEn || "—"}
             </Paragraph>
           </div>
+          {/* Bangla content hidden
           <div className="bg-light rounded-xl p-4 border border-border">
             <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
               Bengali Name
@@ -51,6 +52,7 @@ const BiographyPreview = ({ data, onEdit }: BiographyPreviewProps) => {
               {data.nameBn || "—"}
             </Paragraph>
           </div>
+          */}
           <div className="bg-light rounded-xl p-4 border border-border">
             <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
               English Designation
@@ -59,6 +61,7 @@ const BiographyPreview = ({ data, onEdit }: BiographyPreviewProps) => {
               {data.designationEn || "—"}
             </Paragraph>
           </div>
+          {/* Bangla content hidden
           <div className="bg-light rounded-xl p-4 border border-border">
             <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
               Bengali Designation
@@ -67,6 +70,7 @@ const BiographyPreview = ({ data, onEdit }: BiographyPreviewProps) => {
               {data.designationBn || "—"}
             </Paragraph>
           </div>
+          */}
         </div>
 
         <div className="bg-light rounded-xl p-4 border border-border">

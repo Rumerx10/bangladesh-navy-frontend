@@ -41,6 +41,7 @@ const GalleryCategoryForm = ({
         />
       </div>
 
+      {/* Bangla content hidden
       <div>
         <InputLabel label="Category Name (Bengali)" />
         <ControlledInputField
@@ -49,6 +50,7 @@ const GalleryCategoryForm = ({
           placeholder="Enter category name in Bengali"
         />
       </div>
+      */}
 
       <div>
         <InputLabel label="Status" required />

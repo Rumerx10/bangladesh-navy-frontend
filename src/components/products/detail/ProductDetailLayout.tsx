@@ -1,13 +1,14 @@
 "use client";
-import Image from "next/image";
+import parse from "html-react-parser";
 import ProductInfo from "./ProductInfo";
-import ProductTabs from "./ProductTabs";
-import TiffPreview from "../TiffPreview";
+import ProductImageCarousel from "./ProductImageCarousel";
 import ProductAttributes from "./ProductAttributes";
 import ProductKeyFeatures from "./ProductKeyFeatures";
 import { INavyProduct } from "@/src/components/products/types";
 import { formatPrice, getDiscountedPrice } from "@/src/data/navyProducts";
 import { IProduct } from "@/src/components/admin/ContentManagement/products/types";
+
+
 
 interface ProductDetailLayoutProps {
   product: INavyProduct;
@@ -19,12 +20,8 @@ const ProductDetailLayout = ({
   chartDetails,
 }: ProductDetailLayoutProps) => {
   const discountedPrice = getDiscountedPrice(product);
-  const imageUrl = product.images?.[0] ?? "/img1.jpeg";
+  const images = (product.images ?? []).filter(Boolean);
 
-  const isTiff = /\.(tif|tiff)$/i.test(imageUrl);
-  // Tide tables carry none of the chart metadata those two sections are built
-  // from, so they'd render as an empty spec grid and a "No description
-  // available." panel. Paper charts and ENCs keep both.
   const isTidal = chartDetails?.category === "TIDAL";
   return (
     <div className="container px-4 sm:px-6 lg:px-8 py-6 lg:py-8 mt-24 lg:mt-20">
@@ -44,21 +41,8 @@ const ProductDetailLayout = ({
             height, so the portrait book covers letterbox inside it via
             object-contain instead of stretching the row. */}
         <div className="relative w-full aspect-4/3 max-h-[70vh] flex items-center justify-center overflow-hidden">
-          {isTiff ? (
-            <TiffPreview
-              src={imageUrl}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <Image
-              src={imageUrl}
-              alt={product.nameEn}
-              width={400}
-              height={300}
-              className="object-contain w-full h-full"
-            />
-          )}
-          <div className="absolute bottom-4 left-4 px-3 py-1.5 rounded-lg bg-black/40 backdrop-blur-sm text-white text-sm font-medium">
+          <ProductImageCarousel images={images} alt={product.nameEn} />
+          <div className="absolute bottom-4 left-4 z-10 px-3 py-1.5 rounded-lg bg-black/40 backdrop-blur-sm text-white text-sm font-medium">
             {product.category.nameEn}
           </div>
         </div>
@@ -84,10 +68,24 @@ const ProductDetailLayout = ({
       )}
 
       {/* Tabs */}
-      {!isTidal && (
-        <div className="mt-8">
-          <ProductTabs product={product} />
-        </div>
+      {!isTidal && product?.descriptionEn && (
+        <div className="rounded-xl border border-border overflow-hidden">
+              <div className="flex border-b border-border bg-light">
+                  <div           
+                    className="px-5 py-3 font-semibold text-sm transition-colors cursor-pointer text-liteBlue border-liteBlue bg-light"
+                  >
+                    Description
+                  </div>
+              </div>
+              <div className="p-5 text-sm text-secondary-foreground leading-relaxed [&_h3]:font-bold [&_h3]:text-pBlue [&_h3]:text-base [&_h3]:mb-3 [&_h3]:mt-2 [&_p]:mb-3 [&_table]:w-full [&_table]:border-collapse [&_table]:mt-2 [&_th]:border [&_th]:border-border [&_th]:bg-brand-blue [&_th]:text-white [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:text-xs [&_th]:font-semibold [&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 [&_td]:text-xs [&_tr:nth-child(even)_td]:bg-light">
+                {parse(product.descriptionEn ?? "No description available.")}
+              </div>
+              {product?.content && (
+                <div className="p-5 text-sm text-secondary-foreground leading-relaxed [&_h3]:font-bold [&_h3]:text-pBlue [&_h3]:text-base [&_h3]:mb-3 [&_h3]:mt-2 [&_p]:mb-3 [&_table]:w-full [&_table]:border-collapse [&_table]:mt-2 [&_th]:border [&_th]:border-border [&_th]:bg-brand-blue [&_th]:text-white [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:text-xs [&_th]:font-semibold [&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 [&_td]:text-xs [&_tr:nth-child(even)_td]:bg-light">
+                  {parse(product.content)}
+                </div>
+              )}
+            </div>
       )}
     </div>
   );

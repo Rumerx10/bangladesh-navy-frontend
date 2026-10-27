@@ -12,10 +12,13 @@ import Paragraph from "@/src/components/shared/Paragraph";
 import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { ISurveyCategory } from "./types";
 import { GetSurveyCategoryColumns } from "./TableColumns/SurveyCategoryColumns";
+import { getSurveyCategoryViewSections } from "./TableColumns/SurveyCategoryViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 import CreateUpdateSurveyCategory from "./Form/CreateUpdateSurveyCategory";
 
 const SurveyCategoryCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<ISurveyCategory | null>(null);
   const [selectedItem, setSelectedItem] = useState<
     ISurveyCategory | undefined
   >();
@@ -73,7 +76,11 @@ const SurveyCategoryCard = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetSurveyCategoryColumns(handleEdit, setPendingDelete);
+  const columns = GetSurveyCategoryColumns(
+    handleEdit,
+    setPendingDelete,
+    setViewItem
+  );
 
   return (
     <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
@@ -116,6 +123,13 @@ const SurveyCategoryCard = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
+      />
+
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="Survey Category Details"
+        sections={viewItem ? getSurveyCategoryViewSections(viewItem) : []}
       />
 
       <DeleteConfirmDialog

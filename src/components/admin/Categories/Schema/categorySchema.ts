@@ -4,7 +4,8 @@ const SUPPORTED_ICON_FORMATS = ["image/svg+xml", "image/png"];
 const ICON_MAX_SIZE = 2 * 1024 * 1024;
 
 export const categorySchema = Yup.object({
-  nameBn: Yup.string().required("Bangla name is required"),
+  // nameBn: Yup.string().required("Bangla name is required"),
+  nameBn: Yup.string().optional(),
   nameEn: Yup.string().default(""),
   descriptionEn: Yup.string().default(""),
   descriptionBn: Yup.string().default(""),

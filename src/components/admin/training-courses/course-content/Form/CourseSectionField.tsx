@@ -63,7 +63,8 @@ const CourseSectionField = () => {
                 </Button>
               </div>
 
-              <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+              {/* Bangla column hidden — was: grid grid-cols-1 gap-4 lg:grid-cols-2 */}
+              <div className="grid grid-cols-1 gap-4">
                 <div className="space-y-3">
                   <div>
                     <InputLabel label="Title (English)" required />
@@ -107,6 +108,7 @@ const CourseSectionField = () => {
                 </div>
 
                 <div className="space-y-3">
+                  {/* Bangla content hidden
                   <div>
                     <InputLabel label="Title (Bangla)" />
                     <Controller
@@ -124,6 +126,8 @@ const CourseSectionField = () => {
                       )}
                     />
                   </div>
+                  */}
+                  {/* Bangla content hidden
                   <div>
                     <InputLabel label="Description (Bangla)" />
                     <Controller
@@ -146,6 +150,7 @@ const CourseSectionField = () => {
                       )}
                     />
                   </div>
+                  */}
                 </div>
               </div>
             </div>

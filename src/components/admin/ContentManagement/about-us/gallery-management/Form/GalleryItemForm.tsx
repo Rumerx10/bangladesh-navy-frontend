@@ -77,7 +77,8 @@ const GalleryItemForm = ({
         </div>
       </div>
 
-      {/* Bengali Content */}
+      {/* Bangla content hidden
+      {/* Bengali Content *\/}
       <div className="border border-light-silver rounded-lg p-8 bg-card">
         <div className="flex items-center gap-3 mb-6">
           <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
@@ -95,6 +96,7 @@ const GalleryItemForm = ({
           className="bg-light shadow-none"
         />
       </div>
+      */}
 
       {/* Image, Category & Position */}
       <div className="border border-light-silver rounded-lg p-8 bg-card">

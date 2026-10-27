@@ -1,8 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDown, FileText } from "lucide-react";
-import { cn } from "@/src/lib/utils";
 import { useFormContext } from "react-hook-form";
 import { Button } from "@/src/components/ui/button";
 import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
@@ -10,7 +7,6 @@ import ControlledInputField from "@/src/components/shared/FromController/Control
 import ControlledTextareaField from "@/src/components/shared/FromController/ControlledTextareaField";
 import StringListField from "@/src/components/shared/FromController/StringListField";
 import InputLabel from "@/src/components/shared/InputLabel";
-import Paragraph from "@/src/components/shared/Paragraph";
 import SubmitButton from "@/src/components/shared/SubmitButton";
 import { ErrorType } from "@/src/components/shared/types/common";
 import FormSectionHeader from "../../FormSectionHeader";
@@ -32,7 +28,7 @@ const InstituteForm = ({
   isPending = false,
   onCancel,
 }: InstituteFormProps) => {
-  const [showBnFields, setShowBnFields] = useState(false);
+  // const [showBnFields, setShowBnFields] = useState(false);
   const { handleSubmit } = useFormContext<InstituteSchemaForm>();
 
   return (
@@ -157,7 +153,8 @@ const InstituteForm = ({
         </div>
       </div>
 
-      {/* Bangla Content (optional, collapsed by default) */}
+      {/* Bangla content hidden
+      {/* Bangla Content (optional, collapsed by default) *\/}
       <div className="border border-light-silver rounded-lg bg-card">
         <button
           type="button"
@@ -270,6 +267,7 @@ const InstituteForm = ({
           </div>
         </div>
       </div>
+      */}
 
       <ErrorMessage error={error} />
 

@@ -7,8 +7,11 @@ interface IPaginationProps {
   onPageChange: (page: number) => void;
   itemsPerPage: number;
   totalItems: number;
-  setItemsPerPage?: (page: string | number) => void;
+  onItemsPerPageChange?: (itemsPerPage: number) => void;
+  pageSizeOptions?: number[];
 }
+
+const DEFAULT_PAGE_SIZE_OPTIONS = [6, 12, 24, 48, 96];
 
 const Pagination = ({
   currentPage,
@@ -16,8 +19,10 @@ const Pagination = ({
   onPageChange,
   itemsPerPage,
   totalItems,
+  onItemsPerPageChange,
+  pageSizeOptions = DEFAULT_PAGE_SIZE_OPTIONS,
 }: IPaginationProps) => {
-  const pages = [];
+  const pages: (number | "...")[] = [];
 
   pages.push(1);
 
@@ -48,16 +53,45 @@ const Pagination = ({
 
   return (
     <div className="flex flex-col lg:flex-row items-center justify-between px-5 py-4 gap-4">
-      <div className="text-sm text-muted-foreground">
-        Showing{" "}
-        <span className="font-medium">
-          {(currentPage - 1) * itemsPerPage + 1}
-        </span>{" "}
-        to{" "}
-        <span className="font-medium">
-          {Math.min(currentPage * itemsPerPage, totalItems)}
-        </span>{" "}
-        of <span className="font-medium">{totalItems}</span> entries
+      <div className="flex flex-col sm:flex-row items-center gap-3 text-sm text-muted-foreground">
+        {onItemsPerPageChange && (
+          <label className="flex items-center gap-2">
+            <span className="whitespace-nowrap">Show</span>
+            <select
+  value={itemsPerPage}
+  onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
+  className="h-8 rounded-md border border-border bg-card px-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 cursor-pointer"
+  aria-label="Items per page"
+>
+  {pageSizeOptions.map((size) => (
+    <option key={size} value={size}>
+      {size}
+    </option>
+  ))}
+  <option value={-1}>All</option>
+</select>
+          </label>
+        )}
+
+        <span>
+          {totalItems === 0 ? (
+            <>
+              <span className="font-medium">0</span> entries
+            </>
+          ) : (
+            <>
+              Showing{" "}
+              <span className="font-medium">
+                {(currentPage - 1) * itemsPerPage + 1}
+              </span>{" "}
+              to{" "}
+              <span className="font-medium">
+                {Math.min(currentPage * itemsPerPage, totalItems)}
+              </span>{" "}
+              of <span className="font-medium">{totalItems}</span> entries
+            </>
+          )}
+        </span>
       </div>
 
       <div className="flex items-center gap-3">
@@ -80,7 +114,6 @@ const Pagination = ({
                   ? "bg-primary hover:bg-primary text-white hover:text-white"
                   : ""
               }`}
-              // variant={page === currentPage ? "default" : "outline"}
               size="sm"
               onClick={() => typeof page === "number" && onPageChange(page)}
               disabled={typeof page !== "number"}
@@ -93,7 +126,7 @@ const Pagination = ({
             variant="outline"
             size="sm"
             onClick={() => onPageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
+            disabled={currentPage >= totalPages}
           >
             <ChevronRightIcon className="h-4 w-4" />
           </Button>

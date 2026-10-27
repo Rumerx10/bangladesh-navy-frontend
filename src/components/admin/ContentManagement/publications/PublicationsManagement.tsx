@@ -10,9 +10,12 @@ import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import CreateUpdatePublication from "./Form/CreateUpdatePublication";
 import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { GetPublicationColumns } from "./TableColumns/PublicationColumns";
+import { getPublicationViewSections } from "./TableColumns/PublicationViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 
 const PublicationsManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<IPublication | null>(null);
   const [selectedItem, setSelectedItem] = useState<IPublication | undefined>();
   const [pendingDelete, setPendingDelete] = useState<IPublication | null>(null);
 
@@ -70,7 +73,11 @@ const PublicationsManagement = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetPublicationColumns(handleEdit, setPendingDelete);
+  const columns = GetPublicationColumns(
+    handleEdit,
+    setPendingDelete,
+    setViewItem
+  );
 
   return (
     <>
@@ -97,6 +104,13 @@ const PublicationsManagement = () => {
         onClose={handleModalClose}
         initialValues={selectedItem}
       />
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="Publication Details"
+        sections={viewItem ? getPublicationViewSections(viewItem) : []}
+      />
+
       <DeleteConfirmDialog
         isOpen={pendingDelete !== null}
         onClose={() => setPendingDelete(null)}

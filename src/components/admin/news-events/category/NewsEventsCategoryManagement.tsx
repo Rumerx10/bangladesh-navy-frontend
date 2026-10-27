@@ -10,10 +10,13 @@ import { DataTable } from "@/src/components/ui/data-table";
 import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { INewsEventsCategory } from "./types";
 import { GetNewsEventsCategoryColumns } from "./TableColumns/NewsEventsCategoryColumns";
+import { getNewsEventsCategoryViewSections } from "./TableColumns/NewsEventsCategoryViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 import CreateUpdateNewsEventsCategory from "./Form/CreateUpdateNewsEventsCategory";
 
 const NewsEventsCategoryManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<INewsEventsCategory | null>(null);
   const [selectedItem, setSelectedItem] = useState<
     INewsEventsCategory | undefined
   >();
@@ -103,7 +106,11 @@ const NewsEventsCategoryManagement = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetNewsEventsCategoryColumns(handleEdit, setPendingDelete);
+  const columns = GetNewsEventsCategoryColumns(
+    handleEdit,
+    setPendingDelete,
+    setViewItem
+  );
 
   return (
     <div>
@@ -129,6 +136,13 @@ const NewsEventsCategoryManagement = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
+      />
+
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="News Category Details"
+        sections={viewItem ? getNewsEventsCategoryViewSections(viewItem) : []}
       />
 
       <DeleteConfirmDialog

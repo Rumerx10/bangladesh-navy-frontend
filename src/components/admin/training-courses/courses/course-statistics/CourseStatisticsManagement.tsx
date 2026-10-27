@@ -19,6 +19,8 @@ import {
 } from "@/src/components/course-statistics/useCourseStatistics";
 import CreateUpdateCourseStatistic from "./Form/CreateUpdateCourseStatistic";
 import { GetCourseStatisticColumns } from "./TableColumns/CourseStatisticColumns";
+import { getCourseStatisticViewSections } from "./TableColumns/CourseStatisticViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 
 /**
  * The row set is the public statistics table — a handful of rows — so the whole
@@ -34,6 +36,7 @@ const FETCH_LIMIT = 50;
 
 const CourseStatisticsManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<ICourseStatistic | null>(null);
   const [selectedItem, setSelectedItem] = useState<
     ICourseStatistic | undefined
   >();
@@ -112,7 +115,11 @@ const CourseStatisticsManagement = () => {
     [allRows]
   );
 
-  const columns = GetCourseStatisticColumns(handleEdit, setPendingDelete);
+  const columns = GetCourseStatisticColumns(
+    handleEdit,
+    setPendingDelete,
+    setViewItem
+  );
 
   return (
     <div className="space-y-3">
@@ -154,6 +161,13 @@ const CourseStatisticsManagement = () => {
         onClose={handleModalClose}
         initialValues={selectedItem}
         nextSerial={nextSerial}
+      />
+
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="Course Statistic Details"
+        sections={viewItem ? getCourseStatisticViewSections(viewItem) : []}
       />
 
       <DeleteConfirmDialog

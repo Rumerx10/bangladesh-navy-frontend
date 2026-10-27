@@ -1,4 +1,4 @@
-import { GraduationCap, Pencil, Trash2 } from "lucide-react";
+import { Eye, GraduationCap, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { IBatch } from "@/src/components/batches/types";
@@ -7,7 +7,8 @@ import { formatShortDate } from "@/src/components/alumni/utils";
 export const GetBatchColumns = (
   onEdit?: (item: IBatch) => void,
   onDelete?: (item: IBatch) => void,
-  onViewMembers?: (item: IBatch) => void
+  onViewMembers?: (item: IBatch) => void,
+  onView?: (item: IBatch) => void
 ): ColumnDef<IBatch>[] => [
   {
     header: "Batch",
@@ -67,6 +68,15 @@ export const GetBatchColumns = (
     accessorKey: "id",
     cell: (_value, row) => (
       <div className="flex items-center gap-2">
+        <Button
+          className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-border bg-light hover:bg-light"
+          size="sm"
+          onClick={() => onView?.(row)}
+          aria-label={`View ${row.name}`}
+          title="View details"
+        >
+          <Eye className="h-4 w-4 text-secondary-foreground" />
+        </Button>
         <Button
           className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-border bg-light hover:bg-light"
           size="sm"

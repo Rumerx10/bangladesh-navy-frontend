@@ -86,6 +86,7 @@ const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
           </div>
         </div>
 
+        {/* Bangla content hidden
         {data.contentBn && (
           <div className="bg-light rounded-xl p-5 border border-border">
             <Paragraph className="font-semibold text-pBlue uppercase mb-3">
@@ -99,6 +100,7 @@ const HistoryPreview = ({ data, onEdit }: HistoryPreviewProps) => {
             </div>
           </div>
         )}
+        */}
 
         {/* Commented out — Key Milestones is not part of the current /history API. */}
         {/* {data.keyMilestones && data.keyMilestones.length > 0 && (

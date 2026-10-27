@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { BarChart3, CalendarRange } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import InputLabel from "@/src/components/shared/InputLabel";
@@ -64,12 +65,18 @@ const CourseForm = ({
   const bn = watch("bn");
   const otherMaritimeOrg = watch("otherMaritimeOrg");
   const overseas = watch("overseas");
-  const totalTrainees = watch("totalTrainees");
 
-  // The public table prints the API's `totalTrainees` verbatim, so a mismatch
-  // with the three columns beside it is worth surfacing before it is saved.
-  const sum = toCount(bn) + toCount(otherMaritimeOrg) + toCount(overseas);
-  const showSumHint = sum > 0 && toCount(totalTrainees) !== sum;
+  // Total is always BN + Other Maritime Org + Overseas — kept in sync here so
+  // it can never be typed in wrong. Left empty while all three are empty.
+  useEffect(() => {
+    const allEmpty = [bn, otherMaritimeOrg, overseas].every(
+      (v) => String(v ?? "").trim() === ""
+    );
+    const sum = toCount(bn) + toCount(otherMaritimeOrg) + toCount(overseas);
+    setValue("totalTrainees", allEmpty ? undefined : sum, {
+      shouldValidate: true,
+    });
+  }, [bn, otherMaritimeOrg, overseas, setValue]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
@@ -167,30 +174,12 @@ const CourseForm = ({
             <ControlledInputField
               name="totalTrainees"
               type="number"
-              placeholder="e.g. 133"
+              placeholder="Auto-calculated"
+              disabled
               className="bg-light shadow-none"
             />
           </div>
         </div>
-
-        {showSumHint && (
-          <div className="mt-4 flex flex-wrap items-center gap-3 rounded-md border border-amber-200 bg-amber-50 px-4 py-3">
-            <Paragraph className="text-xs! text-amber-800">
-              BN + Other Maritime Org + Overseas ={" "}
-              <span className="font-bold tabular-nums">{sum}</span>, which does
-              not match Total Trainees.
-            </Paragraph>
-            <Button
-              type="button"
-              onClick={() =>
-                setValue("totalTrainees", sum, { shouldValidate: true })
-              }
-              className="h-8 cursor-pointer bg-amber-600 px-3 text-xs text-white hover:bg-amber-700"
-            >
-              Use {sum}
-            </Button>
-          </div>
-        )}
 
         <Paragraph className="mt-4 text-xs! text-secondary-foreground">
           Leave a figure empty where none is available — the public table prints

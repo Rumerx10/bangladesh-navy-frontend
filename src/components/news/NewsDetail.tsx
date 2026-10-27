@@ -35,7 +35,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
     return (
       <div className="mt-24 lg:mt-20">
         <div className="h-85 lg:h-105 bg-light-silver animate-pulse" />
-        <div className="max-w-3xl mx-auto px-4 py-10 space-y-4">
+        <div className="container mx-auto px-4 py-10 space-y-4">
           <div className="h-6 w-32 bg-light-silver animate-pulse rounded" />
           <div className="h-10 w-full bg-light-silver animate-pulse rounded" />
           <div className="h-4 w-full bg-light-silver animate-pulse rounded" />
@@ -111,7 +111,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
         </div>
 
         <div className="relative container px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto">
+          <div className="container px-4 mx-auto">
             {/* Meta */}
             <motion.div
               className="flex flex-wrap items-center gap-4 mb-6"

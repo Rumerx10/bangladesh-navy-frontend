@@ -21,6 +21,8 @@ import {
 import { ALUMNI_MEMBERS_TREE_QUERY_KEY } from "@/src/components/alumni/useAlumni";
 import CreateUpdateBatch from "./Form/CreateUpdateBatch";
 import { GetBatchColumns } from "./TableColumns/BatchColumns";
+import { getBatchViewSections } from "./TableColumns/BatchViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 
 interface BatchesCardProps {
   /** Pre-filters the table to one course's batches — set when drilling down from Courses. */
@@ -36,6 +38,7 @@ const BatchesCard = ({
   onViewMembers,
 }: BatchesCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<IBatch | null>(null);
   const [selectedItem, setSelectedItem] = useState<IBatch | undefined>();
   const [pendingDelete, setPendingDelete] = useState<IBatch | null>(null);
 
@@ -148,7 +151,12 @@ const BatchesCard = ({
     [courseId, filtered]
   );
 
-  const columns = GetBatchColumns(handleEdit, setPendingDelete, onViewMembers);
+  const columns = GetBatchColumns(
+    handleEdit,
+    setPendingDelete,
+    onViewMembers,
+    setViewItem
+  );
 
   return (
     <>
@@ -207,6 +215,17 @@ const BatchesCard = ({
         initialValues={selectedItem}
         initialCourseId={courseId}
         nextSerial={nextSerial}
+      />
+
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="Batch Details"
+        sections={
+          viewItem
+            ? getBatchViewSections(viewItem, courseNames[viewItem.courseId])
+            : []
+        }
       />
 
       <DeleteConfirmDialog
