@@ -1,5 +1,12 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "../ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 interface IPaginationProps {
   currentPage: number;
@@ -9,6 +16,11 @@ interface IPaginationProps {
   totalItems: number;
   onItemsPerPageChange?: (itemsPerPage: number) => void;
   pageSizeOptions?: number[];
+  /**
+   * The page size the dropdown shows as chosen, when it differs from
+   * `itemsPerPage` — pass -1 for "All" (where `itemsPerPage` is the total).
+   */
+  selectedPageSize?: number;
 }
 
 const DEFAULT_PAGE_SIZE_OPTIONS = [6, 12, 24, 48, 96];
@@ -21,6 +33,7 @@ const Pagination = ({
   totalItems,
   onItemsPerPageChange,
   pageSizeOptions = DEFAULT_PAGE_SIZE_OPTIONS,
+  selectedPageSize = itemsPerPage,
 }: IPaginationProps) => {
   const pages: (number | "...")[] = [];
 
@@ -55,22 +68,40 @@ const Pagination = ({
     <div className="flex flex-col lg:flex-row items-center justify-between px-5 py-4 gap-4">
       <div className="flex flex-col sm:flex-row items-center gap-3 text-sm text-muted-foreground">
         {onItemsPerPageChange && (
-          <label className="flex items-center gap-2">
-            <span className="whitespace-nowrap">Show</span>
-            <select
-  value={itemsPerPage}
-  onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
-  className="h-8 rounded-md border border-border bg-card px-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 cursor-pointer"
-  aria-label="Items per page"
->
-  {pageSizeOptions.map((size) => (
-    <option key={size} value={size}>
-      {size}
-    </option>
-  ))}
-  <option value={-1}>All</option>
-</select>
-          </label>
+          <div className="flex items-center gap-2">
+            <span className="whitespace-nowrap">Rows per page</span>
+            <Select
+              value={String(selectedPageSize)}
+              onValueChange={(value) => onItemsPerPageChange(Number(value))}
+            >
+              <SelectTrigger
+                aria-label="Rows per page"
+                className="h-9 min-w-20 cursor-pointer gap-3 rounded-lg border-border bg-card pr-2.5 pl-3 font-medium text-foreground shadow-none transition-colors hover:border-primary/40 hover:bg-light data-[state=open]:border-primary/50 data-[state=open]:ring-[3px] data-[state=open]:ring-primary/15"
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent
+                align="start"
+                className="min-w-(--radix-select-trigger-width) rounded-xl p-1 shadow-lg"
+              >
+                {pageSizeOptions.map((size) => (
+                  <SelectItem
+                    key={size}
+                    value={String(size)}
+                    className="cursor-pointer rounded-lg py-2 font-medium data-[state=checked]:text-primary"
+                  >
+                    {size}
+                  </SelectItem>
+                ))}
+                <SelectItem
+                  value="-1"
+                  className="cursor-pointer rounded-lg py-2 font-medium data-[state=checked]:text-primary"
+                >
+                  All
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         )}
 
         <span>

@@ -10,9 +10,14 @@ import Paragraph from "@/src/components/shared/Paragraph";
 import SubmitButton from "@/src/components/shared/SubmitButton";
 import { ErrorType } from "@/src/components/shared/types/common";
 import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
-import { ContactInfoFormValues } from "../Schema/contactInfoSchema";
+import {
+  ContactInfoFormValues,
+  validateEmailItem,
+  validatePhoneItem,
+} from "../Schema/contactInfoSchema";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
 import MultipleStringField from "@/src/components/shared/FromController/MultipleStringField";
+import { sanitizePhone } from "@/src/components/shared/FromController/ControlledPhoneField";
 
 interface ContactInfoFormProps {
   error?: ErrorType | null;
@@ -34,10 +39,10 @@ const ContactInfoForm = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
-      <div className="border border-light-silver rounded-lg p-8 bg-card">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
+      <div className="border border-light-silver rounded-lg p-4 sm:p-6 lg:p-8 bg-card">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="bg-primary/10 w-9 h-9 shrink-0 flex items-center justify-center rounded-md border border-primary/20">
               <Image
                 src="/icons/phone.svg"
                 alt="contact info"
@@ -70,7 +75,11 @@ const ContactInfoForm = ({
             <MultipleStringField
               name="phones"
               itemLabel="Phone"
-              placeholder="e.g. +8801711111111"
+              placeholder="e.g. 01712345678 or +8801712345678"
+              inputMode="tel"
+              sanitize={sanitizePhone}
+              validateItem={validatePhoneItem}
+              unique
             />
           </div>
 
@@ -80,14 +89,17 @@ const ContactInfoForm = ({
               name="emails"
               itemLabel="Email"
               placeholder="e.g. info@navy.mil.bd"
+              inputMode="email"
+              validateItem={validateEmailItem}
+              unique
             />
           </div>
 
           <div>
-            <InputLabel label="Office Hour" required />
+            <InputLabel label="Office Address" required />
             <ControlledInputField
               name="office_hour"
-              placeholder="e.g. Sunday - Thursday, 9:00 AM - 5:00 PM"
+              placeholder="e.g. BN Hydrographic & Oceanographic Center, Patenga, Chattogram"
               className="bg-light shadow-none"
             />
           </div>
@@ -96,7 +108,7 @@ const ContactInfoForm = ({
 
       <ErrorMessage error={error} />
 
-      <div className="flex items-center justify-end gap-4">
+      <div className="flex flex-wrap items-center justify-end gap-3 sm:gap-4">
         <Button
           type="button"
           onClick={onCancel}

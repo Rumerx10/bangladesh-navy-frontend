@@ -13,6 +13,7 @@ import ControlledInputField from "@/src/components/shared/FromController/Control
 import ControlledSelectField from "@/src/components/shared/FromController/ControlledSelectField";
 import ControlledTextareaField from "@/src/components/shared/FromController/ControlledTextareaField";
 import ControlledComboboxSelect from "@/src/components/shared/FromController/ControlledComboboxSelect";
+import ControlledSuggestionInput from "@/src/components/shared/FromController/ControlledSuggestionInput";
 import { MultipleImageUploadController } from "@/src/components/shared/FromController/MultipleImageFileInput";
 import { ErrorType } from "@/src/components/shared/types/common";
 import { chartIndexAreas } from "@/src/data/chartIndexAreas";
@@ -38,6 +39,25 @@ interface ProductFormProps {
   error?: ErrorType;
   initialValues?: IProduct;
 }
+
+// Common chart projections, offered as you type (free text still allowed).
+const PROJECTION_SUGGESTIONS = [
+  "Mercator",
+  "Transverse Mercator",
+  "Universal Transverse Mercator (UTM)",
+  "Lambert Conformal Conic",
+  "Gnomonic",
+  "Polar Stereographic",
+];
+
+const ordinal = (n: number) => {
+  if (n % 100 >= 11 && n % 100 <= 13) return `${n}th`;
+  return `${n}${({ 1: "st", 2: "nd", 3: "rd" } as Record<number, string>)[n % 10] ?? "th"}`;
+};
+const EDITION_SUGGESTIONS = Array.from(
+  { length: 12 },
+  (_, i) => `${ordinal(i + 1)} Edition`
+);
 
 const SectionHeader = ({ label }: { label: string }) => {
   return (
@@ -250,12 +270,18 @@ const ProductForm = ({
       {/* Nautical Chart Details */}
       <div className="border border-light-silver rounded-lg p-8 bg-card">
         <SectionHeader label="Nautical Chart Details" />
+        <Paragraph className="-mt-2 mb-6 text-xs! text-secondary-foreground">
+          Coordinates are degrees° minutes&apos; hemisphere, e.g.
+          22°29.00&apos;N or 089°27.40&apos;E — typing 22 29.00 N is fine, it is
+          saved in that form. Scale is 1:12 500.
+        </Paragraph>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="sm:col-span-2">
             <InputLabel label="Geographic Location" />
             <ControlledInputField
               name="geographicLocation"
               placeholder="e.g. Bay of Bengal"
+              maxLength={150}
               className="bg-light shadow-none"
             />
           </div>
@@ -264,14 +290,18 @@ const ProductForm = ({
             <ControlledInputField
               name="scale"
               placeholder="e.g. 1:12 500"
+              maxLength={20}
+              autoComplete="off"
               className="bg-light shadow-none"
             />
           </div>
           <div>
             <InputLabel label="Projection" />
-            <ControlledInputField
+            <ControlledSuggestionInput
               name="projection"
+              suggestions={PROJECTION_SUGGESTIONS}
               placeholder="e.g. Mercator"
+              maxLength={60}
               className="bg-light shadow-none"
             />
           </div>
@@ -279,6 +309,8 @@ const ProductForm = ({
             <InputLabel label="North Latitude" />
             <ControlledInputField
               name="northLatitude"
+              maxLength={20}
+              autoComplete="off"
               placeholder="e.g. 22°30.64'N"
               className="bg-light shadow-none"
             />
@@ -287,6 +319,8 @@ const ProductForm = ({
             <InputLabel label="South Latitude" />
             <ControlledInputField
               name="southLatitude"
+              maxLength={20}
+              autoComplete="off"
               placeholder="e.g. 22°26.59'N"
               className="bg-light shadow-none"
             />
@@ -295,6 +329,8 @@ const ProductForm = ({
             <InputLabel label="East Longitude" />
             <ControlledInputField
               name="eastLongitude"
+              maxLength={20}
+              autoComplete="off"
               placeholder="e.g. 092°15.05'E"
               className="bg-light shadow-none"
             />
@@ -303,15 +339,19 @@ const ProductForm = ({
             <InputLabel label="West Longitude" />
             <ControlledInputField
               name="westLongitude"
+              maxLength={20}
+              autoComplete="off"
               placeholder="e.g. 092°02.20'E"
               className="bg-light shadow-none"
             />
           </div>
           <div>
             <InputLabel label="Edition" />
-            <ControlledInputField
+            <ControlledSuggestionInput
               name="edition"
+              suggestions={EDITION_SUGGESTIONS}
               placeholder="e.g. 1st Edition"
+              maxLength={20}
               className="bg-light shadow-none"
             />
           </div>

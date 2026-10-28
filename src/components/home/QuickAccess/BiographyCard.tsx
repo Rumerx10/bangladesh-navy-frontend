@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import { IBiography } from "../../types";
 import { motion } from "framer-motion";
@@ -7,10 +8,9 @@ import { ArrowUpRight } from "lucide-react";
 
 interface BiographyCardProps {
   data: IBiography;
-  openModal: () => void;
 }
 
-const BiographyCard = ({ data, openModal }: BiographyCardProps) => {
+const BiographyCard = ({ data }: BiographyCardProps) => {
   return (
     <motion.div
       className="w-full lg:w-72 lg:shrink-0 xl:w-80 lg:sticky lg:top-28 lg:self-start"
@@ -47,15 +47,15 @@ const BiographyCard = ({ data, openModal }: BiographyCardProps) => {
             {data.designationEn}
           </p>
 
-          <button
-            onClick={openModal}
+          <Link
+            href="/about/chief-hydrographer-message"
             className="mt-4 cursor-pointer flex items-center gap-2.5 pl-6 pr-1.5 py-1.5 bg-brand-navy hover:bg-brand-navy text-white text-sm font-semibold rounded-full transition-colors duration-200"
           >
             View Profile
             <span className="flex items-center justify-center w-7 h-7 rounded-full bg-amber-400">
               <ArrowUpRight size={15} className="text-pBlue" />
             </span>
-          </button>
+          </Link>
         </div>
       </div>
     </motion.div>

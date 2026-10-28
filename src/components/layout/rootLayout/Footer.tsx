@@ -10,17 +10,17 @@ import { siteConfig } from "@/src/config/siteConfig";
 import { IImportantLink } from "@/src/components/admin/ContentManagement/home/important-links/types";
 
 const productLinks = [
-  { label: "Paper Charts", href: "/product-service?category=paper-charts" },
+  { label: "Paper Charts", href: "/product-service/paper-charts" },
   {
     label: "Electronic Charts",
-    href: "/product-service?category=electronic-charts",
+    href: "/product-service/electronic-navigational-charts",
   },
-  { label: "Tide Tables", href: "/product-service?category=tide-tables" },
+  { label: "Tide Tables", href: "/product-service/tide-tables" },
   {
     label: "Notices to Mariners",
     href: "/important-notice/notices",
   },
-  { label: "Publications", href: "/product-service?category=publications" },
+  { label: "Publications", href: "/important-notice/publications" },
 ];
 
 const aboutLinks = [

@@ -5,6 +5,7 @@ import { Mail, Phone } from "lucide-react";
 import { MdLocationPin } from "react-icons/md";
 import SectionTitle from "../SectionTitle";
 import { IContactInfo } from "./types";
+import { siteConfig } from "@/src/config/siteConfig";
 
 const DirectApproach = () => {
   const { data, isLoading } = useGet<IContactInfo>("/contact-info", [
@@ -19,7 +20,8 @@ const DirectApproach = () => {
 
   const phoneNumbers = hasPhones ? contactInfo.phones : [];
   const emailAddresses = hasEmails ? contactInfo.emails : [];
-  const officeHour = contactInfo?.office_hour || "";
+  // The API stores the office address under `office_hour`.
+  const officeAddress = contactInfo?.office_hour || "";
 
   return (
     <div>
@@ -46,7 +48,7 @@ const DirectApproach = () => {
                   <a
                     key={index}
                     href={`tel:${phone.replace(/\s/g, "")}`}
-                    className="text-pBlue font-semibold hover:text-liteBlue transition-colors"
+                    className="text-pBlue font-semibold hover:text-liteBlue transition-colors wrap-anywhere"
                   >
                     {phone}
                   </a>
@@ -98,8 +100,8 @@ const DirectApproach = () => {
           {isLoading ? (
             <div className="h-5 w-44 bg-light-silver rounded animate-pulse" />
           ) : (
-            <p className="text-pBlue font-semibold">
-              {officeHour || "Sun - Thu, 08:30 AM - 04:30 PM"}
+            <p className="text-pBlue font-semibold wrap-break-word">
+              {officeAddress || siteConfig.address}
             </p>
           )}
         </div>

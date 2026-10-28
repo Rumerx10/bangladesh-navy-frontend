@@ -87,48 +87,44 @@ const UpdateQuerySuggestionStatus = ({
         </DialogHeader>
 
         {initialValues && (
-          <div className="space-y-3 bg-light rounded-lg p-4 border border-border">
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <p className="text-xs text-secondary-foreground uppercase tracking-wider">
-                  Name
-                </p>
-                <p className="text-sm font-medium text-secondary-dark">
-                  {initialValues.name}
-                </p>
-              </div>
-              <div>
-                <p className="text-xs text-secondary-foreground uppercase tracking-wider">
-                  Email
-                </p>
-                <p className="text-sm font-medium text-secondary-dark">
-                  {initialValues.email}
-                </p>
-              </div>
-              <div>
-                <p className="text-xs text-secondary-foreground uppercase tracking-wider">
-                  Phone
-                </p>
-                <p className="text-sm font-medium text-secondary-dark">
-                  {initialValues.phone}
-                </p>
-              </div>
-              <div>
-                <p className="text-xs text-secondary-foreground uppercase tracking-wider">
-                  Submitted
-                </p>
-                <p className="text-sm font-medium text-secondary-dark">
-                  {new Date(initialValues.createdAt).toLocaleDateString()}
-                </p>
-              </div>
+          <div className="rounded-xl border border-border bg-light p-4 sm:p-5 space-y-5">
+            {/* Contact Information */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+              {[
+                { label: "Name", value: initialValues.name },
+                { label: "Email", value: initialValues.email },
+                { label: "Phone", value: initialValues.phone },
+                {
+                  label: "Submitted",
+                  value: new Date(initialValues.createdAt).toLocaleDateString(),
+                },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="min-w-0 rounded-lg border border-border/70 bg-card p-3 sm:p-4"
+                >
+                  <p className="mb-1.5 text-xs font-medium uppercase tracking-wider text-secondary-foreground">
+                    {item.label}
+                  </p>
+
+                  <p className="text-sm font-medium text-secondary-dark">
+                    {item.value || "—"}
+                  </p>
+                </div>
+              ))}
             </div>
-            <div>
-              <p className="text-xs text-secondary-foreground uppercase tracking-wider mb-1">
+
+            {/* Message */}
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wider text-secondary-foreground">
                 Message
               </p>
-              <p className="text-sm text-secondary-dark bg-card rounded p-3 border border-border">
-                {initialValues.message}
-              </p>
+
+              <div className="rounded-lg border border-border bg-card p-4 sm:p-5">
+                <p className="text-sm leading-6 text-secondary-dark whitespace-pre-wrap">
+                  {initialValues.message || "No message provided."}
+                </p>
+              </div>
             </div>
           </div>
         )}

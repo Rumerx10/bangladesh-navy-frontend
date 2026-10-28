@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { useReducedMotion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper/types";
@@ -41,7 +40,6 @@ const ProductImageCarousel = ({ images, alt }: ProductImageCarouselProps) => {
   const [swiper, setSwiper] = useState<SwiperType | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-
   if (images.length <= 1) {
     return <ProductImage src={images[0] ?? "/img1.jpeg"} alt={alt} />;
   }
@@ -62,7 +60,10 @@ const ProductImageCarousel = ({ images, alt }: ProductImageCarouselProps) => {
         className="w-full h-full"
       >
         {images.map((src, index) => (
-          <SwiperSlide key={`${src}-${index}`} className="h-full! border-2 rounded-lg lg:rounded-none overflow-hidden">
+          <SwiperSlide
+            key={`${src}-${index}`}
+            className="h-full! border-2 rounded-lg lg:rounded-none overflow-hidden"
+          >
             <ProductImage src={src} alt={`${alt} — image ${index + 1}`} />
           </SwiperSlide>
         ))}

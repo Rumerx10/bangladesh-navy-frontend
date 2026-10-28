@@ -191,7 +191,7 @@ const HowToCollect = () => {
                             </div>
                           </div>
 
-                          <p className="mt-3 text-sm text-secondary-foreground leading-relaxed whitespace-pre-line">
+                          <p className="mt-3 text-sm text-justify text-secondary-foreground leading-relaxed whitespace-pre-line">
                             {step.description}
                           </p>
 

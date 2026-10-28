@@ -189,7 +189,7 @@ const CreateUpdateSurveyShip = ({
             {isUpdate ? "Update" : "Create"} Survey Ship
           </DialogTitle>
         </DialogHeader>
-        <div className="overflow-y-auto flex-1 mt-2 pr-2 scrollbar-modern">
+        <div className="overflow-y-auto flex-1 mt-2 pr-2 pb-1 scrollbar-modern">
           <FormProvider {...methods}>
             <SurveyShipForm
               isEditMode={isUpdate}

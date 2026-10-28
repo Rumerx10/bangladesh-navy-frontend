@@ -1,7 +1,9 @@
 "use client";
 import dynamic from "next/dynamic";
+import { useMemo } from "react";
 import { ITidalStation } from "./types";
 import { useGet } from "@/src/hooks/useGet";
+import { useInactiveProducts } from "@/src/components/products/useInactiveProducts";
 import TidalStationMapSkeleton from "./Skeleton/TidalStationMapSkeleton";
 
 const TidalStationMap = dynamic(() => import("./TidalStationMap"), {
@@ -10,11 +12,28 @@ const TidalStationMap = dynamic(() => import("./TidalStationMap"), {
 });
 
 const TideTables = () => {
-  const { data, isLoading } = useGet<ITidalStation[]>("/tidal-station/list", [
-    "tidal-station-list",
-  ]);
+  const { data, isLoading: stationsLoading } = useGet<ITidalStation[]>(
+    "/tidal-station/list",
+    ["tidal-station-list"]
+  );
+  const { inactiveIds, isLoading: inactiveLoading } =
+    useInactiveProducts("TIDAL");
+  const isLoading = stationsLoading || inactiveLoading;
 
-  const stations = data?.data ?? [];
+  // Drop inactive stations, and stations whose tide-table product an admin
+  // has switched off. Held back until both lists are in, so the map never
+  // fits itself to pins that are about to disappear.
+  const stations = useMemo(
+    () =>
+      isLoading
+        ? []
+        : (data?.data ?? []).filter(
+            (station) =>
+              station.status === "ACTIVE" &&
+              !inactiveIds.has(station.product?.id ?? station.productId)
+          ),
+    [data, inactiveIds, isLoading]
+  );
 
   return (
     <section className="relative mt-25">

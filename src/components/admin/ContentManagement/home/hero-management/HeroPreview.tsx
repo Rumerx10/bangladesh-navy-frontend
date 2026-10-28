@@ -45,7 +45,7 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
       </div>
 
       <div className="p-8 pt-10 space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4">
           <div className="bg-light rounded-xl p-4 border border-border">
             <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
               English Title
@@ -54,7 +54,8 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
               {data.titleEn || "—"}
             </Paragraph>
           </div>
-          {/* Bangla content hidden
+
+          {/*
           <div className="bg-light rounded-xl p-4 border border-border">
             <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
               Bengali Title
@@ -63,7 +64,6 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
               {data.titleBn || "—"}
             </Paragraph>
           </div>
-          */}
           <div className="bg-light rounded-xl p-4 border border-border">
             <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
               English Subtitle
@@ -72,7 +72,6 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
               {data.subTitleEn || "—"}
             </Paragraph>
           </div>
-          {/* Bangla content hidden
           <div className="bg-light rounded-xl p-4 border border-border">
             <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
               Bengali Subtitle
@@ -81,47 +80,49 @@ const HeroPreview = ({ data, onEdit }: HeroPreviewProps) => {
               {data.subTitleBn || "—"}
             </Paragraph>
           </div>
+          <div className="bg-light rounded-xl p-4 border border-border">
+            <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
+              English Description
+            </Paragraph>
+            <Paragraph className="text-sm! text-secondary-dark">
+              {data.descriptionEn || "—"}
+            </Paragraph>
+          </div>
+          <div className="bg-light rounded-xl p-4 border border-border">
+            <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
+              Bengali Description
+            </Paragraph>
+            <Paragraph className="text-sm! text-secondary-dark">
+              {data.descriptionBn || "—"}
+            </Paragraph>
+          </div>
           */}
         </div>
-
-        <div className="bg-light rounded-xl p-4 border border-border">
-          <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
-            English Description
-          </Paragraph>
-          <Paragraph className="text-sm! text-secondary-dark">
-            {data.descriptionEn || "—"}
-          </Paragraph>
-        </div>
-
-        {/* Bangla content hidden
-        <div className="bg-light rounded-xl p-4 border border-border">
-          <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1">
-            Bengali Description
-          </Paragraph>
-          <Paragraph className="text-sm! text-secondary-dark">
-            {data.descriptionBn || "—"}
-          </Paragraph>
-        </div>
-        */}
 
         <div className="bg-light rounded-xl p-4 border border-border">
           <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-2">
             Images
           </Paragraph>
           <div className="flex gap-3 flex-wrap">
-            {data.imageUrls?.map((url, index) => (
-              <div
-                key={index}
-                className="relative w-24 h-24 rounded-lg overflow-hidden border border-border"
-              >
-                <Image
-                  src={url}
-                  alt={`Hero image ${index + 1}`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ))}
+            {data.imageUrls?.length ? (
+              data.imageUrls.map((url, index) => (
+                <div
+                  key={url || index}
+                  className="relative w-24 h-24 rounded-lg overflow-hidden border border-border"
+                >
+                  <Image
+                    src={url}
+                    alt={`Hero image ${index + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              ))
+            ) : (
+              <span className="text-xs text-secondary-foreground">
+                No images uploaded
+              </span>
+            )}
           </div>
         </div>
 

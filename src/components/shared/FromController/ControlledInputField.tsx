@@ -12,6 +12,11 @@ interface ControlledInputFieldProps {
   icon?: ReactElement;
   /** id of a <datalist> rendered alongside the field, for free-text suggestions */
   list?: string;
+  /** Hard cap on typed characters (the browser stops input at this length). */
+  maxLength?: number;
+  /** Upper bound for date/number inputs, e.g. today's date. */
+  max?: string;
+  autoComplete?: string;
 
   // ✅ add this
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -25,6 +30,9 @@ const ControlledInputField: React.FC<ControlledInputFieldProps> = ({
   disabled,
   icon,
   list,
+  maxLength,
+  max,
+  autoComplete,
   onKeyDown,
 }) => {
   const { control } = useFormContext();
@@ -46,6 +54,10 @@ const ControlledInputField: React.FC<ControlledInputFieldProps> = ({
             className={className}
             disabled={disabled}
             list={list}
+            maxLength={maxLength}
+            max={max}
+            autoComplete={autoComplete}
+            aria-invalid={!!error}
             showErrorMessage={!!error}
             onKeyDown={onKeyDown}
           />

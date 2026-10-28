@@ -8,9 +8,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import ControlledInputField from "../shared/FromController/ControlledInputField";
 import ControlledTextareaField from "../shared/FromController/ControlledTextareaField";
+import ControlledPhoneField from "../shared/FromController/ControlledPhoneField";
 import {
   ContactFormType,
   contactValidationSchema,
+  NAME_MAX_LENGTH,
 } from "../contact/contactFormSchema";
 
 const QueryForm = () => {
@@ -65,6 +67,7 @@ const QueryForm = () => {
               <ControlledInputField
                 name="name"
                 placeholder="Enter your name"
+                maxLength={NAME_MAX_LENGTH}
                 className="bg-card"
               />
             </div>
@@ -81,8 +84,7 @@ const QueryForm = () => {
 
             <div className="md:col-span-2">
               <InputLabel label="Phone" required />
-              <ControlledInputField
-                type="tel"
+              <ControlledPhoneField
                 name="phone"
                 placeholder="Enter your phone number"
                 className="bg-card"

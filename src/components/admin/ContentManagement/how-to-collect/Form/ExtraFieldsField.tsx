@@ -13,6 +13,7 @@ const EMPTY_FIELD = { key: "", value: "" };
 const ExtraFieldsField = () => {
   const {
     control,
+    trigger,
     formState: { errors },
   } = useFormContext<HowToCollectFormValues>();
 
@@ -20,6 +21,16 @@ const ExtraFieldsField = () => {
     HowToCollectFormValues,
     "extraFields"
   >({ control, name: "extraFields" });
+
+  // Only add a new row once every existing one is filled in — otherwise
+  // surface the missing label/value errors and focus the first one.
+  const handleAddRow = async () => {
+    if (fields.length > 0) {
+      const isValid = await trigger("extraFields", { shouldFocus: true });
+      if (!isValid) return;
+    }
+    append(EMPTY_FIELD);
+  };
 
   // The array-level message lives on the array itself, separate from the
   // per-row field errors.
@@ -89,7 +100,7 @@ const ExtraFieldsField = () => {
 
       <Button
         type="button"
-        onClick={() => append(EMPTY_FIELD)}
+        onClick={handleAddRow}
         className="h-11 w-full cursor-pointer border border-dashed border-primary/40 bg-primary/5 text-primary shadow-none hover:bg-primary/10"
       >
         <Plus className="h-4 w-4" />

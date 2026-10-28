@@ -239,7 +239,7 @@ const ViewDetailsModal = ({
           </DialogTitle>
         </DialogHeader>
 
-        <div className="overflow-y-auto scrollbar-modern flex-1 mt-2 pr-2">
+        <div className="overflow-y-auto scrollbar-modern flex-1 mt-2 pr-2 pb-1">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {sections.map((section, sectionIndex) => (
               <div key={section.title ?? sectionIndex} className="contents">

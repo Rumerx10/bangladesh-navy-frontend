@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { BarChart3, CalendarRange } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import InputLabel from "@/src/components/shared/InputLabel";
@@ -9,6 +9,8 @@ import SubmitButton from "@/src/components/shared/SubmitButton";
 import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
 import ControlledSelectField from "@/src/components/shared/FromController/ControlledSelectField";
+import ControlledSuggestionInput from "@/src/components/shared/FromController/ControlledSuggestionInput";
+import { useCourseStatisticsList } from "@/src/components/course-statistics/useCourseStatistics";
 import { Button } from "@/src/components/ui/button";
 import { ErrorType } from "@/src/components/shared/types/common";
 import { COURSE_STATUS_OPTIONS } from "@/src/components/courses/types";
@@ -60,7 +62,28 @@ const CourseForm = ({
   isPending = false,
   error,
 }: CourseFormProps) => {
-  const { handleSubmit, watch, setValue } = useFormContext<CourseFormValues>();
+  const { handleSubmit, watch, setValue, getValues } =
+    useFormContext<CourseFormValues>();
+
+  // Course names already on the public Course Statistics table
+  // (Training & Courses → Courses), offered as suggestions so the two lists
+  // spell a course the same way.
+  const { rows: courseStatistics } = useCourseStatisticsList();
+  const courseNameSuggestions = useMemo(
+    () => courseStatistics.map((row) => row.courseName),
+    [courseStatistics]
+  );
+
+  // Picking a suggested course also fills its duration and remarks — only
+  // where those are still empty, so nothing already typed is overwritten.
+  const handleCoursePick = (courseName: string) => {
+    const match = courseStatistics.find((row) => row.courseName === courseName);
+    if (!match) return;
+    if (!getValues("duration")?.trim() && match.duration)
+      setValue("duration", match.duration, { shouldValidate: true });
+    if (!getValues("remarks")?.trim() && match.remarks)
+      setValue("remarks", match.remarks, { shouldValidate: true });
+  };
 
   const bn = watch("bn");
   const otherMaritimeOrg = watch("otherMaritimeOrg");
@@ -91,9 +114,13 @@ const CourseForm = ({
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <InputLabel label="Course Name" required />
-            <ControlledInputField
+            <ControlledSuggestionInput
               name="name"
-              placeholder="e.g. Basic Hydrographic (Cat B)"
+              suggestions={courseNameSuggestions}
+              heading="From Course Statistics"
+              onPick={handleCoursePick}
+              maxLength={200}
+              placeholder="Type or pick a course, e.g. Basic Hydrographic (Cat B)"
               className="bg-light shadow-none"
             />
           </div>

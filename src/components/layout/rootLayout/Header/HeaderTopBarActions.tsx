@@ -9,6 +9,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
+  {
+    label: "Chief Hydrographer Message",
+    href: "/about/chief-hydrographer-message",
+  },
   { label: "History", href: "/about/history" },
   { label: "Vision & Mission", href: "/about/vision-mission" },
   { label: "Organogram", href: "/about/organogram" },
@@ -34,44 +38,31 @@ const NAV_LINKS = [
   { label: "Tide Tables", href: "/product-service?category=tide-tables" },
 ];
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
 const HeaderTopBarActions = () => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(
-    searchParams.get("search") || ""
-  );
+  const [searchQuery, setSearchQuery] = useState("");
   const searchAreaRef = useRef<HTMLDivElement>(null);
   const debouncedQuery = useDebounce(searchQuery, 250);
 
-  const isProductPage =
-    pathname === "/product-service" || pathname.startsWith("/products");
+  const isProductListing = pathname === "/product-service";
 
   const navSuggestions = useMemo(() => {
-    if (debouncedQuery.length < 2) return [];
-    const q = debouncedQuery.toLowerCase();
+    const q = debouncedQuery.trim().toLowerCase();
+    if (q.length < 2) return [];
     return NAV_LINKS.filter((link) =>
       link.label.toLowerCase().includes(q)
     ).slice(0, 5);
   }, [debouncedQuery]);
 
-  // Sync search query to URL on product pages
-  useEffect(() => {
-    if (!isProductPage) return;
-
-    const currentSearch = searchParams.get("search") || "";
-    if (searchQuery === currentSearch) return;
-
-    const params = new URLSearchParams(searchParams.toString());
-    if (searchQuery) {
-      params.set("search", searchQuery);
-    } else {
-      params.delete("search");
-    }
-
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }, [searchQuery, isProductPage, pathname, router, searchParams]);
+  const closeSearch = () => {
+    setIsSearchOpen(false);
+    setSearchQuery("");
+  };
 
   // Close search on outside click
   useEffect(() => {
@@ -90,111 +81,137 @@ const HeaderTopBarActions = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isSearchOpen]);
 
+  // Hands the query to the products page as `?search=`, which that page reads
+  // and keeps. (This used to also mirror every keystroke into the URL and then
+  // clear it again when the box closed — wiping the search it had just sent.)
   const handleSearchSubmit = () => {
-    if (searchQuery.trim()) {
-      setIsSearchOpen(false);
-      if (isProductPage) {
-        const params = new URLSearchParams(searchParams.toString());
-        params.set("search", searchQuery);
-        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-      } else {
-        router.push(
-          `/product-service?search=${encodeURIComponent(searchQuery.trim())}`
-        );
-      }
-      setSearchQuery("");
+    const query = searchQuery.trim();
+    if (!query) return;
+    if (isProductListing) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("search", query);
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    } else {
+      router.push(`/product-service?search=${encodeURIComponent(query)}`);
     }
+    closeSearch();
   };
 
   const handleNavSuggestionClick = (href: string) => {
-    setIsSearchOpen(false);
-    setSearchQuery("");
+    closeSearch();
     router.push(href);
   };
+
+  const showDropdown = searchQuery.trim().length > 0;
 
   return (
     <div className="flex items-center gap-1 shrink-0">
       <ThemeToggle className="text-nav-ink" />
 
       {/* Search with nav suggestions */}
-      <div ref={searchAreaRef}>
-        <AnimatePresence mode="wait">
-          <div className="flex items-center">
-            {isSearchOpen ? (
-              <motion.div
-                initial={{ width: 0, opacity: 0 }}
-                animate={{ width: "240px", opacity: 1 }}
-                exit={{ width: 0, opacity: 0 }}
-                className="relative flex items-center h-10 ml-2"
+      <div ref={searchAreaRef} className="flex items-center">
+        {/* AnimatePresence has to wrap the keyed elements themselves — around
+            a plain wrapper it never sees them leave, which is why closing used
+            to snap shut. `wait` lets the field fold away before the icon
+            returns, mirroring the way it opens. */}
+        <AnimatePresence mode="wait" initial={false}>
+          {isSearchOpen ? (
+            <motion.div
+              key="search-field"
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: 240, opacity: 1 }}
+              exit={{ width: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: EASE }}
+              className="relative flex items-center h-10 ml-2"
+            >
+              <input
+                autoFocus
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleSearchSubmit();
+                  if (e.key === "Escape") closeSearch();
+                }}
+                placeholder="Search products & pages..."
+                aria-label="Search products and pages"
+                className="w-full h-full pl-4 pr-10 rounded-full border border-border bg-light text-sm focus:outline-none focus:border-liteBlue focus:bg-card transition-all shadow-inner"
+              />
+              <button
+                type="button"
+                onClick={closeSearch}
+                aria-label="Close search"
+                className="absolute right-3 text-muted-foreground hover:text-red-500 transition-colors"
               >
-                <input
-                  autoFocus
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") handleSearchSubmit();
-                    if (e.key === "Escape") {
-                      setIsSearchOpen(false);
-                      setSearchQuery("");
-                    }
-                  }}
-                  placeholder="Search products..."
-                  className="w-full h-full pl-4 pr-10 rounded-full border border-border bg-light text-sm focus:outline-none focus:border-liteBlue focus:bg-card transition-all shadow-inner"
-                />
-                <button
-                  onClick={() => {
-                    setIsSearchOpen(false);
-                    setSearchQuery("");
-                  }}
-                  className="absolute right-3 text-muted-foreground hover:text-red-500 transition-colors"
-                >
-                  <X size={16} />
-                </button>
+                <X size={16} />
+              </button>
 
-                {/* Nav suggestions dropdown */}
-                {navSuggestions.length > 0 && (
-                  <div className="absolute top-full right-0 mt-1.5 w-64 bg-(image:--nav-gradient) rounded-xl shadow-2xl border border-nav-hairline z-100 overflow-hidden">
-                    <p className="px-3 pt-2.5 pb-1 text-[10px] font-semibold text-nav-ink-muted uppercase tracking-widest">
-                      Quick Navigation
-                    </p>
-                    {navSuggestions.map((link) => (
-                      <button
-                        key={link.href}
-                        onClick={() => handleNavSuggestionClick(link.href)}
-                        className="flex items-center gap-2.5 w-full px-3 py-2 text-sm text-nav-ink-muted hover:bg-nav-wash hover:text-nav-ink text-left transition-colors"
-                      >
-                        <ArrowRight
-                          size={13}
-                          className="text-nav-ink-muted shrink-0"
-                        />
-                        {link.label}
-                      </button>
-                    ))}
-                    {searchQuery.trim() && (
-                      <button
-                        onClick={handleSearchSubmit}
-                        className="flex items-center gap-2.5 w-full px-3 py-2.5 text-sm font-medium text-nav-ink hover:bg-nav-wash border-t border-nav-hairline transition-colors"
-                      >
-                        <Search size={13} className="shrink-0" />
-                        Search &ldquo;{searchQuery}&rdquo;
-                      </button>
+              {/* Suggestions dropdown */}
+              <AnimatePresence>
+                {showDropdown && (
+                  <motion.div
+                    key="search-suggestions"
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.2, ease: EASE }}
+                    className="absolute top-full right-0 mt-1.5 w-full min-w-60 bg-(image:--nav-gradient) rounded-xl shadow-2xl border border-nav-hairline z-100 overflow-hidden"
+                  >
+                    {navSuggestions.length > 0 && (
+                      <>
+                        <p className="px-3 pt-2.5 pb-1 text-[10px] font-semibold text-nav-ink-muted uppercase tracking-widest">
+                          Quick Navigation
+                        </p>
+                        {navSuggestions.map((link) => (
+                          <button
+                            key={link.href}
+                            type="button"
+                            onClick={() => handleNavSuggestionClick(link.href)}
+                            className="flex items-center gap-2.5 w-full px-3 py-2 text-sm text-nav-ink-muted hover:bg-nav-wash hover:text-nav-ink text-left transition-colors"
+                          >
+                            <ArrowRight
+                              size={13}
+                              className="text-nav-ink-muted shrink-0"
+                            />
+                            {link.label}
+                          </button>
+                        ))}
+                      </>
                     )}
-                  </div>
+                    {/* Always on offer, even when no page name matches. */}
+                    <button
+                      type="button"
+                      onClick={handleSearchSubmit}
+                      className={`flex items-center gap-2.5 w-full px-3 py-2.5 text-sm font-medium text-nav-ink hover:bg-nav-wash text-left transition-colors ${
+                        navSuggestions.length > 0
+                          ? "border-t border-nav-hairline"
+                          : ""
+                      }`}
+                    >
+                      <Search size={13} className="shrink-0" />
+                      <span className="truncate">
+                        Search products for &ldquo;{searchQuery.trim()}&rdquo;
+                      </span>
+                    </button>
+                  </motion.div>
                 )}
-              </motion.div>
-            ) : (
-              <motion.button
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                onClick={() => setIsSearchOpen(true)}
-                className="flex items-center justify-center w-10 h-10 text-nav-ink hover:bg-white/10 rounded-full transition-colors"
-                aria-label="Open search"
-              >
-                <Search size={20} />
-              </motion.button>
-            )}
-          </div>
+              </AnimatePresence>
+            </motion.div>
+          ) : (
+            <motion.button
+              key="search-icon"
+              type="button"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.2, ease: EASE }}
+              onClick={() => setIsSearchOpen(true)}
+              className="flex items-center justify-center w-10 h-10 text-nav-ink hover:bg-white/10 rounded-full transition-colors"
+              aria-label="Open search"
+            >
+              <Search size={20} />
+            </motion.button>
+          )}
         </AnimatePresence>
       </div>
     </div>

@@ -11,6 +11,19 @@ import { productSchema, ProductFormValues } from "../Schema/productsSchema";
 import { IProduct } from "../types";
 import ProductForm from "./ProductsForm";
 
+/**
+ * Stand-in for "cleared". The API drops `""` on update (the old description
+ * survives), but accepts a lone space. Remove once the backend treats `""` as
+ * a real value.
+ */
+const CLEARED_TEXT = " ";
+
+const descriptionPayload = (next?: string, previous?: string | null) => {
+  const value = next?.trim() ?? "";
+  if (value) return value;
+  return previous?.trim() ? CLEARED_TEXT : "";
+};
+
 interface CreateUpdateProductProps {
   initialValues?: IProduct;
 }
@@ -49,8 +62,10 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
       methods.reset({
         nameEn: initialValues.nameEn || "",
         nameBn: initialValues.nameBn || "",
-        descriptionEn: initialValues.descriptionEn || "",
-        descriptionBn: initialValues.descriptionBn || "",
+        // Trimmed so a description cleared via CLEARED_TEXT (below) loads
+        // back as an empty field rather than a lone space.
+        descriptionEn: initialValues.descriptionEn?.trim() || "",
+        descriptionBn: initialValues.descriptionBn?.trim() || "",
         category: initialValues.category || "",
         price: initialValues.price ?? undefined,
         chartCode:
@@ -77,7 +92,14 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
     }
   }, [initialValues, methods]);
 
-  const goToList = () => router.push("/admin/products");
+  // Back to the list on the product's own category tab, so editing a run of
+  // charts doesn't mean re-picking the tab every time.
+  const goToList = () => {
+    const category = methods.getValues("category");
+    router.push(
+      category ? `/admin/products?category=${category}` : "/admin/products"
+    );
+  };
 
   const {
     mutate: createMutate,
@@ -89,7 +111,7 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
       toast.success("Product created successfully!");
       goToList();
     },
-    [["product"]]
+    [["product"], ["product-public"], ["product-inactive"]]
   );
 
   const {
@@ -99,19 +121,31 @@ const CreateUpdateProduct = ({ initialValues }: CreateUpdateProductProps) => {
   } = usePatch(() => {
     toast.success("Product updated successfully!");
     goToList();
-  }, [["product"]]);
+  }, [
+    ["product"],
+    // The public listing and the map pages' inactive filter follow status.
+    ["product-public"],
+    ["product-inactive"],
+    // Public detail page caches under its own key; refresh it too.
+    [`product-detail-${initialValues?.id}`],
+  ]);
 
   const onSubmit = (values: ProductFormValues) => {
     const formData = new FormData();
     formData.append("nameEn", values.nameEn);
     formData.append("nameBn", values.nameBn || "");
 
-    // descriptionEn / descriptionBn are non-nullable strings on the entity.
-    // Sending them unconditionally (even as "") ensures erasing the field
-    // in the UI actually erases it in the DB. `?? ""` also normalizes
-    // undefined → "" so the field is never silently omitted.
-    formData.append("descriptionEn", values.descriptionEn ?? "");
-    formData.append("descriptionBn", values.descriptionBn ?? "");
+    // The API ignores an empty-string description on PATCH and keeps the old
+    // text, so erasing an existing description sends CLEARED_TEXT instead.
+    // Every reader trims, so it displays as "no description".
+    formData.append(
+      "descriptionEn",
+      descriptionPayload(values.descriptionEn, initialValues?.descriptionEn)
+    );
+    formData.append(
+      "descriptionBn",
+      descriptionPayload(values.descriptionBn, initialValues?.descriptionBn)
+    );
 
     if (values.category) {
       formData.append("category", values.category);

@@ -7,6 +7,10 @@ import { IPublication } from "@/src/components/admin/ContentManagement/publicati
 import { INotice } from "@/src/components/notices/types";
 import { ITidalStation } from "@/src/components/tide-tables/types";
 import { useGet } from "@/src/hooks/useGet";
+import {
+  normaliseChartCode,
+  useInactiveProducts,
+} from "@/src/components/products/useInactiveProducts";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
 import { motion } from "framer-motion";
@@ -105,15 +109,20 @@ const MaritimeSearch = () => {
   const categories = TAB_CATEGORIES[activeTab] ?? TAB_CATEGORIES.all;
   const needs = (category: ResultCategory) => categories.includes(category);
 
+  // Products an admin has switched off never surface as results — their
+  // detail pages 404.
+  const { inactiveIds, inactiveCodes } = useInactiveProducts();
+
   // Paper charts & ENC cells are static catalogues — filtered client-side,
   // no network round-trip needed.
   const uniquePaperCharts = useMemo(() => {
     const byNumber = new Map<string, IChartArea>();
     for (const area of chartIndexAreas) {
+      if (inactiveCodes.has(normaliseChartCode(area.number))) continue;
       if (!byNumber.has(area.number)) byNumber.set(area.number, area);
     }
     return [...byNumber.values()];
-  }, []);
+  }, [inactiveCodes]);
 
   const paperChartResults = useMemo<SearchResult[]>(() => {
     if (!q || !needs("paper-chart")) return [];
@@ -136,6 +145,7 @@ const MaritimeSearch = () => {
   const encChartResults = useMemo<SearchResult[]>(() => {
     if (!q || !needs("enc-chart")) return [];
     return encHotspotAreas
+      .filter((cell) => !inactiveCodes.has(normaliseChartCode(cell.cellNo)))
       .filter(
         (cell) =>
           cell.cellNo.toLowerCase().includes(q) ||
@@ -151,7 +161,7 @@ const MaritimeSearch = () => {
         href: `/product-service/electronic-navigational-charts/${cell.cellNo}`,
       }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [q, activeTab]);
+  }, [q, activeTab, inactiveCodes]);
 
   const { data: tidalData, isLoading: tidesLoading } = useGet<ITidalStation[]>(
     "/tidal-station/list",
@@ -166,7 +176,12 @@ const MaritimeSearch = () => {
     if (!q || !needs("tide")) return [];
     const stations = Array.isArray(tidalData?.data) ? tidalData.data : [];
     return stations
-      .filter((station) => station.product?.id)
+      .filter(
+        (station) =>
+          station.status === "ACTIVE" &&
+          station.product?.id &&
+          !inactiveIds.has(station.product.id)
+      )
       .filter(
         (station) =>
           station.product?.nameEn.toLowerCase().includes(q) ||
@@ -181,7 +196,7 @@ const MaritimeSearch = () => {
         href: `/product-service/tide-tables/${station.product?.id}`,
       }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [q, activeTab, tidalData]);
+  }, [q, activeTab, tidalData, inactiveIds]);
 
   const { data: noticeData, isLoading: noticesLoading } = useGet<INotice[]>(
     "/notice-management/list",

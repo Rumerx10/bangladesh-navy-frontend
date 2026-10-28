@@ -67,7 +67,9 @@ const ProductDetailByChart = ({ chartId }: ProductDetailByChartProps) => {
     );
   }
 
-  if (isError || !data?.data) {
+  // An inactive product is withdrawn from the public site, so a direct link
+  // to it lands on the 404 like any other missing page.
+  if (isError || !data?.data || data.data.status === "INACTIVE") {
     notFound();
   }
 

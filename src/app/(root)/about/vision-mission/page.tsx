@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import AboutHero from "@/src/components/about/AboutHero";
 import VisionMission from "@/src/components/about/VisionMission";
+import VisionMissionHero from "@/src/components/about/VisionMissionHero";
 
 export const metadata: Metadata = {
   title:
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const VisionMissionPage = () => {
   return (
     <>
-      <AboutHero title="Vision & Mission" />
+      <VisionMissionHero />
       <VisionMission />
     </>
   );

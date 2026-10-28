@@ -18,6 +18,7 @@ import {
 } from "@/src/data/encIndexAreas";
 
 import { IProduct } from "@/src/components/admin/ContentManagement/products/types";
+import { useInactiveProducts } from "@/src/components/products/useInactiveProducts";
 
 const IMAGE_SRC = "/chart/enc-index.jpg";
 
@@ -48,20 +49,30 @@ const ElectronicChartMap = () => {
     { enabled: selected !== null }
   );
 
+  // Cells whose product an admin has switched off are left off the index.
+  const { inactiveCodes } = useInactiveProducts(
+    "ELECTRONIC_NAVIGATIONAL_CHART"
+  );
+  const visibleCells = useMemo(
+    () =>
+      encHotspotAreas.filter((c) => !inactiveCodes.has(normalise(c.cellNo))),
+    [inactiveCodes]
+  );
+
   // Largest rectangles first so the smallest (most specific) cell renders on
   // top and wins hover/click where coverage areas overlap.
   const areas = useMemo(
-    () => [...encHotspotAreas].sort((a, b) => b.w * b.h - a.w * a.h),
-    []
+    () => [...visibleCells].sort((a, b) => b.w * b.h - a.w * a.h),
+    [visibleCells]
   );
 
   // Cells sorted by national number for the search dropdown.
   const allCells = useMemo(
     () =>
-      [...encHotspotAreas].sort(
+      [...visibleCells].sort(
         (a, b) => Number(a.nationalNo) - Number(b.nationalNo)
       ),
-    []
+    [visibleCells]
   );
 
   const results = useMemo(() => {
@@ -106,72 +117,72 @@ const ElectronicChartMap = () => {
       <div className="relative z-20 flex items-center justify-between gap-4 px-4 py-2.5">
         <div className="container px-4 mx-auto flex items-center justify-between gap-4">
           <div className="relative w-full sm:w-80">
-          <SearchIcon className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setDropdownOpen(true);
-            }}
-            onFocus={() => query.trim() && setDropdownOpen(true)}
-            onBlur={() => setDropdownOpen(false)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && results[0]) selectResult(results[0]);
-              if (e.key === "Escape") clearSearch();
-            }}
-            placeholder="Search ENC charts..."
-            aria-label="Search ENC cell by cell or chart number"
-            className="h-10 w-full rounded-full border border-border bg-card pr-9 pl-9 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
-          />
-          {query && (
-            <button
-              type="button"
-              onClick={clearSearch}
-              aria-label="Clear search"
-              className="absolute top-1/2 right-2 -translate-y-1/2 rounded p-1 text-muted-foreground transition-colors hover:text-pBlue"
-            >
-              <XIcon className="h-4 w-4" />
-            </button>
-          )}
+            <SearchIcon className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setDropdownOpen(true);
+              }}
+              onFocus={() => query.trim() && setDropdownOpen(true)}
+              onBlur={() => setDropdownOpen(false)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && results[0]) selectResult(results[0]);
+                if (e.key === "Escape") clearSearch();
+              }}
+              placeholder="Search ENC charts..."
+              aria-label="Search ENC cell by cell or chart number"
+              className="h-10 w-full rounded-full border border-border bg-card pr-9 pl-9 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={clearSearch}
+                aria-label="Clear search"
+                className="absolute top-1/2 right-2 -translate-y-1/2 rounded p-1 text-muted-foreground transition-colors hover:text-pBlue"
+              >
+                <XIcon className="h-4 w-4" />
+              </button>
+            )}
 
-          {dropdownOpen && query.trim() && (
-            <ul
-              className="absolute top-11 right-0 left-0 z-30 max-h-64 overflow-auto rounded-lg border border-border bg-card py-1 shadow-xl"
-              onMouseDown={(e) => e.preventDefault()}
-            >
-              {results.length > 0 ? (
-                results.map((area) => (
-                  <li key={area.cellNo}>
-                    <button
-                      type="button"
-                      onClick={() => selectResult(area)}
-                      className="flex w-full items-baseline gap-2 px-3 py-2 text-left transition-colors hover:bg-light"
-                    >
-                      <span className="text-sm font-bold text-pBlue">
-                        {area.cellNo}
-                      </span>
-                      <span className="text-xs text-muted-foreground">
-                        {area.nationalNo}
-                      </span>
-                      <span className="min-w-0 flex-1 truncate text-xs text-secondary-foreground">
-                        {area.title}
-                      </span>
-                    </button>
+            {dropdownOpen && query.trim() && (
+              <ul
+                className="absolute top-11 right-0 left-0 z-30 max-h-64 overflow-auto rounded-lg border border-border bg-card py-1 shadow-xl"
+                onMouseDown={(e) => e.preventDefault()}
+              >
+                {results.length > 0 ? (
+                  results.map((area) => (
+                    <li key={area.cellNo}>
+                      <button
+                        type="button"
+                        onClick={() => selectResult(area)}
+                        className="flex w-full items-baseline gap-2 px-3 py-2 text-left transition-colors hover:bg-light"
+                      >
+                        <span className="text-sm font-bold text-pBlue">
+                          {area.cellNo}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {area.nationalNo}
+                        </span>
+                        <span className="min-w-0 flex-1 truncate text-xs text-secondary-foreground">
+                          {area.title}
+                        </span>
+                      </button>
+                    </li>
+                  ))
+                ) : (
+                  <li className="px-3 py-2 text-sm text-muted-foreground">
+                    No cell matches “{query.trim()}”
                   </li>
-                ))
-              ) : (
-                <li className="px-3 py-2 text-sm text-muted-foreground">
-                  No cell matches “{query.trim()}”
-                </li>
-              )}
-            </ul>
-          )}
-        </div>
+                )}
+              </ul>
+            )}
+          </div>
 
-        <p className="hidden h-10 lg:flex items-center justify-center text-xs text-muted-foreground md:block border py-2 rounded-full px-5">
-          Hover a rectangle to identify an ENC cell — click it to view details
-        </p>
+          <p className="hidden h-10 lg:flex items-center justify-center text-xs text-muted-foreground md:block border py-2 rounded-full px-5">
+            Hover a rectangle to identify an ENC cell — click it to view details
+          </p>
         </div>
       </div>
 

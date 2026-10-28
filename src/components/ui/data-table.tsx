@@ -57,6 +57,8 @@ export interface DataTableProps<T> {
   setSelectedId?: (id: string) => void;
   options?: { value: string; label: string }[];
   rightComponents?: ReactNode;
+  /** Filter controls (e.g. category tabs) shown left of the search box. */
+  toolbarStart?: ReactNode;
   statusOptions?: { label: string; value: string }[];
 }
 
@@ -81,6 +83,7 @@ export function DataTable<T>({
   onSearchChange,
   searchPlaceholder = "Searching...",
   rightComponents,
+  toolbarStart,
   statusOptions,
   isShowStatus = true,
 }: DataTableProps<T>) {
@@ -116,34 +119,73 @@ export function DataTable<T>({
             id="table-tab"
             className="bg-card p-5 rounded-t-lg border border-light-dark"
           >
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
-              {tableTitle && (
-                <Paragraph className="text-sm xl:text-xl  text-secondary-dark font-semibold">
-                  {tableTitle}
-                </Paragraph>
-              )}
-              <div className="flex  items-center gap-3">
-                {tabs.length > 0 ? (
-                  <div className="overflow-hidden rounded-sm border border-light-dark h-11">
-                    {tabs.map((tab) => (
-                      <Button
-                        key={tab.name}
-                        className={`h-full text-secondary-dark rounded-none cursor-pointer text-sm font-medium  ${
-                          pathname === tab.route
-                            ? "bg-primary text-white"
-                            : "bg-transparent hover:bg-transparent"
-                        }`}
-                        onClick={() => {
-                          router.push(tab.route as string);
-                          dispatch(clearFilters());
-                        }}
-                      >
-                        {tab.name}
-                      </Button>
-                    ))}
-                  </div>
-                ) : (
-                  showSearch && (
+            {toolbarStart ? (
+              // Filters on the left, search on the right; stacks on small
+              // screens with the search full width.
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
+                <div className="min-w-0">{toolbarStart}</div>
+                <div className="flex w-full items-center gap-3 lg:w-auto">
+                  {showSearch && (
+                    <div className="flex h-11 w-full items-center rounded-[6px] border border-light-dark px-3 lg:w-72">
+                      <Search className="text-muted-foreground" />
+                      <Input
+                        placeholder={searchPlaceholder}
+                        value={searchValue}
+                        onChange={onSearchChange}
+                        className="border-none bg-transparent shadow-none placeholder:text-muted-foreground focus-visible:ring-0"
+                      />
+                    </div>
+                  )}
+                  {rightComponents}
+                  {isShowStatus && (
+                    <StatusFilter statusOptions={statusOptions} />
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+                {tableTitle && (
+                  <Paragraph className="text-sm xl:text-xl  text-secondary-dark font-semibold">
+                    {tableTitle}
+                  </Paragraph>
+                )}
+                <div className="flex  items-center gap-3">
+                  {tabs.length > 0 ? (
+                    <div className="overflow-hidden rounded-sm border border-light-dark h-11">
+                      {tabs.map((tab) => (
+                        <Button
+                          key={tab.name}
+                          className={`h-full text-secondary-dark rounded-none cursor-pointer text-sm font-medium  ${
+                            pathname === tab.route
+                              ? "bg-primary text-white"
+                              : "bg-transparent hover:bg-transparent"
+                          }`}
+                          onClick={() => {
+                            router.push(tab.route as string);
+                            dispatch(clearFilters());
+                          }}
+                        >
+                          {tab.name}
+                        </Button>
+                      ))}
+                    </div>
+                  ) : (
+                    showSearch && (
+                      <div className="flex items-center border border-light-dark px-3 rounded-[6px] h-11 w-full max-w-60">
+                        <Search className="text-muted-foreground" />
+                        <Input
+                          placeholder={searchPlaceholder}
+                          value={searchValue}
+                          onChange={onSearchChange}
+                          className="border-none shadow-none focus-visible:ring-0 placeholder:text-muted-foreground bg-transparent"
+                        />
+                      </div>
+                    )
+                  )}
+                </div>
+
+                <div className="flex items-center gap-3">
+                  {tabs.length > 0 && showSearch && (
                     <div className="flex items-center border border-light-dark px-3 rounded-[6px] h-11 w-full max-w-60">
                       <Search className="text-muted-foreground" />
                       <Input
@@ -153,26 +195,14 @@ export function DataTable<T>({
                         className="border-none shadow-none focus-visible:ring-0 placeholder:text-muted-foreground bg-transparent"
                       />
                     </div>
-                  )
-                )}
+                  )}
+                  {rightComponents}
+                  {isShowStatus && (
+                    <StatusFilter statusOptions={statusOptions} />
+                  )}
+                </div>
               </div>
-
-              <div className="flex items-center gap-3">
-                {tabs.length > 0 && showSearch && (
-                  <div className="flex items-center border border-light-dark px-3 rounded-[6px] h-11 w-full max-w-60">
-                    <Search className="text-muted-foreground" />
-                    <Input
-                      placeholder={searchPlaceholder}
-                      value={searchValue}
-                      onChange={onSearchChange}
-                      className="border-none shadow-none focus-visible:ring-0 placeholder:text-muted-foreground bg-transparent"
-                    />
-                  </div>
-                )}
-                {rightComponents}
-                {isShowStatus && <StatusFilter statusOptions={statusOptions} />}
-              </div>
-            </div>
+            )}
           </div>
           <Table className="min-w-full border-collapse">
             <TableHeader>

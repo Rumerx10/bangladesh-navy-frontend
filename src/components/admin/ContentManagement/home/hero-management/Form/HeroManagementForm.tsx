@@ -100,7 +100,7 @@ const HeroManagementForm = ({
             />
           </div>
 
-          <div>
+          {/* <div>
             <InputLabel label="English Subtitle" required />
             <ControlledInputField
               name="subTitleEn"
@@ -125,7 +125,7 @@ const HeroManagementForm = ({
               options={statusOptions}
               placeholder="Select status"
             />
-          </div>
+          </div> */}
         </div>
       </div>
 

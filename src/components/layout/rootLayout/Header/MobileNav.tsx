@@ -9,6 +9,10 @@ import { NavItem, NavigationItems, SubLink } from "@/src/data/navigationItems";
 const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
+  {
+    label: "Chief Hydrographer Message",
+    href: "/about/chief-hydrographer-message",
+  },
   { label: "History", href: "/about/history" },
   { label: "Vision & Mission", href: "/about/vision-mission" },
   { label: "Organogram", href: "/about/organogram" },

@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { LayoutGrid, Package } from "lucide-react";
+import { LayoutGrid, Package, SearchIcon, XIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGet } from "@/src/hooks/useGet";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
@@ -13,46 +13,73 @@ import {
   IProduct,
   PRODUCT_CATEGORY_LABELS,
   PRODUCT_CATEGORY_OPTIONS,
+  ProductCategory,
 } from "@/src/components/admin/ContentManagement/products/types";
 
 const DEFAULT_PAGE_SIZE = 12;
 const PAGE_SIZE_OPTIONS = [12, 24, 48];
 
-interface ProductsResponse {
-  data: IProduct[];
-  meta: {
-    totalItems: number;
-    itemCount: number;
-    itemsPerPage: number;
-    totalPages: number;
-    currentPage: number;
-    hasPagination: boolean;
-  };
-}
-
-// Backend slugs → admin enum values.
-const CATEGORY_BY_SLUG: Record<string, string> = {
-  "paper-charts": "PAPER_CHART",
+// URL slugs (header / footer / mobile nav links) → backend enum values. Note
+// the backend's own spelling, `PAPPER_CHART`.
+const CATEGORY_BY_SLUG: Record<string, ProductCategory> = {
+  "paper-charts": "PAPPER_CHART",
+  "electronic-charts": "ELECTRONIC_NAVIGATIONAL_CHART",
   "electronic-navigational-charts": "ELECTRONIC_NAVIGATIONAL_CHART",
   "tide-tables": "TIDAL",
 };
 
-const toCategory = (value: string | null) => {
+// Extra words each category answers to, so "tide", "tidal" or "enc" find
+// products whose names don't contain them.
+const CATEGORY_KEYWORDS: Record<ProductCategory, string> = {
+  PAPPER_CHART: "paper chart charts nautical",
+  ELECTRONIC_NAVIGATIONAL_CHART: "electronic navigational chart charts enc",
+  TIDAL: "tidal tide tides table tables",
+};
+
+const toCategory = (value: string | null): ProductCategory | "all" => {
   if (!value) return "all";
-  if (PRODUCT_CATEGORY_OPTIONS.some((option) => option.value === value))
-    return value;
+  const direct = PRODUCT_CATEGORY_OPTIONS.find(
+    (option) => option.value === value
+  );
+  if (direct) return direct.value;
   return CATEGORY_BY_SLUG[value] ?? "all";
 };
+
+const searchableText = (product: IProduct) =>
+  [
+    product.nameEn,
+    product.nameBn,
+    product.chartCode,
+    product.geographicLocation,
+    product.category && PRODUCT_CATEGORY_LABELS[product.category],
+    product.category && CATEGORY_KEYWORDS[product.category],
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
 
 const ProductListingPage = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  // The header search lands here with `?search=`.
+  const urlSearch = searchParams.get("search") ?? "";
+
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
-  const { search, handleSearchChange, debouncedSearch } =
-    useSearchDebounce(300);
+  const { search, setSearch, handleSearchChange, debouncedSearch } =
+    useSearchDebounce(300, urlSearch);
+
+  // A new header search while already on this page changes the URL without
+  // remounting, so pick it up here (adjusting state during render, not in an
+  // effect, so there is no extra paint with the stale query).
+  const [syncedUrlSearch, setSyncedUrlSearch] = useState(urlSearch);
+  if (urlSearch !== syncedUrlSearch) {
+    setSyncedUrlSearch(urlSearch);
+    setSearch(urlSearch);
+    setCurrentPage(1);
+  }
 
   const selectedCategory = toCategory(searchParams.get("category"));
 
@@ -73,40 +100,54 @@ const ProductListingPage = () => {
     handleSearchChange(event);
   };
 
+  const clearSearch = () => {
+    setCurrentPage(1);
+    setSearch("");
+  };
+
   const handlePageSizeChange = (size: number) => {
     setPageSize(size);
     setCurrentPage(1);
   };
 
-  const trimmedSearch = debouncedSearch.trim();
-  // -1 = "All": omit `limit` so the API returns the full set (meta confirms
-  // this by returning itemsPerPage === totalItems, hasPagination: false).
-  const showAll = pageSize === -1;
-
-  const { data, isLoading } = useGet<ProductsResponse>(
+  // The whole active catalogue for the category, in one request (no `limit`
+  // → the API returns every match). The backend ignores `search`, so search
+  // and pagination happen here; the catalogue is small enough for that.
+  const { data, isLoading } = useGet<IProduct[]>(
     "/product",
-    [
-      "product-public",
-      selectedCategory,
-      trimmedSearch,
-      currentPage.toString(),
-      pageSize.toString(),
-    ],
+    ["product-public", selectedCategory],
     {
-      page: showAll ? "1" : currentPage.toString(),
       sortOrder: "asc",
       status: "ACTIVE",
-      ...(!showAll && { limit: pageSize.toString() }),
-      ...(trimmedSearch && { search: trimmedSearch }),
       ...(selectedCategory !== "all" && { category: selectedCategory }),
     }
   );
 
-  const products = Array.isArray(data?.data) ? data.data : [];
-  const totalItems = data?.meta?.totalItems ?? 0;
+  const terms = debouncedSearch.trim().toLowerCase().split(/\s+/);
+
+  const filteredProducts = useMemo(() => {
+    const all = Array.isArray(data?.data) ? data.data : [];
+    return all.filter((product) => {
+      // Belt and braces: never show a withdrawn product, whatever the API sends.
+      if (product.status !== "ACTIVE") return false;
+      const text = searchableText(product);
+      return terms.every((term) => text.includes(term));
+    });
+    // `terms` is derived from debouncedSearch on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, debouncedSearch]);
+
+  const showAll = pageSize === -1;
+  const totalItems = filteredProducts.length;
   const totalPages = showAll
     ? 1
-    : Math.max(1, data?.meta?.totalPages ?? Math.ceil(totalItems / pageSize));
+    : Math.max(1, Math.ceil(totalItems / pageSize));
+  const page = Math.min(currentPage, totalPages);
+  const products = showAll
+    ? filteredProducts
+    : filteredProducts.slice((page - 1) * pageSize, page * pageSize);
+
+  const trimmedSearch = debouncedSearch.trim();
 
   return (
     <section className="container px-4 sm:px-6 lg:px-8 py-8 lg:py-16 mt-24 lg:mt-28">
@@ -123,13 +164,28 @@ const ProductListingPage = () => {
 
       {/* Search + Category filter */}
       <div className="flex flex-col md:flex-row gap-4 mb-8">
-        <input
-          type="search"
-          value={search}
-          onChange={handleSearch}
-          placeholder="Search products..."
-          className="h-10 flex-1 px-4 rounded-lg border border-border bg-card text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
-        />
+        <div className="relative flex-1">
+          <SearchIcon className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" />
+          <input
+            type="text"
+            value={search}
+            onChange={handleSearch}
+            onKeyDown={(event) => event.key === "Escape" && clearSearch()}
+            placeholder="Search by name, chart number or type…"
+            aria-label="Search products"
+            className="h-10 w-full pl-10 pr-10 rounded-lg border border-border bg-card text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+          />
+          {search && (
+            <button
+              type="button"
+              onClick={clearSearch}
+              aria-label="Clear search"
+              className="absolute top-1/2 right-2 grid size-7 -translate-y-1/2 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-light-dark hover:text-foreground cursor-pointer"
+            >
+              <XIcon className="size-4" />
+            </button>
+          )}
+        </div>
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => handleCategoryChange("all")}
@@ -166,6 +222,15 @@ const ProductListingPage = () => {
           </span>{" "}
           of <span className="font-semibold text-foreground">{totalItems}</span>{" "}
           {totalItems === 1 ? "product" : "products"}
+          {trimmedSearch && (
+            <>
+              {" "}
+              for{" "}
+              <span className="font-semibold text-foreground">
+                &ldquo;{trimmedSearch}&rdquo;
+              </span>
+            </>
+          )}
         </p>
       )}
 
@@ -198,8 +263,19 @@ const ProductListingPage = () => {
             No products found
           </h3>
           <p className="text-sm text-secondary-foreground mt-1">
-            Try adjusting your search or filter
+            {trimmedSearch
+              ? `Nothing matches “${trimmedSearch}”. Try another name or chart number.`
+              : "Try adjusting your search or filter"}
           </p>
+          {trimmedSearch && (
+            <button
+              type="button"
+              onClick={clearSearch}
+              className="mt-4 rounded-full bg-brand-navy px-4 py-1.5 text-sm font-medium text-white transition-opacity hover:opacity-90 cursor-pointer"
+            >
+              Clear search
+            </button>
+          )}
         </motion.div>
       ) : (
         <AnimatePresence mode="popLayout">
@@ -236,9 +312,7 @@ const ProductListingPage = () => {
                     )}
                     <span className="absolute bottom-3 left-3 px-2.5 py-1 rounded-md bg-black/40 backdrop-blur-sm text-white text-[11px] font-medium">
                       {product.category
-                        ? PRODUCT_CATEGORY_LABELS[
-                            product.category as keyof typeof PRODUCT_CATEGORY_LABELS
-                          ]
+                        ? PRODUCT_CATEGORY_LABELS[product.category]
                         : "Tidal Product"}
                     </span>
                   </div>
@@ -257,16 +331,17 @@ const ProductListingPage = () => {
         </AnimatePresence>
       )}
 
-      {!isLoading && (totalPages > 1 || showAll) && (
+      {!isLoading && totalItems > PAGE_SIZE_OPTIONS[0] && (
         <div className="mt-8 rounded-xl border border-border bg-card">
           <Pagination
-            currentPage={currentPage}
+            currentPage={page}
             totalPages={totalPages}
             onPageChange={(next) => {
               setCurrentPage(next);
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
             itemsPerPage={showAll ? totalItems : pageSize}
+            selectedPageSize={pageSize}
             totalItems={totalItems}
             onItemsPerPageChange={handlePageSizeChange}
             pageSizeOptions={PAGE_SIZE_OPTIONS}

@@ -1,13 +1,27 @@
 import * as yup from "yup";
+import { getPhoneError } from "@/src/utils/phoneValidation";
+
+export const NAME_MAX_LENGTH = 100;
 
 export const contactValidationSchema = yup.object({
-  name: yup.string().required("Name is required").trim(),
+  name: yup
+    .string()
+    .trim()
+    .required("Name is required")
+    .max(NAME_MAX_LENGTH, `Name cannot exceed ${NAME_MAX_LENGTH} characters`),
   email: yup
     .string()
     .required("Email is required")
     .email("Invalid email")
     .trim(),
-  phone: yup.string().required("Phone number is required").trim(),
+  phone: yup
+    .string()
+    .trim()
+    .required("Phone number is required")
+    .test("phone", function (value) {
+      const message = value ? getPhoneError(value) : undefined;
+      return message ? this.createError({ message }) : true;
+    }),
   message: yup
     .string()
     .required("Message is required")

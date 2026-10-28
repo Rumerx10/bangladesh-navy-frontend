@@ -45,6 +45,7 @@ export enum StatusType {
   IN_PROGRESS = "IN_PROGRESS",
   VERIFIED = "VERIFIED",
   UNVERIFIED = "UNVERIFIED",
+  RESOLVED = "RESOLVED",
 }
 export interface ITableProps<T> {
   columns: ColumnDef<T>[];

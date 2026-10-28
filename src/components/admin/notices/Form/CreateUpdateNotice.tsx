@@ -166,7 +166,7 @@ const CreateUpdateNotice = ({
             {isUpdate ? "Update" : "Create"} Notice
           </DialogTitle>
         </DialogHeader>
-        <div className="overflow-y-auto flex-1 mt-2 pr-2 scrollbar-modern">
+        <div className="overflow-y-auto flex-1 mt-2 pr-2 pb-1 scrollbar-modern">
           <FormProvider {...methods}>
             <NoticeForm
               isEditMode={isUpdate}
