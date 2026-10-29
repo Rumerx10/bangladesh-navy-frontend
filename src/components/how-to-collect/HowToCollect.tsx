@@ -1,6 +1,7 @@
 "use client";
 
 import SectionTitle from "@/src/components/SectionTitle";
+import PageHero from "@/src/components/shared/PageHero";
 import { useGet } from "@/src/hooks/useGet";
 import { getStepIcon } from "@/src/data/howToCollectIcons";
 import { IHowToCollectStep } from "@/src/components/admin/ContentManagement/how-to-collect/types";
@@ -15,6 +16,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import HowToCollectStepsSkeleton from "./Skeleton/HowToCollectStepsSkeleton";
+import Container from "@/src/components/shared/Container";
 
 /* The accent tints are per-step brand colour, not semantic tokens, so each one
    needs an explicit dark cut: the light `-50` fills sit on a white card, and on
@@ -89,50 +91,20 @@ const HowToCollect = () => {
 
   return (
     <main>
-      {/* Hero Banner */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-brand-navy overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-125 h-125 bg-blue-500 rounded-full blur-[120px] -mr-64 -mt-64" />
-          <div className="absolute bottom-0 left-0 w-100 h-100 bg-cyan-500 rounded-full blur-[100px] -ml-48 -mb-48" />
-        </div>
-
-        <div className="relative container px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-blue-200 text-xs font-bold uppercase tracking-widest mb-6">
-              <ShieldCheck size={16} />
-              Simple &amp; Secure Process
-            </div>
-            <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              How to{" "}
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-cyan-300">
-                Collect
-              </span>
-            </h1>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
-              {hasSteps ? (
-                <>
-                  Follow our simple {steps.length}-step process to collect BNHOC
-                  nautical charts and publications — from browsing the catalogue
-                  to delivery at your address.
-                </>
-              ) : (
-                <>
-                  Collect BNHOC nautical charts and publications — from browsing
-                  the catalogue to delivery at your address.
-                </>
-              )}
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        title="How to"
+        highlight="Collect"
+        description={
+          hasSteps
+            ? `Follow our simple ${steps.length}-step process to collect BNHOC nautical charts and publications — from browsing the catalogue to delivery at your address.`
+            : "Collect BNHOC nautical charts and publications — from browsing the catalogue to delivery at your address."
+        }
+        features={[{ icon: <ShieldCheck />, label: "Simple & Secure Process" }]}
+      />
 
       {/* Collection Flow */}
       <section className="py-8 lg:py-20 bg-card">
-        <div className="container px-4 sm:px-6 lg:px-8">
+        <Container>
           <SectionTitle
             title="Collection Process"
             desc="From catalogue to your doorstep, step by step."
@@ -257,12 +229,12 @@ const HowToCollect = () => {
               </div>
             )}
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Help Banner */}
       <section className="py-14 bg-brand-blue">
-        <div className="container px-4 sm:px-6 lg:px-8 text-center">
+        <Container className="text-center">
           <h3 className="text-xl lg:text-2xl font-bold text-white mb-3">
             Need Assistance with Your Collection?
           </h3>
@@ -287,7 +259,7 @@ const HowToCollect = () => {
               +880 1769 722446
             </a>
           </div>
-        </div>
+        </Container>
       </section>
     </main>
   );

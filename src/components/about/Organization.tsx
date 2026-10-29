@@ -9,6 +9,7 @@ import {
   type IOrganogramListItem,
   type IOrganogramTreeNode,
 } from "@/src/utils/organogram";
+import Container from "@/src/components/shared/Container";
 
 type Kind = "command" | "deputy" | "dept";
 
@@ -363,7 +364,7 @@ const Organization = () => {
 
   return (
     <section className="bg-linear-to-b from-light/60 to-card py-8 lg:py-20">
-      <div className="container px-4 sm:px-6 lg:px-8">
+      <Container>
         <SectionTitle
           title="Organisation Tree"
           desc="Organisational structure of Bangladesh Navy Hydrographic & Oceanographic Centre (BNHOC)"
@@ -409,7 +410,7 @@ const Organization = () => {
 
         {/* Hidden while there is no chart to explain. */}
         {!isLoading && roots.length > 0 && <Legend />}
-      </div>
+      </Container>
     </section>
   );
 };

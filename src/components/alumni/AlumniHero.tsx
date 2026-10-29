@@ -1,7 +1,5 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { Anchor, CalendarRange, GraduationCap, Users } from "lucide-react";
+import { CalendarRange, GraduationCap, Users } from "lucide-react";
+import PageHero from "@/src/components/shared/PageHero";
 
 interface AlumniHeroProps {
   totalCourses: number;
@@ -16,7 +14,7 @@ const STATS = [
   { key: "years", label: "Years of Training", icon: CalendarRange },
 ] as const;
 
-/** Mirrors the notices hero (src/components/notices/NoticesHero.tsx). */
+/** The shared page header, with the directory's headline figures under it. */
 const AlumniHero = ({
   totalCourses,
   totalAlumni,
@@ -29,52 +27,32 @@ const AlumniHero = ({
   };
 
   return (
-    <section className="relative pt-44 pb-14 lg:pt-48 lg:pb-24 bg-brand-navy overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 right-0 w-125 h-125 bg-blue-500 rounded-full blur-[120px] -mr-64 -mt-64" />
-        <div className="absolute bottom-0 left-0 w-100 h-100 bg-cyan-500 rounded-full blur-[100px] -ml-48 -mb-48" />
-      </div>
-
-      <div className="relative container px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-blue-200 text-xs font-bold uppercase tracking-widest mb-6">
-            <Anchor size={16} />
-            BN Hydrographic Institute
-          </div>
-          <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-cyan-300">
-              Alumni
+    <PageHero
+      title="Alumni"
+      parents={[
+        { label: "BN Hydrographic Institute", href: "/training-courses" },
+      ]}
+    >
+      <dl className="grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3">
+        {STATS.map(({ key, label, icon: Icon }) => (
+          <div
+            key={key}
+            className="flex items-center gap-4 rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 backdrop-blur-sm"
+          >
+            <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-white/10 text-sky-300">
+              <Icon className="size-5" />
             </span>
-          </h1>
-
-          {/* Stat tiles */}
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
-            {STATS.map(({ key, label, icon: Icon }, index) => (
-              <motion.div
-                key={key}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.15 + index * 0.08 }}
-                className="rounded-xl border border-white/15 bg-white/5 px-5 py-4 backdrop-blur-sm"
-              >
-                <Icon className="mx-auto h-5 w-5 text-blue-300" />
-                <p className="mt-2 text-2xl font-bold text-white tabular-nums">
-                  {values[key]}
-                </p>
-                <p className="mt-0.5 text-xs font-medium uppercase tracking-wide text-blue-200/80">
-                  {label}
-                </p>
-              </motion.div>
-            ))}
+            {/* Label first in the markup (dt before dd), figure first on screen. */}
+            <div className="flex min-w-0 flex-col-reverse">
+              <dt className="text-xs font-medium text-white/60">{label}</dt>
+              <dd className="text-xl font-bold text-white tabular-nums">
+                {values[key]}
+              </dd>
+            </div>
           </div>
-        </motion.div>
-      </div>
-    </section>
+        ))}
+      </dl>
+    </PageHero>
   );
 };
 

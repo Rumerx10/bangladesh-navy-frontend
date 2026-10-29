@@ -7,6 +7,7 @@ import {
   SurveyShipScene,
 } from "@/src/components/about/VisionMissionScenes";
 import { useMissionVision } from "@/src/components/mission-vision/useMissionVision";
+import Container from "@/src/components/shared/Container";
 
 const VisionMissionSkeleton = () => (
   <div className="mx-auto grid max-w-6xl animate-pulse gap-6 md:grid-cols-2 lg:gap-8">
@@ -54,7 +55,7 @@ const VisionMission = () => {
 
   return (
     <section className="py-14 lg:py-24">
-      <div className="container px-4 sm:px-6 lg:px-8">
+      <Container>
         {isLoading ? (
           <VisionMissionSkeleton />
         ) : (
@@ -98,7 +99,7 @@ const VisionMission = () => {
             )}
           </div>
         )}
-      </div>
+      </Container>
     </section>
   );
 };

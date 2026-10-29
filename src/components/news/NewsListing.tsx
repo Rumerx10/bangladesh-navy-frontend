@@ -1,12 +1,12 @@
 ﻿"use client";
 
-import Link from "next/link";
 import { INewsItem } from "../types";
 import { motion } from "framer-motion";
 import { useGet } from "@/src/hooks/useGet";
 import NewsCard from "@/src/components/home/News/NewsCard";
-import { ChevronRight, Home, Newspaper } from "lucide-react";
-import NavyWatermark from "@/src/components/shared/NavyWatermark";
+import { Newspaper } from "lucide-react";
+import PageHero from "@/src/components/shared/PageHero";
+import Container from "@/src/components/shared/Container";
 
 const NewsListingPage = () => {
   const { data, isLoading } = useGet<INewsItem[]>("/news-events/list", [
@@ -16,55 +16,16 @@ const NewsListingPage = () => {
   const newsItems = Array.isArray(data?.data) ? data.data : [];
 
   return (
-    <div className="mt-24 lg:mt-20">
-      {/* Page Header */}
-      <section className="relative bg-linear-to-b from-brand-navy to-[#003052] py-14 lg:py-20 overflow-hidden">
-        <div className="absolute -right-20 -top-10 text-white">
-          <NavyWatermark
-            variant="anchor"
-            size={300}
-            opacity={0.05}
-            animate="float"
-          />
-        </div>
-        <div className="relative container px-4 sm:px-6 lg:px-8 text-center text-white">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Newspaper size={22} />
-              <span className="text-sm font-semibold uppercase tracking-wider text-blue-300">
-                BNHOC
-              </span>
-            </div>
-            <h1 className="text-3xl lg:text-4xl font-bold mb-3">
-              News & Events
-            </h1>
-            <p className="text-base text-gray-300 max-w-lg mx-auto">
-              Stay updated with the latest hydrographic surveys, maritime
-              events, and BNHOC publications
-            </p>
-          </motion.div>
-
-          {/* Breadcrumb */}
-          <nav className="flex items-center justify-center gap-1.5 mt-6 text-sm text-muted-foreground">
-            <Link
-              href="/"
-              className="flex items-center gap-1 hover:text-white transition-colors"
-            >
-              <Home size={14} /> Home
-            </Link>
-            <ChevronRight size={14} />
-            <span className="text-white font-medium">News & Events</span>
-          </nav>
-        </div>
-      </section>
+    <div>
+      <PageHero
+        title="News & Events"
+        parents={[{ label: "About Us", href: "/about" }]}
+        description="Stay updated with the latest hydrographic surveys, maritime events, and BNHOC publications"
+      />
 
       {/* News Grid */}
       <section className="py-12 lg:py-16 bg-light">
-        <div className="container px-4 sm:px-6 lg:px-8">
+        <Container>
           {isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(6)].map((_, i) => (
@@ -102,7 +63,7 @@ const NewsListingPage = () => {
               ))}
             </div>
           )}
-        </div>
+        </Container>
       </section>
     </div>
   );

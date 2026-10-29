@@ -6,9 +6,10 @@ import { useGet } from "@/src/hooks/useGet";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import Pagination from "@/src/components/shared/Pagination";
 import { IPublication } from "@/src/components/admin/ContentManagement/publications/types";
+import PageHero from "@/src/components/shared/PageHero";
 import PublicationCard from "./PublicationCard";
-import PublicationsHero from "./PublicationsHero";
 import PublicationListSkeleton from "./Skeleton/PublicationListSkeleton";
+import Container from "@/src/components/shared/Container";
 
 const PAGE_SIZE = 8;
 
@@ -41,10 +42,14 @@ const Publications = () => {
 
   return (
     <div className="bg-card">
-      <PublicationsHero />
+      <PageHero
+        title="Official"
+        highlight="Publications"
+        breadcrumbLabel="Publications"
+      />
 
       <section className="py-10 lg:py-14">
-        <div className="container px-4 sm:px-6 lg:px-8">
+        <Container>
           {/* Search */}
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-end">
             <div className="relative w-full lg:max-w-xs">
@@ -100,7 +105,7 @@ const Publications = () => {
               />
             </div>
           )}
-        </div>
+        </Container>
       </section>
     </div>
   );

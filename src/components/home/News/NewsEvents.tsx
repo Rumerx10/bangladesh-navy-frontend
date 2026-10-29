@@ -8,6 +8,7 @@ import { useGet } from "@/src/hooks/useGet";
 import SectionTitle from "../../SectionTitle";
 import { ArrowRight, Newspaper } from "lucide-react";
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
+import Container from "@/src/components/shared/Container";
 
 const NewsEvents = () => {
   const { data, isLoading } = useGet<INewsItem[]>("/news-events/list", [
@@ -31,7 +32,7 @@ const NewsEvents = () => {
           />
         </div>
 
-        <div className="relative container px-4 sm:px-6 lg:px-8">
+        <Container className="relative">
           {/* Section header */}
           <div>
             <div className="flex items-center justify-center gap-2 mb-3">
@@ -101,7 +102,7 @@ const NewsEvents = () => {
               </Link>
             </motion.div>
           )}
-        </div>
+        </Container>
       </section>
     </>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import AboutHero from "@/src/components/about/AboutHero";
+import PageHero from "@/src/components/shared/PageHero";
 import { useMissionVision } from "@/src/components/mission-vision/useMissionVision";
 
 /**
@@ -12,9 +12,11 @@ const VisionMissionHero = () => {
   const { missionVision } = useMissionVision();
 
   return (
-    <AboutHero
+    <PageHero
       title={missionVision.titleEn}
       description={missionVision.subTitleEn?.trim() || undefined}
+      parents={[{ label: "About Us", href: "/about" }]}
+      breadcrumbLabel="Vision & Mission"
     />
   );
 };

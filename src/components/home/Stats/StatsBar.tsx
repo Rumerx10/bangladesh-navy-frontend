@@ -3,6 +3,7 @@
 import { statsItems } from "@/src/data/homeData";
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
 import StatItem from "./StatItem";
+import Container from "@/src/components/shared/Container";
 
 const StatsBar = () => {
   return (
@@ -17,13 +18,13 @@ const StatsBar = () => {
         />
       </div>
 
-      <div className="relative container px-4 sm:px-6 lg:px-8">
+      <Container className="relative">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {statsItems.map((stat) => (
             <StatItem key={stat.id} stat={stat} />
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

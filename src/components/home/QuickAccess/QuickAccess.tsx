@@ -6,6 +6,7 @@ import QuickAccessCard from "./QuickAccessCard";
 import { quickAccessItems } from "@/src/data/homeData";
 import { motion } from "framer-motion";
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
+import Container from "@/src/components/shared/Container";
 
 const QuickAccess = () => {
   const { data } = useGet<IBiography>("/biography", ["biography"]);
@@ -32,7 +33,7 @@ const QuickAccess = () => {
         />
       </div>
 
-      <div className="relative container px-4 sm:px-6 lg:px-8">
+      <Container className="relative">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start">
           {/* Left — title + cards, fills remaining space next to the fixed-width biography card */}
           <div className="w-full lg:flex-1 lg:min-w-0">
@@ -70,7 +71,7 @@ const QuickAccess = () => {
           {/* Right — 20%: Chief Message card */}
           {biographyData && <BiographyCard data={biographyData} />}
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

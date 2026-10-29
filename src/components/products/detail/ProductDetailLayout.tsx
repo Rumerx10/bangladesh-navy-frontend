@@ -8,6 +8,7 @@ import ProductKeyFeatures from "./ProductKeyFeatures";
 import { INavyProduct } from "@/src/components/products/types";
 import { formatPrice, getDiscountedPrice } from "@/src/data/navyProducts";
 import { IProduct } from "@/src/components/admin/ContentManagement/products/types";
+import Container from "@/src/components/shared/Container";
 
 interface ProductDetailLayoutProps {
   product: INavyProduct;
@@ -27,7 +28,7 @@ const ProductDetailLayout = ({
   const hasDescription = htmlToPlainText(product.descriptionEn).length > 0;
   const hasContent = htmlToPlainText(product.content).length > 0;
   return (
-    <div className="container px-4 sm:px-6 lg:px-8 py-6 lg:py-8 mt-24 lg:mt-20">
+    <Container className="py-6 lg:py-8 mt-24 lg:mt-20">
       {/* Breadcrumb */}
       <nav className="text-sm text-secondary-foreground mb-6">
         <span className="hover:text-liteBlue cursor-pointer">Home</span>
@@ -88,7 +89,7 @@ const ProductDetailLayout = ({
           )}
         </div>
       )}
-    </div>
+    </Container>
   );
 };
 

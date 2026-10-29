@@ -8,6 +8,7 @@ import SectionTitle from "../../SectionTitle";
 import { useState } from "react";
 import GalleryLightbox from "@/src/components/shared/GalleryLightbox";
 import { useGalleryList } from "./useGalleryList";
+import Container from "@/src/components/shared/Container";
 
 const MotionLink = motion.create(Link);
 
@@ -25,7 +26,7 @@ const GallerySection = () => {
   if (isLoading) {
     return (
       <section className="py-20 lg:py-28 bg-light">
-        <div className="container px-4 sm:px-6 lg:px-8">
+        <Container>
           <div className="text-center mb-12 lg:mb-16">
             <SectionTitle title="Gallery" />
           </div>
@@ -38,7 +39,7 @@ const GallerySection = () => {
               />
             ))}
           </div>
-        </div>
+        </Container>
       </section>
     );
   }
@@ -46,7 +47,7 @@ const GallerySection = () => {
   if (galleryImages.length === 0) {
     return (
       <section className="py-20 lg:py-28 bg-light">
-        <div className="container px-4 sm:px-6 lg:px-8">
+        <Container>
           <div className="text-center mb-12 lg:mb-16">
             <SectionTitle title="Gallery" />
           </div>
@@ -56,7 +57,7 @@ const GallerySection = () => {
               No gallery images available.
             </p>
           </div>
-        </div>
+        </Container>
       </section>
     );
   }
@@ -64,7 +65,7 @@ const GallerySection = () => {
   return (
     <>
       <section className="py-20 lg:py-28 bg-light">
-        <div className="container px-4 sm:px-6 lg:px-8">
+        <Container>
           {/* Section Header */}
           <div className="text-center mb-12 lg:mb-16">
             <SectionTitle title="Gallery" />
@@ -135,7 +136,7 @@ const GallerySection = () => {
               Explore Full Gallery
             </MotionLink>
           </div>
-        </div>
+        </Container>
       </section>
 
       <GalleryLightbox

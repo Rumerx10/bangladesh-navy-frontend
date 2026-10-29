@@ -1,4 +1,12 @@
 import * as Yup from "yup";
+import {
+  normalizeCoordinate,
+  normalizeEdition,
+  normalizePlace,
+  normalizeProjection,
+  normalizeScale,
+  parseCoordinate,
+} from "./chartFormats";
 
 const SUPPORTED_FORMATS = [
   "image/jpeg",
@@ -8,88 +16,44 @@ const SUPPORTED_FORMATS = [
 ];
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
-// ── Nautical chart detail formats ──────────────────────────────────────────
-// Match what the printed charts (and the existing records) use, e.g.
-// scale "1:35 000", latitude "22°29.00'N", longitude "089°27.40'E".
+// ── Nautical chart details ───────────────────────────────────────────────────
+// All optional. Each field accepts whatever its reader in ./chartFormats can
+// make sense of — "22 29.5 N", "1:12500", "3rd edition" — and is saved in the
+// chart's own spelling (22°29.50'N, 1:12 500, 3rd Edition). Only input that
+// can't be read at all is rejected.
 
-const LOCATION_PATTERN = /^[p{L}p{M}p{N}][p{L}p{M}p{N}s,.'’()&/-]*$/u;
-const SCALE_PATTERN = /^1s?:s?[1-9]d{0,2}(?:[ ,]?d{3})*$/;
-const PROJECTION_PATTERN = /^[A-Za-z][A-Za-zs()-]*$/;
-// degrees ° minutes(.decimals) ' hemisphere. The ° and ' are optional on
-// input — "22 29.00 N" and "22-29.00N" are accepted too, since ° is awkward to
-// type — and the value is saved in the canonical "22°29.00'N" form.
-const COORDINATE_PATTERN =
-  /^(d{1,3})(?:s*°s*|s+|-)(d{1,2}(?:.d{1,3})?)s*['′’]?s*([NSEW])$/i;
-
-/** "22°29.00'N" → 22.483…, "089°27.40'W" → -89.45…; null if blank or malformed. */
-export const toDecimalDegrees = (
-  value: string | undefined | null,
-  axis: "lat" | "lon"
-) => {
-  const match = value?.trim().match(COORDINATE_PATTERN);
-  if (!match) return null;
-  const [, deg, min, hemisphere] = match;
-  const h = hemisphere.toUpperCase();
-  if (axis === "lat" ? !"NS".includes(h) : !"EW".includes(h)) return null;
-  const degrees = Number(deg);
-  const minutes = Number(min);
-  if (minutes >= 60 || degrees > (axis === "lat" ? 90 : 180)) return null;
-  const decimal = degrees + minutes / 60;
-  if (decimal > (axis === "lat" ? 90 : 180)) return null;
-  return h === "S" || h === "W" ? -decimal : decimal;
-};
-
-/** Canonical spelling — "22°29.00'N" / "089°27.40'E" — or the input untouched if it can't be read. */
-const toCanonicalCoordinate = (value: string, axis: "lat" | "lon") => {
-  const match = value.trim().match(COORDINATE_PATTERN);
-  if (!match || toDecimalDegrees(value, axis) === null) return value;
-  const [, deg, min, hemisphere] = match;
-  const degrees = String(Number(deg)).padStart(axis === "lat" ? 2 : 3, "0");
-  const minutes = Number(min).toFixed(2).padStart(5, "0");
-  return `${degrees}°${minutes}'${hemisphere.toUpperCase()}`;
-};
-
-const coordinate = (label: string, axis: "lat" | "lon") =>
+/** Optional text field, validated and normalised by `normalize`. */
+const chartField = (
+  normalize: (value: string) => string | null,
+  message: string
+) =>
   Yup.string()
-    .trim()
     .transform((value) =>
-      typeof value === "string" && value
-        ? toCanonicalCoordinate(value, axis)
+      typeof value === "string"
+        ? value.trim()
+          ? (normalize(value) ?? value.trim())
+          : ""
         : value
     )
-    .test(
-      `${axis}-format`,
-      axis === "lat"
-        ? `${label} must look like 22°29.00'N (0–90°, minutes under 60, N or S)`
-        : `${label} must look like 089°27.40'E (0–180°, minutes under 60, E or W)`,
-      (value) => !value || toDecimalDegrees(value, axis) !== null
-    )
+    .test("chart-format", message, (value) => !value || !!normalize(value))
     .optional();
 
-const latitude = (label: string) => coordinate(label, "lat");
-const longitude = (label: string) => coordinate(label, "lon");
-
-const ORDINAL_SUFFIX = (n: number) => {
-  if (n % 100 >= 11 && n % 100 <= 13) return "th";
-  return (
-    ({ 1: "st", 2: "nd", 3: "rd" } as Record<number, string>)[n % 10] ?? "th"
-  );
-};
-
-/** "1st Edition", "22nd Edition" — and the suffix has to fit the number. */
-const isValidEdition = (value: string) => {
-  const match = value.match(/^(d{1,3})(st|nd|rd|th)s+Edition$/i);
-  if (!match) return false;
-  const n = Number(match[1]);
-  return n > 0 && match[2].toLowerCase() === ORDINAL_SUFFIX(n);
-};
+const latitude = chartField(
+  (value) => normalizeCoordinate(value, "lat"),
+  "Enter a latitude like 22°29.00'N (or just 22 29)"
+);
+const longitude = chartField(
+  (value) => normalizeCoordinate(value, "lon"),
+  "Enter a longitude like 089°27.40'E (or just 89 27.4)"
+);
 
 const chartDate = (label: string) =>
   Yup.string()
     .test("date-valid", `${label} is not a valid date`, (value) => {
       if (!value) return true;
-      const year = new Date(value).getFullYear();
-      return !Number.isNaN(year) && year >= 1900 && year <= 2100;
+      const date = new Date(value);
+      const year = date.getFullYear();
+      return !Number.isNaN(date.getTime()) && year >= 1900 && year <= 2100;
     })
     .optional();
 
@@ -133,60 +97,39 @@ export const productSchema = Yup.object({
     )
     .min(1, "At least one image is required")
     .required("Images are required"),
-  geographicLocation: Yup.string()
-    .trim()
-    .max(150, "Max 150 characters")
-    .test(
-      "location-format",
-      "Use a place name — letters, numbers and , . ' ( ) - & / only",
-      (value) => !value || LOCATION_PATTERN.test(value)
-    )
-    .optional(),
-  scale: Yup.string()
-    .trim()
-    .test(
-      "scale-format",
-      "Scale must look like 1:12 500 or 1:350 000",
-      (value) => !value || SCALE_PATTERN.test(value)
-    )
-    .optional(),
-  projection: Yup.string()
-    .trim()
-    .max(60, "Max 60 characters")
-    .test(
-      "projection-format",
-      "Projection may only contain letters, spaces, hyphens and brackets",
-      (value) => !value || PROJECTION_PATTERN.test(value)
-    )
-    .optional(),
-  northLatitude: latitude("North latitude").test(
-    "north-above-south",
-    "North latitude must be north of (greater than) the south latitude",
+  geographicLocation: chartField(
+    normalizePlace,
+    "Enter a place name, e.g. Bay of Bengal"
+  ).max(150, "Max 150 characters"),
+  scale: chartField(normalizeScale, "Enter a scale like 1:12 500"),
+  projection: chartField(
+    normalizeProjection,
+    "Enter a projection name, e.g. Mercator"
+  ).max(60, "Max 60 characters"),
+  northLatitude: latitude.test(
+    "north-of-south",
+    "North latitude must be greater than South latitude — are they swapped?",
     function (value) {
-      const north = toDecimalDegrees(value, "lat");
-      const south = toDecimalDegrees(this.parent.southLatitude, "lat");
-      return north === null || south === null || north >= south;
+      const north = parseCoordinate(value, "lat");
+      const south = parseCoordinate(this.parent.southLatitude, "lat");
+      return !north || !south || north.decimal >= south.decimal;
     }
   ),
-  southLatitude: latitude("South latitude"),
-  eastLongitude: longitude("East longitude").test(
+  southLatitude: latitude,
+  eastLongitude: longitude.test(
     "east-of-west",
-    "East longitude must be east of (greater than) the west longitude",
+    "East longitude must be greater than West longitude — are they swapped?",
     function (value) {
-      const east = toDecimalDegrees(value, "lon");
-      const west = toDecimalDegrees(this.parent.westLongitude, "lon");
-      return east === null || west === null || east >= west;
+      const east = parseCoordinate(value, "lon");
+      const west = parseCoordinate(this.parent.westLongitude, "lon");
+      return !east || !west || east.decimal >= west.decimal;
     }
   ),
-  westLongitude: longitude("West longitude"),
-  edition: Yup.string()
-    .trim()
-    .test(
-      "edition-format",
-      "Edition must look like 1st Edition, 2nd Edition, 3rd Edition…",
-      (value) => !value || isValidEdition(value)
-    )
-    .optional(),
+  westLongitude: longitude,
+  edition: chartField(
+    normalizeEdition,
+    "Enter the edition number, e.g. 1st Edition"
+  ),
   editionDate: chartDate("Edition date"),
   publicationDate: chartDate("Publication date"),
 });

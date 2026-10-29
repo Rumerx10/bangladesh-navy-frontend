@@ -9,8 +9,14 @@ import SubmitButton from "@/src/components/shared/SubmitButton";
 import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
 import ControlledSelectField from "@/src/components/shared/FromController/ControlledSelectField";
-import ControlledSuggestionInput from "@/src/components/shared/FromController/ControlledSuggestionInput";
-import { useCourseStatisticsList } from "@/src/components/course-statistics/useCourseStatistics";
+import ControlledCreatableCombobox from "@/src/components/shared/FromController/ControlledCreatableCombobox";
+import { useGet } from "@/src/hooks/useGet";
+import { ICourseStatistic } from "@/src/components/course-statistics/types";
+import {
+  bySerial,
+  COURSE_STATISTICS_ENDPOINT,
+  COURSE_STATISTICS_QUERY_KEY,
+} from "@/src/components/course-statistics/useCourseStatistics";
 import { Button } from "@/src/components/ui/button";
 import { ErrorType } from "@/src/components/shared/types/common";
 import { COURSE_STATUS_OPTIONS } from "@/src/components/courses/types";
@@ -65,11 +71,23 @@ const CourseForm = ({
   const { handleSubmit, watch, setValue, getValues } =
     useFormContext<CourseFormValues>();
 
-  // Course names already on the public Course Statistics table
-  // (Training & Courses → Courses), offered as suggestions so the two lists
-  // spell a course the same way.
-  const { rows: courseStatistics } = useCourseStatisticsList();
-  const courseNameSuggestions = useMemo(
+  // The course names in the Training & Courses → Courses table, offered in
+  // the Course Name dropdown so both lists spell a course the same way. Same
+  // request (and cache entry) as that table, so the lists always match.
+  const { data: statisticsData, isLoading: statisticsLoading } = useGet<
+    ICourseStatistic[]
+  >(COURSE_STATISTICS_ENDPOINT, COURSE_STATISTICS_QUERY_KEY, {
+    page: "1",
+    limit: "50",
+  });
+  const courseStatistics = useMemo(
+    () =>
+      Array.isArray(statisticsData?.data)
+        ? [...statisticsData.data].sort(bySerial)
+        : [],
+    [statisticsData]
+  );
+  const courseNameOptions = useMemo(
     () => courseStatistics.map((row) => row.courseName),
     [courseStatistics]
   );
@@ -114,13 +132,15 @@ const CourseForm = ({
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <InputLabel label="Course Name" required />
-            <ControlledSuggestionInput
+            <ControlledCreatableCombobox
               name="name"
-              suggestions={courseNameSuggestions}
-              heading="From Course Statistics"
+              options={courseNameOptions}
+              isLoading={statisticsLoading}
+              groupLabel="Courses"
               onPick={handleCoursePick}
               maxLength={200}
-              placeholder="Type or pick a course, e.g. Basic Hydrographic (Cat B)"
+              placeholder="Select a course"
+              searchPlaceholder="Search courses or type a new name…"
               className="bg-light shadow-none"
             />
           </div>

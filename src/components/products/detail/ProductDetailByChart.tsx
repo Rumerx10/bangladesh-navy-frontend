@@ -8,6 +8,7 @@ import {
   IProduct,
   PRODUCT_CATEGORY_LABELS,
 } from "@/src/components/admin/ContentManagement/products/types";
+import Container from "@/src/components/shared/Container";
 
 function adaptToNavyProduct(p: IProduct): INavyProduct {
   const categoryLabel = p.category
@@ -51,7 +52,7 @@ const ProductDetailByChart = ({ chartId }: ProductDetailByChartProps) => {
 
   if (isLoading) {
     return (
-      <div className="container px-4 sm:px-6 lg:px-8 py-6 lg:py-8 mt-24 lg:mt-20">
+      <Container className="py-6 lg:py-8 mt-24 lg:mt-20">
         <div className="animate-pulse space-y-6">
           <div className="h-4 bg-light-silver rounded w-64" />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -63,7 +64,7 @@ const ProductDetailByChart = ({ chartId }: ProductDetailByChartProps) => {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     );
   }
 

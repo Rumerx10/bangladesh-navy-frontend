@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import AboutHero from "@/src/components/about/AboutHero";
+import PageHero from "@/src/components/shared/PageHero";
 import SurveyShips from "@/src/components/about/SurveyShips";
 
 export const metadata: Metadata = {
@@ -11,9 +11,10 @@ export const metadata: Metadata = {
 const SurveyShipsPage = () => {
   return (
     <>
-      <AboutHero
+      <PageHero
         title="Survey Ships"
         description="Our fleet of hydrographic survey and oceanographic research vessels"
+        parents={[{ label: "About Us", href: "/about" }]}
       />
       <SurveyShips />
     </>

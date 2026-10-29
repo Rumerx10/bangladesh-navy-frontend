@@ -9,6 +9,7 @@ import { INewsItem } from "../types";
 import NewsCard from "@/src/components/home/News/NewsCard";
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
 import { sanitizeRichText } from "@/src/utils/sanitize";
+import Container from "@/src/components/shared/Container";
 
 interface NewsDetailProps {
   slug: string;
@@ -75,7 +76,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
 
         {/* Breadcrumb on hero */}
         <div className="absolute bottom-0 left-0 right-0">
-          <div className="container px-4 sm:px-6 lg:px-8 pb-8">
+          <Container className="pb-8">
             <nav className="flex items-center gap-1.5 text-sm text-gray-300 mb-4">
               <Link
                 href="/"
@@ -95,7 +96,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
                 {news.titleEn}
               </span>
             </nav>
-          </div>
+          </Container>
         </div>
       </section>
 
@@ -110,7 +111,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
           />
         </div>
 
-        <div className="relative container px-4 sm:px-6 lg:px-8">
+        <Container className="relative">
           <div className="container px-4 mx-auto">
             {/* Meta */}
             <motion.div
@@ -192,13 +193,13 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
               </button>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Related News */}
       {relatedNews.length > 0 && (
         <section className="py-12 lg:py-16 bg-light">
-          <div className="container px-4 sm:px-6 lg:px-8">
+          <Container>
             <h2 className="text-xl lg:text-2xl font-bold text-pBlue mb-8">
               Related News
             </h2>
@@ -214,7 +215,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
                 </motion.div>
               ))}
             </div>
-          </div>
+          </Container>
         </section>
       )}
     </div>

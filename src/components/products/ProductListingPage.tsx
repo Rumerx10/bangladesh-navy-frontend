@@ -10,11 +10,16 @@ import { useGet } from "@/src/hooks/useGet";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import Pagination from "@/src/components/shared/Pagination";
 import {
+  productMatches,
+  toSearchTerms,
+} from "@/src/components/products/productSearch";
+import {
   IProduct,
   PRODUCT_CATEGORY_LABELS,
   PRODUCT_CATEGORY_OPTIONS,
   ProductCategory,
 } from "@/src/components/admin/ContentManagement/products/types";
+import Container from "@/src/components/shared/Container";
 
 const DEFAULT_PAGE_SIZE = 12;
 const PAGE_SIZE_OPTIONS = [12, 24, 48];
@@ -28,14 +33,6 @@ const CATEGORY_BY_SLUG: Record<string, ProductCategory> = {
   "tide-tables": "TIDAL",
 };
 
-// Extra words each category answers to, so "tide", "tidal" or "enc" find
-// products whose names don't contain them.
-const CATEGORY_KEYWORDS: Record<ProductCategory, string> = {
-  PAPPER_CHART: "paper chart charts nautical",
-  ELECTRONIC_NAVIGATIONAL_CHART: "electronic navigational chart charts enc",
-  TIDAL: "tidal tide tides table tables",
-};
-
 const toCategory = (value: string | null): ProductCategory | "all" => {
   if (!value) return "all";
   const direct = PRODUCT_CATEGORY_OPTIONS.find(
@@ -44,19 +41,6 @@ const toCategory = (value: string | null): ProductCategory | "all" => {
   if (direct) return direct.value;
   return CATEGORY_BY_SLUG[value] ?? "all";
 };
-
-const searchableText = (product: IProduct) =>
-  [
-    product.nameEn,
-    product.nameBn,
-    product.chartCode,
-    product.geographicLocation,
-    product.category && PRODUCT_CATEGORY_LABELS[product.category],
-    product.category && CATEGORY_KEYWORDS[product.category],
-  ]
-    .filter(Boolean)
-    .join(" ")
-    .toLowerCase();
 
 const ProductListingPage = () => {
   const router = useRouter();
@@ -123,18 +107,14 @@ const ProductListingPage = () => {
     }
   );
 
-  const terms = debouncedSearch.trim().toLowerCase().split(/\s+/);
-
   const filteredProducts = useMemo(() => {
     const all = Array.isArray(data?.data) ? data.data : [];
-    return all.filter((product) => {
-      // Belt and braces: never show a withdrawn product, whatever the API sends.
-      if (product.status !== "ACTIVE") return false;
-      const text = searchableText(product);
-      return terms.every((term) => text.includes(term));
-    });
-    // `terms` is derived from debouncedSearch on every render.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const terms = toSearchTerms(debouncedSearch);
+    return all.filter(
+      (product) =>
+        // Belt and braces: never show a withdrawn product, whatever the API sends.
+        product.status === "ACTIVE" && productMatches(product, terms)
+    );
   }, [data, debouncedSearch]);
 
   const showAll = pageSize === -1;
@@ -150,7 +130,7 @@ const ProductListingPage = () => {
   const trimmedSearch = debouncedSearch.trim();
 
   return (
-    <section className="container px-4 sm:px-6 lg:px-8 py-8 lg:py-16 mt-24 lg:mt-28">
+    <Container as="section" className="py-8 lg:py-16 mt-24 lg:mt-28">
       {/* Page header */}
       <div className="mb-8">
         <h1 className="text-2xl lg:text-3xl font-bold text-pBlue">
@@ -186,7 +166,7 @@ const ProductListingPage = () => {
             </button>
           )}
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex overflow-auto gap-2">
           <button
             onClick={() => handleCategoryChange("all")}
             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors cursor-pointer ${
@@ -201,7 +181,7 @@ const ProductListingPage = () => {
             <button
               key={cat.value}
               onClick={() => handleCategoryChange(cat.value)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors cursor-pointer ${
+              className={`whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium transition-colors cursor-pointer ${
                 selectedCategory === cat.value
                   ? "bg-brand-navy text-white"
                   : "bg-light-dark text-secondary-foreground hover:bg-light-silver"
@@ -348,7 +328,7 @@ const ProductListingPage = () => {
           />
         </div>
       )}
-    </section>
+    </Container>
   );
 };
 

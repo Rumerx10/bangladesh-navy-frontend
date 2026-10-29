@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { useGet } from "@/src/hooks/useGet";
 
 interface INoticeList {
@@ -16,32 +17,31 @@ const MarqueeNotice = () => {
   if (notices.length === 0) return null;
 
   const track = notices.map((notice, index) => (
-    <span key={index} className="px-10">
+    // 👇 tighter gap on mobile, original on sm+
+    <span key={index} className="px-4 sm:px-10">
       {notice.name}
     </span>
   ));
 
   return (
-    <div className="bg-nav-strip text-nav-ink py-2 overflow-hidden flex items-center">
-      <div className="container px-4 flex items-center">
-        <span className="font-bold text-sm shrink-0 mr-4 bg-nav-wash-strong px-3 py-1 rounded">
+    // 👇 slightly slimmer strip on mobile
+    <div className="bg-nav-strip text-nav-ink py-1.5 sm:py-2 overflow-hidden flex items-center">
+      <div className="container px-3 sm:px-4 flex items-center">
+        <span className="font-bold text-xs sm:text-sm shrink-0 mr-2 sm:mr-4 bg-nav-wash-strong px-2 sm:px-3 py-1 rounded">
           NOTICE
         </span>
         <div
-          className="flex-1 overflow-hidden relative flex text-sm tracking-wider font-medium"
+          // 👇 smaller text + normal tracking on mobile
+          className="flex-1 overflow-hidden relative flex text-xs sm:text-sm tracking-normal sm:tracking-wider font-medium"
           style={
             {
-              // Keep the reading pace roughly constant: a fixed duration would
-              // make a long notice list scroll past faster than a short one.
               "--marquee-duration": `${Math.max(20, notices.length * 7)}s`,
-            } as React.CSSProperties
+            } as CSSProperties
           }
         >
           <div className="animate-marquee shrink-0 whitespace-nowrap">
             {track}
           </div>
-          {/* Second copy of the same notices, trailing one track-width behind,
-              so it is already entering from the right as the first one exits. */}
           <div
             aria-hidden
             className="animate-marquee-follow absolute top-0 left-0 shrink-0 whitespace-nowrap"

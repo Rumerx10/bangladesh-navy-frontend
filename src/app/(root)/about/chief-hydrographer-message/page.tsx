@@ -1,6 +1,7 @@
 import { Metadata } from "next";
-import AboutHero from "@/src/components/about/AboutHero";
+import PageHero from "@/src/components/shared/PageHero";
 import ChiefHydrographerMessage from "@/src/components/about/ChiefHydrographerMessage";
+import Container from "@/src/components/shared/Container";
 
 export const metadata: Metadata = {
   title:
@@ -11,14 +12,15 @@ export const metadata: Metadata = {
 const ChiefHydrographerMessagePage = () => {
   return (
     <>
-      <AboutHero
+      <PageHero
         title="Chief Hydrographer Message"
         description="A message from the Chief Hydrographer of BNHOC"
+        parents={[{ label: "About Us", href: "/about" }]}
       />
       <section className="py-8 lg:py-20">
-        <div className="container px-4 sm:px-6 lg:px-8">
+        <Container>
           <ChiefHydrographerMessage />
-        </div>
+        </Container>
       </section>
     </>
   );

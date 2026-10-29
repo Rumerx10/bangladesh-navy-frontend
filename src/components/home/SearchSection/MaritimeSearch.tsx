@@ -29,6 +29,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import SearchTabs from "./SearchTabs";
 import SectionTitle from "../../SectionTitle";
+import Container from "@/src/components/shared/Container";
 
 type ResultCategory =
   "paper-chart" | "enc-chart" | "tide" | "notice" | "publication";
@@ -316,7 +317,7 @@ const MaritimeSearch = () => {
           because this layer spans the full section and would otherwise
           swallow clicks meant for the input and tabs. */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -right-20 top-10 lg:-top-10 text-pBlue">
+        <div className="absolute left-50 bottom-0 lg:bottom-0 text-pBlue">
           <NavyWatermark
             variant="compass"
             size={350}
@@ -324,16 +325,16 @@ const MaritimeSearch = () => {
             animate="rotate"
           />
         </div>
-        <div className="absolute -left-16 -bottom-16 text-pBlue">
+        {/* <div className="absolute -left-16 -bottom-16 text-pBlue">
           <NavyWatermark
             variant="anchor"
             size={250}
             opacity={0.025}
             animate="drift"
           />
-        </div>
+        </div> */}
       </div>
-      <div className="relative container px-4 sm:px-6 lg:px-8 text-center">
+      <Container className="relative text-center">
         <SectionTitle
           title="Find Maritime Resources"
           desc="Search our comprehensive database of charts, notices, and data"
@@ -504,7 +505,7 @@ const MaritimeSearch = () => {
             </div>
           )}
         </motion.div>
-      </div>
+      </Container>
     </section>
   );
 };

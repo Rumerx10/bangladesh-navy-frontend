@@ -29,6 +29,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
+import Container from "@/src/components/shared/Container";
 
 interface ProductDetailsProps {
   product: IProduct;
@@ -186,7 +187,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
     "w-full px-3 py-2.5 rounded-lg border border-border text-sm bg-background text-foreground focus:outline-none focus:border-primary transition-colors";
 
   return (
-    <div className="container px-4 sm:px-6 lg:px-8 py-6 lg:py-10">
+    <Container className="py-6 lg:py-10">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1.5 text-xs text-muted-foreground mb-6 flex-wrap">
         <Link href="/" className="hover:text-primary transition-colors">
@@ -1021,7 +1022,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           </div>
         </div>
       )}
-    </div>
+    </Container>
   );
 };
 

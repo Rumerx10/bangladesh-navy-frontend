@@ -13,6 +13,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Container from "@/src/components/shared/Container";
 
 const sidebarSections = [
   {
@@ -51,7 +52,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     : sidebarSections.filter((section) => section.title !== "My Orders");
 
   return (
-    <div className="container px-4 sm:px-6 lg:px-8">
+    <Container>
       <div className="py-6 lg:py-8 pb-20 lg:pb-12">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-secondary-foreground mb-6">
@@ -163,7 +164,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
           <main className="flex-1 min-w-0">{children}</main>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

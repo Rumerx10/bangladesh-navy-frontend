@@ -1,44 +1,12 @@
 "use client";
 
-import { ChevronDown, ChevronRight, Search, X } from "lucide-react";
+import { ChevronDown, ChevronRight, FileText, Search, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { NavItem, NavigationItems, SubLink } from "@/src/data/navigationItems";
-
-const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
-  {
-    label: "Chief Hydrographer Message",
-    href: "/about/chief-hydrographer-message",
-  },
-  { label: "History", href: "/about/history" },
-  { label: "Vision & Mission", href: "/about/vision-mission" },
-  { label: "Organogram", href: "/about/organogram" },
-  { label: "Survey Ships", href: "/about/survey-ships" },
-  { label: "Gallery", href: "/about/gallery" },
-  { label: "Nautical Products", href: "/product-service" },
-  { label: "New Chart", href: "/chart" },
-  { label: "How to Collect", href: "/how-to-collect" },
-  { label: "BN Hydrographic Institute", href: "/training-courses" },
-  { label: "Courses", href: "/training-courses/courses" },
-  { label: "Alumni", href: "/training-courses/alumni" },
-  { label: "Contact Information", href: "/contact-us/information" },
-  { label: "Query & Suggestion", href: "/contact-us/query-suggestion" },
-  { label: "Hydrographic Note", href: "/contact-us/hydrographic-note" },
-  { label: "Publications", href: "/product-service?category=publications" },
-  {
-    label: "Notices to Mariners",
-    href: "/important-notice/notices",
-  },
-  { label: "Paper Charts", href: "/product-service?category=paper-charts" },
-  {
-    label: "Electronic Charts",
-    href: "/product-service?category=electronic-charts",
-  },
-  { label: "Tide Tables", href: "/product-service?category=tide-tables" },
-];
+import { toSearchTerms } from "@/src/components/products/productSearch";
+import { findPages } from "./searchPages";
 
 interface MobileNavProps {
   open: boolean;
@@ -107,26 +75,32 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
     });
   };
 
-  const navSuggestions =
-    searchQuery.length >= 2
-      ? NAV_LINKS.filter((link) =>
-          link.label.toLowerCase().includes(searchQuery.toLowerCase())
-        ).slice(0, 5)
-      : [];
+  const query = searchQuery.trim();
+  // Same pages and matching as the desktop header search.
+  const pageResults =
+    query.length >= 2 ? findPages(toSearchTerms(query), 5) : [];
+
+  const clearSearch = () => {
+    setSearchQuery("");
+    setShowSuggestions(false);
+  };
 
   const handleNavClick = (href: string) => {
+    clearSearch();
     setOpen(false);
     router.push(href);
   };
 
+  const submitSearch = () => {
+    if (!query) return;
+    clearSearch();
+    setOpen(false);
+    router.push(`/product-service?search=${encodeURIComponent(query)}`);
+  };
+
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      setOpen(false);
-      router.push(
-        `/product-service?search=${encodeURIComponent(searchQuery.trim())}`
-      );
-    }
+    submitSearch();
   };
 
   function renderSubItem(sub: SubLink) {
@@ -265,7 +239,7 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
         {/* Search — top */}
         <div
           ref={searchRef}
-          className="shrink-0 px-4 pt-4 pb-3 border-b border-border relative"
+          className="shrink-0 px-4 pt-4 pb-3 border-b border-border"
         >
           <form onSubmit={handleSearchSubmit}>
             <div className="relative flex items-center">
@@ -277,16 +251,18 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
                   setShowSuggestions(true);
                 }}
                 onFocus={() => setShowSuggestions(true)}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") setShowSuggestions(false);
+                }}
                 placeholder="Search pages & products..."
+                aria-label="Search pages and products"
                 className="w-full h-10 pl-4 pr-20 rounded-full border border-border bg-light text-sm focus:border-liteBlue focus:bg-card focus:outline-none transition-colors"
               />
               {searchQuery && (
                 <button
                   type="button"
-                  onClick={() => {
-                    setSearchQuery("");
-                    setShowSuggestions(false);
-                  }}
+                  onClick={clearSearch}
+                  aria-label="Clear search"
                   className="absolute right-10 top-1/2 -translate-y-1/2 text-muted-foreground p-1"
                 >
                   <X size={14} />
@@ -302,25 +278,46 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
             </div>
           </form>
 
-          {/* Search suggestions */}
-          {showSuggestions && navSuggestions.length > 0 && (
-            <div className="absolute left-4 right-4 top-[calc(100%-4px)] bg-card rounded-b-xl shadow-lg border border-t-0 border-border z-10 overflow-hidden">
-              {navSuggestions.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => {
-                    setShowSuggestions(false);
-                    handleNavClick(link.href);
-                  }}
-                  className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm text-foreground hover:bg-light hover:text-liteBlue text-left transition-colors"
-                >
-                  <Search
-                    size={13}
-                    className="text-muted-foreground shrink-0"
-                  />
-                  {link.label}
-                </button>
-              ))}
+          {/* Suggestions — in the flow, straight under the field, so the menu
+              below moves down instead of being covered by a floating box. */}
+          {showSuggestions && query && (
+            <div className="mt-2 overflow-hidden rounded-xl border border-border bg-card shadow-sm animate-in fade-in-0 slide-in-from-top-1 duration-150">
+              {pageResults.length > 0 && (
+                <ul className="max-h-[45vh] overflow-y-auto py-1">
+                  {pageResults.map((page) => (
+                    <li key={page.href}>
+                      <button
+                        type="button"
+                        onClick={() => handleNavClick(page.href)}
+                        className="flex w-full items-center gap-3 px-3 py-2.5 text-left text-sm text-foreground transition-colors hover:bg-light active:bg-light"
+                      >
+                        <FileText
+                          size={14}
+                          className="shrink-0 text-muted-foreground"
+                        />
+                        <span className="min-w-0 flex-1 truncate">
+                          {page.label}
+                        </span>
+                        <span className="shrink-0 text-xs text-muted-foreground">
+                          {page.section}
+                        </span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <button
+                type="button"
+                onClick={submitSearch}
+                className={`flex w-full items-center gap-3 px-3 py-2.5 text-left text-sm font-medium text-pBlue transition-colors hover:bg-light active:bg-light ${
+                  pageResults.length > 0 ? "border-t border-border" : ""
+                }`}
+              >
+                <Search size={14} className="shrink-0" />
+                <span className="truncate">
+                  Search products for &ldquo;{query}&rdquo;
+                </span>
+              </button>
             </div>
           )}
         </div>

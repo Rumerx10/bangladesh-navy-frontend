@@ -1,6 +1,7 @@
 import { Metadata } from "next";
-import AboutHero from "@/src/components/about/AboutHero";
+import PageHero from "@/src/components/shared/PageHero";
 import DirectApproach from "@/src/components/contact/DirectApproach";
+import Container from "@/src/components/shared/Container";
 
 export const metadata: Metadata = {
   title: "Contact Information | BNHOC",
@@ -11,14 +12,15 @@ export const metadata: Metadata = {
 const ContactInfoPage = () => {
   return (
     <>
-      <AboutHero
+      <PageHero
         title="Contact Information"
         description="Reach out to the Bangladesh Navy Hydrographic & Oceanographic Center"
+        parents={[{ label: "Contact Us", href: "/contact-us" }]}
       />
       <section className="py-8 lg:py-20">
-        <div className="container px-4 sm:px-6 lg:px-8 max-w-3xl">
+        <Container className="max-w-3xl">
           <DirectApproach />
-        </div>
+        </Container>
       </section>
     </>
   );
