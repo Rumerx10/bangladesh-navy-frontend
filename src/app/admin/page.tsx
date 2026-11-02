@@ -73,26 +73,6 @@ export const metadata: Metadata = {
 const AdminDashboardPage = () => {
   return (
     <div className="space-y-8 lg:space-y-10">
-      {/* Hero */}
-      <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-brand-navy via-secondary to-brand-blue px-6 py-10 text-white shadow-lg sm:px-10 sm:py-12">
-        <Compass
-          className="pointer-events-none absolute -top-8 -right-8 h-52 w-52 text-white/10"
-          strokeWidth={1}
-        />
-        <div className="relative max-w-2xl">
-          <p className="text-xs font-semibold tracking-widest text-white/70 uppercase sm:text-sm">
-            Bangladesh Navy Hydrographic &amp; Oceanographic Centre
-          </p>
-          <h1 className="mt-2 text-2xl font-bold sm:text-3xl lg:text-4xl">
-            Admin Control Panel
-          </h1>
-          <p className="mt-3 text-sm text-white/80 sm:text-base">
-            Manage products, content, news and users for the BNHOC platform —
-            everything you need, in one place.
-          </p>
-        </div>
-      </div>
-
       {/* Quick access */}
       <div>
         <h2 className="text-xl font-bold text-pBlue lg:text-2xl">
