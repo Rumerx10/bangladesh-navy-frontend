@@ -9,7 +9,6 @@ import {
   Phone,
   Users,
   ArrowRight,
-  Compass,
   type LucideIcon,
 } from "lucide-react";
 
