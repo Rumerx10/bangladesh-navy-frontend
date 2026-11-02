@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { Image as ImageIcon } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { useFormContext } from "react-hook-form";
 import { Button } from "@/src/components/ui/button";
@@ -13,13 +12,6 @@ import { ErrorType } from "@/src/components/shared/types/common";
 import { HistoryManagementSchemaForm } from "../Schema/historyManagementSchema";
 import InputLabel from "@/src/components/shared/InputLabel";
 import TextEditor from "@/src/components/shared/text-editor/TextEditor";
-// Commented out — Key Milestones/Timeline are not part of the current /history API.
-// Kept for potential future re-enablement.
-// import { FileUploadController } from "@/src/components/shared/FromController/FileUploadController";
-// import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
-// import KeyMilestonesField from "./KeyMilestonesField";
-// import TimelineItemsField from "./TimelineItemsField";
-
 interface HistoryManagementFormProps {
   isEditMode?: boolean;
   onSubmit: (data: HistoryManagementSchemaForm) => void;
@@ -82,22 +74,6 @@ const SectionHeader = ({
   );
 };
 
-/** The image controls are contextual — they only appear once an image is
- *  selected — so without a nudge an admin can insert a picture and never
- *  discover that wrapping, alignment and size are one click away. */
-const ImageHint = () => (
-  <div className="flex items-start gap-2 mb-3 rounded-md border border-blue-100 bg-blue-50/60 px-3 py-2">
-    <ImageIcon className="w-4 h-4 text-blue-500 mt-0.5 shrink-0" />
-    <Paragraph className="text-xs! text-secondary-foreground">
-      Insert a picture with the image button, then{" "}
-      <span className="font-medium">click the image</span> to choose how the
-      text wraps around it (Inline / Wrap / Break), which side it sits on, and
-      how wide it is. Drag any corner to resize — widths are saved as a share of
-      the text column, so they stay correct on every screen.
-    </Paragraph>
-  </div>
-);
-
 const HistoryManagementForm = ({
   isEditMode = false,
   onSubmit,
@@ -154,7 +130,6 @@ const HistoryManagementForm = ({
               required
               className="font-semibold text-pBlue uppercase mb-2"
             />
-            <ImageHint />
             <TextEditor
               value={watch("contentEn")}
               onChange={(value) =>

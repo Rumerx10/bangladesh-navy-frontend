@@ -13,10 +13,14 @@ export interface ImageAttributes {
 
 export interface ToolbarButtonProps {
   onClick: () => void;
-  isActive: boolean;
+  /** Omit for plain actions; pass a boolean for toggles so it's announced as one. */
+  isActive?: boolean;
   children: React.ReactNode;
   title?: string;
+  /** Key names shown in the tooltip, e.g. ["Mod", "B"]. */
+  shortcut?: readonly string[];
   disabled?: boolean;
+  className?: string;
 }
 
 export interface ImageUploadResponse {
