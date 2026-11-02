@@ -1,9 +1,9 @@
 "use client";
-import { Compass } from "lucide-react";
+
 import DashboardHeader from "@/src/components/layout/dashboardLayout/DashboardHeader";
 import Sidebar from "@/src/components/shared/sidebar/Sidebar";
 import { ReactNode, useState } from "react";
-
+import { GiCompass } from "react-icons/gi";
 const AdminLayoutClient = ({ children }: { children: ReactNode }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -18,7 +18,7 @@ const AdminLayoutClient = ({ children }: { children: ReactNode }) => {
           {/* Hero */}
           <div className="relative overflow-hidden bg-linear-to-br from-brand-navy via-secondary to-brand-blue px-6 py-10 text-white shadow-lg sm:px-10 sm:py-12">
             <div className="relative flex max-w-3xl flex-col items-start gap-6 md:flex-row md:items-center">
-              <Compass
+              <GiCompass
                 className="pointer-events-none animate-[spin_20s_linear_infinite] h-28 w-28 shrink-0 text-white/10 sm:h-36 sm:w-36 md:h-52 md:w-52"
                 strokeWidth={1}
               />
