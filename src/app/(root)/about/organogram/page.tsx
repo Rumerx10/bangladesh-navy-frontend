@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import AboutHero from "@/src/components/about/AboutHero";
+import PageHero from "@/src/components/shared/PageHero";
 import Organization from "@/src/components/about/Organization";
 
 export const metadata: Metadata = {
@@ -10,9 +10,10 @@ export const metadata: Metadata = {
 const OrganogramPage = () => {
   return (
     <>
-      <AboutHero
+      <PageHero
         title="Organogram"
         description="Structure and departments of BNHOC"
+        parents={[{ label: "About Us", href: "/about" }]}
       />
       <Organization />
     </>

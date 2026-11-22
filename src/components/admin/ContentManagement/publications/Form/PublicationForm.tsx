@@ -51,6 +51,7 @@ const PublicationForm = ({
           className="bg-light shadow-none"
         />
       </div>
+      {/* Bangla content hidden
       <div>
         <InputLabel label="Title (Bangla)" />
         <ControlledInputField
@@ -59,6 +60,7 @@ const PublicationForm = ({
           className="bg-light shadow-none"
         />
       </div>
+      */}
       <div>
         <InputLabel label="Publication Code" />
         <ControlledInputField

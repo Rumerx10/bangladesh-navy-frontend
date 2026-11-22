@@ -5,6 +5,7 @@ import { OrderStatus } from "@/src/components/cart/types/order";
 import { ArrowRight, ChevronRight, Package } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import Container from "@/src/components/shared/Container";
 
 const statusColors: Record<OrderStatus, string> = {
   [OrderStatus.PENDING]: "bg-yellow-50 text-yellow-700 border-yellow-200",
@@ -20,7 +21,7 @@ const statusColors: Record<OrderStatus, string> = {
 const OrdersClient = () => {
   if (dummyOrders.length === 0) {
     return (
-      <div className="container px-4 sm:px-6 lg:px-8">
+      <Container>
         <div className="flex flex-col items-center justify-center py-16 sm:py-20 text-center gap-4">
           <div className="w-20 h-20 flex items-center justify-center rounded-full bg-muted text-muted-foreground">
             <Package size={32} />
@@ -37,12 +38,12 @@ const OrdersClient = () => {
             <ArrowRight size={16} />
           </Link>
         </div>
-      </div>
+      </Container>
     );
   }
 
   return (
-    <div className="container px-4 sm:px-6 lg:px-8">
+    <Container>
       <div className="py-4 sm:py-6 lg:py-8 pb-20 lg:pb-16">
         <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-4 sm:mb-6">
           My Orders
@@ -126,7 +127,7 @@ const OrdersClient = () => {
           ))}
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

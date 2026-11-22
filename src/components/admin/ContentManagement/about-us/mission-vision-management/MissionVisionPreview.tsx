@@ -8,16 +8,14 @@ import { IMissionVision } from "@/src/components/mission-vision/types";
 
 interface MissionVisionPreviewProps {
   data: IMissionVision;
-  isUsingDefaults?: boolean;
   onEdit: () => void;
 }
 
 /** Bangla blocks only appear once a translation has actually been entered. */
-const hasText = (value?: string | null) => !!value?.trim();
+// const hasText = (value?: string | null) => !!value?.trim();
 
 const MissionVisionPreview = ({
   data,
-  isUsingDefaults = false,
   onEdit,
 }: MissionVisionPreviewProps) => {
   return (
@@ -55,15 +53,7 @@ const MissionVisionPreview = ({
       </div>
 
       <div className="p-6 sm:p-8 pt-10 space-y-8">
-        {isUsingDefaults && (
-          <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
-            <Paragraph className="text-sm! text-amber-800">
-              Nothing has been saved yet — this is the fallback copy the public
-              page falls back to. Edit and save to store it.
-            </Paragraph>
-          </div>
-        )}
-
+        
         {/* Section heading */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-light rounded-xl p-5 border border-border">
@@ -71,11 +61,13 @@ const MissionVisionPreview = ({
               Title
             </Paragraph>
             <Paragraph className="text-base">{data.titleEn}</Paragraph>
+            {/* Bangla content hidden
             {hasText(data.titleBn) && (
               <Paragraph className="mt-2 text-sm! text-secondary-foreground">
                 {data.titleBn}
               </Paragraph>
             )}
+            */}
           </div>
           <div className="bg-light rounded-xl p-5 border border-border">
             <Paragraph className="font-semibold text-pBlue uppercase mb-2">
@@ -84,11 +76,13 @@ const MissionVisionPreview = ({
             <Paragraph className="text-base">
               {data.subTitleEn?.trim() || "—"}
             </Paragraph>
+            {/* Bangla content hidden
             {hasText(data.subTitleBn) && (
               <Paragraph className="mt-2 text-sm! text-secondary-foreground">
                 {data.subTitleBn}
               </Paragraph>
             )}
+            */}
           </div>
         </div>
 
@@ -108,6 +102,7 @@ const MissionVisionPreview = ({
               {data.missionDescriptionEn}
             </Paragraph>
 
+            {/* Bangla content hidden
             {(hasText(data.missionTitleBn) ||
               hasText(data.missionDescriptionBn)) && (
               <div className="mt-3 border-t border-dashed border-border pt-3">
@@ -123,6 +118,7 @@ const MissionVisionPreview = ({
                 )}
               </div>
             )}
+            */}
           </div>
 
           <div className="bg-light rounded-xl p-5 border border-border">
@@ -139,6 +135,7 @@ const MissionVisionPreview = ({
               {data.visionDescriptionEn}
             </Paragraph>
 
+            {/* Bangla content hidden
             {(hasText(data.visionTitleBn) ||
               hasText(data.visionDescriptionBn)) && (
               <div className="mt-3 border-t border-dashed border-border pt-3">
@@ -154,6 +151,7 @@ const MissionVisionPreview = ({
                 )}
               </div>
             )}
+            */}
           </div>
         </div>
       </div>

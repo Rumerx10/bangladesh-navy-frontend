@@ -4,7 +4,12 @@ import { motion } from "framer-motion";
 import { Network } from "lucide-react";
 import { useGet } from "@/src/hooks/useGet";
 import SectionTitle from "@/src/components/SectionTitle";
-import type { IOrganogramTreeNode } from "@/src/utils/organogram";
+import {
+  buildPublicOrganogramTree,
+  type IOrganogramListItem,
+  type IOrganogramTreeNode,
+} from "@/src/utils/organogram";
+import Container from "@/src/components/shared/Container";
 
 type Kind = "command" | "deputy" | "dept";
 
@@ -330,13 +335,17 @@ const EmptyChart = () => (
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 const Organization = () => {
-  const { data, isLoading } = useGet<IOrganogramTreeNode[]>(
-    "/organogram/tree",
-    ["organogram-public"]
+  // Built from the flat active-only list rather than `/organogram/tree`: the
+  // tree endpoint promotes the children of a switched-off node to top-level
+  // roots, so an inactive node's branch still showed. Same cache key as the
+  // admin form, which the admin invalidates on every save.
+  const { data, isLoading } = useGet<IOrganogramListItem[]>(
+    "/organogram/list",
+    ["organogram-list"]
   );
 
   const roots = useMemo(
-    () => (Array.isArray(data?.data) ? data.data : []),
+    () => buildPublicOrganogramTree(Array.isArray(data?.data) ? data.data : []),
     [data]
   );
 
@@ -355,7 +364,7 @@ const Organization = () => {
 
   return (
     <section className="bg-linear-to-b from-light/60 to-card py-8 lg:py-20">
-      <div className="container px-4 sm:px-6 lg:px-8">
+      <Container>
         <SectionTitle
           title="Organisation Tree"
           desc="Organisational structure of Bangladesh Navy Hydrographic & Oceanographic Centre (BNHOC)"
@@ -401,7 +410,7 @@ const Organization = () => {
 
         {/* Hidden while there is no chart to explain. */}
         {!isLoading && roots.length > 0 && <Legend />}
-      </div>
+      </Container>
     </section>
   );
 };

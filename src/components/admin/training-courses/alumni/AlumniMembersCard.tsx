@@ -20,6 +20,8 @@ import {
 } from "@/src/components/alumni/useAlumni";
 import CreateUpdateAlumniMember from "./Form/CreateUpdateAlumniMember";
 import { GetAlumniMemberColumns } from "./TableColumns/AlumniMemberColumns";
+import { getAlumniMemberViewSections } from "./TableColumns/AlumniMemberViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 
 interface AlumniMembersCardProps {
   /** Pre-filters the table to one batch's roster — set when drilling down from Batches. */
@@ -32,6 +34,7 @@ const AlumniMembersCard = ({
   onClearFilter,
 }: AlumniMembersCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<IAlumniMember | null>(null);
   const [selectedItem, setSelectedItem] = useState<IAlumniMember | undefined>();
   const [pendingDelete, setPendingDelete] = useState<IAlumniMember | null>(
     null
@@ -151,7 +154,8 @@ const AlumniMembersCard = ({
   const columns = GetAlumniMemberColumns(
     batchNames,
     handleEdit,
-    setPendingDelete
+    setPendingDelete,
+    setViewItem
   );
 
   return (
@@ -211,6 +215,20 @@ const AlumniMembersCard = ({
         onClose={handleModalClose}
         initialValues={selectedItem}
         initialBatchId={batchId}
+      />
+
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="Alumni Member Details"
+        sections={
+          viewItem
+            ? getAlumniMemberViewSections(
+                viewItem,
+                batchNames[viewItem.batchId]
+              )
+            : []
+        }
       />
 
       <DeleteConfirmDialog

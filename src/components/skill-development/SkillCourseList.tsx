@@ -4,6 +4,7 @@ import { courses } from "@/src/data/skillCourses";
 import { useState } from "react";
 import { CourseCategory } from "./types";
 import CourseCard from "./CourseCard";
+import Container from "@/src/components/shared/Container";
 
 const ALL = "All";
 
@@ -24,7 +25,7 @@ const SkillCourseList = () => {
 
   return (
     <section id="courses" className="py-20 lg:py-32 bg-card">
-      <div className="container px-4 sm:px-6 lg:px-8">
+      <Container>
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <div>
@@ -72,7 +73,7 @@ const SkillCourseList = () => {
             No courses found in this category.
           </p>
         )}
-      </div>
+      </Container>
     </section>
   );
 };

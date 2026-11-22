@@ -18,7 +18,13 @@ export interface MenuItem {
   icon: LucideIcon;
   href?: string;
   matchRoutes?: string[];
-  children?: { label: string; href: string; matchRoutes?: string[] }[];
+  children?: {
+    label: string;
+    href: string;
+    matchRoutes?: string[];
+    /** Live count shown beside the link (see SidebarMenuGroup). */
+    badge?: "pendingQueries";
+  }[];
 }
 const getMenuItems = (): MenuItem[] => {
   const menuItems: (MenuItem | false)[] = [
@@ -102,6 +108,7 @@ const getMenuItems = (): MenuItem[] => {
         {
           label: "Query & Suggestion",
           href: "/admin/contact-us/query-suggestion",
+          badge: "pendingQueries",
         },
         {
           label: "Hydrographic Note",

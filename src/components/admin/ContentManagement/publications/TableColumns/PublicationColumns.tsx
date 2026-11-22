@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { IPublication } from "../types";
 
@@ -18,7 +18,8 @@ const formatDate = (value?: string) => {
 
 export function GetPublicationColumns(
   onEdit: (item: IPublication) => void,
-  onDelete: (item: IPublication) => void
+  onDelete: (item: IPublication) => void,
+  onView?: (item: IPublication) => void
 ): ColumnDef<IPublication>[] {
   return [
     {
@@ -82,6 +83,13 @@ export function GetPublicationColumns(
       accessorKey: "id",
       cell: (_, row) => (
         <div className="flex gap-1">
+          <button
+            onClick={() => onView?.(row)}
+            className="p-2 rounded-md hover:bg-light-dark text-secondary-foreground hover:text-pBlue transition-colors cursor-pointer"
+            title="View"
+          >
+            <Eye className="w-4 h-4" />
+          </button>
           <button
             onClick={() => onEdit(row)}
             className="p-2 rounded-md hover:bg-light-dark text-secondary-foreground hover:text-pBlue transition-colors cursor-pointer"

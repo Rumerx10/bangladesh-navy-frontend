@@ -6,10 +6,6 @@ import MissionVisionPreview from "./MissionVisionPreview";
 import MissionVisionPreviewSkeleton from "./Skeleton/MissionVisionPreviewSkeleton";
 import CreateUpdateMissionVision from "./Form/CreateUpdateMissionVision";
 
-/**
- * Heading, mission and vision copy for the public `/about/vision-mission`
- * page, backed by the singleton `/mission-vision` record.
- */
 const MissionVisionManagement = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const { missionVision, isUsingDefaults, isLoading } = useMissionVision();
@@ -20,7 +16,6 @@ const MissionVisionManagement = () => {
     return (
       <MissionVisionPreview
         data={missionVision}
-        isUsingDefaults={isUsingDefaults}
         onEdit={() => setIsEditMode(true)}
       />
     );

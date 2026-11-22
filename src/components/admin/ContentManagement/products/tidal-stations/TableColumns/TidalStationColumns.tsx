@@ -1,13 +1,14 @@
 "use client";
 
-import { Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { ITidalStation } from "../types";
 
 export function GetTidalStationColumns(
   onEdit: (item: ITidalStation) => void,
-  onDelete: (id: string) => void
+  onDelete: (id: string) => void,
+  onView?: (item: ITidalStation) => void
 ): ColumnDef<ITidalStation>[] {
   return [
     {
@@ -66,6 +67,14 @@ export function GetTidalStationColumns(
       accessorKey: "id",
       cell: (_value, row) => (
         <div className="flex items-center gap-2 w-full">
+          <Button
+            className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
+            size="sm"
+            onClick={() => onView?.(row)}
+            aria-label={`View ${row.generalArea}`}
+          >
+            <Eye className="h-4 w-4 text-secondary-foreground" />
+          </Button>
           <Button
             className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
             size="sm"

@@ -8,21 +8,19 @@ import { IAboutInstitute } from "@/src/components/about-institute/types";
 
 interface InstitutePreviewProps {
   data: IAboutInstitute;
-  isUsingDefaults?: boolean;
   onEdit: () => void;
 }
 
 /** Bangla blocks only appear once a translation has actually been entered. */
-const hasText = (value?: string | null) => !!value?.trim();
+// const hasText = (value?: string | null) => !!value?.trim();
 
 const InstitutePreview = ({
   data,
-  isUsingDefaults = false,
   onEdit,
 }: InstitutePreviewProps) => {
-  const aboutParagraphsBn = data.aboutParagraphsBn ?? [];
-  const missionPointsBn = data.missionPointsBn ?? [];
-  const trainingOverviewParagraphsBn = data.trainingOverviewParagraphsBn ?? [];
+  // const aboutParagraphsBn = data.aboutParagraphsBn ?? [];
+  // const missionPointsBn = data.missionPointsBn ?? [];
+  // const trainingOverviewParagraphsBn = data.trainingOverviewParagraphsBn ?? [];
 
   return (
     <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
@@ -58,16 +56,7 @@ const InstitutePreview = ({
         </Button>
       </div>
 
-      <div className="p-6 sm:p-8 pt-10 space-y-8">
-        {isUsingDefaults && (
-          <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
-            <Paragraph className="text-sm! text-amber-800">
-              Nothing has been saved yet — this is the fallback copy the public
-              page falls back to. Edit and save to store it.
-            </Paragraph>
-          </div>
-        )}
-
+      <div className="p-6 sm:p-8 pt-10 space-y-8">       
         {/* Basic */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-light rounded-xl p-5 border border-border">
@@ -75,11 +64,13 @@ const InstitutePreview = ({
               Title
             </Paragraph>
             <Paragraph className="text-base">{data.titleEn}</Paragraph>
+            {/* Bangla content hidden
             {hasText(data.titleBn) && (
               <Paragraph className="mt-2 text-sm! text-secondary-foreground">
                 {data.titleBn}
               </Paragraph>
             )}
+            */}
           </div>
           <div className="bg-light rounded-xl p-5 border border-border">
             <Paragraph className="font-semibold text-pBlue uppercase mb-2">
@@ -88,11 +79,13 @@ const InstitutePreview = ({
             <Paragraph className="text-base">
               {data.subTitleEn?.trim() || "—"}
             </Paragraph>
+            {/* Bangla content hidden
             {hasText(data.subTitleBn) && (
               <Paragraph className="mt-2 text-sm! text-secondary-foreground">
                 {data.subTitleBn}
               </Paragraph>
             )}
+            */}
           </div>
         </div>
 
@@ -114,6 +107,7 @@ const InstitutePreview = ({
               </Paragraph>
             ))}
           </div>
+          {/* Bangla content hidden
           {aboutParagraphsBn.length > 0 && (
             <div className="mt-3 space-y-3 border-t border-dashed border-border pt-3">
               {aboutParagraphsBn.map((text, index) => (
@@ -126,6 +120,7 @@ const InstitutePreview = ({
               ))}
             </div>
           )}
+          */}
         </div>
 
         {/* Vision & Mission */}
@@ -143,6 +138,7 @@ const InstitutePreview = ({
             <Paragraph className="text-sm leading-relaxed text-secondary-foreground text-justify">
               {data.visionDescriptionEn}
             </Paragraph>
+            {/* Bangla content hidden
             {(hasText(data.visionTitleBn) ||
               hasText(data.visionDescriptionBn)) && (
               <div className="mt-3 border-t border-dashed border-border pt-3">
@@ -158,6 +154,7 @@ const InstitutePreview = ({
                 )}
               </div>
             )}
+            */}
           </div>
 
           <div className="bg-light rounded-xl p-5 border border-border">
@@ -181,6 +178,7 @@ const InstitutePreview = ({
                 </li>
               ))}
             </ul>
+            {/* Bangla content hidden
             {(hasText(data.missionTitleBn) || missionPointsBn.length > 0) && (
               <div className="mt-3 border-t border-dashed border-border pt-3">
                 {hasText(data.missionTitleBn) && (
@@ -201,6 +199,7 @@ const InstitutePreview = ({
                 </ul>
               </div>
             )}
+            */}
           </div>
         </div>
 
@@ -219,6 +218,7 @@ const InstitutePreview = ({
               </Paragraph>
             ))}
           </div>
+          {/* Bangla content hidden
           {(hasText(data.trainingOverviewTitleBn) ||
             trainingOverviewParagraphsBn.length > 0) && (
             <div className="mt-3 border-t border-dashed border-border pt-3">
@@ -239,6 +239,7 @@ const InstitutePreview = ({
               </div>
             </div>
           )}
+          */}
         </div>
       </div>
     </div>

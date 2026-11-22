@@ -7,6 +7,7 @@ import { ChevronRight, Quote, Ship, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import Container from "@/src/components/shared/Container";
 
 const VISIBLE_PARAGRAPHS = 1;
 
@@ -74,7 +75,7 @@ const ChiefMessage = () => {
           />
         </div>
 
-        <div className="relative container px-4 sm:px-6 lg:px-8">
+        <Container className="relative">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
             {/* Left Column: Image & Badges */}
             <motion.div
@@ -207,7 +208,7 @@ const ChiefMessage = () => {
               {/* Signature Area */}
             </motion.div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Full Biography Modal */}

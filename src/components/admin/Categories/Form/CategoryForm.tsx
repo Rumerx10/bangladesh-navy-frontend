@@ -56,7 +56,8 @@ const CategoryForm = ({
         </div>
       </div>
 
-      {/* Bengali Name */}
+      {/* Bangla content hidden
+      {/* Bengali Name *\/}
       <div className="relative">
         <InputLabel label="Category Name (Bengali)" required />
         <ControlledInputField
@@ -65,6 +66,7 @@ const CategoryForm = ({
           placeholder="Enter category name in Bengali"
         />
       </div>
+      */}
 
       {/* English Description */}
       <div>
@@ -75,7 +77,8 @@ const CategoryForm = ({
           placeholder="Enter category description in English"
         />
       </div>
-      {/* Bengali Description */}
+      {/* Bangla content hidden
+      {/* Bengali Description *\/}
       <div>
         <InputLabel label="Description (Bengali)" />
         <ControlledTextareaField
@@ -84,6 +87,7 @@ const CategoryForm = ({
           placeholder="Enter category description in Bengali"
         />
       </div>
+      */}
 
       {/* Icon Upload */}
       <div>

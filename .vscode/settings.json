@@ -1,0 +1,14 @@
+{
+  // Next's dev server rewrites its manifests in `.next` by renaming temp files
+  // over them. On Windows that fails with EPERM while any extension holds one
+  // open, so keep VS Code's watcher, search and file scans out of it.
+  "files.watcherExclude": {
+    "**/.next/**": true
+  },
+  "search.exclude": {
+    "**/.next": true
+  },
+  "files.exclude": {
+    "**/.next": true
+  }
+}

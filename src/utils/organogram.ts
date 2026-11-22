@@ -17,11 +17,10 @@ export interface IOrganogramListItem {
 }
 
 /**
- * Shape of `GET /organogram/tree` — the only organogram read that is open to
- * anonymous visitors, and already nested by the backend. It omits `parentId`
- * and `status`: the server has resolved the parent links itself, and the
- * public projection is expected to have dropped switched-off nodes before it
- * ever reaches us. Sorting is likewise the server's, so no client pass is run.
+ * Nested node of the public chart. Built client-side from `GET
+ * /organogram/list` (see `buildPublicOrganogramTree`), which, like
+ * `/organogram/tree`, is open to anonymous visitors and only carries active
+ * nodes.
  */
 export interface IOrganogramTreeNode {
   id: string;
@@ -42,9 +41,8 @@ const bySerial = (a: IOrganogramNode, b: IOrganogramNode) =>
  * renders from, inactive nodes included — switching one off there should stay
  * visible and reversible.
  *
- * The public chart does not come through here: its `/organogram/tree` read is
- * nested server-side (see `IOrganogramTreeNode`). This builder exists for the
- * admin's flat collection read alone.
+ * The public chart does not come through here — it uses
+ * `buildPublicOrganogramTree`, which drops orphaned branches instead.
  */
 export const buildOrganogramTree = (
   nodes: IOrganogramNode[]
@@ -76,6 +74,44 @@ export const buildOrganogramTree = (
   roots.sort(bySerial);
 
   return roots;
+};
+
+/**
+ * The public chart's tree, from the active-only `/organogram/list` rows.
+ *
+ * Unlike the admin builder, a node whose parent is not in the set is dropped
+ * together with its whole branch: the parent is missing because an admin
+ * switched it off, and switching a node off has to take its children off the
+ * site too. (`/organogram/tree` instead promotes those orphans to top-level
+ * roots, which is why the public page no longer reads it.)
+ */
+export const buildPublicOrganogramTree = (
+  rows: IOrganogramListItem[]
+): IOrganogramTreeNode[] => {
+  const childrenOf = new Map<string | null, IOrganogramListItem[]>();
+  rows.forEach((row) => {
+    const key = row.parentId ?? null;
+    childrenOf.set(key, [...(childrenOf.get(key) ?? []), row]);
+  });
+
+  // Walking down from the true roots only reaches nodes whose every ancestor
+  // is active; `seen` guards against a parent cycle in bad data.
+  const seen = new Set<string>();
+  const build = (parentId: string | null): IOrganogramTreeNode[] =>
+    (childrenOf.get(parentId) ?? [])
+      .filter((row) => !seen.has(row.id))
+      .sort((a, b) => a.serial - b.serial)
+      .map((row) => {
+        seen.add(row.id);
+        return {
+          id: row.id,
+          title: row.title,
+          serial: row.serial,
+          children: build(row.id),
+        };
+      });
+
+  return build(null);
 };
 
 /** Total nodes in a forest, counting every descendant. */

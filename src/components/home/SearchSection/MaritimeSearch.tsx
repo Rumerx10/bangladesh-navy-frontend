@@ -7,6 +7,10 @@ import { IPublication } from "@/src/components/admin/ContentManagement/publicati
 import { INotice } from "@/src/components/notices/types";
 import { ITidalStation } from "@/src/components/tide-tables/types";
 import { useGet } from "@/src/hooks/useGet";
+import {
+  normaliseChartCode,
+  useInactiveProducts,
+} from "@/src/components/products/useInactiveProducts";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import NavyWatermark from "@/src/components/shared/NavyWatermark";
 import { motion } from "framer-motion";
@@ -25,6 +29,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import SearchTabs from "./SearchTabs";
 import SectionTitle from "../../SectionTitle";
+import Container from "@/src/components/shared/Container";
 
 type ResultCategory =
   "paper-chart" | "enc-chart" | "tide" | "notice" | "publication";
@@ -105,15 +110,20 @@ const MaritimeSearch = () => {
   const categories = TAB_CATEGORIES[activeTab] ?? TAB_CATEGORIES.all;
   const needs = (category: ResultCategory) => categories.includes(category);
 
+  // Products an admin has switched off never surface as results — their
+  // detail pages 404.
+  const { inactiveIds, inactiveCodes } = useInactiveProducts();
+
   // Paper charts & ENC cells are static catalogues — filtered client-side,
   // no network round-trip needed.
   const uniquePaperCharts = useMemo(() => {
     const byNumber = new Map<string, IChartArea>();
     for (const area of chartIndexAreas) {
+      if (inactiveCodes.has(normaliseChartCode(area.number))) continue;
       if (!byNumber.has(area.number)) byNumber.set(area.number, area);
     }
     return [...byNumber.values()];
-  }, []);
+  }, [inactiveCodes]);
 
   const paperChartResults = useMemo<SearchResult[]>(() => {
     if (!q || !needs("paper-chart")) return [];
@@ -136,6 +146,7 @@ const MaritimeSearch = () => {
   const encChartResults = useMemo<SearchResult[]>(() => {
     if (!q || !needs("enc-chart")) return [];
     return encHotspotAreas
+      .filter((cell) => !inactiveCodes.has(normaliseChartCode(cell.cellNo)))
       .filter(
         (cell) =>
           cell.cellNo.toLowerCase().includes(q) ||
@@ -151,7 +162,7 @@ const MaritimeSearch = () => {
         href: `/product-service/electronic-navigational-charts/${cell.cellNo}`,
       }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [q, activeTab]);
+  }, [q, activeTab, inactiveCodes]);
 
   const { data: tidalData, isLoading: tidesLoading } = useGet<ITidalStation[]>(
     "/tidal-station/list",
@@ -166,7 +177,12 @@ const MaritimeSearch = () => {
     if (!q || !needs("tide")) return [];
     const stations = Array.isArray(tidalData?.data) ? tidalData.data : [];
     return stations
-      .filter((station) => station.product?.id)
+      .filter(
+        (station) =>
+          station.status === "ACTIVE" &&
+          station.product?.id &&
+          !inactiveIds.has(station.product.id)
+      )
       .filter(
         (station) =>
           station.product?.nameEn.toLowerCase().includes(q) ||
@@ -181,7 +197,7 @@ const MaritimeSearch = () => {
         href: `/product-service/tide-tables/${station.product?.id}`,
       }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [q, activeTab, tidalData]);
+  }, [q, activeTab, tidalData, inactiveIds]);
 
   const { data: noticeData, isLoading: noticesLoading } = useGet<INotice[]>(
     "/notice-management/list",
@@ -301,7 +317,7 @@ const MaritimeSearch = () => {
           because this layer spans the full section and would otherwise
           swallow clicks meant for the input and tabs. */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -right-20 top-10 lg:-top-10 text-pBlue">
+        <div className="absolute left-50 bottom-0 lg:bottom-0 text-pBlue">
           <NavyWatermark
             variant="compass"
             size={350}
@@ -309,16 +325,16 @@ const MaritimeSearch = () => {
             animate="rotate"
           />
         </div>
-        <div className="absolute -left-16 -bottom-16 text-pBlue">
+        {/* <div className="absolute -left-16 -bottom-16 text-pBlue">
           <NavyWatermark
             variant="anchor"
             size={250}
             opacity={0.025}
             animate="drift"
           />
-        </div>
+        </div> */}
       </div>
-      <div className="relative container px-4 sm:px-6 lg:px-8 text-center">
+      <Container className="relative text-center">
         <SectionTitle
           title="Find Maritime Resources"
           desc="Search our comprehensive database of charts, notices, and data"
@@ -489,7 +505,7 @@ const MaritimeSearch = () => {
             </div>
           )}
         </motion.div>
-      </div>
+      </Container>
     </section>
   );
 };

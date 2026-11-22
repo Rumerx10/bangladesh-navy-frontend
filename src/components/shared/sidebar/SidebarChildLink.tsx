@@ -1,11 +1,14 @@
 import { cn } from "@/src/lib/utils";
 import Link from "next/link";
+import { ReactNode } from "react";
 
 interface SidebarChildLinkProps {
   label: string;
   href: string;
   isActive: boolean;
   onNavigate: () => void;
+  /** Rendered at the right edge, e.g. a notification count. */
+  badge?: ReactNode;
 }
 
 const SidebarChildLink = ({
@@ -13,6 +16,7 @@ const SidebarChildLink = ({
   href,
   isActive,
   onNavigate,
+  badge,
 }: SidebarChildLinkProps) => {
   return (
     <Link
@@ -26,6 +30,7 @@ const SidebarChildLink = ({
       )}
     >
       <span className="truncate">{label}</span>
+      {badge}
     </Link>
   );
 };

@@ -52,6 +52,10 @@ export const NavigationItems: NavItem[] = [
     label: "About Us",
     link: "/about",
     subLinks: [
+      {
+        label: "Chief Hydrographer Message",
+        link: "/about/chief-hydrographer-message",
+      },
       { label: "History", link: "/about/history" },
       { label: "Vision & Mission", link: "/about/vision-mission" },
       { label: "Organogram", link: "/about/organogram" },
@@ -101,7 +105,7 @@ export const NavigationItems: NavItem[] = [
       { label: "Alumni", link: "/training-courses/alumni" },
     ],
   },
-  
+
   {
     label: "Contact",
     link: "/contact-us",

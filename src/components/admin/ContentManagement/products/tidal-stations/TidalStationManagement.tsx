@@ -11,10 +11,13 @@ import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import CreateUpdateTidalStation from "./Form/CreateUpdateTidalStation";
 import { GetTidalStationColumns } from "./TableColumns/TidalStationColumns";
+import { getTidalStationViewSections } from "./TableColumns/TidalStationViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 import { ITidalStation } from "./types";
 
 const TidalStationManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<ITidalStation | null>(null);
   const [selectedItem, setSelectedItem] = useState<ITidalStation | undefined>();
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
@@ -80,7 +83,7 @@ const TidalStationManagement = () => {
     setDeleteId(null);
   };
 
-  const columns = GetTidalStationColumns(handleEdit, handleDelete);
+  const columns = GetTidalStationColumns(handleEdit, handleDelete, setViewItem);
 
   return (
     <div>
@@ -107,6 +110,13 @@ const TidalStationManagement = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
+      />
+
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="Tidal Station Details"
+        sections={viewItem ? getTidalStationViewSections(viewItem) : []}
       />
 
       <DeleteConfirmDialog

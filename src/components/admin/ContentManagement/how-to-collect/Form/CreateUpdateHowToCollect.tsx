@@ -149,7 +149,7 @@ const CreateUpdateHowToCollect = ({
             {isUpdate ? "Update" : "Create"} Collection Step
           </DialogTitle>
         </DialogHeader>
-        <div className="scrollbar-modern mt-2 flex-1 overflow-y-auto pr-2">
+        <div className="scrollbar-modern mt-2 flex-1 overflow-y-auto pr-2 pb-1">
           <FormProvider {...methods}>
             <HowToCollectForm
               isEditMode={isUpdate}

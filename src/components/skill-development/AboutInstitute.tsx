@@ -2,6 +2,7 @@
 
 import { BookOpen, Eye, Target } from "lucide-react";
 import { useAboutInstitute } from "@/src/components/about-institute/useAboutInstitute";
+import Container from "@/src/components/shared/Container";
 
 const AboutInstituteSkeleton = () => (
   <div className="animate-pulse">
@@ -62,7 +63,7 @@ const AboutInstitute = () => {
 
   return (
     <section className="py-8 lg:py-20 bg-card">
-      <div className="container px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+      <Container className="max-w-4xl mx-auto">
         {isLoading ? (
           <AboutInstituteSkeleton />
         ) : (
@@ -145,7 +146,7 @@ const AboutInstitute = () => {
             )}
           </>
         )}
-      </div>
+      </Container>
     </section>
   );
 };

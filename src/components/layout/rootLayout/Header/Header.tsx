@@ -21,8 +21,12 @@ const Header = () => {
 
   return (
     <header className="relative lg:pb-10">
+      {/* left-0 + right-0 rather than w-full, with `right-scroll-bar-position`:
+          while a dialog locks page scroll the scrollbar disappears, and this
+          class (from the dialog's scroll lock) keeps the bar's right edge
+          where the scrollbar was — a w-full bar would jump sideways instead. */}
       <div
-        className={`fixed top-0 left-0 w-full z-50 transition-shadow duration-300 ${
+        className={`right-scroll-bar-position fixed top-0 right-0 left-0 z-50 transition-shadow duration-300 ${
           scrolled ? "shadow-md" : ""
         }`}
       >

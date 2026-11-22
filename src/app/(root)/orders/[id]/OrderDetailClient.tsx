@@ -6,6 +6,7 @@ import { ArrowLeft, Package } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { use } from "react";
+import Container from "@/src/components/shared/Container";
 
 const statusColors: Record<OrderStatus, string> = {
   [OrderStatus.PENDING]: "bg-yellow-50 text-yellow-700 border-yellow-200",
@@ -32,7 +33,7 @@ const OrderDetailClient = ({ params }: { params: Promise<{ id: string }> }) => {
 
   if (!order) {
     return (
-      <div className="container px-4 sm:px-6 lg:px-8">
+      <Container>
         <div className="flex flex-col items-center justify-center py-16 sm:py-20 text-center gap-4">
           <div className="w-20 h-20 flex items-center justify-center rounded-full bg-muted text-muted-foreground">
             <Package size={32} />
@@ -48,14 +49,14 @@ const OrderDetailClient = ({ params }: { params: Promise<{ id: string }> }) => {
             Back to Orders
           </Link>
         </div>
-      </div>
+      </Container>
     );
   }
 
   const currentStatusIdx = STATUS_FLOW.indexOf(order.orderStatus);
 
   return (
-    <div className="container px-4 sm:px-6 lg:px-8">
+    <Container>
       <div className="py-4 sm:py-6 lg:py-8 pb-20 lg:pb-16">
         <Link
           href="/orders"
@@ -494,7 +495,7 @@ const OrderDetailClient = ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

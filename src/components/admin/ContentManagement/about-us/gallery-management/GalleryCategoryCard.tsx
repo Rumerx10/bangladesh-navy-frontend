@@ -10,9 +10,12 @@ import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import CreateUpdateGalleryCategory from "./Form/CreateUpdateGalleryCategory";
 import { GetGalleryCategoryColumns } from "./TableColumns/GalleryCategoryColumns";
+import { getGalleryCategoryViewSections } from "./TableColumns/GalleryCategoryViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 
 const GalleryCategoryCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<IGalleryCategory | null>(null);
   const [selectedItem, setSelectedItem] = useState<
     IGalleryCategory | undefined
   >();
@@ -70,7 +73,11 @@ const GalleryCategoryCard = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetGalleryCategoryColumns(handleEdit, setPendingDelete);
+  const columns = GetGalleryCategoryColumns(
+    handleEdit,
+    setPendingDelete,
+    setViewItem
+  );
 
   return (
     <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
@@ -99,6 +106,13 @@ const GalleryCategoryCard = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
+      />
+
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="Gallery Category Details"
+        sections={viewItem ? getGalleryCategoryViewSections(viewItem) : []}
       />
 
       <DeleteConfirmDialog

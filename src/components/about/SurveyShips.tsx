@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import ShipCard from "./ShipCard";
 import { useGet } from "@/src/hooks/useGet";
 import { SurveyShipItem } from "@/src/types/global/global.types";
+import Container from "@/src/components/shared/Container";
 
 // Collapsed limits — keep every card roughly the same height as its image
 
@@ -27,27 +28,27 @@ const SurveyShips = () => {
   if (isLoading) {
     return (
       <section className="py-8 lg:py-20">
-        <div className="container px-4 sm:px-6 lg:px-8 space-y-6">
+        <Container className="space-y-6">
           {Array.from({ length: 2 }).map((_, i) => (
             <div
               key={i}
               className="rounded-2xl border border-border bg-card h-64 animate-pulse"
             />
           ))}
-        </div>
+        </Container>
       </section>
     );
   }
 
   return (
     <section className="py-8 lg:py-20">
-      <div className="container px-4 sm:px-6 lg:px-8">
+      <Container>
         <div className="space-y-6">
           {ships.map((ship, i) => (
             <ShipCard key={ship.id} ship={ship} index={i} />
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

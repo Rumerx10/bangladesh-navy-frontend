@@ -2,6 +2,7 @@ import { cn } from "@/src/lib/utils";
 import { MenuItem } from "@/src/utils/getMenuItems";
 import { usePathname } from "next/navigation";
 import SidebarChildLink from "./SidebarChildLink";
+import PendingQueryBadge from "./PendingQueryBadge";
 import SidebarParentLink from "./SidebarParentLink";
 import SidebarSegmentHeader from "./SidebarSegmentHeader";
 
@@ -69,6 +70,11 @@ const SidebarMenuGroup = ({
                 href={child.href}
                 isActive={isChildActive}
                 onNavigate={onNavigate}
+                badge={
+                  child.badge === "pendingQueries" ? (
+                    <PendingQueryBadge />
+                  ) : undefined
+                }
               />
             );
           })}

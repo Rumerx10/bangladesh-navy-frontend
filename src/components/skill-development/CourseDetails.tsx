@@ -14,6 +14,7 @@ import {
 import Image from "next/image";
 import { useState } from "react";
 import CourseEnrollForm from "./CourseEnrollForm";
+import Container from "@/src/components/shared/Container";
 
 interface CourseDetailsProps {
   course: ICourse;
@@ -34,7 +35,7 @@ const CourseDetails = ({ course }: CourseDetailsProps) => {
           priority
         />
         <div className="absolute inset-0 bg-linear-to-t from-brand-navy via-brand-navy/60 to-transparent" />
-        <div className="relative container px-4 sm:px-6 lg:px-8 pb-12">
+        <Container className="relative pb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -64,12 +65,12 @@ const CourseDetails = ({ course }: CourseDetailsProps) => {
               </div>
             </div>
           </motion.div>
-        </div>
+        </Container>
       </section>
 
       {/* Main Content */}
       <section className="py-8 lg:py-20">
-        <div className="container px-4 sm:px-6 lg:px-8">
+        <Container>
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
             {/* Left Content */}
             <div className="flex-1">
@@ -217,7 +218,7 @@ const CourseDetails = ({ course }: CourseDetailsProps) => {
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Enrollment Modal */}

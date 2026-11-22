@@ -7,6 +7,8 @@ interface ControlledTextareaFieldProps {
   placeholder?: string;
   className?: string;
   disabled?: boolean;
+  /** Caps typed characters and shows a live "used / max" counter. */
+  maxLength?: number;
 }
 
 const ControlledTextareaField: React.FC<ControlledTextareaFieldProps> = ({
@@ -14,6 +16,7 @@ const ControlledTextareaField: React.FC<ControlledTextareaFieldProps> = ({
   placeholder,
   className,
   disabled,
+  maxLength,
 }) => {
   const { control } = useFormContext();
 
@@ -22,12 +25,15 @@ const ControlledTextareaField: React.FC<ControlledTextareaFieldProps> = ({
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => {
+        const length = String(field.value ?? "").length;
         return (
           <div>
             <Textarea
               {...field}
               placeholder={placeholder}
               disabled={disabled}
+              maxLength={maxLength}
+              aria-invalid={!!error}
               className={cn(
                 `h-40 ${
                   error
@@ -37,9 +43,23 @@ const ControlledTextareaField: React.FC<ControlledTextareaFieldProps> = ({
                 className
               )}
             />
-            {error && (
-              <div className="text-rose-500 text-xs mt-1 pl-2">
-                {error.message}
+            {(error || maxLength) && (
+              <div className="mt-1 flex items-start justify-between gap-3 pl-2 text-xs">
+                <span className="text-rose-500 wrap-break-word">
+                  {error?.message}
+                </span>
+                {maxLength && (
+                  <span
+                    className={cn(
+                      "shrink-0 tabular-nums",
+                      length >= maxLength
+                        ? "text-rose-500"
+                        : "text-muted-foreground"
+                    )}
+                  >
+                    {length.toLocaleString()} / {maxLength.toLocaleString()}
+                  </span>
+                )}
               </div>
             )}
           </div>

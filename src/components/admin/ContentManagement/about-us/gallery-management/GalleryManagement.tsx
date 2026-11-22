@@ -11,6 +11,8 @@ import { usePagination } from "@/src/hooks/usePagination";
 import { DataTable } from "@/src/components/ui/data-table";
 import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import { GetGalleryColumns } from "./TableColumns/GalleryColumns";
+import { getGalleryViewSections } from "./TableColumns/GalleryViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import CreateUpdateGalleryItem from "./Form/CreateUpdateGalleryItem";
 
@@ -24,6 +26,7 @@ const TABS: { key: ActiveTab; label: string; icon: React.ElementType }[] = [
 const GalleryManagement = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>("gallery");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<IGalleryItem | null>(null);
   const [selectedItem, setSelectedItem] = useState<IGalleryItem | undefined>();
   const [pendingDelete, setPendingDelete] = useState<IGalleryItem | null>(null);
 
@@ -117,7 +120,7 @@ const GalleryManagement = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetGalleryColumns(handleEdit, setPendingDelete);
+  const columns = GetGalleryColumns(handleEdit, setPendingDelete, setViewItem);
 
   return (
     <div className="space-y-6">
@@ -168,6 +171,13 @@ const GalleryManagement = () => {
             isOpen={isModalOpen}
             onClose={handleModalClose}
             initialValues={selectedItem}
+          />
+
+          <ViewDetailsModal
+            isOpen={viewItem !== null}
+            onClose={() => setViewItem(null)}
+            title="Gallery Item Details"
+            sections={viewItem ? getGalleryViewSections(viewItem) : []}
           />
 
           <DeleteConfirmDialog

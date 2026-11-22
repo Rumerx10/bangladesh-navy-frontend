@@ -13,6 +13,10 @@ import {
 import { SearchIcon, XIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import ChartInfoDialog from "../products/ChartInfoDialog";
+import {
+  normaliseChartCode,
+  useInactiveProducts,
+} from "../products/useInactiveProducts";
 
 const IMAGE_SRC = "/chart/chart-index.jpg";
 
@@ -50,23 +54,33 @@ const ChartIndexMap = () => {
   );
   const selectedProduct = selectedProductData?.data;
 
+  // Charts whose product an admin has switched off are left off the index.
+  const { inactiveCodes } = useInactiveProducts("PAPPER_CHART");
+  const visibleAreas = useMemo(
+    () =>
+      chartIndexAreas.filter(
+        (a) => !inactiveCodes.has(normaliseChartCode(a.number))
+      ),
+    [inactiveCodes]
+  );
+
   // Largest rectangles first so the smallest (most specific) chart renders
   // on top and wins hover/click where coverage areas overlap.
   const areas = useMemo(
-    () => [...chartIndexAreas].sort((a, b) => b.w * b.h - a.w * a.h),
-    []
+    () => [...visibleAreas].sort((a, b) => b.w * b.h - a.w * a.h),
+    [visibleAreas]
   );
 
   // One entry per chart number (1511 has two panels), sorted ascending.
   const uniqueCharts = useMemo(() => {
     const byNumber = new Map<string, IChartArea>();
-    for (const a of chartIndexAreas) {
+    for (const a of visibleAreas) {
       if (!byNumber.has(a.number)) byNumber.set(a.number, a);
     }
     return [...byNumber.values()].sort(
       (a, b) => Number(a.number) - Number(b.number)
     );
-  }, []);
+  }, [visibleAreas]);
 
   const results = useMemo(() => {
     const q = query.trim();

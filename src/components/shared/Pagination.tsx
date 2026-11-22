@@ -1,5 +1,12 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "../ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 interface IPaginationProps {
   currentPage: number;
@@ -7,8 +14,16 @@ interface IPaginationProps {
   onPageChange: (page: number) => void;
   itemsPerPage: number;
   totalItems: number;
-  setItemsPerPage?: (page: string | number) => void;
+  onItemsPerPageChange?: (itemsPerPage: number) => void;
+  pageSizeOptions?: number[];
+  /**
+   * The page size the dropdown shows as chosen, when it differs from
+   * `itemsPerPage` — pass -1 for "All" (where `itemsPerPage` is the total).
+   */
+  selectedPageSize?: number;
 }
+
+const DEFAULT_PAGE_SIZE_OPTIONS = [6, 12, 24, 48, 96];
 
 const Pagination = ({
   currentPage,
@@ -16,8 +31,11 @@ const Pagination = ({
   onPageChange,
   itemsPerPage,
   totalItems,
+  onItemsPerPageChange,
+  pageSizeOptions = DEFAULT_PAGE_SIZE_OPTIONS,
+  selectedPageSize = itemsPerPage,
 }: IPaginationProps) => {
-  const pages = [];
+  const pages: (number | "...")[] = [];
 
   pages.push(1);
 
@@ -48,16 +66,63 @@ const Pagination = ({
 
   return (
     <div className="flex flex-col lg:flex-row items-center justify-between px-5 py-4 gap-4">
-      <div className="text-sm text-muted-foreground">
-        Showing{" "}
-        <span className="font-medium">
-          {(currentPage - 1) * itemsPerPage + 1}
-        </span>{" "}
-        to{" "}
-        <span className="font-medium">
-          {Math.min(currentPage * itemsPerPage, totalItems)}
-        </span>{" "}
-        of <span className="font-medium">{totalItems}</span> entries
+      <div className="flex flex-col sm:flex-row items-center gap-3 text-sm text-muted-foreground">
+        {onItemsPerPageChange && (
+          <div className="flex items-center gap-2">
+            <span className="whitespace-nowrap">Rows per page</span>
+            <Select
+              value={String(selectedPageSize)}
+              onValueChange={(value) => onItemsPerPageChange(Number(value))}
+            >
+              <SelectTrigger
+                aria-label="Rows per page"
+                className="h-9 min-w-20 cursor-pointer gap-3 rounded-lg border-border bg-card pr-2.5 pl-3 font-medium text-foreground shadow-none transition-colors hover:border-primary/40 hover:bg-light data-[state=open]:border-primary/50 data-[state=open]:ring-[3px] data-[state=open]:ring-primary/15"
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent
+                align="start"
+                className="min-w-(--radix-select-trigger-width) rounded-xl p-1 shadow-lg"
+              >
+                {pageSizeOptions.map((size) => (
+                  <SelectItem
+                    key={size}
+                    value={String(size)}
+                    className="cursor-pointer rounded-lg py-2 font-medium data-[state=checked]:text-primary"
+                  >
+                    {size}
+                  </SelectItem>
+                ))}
+                <SelectItem
+                  value="-1"
+                  className="cursor-pointer rounded-lg py-2 font-medium data-[state=checked]:text-primary"
+                >
+                  All
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
+        <span>
+          {totalItems === 0 ? (
+            <>
+              <span className="font-medium">0</span> entries
+            </>
+          ) : (
+            <>
+              Showing{" "}
+              <span className="font-medium">
+                {(currentPage - 1) * itemsPerPage + 1}
+              </span>{" "}
+              to{" "}
+              <span className="font-medium">
+                {Math.min(currentPage * itemsPerPage, totalItems)}
+              </span>{" "}
+              of <span className="font-medium">{totalItems}</span> entries
+            </>
+          )}
+        </span>
       </div>
 
       <div className="flex items-center gap-3">
@@ -80,7 +145,6 @@ const Pagination = ({
                   ? "bg-primary hover:bg-primary text-white hover:text-white"
                   : ""
               }`}
-              // variant={page === currentPage ? "default" : "outline"}
               size="sm"
               onClick={() => typeof page === "number" && onPageChange(page)}
               disabled={typeof page !== "number"}
@@ -93,7 +157,7 @@ const Pagination = ({
             variant="outline"
             size="sm"
             onClick={() => onPageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
+            disabled={currentPage >= totalPages}
           >
             <ChevronRightIcon className="h-4 w-4" />
           </Button>

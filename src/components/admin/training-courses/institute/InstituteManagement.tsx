@@ -20,7 +20,6 @@ const InstituteManagement = () => {
     return (
       <InstitutePreview
         data={aboutInstitute}
-        isUsingDefaults={isUsingDefaults}
         onEdit={() => setIsEditMode(true)}
       />
     );

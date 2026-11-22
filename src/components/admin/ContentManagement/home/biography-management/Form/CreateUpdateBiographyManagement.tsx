@@ -61,11 +61,11 @@ const CreateUpdateBiographyManagement = ({
   const onSubmit = (data: BiographyManagementSchemaForm) => {
     const formData = new FormData();
     formData.append("nameEn", data.nameEn);
-    formData.append("nameBn", data.nameBn);
+    formData.append("nameBn", data.nameBn || "");
     formData.append("designationEn", data.designationEn);
     formData.append("designationBn", data.designationBn || "");
     formData.append("messageEn", data.messageEn);
-    formData.append("messageBn", data.messageBn);
+    formData.append("messageBn", data.messageBn || "");
     formData.append("status", data.status);
 
     if (data.image instanceof File) {

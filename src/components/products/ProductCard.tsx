@@ -48,7 +48,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <Link
       href={`/products/${slug}`}
-      className="group flex flex-col rounded-xl border border-border shadow bg-card overflow-hidden hover:shadow-lg hover:border-liteBlue/15 transition-all duration-300"
+      className="group flex h-full flex-col rounded-xl border border-border shadow bg-card overflow-hidden hover:shadow-lg hover:border-liteBlue/15 transition-all duration-300"
     >
       {/* Image */}
       <div className="relative aspect-4/3 bg-linear-to-br from-brand-navy to-brand-blue flex items-center justify-center overflow-hidden">
@@ -105,7 +105,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
       {/* Info */}
       <div className="flex-1 p-4 flex flex-col">
-        <h3 className="text-sm font-semibold text-pBlue line-clamp-2 group-hover:text-liteBlue transition-colors leading-snug">
+        {/* Two lines always reserved so 1- and 2-line names give equal cards. */}
+        <h3 className="text-sm font-semibold text-pBlue line-clamp-2 min-h-[2lh] group-hover:text-liteBlue transition-colors leading-snug">
           {product.nameEn}
         </h3>
 

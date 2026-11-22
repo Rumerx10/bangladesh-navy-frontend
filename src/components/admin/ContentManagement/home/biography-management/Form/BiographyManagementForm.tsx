@@ -96,7 +96,8 @@ const BiographyManagementForm = ({
         </div>
       </div>
 
-      {/* Bengali Content Section */}
+      {/* Bangla content hidden
+      {/* Bengali Content Section *\/}
       <div className="border border-light-silver rounded-lg p-8 bg-card">
         <div className="flex items-center gap-3 mb-6">
           <div className="bg-primary/10 w-9 h-9 flex items-center justify-center rounded-md border border-primary/20">
@@ -138,6 +139,7 @@ const BiographyManagementForm = ({
           </div>
         </div>
       </div>
+      */}
 
       {/* Image & Status Section */}
       <div className="border border-light-silver rounded-lg p-8 bg-card">

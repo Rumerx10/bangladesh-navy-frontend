@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { ChevronDown, FileText } from "lucide-react";
+import { FileText } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { Button } from "@/src/components/ui/button";
 import { useFormContext } from "react-hook-form";
@@ -34,7 +34,7 @@ const HeroManagementForm = ({
 }: HeroManagementFormProps) => {
   const { handleSubmit } = useFormContext<HeroManagementSchemaForm>();
   const [iconLoaded, setIconLoaded] = useState(false);
-  const [showBnFields, setShowBnFields] = useState(false);
+  // const [showBnFields, setShowBnFields] = useState(false);
 
   const statusOptions = [
     { label: "Active", value: "ACTIVE" },
@@ -100,7 +100,7 @@ const HeroManagementForm = ({
             />
           </div>
 
-          <div>
+          {/* <div>
             <InputLabel label="English Subtitle" required />
             <ControlledInputField
               name="subTitleEn"
@@ -125,11 +125,12 @@ const HeroManagementForm = ({
               options={statusOptions}
               placeholder="Select status"
             />
-          </div>
+          </div> */}
         </div>
       </div>
 
-      {/* Bengali Fields Section (optional, collapsed by default) */}
+      {/* Bangla content hidden
+      {/* Bengali Fields Section (optional, collapsed by default) *\/}
       <div className="border border-light-silver rounded-lg bg-card">
         <button
           type="button"
@@ -195,6 +196,7 @@ const HeroManagementForm = ({
           </div>
         </div>
       </div>
+      */}
 
       {/* Error Message */}
       <ErrorMessage error={error} />

@@ -9,6 +9,7 @@ import {
 } from "@/src/components/ui/dialog";
 import Image from "next/image";
 import Link from "next/link";
+import { cn } from "@/src/lib/utils";
 
 export interface ChartInfoSpec {
   label: string;
@@ -81,93 +82,101 @@ const ChartInfoDialog = ({
         if (!next) onClose();
       }}
     >
-      <DialogContent className={heading ? "sm:max-w-md" : "sm:max-w-sm"}>
-        <DialogHeader>
+      <DialogContent
+        className={cn(
+          "flex max-h-[85vh] flex-col",
+          heading ? "sm:max-w-md" : "sm:max-w-sm"
+        )}
+      >
+        <DialogHeader className="shrink-0">
           <DialogTitle className="text-pBlue">{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
 
-        {heading ? (
-          <div className="space-y-4">
-            {/* Preview */}
-            {image && (
-              <div className="relative h-56 w-full overflow-hidden rounded-xl border border-border bg-linear-to-br from-light to-light-dark">
-                <Image
-                  src={image}
-                  alt={heading}
-                  fill
-                  className="object-contain p-2"
-                  sizes="(max-width: 640px) 100vw, 448px"
-                />
-                {imageBadge && (
-                  <span className="absolute top-3 left-3 rounded-md bg-brand-navy px-2.5 py-1 text-xs font-bold text-white shadow-md">
-                    {imageBadge}
-                  </span>
-                )}
-                {imageBadgeSecondary && (
-                  <span className="absolute top-3 right-3 rounded-md bg-card/90 px-2.5 py-1 text-xs font-semibold text-pBlue shadow-md">
-                    {imageBadgeSecondary}
-                  </span>
-                )}
-              </div>
-            )}
-
-            {/* Title */}
-            <div>
-              <h3 className="text-lg leading-snug font-bold text-pBlue">
-                {heading}
-              </h3>
-              {subheading && (
-                <p className="mt-0.5 text-sm text-secondary-foreground">
-                  {subheading}
-                </p>
-              )}
-            </div>
-
-            {/* Specifications */}
-            {visibleSpecs.length > 0 && (
-              <div className="grid grid-cols-2 gap-2">
-                {visibleSpecs.map((spec) => (
-                  <SpecTile
-                    key={spec.label}
-                    label={spec.label}
-                    value={spec.value}
-                  />
-                ))}
-              </div>
-            )}
-
-            {/* CTA */}
-            {detailsHref && (
-              <div className="border-t border-border pt-4">
-                <Link
-                  href={detailsHref}
-                  className="block w-full rounded-lg bg-brand-navy py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-brand-navy/90"
-                >
-                  View Details
-                </Link>
-              </div>
-            )}
-          </div>
-        ) : (
-          fallback && (
+        {/* Title and close stay put; only the body scrolls past 85vh. */}
+        <div className="-mr-2 min-h-0 flex-1 overflow-y-auto pr-2 scrollbar-modern">
+          {heading ? (
             <div className="space-y-4">
-              <div className="rounded-xl border border-dashed border-border bg-light py-8 text-center">
-                <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                  {fallback.label}
-                </p>
-                <p className="mt-1 text-4xl font-extrabold tracking-wide text-pBlue">
-                  {fallback.value}
-                </p>
-                {fallback.note && (
-                  <p className="mt-1 text-sm font-semibold text-secondary-foreground">
-                    {fallback.note}
+              {/* Preview */}
+              {image && (
+                <div className="relative h-56 w-full overflow-hidden rounded-xl border border-border bg-linear-to-br from-light to-light-dark">
+                  <Image
+                    src={image}
+                    alt={heading}
+                    fill
+                    className="object-contain p-2"
+                    sizes="(max-width: 640px) 100vw, 448px"
+                  />
+                  {imageBadge && (
+                    <span className="absolute top-3 left-3 rounded-md bg-brand-navy px-2.5 py-1 text-xs font-bold text-white shadow-md">
+                      {imageBadge}
+                    </span>
+                  )}
+                  {imageBadgeSecondary && (
+                    <span className="absolute top-3 right-3 rounded-md bg-card/90 px-2.5 py-1 text-xs font-semibold text-pBlue shadow-md">
+                      {imageBadgeSecondary}
+                    </span>
+                  )}
+                </div>
+              )}
+
+              {/* Title */}
+              <div>
+                <h3 className="text-lg leading-snug font-bold text-pBlue">
+                  {heading}
+                </h3>
+                {subheading && (
+                  <p className="mt-0.5 text-sm text-secondary-foreground">
+                    {subheading}
                   </p>
                 )}
               </div>
+
+              {/* Specifications */}
+              {visibleSpecs.length > 0 && (
+                <div className="grid grid-cols-2 gap-2">
+                  {visibleSpecs.map((spec) => (
+                    <SpecTile
+                      key={spec.label}
+                      label={spec.label}
+                      value={spec.value}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {/* CTA */}
+              {detailsHref && (
+                <div className="border-t border-border pt-4">
+                  <Link
+                    href={detailsHref}
+                    className="block w-full rounded-lg bg-brand-navy py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-brand-navy/90"
+                  >
+                    View Details
+                  </Link>
+                </div>
+              )}
             </div>
-          )
-        )}
+          ) : (
+            fallback && (
+              <div className="space-y-4">
+                <div className="rounded-xl border border-dashed border-border bg-light py-8 text-center">
+                  <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+                    {fallback.label}
+                  </p>
+                  <p className="mt-1 text-4xl font-extrabold tracking-wide text-pBlue">
+                    {fallback.value}
+                  </p>
+                  {fallback.note && (
+                    <p className="mt-1 text-sm font-semibold text-secondary-foreground">
+                      {fallback.note}
+                    </p>
+                  )}
+                </div>
+              </div>
+            )
+          )}
+        </div>
       </DialogContent>
     </Dialog>
   );

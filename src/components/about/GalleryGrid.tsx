@@ -11,6 +11,7 @@ import { useState } from "react";
 import { BiExpandAlt } from "react-icons/bi";
 import GalleryLightbox from "@/src/components/shared/GalleryLightbox";
 import { useGalleryList } from "@/src/components/home/Gallery/useGalleryList";
+import Container from "@/src/components/shared/Container";
 
 const gridVariants: Variants = {
   hidden: {},
@@ -50,18 +51,24 @@ const GalleryGrid = () => {
 
   const allCategories = [
     "All",
-    ...Array.from(new Set(galleryItems.map((g) => g.galleryCategory.nameEn))),
+    ...Array.from(
+      new Set(
+        galleryItems.map((g) => g.galleryCategory?.nameEn).filter(Boolean)
+      )
+    ),
   ];
 
   const filteredItems =
     activeCategory === "All"
       ? galleryItems
-      : galleryItems.filter((g) => g.galleryCategory.nameEn === activeCategory);
+      : galleryItems.filter(
+          (g) => g.galleryCategory?.nameEn === activeCategory
+        );
 
   if (isLoading) {
     return (
       <section className="py-8 lg:py-20 bg-card">
-        <div className="container px-4 sm:px-6 lg:px-8">
+        <Container>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
             {Array.from({ length: 8 }).map((_, i) => (
               <div
@@ -70,7 +77,7 @@ const GalleryGrid = () => {
               />
             ))}
           </div>
-        </div>
+        </Container>
       </section>
     );
   }
@@ -84,7 +91,7 @@ const GalleryGrid = () => {
         viewport={{ once: true, amount: 0.15 }}
         variants={gridVariants}
       >
-        <div className="container px-4 sm:px-6 lg:px-8">
+        <Container>
           {/* Category Tabs */}
           <div className="flex flex-wrap items-center justify-center gap-3 mb-12 lg:mb-16">
             {allCategories.map((cat) => (
@@ -175,7 +182,7 @@ const GalleryGrid = () => {
                     animate={shouldReduceMotion ? undefined : { y: 0 }}
                   >
                     <span className="inline-block px-2 py-0.5 rounded-md bg-blue-500 text-white text-[10px] font-bold uppercase tracking-wider mb-2">
-                      {item.galleryCategory.nameEn}
+                      {item.galleryCategory?.nameEn}
                     </span>
                     <h4 className="text-white text-base lg:text-lg font-bold leading-tight line-clamp-2">
                       {item.titleEn}
@@ -185,7 +192,7 @@ const GalleryGrid = () => {
               ))}
             </AnimatePresence>
           </motion.div>
-        </div>
+        </Container>
       </motion.section>
 
       <GalleryLightbox

@@ -20,6 +20,8 @@ import {
 import { ALUMNI_MEMBERS_TREE_QUERY_KEY } from "@/src/components/alumni/useAlumni";
 import CreateUpdateCourse from "./Form/CreateUpdateCourse";
 import { GetCourseColumns } from "./TableColumns/CourseColumns";
+import { getCourseViewSections } from "./TableColumns/CourseViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 
 /**
  * The course list is the public statistics table — a handful of rows — so the
@@ -36,6 +38,7 @@ interface CoursesCardProps {
 
 const CoursesCard = ({ onViewBatches }: CoursesCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<ICourse | null>(null);
   const [selectedItem, setSelectedItem] = useState<ICourse | undefined>();
   const [pendingDelete, setPendingDelete] = useState<ICourse | null>(null);
 
@@ -116,7 +119,12 @@ const CoursesCard = ({ onViewBatches }: CoursesCardProps) => {
     [allCourses]
   );
 
-  const columns = GetCourseColumns(handleEdit, setPendingDelete, onViewBatches);
+  const columns = GetCourseColumns(
+    handleEdit,
+    setPendingDelete,
+    onViewBatches,
+    setViewItem
+  );
 
   return (
     <>
@@ -165,6 +173,13 @@ const CoursesCard = ({ onViewBatches }: CoursesCardProps) => {
         onClose={handleModalClose}
         initialValues={selectedItem}
         nextSerial={nextSerial}
+      />
+
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="Course Details"
+        sections={viewItem ? getCourseViewSections(viewItem) : []}
       />
 
       <DeleteConfirmDialog

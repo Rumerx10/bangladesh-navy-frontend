@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useMemo } from "react";
 import { BarChart3, CalendarRange } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import InputLabel from "@/src/components/shared/InputLabel";
@@ -8,6 +9,14 @@ import SubmitButton from "@/src/components/shared/SubmitButton";
 import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
 import ControlledSelectField from "@/src/components/shared/FromController/ControlledSelectField";
+import ControlledCreatableCombobox from "@/src/components/shared/FromController/ControlledCreatableCombobox";
+import { useGet } from "@/src/hooks/useGet";
+import { ICourseStatistic } from "@/src/components/course-statistics/types";
+import {
+  bySerial,
+  COURSE_STATISTICS_ENDPOINT,
+  COURSE_STATISTICS_QUERY_KEY,
+} from "@/src/components/course-statistics/useCourseStatistics";
 import { Button } from "@/src/components/ui/button";
 import { ErrorType } from "@/src/components/shared/types/common";
 import { COURSE_STATUS_OPTIONS } from "@/src/components/courses/types";
@@ -59,17 +68,56 @@ const CourseForm = ({
   isPending = false,
   error,
 }: CourseFormProps) => {
-  const { handleSubmit, watch, setValue } = useFormContext<CourseFormValues>();
+  const { handleSubmit, watch, setValue, getValues } =
+    useFormContext<CourseFormValues>();
+
+  // The course names in the Training & Courses → Courses table, offered in
+  // the Course Name dropdown so both lists spell a course the same way. Same
+  // request (and cache entry) as that table, so the lists always match.
+  const { data: statisticsData, isLoading: statisticsLoading } = useGet<
+    ICourseStatistic[]
+  >(COURSE_STATISTICS_ENDPOINT, COURSE_STATISTICS_QUERY_KEY, {
+    page: "1",
+    limit: "50",
+  });
+  const courseStatistics = useMemo(
+    () =>
+      Array.isArray(statisticsData?.data)
+        ? [...statisticsData.data].sort(bySerial)
+        : [],
+    [statisticsData]
+  );
+  const courseNameOptions = useMemo(
+    () => courseStatistics.map((row) => row.courseName),
+    [courseStatistics]
+  );
+
+  // Picking a suggested course also fills its duration and remarks — only
+  // where those are still empty, so nothing already typed is overwritten.
+  const handleCoursePick = (courseName: string) => {
+    const match = courseStatistics.find((row) => row.courseName === courseName);
+    if (!match) return;
+    if (!getValues("duration")?.trim() && match.duration)
+      setValue("duration", match.duration, { shouldValidate: true });
+    if (!getValues("remarks")?.trim() && match.remarks)
+      setValue("remarks", match.remarks, { shouldValidate: true });
+  };
 
   const bn = watch("bn");
   const otherMaritimeOrg = watch("otherMaritimeOrg");
   const overseas = watch("overseas");
-  const totalTrainees = watch("totalTrainees");
 
-  // The public table prints the API's `totalTrainees` verbatim, so a mismatch
-  // with the three columns beside it is worth surfacing before it is saved.
-  const sum = toCount(bn) + toCount(otherMaritimeOrg) + toCount(overseas);
-  const showSumHint = sum > 0 && toCount(totalTrainees) !== sum;
+  // Total is always BN + Other Maritime Org + Overseas — kept in sync here so
+  // it can never be typed in wrong. Left empty while all three are empty.
+  useEffect(() => {
+    const allEmpty = [bn, otherMaritimeOrg, overseas].every(
+      (v) => String(v ?? "").trim() === ""
+    );
+    const sum = toCount(bn) + toCount(otherMaritimeOrg) + toCount(overseas);
+    setValue("totalTrainees", allEmpty ? undefined : sum, {
+      shouldValidate: true,
+    });
+  }, [bn, otherMaritimeOrg, overseas, setValue]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-6">
@@ -84,9 +132,15 @@ const CourseForm = ({
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <InputLabel label="Course Name" required />
-            <ControlledInputField
+            <ControlledCreatableCombobox
               name="name"
-              placeholder="e.g. Basic Hydrographic (Cat B)"
+              options={courseNameOptions}
+              isLoading={statisticsLoading}
+              groupLabel="Courses"
+              onPick={handleCoursePick}
+              maxLength={200}
+              placeholder="Select a course"
+              searchPlaceholder="Search courses or type a new name…"
               className="bg-light shadow-none"
             />
           </div>
@@ -167,30 +221,12 @@ const CourseForm = ({
             <ControlledInputField
               name="totalTrainees"
               type="number"
-              placeholder="e.g. 133"
+              placeholder="Auto-calculated"
+              disabled
               className="bg-light shadow-none"
             />
           </div>
         </div>
-
-        {showSumHint && (
-          <div className="mt-4 flex flex-wrap items-center gap-3 rounded-md border border-amber-200 bg-amber-50 px-4 py-3">
-            <Paragraph className="text-xs! text-amber-800">
-              BN + Other Maritime Org + Overseas ={" "}
-              <span className="font-bold tabular-nums">{sum}</span>, which does
-              not match Total Trainees.
-            </Paragraph>
-            <Button
-              type="button"
-              onClick={() =>
-                setValue("totalTrainees", sum, { shouldValidate: true })
-              }
-              className="h-8 cursor-pointer bg-amber-600 px-3 text-xs text-white hover:bg-amber-700"
-            >
-              Use {sum}
-            </Button>
-          </div>
-        )}
 
         <Paragraph className="mt-4 text-xs! text-secondary-foreground">
           Leave a figure empty where none is available — the public table prints

@@ -55,7 +55,7 @@ const HydrographicNoteDetailModal = ({
         </DialogHeader>
 
         {data && (
-          <div className="overflow-y-auto scrollbar-modern flex-1 mt-2 pr-2">
+          <div className="overflow-y-auto scrollbar-modern flex-1 mt-2 pr-2 pb-1">
             <div className="grid grid-cols-2 gap-3">
               <SectionLabel title="Sender Information" />
               <DetailRow label="Date" value={data.date} />

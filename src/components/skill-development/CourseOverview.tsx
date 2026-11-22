@@ -2,6 +2,7 @@
 
 import CourseStatisticsTable from "@/src/components/course-statistics/CourseStatisticsTable";
 import { useCourseInfo } from "@/src/components/course-info/useCourseInfo";
+import Container from "@/src/components/shared/Container";
 
 const CourseOverviewSkeleton = () => (
   <div className="space-y-12 animate-pulse">
@@ -43,7 +44,7 @@ const CourseOverview = () => {
 
   return (
     <section className="bg-card py-8 lg:py-20">
-      <div className="container px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-12">
+      <Container className="max-w-5xl mx-auto space-y-12">
         {isLoading ? (
           <CourseOverviewSkeleton />
         ) : (
@@ -90,7 +91,7 @@ const CourseOverview = () => {
 
         {/* Summary Table — rows and totals come from `/course-statistics/list` */}
         <CourseStatisticsTable />
-      </div>
+      </Container>
     </section>
   );
 };

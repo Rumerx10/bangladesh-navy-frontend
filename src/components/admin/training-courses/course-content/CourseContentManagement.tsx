@@ -21,7 +21,6 @@ const CourseContentManagement = () => {
     return (
       <CourseContentPreview
         data={courseInfo}
-        isUsingDefaults={isUsingDefaults}
         onEdit={() => setIsEditMode(true)}
       />
     );

@@ -1,11 +1,12 @@
 import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
-import { Download } from "lucide-react";
+import { Download, Eye } from "lucide-react";
 import Image from "next/image";
 import { IApplicant } from "../types";
 
 export const GetApplicantColumns = (
-  onDownload?: (applicantId: string, filename: string) => void
+  onDownload?: (applicantId: string, filename: string) => void,
+  onView?: (item: IApplicant) => void
 ): ColumnDef<IApplicant>[] => {
   return [
     {
@@ -48,15 +49,25 @@ export const GetApplicantColumns = (
         const applicant = row as IApplicant;
 
         return (
-          <Button
-            className="w-11! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
-            size="sm"
-            onClick={() =>
-              onDownload?.(applicant.id, `${applicant.name}-resume`)
-            }
-          >
-            <Download className="h-5 text-secondary-foreground" />
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              className="w-11! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
+              size="sm"
+              onClick={() => onView?.(applicant)}
+              aria-label={`View ${applicant.name}`}
+            >
+              <Eye className="h-5 text-secondary-foreground" />
+            </Button>
+            <Button
+              className="w-11! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
+              size="sm"
+              onClick={() =>
+                onDownload?.(applicant.id, `${applicant.name}-resume`)
+              }
+            >
+              <Download className="h-5 text-secondary-foreground" />
+            </Button>
+          </div>
         );
       },
     },

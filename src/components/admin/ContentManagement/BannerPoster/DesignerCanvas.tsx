@@ -25,6 +25,7 @@ import type {
 } from "./templates";
 import DraggableText from "./DraggableText";
 import TextControlPanel from "./TextControlPanel";
+import Image from "next/image";
 
 interface DesignerCanvasProps {
   template: PosterTemplate;
@@ -454,7 +455,7 @@ const DesignerCanvas = ({ template, onBack }: DesignerCanvasProps) => {
                       setSelectedTextId(null);
                     }}
                   >
-                    <img
+                    <Image
                       src={imageUploads[zone.id]}
                       alt=""
                       className="w-full h-full cursor-move"

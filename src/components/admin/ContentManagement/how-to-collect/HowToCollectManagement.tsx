@@ -11,10 +11,13 @@ import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
 import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import CreateUpdateHowToCollect from "./Form/CreateUpdateHowToCollect";
 import { GetHowToCollectColumns } from "./TableColumns/HowToCollectColumns";
+import { getHowToCollectViewSections } from "./TableColumns/HowToCollectViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 import { IHowToCollectStep } from "./types";
 
 const HowToCollectManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<IHowToCollectStep | null>(null);
   const [selectedItem, setSelectedItem] = useState<
     IHowToCollectStep | undefined
   >();
@@ -83,7 +86,7 @@ const HowToCollectManagement = () => {
     setDeleteId(null);
   };
 
-  const columns = GetHowToCollectColumns(handleEdit, setDeleteId);
+  const columns = GetHowToCollectColumns(handleEdit, setDeleteId, setViewItem);
 
   // Only the current page is in hand, so this is a sensible starting point for
   // the next serial rather than an authoritative maximum.
@@ -115,6 +118,13 @@ const HowToCollectManagement = () => {
         onClose={handleModalClose}
         initialValues={selectedItem}
         nextSerial={nextSerial}
+      />
+
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="How to Collect Step Details"
+        sections={viewItem ? getHowToCollectViewSections(viewItem) : []}
       />
 
       <DeleteConfirmDialog

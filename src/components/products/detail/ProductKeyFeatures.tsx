@@ -41,7 +41,12 @@ const ProductKeyFeatures = ({ product }: ProductKeyFeaturesProps) => {
           })
         : undefined,
     },
-  ].filter((feature) => feature.value !== undefined && feature.value !== "");
+  ].filter(
+    (feature) =>
+      feature.value !== undefined &&
+      feature.value !== null &&
+      String(feature.value).trim() !== ""
+  );
 
   if (features.length === 0) return null;
 

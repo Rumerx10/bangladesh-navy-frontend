@@ -12,10 +12,13 @@ import DeleteConfirmDialog from "@/src/components/shared/DeleteConfirmDialog";
 import NoticeTypeFilter from "@/src/components/notices/NoticeTypeFilter";
 import { INotice, NoticeFilterValue } from "@/src/components/notices/types";
 import { GetNoticesColumns } from "./TableColumns/NoticesColumns";
+import { getNoticesViewSections } from "./TableColumns/NoticesViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 import CreateUpdateNotice from "./Form/CreateUpdateNotice";
 
 const NoticesManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<INotice | null>(null);
   const [selectedItem, setSelectedItem] = useState<INotice | undefined>();
   const [pendingDelete, setPendingDelete] = useState<INotice | null>(null);
   const [type, setType] = useState<NoticeFilterValue>("ALL");
@@ -105,7 +108,7 @@ const NoticesManagement = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetNoticesColumns(handleEdit, setPendingDelete);
+  const columns = GetNoticesColumns(handleEdit, setPendingDelete, setViewItem);
 
   return (
     <div>
@@ -140,6 +143,13 @@ const NoticesManagement = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
+      />
+
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="Notice to Mariners Details"
+        sections={viewItem ? getNoticesViewSections(viewItem) : []}
       />
 
       <DeleteConfirmDialog

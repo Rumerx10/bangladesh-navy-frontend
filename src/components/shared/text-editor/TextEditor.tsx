@@ -1,6 +1,7 @@
 "use client";
 import { usePost } from "@/src/hooks/usePost";
 import { cn } from "@/src/lib/utils";
+import { type Editor } from "@tiptap/core";
 import Bold from "@tiptap/extension-bold";
 import BulletList from "@tiptap/extension-bullet-list";
 import Document from "@tiptap/extension-document";
@@ -13,15 +14,27 @@ import Text from "@tiptap/extension-text";
 import TextAlign from "@tiptap/extension-text-align";
 import { Color, TextStyle } from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
-import { EditorContent, useEditor } from "@tiptap/react";
-import { ImagePlus, Loader2 } from "lucide-react";
-import Image from "next/image";
+import { EditorContent, useEditor, useEditorState } from "@tiptap/react";
+import {
+  AlignCenterIcon,
+  AlignJustifyIcon,
+  AlignLeftIcon,
+  AlignRightIcon,
+  BoldIcon,
+  CircleAlertIcon,
+  ImagePlusIcon,
+  ItalicIcon,
+  ListIcon,
+  ListOrderedIcon,
+  Loader2Icon,
+  UnderlineIcon,
+} from "lucide-react";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { FieldError } from "react-hook-form";
 import FontSize from "./extensions/font-size";
 import ResizableImage from "./extensions/resizable-image";
 import "./TextEditor.css";
-import ToolbarButton from "./Toolbar";
+import ToolbarButton, { ToolbarDivider } from "./Toolbar";
 import ColorPickerDropdown from "./toolbar/ColorPickerDropdown";
 import FontSizeSelector from "./toolbar/FontSizeSelector";
 import ImageToolbar from "./toolbar/ImageToolbar";
@@ -41,20 +54,87 @@ interface TextEditorProps {
   uploadEndpoint?: string;
 }
 
+const MARKS = [
+  {
+    key: "bold",
+    label: "Bold",
+    Icon: BoldIcon,
+    shortcut: ["Mod", "B"],
+    run: (editor: Editor) => editor.chain().focus().toggleBold().run(),
+  },
+  {
+    key: "italic",
+    label: "Italic",
+    Icon: ItalicIcon,
+    shortcut: ["Mod", "I"],
+    run: (editor: Editor) => editor.chain().focus().toggleItalic().run(),
+  },
+  {
+    key: "underline",
+    label: "Underline",
+    Icon: UnderlineIcon,
+    shortcut: ["Mod", "U"],
+    run: (editor: Editor) => editor.chain().focus().toggleUnderline().run(),
+  },
+] as const;
+
+const ALIGNMENTS = [
+  {
+    value: "left",
+    label: "Align left",
+    Icon: AlignLeftIcon,
+    shortcut: ["Mod", "Shift", "L"],
+  },
+  {
+    value: "center",
+    label: "Align centre",
+    Icon: AlignCenterIcon,
+    shortcut: ["Mod", "Shift", "E"],
+  },
+  {
+    value: "right",
+    label: "Align right",
+    Icon: AlignRightIcon,
+    shortcut: ["Mod", "Shift", "R"],
+  },
+  {
+    value: "justify",
+    label: "Justify",
+    Icon: AlignJustifyIcon,
+    shortcut: ["Mod", "Shift", "J"],
+  },
+] as const;
+
+const LISTS = [
+  {
+    key: "bulletList",
+    label: "Bulleted list",
+    Icon: ListIcon,
+    shortcut: ["Mod", "Shift", "8"],
+    run: (editor: Editor) => editor.chain().focus().toggleBulletList().run(),
+  },
+  {
+    key: "orderedList",
+    label: "Numbered list",
+    Icon: ListOrderedIcon,
+    shortcut: ["Mod", "Shift", "7"],
+    run: (editor: Editor) => editor.chain().focus().toggleOrderedList().run(),
+  },
+] as const;
+
 const TextEditor = ({
   value,
   onChange,
   className,
   error,
   height,
-  minHeight = 128,
+  minHeight = 240,
   maxHeight,
   uploadEndpoint = "/history/upload-image",
 }: TextEditorProps) => {
   const { mutateAsync: uploadImage, isPending: isLoading } = usePost<{
     imageUrl: string;
   }>(uploadEndpoint);
-  const [currentFontSize, setCurrentFontSize] = useState("16");
   const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   // The contextual image toolbar is positioned against this element, so it has
@@ -63,7 +143,7 @@ const TextEditor = ({
   const editor = useEditor({
     extensions: [
       Placeholder.configure({
-        placeholder: "Write here...",
+        placeholder: "Start writing…",
         showOnlyWhenEditable: true,
         showOnlyCurrent: false,
       }),
@@ -92,8 +172,9 @@ const TextEditor = ({
       attributes: {
         // Shares the public pages' rich-text rules (see globals.css) so what
         // the admin composes is laid out by exactly the same CSS that will
-        // render it on the site.
-        class: "rich-text",
+        // render it on the site. The padding lives here rather than on a
+        // wrapper so the whole writing area, margins included, takes a click.
+        class: "rich-text px-5 py-4",
       },
     },
     onCreate: ({ editor }) => {
@@ -101,8 +182,33 @@ const TextEditor = ({
     },
     onUpdate: ({ editor }) => {
       onChange?.(editor.getHTML());
-      const size = editor.getAttributes("textStyle").fontSize;
-      setCurrentFontSize(size?.replace("px", "") || "");
+    },
+  });
+
+  // `useEditor` doesn't re-render on selection changes, so without this the
+  // toolbar would keep showing the formatting of wherever the caret was when
+  // the text last changed.
+  const toolbarState = useEditorState({
+    editor,
+    selector: ({ editor }) => {
+      if (!editor) return null;
+      const textStyle = editor.getAttributes("textStyle");
+      const text = editor.getText({ blockSeparator: " " }).trim();
+      return {
+        bold: editor.isActive("bold"),
+        italic: editor.isActive("italic"),
+        underline: editor.isActive("underline"),
+        bulletList: editor.isActive("bulletList"),
+        orderedList: editor.isActive("orderedList"),
+        // A paragraph with no alignment set renders left-aligned, so show it so.
+        align:
+          ALIGNMENTS.find(({ value }) => editor.isActive({ textAlign: value }))
+            ?.value ?? "left",
+        fontSize: String(textStyle.fontSize ?? "").replace("px", ""),
+        color: (textStyle.color as string | undefined) ?? null,
+        words: text ? text.split(/\s+/).length : 0,
+        characters: editor.state.doc.textContent.length,
+      };
     },
   });
 
@@ -152,191 +258,152 @@ const TextEditor = ({
       editor.commands.setContent(value || "", { emitUpdate: false });
     }
   }, [value, editor]);
-  if (!editor) return null;
+  if (!editor || !toolbarState) return null;
 
   const setFontSize = (size: string) => {
-    if (!size) {
-      editor.chain().focus().unsetFontSize().run();
-      setCurrentFontSize("");
-    } else {
-      editor.chain().focus().setFontSize(`${size}px`).run();
-      setCurrentFontSize(size);
-    }
+    const chain = editor.chain().focus();
+    (size ? chain.setFontSize(`${size}px`) : chain.unsetFontSize()).run();
   };
 
   return (
     <div>
       <div
         className={cn(
-          `border rounded-md ${error ? "border-rose-500" : "border-light-silver"}`,
+          "rounded-xl border bg-card shadow-[0_1px_2px_rgb(0_24_54/0.05)]",
+          "transition-[border-color,box-shadow] duration-200",
+          error
+            ? "border-rose-400 focus-within:ring-4 focus-within:ring-rose-500/10"
+            : "border-light-silver focus-within:border-primary/40 focus-within:ring-4 focus-within:ring-primary/10",
           className
         )}
       >
-        <div className="flex items-center flex-wrap gap-2  px-2  bg-light w-fit rounded-tl-md">
+        {/* Sticky so a long article never scrolls its toolbar out of reach.
+            The admin content pane is the scroll container, so `top-0` pins
+            it just under the dashboard header. */}
+        <div
+          role="toolbar"
+          aria-label="Text formatting"
+          className="sticky top-0 z-10 flex flex-wrap items-center gap-0.5 rounded-t-[calc(var(--radius)_+_3px)] border-b border-light-silver bg-light/90 px-2 py-1.5 backdrop-blur-sm"
+        >
           <FontSizeSelector
-            currentFontSize={currentFontSize}
+            currentFontSize={toolbarState.fontSize}
             setFontSize={setFontSize}
           />
-          <span className="h-10 w-px bg-light-dark"></span>
-          <ColorPickerDropdown editor={editor} />
-          <span className="h-10 w-px bg-light-dark"></span>
-          <div className="py-2.5">
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleBold().run()}
-              isActive={editor.isActive("bold")}
-              title="Bold"
-            >
-              <Image src="/icons/bold.svg" alt="bold" width={20} height={20} />
-            </ToolbarButton>
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleItalic().run()}
-              isActive={editor.isActive("italic")}
-              title="Italic"
-            >
-              <Image
-                src="/icons/italic.svg"
-                alt="bold"
-                width={20}
-                height={20}
-              />
-            </ToolbarButton>
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleUnderline().run()}
-              isActive={editor.isActive("underline")}
-              title="Underline"
-            >
-              <Image
-                src="/icons/underline.svg"
-                alt="Underline"
-                width={20}
-                height={20}
-              />
-            </ToolbarButton>
-          </div>
+          <ColorPickerDropdown
+            editor={editor}
+            currentColor={toolbarState.color}
+          />
 
-          <span className="h-10 w-px bg-light-dark"></span>
+          <ToolbarDivider />
 
-          <div>
+          {MARKS.map(({ key, label, Icon, shortcut, run }) => (
             <ToolbarButton
-              onClick={() => editor.chain().focus().setTextAlign("left").run()}
-              isActive={editor.isActive({ textAlign: "left" })}
-              title="Align Left"
+              key={key}
+              title={label}
+              shortcut={shortcut}
+              isActive={toolbarState[key]}
+              onClick={() => run(editor)}
             >
-              <Image
-                src="/icons/left_align.svg"
-                alt="bold"
-                width={20}
-                height={20}
-              />
+              <Icon />
             </ToolbarButton>
+          ))}
 
-            <ToolbarButton
-              onClick={() =>
-                editor.chain().focus().setTextAlign("center").run()
-              }
-              isActive={editor.isActive({ textAlign: "center" })}
-              title="Align Center"
-            >
-              <Image
-                src="/icons/center_align.svg"
-                alt="bold"
-                width={20}
-                height={20}
-              />
-            </ToolbarButton>
-            <ToolbarButton
-              onClick={() => editor.chain().focus().setTextAlign("right").run()}
-              isActive={editor.isActive({ textAlign: "right" })}
-              title="Align Right"
-            >
-              <Image
-                src="/icons/right_align.svg"
-                alt="bold"
-                width={20}
-                height={20}
-              />
-            </ToolbarButton>
-            <ToolbarButton
-              onClick={() =>
-                editor.chain().focus().setTextAlign("justify").run()
-              }
-              isActive={editor.isActive({ textAlign: "justify" })}
-              title="Justify"
-            >
-              <Image
-                src="/icons/justify_align.svg"
-                alt="justify"
-                width={20}
-                height={20}
-              />
-            </ToolbarButton>
-          </div>
-          <span className="h-10 w-px bg-light-dark"></span>
+          <ToolbarDivider />
 
-          <div>
+          {ALIGNMENTS.map(({ value, label, Icon, shortcut }) => (
             <ToolbarButton
-              onClick={() => editor.chain().focus().toggleBulletList().run()}
-              isActive={editor.isActive("bulletList")}
-              title="Bullet List"
+              key={value}
+              title={label}
+              shortcut={shortcut}
+              isActive={toolbarState.align === value}
+              onClick={() => editor.chain().focus().setTextAlign(value).run()}
             >
-              <Image src="/icons/list.svg" alt="bold" width={20} height={20} />
+              <Icon />
             </ToolbarButton>
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleOrderedList().run()}
-              isActive={editor.isActive("orderedList")}
-              title="Numbered List"
-            >
-              <Image
-                src="/icons/number.svg"
-                alt="bold"
-                width={20}
-                height={20}
-              />
-            </ToolbarButton>
-          </div>
+          ))}
 
-          <span className="h-10 w-px bg-light-dark"></span>
+          <ToolbarDivider />
 
-          <div className="py-2.5">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              ref={fileInputRef}
-              style={{ display: "none" }}
-            />
+          {LISTS.map(({ key, label, Icon, shortcut, run }) => (
             <ToolbarButton
-              onClick={() => fileInputRef.current?.click()}
-              isActive={false}
-              disabled={isLoading}
-              title="Insert image — select it afterwards to set wrapping, alignment and size"
+              key={key}
+              title={label}
+              shortcut={shortcut}
+              isActive={toolbarState[key]}
+              onClick={() => run(editor)}
             >
-              {isLoading ? (
-                <Loader2 className="w-5 h-5 animate-spin text-secondary-foreground" />
-              ) : (
-                <ImagePlus className="w-5 h-5 text-secondary-foreground" />
-              )}
+              <Icon />
             </ToolbarButton>
-          </div>
+          ))}
+
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            ref={fileInputRef}
+            tabIndex={-1}
+            aria-hidden
+            className="hidden"
+          />
+          <ToolbarButton
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isLoading}
+            title="Insert image"
+            className="ml-auto gap-1.5 px-2.5 text-sm font-medium"
+          >
+            {isLoading ? (
+              <Loader2Icon className="animate-spin" />
+            ) : (
+              <ImagePlusIcon />
+            )}
+            <span className="hidden sm:inline">
+              {isLoading ? "Uploading…" : "Image"}
+            </span>
+          </ToolbarButton>
         </div>
 
-        {/* EDITOR */}
-        <div className="p-3 relative" ref={editorShellRef}>
+        {/* `isolate` keeps the image toolbar and resize handles stacked
+            beneath the sticky toolbar when the content scrolls under it. */}
+        <div className="relative isolate" ref={editorShellRef}>
           <EditorContent
             editor={editor}
-            className="overflow-y-auto"
+            className="flex flex-col overflow-y-auto [&>.ProseMirror]:flex-1"
             style={{ height, minHeight, maxHeight }}
           />
           <ImageToolbar editor={editor} boundaryRef={editorShellRef} />
         </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 rounded-b-[calc(var(--radius)_+_3px)] border-t border-light-silver bg-light/50 px-4 py-2 text-xs text-muted-foreground">
+          <span className="tabular-nums">
+            {toolbarState.words.toLocaleString()}{" "}
+            {toolbarState.words === 1 ? "word" : "words"}
+            <span aria-hidden className="mx-1.5 opacity-50">
+              ·
+            </span>
+            {toolbarState.characters.toLocaleString()} characters
+          </span>
+
+          {isLoading ? (
+            <span className="flex items-center gap-1.5 text-primary">
+              <Loader2Icon className="size-3.5 animate-spin" />
+              Uploading image…
+            </span>
+          ) : (
+            uploadError && (
+              <span
+                role="alert"
+                className="flex items-center gap-1.5 text-rose-500"
+              >
+                <CircleAlertIcon className="size-3.5" />
+                {uploadError}
+              </span>
+            )
+          )}
+        </div>
       </div>
 
-      {uploadError && (
-        <div className="text-rose-500 text-xs mt-1 pl-2">{uploadError}</div>
-      )}
-
-      {error && error && (
-        <div className="text-rose-500 text-xs mt-1 pl-2">{error.message}</div>
+      {error?.message && (
+        <div className="text-rose-500 text-xs mt-1.5 pl-1">{error.message}</div>
       )}
     </div>
   );

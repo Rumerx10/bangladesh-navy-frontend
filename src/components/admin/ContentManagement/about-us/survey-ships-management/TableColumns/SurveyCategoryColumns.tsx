@@ -1,11 +1,12 @@
-import { Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { ISurveyCategory } from "../types";
 
 export const GetSurveyCategoryColumns = (
   onEdit?: (item: ISurveyCategory) => void,
-  onDelete?: (item: ISurveyCategory) => void
+  onDelete?: (item: ISurveyCategory) => void,
+  onView?: (item: ISurveyCategory) => void
 ): ColumnDef<ISurveyCategory>[] => [
   {
     header: "English Name",
@@ -16,15 +17,15 @@ export const GetSurveyCategoryColumns = (
       </span>
     ),
   },
-  {
-    header: "Bengali Name",
-    accessorKey: "nameBn",
-    cell: (value) => (
-      <span className="text-sm text-secondary-gary">
-        {(value as string) || "—"}
-      </span>
-    ),
-  },
+  // {
+  // header: "Bengali Name",
+  // accessorKey: "nameBn",
+  // cell: (value) => (
+  // <span className="text-sm text-secondary-gary">
+  // {(value as string) || "—"}
+  // </span>
+  // ),
+  // },
   {
     header: "Status",
     accessorKey: "status",
@@ -48,6 +49,14 @@ export const GetSurveyCategoryColumns = (
     accessorKey: "id",
     cell: (_value, row) => (
       <div className="flex items-center gap-2">
+        <Button
+          className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
+          size="sm"
+          onClick={() => onView?.(row)}
+          aria-label={`View ${row.nameEn}`}
+        >
+          <Eye className="h-4 w-4 text-secondary-foreground" />
+        </Button>
         <Button
           className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
           size="sm"

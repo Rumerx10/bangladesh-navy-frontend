@@ -105,9 +105,15 @@ const CreateUpdateNewsEvents = ({
   const buildFormData = (values: NewsEventsFormValues): FormData => {
     const formData = new FormData();
     formData.append("titleEn", values.titleEn);
-    formData.append("titleBn", values.titleBn);
+    // The Bengali fields are optional — send them only when filled in, since
+    // the API validates an empty string against its minimum length.
+    if (values.titleBn?.trim()) {
+      formData.append("titleBn", values.titleBn.trim());
+    }
     formData.append("contentEn", values.contentEn);
-    formData.append("contentBn", values.contentBn);
+    if (values.contentBn?.trim()) {
+      formData.append("contentBn", values.contentBn);
+    }
     formData.append("newsCategoryId", values.newsCategoryId);
     if (values.image instanceof File) {
       formData.append("image", values.image);
@@ -137,7 +143,7 @@ const CreateUpdateNewsEvents = ({
             {isUpdate ? "Update" : "Create"} News & Event
           </DialogTitle>
         </DialogHeader>
-        <div className="overflow-y-auto flex-1 mt-2 pr-2 scrollbar-modern">
+        <div className="overflow-y-auto flex-1 mt-2 pr-2 pb-1 scrollbar-modern">
           <FormProvider {...methods}>
             <NewsEventsForm
               isEditMode={isUpdate}

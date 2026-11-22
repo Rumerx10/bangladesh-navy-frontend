@@ -4,6 +4,37 @@ import { FileText, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { toast } from "react-toastify";
+
+// Content fingerprint per File, so a re-pick compares bytes rather than names
+// (a renamed copy of the same image is still caught) and each file is only
+// hashed once.
+const fingerprints = new WeakMap<File, Promise<string>>();
+
+const fingerprintOf = (file: File): Promise<string> => {
+  const cached = fingerprints.get(file);
+  if (cached) return cached;
+
+  // `crypto.subtle` only exists in secure contexts (https / localhost); on a
+  // plain-http deployment fall back to the file's metadata.
+  const fingerprint = globalThis.crypto?.subtle
+    ? file
+        .arrayBuffer()
+        .then((buffer) => crypto.subtle.digest("SHA-256", buffer))
+        .then((digest) =>
+          Array.from(new Uint8Array(digest), (byte) =>
+            byte.toString(16).padStart(2, "0")
+          ).join("")
+        )
+    : Promise.resolve(`${file.name}:${file.size}:${file.lastModified}`);
+
+  fingerprints.set(file, fingerprint);
+  return fingerprint;
+};
+
+const isSameFile = async (a: File, b: File) =>
+  a === b ||
+  (a.size === b.size && (await fingerprintOf(a)) === (await fingerprintOf(b)));
 export const SUPPORTED_FORMATS = [
   "image/jpg",
   "image/webp",
@@ -66,19 +97,30 @@ export const FileUploadController = ({
                 ? initialUrl
                 : null;
 
-        const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-          if (disabled) return;
-          const file = e.target.files?.[0];
-          if (!file) return;
+        const handleFileChange = async (
+          e: React.ChangeEvent<HTMLInputElement>
+        ) => {
+          const input = e.target;
+          const file = input.files?.[0];
+          // Cleared every time so the same file can be picked again after it
+          // was removed — browsers skip `change` for an unchanged selection.
+          input.value = "";
+          if (disabled || isLoading || !file) return;
 
-          setTouched(true);
           setIsLoading(true);
-
-          // small delay for UX animation
-          setTimeout(() => {
+          try {
+            if (
+              fileValue instanceof File &&
+              (await isSameFile(fileValue, file))
+            ) {
+              toast.warning("This file is already uploaded.");
+              return;
+            }
+            setTouched(true);
             field.onChange(file);
+          } finally {
             setIsLoading(false);
-          }, 400);
+          }
         };
 
         const handleDelete = () => {
@@ -128,46 +170,31 @@ export const FileUploadController = ({
                   htmlFor={`${name}-file`}
                   className="flex items-center justify-center h-full cursor-pointer select-none"
                 >
-                  <AnimatePresence mode="wait">
-                    {isLoading ? (
-                      <motion.div
-                        key="loading"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="flex flex-col items-center gap-2"
-                      >
-                        <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-                        <span className="text-xs text-muted-foreground">
-                          Uploading...
-                        </span>
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        key="upload"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="flex flex-col items-center"
-                      >
-                        <Image
-                          width={36}
-                          height={36}
-                          src="/icons/plus.svg"
-                          alt="plus"
-                          className="w-4.5 mb-1"
-                        />
-                        <span className="text-xs text-muted-foreground text-center px-2">
-                          {label || "Upload Cover image"}
-                        </span>
-                      </motion.div>
-                    )}
+                  <AnimatePresence>
+                    <motion.div
+                      key="upload"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex flex-col items-center"
+                    >
+                      <Image
+                        width={36}
+                        height={36}
+                        src="/icons/plus.svg"
+                        alt="plus"
+                        className="w-4.5 mb-1"
+                      />
+                      <span className="text-xs text-muted-foreground text-center px-2">
+                        {label || "Upload Cover image"}
+                      </span>
+                    </motion.div>
                   </AnimatePresence>
 
                   <input
                     id={`${name}-file`}
                     type="file"
-                    disabled={disabled}
+                    disabled={disabled || isLoading}
                     accept={(accept || SUPPORTED_FORMATS).join(",")}
                     className="hidden"
                     onChange={handleFileChange}

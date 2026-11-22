@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { ChevronDown, FileText } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { useFormContext } from "react-hook-form";
 import { Button } from "@/src/components/ui/button";
@@ -83,7 +82,7 @@ const MissionVisionForm = ({
   isPending = false,
   onCancel,
 }: MissionVisionFormProps) => {
-  const [showBnFields, setShowBnFields] = useState(false);
+  // const [showBnFields, setShowBnFields] = useState(false);
   const { handleSubmit } = useFormContext<MissionVisionSchemaForm>();
 
   return (
@@ -162,7 +161,8 @@ const MissionVisionForm = ({
         </div>
       </div>
 
-      {/* Bangla Content (optional, collapsed by default) */}
+      {/* Bangla content hidden
+      {/* Bangla Content (optional, collapsed by default) *\/}
       <div className="border border-light-silver rounded-lg bg-card">
         <button
           type="button"
@@ -250,6 +250,7 @@ const MissionVisionForm = ({
           </div>
         </div>
       </div>
+      */}
 
       <ErrorMessage error={error} />
 

@@ -1,4 +1,4 @@
-import { Layers, Pencil, Trash2 } from "lucide-react";
+import { Eye, Layers, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { ICourse } from "@/src/components/courses/types";
@@ -7,7 +7,8 @@ import { formatFigure } from "@/src/components/courses/useCourses";
 export const GetCourseColumns = (
   onEdit?: (item: ICourse) => void,
   onDelete?: (item: ICourse) => void,
-  onViewBatches?: (item: ICourse) => void
+  onViewBatches?: (item: ICourse) => void,
+  onView?: (item: ICourse) => void
 ): ColumnDef<ICourse>[] => [
   {
     header: "Course",
@@ -75,6 +76,15 @@ export const GetCourseColumns = (
     accessorKey: "id",
     cell: (_value, row) => (
       <div className="flex items-center gap-2">
+        <Button
+          className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-border bg-light hover:bg-light"
+          size="sm"
+          onClick={() => onView?.(row)}
+          aria-label={`View ${row.name}`}
+          title="View details"
+        >
+          <Eye className="h-4 w-4 text-secondary-foreground" />
+        </Button>
         <Button
           className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-border bg-light hover:bg-light"
           size="sm"

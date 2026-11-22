@@ -1,4 +1,4 @@
-import { Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { ICourseStatistic } from "@/src/components/course-statistics/types";
@@ -6,7 +6,8 @@ import { formatFigure } from "@/src/components/course-statistics/useCourseStatis
 
 export const GetCourseStatisticColumns = (
   onEdit?: (item: ICourseStatistic) => void,
-  onDelete?: (item: ICourseStatistic) => void
+  onDelete?: (item: ICourseStatistic) => void,
+  onView?: (item: ICourseStatistic) => void
 ): ColumnDef<ICourseStatistic>[] => [
   {
     header: "Course",
@@ -83,6 +84,14 @@ export const GetCourseStatisticColumns = (
     accessorKey: "id",
     cell: (_value, row) => (
       <div className="flex items-center gap-2">
+        <Button
+          className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-border bg-light hover:bg-light"
+          size="sm"
+          onClick={() => onView?.(row)}
+          aria-label={`View ${row.courseName}`}
+        >
+          <Eye className="h-4 w-4 text-secondary-foreground" />
+        </Button>
         <Button
           className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-border bg-light hover:bg-light"
           size="sm"

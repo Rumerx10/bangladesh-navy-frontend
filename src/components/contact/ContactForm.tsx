@@ -6,9 +6,14 @@ import InputLabel from "../shared/InputLabel";
 import { usePost } from "@/src/hooks/usePost";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { ContactFormType, contactValidationSchema } from "./contactFormSchema";
+import {
+  ContactFormType,
+  contactValidationSchema,
+  NAME_MAX_LENGTH,
+} from "./contactFormSchema";
 import ControlledInputField from "../shared/FromController/ControlledInputField";
 import ControlledTextareaField from "../shared/FromController/ControlledTextareaField";
+import ControlledPhoneField from "../shared/FromController/ControlledPhoneField";
 
 const ContactForm = () => {
   const methods = useForm<ContactFormType>({
@@ -53,6 +58,7 @@ const ContactForm = () => {
               <ControlledInputField
                 name="name"
                 placeholder="Enter your name"
+                maxLength={NAME_MAX_LENGTH}
                 className="bg-card"
               />
             </div>
@@ -69,8 +75,7 @@ const ContactForm = () => {
 
             <div>
               <InputLabel label="Phone" required />
-              <ControlledInputField
-                type="tel"
+              <ControlledPhoneField
                 name="phone"
                 placeholder="Enter your phone number"
                 className="bg-card"

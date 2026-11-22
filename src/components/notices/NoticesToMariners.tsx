@@ -1,10 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { FileSearch, Search } from "lucide-react";
+import { FileSearch, FileText, Radio, Search } from "lucide-react";
 import { useGet } from "@/src/hooks/useGet";
+import PageHero from "@/src/components/shared/PageHero";
 import NoticeCard from "./NoticeCard";
-import NoticesHero from "./NoticesHero";
 import NoticeTypeFilter from "./NoticeTypeFilter";
 import NoticeListSkeleton from "./Skeleton/NoticeListSkeleton";
 import {
@@ -13,6 +13,7 @@ import {
   NoticeFilterValue,
   NoticeType,
 } from "./types";
+import Container from "@/src/components/shared/Container";
 
 const NoticesToMariners = () => {
   const [type, setType] = useState<NoticeFilterValue>("ALL");
@@ -63,10 +64,18 @@ const NoticesToMariners = () => {
 
   return (
     <div className="bg-card">
-      <NoticesHero />
+      <PageHero
+        title="Notices to"
+        highlight="Mariners"
+        description="Permanent, temporary, preliminary and gun fire notices issued by the Bangladesh Navy Hydrographic & Oceanographic Centre. Corrections should be applied to charts and publications on receipt."
+        features={[
+          { icon: <FileText />, label: "Chart Corrections" },
+          { icon: <Radio />, label: "Navigational Warnings" },
+        ]}
+      />
 
       <section className="py-10 lg:py-14">
-        <div className="container px-4 sm:px-6 lg:px-8">
+        <Container>
           {/* Filters */}
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <NoticeTypeFilter value={type} onChange={setType} counts={counts} />
@@ -106,7 +115,7 @@ const NoticesToMariners = () => {
               </div>
             )}
           </div>
-        </div>
+        </Container>
       </section>
     </div>
   );

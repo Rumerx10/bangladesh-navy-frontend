@@ -79,6 +79,13 @@
   outline: none;
   /* fills the sized wrapper so the whole area is clickable */
   height: 100%;
+  /* Caret and selection carry the brand accent, so the writing surface reads
+     as part of the admin rather than a bare browser text box. */
+  caret-color: var(--primary);
+}
+
+.ProseMirror ::selection {
+  background: color-mix(in oklab, var(--primary) 18%, transparent);
 }
 
 .ProseMirror p {
@@ -493,7 +500,7 @@
 }
 .ProseMirror p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
-  color: var(--muted-foreground);
+  color: color-mix(in oklab, var(--muted-foreground) 70%, transparent);
   float: left;
   pointer-events: none;
   height: 0;

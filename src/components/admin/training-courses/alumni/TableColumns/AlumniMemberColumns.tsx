@@ -1,4 +1,4 @@
-import { Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { IAlumniMember } from "@/src/components/alumni/types";
@@ -7,7 +7,8 @@ export const GetAlumniMemberColumns = (
   /** `batchId` → "Course — Batch" name; the list endpoint returns the id only. */
   batchNames: Record<string, string>,
   onEdit?: (item: IAlumniMember) => void,
-  onDelete?: (item: IAlumniMember) => void
+  onDelete?: (item: IAlumniMember) => void,
+  onView?: (item: IAlumniMember) => void
 ): ColumnDef<IAlumniMember>[] => [
   {
     header: "Rank & Name",
@@ -78,6 +79,14 @@ export const GetAlumniMemberColumns = (
     accessorKey: "id",
     cell: (_value, row) => (
       <div className="flex items-center gap-2">
+        <Button
+          className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-border bg-light hover:bg-light"
+          size="sm"
+          onClick={() => onView?.(row)}
+          aria-label={`View ${row.rankAndName}`}
+        >
+          <Eye className="h-4 w-4 text-secondary-foreground" />
+        </Button>
         <Button
           className="flex min-h-9 w-9! items-center justify-center rounded-lg border border-border bg-light hover:bg-light"
           size="sm"

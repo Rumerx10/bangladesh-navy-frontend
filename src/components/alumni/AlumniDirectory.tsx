@@ -13,6 +13,7 @@ import AlumniHero from "./AlumniHero";
 import AlumniListSkeleton from "./Skeleton/AlumniListSkeleton";
 import { filterAlumniGroups, useAlumniTree } from "./useAlumni";
 import { yearOf } from "./utils";
+import Container from "@/src/components/shared/Container";
 
 const AlumniDirectory = () => {
   const [courseId, setCourseId] = useState("ALL");
@@ -83,7 +84,7 @@ const AlumniDirectory = () => {
       />
 
       <section className="py-10 lg:py-14">
-        <div className="container px-4 sm:px-6 lg:px-8">
+        <Container>
           {/* Filters */}
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <AlumniCourseFilter
@@ -171,7 +172,7 @@ const AlumniDirectory = () => {
               </div>
             )}
           </div>
-        </div>
+        </Container>
       </section>
     </div>
   );

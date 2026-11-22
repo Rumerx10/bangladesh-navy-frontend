@@ -69,7 +69,7 @@ const ProductInfo = ({
       </div>
       {/* Description */}
       {product.descriptionEn && (
-        <p className="mt-5 text-sm text-secondary-foreground leading-relaxed">
+        <p className="mt-5 text-sm text-justify text-secondary-foreground leading-relaxed">
           {parse(product.descriptionEn)}
         </p>
       )}

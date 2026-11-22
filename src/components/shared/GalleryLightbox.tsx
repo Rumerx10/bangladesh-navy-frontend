@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { X } from "lucide-react";
+import { Autoplay } from "swiper/modules";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper/types";
@@ -77,7 +78,7 @@ const GalleryLightbox = ({
           </button>
 
           <div
-            className="w-full max-w-5xl flex flex-col gap-4"
+            className="w-full max-w-7xl flex flex-col gap-4"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Main swiper */}
@@ -85,12 +86,18 @@ const GalleryLightbox = ({
               <Swiper
                 spaceBetween={0}
                 loop
+                modules={[Autoplay]}
+                autoplay={{
+                  delay: 4000,
+                  disableOnInteraction: false,
+                  pauseOnMouseEnter: true,
+                }}
                 onSwiper={(s) => {
                   setMainSwiper(s);
                   s.slideTo(activeIndex, 0);
                 }}
                 onRealIndexChange={(s) => onIndexChange(s.realIndex)}
-                className="w-full h-130 overflow-hidden"
+                className="w-full h-140 lg:h-160 overflow-hidden"
               >
                 {images.map((image, index) => (
                   <SwiperSlide key={image.id}>
@@ -99,7 +106,7 @@ const GalleryLightbox = ({
                       width={1200}
                       src={image.src}
                       alt={image.alt}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain lg:object-cover"
                       priority={index === activeIndex}
                     />
                   </SwiperSlide>

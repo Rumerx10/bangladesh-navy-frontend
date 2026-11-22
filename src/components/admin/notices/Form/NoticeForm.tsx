@@ -110,7 +110,8 @@ const NoticeForm = ({
         </div>
       </div>
 
-      {/* Bengali content */}
+      {/* Bangla content hidden
+      {/* Bengali content *\/}
       <div className="border border-light-silver rounded-lg p-8 bg-card">
         <SectionHeader label="Bengali Content" />
         <div className="flex flex-col gap-y-6">
@@ -132,6 +133,7 @@ const NoticeForm = ({
           </div>
         </div>
       </div>
+      */}
 
       {/* Attachment */}
       <div className="border border-light-silver rounded-lg p-8 bg-card">

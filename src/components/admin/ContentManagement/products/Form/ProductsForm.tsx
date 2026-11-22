@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { ChevronDown, FileText } from "lucide-react";
-import { cn } from "@/src/lib/utils";
+import { useEffect, useMemo } from "react";
+import { FileText } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import { useGet } from "@/src/hooks/useGet";
 import { Button } from "@/src/components/ui/button";
@@ -14,12 +13,22 @@ import ControlledInputField from "@/src/components/shared/FromController/Control
 import ControlledSelectField from "@/src/components/shared/FromController/ControlledSelectField";
 import ControlledTextareaField from "@/src/components/shared/FromController/ControlledTextareaField";
 import ControlledComboboxSelect from "@/src/components/shared/FromController/ControlledComboboxSelect";
+import ControlledCreatableCombobox from "@/src/components/shared/FromController/ControlledCreatableCombobox";
 import { MultipleImageUploadController } from "@/src/components/shared/FromController/MultipleImageFileInput";
 import { ErrorType } from "@/src/components/shared/types/common";
 import { chartIndexAreas } from "@/src/data/chartIndexAreas";
 import { encIndexAreas } from "@/src/data/encIndexAreas";
 import { IProduct, PRODUCT_CATEGORY_OPTIONS } from "../types";
 import { ProductFormValues } from "../Schema/productsSchema";
+import {
+  EDITION_OPTIONS,
+  KNOWN_PROJECTIONS,
+  normalizeCoordinate,
+  normalizeEdition,
+  normalizePlace,
+  normalizeProjection,
+  normalizeScale,
+} from "../Schema/chartFormats";
 
 const STATUS_OPTIONS = [
   { label: "Active", value: "ACTIVE" },
@@ -39,6 +48,18 @@ interface ProductFormProps {
   error?: ErrorType;
   initialValues?: IProduct;
 }
+
+// Field tidiers for the Nautical Chart Details: on blur, a readable value is
+// rewritten in chart format ("22 29 N" → "22°29.00'N"); one that can't be
+// read is left as typed so the validation message explains it.
+const tidy = (normalize: (value: string) => string | null) => (value: string) =>
+  normalize(value) ?? value;
+const tidyLatitude = tidy((value) => normalizeCoordinate(value, "lat"));
+const tidyLongitude = tidy((value) => normalizeCoordinate(value, "lon"));
+const tidyScale = tidy(normalizeScale);
+const tidyPlace = tidy(normalizePlace);
+const tidyProjection = tidy(normalizeProjection);
+const tidyEdition = tidy(normalizeEdition);
 
 const SectionHeader = ({ label }: { label: string }) => {
   return (
@@ -65,9 +86,11 @@ const ProductForm = ({
     handleSubmit,
     watch,
     setValue,
+    trigger,
+    getFieldState,
     formState: { dirtyFields },
   } = useFormContext<ProductFormValues>();
-  const [showBnFields, setShowBnFields] = useState(false);
+  // const [showBnFields, setShowBnFields] = useState(false);
 
   const category = watch("category");
 
@@ -84,6 +107,18 @@ const ProductForm = ({
       setValue("chartCode", "", { shouldValidate: category === "TIDAL" });
     }
   }, [category, dirtyFields.category, setValue]);
+
+  // North is checked against South, and East against West, but a field only
+  // re-validates when it changes itself. So when the other half of a pair
+  // changes, clear a stale "are they swapped?" message straight away.
+  const southLatitude = watch("southLatitude");
+  const westLongitude = watch("westLongitude");
+  useEffect(() => {
+    if (getFieldState("northLatitude").error) trigger("northLatitude");
+  }, [southLatitude, getFieldState, trigger]);
+  useEffect(() => {
+    if (getFieldState("eastLongitude").error) trigger("eastLongitude");
+  }, [westLongitude, getFieldState, trigger]);
 
   // Every existing product's chart code, so already-assigned codes drop out
   // of the suggestion lists. The product being edited is excluded from this
@@ -251,12 +286,19 @@ const ProductForm = ({
       {/* Nautical Chart Details */}
       <div className="border border-light-silver rounded-lg p-8 bg-card">
         <SectionHeader label="Nautical Chart Details" />
+        <Paragraph className="-mt-2 mb-6 text-xs! text-secondary-foreground">
+          No need to type ° or &apos; — enter coordinates as 22 29.5 or 22.49,
+          and the scale as 1:12500. Each field is put into chart format
+          (22°29.50&apos;N, 1:12 500) when you move on.
+        </Paragraph>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="sm:col-span-2">
             <InputLabel label="Geographic Location" />
             <ControlledInputField
               name="geographicLocation"
               placeholder="e.g. Bay of Bengal"
+              maxLength={150}
+              formatOnBlur={tidyPlace}
               className="bg-light shadow-none"
             />
           </div>
@@ -265,14 +307,22 @@ const ProductForm = ({
             <ControlledInputField
               name="scale"
               placeholder="e.g. 1:12 500"
+              maxLength={24}
+              autoComplete="off"
+              formatOnBlur={tidyScale}
               className="bg-light shadow-none"
             />
           </div>
           <div>
             <InputLabel label="Projection" />
-            <ControlledInputField
+            <ControlledCreatableCombobox
               name="projection"
-              placeholder="e.g. Mercator"
+              options={KNOWN_PROJECTIONS}
+              normalize={tidyProjection}
+              groupLabel="Common projections"
+              placeholder="Select a projection"
+              searchPlaceholder="Search or type a projection…"
+              maxLength={60}
               className="bg-light shadow-none"
             />
           </div>
@@ -280,7 +330,10 @@ const ProductForm = ({
             <InputLabel label="North Latitude" />
             <ControlledInputField
               name="northLatitude"
-              placeholder="e.g. 22°30.64'N"
+              maxLength={24}
+              autoComplete="off"
+              placeholder="e.g. 22°30.64'N or 22 30.64"
+              formatOnBlur={tidyLatitude}
               className="bg-light shadow-none"
             />
           </div>
@@ -288,7 +341,10 @@ const ProductForm = ({
             <InputLabel label="South Latitude" />
             <ControlledInputField
               name="southLatitude"
-              placeholder="e.g. 22°26.59'N"
+              maxLength={24}
+              autoComplete="off"
+              placeholder="e.g. 22°26.59'N or 22 26.59"
+              formatOnBlur={tidyLatitude}
               className="bg-light shadow-none"
             />
           </div>
@@ -296,7 +352,10 @@ const ProductForm = ({
             <InputLabel label="East Longitude" />
             <ControlledInputField
               name="eastLongitude"
-              placeholder="e.g. 092°15.05'E"
+              maxLength={24}
+              autoComplete="off"
+              placeholder="e.g. 092°15.05'E or 92 15.05"
+              formatOnBlur={tidyLongitude}
               className="bg-light shadow-none"
             />
           </div>
@@ -304,15 +363,23 @@ const ProductForm = ({
             <InputLabel label="West Longitude" />
             <ControlledInputField
               name="westLongitude"
-              placeholder="e.g. 092°02.20'E"
+              maxLength={24}
+              autoComplete="off"
+              placeholder="e.g. 092°02.20'E or 92 2.2"
+              formatOnBlur={tidyLongitude}
               className="bg-light shadow-none"
             />
           </div>
           <div>
             <InputLabel label="Edition" />
-            <ControlledInputField
+            <ControlledCreatableCombobox
               name="edition"
-              placeholder="e.g. 1st Edition"
+              options={EDITION_OPTIONS}
+              normalize={tidyEdition}
+              groupLabel="Editions"
+              placeholder="Select an edition"
+              searchPlaceholder="Search or type a number, e.g. 13"
+              maxLength={30}
               className="bg-light shadow-none"
             />
           </div>
@@ -335,7 +402,8 @@ const ProductForm = ({
         </div>
       </div>
 
-      {/* Bengali Fields Section (optional, collapsed by default) */}
+      {/* Bangla content hidden
+      {/* Bengali Fields Section (optional, collapsed by default) *\/}
       <div className="border border-light-silver rounded-lg bg-card">
         <button
           type="button"
@@ -391,6 +459,7 @@ const ProductForm = ({
           </div>
         </div>
       </div>
+      */}
 
       <ErrorMessage error={error} />
 

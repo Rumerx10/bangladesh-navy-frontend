@@ -8,7 +8,7 @@ import { StatusType } from "@/src/components/shared/types/common";
 const statusVariantMap: Record<string, StatusType> = {
   PENDING: StatusType.PENDING,
   IN_PROGRESS: StatusType.IN_PROGRESS,
-  RESOLVED: StatusType.ACTIVE,
+  RESOLVED: StatusType.RESOLVED,
 };
 
 const GetQuerySuggestionColumns = (

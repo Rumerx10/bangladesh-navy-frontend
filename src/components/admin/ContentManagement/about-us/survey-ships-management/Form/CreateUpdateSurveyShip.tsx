@@ -143,9 +143,12 @@ const CreateUpdateSurveyShip = ({
     formData.append("beam", values.beam);
     formData.append("draft", values.draft);
     formData.append("crew", values.crew);
-    values.surveyEquipment.forEach((item) => {
-      formData.append("surveyEquipment", item);
-    });
+    (values.surveyEquipment ?? [])
+      .map((item) => item.trim())
+      .filter(Boolean)
+      .forEach((item) => {
+        formData.append("surveyEquipment", item);
+      });
 
     // Optional — omitted entirely when left blank, so the API keeps its own
     // ordering rather than receiving an empty value it would reject.
@@ -186,7 +189,7 @@ const CreateUpdateSurveyShip = ({
             {isUpdate ? "Update" : "Create"} Survey Ship
           </DialogTitle>
         </DialogHeader>
-        <div className="overflow-y-auto flex-1 mt-2 pr-2 scrollbar-modern">
+        <div className="overflow-y-auto flex-1 mt-2 pr-2 pb-1 scrollbar-modern">
           <FormProvider {...methods}>
             <SurveyShipForm
               isEditMode={isUpdate}

@@ -9,9 +9,12 @@ import { useEffect, useState } from "react";
 import CreateUpdateNoticeManagement from "./Form/CreateUpdateNoticeManagement";
 import { INoticeManagement } from "./types";
 import GetNoticeColumns from "./TableColumns/NoticeColumns";
+import { getNoticeViewSections } from "./TableColumns/NoticeViewFields";
+import ViewDetailsModal from "@/src/components/shared/ViewDetailsModal/ViewDetailsModal";
 
 const NoticeManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewItem, setViewItem] = useState<INoticeManagement | null>(null);
   const [selectedItem, setSelectedItem] = useState<
     INoticeManagement | undefined
   >();
@@ -66,7 +69,7 @@ const NoticeManagement = () => {
     setSelectedItem(undefined);
   };
 
-  const columns = GetNoticeColumns(handleEdit);
+  const columns = GetNoticeColumns(handleEdit, setViewItem);
 
   return (
     <div>
@@ -90,6 +93,12 @@ const NoticeManagement = () => {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         initialValues={selectedItem}
+      />
+      <ViewDetailsModal
+        isOpen={viewItem !== null}
+        onClose={() => setViewItem(null)}
+        title="Notice Details"
+        sections={viewItem ? getNoticeViewSections(viewItem) : []}
       />
     </div>
   );

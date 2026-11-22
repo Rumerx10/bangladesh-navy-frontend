@@ -1,13 +1,14 @@
 "use client";
 
-import { Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { getStepIcon } from "@/src/data/howToCollectIcons";
 import { IHowToCollectStep } from "../types";
 
 export function GetHowToCollectColumns(
   onEdit: (item: IHowToCollectStep) => void,
-  onDelete: (id: string) => void
+  onDelete: (id: string) => void,
+  onView?: (item: IHowToCollectStep) => void
 ): ColumnDef<IHowToCollectStep>[] {
   return [
     {
@@ -86,6 +87,13 @@ export function GetHowToCollectColumns(
       accessorKey: "id",
       cell: (_, row) => (
         <div className="flex items-center gap-1">
+          <button
+            onClick={() => onView?.(row)}
+            className="cursor-pointer rounded-md p-2 text-secondary-foreground transition-colors hover:bg-light-dark hover:text-pBlue"
+            title="View"
+          >
+            <Eye className="h-4 w-4" />
+          </button>
           <button
             onClick={() => onEdit(row)}
             className="cursor-pointer rounded-md p-2 text-secondary-foreground transition-colors hover:bg-light-dark hover:text-pBlue"

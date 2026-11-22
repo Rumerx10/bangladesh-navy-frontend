@@ -1,6 +1,7 @@
 import { Metadata } from "next";
-import AboutHero from "@/src/components/about/AboutHero";
+import PageHero from "@/src/components/shared/PageHero";
 import HistoryTimeline from "@/src/components/about/HistoryTimeline";
+import Container from "@/src/components/shared/Container";
 
 export const metadata: Metadata = {
   title: "Our History | Bangladesh Navy Hydrographic & Oceanographic Center",
@@ -11,9 +12,11 @@ export const metadata: Metadata = {
 const HistoryPage = () => {
   return (
     <>
-      <AboutHero
+      <PageHero
         title="Our History"
         description="The journey of Bangladesh Navy Hydrographic and Oceanographic Center"
+        parents={[{ label: "About Us", href: "/about" }]}
+        breadcrumbLabel="History"
       />
       <section className="py-8 lg:py-20">
         {/* The shared `.container` runs to 1535px, which is a fine shell for a
@@ -21,11 +24,11 @@ const HistoryPage = () => {
             floated image inside it ends up marooned. Constraining the article
             to a book-like measure is what lets the text actually wrap around
             the picture the way the admin arranged it. */}
-        <div className="container px-4 sm:px-6 lg:px-8">
+        <Container>
           <article className="mx-auto w-full">
             <HistoryTimeline />
           </article>
-        </div>
+        </Container>
       </section>
     </>
   );
