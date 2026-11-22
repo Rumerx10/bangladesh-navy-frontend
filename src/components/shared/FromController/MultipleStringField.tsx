@@ -11,7 +11,14 @@ import {
 import { Input } from "@/src/components/ui/input";
 import { Button } from "@/src/components/ui/button";
 import { Plus, X } from "lucide-react";
-import { Controller, get, useFormContext } from "react-hook-form";
+import {
+  Controller,
+  get,
+  useFormContext,
+  type FieldError,
+} from "react-hook-form";
+
+type ArrayFieldError = (FieldError & { root?: FieldError }) | undefined;
 
 interface MultipleStringFieldProps {
   name: string;
@@ -52,11 +59,12 @@ const MultipleStringField = ({
 
   // Array-level errors ("At least one…", "Each … must be different") sit on
   // the list itself; an invalid entry's error sits on its index.
-  const fieldErrors = get(errors, name);
+  const fieldErrors = get<typeof errors, ArrayFieldError>(errors, name);
   const listError: string | undefined =
     fieldErrors?.message ?? fieldErrors?.root?.message;
   const itemError = (index: number): string | undefined =>
-    get(errors, `${name}.${index}`)?.message;
+    get<typeof errors, FieldError | undefined>(errors, `${name}.${index}`)
+      ?.message;
 
   const updateItems = (next: string[]) =>
     setValue(name, next, { shouldValidate: true, shouldDirty: true });

@@ -12,8 +12,10 @@ WORKDIR /app
 
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 
-RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+# Persistent yarn cache: a retry after a network blip only fetches what's missing
+RUN --mount=type=cache,target=/yarn-cache \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile --prefer-offline \
+    --cache-folder /yarn-cache --network-timeout 600000; \
   elif [ -f package-lock.json ]; then npm ci; \
   elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
