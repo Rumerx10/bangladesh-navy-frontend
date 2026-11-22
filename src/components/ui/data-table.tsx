@@ -269,7 +269,7 @@ export function DataTable<T>({
             onPageChange={onPageChange}
             itemsPerPage={itemsPerPage}
             totalItems={totalItems}
-            setItemsPerPage={setItemsPerPage}
+            onItemsPerPageChange={setItemsPerPage}
           />
         </div>
       </div>
