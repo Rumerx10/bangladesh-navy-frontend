@@ -113,12 +113,12 @@ export function DataTable<T>({
         )}
       </div>
 
-      <div>
+      {/* One frosted-glass shell for toolbar, table and pagination — the
+          admin canvas's coastal chart reads softly through it. The sections
+          inside stay unfilled; a solid fill on any of them would block it. */}
+      <div className="rounded-xl border border-white/70 bg-card/60 shadow-[0_12px_32px_-18px_rgb(0_24_54/0.25)] backdrop-blur-sm backdrop-saturate-150 dark:border-white/10">
         <div className="w-full overflow-x-auto">
-          <div
-            id="table-tab"
-            className="bg-card p-5 rounded-t-lg border border-light-dark"
-          >
+          <div id="table-tab" className="p-5">
             {toolbarStart ? (
               // Filters on the left, search on the right; stacks on small
               // screens with the search full width.
@@ -206,7 +206,7 @@ export function DataTable<T>({
           </div>
           <Table className="min-w-full border-collapse">
             <TableHeader>
-              <TableRow className="bg-light h-15 border border-light-dark border-t-0">
+              <TableRow className="h-15 border-y border-light-dark/80 bg-light/60">
                 {columns.map((column, index) => (
                   <TableHead
                     key={index}
@@ -218,7 +218,7 @@ export function DataTable<T>({
               </TableRow>
             </TableHeader>
 
-            <TableBody className="border border-light-dark bg-card">
+            <TableBody>
               {isLoading ? (
                 Array.from({ length: itemsPerPage }).map((_, rowIndex) => (
                   <TableRow className="h-18" key={`skeleton-${rowIndex}`}>
@@ -240,7 +240,10 @@ export function DataTable<T>({
                 </TableRow>
               ) : (
                 data.map((row, rowIndex) => (
-                  <TableRow className="h-18" key={rowIndex}>
+                  <TableRow
+                    className="h-18 transition-colors hover:bg-primary/4"
+                    key={rowIndex}
+                  >
                     {columns.map((column, idx) => {
                       const value = row[column.accessorKey];
                       return (
@@ -248,7 +251,7 @@ export function DataTable<T>({
                           key={`${rowIndex}-${idx}-${String(
                             column.accessorKey
                           )}`}
-                          className="max-w-50 truncate whitespace-nowrap px-5 text-sm text-secondary-gary border-b border-light-dark"
+                          className="max-w-50 truncate whitespace-nowrap px-5 text-sm text-secondary-gary border-b border-light-dark/80"
                         >
                           {column?.cell
                             ? column.cell(value, row)
@@ -262,16 +265,18 @@ export function DataTable<T>({
             </TableBody>
           </Table>
         </div>
-        <div className="bg-card border border-t-0 border-light-dark  rounded-b-lg">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={onPageChange}
-            itemsPerPage={itemsPerPage}
-            totalItems={totalItems}
-            onItemsPerPageChange={setItemsPerPage}
-          />
-        </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+          itemsPerPage={itemsPerPage}
+          totalItems={totalItems}
+          onItemsPerPageChange={setItemsPerPage}
+          // Table-sized steps. The shared default (6/12/24…) suits card
+          // grids; tables start at 10 rows (usePagination), and a size missing
+          // from this list leaves the select showing blank.
+          pageSizeOptions={[10, 20, 50, 100]}
+        />
       </div>
     </>
   );

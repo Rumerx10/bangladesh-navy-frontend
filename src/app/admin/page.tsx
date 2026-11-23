@@ -72,6 +72,16 @@ export const metadata: Metadata = {
 const AdminDashboardPage = () => {
   return (
     <div className="space-y-8 lg:space-y-10">
+      <header>
+        <h1 className="text-2xl font-semibold tracking-tight text-pBlue lg:text-3xl">
+          Welcome back
+        </h1>
+        <p className="mt-1.5 max-w-2xl text-sm text-pretty text-secondary-gray lg:text-base">
+          Manage products, content, news and users for the BNHOC platform —
+          everything you need, in one place.
+        </p>
+      </header>
+
       {/* Quick access */}
       <div>
         <h2 className="text-xl font-bold text-pBlue lg:text-2xl">

@@ -31,7 +31,11 @@ const Sidebar = ({ className, isOpen, setIsOpen }: SidebarProps) => {
 
       <aside
         className={cn(
-          "fixed top-0 left-0 h-screen w-70 bg-card border-r border-border flex flex-col px-4 sm:px-5 transition-transform duration-300 ease-in-out z-50",
+          "fixed top-0 left-0 h-dvh w-70 bg-card border-r border-border flex flex-col px-4 sm:px-5 transition-transform duration-300 ease-in-out z-50",
+          // Docked on large screens it is frosted glass over the coastal
+          // chart (AdminLayoutClient); as a phone drawer it opens over the
+          // page behind a dark overlay, where glass would only read grey.
+          "lg:border-white/70 lg:bg-card/70 lg:backdrop-blur-lg lg:backdrop-saturate-150 dark:lg:border-white/10",
           {
             "-translate-x-full": !isOpen,
             "translate-x-0": isOpen,
