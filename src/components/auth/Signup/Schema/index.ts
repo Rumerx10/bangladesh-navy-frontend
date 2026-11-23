@@ -9,10 +9,11 @@ export const signupSchema = Yup.object({
     .min(5)
     .max(100),
 
+  // Same 8–72 rule the API applies when a password is reset or changed.
   password: Yup.string()
     .required("Password is required")
-    .min(6, "Password must be at least 8 characters")
-    .max(64),
+    .min(8, "Use at least 8 characters")
+    .max(72, "Use 72 characters or fewer"),
 
   rePassword: Yup.string()
     .required("Please confirm your password")

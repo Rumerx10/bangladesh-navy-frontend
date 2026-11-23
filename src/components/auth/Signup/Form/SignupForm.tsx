@@ -9,6 +9,7 @@ import { Button } from "@/src/components/ui/button";
 import InputLabel from "@/src/components/shared/InputLabel";
 import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
+import { useRedirectQuery } from "../../shared/useRedirectQuery";
 
 const SignupForm = ({
   onSubmit,
@@ -18,6 +19,7 @@ const SignupForm = ({
   const methods = useFormContext<SignupFormType>();
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
+  const redirectQuery = useRedirectQuery();
 
   return (
     <form onSubmit={methods.handleSubmit(onSubmit)} className="w-full max-w-md">
@@ -67,7 +69,7 @@ const SignupForm = ({
           <ControlledInputField
             name="password"
             type={showPassword ? "text" : "password"}
-            placeholder="Enter your password"
+            placeholder="At least 8 characters"
             className="pr-10"
           />
           <Button
@@ -113,8 +115,8 @@ const SignupForm = ({
       <p className="mt-4 text-left text-sm text-muted-foreground">
         Already have an account?{" "}
         <Link
-          href="/auth/login"
-          className="text-primary-light font-medium underline"
+          href={`/auth/login${redirectQuery}`}
+          className="font-medium text-primary hover:underline"
         >
           Log in
         </Link>

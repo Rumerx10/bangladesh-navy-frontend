@@ -1,16 +1,12 @@
 "use client";
 
 import { logoutUser } from "@/src/lib/redux/features/auth/authSlice";
-import {
-  selectCanAccessAdmin,
-  selectCanViewOwnOrders,
-} from "@/src/lib/redux/features/permission/permissionSelectors";
+import { selectCanAccessAdmin } from "@/src/lib/redux/features/permission/permissionSelectors";
 import { clearRolePermissions } from "@/src/lib/redux/features/permission/permissionSlice";
 import { useAppDispatch, useAppSelector } from "@/src/lib/redux/hooks";
-import { LogOut, User } from "lucide-react";
-import { IoIosArrowDown } from "react-icons/io";
+import { ChevronDown, LogOut, User } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,124 +15,115 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../../ui/dropdown-menu";
-import ProfileDropdownSkeleton from "./Skeleton/ProfileDropdownSkeleton";
 import {
   adminMenuItems,
   userMenuItems,
 } from "../../../../utils/profileMenuItems";
 
-export const ProfileDropdown = () => {
-  const dispatch = useAppDispatch();
-  const { userInformation, loading } = useAppSelector((state) => state.auth);
-  const canAccessAdmin = useAppSelector(selectCanAccessAdmin);
-  const canViewOwnOrders = useAppSelector(selectCanViewOwnOrders);
-  const router = useRouter();
+const Avatar = ({
+  src,
+  name,
+  size,
+}: {
+  src: string | null;
+  name: string;
+  size: number;
+}) =>
+  src ? (
+    <Image
+      src={src}
+      alt=""
+      width={size}
+      height={size}
+      className="shrink-0 rounded-full object-cover ring-2 ring-white/25"
+      style={{ width: size, height: size }}
+    />
+  ) : (
+    <span
+      aria-hidden
+      className="grid shrink-0 place-items-center rounded-full bg-white/15 text-sm font-semibold text-nav-ink uppercase"
+      style={{ width: size, height: size }}
+    >
+      {name.trim().charAt(0) || <User size={16} />}
+    </span>
+  );
 
-  const menuItems = canAccessAdmin
-    ? adminMenuItems
-    : userMenuItems.filter((item) => {
-        if (!canViewOwnOrders && item.href.includes("/orders")) return false;
-        return true;
-      });
+/** Account menu for a signed-in visitor: their pages (orders, addresses,
+ *  password…) or, for admins, the admin shortcuts — and log out. */
+export const ProfileDropdown = ({ compact = false }: { compact?: boolean }) => {
+  const dispatch = useAppDispatch();
+  const { userInformation } = useAppSelector((state) => state.auth);
+  const isAdmin = useAppSelector(selectCanAccessAdmin);
+  const menuItems = isAdmin ? adminMenuItems : userMenuItems;
+  const fullName = [userInformation.firstName, userInformation.lastName]
+    .filter(Boolean)
+    .join(" ");
 
   const handleLogout = () => {
-    dispatch(logoutUser());
     dispatch(clearRolePermissions());
+    dispatch(logoutUser());
   };
 
-  if (loading) {
-    return <ProfileDropdownSkeleton />;
-  }
-
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <button
-          className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-light transition-colors focus:outline-none cursor-pointer"
-          aria-label="Open profile menu"
+          type="button"
+          aria-label="Open account menu"
+          className="flex h-9 cursor-pointer items-center gap-2 rounded-full bg-nav-wash pr-2 pl-0.5 text-nav-ink transition-colors hover:bg-nav-wash-strong focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:outline-none aria-expanded:bg-nav-wash-strong"
         >
-          {userInformation.profilePicture ? (
-            <Image
-              src={userInformation.profilePicture}
-              alt={userInformation.firstName}
-              width={32}
-              height={32}
-              className="w-8 h-8 rounded-full object-cover ring-2 ring-primary/20"
-            />
-          ) : (
-            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-              <User size={16} className="text-primary" />
-            </div>
+          <Avatar
+            src={userInformation.profilePicture}
+            name={userInformation.firstName}
+            size={32}
+          />
+          {!compact && (
+            <span className="hidden max-w-28 truncate text-sm font-medium xl:block">
+              {userInformation.firstName || "Account"}
+            </span>
           )}
-          <div className="hidden xl:flex flex-col items-start">
-            <span className="text-xs font-semibold text-foreground leading-tight">
-              {userInformation.firstName}
-            </span>
-            <span className="text-[10px] text-muted-foreground leading-tight">
-              My Account
-            </span>
-          </div>
-          <IoIosArrowDown />
+          <ChevronDown size={14} className="opacity-70" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
         sideOffset={8}
-        className="z-9999 w-64 shadow-xl rounded-xl bg-card border border-border p-0 overflow-hidden"
+        className="z-9999 w-64 overflow-hidden rounded-xl border border-border bg-card p-0 shadow-xl"
       >
-        {/* User info header */}
-        <DropdownMenuLabel className="px-4 py-3 bg-light/80">
-          <div className="flex items-center gap-3">
-            {userInformation.profilePicture ? (
-              <Image
-                src={userInformation.profilePicture}
-                alt={userInformation.firstName}
-                width={40}
-                height={40}
-                className="w-10 h-10 rounded-full object-cover ring-2 ring-primary/20"
-              />
-            ) : (
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                <User size={18} className="text-primary" />
-              </div>
-            )}
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-foreground truncate">
-                {userInformation.firstName} {userInformation.lastName}
-              </p>
-              <p className="text-xs text-secondary-foreground truncate">
-                {userInformation.email}
-              </p>
-            </div>
-          </div>
+        <DropdownMenuLabel className="bg-light/80 px-4 py-3">
+          <p className="truncate text-sm font-semibold text-foreground">
+            {fullName || "My account"}
+          </p>
+          <p className="truncate text-xs font-normal text-secondary-foreground">
+            {userInformation.email}
+          </p>
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator className="m-0" />
 
-        {/* Menu Items */}
         <div className="py-1">
           {menuItems.map((item) => (
-            <DropdownMenuItem
-              key={item.href}
-              onClick={() => router.push(item.href)}
-              className="flex items-center gap-3 px-4 py-2.5 cursor-pointer text-secondary-foreground hover:text-primary hover:bg-primary/5 transition-colors"
-            >
-              <item.icon size={16} className="shrink-0" />
-              <span className="text-sm">{item.label}</span>
+            <DropdownMenuItem key={item.href} asChild>
+              <Link
+                href={item.href}
+                className="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-secondary-foreground transition-colors hover:bg-primary/5 hover:text-primary"
+              >
+                <item.icon size={16} className="shrink-0" />
+                <span className="text-sm">{item.label}</span>
+              </Link>
             </DropdownMenuItem>
           ))}
         </div>
 
         <DropdownMenuSeparator className="m-0" />
 
-        {/* Logout */}
         <div className="py-1">
           <DropdownMenuItem
             onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-2.5 cursor-pointer text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors"
+            className="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-red-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
           >
             <LogOut size={16} className="shrink-0" />
-            <span className="text-sm font-medium">Logout</span>
+            <span className="text-sm font-medium">Log out</span>
           </DropdownMenuItem>
         </div>
       </DropdownMenuContent>

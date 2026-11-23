@@ -7,9 +7,11 @@ import { toast } from "react-toastify";
 import SignupForm from "./Form/SignupForm";
 import { SignupFormType, signupSchema } from "./Schema";
 import SignupBanner from "./SignupBanner";
+import { useRedirectQuery } from "../shared/useRedirectQuery";
 
 const SignupPage = () => {
   const router = useRouter();
+  const redirectQuery = useRedirectQuery();
   const methods = useForm<SignupFormType>({
     resolver: yupResolver(signupSchema),
     defaultValues: {
@@ -31,16 +33,20 @@ const SignupPage = () => {
 
   const onSubmit = (data: SignupFormType) => {
     signup({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
+      firstName: data.firstName.trim(),
+      lastName: data.lastName.trim(),
+      email: data.email.trim(),
       password: data.password,
-    }).then(() => {
-      methods.reset();
-      reset();
-      router.push("/auth/login");
-      toast.success("User registered successfully");
-    });
+    })
+      .then(() => {
+        methods.reset();
+        reset();
+        toast.success("Account created. Log in to continue.");
+        // Carry on to wherever sign-in was asked for, e.g. checkout.
+        router.push(`/auth/login${redirectQuery}`);
+      })
+      // The form shows the error; this only stops an unhandled rejection.
+      .catch(() => {});
   };
 
   return (

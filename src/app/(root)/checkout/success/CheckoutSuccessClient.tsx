@@ -1,199 +1,106 @@
 "use client";
-import { useState } from "react";
+
+import { IOrder, ORDER_QUERY_KEYS } from "@/src/components/cart/types/order";
+import {
+  OrderStatusBadge,
+  PaymentStatusBadge,
+} from "@/src/components/order/OrderBadges";
+import {
+  formatMoney,
+  itemCountLabel,
+} from "@/src/components/order/orderDisplay";
+import { useGet } from "@/src/hooks/useGet";
+import { CheckCircle2, Package } from "lucide-react";
 import Link from "next/link";
-import { CheckCircle, Package, ShoppingBag } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 const CheckoutSuccessClient = () => {
-  const [orderNumber] = useState(
-    () => `ORD-${Date.now().toString(36).toUpperCase()}`
+  const orderId = useSearchParams().get("order") ?? "";
+
+  const { data, isLoading } = useGet<IOrder>(
+    `/order/${orderId}`,
+    ORDER_QUERY_KEYS.detail(orderId),
+    undefined,
+    { enabled: !!orderId }
   );
+  const order = data?.data;
 
   return (
-    <div className="container">
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "4rem 2rem",
-          textAlign: "center",
-          gap: "1.25rem",
-          maxWidth: 480,
-          margin: "0 auto",
-        }}
-      >
-        {/* Success Icon */}
-        <div
-          style={{
-            width: 80,
-            height: 80,
-            borderRadius: "50%",
-            background: "#f0fdf4",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            animation: "fadeInScale 0.5s ease-out",
-          }}
-        >
-          <CheckCircle size={40} color="#16a34a" />
+    <div className="container px-4">
+      <div className="below-site-header mx-auto flex max-w-lg flex-col items-center gap-5 pb-16 text-center lg:pb-24">
+        <div className="grid size-20 place-items-center rounded-full bg-green-50 text-green-600 dark:bg-green-500/10 dark:text-green-400">
+          <CheckCircle2 size={40} />
         </div>
 
-        <h1
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 700,
-            color: "var(--foreground)",
-          }}
-        >
-          Order Placed Successfully!
-        </h1>
-
-        <p
-          style={{
-            fontSize: "0.9rem",
-            color: "var(--muted-foreground)",
-            lineHeight: 1.6,
-          }}
-        >
-          Thank you for your order. Your order number is{" "}
-          <strong style={{ color: "var(--primary)" }}>{orderNumber}</strong>.
-          We&apos;ll send you a confirmation shortly.
-        </p>
-
-        {/* Info Cards */}
-        <div
-          style={{
-            display: "flex",
-            gap: "1rem",
-            width: "100%",
-            marginTop: "0.5rem",
-          }}
-        >
-          <div
-            style={{
-              flex: 1,
-              padding: "1rem",
-              borderRadius: "0.5rem",
-              border: "1px solid var(--border)",
-              background: "var(--card)",
-              textAlign: "center",
-            }}
-          >
-            <Package
-              size={20}
-              style={{ margin: "0 auto 0.5rem", color: "var(--primary)" }}
-            />
-            <p
-              style={{ fontSize: "0.75rem", color: "var(--muted-foreground)" }}
-            >
-              Estimated Delivery
-            </p>
-            <p
-              style={{
-                fontSize: "0.85rem",
-                fontWeight: 600,
-                color: "var(--foreground)",
-              }}
-            >
-              3-5 Business Days
-            </p>
-          </div>
-          <div
-            style={{
-              flex: 1,
-              padding: "1rem",
-              borderRadius: "0.5rem",
-              border: "1px solid var(--border)",
-              background: "var(--card)",
-              textAlign: "center",
-            }}
-          >
-            <ShoppingBag
-              size={20}
-              style={{ margin: "0 auto 0.5rem", color: "var(--primary)" }}
-            />
-            <p
-              style={{ fontSize: "0.75rem", color: "var(--muted-foreground)" }}
-            >
-              Payment
-            </p>
-            <p
-              style={{
-                fontSize: "0.85rem",
-                fontWeight: 600,
-                color: "var(--foreground)",
-              }}
-            >
-              Cash on Delivery
-            </p>
-          </div>
+        <div className="space-y-2">
+          <h1 className="text-2xl font-bold text-foreground">
+            Your order is placed
+          </h1>
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            We&apos;ll review it and update its status as it moves along. You
+            can follow every step from My Orders.
+          </p>
         </div>
 
-        {/* Action Buttons */}
-        <div
-          style={{
-            display: "flex",
-            gap: "0.75rem",
-            width: "100%",
-            marginTop: "0.5rem",
-          }}
-        >
+        {orderId && (
+          <div className="w-full rounded-xl border border-border bg-card p-5 text-left">
+            {isLoading ? (
+              <div className="space-y-3">
+                <div className="h-5 w-48 animate-pulse rounded bg-light-dark" />
+                <div className="h-4 w-32 animate-pulse rounded bg-light-dark" />
+              </div>
+            ) : order ? (
+              <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+                <div className="col-span-2">
+                  <dt className="text-xs text-muted-foreground">
+                    Order number
+                  </dt>
+                  <dd className="font-semibold text-foreground select-all">
+                    {order.orderNumber}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-xs text-muted-foreground">Total</dt>
+                  <dd className="font-semibold text-foreground">
+                    {formatMoney(order.totalAmount, order.currency)}
+                    <span className="ml-1 font-normal text-muted-foreground">
+                      ({itemCountLabel(order)})
+                    </span>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-xs text-muted-foreground">Status</dt>
+                  <dd className="mt-0.5 flex flex-wrap gap-1.5">
+                    <OrderStatusBadge status={order.status} />
+                    <PaymentStatusBadge status={order.paymentStatus} />
+                  </dd>
+                </div>
+              </dl>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                Order details aren&apos;t available right now. You&apos;ll find
+                the order in My Orders.
+              </p>
+            )}
+          </div>
+        )}
+
+        <div className="flex w-full flex-col gap-3 sm:flex-row">
           <Link
-            href="/orders"
-            style={{
-              flex: 1,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "0.4rem",
-              padding: "0.7rem",
-              borderRadius: "0.5rem",
-              fontSize: "0.85rem",
-              fontWeight: 600,
-              border: "1px solid var(--border)",
-              color: "var(--foreground)",
-              textDecoration: "none",
-              transition: "background 0.2s",
-            }}
+            href={orderId ? `/orders/${orderId}` : "/account/orders"}
+            className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground no-underline transition-opacity hover:opacity-90"
           >
-            View Orders
+            <Package size={16} />
+            {orderId ? "View order" : "My orders"}
           </Link>
           <Link
-            href="/"
-            style={{
-              flex: 1,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "0.4rem",
-              padding: "0.7rem",
-              borderRadius: "0.5rem",
-              fontSize: "0.85rem",
-              fontWeight: 600,
-              background: "var(--primary)",
-              color: "var(--primary-foreground)",
-              textDecoration: "none",
-              transition: "opacity 0.2s",
-            }}
+            href="/products"
+            className="flex flex-1 items-center justify-center rounded-lg border border-border px-5 py-2.5 text-sm font-semibold text-foreground no-underline transition-colors hover:bg-light"
           >
-            Continue Shopping
+            Continue shopping
           </Link>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes fadeInScale {
-          from {
-            opacity: 0;
-            transform: scale(0.5);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-      `}</style>
     </div>
   );
 };

@@ -243,7 +243,7 @@ const ProductForm = ({
             />
           </div>
           <div>
-            <InputLabel label="Price" />
+            <InputLabel label="Price (BDT)" required />
             <ControlledInputField
               name="price"
               type="number"

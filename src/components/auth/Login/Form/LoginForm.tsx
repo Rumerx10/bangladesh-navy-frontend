@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 import { LoginFormType } from "../Schema";
 import { LoginFormProps } from "../types";
@@ -8,6 +9,7 @@ import { Button } from "@/src/components/ui/button";
 import InputLabel from "@/src/components/shared/InputLabel";
 import ErrorMessage from "@/src/components/shared/Errors/ErrorMessage";
 import ControlledInputField from "@/src/components/shared/FromController/ControlledInputField";
+import { useRedirectQuery } from "../../shared/useRedirectQuery";
 
 const LoginForm = ({
   onSubmit,
@@ -17,6 +19,7 @@ const LoginForm = ({
 }: LoginFormProps) => {
   const methods = useFormContext<LoginFormType>();
   const [showPassword, setShowPassword] = useState(false);
+  const redirectQuery = useRedirectQuery();
 
   return (
     <form onSubmit={methods.handleSubmit(onSubmit)} className="w-full max-w-md">
@@ -63,12 +66,12 @@ const LoginForm = ({
             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </Button>
         </div>
-        {/* <Link
-          href="/forgot-password"
-          className="mt-3 block text-right text-primary-light font-semibold underline"
+        <Link
+          href="/auth/forgot-password"
+          className="mt-3 block text-right text-sm font-medium text-primary hover:underline"
         >
           Forgot password?
-        </Link> */}
+        </Link>
       </div>
 
       <div className="mt-3">
@@ -83,15 +86,15 @@ const LoginForm = ({
         {isPending ? "Loading..." : "Sign in"}
       </Button>
 
-      {/* <p className="mt-4 text-left text-sm text-muted-foreground">
+      <p className="mt-4 text-left text-sm text-muted-foreground">
         Don&apos;t have an account?{" "}
         <Link
-          href="/auth/signup"
-          className="text-primary-light font-medium underline"
+          href={`/auth/signup${redirectQuery}`}
+          className="font-medium text-primary hover:underline"
         >
-          Sign Up
+          Sign up
         </Link>
-      </p> */}
+      </p>
     </form>
   );
 };

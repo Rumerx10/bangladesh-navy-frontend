@@ -72,7 +72,7 @@ export const metadata: Metadata = {
 const AdminDashboardPage = () => {
   return (
     <div className="space-y-8 lg:space-y-10">
-      <header>
+      <header className="backdrop-blur-xs bg-transparent rounded-xl border border-light-silver p-6 lg:p-8 space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight text-pBlue lg:text-3xl">
           Welcome back
         </h1>
@@ -96,7 +96,7 @@ const AdminDashboardPage = () => {
             <Link
               key={href}
               href={href}
-              className="group relative flex flex-col gap-3 rounded-xl border border-light-silver bg-card p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg"
+              className="group relative flex flex-col gap-3 rounded-xl border border-light-silver bg-transparent backdrop-blur-xs p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg"
             >
               <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary group-hover:text-white">
                 <Icon className="h-5 w-5" />

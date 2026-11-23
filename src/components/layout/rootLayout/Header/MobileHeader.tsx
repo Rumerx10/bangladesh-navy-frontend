@@ -5,6 +5,8 @@ import { Menu } from "lucide-react";
 import logo from "@/public/logo.png";
 import ThemeToggle from "@/src/components/theme/ThemeToggle";
 import { siteConfig } from "@/src/config/siteConfig";
+import HeaderAccount from "./HeaderAccount";
+import HeaderCartButton from "./HeaderCartButton";
 
 interface MobileHeaderProps {
   menuOpen: boolean;
@@ -36,6 +38,8 @@ const MobileHeader = ({ menuOpen, setMenuOpen }: MobileHeaderProps) => {
           </Link>
           <div className="flex items-center gap-1">
             <ThemeToggle className="text-nav-ink" />
+            <HeaderCartButton />
+            <HeaderAccount compact />
 
             {/* Hamburger */}
             <button

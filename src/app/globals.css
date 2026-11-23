@@ -367,6 +367,22 @@
 }
 
 /* =========================
+   BELOW THE SITE HEADER
+   The site header is position: fixed — on phones a 56px bar plus the 36px
+   notice strip (92px), on desktop a 96px bar plus a 44px strip (140px). In
+   the page flow it reserves nothing on phones and 40px on desktop
+   (Header's `lg:pb-10`). Pages that start with ordinary content, rather
+   than a hero designed to sit under the header, use this to clear it with
+   ~20–28px to spare.
+========================= */
+@utility below-site-header {
+  padding-top: 7rem;
+  @variant lg {
+    padding-top: 8rem;
+  }
+}
+
+/* =========================
    CONTAINER (1535px)
 ========================= */
 @utility container {

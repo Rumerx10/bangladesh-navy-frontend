@@ -4,9 +4,9 @@ import { selectCanViewOwnOrders } from "@/src/lib/redux/features/permission/perm
 import { useAppSelector } from "@/src/lib/redux/hooks";
 import {
   CreditCard,
+  KeyRound,
   MapPin,
   Package,
-  RotateCcw,
   User,
   XCircle,
 } from "lucide-react";
@@ -22,6 +22,11 @@ const sidebarSections = [
       { label: "My Profile", href: "/account", icon: User },
       { label: "Address Book", href: "/account/addresses", icon: MapPin },
       {
+        label: "Change Password",
+        href: "/account/change-password",
+        icon: KeyRound,
+      },
+      {
         label: "Payment Methods",
         href: "/account/payment-methods",
         icon: CreditCard,
@@ -32,7 +37,6 @@ const sidebarSections = [
     title: "My Orders",
     items: [
       { label: "My Orders", href: "/account/orders", icon: Package },
-      { label: "My Returns", href: "/account/returns", icon: RotateCcw },
       {
         label: "My Cancellations",
         href: "/account/cancellations",
@@ -53,7 +57,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <Container>
-      <div className="py-6 lg:py-8 pb-20 lg:pb-12">
+      <div className="below-site-header pb-20 lg:pb-12">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-secondary-foreground mb-6">
           <Link
@@ -69,7 +73,8 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
           {/* ═══════ SIDEBAR (Desktop) ═══════ */}
           <aside className="hidden lg:block w-64 shrink-0">
-            <div className="sticky top-32.5 bg-card rounded-xl border border-border overflow-hidden shadow-sm">
+            {/* top-40 = the 140px fixed header plus a 20px gap. */}
+            <div className="sticky top-40 bg-card rounded-xl border border-border overflow-hidden shadow-sm">
               {/* User Card */}
               <div className="p-5 bg-linear-to-br from-primary/5 to-primary/10 border-b border-border">
                 <div className="flex items-center gap-3">

@@ -17,7 +17,7 @@ const Cart = () => {
 
   return (
     <div className="container  px-4 sm:0">
-      <div className="py-4 sm:py-6 lg:pt-40 pb-20 lg:pb-16">
+      <div className="below-site-header pb-20 lg:pb-16">
         <CartHeader totalItems={totalItems} />
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6 lg:gap-8 items-start">
           <CartItemList items={items} />

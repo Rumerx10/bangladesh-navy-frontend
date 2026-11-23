@@ -10,8 +10,8 @@ import { useAppDispatch, useAppSelector } from "@/src/lib/redux/hooks";
 import { isAdminRole } from "@/src/utils/UserRoleEnum";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Eye, EyeOff, Lock, ShieldCheck, X } from "lucide-react";
-
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import ErrorMessage from "../../shared/Errors/ErrorMessage";
@@ -23,6 +23,8 @@ const LoginModal = () => {
     (state) => state.auth.isLoginModalOpen
   );
   const router = useRouter();
+  // Sign-up comes back here afterwards (via login), e.g. to the product page.
+  const pathname = usePathname();
   const [showPassword, setShowPassword] = useState(false);
 
   const methods = useForm<LoginFormType>({
@@ -170,13 +172,13 @@ const LoginModal = () => {
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
-              {/* <Link
-                href="/forgot-password"
+              <Link
+                href="/auth/forgot-password"
                 className="text-[11px] text-primary hover:underline mt-1 inline-block"
                 onClick={handleCloseModal}
               >
                 Forgot password?
-              </Link> */}
+              </Link>
             </div>
             {error && <ErrorMessage error={error} />}
             <button
@@ -199,16 +201,16 @@ const LoginModal = () => {
         </FormProvider>
 
         {/* Footer */}
-        {/* <p className="text-center text-xs text-muted-foreground">
+        <p className="text-center text-xs text-muted-foreground">
           Don&apos;t have an account?{" "}
           <Link
-            href="/auth/signup"
+            href={`/auth/signup?redirect=${encodeURIComponent(pathname)}`}
             onClick={handleCloseModal}
             className="text-primary font-semibold hover:underline"
           >
-            Sign Up
+            Sign up
           </Link>
-        </p> */}
+        </p>
 
         {/* Trust */}
         <div className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground">

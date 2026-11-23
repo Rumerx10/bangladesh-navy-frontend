@@ -9,6 +9,7 @@ import {
   PRODUCT_CATEGORY_LABELS,
 } from "@/src/components/admin/ContentManagement/products/types";
 import Container from "@/src/components/shared/Container";
+import { MAX_ORDER_ITEM_QUANTITY } from "@/src/components/cart/types/order";
 
 function adaptToNavyProduct(p: IProduct): INavyProduct {
   const categoryLabel = p.category
@@ -25,7 +26,9 @@ function adaptToNavyProduct(p: IProduct): INavyProduct {
     // INavyProduct.price is in poysha (formatPrice divides by 100); the real
     // backend stores a flat BDT amount, so scale it up to match.
     price: (p.price ?? 0) * 100,
-    stock: 0,
+    // Charts aren't stock-counted; the cart caps a line at this, which is
+    // also the most a single order line may carry.
+    stock: MAX_ORDER_ITEM_QUANTITY,
     categoryId: p.category || "",
     status:
       p.status === "ACTIVE" ? ProductStatus.ACTIVE : ProductStatus.INACTIVE,

@@ -29,6 +29,9 @@ interface MultipleStringFieldProps {
   inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
 }
 
+// RHF's `get()` is typed as `{}`, so spell out the bits we read.
+type FieldErrorShape = { message?: string; root?: { message?: string } };
+
 const MultipleStringField = ({
   name,
   placeholder = "Add an item...",
@@ -52,11 +55,11 @@ const MultipleStringField = ({
 
   // Array-level errors ("At least one…", "Each … must be different") sit on
   // the list itself; an invalid entry's error sits on its index.
-  const fieldErrors = get(errors, name);
+  const fieldErrors: FieldErrorShape | undefined = get(errors, name);
   const listError: string | undefined =
     fieldErrors?.message ?? fieldErrors?.root?.message;
   const itemError = (index: number): string | undefined =>
-    get(errors, `${name}.${index}`)?.message;
+    (get(errors, `${name}.${index}`) as FieldErrorShape | undefined)?.message;
 
   const updateItems = (next: string[]) =>
     setValue(name, next, { shouldValidate: true, shouldDirty: true });

@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import { storeAuthTokens } from "../utils/authTokens";
 import { toast } from "react-toastify";
 import { IUserInformation } from "../lib/redux/features/auth/authTypes";
 import { authService } from "../services/auth";
@@ -26,10 +26,7 @@ export const useAuth = (
   return useMutation({
     mutationFn: authService.login,
     onSuccess: async (data) => {
-      // Set accessToken & refreshToken as cookies
-      Cookies.set("accessToken", data.accessToken, { expires: 1 });
-      Cookies.set("refreshToken", data.refreshToken, { expires: 2 });
-      window.dispatchEvent(new Event("auth-token-updated"));
+      storeAuthTokens(data);
 
       // Decode role from JWT
       let role = "user";
