@@ -6,7 +6,7 @@ import Link from "next/link";
 const EmptyCart = () => {
   return (
     <div className="container px-4 sm:px-0 h-[70vh] flex items-center justify-center">
-      <div className="flex flex-col items-center justify-center py-16 sm:pt-40 text-center gap-4">
+      <div className="below-site-header flex flex-col items-center justify-center pb-16 text-center gap-4">
         <div className="w-20 h-20 flex items-center justify-center rounded-full bg-muted text-muted-foreground">
           <ShoppingCart size={32} />
         </div>

@@ -106,7 +106,7 @@ const GalleryLightbox = ({
                       width={1200}
                       src={image.src}
                       alt={image.alt}
-                      className="w-full h-full object-contain lg:object-cover"
+                      className="w-full h-full object-contain"
                       priority={index === activeIndex}
                     />
                   </SwiperSlide>

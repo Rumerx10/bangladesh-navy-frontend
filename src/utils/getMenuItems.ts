@@ -8,6 +8,7 @@ import {
   Megaphone,
   Package,
   Phone,
+  ShoppingCart,
   Users,
   type LucideIcon,
 } from "lucide-react";
@@ -127,12 +128,12 @@ const getMenuItems = (): MenuItem[] => {
         { label: "How to Collect", href: "/admin/how-to-collect" },
       ],
     },
-    // {
-    //   segment: "Order Management",
-    //   label: "Orders",
-    //   icon: ShoppingCart,
-    //   children: [{ label: "All Orders", href: "/admin/orders" }],
-    // },
+    {
+      segment: "Order Management",
+      label: "Orders",
+      icon: ShoppingCart,
+      href: "/admin/orders",
+    },
     {
       segment: "User Management",
       label: "Users",

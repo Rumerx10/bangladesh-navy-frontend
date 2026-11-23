@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 import SignupPage from "@/src/components/auth/Signup/Signup";
 
 export const metadata: Metadata = {
@@ -7,10 +8,14 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+// The form reads `?redirect=` (useSearchParams), which needs a Suspense
+// boundary.
 const page = () => {
   return (
     <div>
-      <SignupPage />
+      <Suspense>
+        <SignupPage />
+      </Suspense>
     </div>
   );
 };

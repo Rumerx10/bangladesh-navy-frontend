@@ -1,11 +1,13 @@
+/** Stands in for the account menu while a stored session's profile loads.
+ *  Tinted for the navy header band. */
 const ProfileDropdownSkeleton = () => {
   return (
-    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full">
-      <div className="w-8 h-8 rounded-full bg-light-silver animate-pulse" />
-      <div className="hidden xl:flex flex-col gap-1">
-        <div className="w-20 h-2.5 bg-light-silver rounded animate-pulse" />
-        <div className="w-14 h-2 bg-light-dark rounded animate-pulse" />
-      </div>
+    <div
+      aria-hidden
+      className="flex h-9 items-center gap-2 rounded-full bg-nav-wash pr-2 pl-0.5"
+    >
+      <div className="size-8 animate-pulse rounded-full bg-white/20" />
+      <div className="hidden h-2.5 w-16 animate-pulse rounded bg-white/20 xl:block" />
     </div>
   );
 };

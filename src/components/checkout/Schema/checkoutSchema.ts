@@ -1,30 +1,52 @@
 import * as Yup from "yup";
 
-import { PaymentMethod } from "@/src/components/cart/types/order";
+import {
+  addressFields,
+  EMPTY_ADDRESS,
+} from "@/src/components/account/Address/Schema/addressSchema";
 
-const paymentMethods = Object.values(PaymentMethod) as PaymentMethod[];
+export type AddressMode = "saved" | "new";
+
+/** An address field that is only validated when the customer is typing a new
+ *  address instead of picking a saved one. */
+const whenNewAddress = (schema: Yup.StringSchema<string | undefined>) =>
+  Yup.string().when("addressMode", {
+    is: "new",
+    then: () => schema,
+    otherwise: (s) => s.optional(),
+  });
 
 export const checkoutSchema = Yup.object({
-  fullName: Yup.string().required("Full name is required"),
-  phone: Yup.string().required("Phone number is required"),
-  email: Yup.string()
-    .transform((value) => (value?.trim() ? value : undefined))
-    .email("Email must be valid")
-    .notRequired(),
-  addressLine1: Yup.string().required("Address line 1 is required"),
-  addressLine2: Yup.string().optional(),
-  city: Yup.string().required("City is required"),
-  district: Yup.string().required("District is required"),
-  division: Yup.string().required("Division is required"),
-  postalCode: Yup.string().optional(),
-  paymentMethod: Yup.mixed<PaymentMethod>()
-    .oneOf(paymentMethods, "Select a payment method")
-    .required("Payment method is required"),
-  bankTransactionId: Yup.string().when("paymentMethod", {
-    is: PaymentMethod.BANK_TRANSFER,
-    then: (schema) => schema.required("Bank transaction ID is required"),
-    otherwise: (schema) => schema.optional(),
+  addressMode: Yup.mixed<AddressMode>().oneOf(["saved", "new"]).required(),
+  addressId: Yup.string().when("addressMode", {
+    is: "saved",
+    then: (s) => s.required("Choose a delivery address"),
+    otherwise: (s) => s.optional(),
   }),
+  label: whenNewAddress(addressFields.label),
+  fullName: whenNewAddress(addressFields.fullName),
+  phone: whenNewAddress(addressFields.phone),
+  address: whenNewAddress(addressFields.address),
+  city: whenNewAddress(addressFields.city),
+  postcode: whenNewAddress(addressFields.postcode),
+  country: whenNewAddress(addressFields.country),
+  note: Yup.string()
+    .trim()
+    .max(500, "Keep the note under 500 characters")
+    .optional(),
 });
 
 export type CheckoutSchemaForm = Yup.InferType<typeof checkoutSchema>;
+
+export const checkoutDefaultValues: CheckoutSchemaForm = {
+  addressMode: "saved",
+  addressId: "",
+  label: EMPTY_ADDRESS.label,
+  fullName: EMPTY_ADDRESS.fullName,
+  phone: EMPTY_ADDRESS.phone,
+  address: EMPTY_ADDRESS.address,
+  city: EMPTY_ADDRESS.city,
+  postcode: EMPTY_ADDRESS.postcode,
+  country: EMPTY_ADDRESS.country,
+  note: "",
+};

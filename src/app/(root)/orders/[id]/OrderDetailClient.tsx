@@ -1,501 +1,208 @@
 "use client";
 
-import { dummyOrders } from "@/src/data/dummyOrders";
-import { OrderStatus } from "@/src/components/cart/types/order";
-import { ArrowLeft, Package } from "lucide-react";
-import Image from "next/image";
+import {
+  IOrder,
+  IOrderTracking,
+  OrderStatus,
+  ORDER_QUERY_KEYS,
+} from "@/src/components/cart/types/order";
+import CancelOrderDialog from "@/src/components/order/CancelOrderDialog";
+import {
+  OrderStatusBadge,
+  PaymentStatusBadge,
+} from "@/src/components/order/OrderBadges";
+import {
+  canCustomerCancel,
+  formatMoney,
+  formatOrderDate,
+} from "@/src/components/order/orderDisplay";
+import {
+  OrderAddressBlock,
+  OrderItemsList,
+  OrderSection,
+  OrderTrackingView,
+} from "@/src/components/order/OrderParts";
+import { useGet } from "@/src/hooks/useGet";
+import {
+  ArrowLeft,
+  CreditCard,
+  MapPin,
+  MessageSquare,
+  Package,
+  Route,
+} from "lucide-react";
 import Link from "next/link";
-import { use } from "react";
-import Container from "@/src/components/shared/Container";
-
-const statusColors: Record<OrderStatus, string> = {
-  [OrderStatus.PENDING]: "bg-yellow-50 text-yellow-700 border-yellow-200",
-  [OrderStatus.CONFIRMED]: "bg-blue-50 text-blue-700 border-blue-200",
-  [OrderStatus.PROCESSING]: "bg-indigo-50 text-indigo-700 border-indigo-200",
-  [OrderStatus.SHIPPED]: "bg-cyan-50 text-cyan-700 border-cyan-200",
-  [OrderStatus.DELIVERED]: "bg-green-50 text-green-700 border-green-200",
-  [OrderStatus.CANCELLED]: "bg-red-50 text-red-700 border-red-200",
-  [OrderStatus.RETURNED]: "bg-orange-50 text-orange-700 border-orange-200",
-  [OrderStatus.REFUNDED]: "bg-purple-50 text-purple-700 border-purple-200",
-};
-
-const STATUS_FLOW: OrderStatus[] = [
-  OrderStatus.PENDING,
-  OrderStatus.CONFIRMED,
-  OrderStatus.PROCESSING,
-  OrderStatus.SHIPPED,
-  OrderStatus.DELIVERED,
-];
+import { use, useState } from "react";
 
 const OrderDetailClient = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);
-  const order = dummyOrders.find((o) => o.id === id);
+  const [isCancelOpen, setIsCancelOpen] = useState(false);
 
-  if (!order) {
-    return (
-      <Container>
-        <div className="flex flex-col items-center justify-center py-16 sm:py-20 text-center gap-4">
-          <div className="w-20 h-20 flex items-center justify-center rounded-full bg-muted text-muted-foreground">
-            <Package size={32} />
-          </div>
-          <h1 className="text-xl font-bold text-foreground">Order not found</h1>
-          <p className="text-sm text-muted-foreground max-w-xs">
-            The order you&apos;re looking for doesn&apos;t exist.
-          </p>
-          <Link
-            href="/orders"
-            className="inline-flex items-center gap-2 mt-2 px-6 py-2.5 rounded-lg text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity no-underline"
-          >
-            Back to Orders
-          </Link>
-        </div>
-      </Container>
-    );
-  }
-
-  const currentStatusIdx = STATUS_FLOW.indexOf(order.orderStatus);
+  const { data, isLoading, isError } = useGet<IOrder>(
+    `/order/${id}`,
+    ORDER_QUERY_KEYS.detail(id)
+  );
+  const { data: trackingData } = useGet<IOrderTracking>(
+    `/order/${id}/tracking`,
+    ORDER_QUERY_KEYS.tracking(id)
+  );
+  const order = data?.data;
+  const tracking = trackingData?.data;
 
   return (
-    <Container>
-      <div className="py-4 sm:py-6 lg:py-8 pb-20 lg:pb-16">
+    <div className="container px-4">
+      <div className="below-site-header pb-20 lg:pb-16">
         <Link
-          href="/orders"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors no-underline mb-4"
+          href="/account/orders"
+          className="mb-4 inline-flex items-center gap-1.5 text-sm text-secondary-foreground no-underline hover:text-primary"
         >
           <ArrowLeft size={16} />
-          Back to Orders
+          My Orders
         </Link>
 
-        {/* Title + Badge */}
-        <div className="flex items-center gap-3 flex-wrap mb-6">
-          <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">
-            {order.orderNumber}
-          </h1>
-          <span
-            className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border capitalize ${statusColors[order.orderStatus]}`}
-          >
-            {order.orderStatus}
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* === LEFT: Items + Shipping === */}
-          <div className="flex flex-col gap-6">
-            {/* Items */}
-            <div className="border border-border rounded-xl bg-card overflow-hidden">
-              <h2 className="text-sm font-bold text-foreground px-4 sm:px-5 py-3 border-b border-border flex items-center gap-2">
-                <span className="w-1 h-4 bg-primary rounded-full" />
-                Order Items
-              </h2>
-              <div className="flex flex-col divide-y divide-border">
-                {order.items.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-3 px-4 sm:px-5 py-3"
-                  >
-                    <div className="relative w-11 sm:w-12 min-w-11 sm:min-w-12 h-11 sm:h-12 rounded-md overflow-hidden bg-light-dark">
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        className="object-cover"
-                        sizes="48px"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs sm:text-sm font-medium text-foreground line-clamp-1">
-                        {item.name}
-                      </p>
-                      <p className="text-[11px] sm:text-xs text-muted-foreground">
-                        Qty: {item.quantity} · ৳{item.price.toLocaleString()}
-                      </p>
-                    </div>
-                    <span className="text-sm font-semibold whitespace-nowrap">
-                      ৳{(item.price * item.quantity).toLocaleString()}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Shipping Address */}
-            <div className="border border-border rounded-xl bg-card overflow-hidden">
-              <h2 className="text-sm font-bold text-foreground px-4 sm:px-5 py-3 border-b border-border flex items-center gap-2">
-                <span className="w-1 h-4 bg-primary rounded-full" />
-                Shipping Address
-              </h2>
-              <div className="grid grid-cols-2 gap-3 px-4 sm:px-5 py-4">
-                <div>
-                  <p className="text-[11px] text-muted-foreground mb-0.5">
-                    Full Name
-                  </p>
-                  <p className="text-sm font-medium text-foreground">
-                    {order.shippingAddress.fullName}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[11px] text-muted-foreground mb-0.5">
-                    Phone
-                  </p>
-                  <p className="text-sm font-medium text-foreground">
-                    {order.shippingAddress.phone}
-                  </p>
-                </div>
-                <div className="col-span-2">
-                  <p className="text-[11px] text-muted-foreground mb-0.5">
-                    Address
-                  </p>
-                  <p className="text-sm font-medium text-foreground">
-                    {order.shippingAddress.addressLine1}
-                    {order.shippingAddress.addressLine2
-                      ? `, ${order.shippingAddress.addressLine2}`
-                      : ""}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[11px] text-muted-foreground mb-0.5">
-                    City
-                  </p>
-                  <p className="text-sm font-medium text-foreground">
-                    {order.shippingAddress.city}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[11px] text-muted-foreground mb-0.5">
-                    District
-                  </p>
-                  <p className="text-sm font-medium text-foreground">
-                    {order.shippingAddress.district}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[11px] text-muted-foreground mb-0.5">
-                    Division
-                  </p>
-                  <p className="text-sm font-medium text-foreground">
-                    {order.shippingAddress.division}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[11px] text-muted-foreground mb-0.5">
-                    Postal Code
-                  </p>
-                  <p className="text-sm font-medium text-foreground">
-                    {order.shippingAddress.postalCode || "—"}
-                  </p>
-                </div>
-              </div>
-            </div>
+        {isLoading ? (
+          <div className="space-y-4">
+            <div className="h-8 w-64 animate-pulse rounded bg-light-dark" />
+            <div className="h-48 animate-pulse rounded-xl bg-light-dark" />
+            <div className="h-64 animate-pulse rounded-xl bg-light-dark" />
           </div>
+        ) : isError || !order ? (
+          <div className="flex flex-col items-center gap-3 py-16 text-center">
+            <div className="grid size-16 place-items-center rounded-full bg-light-dark text-muted-foreground">
+              <Package size={28} />
+            </div>
+            <h1 className="text-lg font-bold text-foreground">
+              Order not found
+            </h1>
+            <p className="max-w-xs text-sm text-muted-foreground">
+              It may belong to another account, or the link is incomplete.
+            </p>
+          </div>
+        ) : (
+          <>
+            <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div>
+                <h1 className="text-lg font-bold text-foreground sm:text-xl lg:text-2xl">
+                  Order {order.orderNumber}
+                </h1>
+                <p className="mt-1 text-sm text-secondary-foreground">
+                  Placed {formatOrderDate(order.createdAt, true)}
+                </p>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  <OrderStatusBadge status={order.status} />
+                  {order.status !== OrderStatus.CANCELLED && (
+                    <PaymentStatusBadge status={order.paymentStatus} />
+                  )}
+                </div>
+              </div>
+              {canCustomerCancel(order) && (
+                <button
+                  type="button"
+                  onClick={() => setIsCancelOpen(true)}
+                  className="cursor-pointer self-start rounded-lg border border-red-200 px-4 py-2 text-sm font-medium text-red-600 transition-colors hover:bg-red-50 dark:border-red-500/30 dark:hover:bg-red-500/10"
+                >
+                  Cancel order
+                </button>
+              )}
+            </header>
 
-          {/* === RIGHT: Reason + Timeline + Payment + Summary === */}
-          <div className="flex flex-col gap-6">
-            {/* ── Cancellation Reason ── */}
-            {order.orderStatus === OrderStatus.CANCELLED &&
-              order.cancelReason && (
-                <div className="border border-red-200 rounded-xl bg-red-50 overflow-hidden">
-                  <div className="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-red-200">
-                    <span className="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center text-red-600 text-xs font-bold">
-                      ✕
-                    </span>
-                    <h2 className="text-sm font-bold text-red-800">
-                      Order Cancelled
-                    </h2>
-                  </div>
-                  <div className="px-4 sm:px-5 py-4 space-y-2">
-                    <p className="text-sm text-red-700 leading-relaxed">
-                      {order.cancelReason}
-                    </p>
-                    <p className="text-[11px] text-red-400">
-                      Cancelled on{" "}
-                      {new Date(order.updatedAt).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </p>
-                    {order.paymentStatus === "REFUNDED" && (
-                      <div className="flex items-center gap-2 bg-card/80 rounded-lg px-3 py-2 border border-red-200 mt-1">
-                        <span className="text-sm">💰</span>
-                        <p className="text-xs text-red-700 font-medium">
-                          Refund of ৳{order.total.toLocaleString()} has been
-                          processed via {order.paymentMethod}
-                        </p>
+            {order.status === OrderStatus.CANCELLED && (
+              <div className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-300">
+                <p className="font-semibold">
+                  This order was cancelled
+                  {order.cancelledAt
+                    ? ` on ${formatOrderDate(order.cancelledAt, true)}`
+                    : ""}
+                  .
+                </p>
+                {order.cancelReason && (
+                  <p className="mt-0.5">Reason: {order.cancelReason}</p>
+                )}
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[1fr_360px]">
+              <div className="flex flex-col gap-6">
+                <OrderSection title="Order progress" icon={Route}>
+                  {tracking ? (
+                    <OrderTrackingView tracking={tracking} />
+                  ) : (
+                    <div className="h-24 animate-pulse rounded-lg bg-light-dark" />
+                  )}
+                </OrderSection>
+
+                <OrderSection title="Items" icon={Package}>
+                  <OrderItemsList order={order} />
+                </OrderSection>
+              </div>
+
+              <div className="flex flex-col gap-6">
+                <OrderSection title="Delivery address" icon={MapPin}>
+                  <OrderAddressBlock address={order.shippingAddress} />
+                </OrderSection>
+
+                <OrderSection title="Payment" icon={CreditCard}>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-secondary-foreground">Status</span>
+                      <PaymentStatusBadge status={order.paymentStatus} />
+                    </div>
+                    {order.paidAt && (
+                      <div className="flex justify-between gap-3">
+                        <span className="text-secondary-foreground">Paid</span>
+                        <span className="text-foreground">
+                          {formatOrderDate(order.paidAt, true)}
+                        </span>
                       </div>
                     )}
-                  </div>
-                </div>
-              )}
-
-            {/* ── Return Reason ── */}
-            {order.orderStatus === OrderStatus.RETURNED &&
-              order.returnReason && (
-                <div className="border border-orange-200 rounded-xl bg-orange-50 overflow-hidden">
-                  <div className="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-orange-200">
-                    <span className="w-6 h-6 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 text-xs">
-                      ↩
-                    </span>
-                    <h2 className="text-sm font-bold text-orange-800">
-                      Order Returned
-                    </h2>
-                  </div>
-                  <div className="px-4 sm:px-5 py-4 space-y-2">
-                    <p className="text-sm text-orange-700 leading-relaxed">
-                      {order.returnReason}
-                    </p>
-                    <p className="text-[11px] text-orange-400">
-                      Returned on{" "}
-                      {new Date(order.updatedAt).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </p>
-                    {order.paymentStatus === "REFUNDED" && (
-                      <div className="flex items-center gap-2 bg-white/80 rounded-lg px-3 py-2 border border-orange-200 mt-1">
-                        <span className="text-sm">💰</span>
-                        <p className="text-xs text-orange-700 font-medium">
-                          Refund of ৳{order.total.toLocaleString()} has been
-                          processed via {order.paymentMethod}
-                        </p>
-                      </div>
+                    <div className="flex justify-between gap-3 border-t border-border pt-3 font-semibold">
+                      <span>Total</span>
+                      <span className="text-primary">
+                        {formatMoney(order.totalAmount, order.currency)}
+                      </span>
+                    </div>
+                    {order.payments.length > 0 && (
+                      <ul className="space-y-2 border-t border-border pt-3">
+                        {order.payments.map((payment) => (
+                          <li key={payment.id} className="text-xs">
+                            <p className="font-medium text-foreground">
+                              {payment.cardType ??
+                                payment.cardBrand ??
+                                "Payment"}{" "}
+                              <span className="font-normal text-muted-foreground lowercase">
+                                {payment.status}
+                              </span>
+                            </p>
+                            <p className="text-muted-foreground">
+                              {payment.tranId},{" "}
+                              {formatOrderDate(payment.createdAt, true)}
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
                     )}
                   </div>
-                </div>
-              )}
+                </OrderSection>
 
-            {/* ── Status Timeline ── */}
-            <div className="border border-border rounded-xl bg-card overflow-hidden">
-              <h2 className="text-sm font-bold text-foreground px-4 sm:px-5 py-3 border-b border-border flex items-center gap-2">
-                <span className="w-1 h-4 bg-primary rounded-full" />
-                Order Status
-              </h2>
-              <div className="flex flex-col gap-0 px-4 sm:px-5 py-4">
-                {order.orderStatus === OrderStatus.CANCELLED ||
-                order.orderStatus === OrderStatus.RETURNED
-                  ? /* Full history for cancelled/returned */
-                    (order.statusHistory ?? []).map((entry, idx) => {
-                      const entries = order.statusHistory ?? [];
-                      const isCancelled =
-                        entry.status === OrderStatus.CANCELLED;
-                      const isReturned = entry.status === OrderStatus.RETURNED;
-                      return (
-                        <div
-                          key={idx}
-                          className="flex items-start gap-3 relative pb-5 last:pb-0"
-                        >
-                          {idx < entries.length - 1 && (
-                            <div
-                              className={`absolute left-2.25 top-5 w-0.5 h-[calc(100%-12px)] ${
-                                isCancelled || isReturned
-                                  ? "bg-red-300"
-                                  : "bg-primary"
-                              }`}
-                            />
-                          )}
-                          <div
-                            className={`w-4.5 h-4.5 rounded-full border-2 shrink-0 mt-0.5 ${
-                              isCancelled
-                                ? "bg-red-500 border-red-500"
-                                : isReturned
-                                  ? "bg-orange-500 border-orange-500"
-                                  : "bg-primary border-primary"
-                            }`}
-                          />
-                          <div>
-                            <p
-                              className={`text-sm font-medium capitalize ${
-                                isCancelled
-                                  ? "text-red-600"
-                                  : isReturned
-                                    ? "text-orange-600"
-                                    : "text-foreground"
-                              }`}
-                            >
-                              {entry.status}
-                            </p>
-                            <p className="text-[11px] text-muted-foreground mt-0.5">
-                              {new Date(entry.date).toLocaleDateString(
-                                "en-US",
-                                {
-                                  month: "short",
-                                  day: "numeric",
-                                  year: "numeric",
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                }
-                              )}
-                            </p>
-                            {entry.note && (
-                              <p className="text-[11px] text-muted-foreground italic mt-0.5">
-                                {entry.note}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })
-                  : /* Normal flow */
-                    STATUS_FLOW.map((status, idx) => {
-                      const isDone = idx < currentStatusIdx;
-                      const isActive = idx === currentStatusIdx;
-                      return (
-                        <div
-                          key={status}
-                          className="flex items-start gap-3 relative pb-5 last:pb-0"
-                        >
-                          {idx < STATUS_FLOW.length - 1 && (
-                            <div
-                              className={`absolute left-2.25 top-5 w-0.5 h-[calc(100%-12px)] ${isDone ? "bg-primary" : "bg-border"}`}
-                            />
-                          )}
-                          <div
-                            className={`w-4.5 h-4.5 rounded-full border-2 shrink-0 mt-0.5 ${
-                              isDone
-                                ? "bg-primary border-primary"
-                                : isActive
-                                  ? "bg-card border-primary shadow-md"
-                                  : "bg-muted border-border"
-                            }`}
-                          />
-                          <div>
-                            <p
-                              className={`text-sm font-medium capitalize ${isDone || isActive ? "text-foreground" : "text-foreground/45"}`}
-                            >
-                              {status}
-                            </p>
-                            {isActive && (
-                              <p className="text-[11px] text-muted-foreground mt-0.5">
-                                {new Date(order.updatedAt).toLocaleDateString(
-                                  "en-US",
-                                  {
-                                    month: "short",
-                                    day: "numeric",
-                                    year: "numeric",
-                                  }
-                                )}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-              </div>
-            </div>
-
-            {/* Payment & Tracking */}
-            <div className="border border-border rounded-xl bg-card overflow-hidden">
-              <h2 className="text-sm font-bold text-foreground px-4 sm:px-5 py-3 border-b border-border flex items-center gap-2">
-                <span className="w-1 h-4 bg-primary rounded-full" />
-                Payment & Delivery
-              </h2>
-              <div className="grid grid-cols-2 gap-3 px-4 sm:px-5 py-4">
-                <div>
-                  <p className="text-[11px] text-muted-foreground mb-0.5">
-                    Payment Method
-                  </p>
-                  <p className="text-sm font-medium text-foreground">
-                    {order.paymentMethod}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[11px] text-muted-foreground mb-0.5">
-                    Payment Status
-                  </p>
-                  <p
-                    className={`text-sm font-medium ${
-                      order.paymentStatus === "REFUNDED"
-                        ? "text-purple-600"
-                        : order.paymentStatus === "PAID"
-                          ? "text-green-600"
-                          : order.paymentStatus === "FAILED"
-                            ? "text-red-600"
-                            : "text-foreground"
-                    }`}
-                  >
-                    {order.paymentStatus}
-                  </p>
-                </div>
-                {order.trackingNumber && (
-                  <div>
-                    <p className="text-[11px] text-muted-foreground mb-0.5">
-                      Tracking Number
+                {order.note && (
+                  <OrderSection title="Your note" icon={MessageSquare}>
+                    <p className="text-sm whitespace-pre-line text-secondary-foreground">
+                      {order.note}
                     </p>
-                    <p className="text-sm font-medium text-foreground">
-                      {order.trackingNumber}
-                    </p>
-                  </div>
-                )}
-                {order.estimatedDelivery && (
-                  <div>
-                    <p className="text-[11px] text-muted-foreground mb-0.5">
-                      Estimated Delivery
-                    </p>
-                    <p className="text-sm font-medium text-foreground">
-                      {new Date(order.estimatedDelivery).toLocaleDateString(
-                        "en-US",
-                        {
-                          month: "short",
-                          day: "numeric",
-                          year: "numeric",
-                        }
-                      )}
-                    </p>
-                  </div>
+                  </OrderSection>
                 )}
               </div>
             </div>
 
-            {/* Order Summary */}
-            <div className="border border-border rounded-xl bg-card overflow-hidden">
-              <h2 className="text-sm font-bold text-foreground px-4 sm:px-5 py-3 border-b border-border flex items-center gap-2">
-                <span className="w-1 h-4 bg-primary rounded-full" />
-                Order Total
-              </h2>
-              <div className="flex flex-col gap-2 px-4 sm:px-5 py-4">
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Subtotal</span>
-                  <span className="font-medium">
-                    ৳{order.subtotal.toLocaleString()}
-                  </span>
-                </div>
-                {order.discount > 0 && (
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">
-                      Discount{order.couponCode ? ` (${order.couponCode})` : ""}
-                    </span>
-                    <span className="font-medium text-green-600">
-                      -৳{order.discount.toLocaleString()}
-                    </span>
-                  </div>
-                )}
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Shipping</span>
-                  <span
-                    className={`font-medium ${order.shippingCost === 0 ? "text-green-600" : ""}`}
-                  >
-                    {order.shippingCost === 0
-                      ? "Free"
-                      : `৳${order.shippingCost.toLocaleString()}`}
-                  </span>
-                </div>
-                <hr className="border-border my-1" />
-                <div className="flex justify-between text-base font-bold">
-                  <span>Total</span>
-                  <span className="text-primary">
-                    ৳{order.total.toLocaleString()}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+            <CancelOrderDialog
+              order={order}
+              isOpen={isCancelOpen}
+              onClose={() => setIsCancelOpen(false)}
+            />
+          </>
+        )}
       </div>
-    </Container>
+    </div>
   );
 };
 

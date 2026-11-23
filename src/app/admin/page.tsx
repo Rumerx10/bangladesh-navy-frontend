@@ -72,6 +72,16 @@ export const metadata: Metadata = {
 const AdminDashboardPage = () => {
   return (
     <div className="space-y-8 lg:space-y-10">
+      <header className="backdrop-blur-xs bg-transparent rounded-xl border border-light-silver p-6 lg:p-8 space-y-2">
+        <h1 className="text-2xl font-semibold tracking-tight text-pBlue lg:text-3xl">
+          Welcome back
+        </h1>
+        <p className="mt-1.5 max-w-2xl text-sm text-pretty text-secondary-gray lg:text-base">
+          Manage products, content, news and users for the BNHOC platform —
+          everything you need, in one place.
+        </p>
+      </header>
+
       {/* Quick access */}
       <div>
         <h2 className="text-xl font-bold text-pBlue lg:text-2xl">
@@ -86,7 +96,7 @@ const AdminDashboardPage = () => {
             <Link
               key={href}
               href={href}
-              className="group relative flex flex-col gap-3 rounded-xl border border-light-silver bg-card p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg"
+              className="group relative flex flex-col gap-3 rounded-xl border border-light-silver bg-transparent backdrop-blur-xs p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg"
             >
               <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary group-hover:text-white">
                 <Icon className="h-5 w-5" />

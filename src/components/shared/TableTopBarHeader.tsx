@@ -1,22 +1,17 @@
-import DynamicBreadcrumb from "./DynamicBreadcrumb";
-
 interface TableHeaderProps {
   title?: string;
 }
 
+/** Page title for admin list pages. The "where am I" trail lives in the admin
+ *  top bar (AdminBreadcrumb), so this is the heading alone. */
 const TableTopBarHeader = ({ title }: TableHeaderProps) => {
   return (
-    <div className="flex flex-col lg:flex-row w-full lg:items-center justify-between gap-4">
-      <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2">
-          <div>
-            <h1 className="text-2xl text-secondary-dark font-semibold mb-2">
-              {title}
-            </h1>
-            <DynamicBreadcrumb />
-          </div>
-        </div>
-      </div>
+    <div className="w-full min-w-0">
+      {title && (
+        <h1 className="text-2xl font-semibold tracking-tight text-secondary-dark">
+          {title}
+        </h1>
+      )}
     </div>
   );
 };

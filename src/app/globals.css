@@ -177,6 +177,11 @@
      with the theme rather than keeping one colour. */
   --dot-grid: rgb(203 213 225 / 0.9);
 
+  /* Ground of the admin workspace, under the coastal chart (see
+     `.admin-canvas`). Cool and a step below white, so content cards read as
+     sheets laid on a chart table rather than dissolving into the page. */
+  --admin-canvas: var(--light-blue);
+
   /* Long-form body ink. Deliberately softer than `--foreground`: full-strength
      black over several hundred words of justified text is fatiguing, and the
      faint blue cast ties the copy to the navy brand. Consumed by `.rich-text`
@@ -315,6 +320,11 @@
   /* Near-black, well under the canvas it sits on, so the grid stays a texture
      you read past. Light dots here would turn the chart into a starfield. */
   --dot-grid: oklch(0.12 0.02 235 / 0.9);
+
+  /* The page itself, not `--light-blue`: that one steps *up* in this theme
+     and would sit lighter than the cards, so they'd look sunk into the chart
+     instead of laid on it. */
+  --admin-canvas: var(--background);
 }
 
 /* =========================
@@ -346,11 +356,29 @@
   .scrollbar-modern::-webkit-scrollbar {
     @apply w-1;
   }
+  /* Transparent, not a fill: the admin sidebar is frosted glass, and a
+     painted track would draw a solid strip down its edge. */
   .scrollbar-modern::-webkit-scrollbar-track {
-    @apply bg-background rounded-full;
+    @apply bg-transparent rounded-full;
   }
   .scrollbar-modern::-webkit-scrollbar-thumb {
     @apply bg-light-silver rounded-full transition-colors duration-200;
+  }
+}
+
+/* =========================
+   BELOW THE SITE HEADER
+   The site header is position: fixed — on phones a 56px bar plus the 36px
+   notice strip (92px), on desktop a 96px bar plus a 44px strip (140px). In
+   the page flow it reserves nothing on phones and 40px on desktop
+   (Header's `lg:pb-10`). Pages that start with ordinary content, rather
+   than a hero designed to sit under the header, use this to clear it with
+   ~20–28px to spare.
+========================= */
+@utility below-site-header {
+  padding-top: 7rem;
+  @variant lg {
+    padding-top: 8rem;
   }
 }
 
@@ -605,6 +633,79 @@ input[type="time"]::-moz-inner-spin-button {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* ================================
+   Admin workspace — coastal chart canvas
+
+   Every admin page is laid on the centre's own ENC index of the Bangladesh
+   coast, cut down to its line work (coast, river channels, graticule, place
+   names) in /chart/enc-index-linework.webp — derived from enc-index.jpg with
+   the land/water fills and the catalogue boxes removed.
+
+   That file is used as a *mask*, not painted: its alpha cuts the lines out of
+   a layer filled with `--primary`, so the chart is drawn in the theme's own
+   navy and follows it into dark mode with no second asset. The second mask
+   layer fades it toward the bottom, so long tables end on calm ground.
+
+   It spans the sidebar as well as the workspace: the sidebar and the data
+   tables are frosted glass over it (`backdrop-blur`), so the chart reads
+   softly through them while their text sits on an even, light ground.
+
+   The element itself is positioned by the layout; it only paints, with the
+   glow and the chart on its two pseudo-elements. Strength is set with
+   `opacity` on solid `--primary` rather than with `color-mix()`: Tailwind
+   gives color-mix a full-strength fallback, which in a browser without it
+   would paint the whole chart solid navy.
+================================= */
+.admin-canvas {
+  background-color: var(--admin-canvas);
+}
+
+.admin-canvas::before,
+.admin-canvas::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* A little light falling from the masthead, so the navy band doesn't stop
+   dead against a flat ground. */
+.admin-canvas::before {
+  background: radial-gradient(
+    80% 55% at 50% 0%,
+    var(--primary),
+    transparent 70%
+  );
+  opacity: 0.08;
+}
+
+/* The chart. */
+.admin-canvas::after {
+  background-color: var(--primary);
+  opacity: 0.24;
+  mask-image:
+    url("/chart/enc-index-linework.webp"),
+    linear-gradient(to bottom, #000 20%, rgb(0 0 0 / 0.4));
+  mask-size:
+    cover,
+    100% 100%;
+  mask-position:
+    top center,
+    0 0;
+  mask-repeat: no-repeat;
+  mask-composite: intersect;
+}
+
+/* The dark accent is a light blue on a near-black ground, so both layers
+   need a touch more strength to read the same. */
+.dark .admin-canvas::before {
+  opacity: 0.12;
+}
+
+.dark .admin-canvas::after {
+  opacity: 0.28;
 }
 
 /* ================================

@@ -67,13 +67,15 @@ export const productSchema = Yup.object({
   category: Yup.string()
     .oneOf(["", "PAPPER_CHART", "ELECTRONIC_NAVIGATIONAL_CHART", "TIDAL"])
     .test("category-required", "Category is required", (value) => !!value),
+  // Required: orders are priced from this field (the API never takes a
+  // price from the cart).
   price: Yup.number()
     .transform((value, originalValue) =>
       originalValue === "" ? undefined : value
     )
     .typeError("Price must be a number")
-    .min(0, "Price must be positive")
-    .optional(),
+    .required("Price is required")
+    .min(0, "Price can't be negative"),
   chartCode: Yup.string().when("category", {
     is: (value: string) => value !== "TIDAL",
     then: (schema) => schema.required("Chart code is required"),

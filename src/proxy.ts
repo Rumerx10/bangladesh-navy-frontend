@@ -11,13 +11,18 @@ function decodeJwtPayload(token: string): Record<string, unknown> | null {
   }
 }
 
-const AUTH_PAGE_PREFIXES = ["/auth/login", "/auth/signup"];
-const CUSTOMER_ONLY_PREFIXES = [
-  "/cart",
-  "/checkout",
-  "/orders",
-  "/account/orders",
+const AUTH_PAGE_PREFIXES = [
+  "/auth/login",
+  "/auth/signup",
+  "/auth/forgot-password",
 ];
+const CUSTOMER_ONLY_PREFIXES = ["/checkout", "/orders", "/account/orders"];
+
+// The cart lives in the browser, so visitors may open it; signing in is
+// asked for at checkout. Admins don't buy, so they're still sent away.
+const NOT_FOR_ADMIN_PREFIXES = ["/cart"];
+
+const SIGNED_IN_PREFIXES = ["/account"];
 
 const matchesPrefix = (pathname: string, prefixes: string[]) =>
   prefixes.some((p) => pathname === p || pathname.startsWith(`${p}/`));
@@ -80,6 +85,17 @@ export default function proxy(request: NextRequest) {
       return NextResponse.redirect(new URL("/admin", request.url));
     }
     return NextResponse.next();
+  }
+
+  if (matchesPrefix(pathname, NOT_FOR_ADMIN_PREFIXES) && isAdmin) {
+    return NextResponse.redirect(new URL("/admin", request.url));
+  }
+
+  // Account pages (profile, addresses, password): any signed-in user.
+  if (matchesPrefix(pathname, SIGNED_IN_PREFIXES) && !isLoggedIn) {
+    const loginUrl = new URL("/auth/login", request.url);
+    loginUrl.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
   return NextResponse.next();

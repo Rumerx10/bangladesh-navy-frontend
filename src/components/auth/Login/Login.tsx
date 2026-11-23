@@ -25,7 +25,9 @@ const LoginPage = () => {
     error,
   } = useAuth((_data, role: string) => {
     const redirect = searchParams.get("redirect");
-    if (redirect) {
+    // Same-site paths only, so a crafted link can't send a fresh login
+    // off-site.
+    if (redirect?.startsWith("/") && !redirect.startsWith("//")) {
       router.push(redirect);
     } else if (isAdminRole(role)) {
       router.push("/admin");

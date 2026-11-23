@@ -11,14 +11,7 @@ import {
 import { Input } from "@/src/components/ui/input";
 import { Button } from "@/src/components/ui/button";
 import { Plus, X } from "lucide-react";
-import {
-  Controller,
-  get,
-  useFormContext,
-  type FieldError,
-} from "react-hook-form";
-
-type ArrayFieldError = (FieldError & { root?: FieldError }) | undefined;
+import { Controller, get, useFormContext } from "react-hook-form";
 
 interface MultipleStringFieldProps {
   name: string;
@@ -35,6 +28,9 @@ interface MultipleStringFieldProps {
   unique?: boolean;
   inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
 }
+
+// RHF's `get()` is typed as `{}`, so spell out the bits we read.
+type FieldErrorShape = { message?: string; root?: { message?: string } };
 
 const MultipleStringField = ({
   name,
@@ -59,12 +55,11 @@ const MultipleStringField = ({
 
   // Array-level errors ("At least one…", "Each … must be different") sit on
   // the list itself; an invalid entry's error sits on its index.
-  const fieldErrors = get<typeof errors, ArrayFieldError>(errors, name);
+  const fieldErrors: FieldErrorShape | undefined = get(errors, name);
   const listError: string | undefined =
     fieldErrors?.message ?? fieldErrors?.root?.message;
   const itemError = (index: number): string | undefined =>
-    get<typeof errors, FieldError | undefined>(errors, `${name}.${index}`)
-      ?.message;
+    (get(errors, `${name}.${index}`) as FieldErrorShape | undefined)?.message;
 
   const updateItems = (next: string[]) =>
     setValue(name, next, { shouldValidate: true, shouldDirty: true });

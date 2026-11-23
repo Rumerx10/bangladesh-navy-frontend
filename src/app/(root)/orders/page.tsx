@@ -1,13 +1,9 @@
-import { Metadata } from "next";
-import OrdersClient from "./OrdersClient";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "My Orders | Bangladesh Navy Hydrographic & Oceanographic Center",
-  description: "View your order history.",
-};
-
+// Order history lives in the account area; this keeps old /orders links
+// working.
 const OrdersPage = () => {
-  return <OrdersClient />;
+  redirect("/account/orders");
 };
 
 export default OrdersPage;

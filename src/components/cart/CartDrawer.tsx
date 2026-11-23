@@ -22,6 +22,7 @@ const CartDrawer = () => {
   const { isOpen, closeDrawer } = useCartDrawer();
   const dispatch = useAppDispatch();
   const { items } = useAppSelector((state) => state.cart);
+  const isGuest = useAppSelector((state) => state.permission.role === "GUEST");
 
   const subtotal = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -184,13 +185,26 @@ const CartDrawer = () => {
               </span>
             </div>
             <Link
-              href="/cart"
+              href="/checkout"
               onClick={closeDrawer}
-              className="flex items-center justify-center gap-2 w-full py-3 rounded-lg bg-brand-blue text-white font-semibold text-sm hover:bg-brand-blue transition-colors"
+              className="flex items-center justify-center gap-2 w-full py-3 rounded-lg bg-brand-blue text-white font-semibold text-sm hover:opacity-90 transition-opacity"
             >
-              View Cart
+              Checkout
               <ArrowRight size={16} />
             </Link>
+            <Link
+              href="/cart"
+              onClick={closeDrawer}
+              className="flex items-center justify-center w-full py-2.5 rounded-lg border border-border text-foreground font-medium text-sm hover:bg-light transition-colors"
+            >
+              View cart
+            </Link>
+            {isGuest && (
+              <p className="text-center text-xs text-muted-foreground">
+                You&apos;ll log in before placing the order. Your cart stays in
+                this browser.
+              </p>
+            )}
           </div>
         )}
       </div>
