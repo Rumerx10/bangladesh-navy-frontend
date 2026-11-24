@@ -34,6 +34,19 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
     };
   }, [open]);
 
+  // The drawer is `lg:hidden`, but CSS alone leaves it "open" when the
+  // viewport widens: the body stays scroll-locked and the drawer pops back on
+  // narrowing again. Close it once we cross Tailwind's `lg` (64rem).
+  useEffect(() => {
+    if (!open) return;
+    const lgQuery = window.matchMedia("(min-width: 64rem)");
+    const closeOnLg = (e: MediaQueryListEvent) => {
+      if (e.matches) setOpen(false);
+    };
+    lgQuery.addEventListener("change", closeOnLg);
+    return () => lgQuery.removeEventListener("change", closeOnLg);
+  }, [open, setOpen]);
+
   // Parent (and nested group) labels that contain the active link — always shown expanded
   const activeExpandedLabels = useMemo(() => {
     const labels = new Set<string>();
@@ -213,7 +226,7 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
       {/* Overlay */}
       {open && (
         <div
-          className="fixed inset-0 bg-black/50 z-60 backdrop-blur-sm"
+          className="lg:hidden fixed inset-0 bg-black/50 z-60 backdrop-blur-sm"
           onClick={() => setOpen(false)}
         />
       )}
@@ -222,7 +235,7 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
       {open && (
         <button
           onClick={() => setOpen(false)}
-          className="fixed z-80 top-3 bg-card/90 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center shadow-lg border border-border"
+          className="lg:hidden fixed z-80 top-3 bg-card/90 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center shadow-lg border border-border"
           style={{ right: "calc(min(320px, 85vw) + 8px)" }}
           aria-label="Close menu"
         >
@@ -232,7 +245,7 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 z-70 h-screen w-80 max-w-[85vw] bg-card transform transition-transform duration-300 flex flex-col ${
+        className={`lg:hidden fixed top-0 right-0 z-70 h-screen w-80 max-w-[85vw] bg-card transform transition-transform duration-300 flex flex-col ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >

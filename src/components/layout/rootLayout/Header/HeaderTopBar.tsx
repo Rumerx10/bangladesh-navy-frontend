@@ -49,7 +49,7 @@ const subLinkIdle = "text-nav-ink-muted hover:bg-nav-wash hover:text-nav-ink";
 // size. The blur is what makes the transparency read as frosted glass rather
 // than as a washed-out fill, so the two belong together.
 const panelSurface =
-  "bg-(image:--nav-panel) backdrop-blur-2xl border border-nav-hairline shadow-2xl";
+  "bg-(image:--nav-panel) backdrop-blur-xs border border-nav-hairline shadow-2xl";
 
 const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
   const pathname = usePathname();
