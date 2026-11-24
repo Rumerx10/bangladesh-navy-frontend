@@ -13,8 +13,10 @@ interface HeaderTopBarProps {
   setMenuOpen: (value: boolean) => void;
 }
 
-// Primary items always shown in the main nav row
+// Primary items in the main nav row
 const PRIMARY_LABELS = ["Home", "About Us", "Nautical Products"];
+// Primary items that still collapse into "More" below 1800 px, listed first
+const COLLAPSIBLE_PRIMARY_LABELS = ["About Us"];
 // Items collapsed into "Others" below 1800 px
 const OTHERS_LABELS = ["Training and Courses", "Contact", "Important Notice"];
 
@@ -24,6 +26,15 @@ const primaryItems = NavigationItems.filter((item) =>
 const othersItems = NavigationItems.filter((item) =>
   OTHERS_LABELS.includes(item.label)
 );
+// Everything the "More" panel holds, collapsible primary items on top
+const moreItems = [
+  ...primaryItems.filter((item) =>
+    COLLAPSIBLE_PRIMARY_LABELS.includes(item.label)
+  ),
+  ...othersItems,
+];
+
+const wideOnlyClass = "hidden min-[1800px]:block";
 
 const triggerBase =
   "inline-flex items-center gap-1 px-2.5 py-2 text-sm font-medium rounded-sm transition-colors cursor-pointer whitespace-nowrap";
@@ -39,7 +50,8 @@ const triggerIdle = "text-nav-ink-muted hover:text-nav-ink hover:bg-nav-wash";
 // of the gradient sits behind it, which keeps it reading the same at the dark
 // end of the sweep and at the bright end. A solid surface token here would
 // punch an opaque rectangle through the gradient.
-const subLinkBase = "whitespace-nowrap block rounded-md px-3 py-2.5 text-sm transition-colors";
+const subLinkBase =
+  "whitespace-nowrap block rounded-md px-3 py-2.5 text-sm transition-colors";
 const subLinkActive = "text-nav-ink bg-nav-wash-strong font-medium";
 const subLinkIdle = "text-nav-ink-muted hover:bg-nav-wash hover:text-nav-ink";
 
@@ -236,8 +248,15 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
 
         <nav ref={navRef} className="hidden lg:flex flex-1 justify-center">
           <ul className="flex items-center gap-0.5">
-            {/* Primary items — always visible */}
-            {primaryItems.map((item) => renderNavItem(item))}
+            {/* Primary items — collapsible ones only at 1800 px+ */}
+            {primaryItems.map((item) =>
+              renderNavItem(
+                item,
+                COLLAPSIBLE_PRIMARY_LABELS.includes(item.label)
+                  ? wideOnlyClass
+                  : undefined
+              )
+            )}
 
             {/* "Others" mega-dropdown — visible below 1800 px */}
             <li className="relative min-[1800px]:hidden">
@@ -245,7 +264,10 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
                 type="button"
                 aria-expanded={openMenu === "More"}
                 onClick={() => toggleMenu("More")}
-                className={`${triggerBase} ${triggerIdle}`}
+                // Highlight "More" when the current page lives inside it
+                className={`${triggerBase} ${
+                  moreItems.some(isItemActive) ? triggerActive : triggerIdle
+                }`}
               >
                 More
                 <ChevronDown
@@ -258,11 +280,11 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
                 className={`absolute left-1/2 top-full z-50 -translate-x-1/2 rounded-xl ${panelSurface} ${openMenu === "More" ? "block" : "hidden"}`}
               >
                 <div className="flex flex-col p-3 gap-1">
-                  {othersItems.map((section, i) => (
+                  {moreItems.map((section, i) => (
                     <div
                       key={section.label}
                       className={`min-w-44 px-2 ${
-                        i < othersItems.length - 1
+                        i < moreItems.length - 1
                           ? "border-b mb-3 border-nav-hairline pb-2"
                           : ""
                       }`}
@@ -345,9 +367,7 @@ const HeaderTopBar = ({ menuOpen, setMenuOpen }: HeaderTopBarProps) => {
             </li>
 
             {/* Individual "others" items — only shown at 1800 px+ */}
-            {othersItems.map((item) =>
-              renderNavItem(item, "hidden min-[1800px]:block")
-            )}
+            {othersItems.map((item) => renderNavItem(item, wideOnlyClass))}
           </ul>
         </nav>
 
