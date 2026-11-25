@@ -103,7 +103,7 @@ const HowToCollect = () => {
       />
 
       {/* Collection Flow */}
-      <section className="py-8 lg:py-20 bg-card">
+      <section className="py-8 lg:py-20">
         <Container>
           <SectionTitle
             title="Collection Process"

@@ -1,6 +1,6 @@
 const CourseContentPreviewSkeleton = () => {
   return (
-    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden animate-pulse">
+    <div className="bg-transparent backdrop-blur-md rounded-2xl shadow-sm border border-border overflow-hidden animate-pulse">
       <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-8 py-6 border-b border-border">
         <div className="flex items-center gap-3">
           <div className="bg-light-silver w-10 h-10 rounded-xl" />

@@ -2,7 +2,7 @@ import { Skeleton } from "@/src/components/ui/skeleton";
 
 const BiographyPreviewSkeleton = () => {
   return (
-    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
+    <div className="bg-transparent backdrop-blur-md rounded-2xl shadow-sm border border-border overflow-hidden">
       <div className="px-8 py-6 border-b border-border">
         <div className="flex items-center gap-3">
           <Skeleton className="w-10 h-10 rounded-xl" />

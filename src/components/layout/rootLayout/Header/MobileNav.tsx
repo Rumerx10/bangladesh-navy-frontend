@@ -1,23 +1,88 @@
 "use client";
 
-import { ChevronDown, ChevronRight, FileText, Search, X } from "lucide-react";
+import { ChevronDown, FileText, LogIn, LogOut, Search, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { NavItem, NavigationItems, SubLink } from "@/src/data/navigationItems";
 import { toSearchTerms } from "@/src/components/products/productSearch";
+import { openLoginModal } from "@/src/lib/redux/features/auth/authSlice";
+import { useAppDispatch } from "@/src/lib/redux/hooks";
+import { Avatar, useAccountMenu } from "./ProfileDropdown";
 import { findPages } from "./searchPages";
+import { useAccountStatus } from "./useAccountStatus";
 
 interface MobileNavProps {
   open: boolean;
   setOpen: (value: boolean) => void;
 }
 
+/** Always mounted; slides open and back shut by animating a grid row between
+ *  0fr and 1fr, i.e. from 0 to the list's exact height. Unlike a max-height
+ *  ceiling there's no dead time on close and no cap to outgrow, and a nested
+ *  group opening inside just grows its parent. `inert` keeps a closed panel's
+ *  links out of the tab order and away from screen readers.
+ *
+ *  Deliberately no `motion-reduce:` guard: with the OS "Animation effects"
+ *  setting off (as on the dev machine), it made every open/close instant. */
+const Collapse = ({
+  open,
+  className,
+  children,
+}: {
+  open: boolean;
+  className?: string;
+  children: ReactNode;
+}) => (
+  <div
+    inert={!open}
+    className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
+      open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+    }`}
+  >
+    {/* min-h-0 lets the row shrink to 0; spacing goes on the innermost box
+        so the closed panel is truly 0px tall. */}
+    <div className="min-h-0 overflow-hidden">
+      <div className={className}>{children}</div>
+    </div>
+  </div>
+);
+
+const chevronClass = (isExpanded: boolean) =>
+  `shrink-0 transition-transform duration-300 ${
+    isExpanded ? "rotate-180" : "rotate-0"
+  }`;
+
+/** The dropdown (and nested group) holding the current page, opened by default. */
+const getActiveLabels = (path: string) => {
+  for (const item of NavigationItems) {
+    for (const sub of item.subLinks ?? []) {
+      if (sub.link === path) return { item: item.label, sub: null };
+      if (sub.subLinks?.some((nested) => nested.link === path)) {
+        return { item: item.label, sub: sub.label };
+      }
+    }
+  }
+  return { item: null, sub: null };
+};
+
 const MobileNav = ({ open, setOpen }: MobileNavProps) => {
   const pathname = usePathname();
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const accountStatus = useAccountStatus();
+  const { userInformation, fullName, menuItems, logout } = useAccountMenu();
+  const [accountOpen, setAccountOpen] = useState(false);
 
-  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
+  // One dropdown open at a time (and one nested group inside it). The one
+  // holding the current page starts open but can still be closed.
+  const [openDropdown, setOpenDropdown] = useState<string | null>(
+    () => getActiveLabels(pathname).item
+  );
+  const [openSubDropdown, setOpenSubDropdown] = useState<string | null>(
+    () => getActiveLabels(pathname).sub
+  );
+  const [prevPathname, setPrevPathname] = useState(pathname);
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
@@ -34,23 +99,27 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
     };
   }, [open]);
 
-  // Parent (and nested group) labels that contain the active link — always shown expanded
-  const activeExpandedLabels = useMemo(() => {
-    const labels = new Set<string>();
-    for (const item of NavigationItems) {
-      if (!item.subLinks) continue;
-      for (const sub of item.subLinks) {
-        if (sub.link === pathname) {
-          labels.add(item.label);
-        }
-        if (sub.subLinks?.some((nested) => nested.link === pathname)) {
-          labels.add(item.label);
-          labels.add(sub.label);
-        }
-      }
-    }
-    return labels;
-  }, [pathname]);
+  // The drawer is `lg:hidden`, but CSS alone leaves it "open" when the
+  // viewport widens: the body stays scroll-locked and the drawer pops back on
+  // narrowing again. Close it once we cross Tailwind's `lg` (64rem).
+  useEffect(() => {
+    if (!open) return;
+    const lgQuery = window.matchMedia("(min-width: 64rem)");
+    const closeOnLg = (e: MediaQueryListEvent) => {
+      if (e.matches) setOpen(false);
+    };
+    lgQuery.addEventListener("change", closeOnLg);
+    return () => lgQuery.removeEventListener("change", closeOnLg);
+  }, [open, setOpen]);
+
+  // Re-open the current page's dropdown after navigation — adjusted during
+  // render rather than in an effect, so there's no frame with the old one.
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    const active = getActiveLabels(pathname);
+    setOpenDropdown(active.item);
+    setOpenSubDropdown(active.sub);
+  }
 
   // Close suggestions on outside click
   useEffect(() => {
@@ -63,16 +132,12 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const toggleItem = (label: string) => {
-    setExpandedItems((prev) => {
-      const next = new Set(prev);
-      if (next.has(label)) {
-        next.delete(label);
-      } else {
-        next.add(label);
-      }
-      return next;
-    });
+  const toggleDropdown = (label: string) => {
+    setOpenDropdown((prev) => (prev === label ? null : label));
+  };
+
+  const toggleSubDropdown = (label: string) => {
+    setOpenSubDropdown((prev) => (prev === label ? null : label));
   };
 
   const query = searchQuery.trim();
@@ -103,41 +168,51 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
     submitSearch();
   };
 
+  const handleLogin = () => {
+    // Close first so the login modal isn't stacked under the drawer overlay.
+    setOpen(false);
+    dispatch(openLoginModal());
+  };
+
+  const handleLogout = () => {
+    setAccountOpen(false);
+    setOpen(false);
+    logout();
+  };
+
   function renderSubItem(sub: SubLink) {
     if (sub.subLinks) {
-      const isExpanded =
-        expandedItems.has(sub.label) || activeExpandedLabels.has(sub.label);
+      const isExpanded = openSubDropdown === sub.label;
       return (
         <div key={sub.label}>
           <button
-            onClick={() => toggleItem(sub.label)}
+            type="button"
+            aria-expanded={isExpanded}
+            onClick={() => toggleSubDropdown(sub.label)}
             className="flex items-center justify-between w-full py-2 px-3 text-sm font-medium text-foreground hover:bg-light rounded-md"
           >
             {sub.label}
-            {isExpanded ? (
-              <ChevronDown size={14} className="shrink-0" />
-            ) : (
-              <ChevronRight size={14} className="shrink-0" />
-            )}
+            <ChevronDown size={14} className={chevronClass(isExpanded)} />
           </button>
-          {isExpanded && (
-            <div className="ml-3 pl-3 border-l border-[#ffb900] flex flex-col gap-0.5">
-              {sub.subLinks.map((nested) => (
-                <Link
-                  key={nested.label}
-                  href={nested.link}
-                  onClick={() => setOpen(false)}
-                  className={`py-2 px-3 text-sm rounded-md block ${
-                    pathname === nested.link
-                      ? "text-liteBlue bg-liteBlue/5 font-medium"
-                      : "text-secondary-foreground hover:text-liteBlue hover:bg-light"
-                  }`}
-                >
-                  {nested.label}
-                </Link>
-              ))}
-            </div>
-          )}
+          <Collapse
+            open={isExpanded}
+            className="ml-3 pl-3 border-l border-[#ffb900] flex flex-col gap-0.5"
+          >
+            {sub.subLinks.map((nested) => (
+              <Link
+                key={nested.label}
+                href={nested.link}
+                onClick={() => setOpen(false)}
+                className={`py-2 px-3 text-sm rounded-md block ${
+                  pathname === nested.link
+                    ? "text-liteBlue bg-liteBlue/5 font-medium"
+                    : "text-secondary-foreground hover:text-liteBlue hover:bg-light"
+                }`}
+              >
+                {nested.label}
+              </Link>
+            ))}
+          </Collapse>
         </div>
       );
     }
@@ -162,8 +237,7 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
       item.link === "/"
         ? pathname === "/"
         : item.link !== "#" && pathname?.startsWith(item.link);
-    const isExpanded =
-      expandedItems.has(item.label) || activeExpandedLabels.has(item.label);
+    const isExpanded = openDropdown === item.label;
 
     if (!item.subLinks) {
       return (
@@ -185,7 +259,9 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
     return (
       <div key={item.label}>
         <button
-          onClick={() => toggleItem(item.label)}
+          type="button"
+          aria-expanded={isExpanded}
+          onClick={() => toggleDropdown(item.label)}
           className={`flex items-center justify-between w-full py-2.5 px-3 rounded-md text-sm font-medium ${
             isActive
               ? "text-liteBlue hover:bg-light"
@@ -193,17 +269,14 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
           }`}
         >
           {item.label}
-          {isExpanded ? (
-            <ChevronDown size={16} className="shrink-0" />
-          ) : (
-            <ChevronRight size={16} className="shrink-0" />
-          )}
+          <ChevronDown size={16} className={chevronClass(isExpanded)} />
         </button>
-        {isExpanded && (
-          <div className="ml-3 pl-3 border-l border-[#ffb900] flex flex-col gap-0.5 mt-0.5">
-            {item.subLinks.map((sub) => renderSubItem(sub))}
-          </div>
-        )}
+        <Collapse
+          open={isExpanded}
+          className="ml-3 pl-3 border-l border-[#ffb900] flex flex-col gap-0.5 mt-0.5"
+        >
+          {item.subLinks.map((sub) => renderSubItem(sub))}
+        </Collapse>
       </div>
     );
   }
@@ -213,7 +286,7 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
       {/* Overlay */}
       {open && (
         <div
-          className="fixed inset-0 bg-black/50 z-60 backdrop-blur-sm"
+          className="lg:hidden fixed inset-0 bg-black/50 z-60 backdrop-blur-sm"
           onClick={() => setOpen(false)}
         />
       )}
@@ -222,7 +295,7 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
       {open && (
         <button
           onClick={() => setOpen(false)}
-          className="fixed z-80 top-3 bg-card/90 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center shadow-lg border border-border"
+          className="lg:hidden fixed z-80 top-3 bg-card/90 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center shadow-lg border border-border"
           style={{ right: "calc(min(320px, 85vw) + 8px)" }}
           aria-label="Close menu"
         >
@@ -232,7 +305,9 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 z-70 h-screen w-80 max-w-[85vw] bg-card transform transition-transform duration-300 flex flex-col ${
+        // h-dvh, not h-screen: 100vh runs under mobile browser toolbars and
+        // would hide the account footer at the bottom.
+        className={`lg:hidden fixed top-0 right-0 z-70 h-dvh w-80 max-w-[85vw] bg-card transform transition-transform duration-300 flex flex-col ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -326,6 +401,98 @@ const MobileNav = ({ open, setOpen }: MobileNavProps) => {
         <nav className="flex-1 overflow-y-auto px-4 py-3 flex flex-col gap-0.5">
           {NavigationItems.map((item) => renderNavItem(item))}
         </nav>
+
+        {/* Account — bottom: Log in for visitors, the profile once signed in */}
+        <div className="shrink-0 border-t border-border px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+          {accountStatus === "visitor" && (
+            // Sign-up lives inside the login modal, one tap past this button.
+            <button
+              type="button"
+              onClick={handleLogin}
+              className="inline-flex h-11 w-full cursor-pointer items-center justify-center gap-1.5 rounded-lg bg-primary text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+            >
+              <LogIn size={16} />
+              Log in
+            </button>
+          )}
+
+          {accountStatus === "loading" && (
+            <div
+              aria-hidden
+              className="flex h-14 items-center gap-3 rounded-lg border border-border px-2"
+            >
+              <div className="size-9 animate-pulse rounded-full bg-light-silver" />
+              <div className="flex-1 space-y-1.5">
+                <div className="h-3 w-28 animate-pulse rounded bg-light-silver" />
+                <div className="h-2.5 w-40 animate-pulse rounded bg-light-dark" />
+              </div>
+            </div>
+          )}
+
+          {accountStatus === "signed-in" && (
+            <>
+              {/* The account pages slide open above the card, like a
+                  drop-up — the card stays put at the foot of the drawer */}
+              <Collapse open={accountOpen} className="pb-2">
+                <ul className="flex flex-col gap-0.5">
+                  {menuItems.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        onClick={() => setOpen(false)}
+                        className={`flex items-center gap-3 rounded-md px-3 py-2.5 text-sm ${
+                          pathname === item.href
+                            ? "text-liteBlue bg-liteBlue/5 font-medium"
+                            : "text-secondary-foreground hover:text-liteBlue hover:bg-light"
+                        }`}
+                      >
+                        <item.icon size={16} className="shrink-0" />
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                  <li>
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      className="flex w-full cursor-pointer items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10"
+                    >
+                      <LogOut size={16} className="shrink-0" />
+                      Log out
+                    </button>
+                  </li>
+                </ul>
+              </Collapse>
+
+              <button
+                type="button"
+                aria-expanded={accountOpen}
+                onClick={() => setAccountOpen((value) => !value)}
+                className="flex h-14 w-full cursor-pointer items-center gap-3 rounded-lg border border-border px-2 text-left transition-colors hover:bg-light"
+              >
+                <Avatar
+                  src={userInformation.profilePicture}
+                  name={userInformation.firstName}
+                  size={36}
+                  className="ring-border bg-primary/10 text-primary"
+                />
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-sm font-semibold text-foreground">
+                    {fullName || "My account"}
+                  </span>
+                  <span className="block truncate text-xs text-secondary-foreground">
+                    {userInformation.email}
+                  </span>
+                </span>
+                {/* Points up while closed: the menu opens upwards */}
+                <ChevronDown
+                  size={16}
+                  className={`text-muted-foreground ${chevronClass(!accountOpen)}`}
+                />
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </>
   );

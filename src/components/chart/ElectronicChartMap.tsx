@@ -109,12 +109,12 @@ const ElectronicChartMap = () => {
   }, []);
 
   return (
-    // mt-33 (132px) clears the fixed header on both breakpoints: mobile
-    // 32+56+44 = 132; desktop 172 minus the <header>'s own lg:pb-10 flow
-    // height (40px) = 132.
-    <section className="mt-25 flex h-[calc(100vh-8.25rem)] lg:h-[calc(100vh-10.75rem)] w-full flex-col bg-card">
+    // The height is the screen less the fixed header (8.25rem on mobile,
+    // 10.75rem on desktop), with a gap above the footer. ChartIndexMap uses
+    // the same layout; keep the two pages in step.
+    <section className="mt-25 mb-10 flex h-[calc(100vh-8.25rem)] lg:h-[calc(100vh-10.75rem)] w-full flex-col">
       {/* Toolbar: ENC cell / chart number search */}
-      <div className="relative z-20 flex items-center justify-between gap-4 px-4 py-2.5">
+      <div className="relative z-20 bg-card px-4 py-2.5">
         <div className="container px-4 mx-auto flex items-center justify-between gap-4">
           <div className="relative w-full sm:w-80">
             <SearchIcon className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -131,7 +131,7 @@ const ElectronicChartMap = () => {
                 if (e.key === "Enter" && results[0]) selectResult(results[0]);
                 if (e.key === "Escape") clearSearch();
               }}
-              placeholder="Search ENC charts..."
+              placeholder="Search ENC charts…"
               aria-label="Search ENC cell by cell or chart number"
               className="h-10 w-full rounded-full border border-border bg-card pr-9 pl-9 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-pBlue focus:ring-2 focus:ring-pBlue/20"
             />
@@ -180,7 +180,7 @@ const ElectronicChartMap = () => {
             )}
           </div>
 
-          <p className="hidden h-10 lg:flex items-center justify-center text-xs text-muted-foreground md:block border py-2 rounded-full px-5">
+          <p className="hidden h-10 items-center rounded-full border px-5 text-xs text-muted-foreground md:flex">
             Hover a rectangle to identify an ENC cell — click it to view details
           </p>
         </div>

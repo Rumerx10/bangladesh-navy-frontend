@@ -14,7 +14,7 @@ interface ContactPreviewProps {
 
 const ContactPreview = ({ data, onEdit }: ContactPreviewProps) => {
   return (
-    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
+    <div className="rounded-2xl backdrop-blur-md bg-transparent shadow-sm border border-border overflow-hidden">
       <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-4 sm:px-8 py-5 sm:py-6 border-b border-border">
         <div className="flex min-w-0 items-center gap-3">
           <div className="bg-primary/10 w-10 h-10 shrink-0 flex items-center justify-center rounded-xl border border-primary/20">
@@ -46,7 +46,7 @@ const ContactPreview = ({ data, onEdit }: ContactPreviewProps) => {
       </div>
 
       <div className="p-4 sm:p-8 sm:pt-10 space-y-4">
-        <div className="bg-light rounded-xl p-4 border border-border">
+        <div className=" rounded-xl p-4 border border-border">
           <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
             <Phone className="w-3.5 h-3.5" />
             Phone Numbers
@@ -56,7 +56,7 @@ const ContactPreview = ({ data, onEdit }: ContactPreviewProps) => {
               {data.phones.map((phone, index) => (
                 <span
                   key={index}
-                  className="max-w-full text-sm! font-medium text-secondary-dark bg-card border border-border rounded-2xl px-3 py-1 wrap-anywhere"
+                  className="max-w-full text-sm! font-medium text-secondary-dark bg-transparent border border-border rounded-2xl px-3 py-1 wrap-anywhere"
                 >
                   {phone}
                 </span>
@@ -67,7 +67,7 @@ const ContactPreview = ({ data, onEdit }: ContactPreviewProps) => {
           )}
         </div>
 
-        <div className="bg-light rounded-xl p-4 border border-border">
+        <div className="bg-transparent rounded-xl p-4 border border-border">
           <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
             <Mail className="w-3.5 h-3.5" />
             Email Addresses
@@ -77,7 +77,7 @@ const ContactPreview = ({ data, onEdit }: ContactPreviewProps) => {
               {data.emails.map((email, index) => (
                 <span
                   key={index}
-                  className="max-w-full text-sm! font-medium text-secondary-dark bg-card border border-border rounded-2xl px-3 py-1 wrap-anywhere"
+                  className="max-w-full text-sm! font-medium text-secondary-dark bg-transparent border border-border rounded-2xl px-3 py-1 wrap-anywhere"
                 >
                   {email}
                 </span>
@@ -88,12 +88,12 @@ const ContactPreview = ({ data, onEdit }: ContactPreviewProps) => {
           )}
         </div>
 
-        <div className="bg-light rounded-xl p-4 border border-border">
+        <div className="bg-transparent rounded-xl p-4 border border-border">
           <Paragraph className="text-xs! text-secondary-foreground uppercase tracking-wider mb-1 flex items-center gap-1.5">
             <MdLocationPin className="w-3.5 h-3.5" />
             Office Address
           </Paragraph>
-          <Paragraph className="text-sm! font-medium text-secondary-dark wrap-break-word">
+          <Paragraph className="bg-transparent text-sm! font-medium text-secondary-dark wrap-break-word">
             {data.office_hour || "—"}
           </Paragraph>
         </div>

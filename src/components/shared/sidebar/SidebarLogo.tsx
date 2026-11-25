@@ -1,6 +1,7 @@
-import { siteConfig } from "@/src/config/siteConfig";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import { siteConfig } from "@/src/config/siteConfig";
+
 
 /** The sidebar's share of the admin masthead. It is filled with the navy the
  *  top bar's gradient starts on (see DashboardHeader), so the crest and the
@@ -10,7 +11,7 @@ import Link from "next/link";
 const SidebarLogo = () => {
   return (
     <Link
-      href="/"
+      href="/admin"
       title="Open the public site"
       className="-mr-4.25 -ml-4 flex h-18 shrink-0 items-center gap-2.5 bg-brand-navy px-4 text-white focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:outline-none focus-visible:ring-inset sm:-mr-5.25 sm:-ml-5 sm:px-5"
     >

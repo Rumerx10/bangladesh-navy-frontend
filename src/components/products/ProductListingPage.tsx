@@ -1,10 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { LayoutGrid, Package, SearchIcon, XIcon } from "lucide-react";
+import { LayoutGrid, SearchIcon, XIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGet } from "@/src/hooks/useGet";
 import { useSearchDebounce } from "@/src/hooks/useSearchDebounce";
@@ -15,14 +13,19 @@ import {
 } from "@/src/components/products/productSearch";
 import {
   IProduct,
-  PRODUCT_CATEGORY_LABELS,
   PRODUCT_CATEGORY_OPTIONS,
   ProductCategory,
 } from "@/src/components/admin/ContentManagement/products/types";
 import Container from "@/src/components/shared/Container";
+import ProductListingCard from "@/src/components/products/ProductListingCard";
 
 const DEFAULT_PAGE_SIZE = 12;
 const PAGE_SIZE_OPTIONS = [12, 24, 48];
+
+// Shared by the grid and its loading skeleton so nothing shifts on load.
+// 12 per page divides evenly into 2, 3 and 4 columns.
+const GRID_CLASSES =
+  "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6";
 
 // URL slugs (header / footer / mobile nav links) → backend enum values. Note
 // the backend's own spelling, `PAPPER_CHART`.
@@ -216,16 +219,19 @@ const ProductListingPage = () => {
 
       {/* Grid */}
       {isLoading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
-          {Array.from({ length: 6 }).map((_, i) => (
+        <div className={GRID_CLASSES}>
+          {Array.from({ length: 8 }).map((_, i) => (
             <div
               key={i}
-              className="rounded-xl border border-border bg-card overflow-hidden animate-pulse"
+              className="rounded-md md:rounded-lg border border-border bg-card overflow-hidden animate-pulse"
             >
               <div className="aspect-4/3 bg-light-silver" />
-              <div className="p-4 space-y-2">
+              <div className="p-3 sm:p-4 space-y-2">
                 <div className="h-4 bg-light-silver rounded w-3/4" />
                 <div className="h-3 bg-light-dark rounded w-1/2" />
+              </div>
+              <div className="border-t border-border p-3 sm:px-4">
+                <div className="h-9 bg-light-dark rounded-lg" />
               </div>
             </div>
           ))}
@@ -259,10 +265,7 @@ const ProductListingPage = () => {
         </motion.div>
       ) : (
         <AnimatePresence mode="popLayout">
-          <motion.div
-            layout
-            className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5"
-          >
+          <motion.div layout className={GRID_CLASSES}>
             {products.map((product) => (
               <motion.div
                 layout
@@ -271,40 +274,11 @@ const ProductListingPage = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.25 }}
-                className="h-full"
+                // Without min-w-0 a grid item won't shrink below its content,
+                // pushing narrow cards past their column.
+                className="h-full min-w-0"
               >
-                <Link
-                  href={`/products/${product.id}`}
-                  className="group flex h-full flex-col rounded-xl border border-border shadow bg-card overflow-hidden hover:shadow-lg hover:border-liteBlue/15 transition-all duration-300"
-                >
-                  <div className="relative aspect-4/3 bg-linear-to-br from-brand-navy to-brand-blue overflow-hidden">
-                    {product.images?.[0] ? (
-                      <Image
-                        src={product.images[0]}
-                        alt={product.nameEn}
-                        fill
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="flex items-center justify-center h-full">
-                        <Package size={40} className="text-white/20" />
-                      </div>
-                    )}
-                    <span className="absolute bottom-3 left-3 px-2.5 py-1 rounded-md bg-black/40 backdrop-blur-sm text-white text-[11px] font-medium">
-                      {product.category
-                        ? PRODUCT_CATEGORY_LABELS[product.category]
-                        : "Tidal Product"}
-                    </span>
-                  </div>
-                  <div className="flex-1 p-4 flex flex-col gap-1">
-                    <h3 className="text-sm font-semibold text-pBlue line-clamp-2 min-h-[2lh] group-hover:text-liteBlue transition-colors leading-snug">
-                      {product.nameEn}
-                    </h3>
-                    <p className="text-xs text-muted-foreground font-mono min-h-lh">
-                      {product.chartCode ? `Chart #${product.chartCode}` : ""}
-                    </p>
-                  </div>
-                </Link>
+                <ProductListingCard product={product} />
               </motion.div>
             ))}
           </motion.div>

@@ -40,8 +40,11 @@ const Partners = () => {
             <Marquee pauseOnHover={true} speed={100}>
               {partners.map((partner) => {
                 const logo = (
+                  // A light plate, so logos drawn on white don't show as
+                  // white boxes on the tinted home backdrop (or vanish in
+                  // the dark theme)
                   <div
-                    className="h-16 w-32 flex items-center justify-center"
+                    className="h-20 w-40 flex items-center justify-center rounded-xl bg-white/90 px-4 py-2 shadow-[0_8px_24px_-12px_rgb(0_40_90/0.35)] ring-1 ring-sky-900/5"
                     key={partner.id}
                   >
                     <Image

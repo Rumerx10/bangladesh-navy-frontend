@@ -14,14 +14,11 @@ interface CourseContentPreviewProps {
 /** Bangla blocks only appear once a translation has actually been entered. */
 // const hasText = (value?: string | null) => !!value?.trim();
 
-const CourseContentPreview = ({
-  data,
-  onEdit,
-}: CourseContentPreviewProps) => {
+const CourseContentPreview = ({ data, onEdit }: CourseContentPreviewProps) => {
   // const sequenceBn = data.courseSequenceBn ?? [];
 
   return (
-    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
+    <div className="bg-transparent backdrop-blur-md rounded-2xl shadow-sm border border-border overflow-hidden">
       {/* Header */}
       <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-6 sm:px-8 py-6 border-b border-border">
         <div className="flex items-center gap-3">
@@ -55,7 +52,6 @@ const CourseContentPreview = ({
       </div>
 
       <div className="p-6 sm:p-8 pt-10 space-y-8">
-
         {/* Title & Introduction */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="bg-light rounded-xl p-5 border border-border">

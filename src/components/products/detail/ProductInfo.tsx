@@ -2,7 +2,6 @@
 import parse from "html-react-parser";
 import { useCartDrawer } from "@/src/components/cart/CartProvider";
 import { INavyProduct } from "@/src/components/products/types";
-import { getProductSlug } from "@/src/data/navyProducts";
 import { addToCart } from "@/src/lib/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/src/lib/redux/hooks";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
@@ -29,7 +28,6 @@ const ProductInfo = ({
   const isAdmin = role === "ADMIN" || role === "SUPER_ADMIN";
   const isGuest = role === "GUEST";
   const [quantity, setQuantity] = useState(1);
-  const slug = getProductSlug(product);
   const hasDiscount = discountedPrice < product.price;
 
   const handleAddToCart = () => {
@@ -38,7 +36,8 @@ const ProductInfo = ({
       addToCart({
         productId: product.id,
         name: product.nameEn,
-        slug,
+        // The detail route looks products up by id, not a name slug.
+        slug: product.id,
         image: product.images[0] ?? "",
         price: discountedPrice / 100,
         compareAtPrice: hasDiscount ? product.price / 100 : undefined,

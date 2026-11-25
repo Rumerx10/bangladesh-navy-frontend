@@ -13,7 +13,7 @@ interface BiographyPreviewProps {
 
 const BiographyPreview = ({ data, onEdit }: BiographyPreviewProps) => {
   return (
-    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
+    <div className="bg-transparent backdrop-blur-md rounded-2xl shadow-sm border border-border overflow-hidden">
       <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-8 py-6 border-b border-border">
         <div>
           <Paragraph className="font-semibold text-lg! text-pBlue">

@@ -54,7 +54,7 @@ const GetNoticeColumns = (
         return (
           <div className="flex items-center gap-2 w-full">
             <Button
-              className="w-11! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
+              className="w-11! min-h-9 border border-border flex items-center justify-center rounded-lg bg-transparent hover:bg-light"
               size="sm"
               onClick={() => onView?.(row)}
               aria-label={`View ${row.name}`}
@@ -62,7 +62,7 @@ const GetNoticeColumns = (
               <Eye className="h-4 w-4 text-secondary-foreground" />
             </Button>
             <Button
-              className="w-11! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
+              className="w-11! min-h-9 border border-border flex items-center justify-center rounded-lg bg-transparent hover:bg-light"
               size="sm"
               onClick={() => onEdit?.(row)}
             >

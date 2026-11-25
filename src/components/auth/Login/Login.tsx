@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 import LoginForm from "./Form/LoginForm";
 import LoginBanner from "./LoginBanner";
+import AuthCloseButton from "../shared/AuthCloseButton";
 import { LoginFormType, loginSchema } from "./Schema";
 
 const LoginPage = () => {
@@ -52,8 +53,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
-      <div className="flex items-center justify-center px-6">
+    <div className="relative min-h-screen grid grid-cols-1 md:grid-cols-2">
+      <AuthCloseButton />
+      <div className="flex items-center justify-center px-6 py-16 md:py-0">
         <FormProvider {...methods}>
           <LoginForm
             onSubmit={onSubmit}

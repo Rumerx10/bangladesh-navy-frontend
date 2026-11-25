@@ -6,7 +6,7 @@ import CourseStatisticsManagement from "./course-statistics/CourseStatisticsMana
 
 const CoursesManagement = () => {
   return (
-    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
+    <div className="bg-transparent backdrop-blur-md rounded-2xl shadow-sm border border-border overflow-hidden">
       {/* Header */}
       <div className="bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-6 sm:px-8 py-6 border-b border-border">
         <div className="flex items-center gap-3">

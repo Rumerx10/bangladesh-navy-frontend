@@ -83,7 +83,7 @@ const SurveyCategoryCard = () => {
   );
 
   return (
-    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
+    <div className="bg-transparent backdrop-blur-md rounded-2xl shadow-sm border border-border overflow-hidden">
       <div className="flex items-center gap-3 px-6 py-5 border-b border-border bg-linear-to-r from-primary/5 via-primary/10 to-transparent">
         <div className="bg-primary/10 w-10 h-10 flex items-center justify-center rounded-xl border border-primary/20">
           <Tag className="w-5 h-5 text-primary" />

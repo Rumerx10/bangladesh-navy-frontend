@@ -308,7 +308,8 @@ const MaritimeSearch = () => {
   };
 
   return (
-    <section className="relative py-16 lg:py-25 bg-card">
+    // No background of its own: the site backdrop shows through
+    <section className="relative py-16 lg:py-25">
       {/* Watermarks. The clip belongs on this layer, not on the <section>:
           both marks bleed past the edges deliberately and would otherwise
           widen the page, but an `overflow-hidden` on the section also cuts off

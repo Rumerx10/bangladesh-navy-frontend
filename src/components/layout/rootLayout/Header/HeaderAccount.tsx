@@ -1,12 +1,11 @@
 "use client";
 
 import { openLoginModal } from "@/src/lib/redux/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "@/src/lib/redux/hooks";
-import Cookies from "js-cookie";
+import { useAppDispatch } from "@/src/lib/redux/hooks";
 import { LogIn } from "lucide-react";
-import { useEffect, useState } from "react";
 import { ProfileDropdown } from "./ProfileDropdown";
 import ProfileDropdownSkeleton from "./Skeleton/ProfileDropdownSkeleton";
+import { useAccountStatus } from "./useAccountStatus";
 
 /** The header's account control: a "Log in" button for visitors, the
  *  account menu once signed in. While a stored session's profile is still
@@ -14,26 +13,17 @@ import ProfileDropdownSkeleton from "./Skeleton/ProfileDropdownSkeleton";
  *  flash past. */
 const HeaderAccount = ({ compact = false }: { compact?: boolean }) => {
   const dispatch = useAppDispatch();
-  const { userInformation, loading } = useAppSelector((state) => state.auth);
-  // Read after mount: the cookie isn't visible to the server render.
-  const [hasSession, setHasSession] = useState(false);
+  const status = useAccountStatus();
 
-  useEffect(() => {
-    const sync = () => setHasSession(Boolean(Cookies.get("accessToken")));
-    sync();
-    window.addEventListener("auth-token-updated", sync);
-    return () => window.removeEventListener("auth-token-updated", sync);
-  }, []);
+  if (status === "signed-in") return <ProfileDropdown compact={compact} />;
 
-  if (userInformation.id) return <ProfileDropdown compact={compact} />;
-
-  if (loading || hasSession) return <ProfileDropdownSkeleton />;
+  if (status === "loading") return <ProfileDropdownSkeleton />;
 
   return (
     <button
       type="button"
       onClick={() => dispatch(openLoginModal())}
-      className="inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-full border border-nav-hairline px-3 text-sm font-medium text-nav-ink transition-colors hover:bg-nav-wash focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:outline-none"
+      className="inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-full border border-nav-hairline px-3 text-sm font-medium text-nav-ink transition-colors hover:bg-nav-wash focus-visible:ring-2 focus-visible:ring-nav-ink/60 focus-visible:outline-none"
     >
       <LogIn size={16} />
       <span className={compact ? "sr-only" : undefined}>Log in</span>

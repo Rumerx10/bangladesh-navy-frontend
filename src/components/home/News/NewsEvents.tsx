@@ -21,7 +21,8 @@ const NewsEvents = () => {
   return (
     <>
       {/* ─── News & Events Section ─── */}
-      <section className="relative py-8 lg:py-20 bg-card overflow-hidden">
+      {/* No background of its own: the site backdrop shows through */}
+      <section className="relative py-8 lg:py-20 overflow-hidden">
         {/* Watermark */}
         <div className="absolute -right-16 top-20 text-pBlue">
           <NavyWatermark

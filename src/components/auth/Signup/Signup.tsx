@@ -6,7 +6,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import SignupForm from "./Form/SignupForm";
 import { SignupFormType, signupSchema } from "./Schema";
-import SignupBanner from "./SignupBanner";
+import LoginBanner from "../Login/LoginBanner";
+import AuthCloseButton from "../shared/AuthCloseButton";
 import { useRedirectQuery } from "../shared/useRedirectQuery";
 
 const SignupPage = () => {
@@ -50,9 +51,11 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
-      <SignupBanner />
-      <div className="flex items-center justify-center px-6">
+    <div className="relative min-h-screen grid grid-cols-1 md:grid-cols-2">
+      <AuthCloseButton />
+      {/* Same banner as the login page, so the two read as one flow. */}
+      <LoginBanner />
+      <div className="flex items-center justify-center px-6 py-16 md:py-0">
         <FormProvider {...methods}>
           <SignupForm onSubmit={onSubmit} error={error} isPending={isPending} />
         </FormProvider>

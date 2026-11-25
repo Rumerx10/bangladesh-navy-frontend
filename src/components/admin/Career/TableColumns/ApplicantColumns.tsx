@@ -51,7 +51,7 @@ export const GetApplicantColumns = (
         return (
           <div className="flex items-center gap-2">
             <Button
-              className="w-11! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
+              className="w-11! min-h-9 border border-border flex items-center justify-center rounded-lg bg-transparent hover:bg-light"
               size="sm"
               onClick={() => onView?.(applicant)}
               aria-label={`View ${applicant.name}`}
@@ -59,7 +59,7 @@ export const GetApplicantColumns = (
               <Eye className="h-5 text-secondary-foreground" />
             </Button>
             <Button
-              className="w-11! min-h-9 border border-border flex items-center justify-center rounded-lg bg-light hover:bg-light"
+              className="w-11! min-h-9 border border-border flex items-center justify-center rounded-lg bg-transparent hover:bg-light"
               size="sm"
               onClick={() =>
                 onDownload?.(applicant.id, `${applicant.name}-resume`)

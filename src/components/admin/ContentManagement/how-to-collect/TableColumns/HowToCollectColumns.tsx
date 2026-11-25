@@ -1,6 +1,7 @@
 "use client";
 
 import { Eye, Pencil, Trash2 } from "lucide-react";
+import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { getStepIcon } from "@/src/data/howToCollectIcons";
 import { IHowToCollectStep } from "../types";
@@ -86,28 +87,34 @@ export function GetHowToCollectColumns(
       header: "Action",
       accessorKey: "id",
       cell: (_, row) => (
-        <div className="flex items-center gap-1">
-          <button
+        <div className="flex items-center gap-2 w-full">
+          <Button
+            className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-transparent hover:bg-light"
+            size="sm"
             onClick={() => onView?.(row)}
-            className="cursor-pointer rounded-md p-2 text-secondary-foreground transition-colors hover:bg-light-dark hover:text-pBlue"
             title="View"
+            aria-label={`View ${row.title}`}
           >
-            <Eye className="h-4 w-4" />
-          </button>
-          <button
+            <Eye className="h-4 w-4 text-secondary-foreground" />
+          </Button>
+          <Button
+            className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-transparent hover:bg-light"
+            size="sm"
             onClick={() => onEdit(row)}
-            className="cursor-pointer rounded-md p-2 text-secondary-foreground transition-colors hover:bg-light-dark hover:text-pBlue"
             title="Edit"
+            aria-label={`Edit ${row.title}`}
           >
-            <Pencil className="h-4 w-4" />
-          </button>
-          <button
+            <Pencil className="h-4 w-4 text-secondary-foreground" />
+          </Button>
+          <Button
+            className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-transparent hover:bg-light"
+            size="sm"
             onClick={() => onDelete(row.id)}
-            className="cursor-pointer rounded-md p-2 text-secondary-foreground transition-colors hover:bg-red-50 hover:text-red-600"
             title="Delete"
+            aria-label={`Delete ${row.title}`}
           >
-            <Trash2 className="h-4 w-4" />
-          </button>
+            <Trash2 className="h-4 w-4 text-red-500" />
+          </Button>
         </div>
       ),
     },

@@ -14,16 +14,13 @@ interface InstitutePreviewProps {
 /** Bangla blocks only appear once a translation has actually been entered. */
 // const hasText = (value?: string | null) => !!value?.trim();
 
-const InstitutePreview = ({
-  data,
-  onEdit,
-}: InstitutePreviewProps) => {
+const InstitutePreview = ({ data, onEdit }: InstitutePreviewProps) => {
   // const aboutParagraphsBn = data.aboutParagraphsBn ?? [];
   // const missionPointsBn = data.missionPointsBn ?? [];
   // const trainingOverviewParagraphsBn = data.trainingOverviewParagraphsBn ?? [];
 
   return (
-    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
+    <div className="bg-transparent backdrop-blur-md rounded-2xl shadow-sm border border-border overflow-hidden">
       {/* Header */}
       <div className="relative bg-linear-to-r from-primary/5 via-primary/10 to-transparent px-6 sm:px-8 py-6 border-b border-border">
         <div className="flex items-center gap-3">
@@ -56,7 +53,7 @@ const InstitutePreview = ({
         </Button>
       </div>
 
-      <div className="p-6 sm:p-8 pt-10 space-y-8">       
+      <div className="p-6 sm:p-8 pt-10 space-y-8">
         {/* Basic */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-light rounded-xl p-5 border border-border">

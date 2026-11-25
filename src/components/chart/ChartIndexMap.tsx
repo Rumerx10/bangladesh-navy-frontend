@@ -111,12 +111,12 @@ const ChartIndexMap = () => {
   }, []);
 
   return (
-    // mt-33 (132px) clears the fixed header on both breakpoints: mobile
-    // 32+56+44 = 132; desktop 172 minus the <header>'s own lg:pb-10 flow
-    // height (40px) = 132.
-    <section className="my-25 flex h-[calc(100vh-8.25rem)] lg:h-[calc(100vh-10.75rem)] w-full flex-col bg-card">
+    // The height is the screen less the fixed header (8.25rem on mobile,
+    // 10.75rem on desktop), with a gap above the footer. ElectronicChartMap
+    // uses the same layout; keep the two pages in step.
+    <section className="mt-25 mb-10 flex h-[calc(100vh-8.25rem)] lg:h-[calc(100vh-10.75rem)] w-full flex-col">
       {/* Toolbar: chart number search */}
-      <div className=" relative z-20 bg-card px-4 py-2.5">
+      <div className="relative z-20 bg-card px-4 py-2.5">
         <div className="container px-4 mx-auto flex items-center justify-between gap-4">
           <div className="relative w-full sm:w-80">
             <SearchIcon className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -182,7 +182,7 @@ const ChartIndexMap = () => {
             )}
           </div>
 
-          <p className="hidden text-xs text-muted-foreground md:block border py-2 rounded-full px-5">
+          <p className="hidden h-10 items-center rounded-full border px-5 text-xs text-muted-foreground md:flex">
             Hover a rectangle to identify a chart — click it to view details
           </p>
         </div>
