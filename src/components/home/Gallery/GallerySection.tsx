@@ -25,7 +25,7 @@ const GallerySection = () => {
 
   if (isLoading) {
     return (
-      <section className="py-20 lg:py-28 bg-light">
+      <section className="py-20 lg:py-28">
         <Container>
           <div className="text-center mb-12 lg:mb-16">
             <SectionTitle title="Gallery" />
@@ -46,7 +46,7 @@ const GallerySection = () => {
 
   if (galleryImages.length === 0) {
     return (
-      <section className="py-20 lg:py-28 bg-light">
+      <section className="py-20 lg:py-28">
         <Container>
           <div className="text-center mb-12 lg:mb-16">
             <SectionTitle title="Gallery" />
@@ -64,7 +64,7 @@ const GallerySection = () => {
 
   return (
     <>
-      <section className="py-20 lg:py-28 bg-light">
+      <section className="py-20 lg:py-28">
         <Container>
           {/* Section Header */}
           <div className="text-center mb-12 lg:mb-16">

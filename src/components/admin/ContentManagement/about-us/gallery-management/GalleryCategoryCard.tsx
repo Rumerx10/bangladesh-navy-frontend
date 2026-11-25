@@ -80,7 +80,7 @@ const GalleryCategoryCard = () => {
   );
 
   return (
-    <div className="bg-card rounded-2xl shadow-sm border border-border overflow-hidden">
+    <div className="bg-transparent backdrop-blur-md rounded-2xl shadow-sm border border-border overflow-hidden">
       <div className="p-4">
         <DataTable
           columns={columns}

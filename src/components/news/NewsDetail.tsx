@@ -101,7 +101,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
       </section>
 
       {/* Content */}
-      <section className="relative py-10 lg:py-14 bg-card overflow-hidden">
+      <section className="relative py-10 lg:py-14 overflow-hidden">
         <div className="absolute -right-20 top-20 text-pBlue">
           <NavyWatermark
             variant="lighthouse"
@@ -198,7 +198,7 @@ const NewsDetail = ({ slug }: NewsDetailProps) => {
 
       {/* Related News */}
       {relatedNews.length > 0 && (
-        <section className="py-12 lg:py-16 bg-light">
+        <section className="py-12 lg:py-16">
           <Container>
             <h2 className="text-xl lg:text-2xl font-bold text-pBlue mb-8">
               Related News

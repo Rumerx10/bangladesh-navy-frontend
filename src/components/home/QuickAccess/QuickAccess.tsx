@@ -14,7 +14,8 @@ const QuickAccess = () => {
   const biographyData = data?.data;
 
   return (
-    <section className="relative py-8 lg:py-20 bg-light overflow-hidden">
+    // No background of its own: the site backdrop shows through
+    <section className="relative py-8 lg:py-20 overflow-hidden">
       {/* Watermarks */}
       <div className="absolute -right-10 top-1/2 -translate-y-1/2 text-pBlue">
         <NavyWatermark
@@ -24,15 +25,6 @@ const QuickAccess = () => {
           animate="rotate"
         />
       </div>
-      <div className="absolute -left-20 -bottom-10 text-pBlue">
-        <NavyWatermark
-          variant="waves"
-          size={300}
-          opacity={0.03}
-          animate="bob"
-        />
-      </div>
-
       <Container className="relative">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start">
           {/* Left — title + cards, fills remaining space next to the fixed-width biography card */}

@@ -310,11 +310,11 @@ const SiteSearch = () => {
         aria-label="Search the site"
         aria-haspopup="dialog"
         aria-keyshortcuts="Control+K Meta+K /"
-        className="group hidden h-10 w-56 cursor-pointer items-center gap-2.5 rounded-full border border-nav-hairline bg-nav-wash pr-2 pl-3.5 text-sm text-nav-ink-muted transition-[background-color,border-color,color,transform] duration-200 hover:border-white/25 hover:bg-nav-wash-strong hover:text-nav-ink focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none active:scale-[0.98] xl:flex"
+        className="group hidden h-10 w-56 cursor-pointer items-center gap-2.5 rounded-full border border-nav-hairline bg-nav-wash pr-2 pl-3.5 text-sm text-nav-ink-muted transition-[background-color,border-color,color,transform] duration-200 hover:border-nav-ink/25 hover:bg-nav-wash-strong hover:text-nav-ink focus-visible:ring-2 focus-visible:ring-nav-ink/50 focus-visible:outline-none active:scale-[0.98] xl:flex"
       >
         <SearchIcon className="size-4 shrink-0 transition-transform duration-200 group-hover:scale-110" />
         <span className="flex-1 truncate text-left">Search charts, pages…</span>
-        <kbd className="rounded-md border border-nav-hairline bg-white/10 px-1.5 py-1 font-sans text-[11px] leading-none font-medium text-nav-ink-muted">
+        <kbd className="rounded-md border border-nav-hairline bg-nav-ink/10 px-1.5 py-1 font-sans text-[11px] leading-none font-medium text-nav-ink-muted">
           {shortcut}
         </kbd>
       </button>
@@ -326,7 +326,7 @@ const SiteSearch = () => {
         aria-label="Search the site"
         aria-haspopup="dialog"
         aria-keyshortcuts="Control+K Meta+K /"
-        className="flex size-10 cursor-pointer items-center justify-center rounded-full text-nav-ink transition-[background-color,transform] duration-200 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none active:scale-95 xl:hidden"
+        className="flex size-10 cursor-pointer items-center justify-center rounded-full text-nav-ink transition-[background-color,transform] duration-200 hover:bg-nav-ink/10 focus-visible:ring-2 focus-visible:ring-nav-ink/50 focus-visible:outline-none active:scale-95 xl:hidden"
       >
         <SearchIcon size={20} />
       </button>

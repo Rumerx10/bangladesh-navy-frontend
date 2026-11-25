@@ -43,7 +43,7 @@ const CourseOverview = () => {
   const { courseInfo, isLoading } = useCourseInfo();
 
   return (
-    <section className="bg-card py-8 lg:py-20">
+    <section className="py-8 lg:py-20">
       <Container className="max-w-5xl mx-auto space-y-12">
         {isLoading ? (
           <CourseOverviewSkeleton />

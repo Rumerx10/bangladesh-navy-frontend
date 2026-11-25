@@ -2,11 +2,10 @@
 
 import Image from "next/image";
 import { Eye, Pencil, Trash2 } from "lucide-react";
+import { Button } from "@/src/components/ui/button";
 import { ColumnDef } from "@/src/components/ui/data-table";
 import { siteConfig } from "@/src/config/siteConfig";
 import { IProduct, PRODUCT_CATEGORY_LABELS } from "../types";
-import StatusBadge from "@/src/components/shared/Status/Status";
-import { StatusType } from "@/src/components/shared/types/common";
 
 export function GetProductColumns(
   onEdit: (item: IProduct) => void,
@@ -84,39 +83,50 @@ export function GetProductColumns(
     {
       header: "Status",
       accessorKey: "status",
-      cell: (value) => {
-        return <StatusBadge status={value as StatusType} />;
-      },
+      cell: (_, row) => (
+        <span
+          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+            row.status === "ACTIVE"
+              ? "bg-green-100 text-green-700"
+              : "bg-light-dark text-secondary-foreground"
+          }`}
+        >
+          {row.status}
+        </span>
+      ),
     },
     {
       header: "Action",
       accessorKey: "id",
       cell: (_, row) => (
-        <div className="flex items-center gap-1">
-          <button
+        <div className="flex items-center gap-2 w-full">
+          <Button
+            className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-transparent hover:bg-light"
+            size="sm"
             onClick={() => onView?.(row)}
-            className="p-2 rounded-md hover:bg-light-dark text-secondary-foreground hover:text-pBlue transition-colors cursor-pointer"
             title="View"
             aria-label={`View ${row.nameEn}`}
           >
-            <Eye className="w-4 h-4" />
-          </button>
-          <button
+            <Eye className="h-4 w-4 text-secondary-foreground" />
+          </Button>
+          <Button
+            className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-transparent hover:bg-light"
+            size="sm"
             onClick={() => onEdit(row)}
-            className="p-2 rounded-md hover:bg-light-dark text-secondary-foreground hover:text-pBlue transition-colors cursor-pointer"
             title="Edit"
             aria-label={`Edit ${row.nameEn}`}
           >
-            <Pencil className="w-4 h-4" />
-          </button>
-          <button
+            <Pencil className="h-4 w-4 text-secondary-foreground" />
+          </Button>
+          <Button
+            className="w-9! min-h-9 border border-border flex items-center justify-center rounded-lg bg-transparent hover:bg-light"
+            size="sm"
             onClick={() => onDelete?.(row)}
-            className="p-2 rounded-md hover:bg-red-50 text-secondary-foreground hover:text-red-500 transition-colors cursor-pointer"
             title="Delete"
             aria-label={`Delete ${row.nameEn}`}
           >
-            <Trash2 className="w-4 h-4" />
-          </button>
+            <Trash2 className="h-4 w-4 text-red-500" />
+          </Button>
         </div>
       ),
     },

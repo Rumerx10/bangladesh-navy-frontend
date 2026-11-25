@@ -24,7 +24,7 @@ const NewsListingPage = () => {
       />
 
       {/* News Grid */}
-      <section className="py-12 lg:py-16 bg-light">
+      <section className="py-12 lg:py-16">
         <Container>
           {isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

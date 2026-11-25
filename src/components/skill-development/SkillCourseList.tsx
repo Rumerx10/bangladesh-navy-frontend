@@ -24,7 +24,7 @@ const SkillCourseList = () => {
       : courses.filter((c) => c.category === activeCategory);
 
   return (
-    <section id="courses" className="py-20 lg:py-32 bg-card">
+    <section id="courses" className="py-20 lg:py-32">
       <Container>
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">

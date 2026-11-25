@@ -116,7 +116,7 @@ export function DataTable<T>({
       {/* One frosted-glass shell for toolbar, table and pagination — the
           admin canvas's coastal chart reads softly through it. The sections
           inside stay unfilled; a solid fill on any of them would block it. */}
-      <div className="rounded-xl border border-white/70 bg-red-500 shadow-[0_12px_32px_-18px_rgb(0_24_54/0.25)] backdrop-blur-sm backdrop-saturate-150 dark:border-white/10">
+      <div className="rounded-xl border border-white/70 bg-transparent shadow-[0_12px_32px_-18px_rgb(0_24_54/0.25)] backdrop-blur-md backdrop-saturate-150 dark:border-white/10">
         <div className="w-full overflow-x-auto">
           <div id="table-tab" className="p-5">
             {toolbarStart ? (
@@ -126,7 +126,7 @@ export function DataTable<T>({
                 <div className="min-w-0">{toolbarStart}</div>
                 <div className="flex w-full items-center gap-3 lg:w-auto">
                   {showSearch && (
-                    <div className="flex h-11 w-full items-center rounded-[6px] border border-light-dark px-3 lg:w-72">
+                    <div className="flex h-11 w-full items-center rounded-full border px-3 lg:w-72">
                       <Search className="text-muted-foreground" />
                       <Input
                         placeholder={searchPlaceholder}

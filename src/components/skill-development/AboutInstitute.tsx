@@ -62,7 +62,7 @@ const AboutInstitute = () => {
   const { aboutInstitute, isLoading } = useAboutInstitute();
 
   return (
-    <section className="py-8 lg:py-20 bg-card">
+    <section className="py-8 lg:py-20">
       <Container className="max-w-4xl mx-auto">
         {isLoading ? (
           <AboutInstituteSkeleton />

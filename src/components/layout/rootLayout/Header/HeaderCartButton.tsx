@@ -21,7 +21,7 @@ const HeaderCartButton = () => {
       type="button"
       onClick={openDrawer}
       aria-label={count > 0 ? `Open cart, ${count} items` : "Open cart"}
-      className="relative inline-flex size-9 cursor-pointer items-center justify-center rounded-full text-nav-ink transition-colors hover:bg-nav-wash focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:outline-none"
+      className="relative inline-flex size-9 cursor-pointer items-center justify-center rounded-full text-nav-ink transition-colors hover:bg-nav-wash focus-visible:ring-2 focus-visible:ring-nav-ink/60 focus-visible:outline-none"
     >
       <ShoppingCart size={20} />
       {count > 0 && (

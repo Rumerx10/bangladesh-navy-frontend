@@ -34,6 +34,8 @@ const GalleryLightbox = ({
 }: GalleryLightboxProps) => {
   const [mainSwiper, setMainSwiper] = useState<SwiperType | null>(null);
   const isOpen = activeIndex !== null;
+  // A lone image (e.g. a profile photo) gets no arrows, counter or autoplay
+  const isSingle = images.length < 2;
 
   const handleClose = () => {
     setMainSwiper(null);
@@ -85,13 +87,18 @@ const GalleryLightbox = ({
             <div className="relative">
               <Swiper
                 spaceBetween={0}
-                loop
+                // One image has nothing to loop or play through
+                loop={!isSingle}
                 modules={[Autoplay]}
-                autoplay={{
-                  delay: 4000,
-                  disableOnInteraction: false,
-                  pauseOnMouseEnter: true,
-                }}
+                autoplay={
+                  isSingle
+                    ? false
+                    : {
+                        delay: 4000,
+                        disableOnInteraction: false,
+                        pauseOnMouseEnter: true,
+                      }
+                }
                 onSwiper={(s) => {
                   setMainSwiper(s);
                   s.slideTo(activeIndex, 0);
@@ -113,23 +120,27 @@ const GalleryLightbox = ({
                 ))}
               </Swiper>
 
-              {/* Prev */}
-              <button
-                onClick={() => mainSwiper?.slidePrev()}
-                className="opacity-0 md:opacity-100 absolute left-3 top-1/2 -translate-y-1/2 z-10 text-white/80 hover:text-white transition-colors drop-shadow-lg"
-                aria-label="Previous"
-              >
-                <IoIosArrowDropleftCircle size={46} />
-              </button>
+              {!isSingle && (
+                <>
+                  {/* Prev */}
+                  <button
+                    onClick={() => mainSwiper?.slidePrev()}
+                    className="opacity-0 md:opacity-100 absolute left-3 top-1/2 -translate-y-1/2 z-10 text-white/80 hover:text-white transition-colors drop-shadow-lg"
+                    aria-label="Previous"
+                  >
+                    <IoIosArrowDropleftCircle size={46} />
+                  </button>
 
-              {/* Next */}
-              <button
-                onClick={() => mainSwiper?.slideNext()}
-                className="opacity-0 md:opacity-100 absolute right-3 top-1/2 -translate-y-1/2 z-10 text-white/80 hover:text-white transition-colors drop-shadow-lg"
-                aria-label="Next"
-              >
-                <IoIosArrowDroprightCircle size={46} />
-              </button>
+                  {/* Next */}
+                  <button
+                    onClick={() => mainSwiper?.slideNext()}
+                    className="opacity-0 md:opacity-100 absolute right-3 top-1/2 -translate-y-1/2 z-10 text-white/80 hover:text-white transition-colors drop-shadow-lg"
+                    aria-label="Next"
+                  >
+                    <IoIosArrowDroprightCircle size={46} />
+                  </button>
+                </>
+              )}
             </div>
 
             {/* Caption + counter centered */}
@@ -137,9 +148,11 @@ const GalleryLightbox = ({
               <p className="text-white font-semibold text-base">
                 {images[activeIndex]?.alt}
               </p>
-              <span className="px-3 py-1 rounded-full bg-white/10 text-white/70 text-sm font-medium">
-                {activeIndex + 1} / {images.length}
-              </span>
+              {!isSingle && (
+                <span className="px-3 py-1 rounded-full bg-white/10 text-white/70 text-sm font-medium">
+                  {activeIndex + 1} / {images.length}
+                </span>
+              )}
             </div>
           </div>
         </motion.div>
