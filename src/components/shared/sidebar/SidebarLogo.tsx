@@ -3,6 +3,11 @@ import Image from "next/image";
 import { siteConfig } from "@/src/config/siteConfig";
 
 
+/** The sidebar's share of the admin masthead. It is filled with the navy the
+ *  top bar's gradient starts on (see DashboardHeader), so the crest and the
+ *  bar read as one band across the screen. The negative margins stretch the
+ *  fill over the sidebar's padding and its 1px right border, so no seam shows
+ *  where the two meet. */
 const SidebarLogo = () => {
   return (
     <Link
